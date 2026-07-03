@@ -50,6 +50,15 @@ export function Hero() {
                 <ArrowRight aria-hidden="true" />
               </Button>
               <Button
+                render={<Link href="/residential" />}
+                nativeButton={false}
+                variant="outline"
+                size="lg"
+                className="text-base"
+              >
+                Residential Roofing
+              </Button>
+              <Button
                 render={<Link href="/commercial" />}
                 nativeButton={false}
                 variant="outline"

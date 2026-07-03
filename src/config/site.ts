@@ -25,21 +25,38 @@ export const siteConfig = {
     "Southeast Roofing is a Hattiesburg, Mississippi roofing contractor serving residential and commercial customers across South Mississippi — roof replacement, repair, metal roofing, storm damage, and insurance claim assistance.",
 
   phone: {
-    /** [NEEDS: real phone number] — display placeholder until supplied */
-    display: "(601) XXX-XXXX",
-    /** E.164 number for tel: links, e.g. "+16015551234". Null disables tel: links. */
-    tel: null as string | null,
+    /** Office number (owner-supplied 2026-07-04) */
+    display: "(601) 549-3783",
+    tel: "+16015493783" as string | null,
   },
-  /** [NEEDS: lead notification / public email] */
-  email: null as string | null,
+  /** Office email (owner-supplied 2026-07-04) */
+  email: "office@southeastroofing.llc" as string | null,
 
   address: {
-    /** [NEEDS: decide whether street address is publishable] */
-    streetAddress: null as string | null,
+    /** Office address (owner-supplied 2026-07-04) */
+    streetAddress: "6668 US-98, Suite F" as string | null,
     addressLocality: "Hattiesburg",
     addressRegion: "MS",
-    postalCode: null as string | null,
+    postalCode: "39402" as string | null,
     addressCountry: "US",
+  },
+
+  /**
+   * Official external profiles & tools (owner-supplied 2026-07-04).
+   * GAF and BBB URLs are verifiable proof of the certifications we claim.
+   */
+  links: {
+    googleBusiness: "https://share.google/8jfoy7nN9HyddPKDb",
+    bbbProfile:
+      "https://www.bbb.org/us/ms/hattiesburg/profile/roofing-contractors/southeast-roofing-llc-0523-235902892",
+    gafProfile:
+      "https://www.gaf.com/en-us/roofing-contractors/residential/usa/ms/hattiesburg/southeast-roofing-1147340",
+    /** GoodLeap financing application */
+    financing:
+      "https://www.goodleap.dev/southeastroofingllc/1b96fc28-5e63-477c-8074-0bec137f3154",
+    /** Roofr instant estimator */
+    instantEstimate:
+      "https://app.roofr.com/instant-estimator/70b6fe06-8fb3-43ee-83d5-c27f43145413/SoutheastRoofing",
   },
   /** Hattiesburg, MS city center — refine when street address is confirmed */
   geo: { latitude: 31.3271, longitude: -89.2903 },
@@ -50,8 +67,12 @@ export const siteConfig = {
   license: null as string | null,
   /** [NEEDS: real founding year] */
   foundingYear: null as number | null,
-  /** [NEEDS: social profile URLs + Google Business Profile URL] — used for schema sameAs */
-  socialProfiles: [] as string[],
+  /** Schema sameAs — official profiles (GBP, BBB, GAF). [NEEDS: social media URLs] */
+  socialProfiles: [
+    "https://share.google/8jfoy7nN9HyddPKDb",
+    "https://www.bbb.org/us/ms/hattiesburg/profile/roofing-contractors/southeast-roofing-llc-0523-235902892",
+    "https://www.gaf.com/en-us/roofing-contractors/residential/usa/ms/hattiesburg/southeast-roofing-1147340",
+  ] as string[],
 
   /**
    * Launch service area (PRD §5). Tiers drive content depth on city pages.

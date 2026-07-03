@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
 
 import { footerColumns, legalLinks } from "@/config/navigation";
 import { siteConfig } from "@/config/site";
@@ -34,9 +34,27 @@ export function SiteFooter() {
           </p>
           <div className="mt-6 flex flex-col gap-2.5 text-sm text-steel-100">
             <PhoneLink />
-            <span className="inline-flex items-center gap-2">
-              <MapPin className="size-4" aria-hidden="true" />
-              {address.addressLocality}, {address.addressRegion}
+            {siteConfig.email && (
+              <a
+                href={`mailto:${siteConfig.email}`}
+                className="inline-flex items-center gap-2 transition-colors hover:text-white"
+              >
+                <Mail className="size-4" aria-hidden="true" />
+                {siteConfig.email}
+              </a>
+            )}
+            <span className="inline-flex items-start gap-2">
+              <MapPin className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+              <span>
+                {address.streetAddress && (
+                  <>
+                    {address.streetAddress}
+                    <br />
+                  </>
+                )}
+                {address.addressLocality}, {address.addressRegion}{" "}
+                {address.postalCode}
+              </span>
             </span>
           </div>
           <p className="mt-6 text-xs leading-relaxed text-steel-300">

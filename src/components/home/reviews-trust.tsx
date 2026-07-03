@@ -1,5 +1,4 @@
-import Link from "next/link";
-
+import { siteConfig } from "@/config/site";
 import { reviewsSection } from "@/content/homepage";
 import { Section } from "@/components/shared/section";
 import { SectionHeading } from "@/components/shared/section-heading";
@@ -25,26 +24,43 @@ export function ReviewsTrust() {
         review CTA carries the section instead.
       */}
       <div className="mt-12 flex flex-col items-center gap-8">
+        {/* Live Google Business Profile — external */}
         <Button
           size="lg"
-          render={<Link href={reviewsSection.googleCta.href} />}
+          render={
+            <a
+              href={reviewsSection.googleCta.href}
+              target="_blank"
+              rel="noopener noreferrer"
+            />
+          }
           nativeButton={false}
         >
           {reviewsSection.googleCta.label}
         </Button>
 
         {/*
-          Credential chips only — GAF leads (brand directive 2026-07-03 §4).
-          Official GAF/BBB badge artwork to be sourced from manufacturer
-          sites in Phase 3; no OC certification claims anywhere.
+          Verifiable credentials — GAF and BBB chips link to the official
+          contractor records (owner-supplied 2026-07-04). GAF leads per the
+          brand directive; no OC certification claims anywhere.
         */}
         <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
-          <span className="rounded-full border border-border bg-white px-4 py-2 text-sm font-semibold text-primary">
-            GAF Certified Contractor
-          </span>
-          <span className="rounded-full border border-border bg-white px-4 py-2 text-sm font-medium text-slate-600">
-            BBB Accredited
-          </span>
+          <a
+            href={siteConfig.links.gafProfile}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-full border border-border bg-white px-4 py-2 text-sm font-semibold text-primary transition-colors hover:border-steel-500"
+          >
+            GAF Certified Contractor ↗
+          </a>
+          <a
+            href={siteConfig.links.bbbProfile}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-full border border-border bg-white px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:border-steel-500 hover:text-primary"
+          >
+            BBB Accredited ↗
+          </a>
           <span className="rounded-full border border-border bg-white px-4 py-2 text-sm font-medium text-slate-600">
             MSBOC Licensed
           </span>

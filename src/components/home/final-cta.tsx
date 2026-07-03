@@ -40,6 +40,22 @@ export function FinalCta() {
           >
             {finalCta.primary.label}
           </Button>
+          {/* External Roofr instant estimator — opens in a new tab */}
+          <Button
+            size="lg"
+            variant="outline"
+            className="border-white/40 text-base text-white hover:border-white hover:bg-white/10"
+            render={
+              <a
+                href={finalCta.estimate.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              />
+            }
+            nativeButton={false}
+          >
+            {finalCta.estimate.label}
+          </Button>
           <PhoneLink className="text-base text-white" />
         </div>
 

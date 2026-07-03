@@ -22,6 +22,7 @@ import {
   Wrench,
 } from "lucide-react";
 
+import { siteConfig } from "@/config/site";
 import { stockPhotos } from "@/content/stock-photos";
 
 /**
@@ -344,9 +345,14 @@ export const financingSection = {
   eyebrow: "Financing",
   title: "A new roof, on a budget that works",
   description:
-    "A roof is a major investment — and it rarely comes at a convenient time. Ask us about financing options for your roof replacement when we provide your estimate.",
+    "A roof is a major investment — and it rarely comes at a convenient time. Apply for financing through our partner GoodLeap, or ask us about options with your estimate.",
   icon: Banknote,
-  cta: { label: "Learn about financing", href: "/financing" },
+  /** GoodLeap application (owner-supplied 2026-07-04) — external */
+  cta: {
+    label: "Apply for financing",
+    href: siteConfig.links.financing,
+    external: true,
+  },
   secondaryCta: {
     label: "Schedule a free inspection",
     href: "/free-inspection",
@@ -373,9 +379,13 @@ export const reviewsSection = {
   eyebrow: "Reputation",
   title: "Don't take our word for it",
   description:
-    "Read what real customers say on Google, and check our credentials for yourself.",
-  /** [NEEDS: Google Business Profile URL] — links to /reviews until supplied */
-  googleCta: { label: "Read our Google reviews", href: "/reviews" },
+    "Read what real customers say on Google, and verify our credentials for yourself — every badge below links to the official record.",
+  /** Live Google Business Profile (owner-supplied 2026-07-04) — external */
+  googleCta: {
+    label: "Read our Google reviews",
+    href: siteConfig.links.googleBusiness,
+    external: true,
+  },
 } as const;
 
 /* ------------------------------------------------------------------ */
@@ -427,8 +437,14 @@ export const homeFaqs: HomeFaq[] = [
 export const finalCta = {
   title: "Ready for a roof you don't have to think about?",
   description:
-    "Schedule a free inspection and get a straight answer from a local team.",
+    "Schedule a free inspection, or get an instant estimate on your roof right now.",
   primary: { label: "Schedule Free Inspection", href: "/free-inspection" },
+  /** Roofr instant estimator (owner-supplied 2026-07-04) — external */
+  estimate: {
+    label: "Get an Instant Estimate",
+    href: siteConfig.links.instantEstimate,
+    external: true,
+  },
   commercial: {
     label: "Commercial? Request a consultation",
     href: "/commercial/request-consultation",

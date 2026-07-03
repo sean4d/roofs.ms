@@ -32,9 +32,16 @@ export function FinancingStrip() {
         </div>
 
         <div className="flex flex-wrap gap-4">
+          {/* External GoodLeap application — opens in a new tab */}
           <Button
             className="bg-white text-primary hover:bg-steel-100"
-            render={<Link href={financingSection.cta.href} />}
+            render={
+              <a
+                href={financingSection.cta.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              />
+            }
             nativeButton={false}
           >
             {financingSection.cta.label}

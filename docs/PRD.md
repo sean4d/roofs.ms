@@ -569,7 +569,7 @@ Local roofing SEO is won by being the **most complete, most local, most trustwor
 
 **Identity & legal:** ~~logo~~ ✅ RECEIVED 2026-07-03 (black + navy PNG, white knockout derived; note: logo is navy — palette reconciliation with burgundy accent still open) · MS contractor license # (public form) · insurance/bonding language safe to publish · legal entity name · year founded
 
-**Contact & operations:** primary phone (+ emergency line?) · lead email(s) · address publishable vs service-area-only · hours + real 24/7 availability · GBP URL/access · social profiles · current lead workflow/CRM
+**Contact & operations:** ✅ RECEIVED 2026-07-04: office phone (601) 549-3783 · office@southeastroofing.llc · 6668 US-98 Suite F, Hattiesburg, MS 39402 · GBP link · BBB + GAF profile URLs (verifiable credentials) · GoodLeap financing link · Roofr instant-estimator link — all in `config/site.ts` · still needed: hours + real 24/7 availability · social media profiles · emergency line (if separate) · current lead workflow/CRM
 
 **Proof & credibility:** real reviews + permission · ~~manufacturer certifications~~ ✅ CORRECTED 2026-07-03 (§0.0): **GAF Certified Contractor (primary emphasis) · BBB accredited · MSBOC licensed** — Owens Corning is a product line only, NOT a held certification · official GAF/BBB badge artwork to be sourced from manufacturer sites (permission granted §0.0.4) · `[NEEDS: MSBOC license number in its public form]` · real warranty terms · real awards/memberships · defensible stats (roofs completed, etc.) · safety record/EMR if publishable (commercial)
 
