@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { mainNav, primaryCta } from "@/config/navigation";
+import { brandAssets } from "@/content/brand-assets";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { MobileNav } from "@/components/layout/mobile-nav";
@@ -40,18 +42,20 @@ export function SiteHeader() {
           scrolled ? "h-16" : "h-20",
         )}
       >
-        {/* Wordmark (logo pending — [NEEDS: logo files]) */}
+        {/* Official logo (white knockout for the dark theme) */}
         <Link
           href="/"
-          className="flex flex-col leading-none"
+          className="shrink-0"
           aria-label="Southeast Roofing — home"
         >
-          <span className="text-metallic font-display text-lg font-black tracking-widest">
-            SOUTHEAST
-          </span>
-          <span className="font-display text-sm font-bold tracking-[0.35em] text-burgundy-500">
-            ROOFING
-          </span>
+          <Image
+            src={brandAssets.logo.light}
+            alt="Southeast Roofing"
+            width={brandAssets.logo.aspect.width}
+            height={brandAssets.logo.aspect.height}
+            className="h-11 w-auto"
+            priority
+          />
         </Link>
 
         {/* Desktop navigation */}

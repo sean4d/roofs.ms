@@ -1,8 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
 import { MapPin } from "lucide-react";
 
 import { footerColumns, legalLinks } from "@/config/navigation";
 import { siteConfig } from "@/config/site";
+import { brandAssets } from "@/content/brand-assets";
 import { PhoneLink } from "@/components/shared/phone-link";
 
 /**
@@ -19,12 +21,13 @@ export function SiteFooter() {
       <div className="container-site grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-5">
         {/* Brand column */}
         <div className="sm:col-span-2 lg:col-span-1">
-          <p className="text-metallic font-display text-lg font-black tracking-widest">
-            SOUTHEAST
-          </p>
-          <p className="font-display text-sm font-bold tracking-[0.35em] text-burgundy-500">
-            ROOFING
-          </p>
+          <Image
+            src={brandAssets.logo.light}
+            alt="Southeast Roofing"
+            width={brandAssets.logo.aspect.width}
+            height={brandAssets.logo.aspect.height}
+            className="h-16 w-auto"
+          />
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-silver-600">
             {siteConfig.tagline}.
           </p>

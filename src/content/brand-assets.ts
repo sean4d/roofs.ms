@@ -1,32 +1,35 @@
 /**
- * Brand assets supplied by the owner (2026-07-03 asset pack).
+ * Official Southeast Roofing brand assets (owner-supplied and confirmed
+ * for site-wide use, 2026-07-03).
  *
  * Usage constraints (integrity rule, PRD §0.2):
- * - The Owens Corning Preferred Contractor badge may only be displayed once
- *   the owner confirms the certification is current and active.
  * - The Google reviews logo is a trust mark, not a substitute for real
  *   reviews — display it only alongside a link to the live Google profile.
- * - Both logo variants sit on light backgrounds (black and navy artwork);
- *   a white/knockout version is still needed for the dark site theme.
+ * - The white knockout logo is derived from the official black artwork
+ *   (inverted, transparency preserved) for use on the dark theme.
  */
 
 export const brandAssets = {
   logo: {
-    /** Black artwork — for light backgrounds only */
+    /** Official black artwork — light backgrounds */
     dark: "/images/brand/southeast-roofing-logo-01.png",
-    /** Navy artwork — for light backgrounds only */
+    /** Official navy artwork — light backgrounds */
     navy: "/images/brand/southeast-roofing-logo-02.png",
-    /** [NEEDS: white/knockout logo version for dark backgrounds] */
-    light: null as string | null,
+    /** Navy artwork, trimmed of padding */
+    navyTrimmed: "/images/brand/southeast-roofing-logo-navy-trimmed.png",
+    /** White knockout derived from official artwork — dark backgrounds */
+    light: "/images/brand/southeast-roofing-logo-white.png",
+    /** Intrinsic aspect ratio of the trimmed marks (479x278) */
+    aspect: { width: 479, height: 278 },
   },
   certifications: {
-    /** [NEEDS: owner confirmation that this certification is current] */
+    /** Owner confirmed for site-wide display, 2026-07-03 */
     owensCorningPreferred: {
       images: [
         "/images/brand/owens-corning-preferred-contractor-logo-01.png",
         "/images/brand/owens-corning-preferred-contractor-logo-02.png",
       ],
-      confirmed: false,
+      confirmed: true,
     },
   },
   trust: {
