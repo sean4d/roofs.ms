@@ -22,7 +22,7 @@ import {
   Wrench,
 } from "lucide-react";
 
-import { projectPhotos, stormPhotos } from "@/content/photos";
+import { stockPhotos } from "@/content/stock-photos";
 
 /**
  * All homepage copy, curated photos, and internal-link targets in one place
@@ -31,11 +31,12 @@ import { projectPhotos, stormPhotos } from "@/content/photos";
  * Section components under components/home/ render this data.
  */
 
-const photoBySrc = (fragment: string) => {
-  const photo = projectPhotos.find((p) => p.src.includes(fragment));
-  if (!photo) throw new Error(`Homepage photo not found: ${fragment}`);
-  return photo;
-};
+/**
+ * Homepage imagery policy (owner directive 2026-07-04): supplied project
+ * photos NEVER appear on the homepage — premium licensed stock only
+ * (stock-photos.ts), with honest generic alt text. Real project photos
+ * live in /projects and gallery contexts.
+ */
 
 /* ------------------------------------------------------------------ */
 /* 1. Hero                                                             */
@@ -54,8 +55,9 @@ export const hero = {
   },
   subhead:
     "Southeast Roofing is South Mississippi's residential asphalt shingle specialist — GAF-certified roof replacement, repairs, storm restoration, and insurance claim help, with metal and commercial capability when you need it.",
-  photo: photoBySrc("petal-ms-002"),
-  photoBadge: "Recent roof replacement — Petal, MS",
+  photo: stockPhotos.heroHome,
+  /** Descriptive only — stock imagery is never presented as our project */
+  photoBadge: "Architectural asphalt shingle roofing",
   credentialLine: "GAF Certified Contractor · BBB Accredited · MSBOC Licensed",
 } as const;
 
@@ -115,7 +117,7 @@ export const divisionSplit = {
       "Asphalt shingle roof replacement is what we do best — backed by repairs, storm restoration, insurance claim help, and metal options.",
     href: "/residential",
     cta: "Explore residential",
-    photo: photoBySrc("petal-ms-001"),
+    photo: stockPhotos.residentialHome,
     highlights: [
       "Asphalt shingle roof replacement",
       "GAF & Owens Corning systems",
@@ -227,7 +229,7 @@ export const stormSection = {
   title: "When the weather turns, we answer",
   description:
     "South Mississippi takes hail, straight-line winds, and hurricane-season storms every year. If your roof takes a hit, we document the damage, provide a thorough inspection, and help you navigate the insurance claim process.",
-  photo: stormPhotos.find((p) => p.category === "emergency-tarp")!,
+  photo: stockPhotos.roofTearOff,
   steps: [
     {
       icon: CalendarCheck,
@@ -283,19 +285,25 @@ export const metalSection = {
 /* 7. Featured projects — real photos, real cities                     */
 /* ------------------------------------------------------------------ */
 
+/**
+ * Real project photography lives in /projects, not on the homepage
+ * (owner directive 2026-07-04) — this section is the invitation to it.
+ */
 export const featuredProjects = {
   eyebrow: "Recent work",
-  title: "Real roofs, across the radius",
+  title: "Real roofs, real addresses",
   description:
-    "A sample of recent residential projects from Hattiesburg to the Coast.",
-  cta: { label: "View the project gallery", href: "/projects" },
-  projects: [
-    { photo: photoBySrc("hattiesburg-ms-003"), service: "Roof replacement" },
-    { photo: photoBySrc("petal-ms-003"), service: "Roof replacement" },
-    { photo: photoBySrc("laurel-ms-001"), service: "Roof replacement" },
-    { photo: photoBySrc("gulfport-ms-001"), service: "Roof replacement" },
-    { photo: photoBySrc("meridian-ms-001"), service: "Roof replacement" },
-    { photo: photoBySrc("biloxi-ms-002"), service: "Roof replacement" },
+    "Every photo in our project gallery is a genuine Southeast Roofing job — completed roofs from Hattiesburg to Jackson, Meridian, and the Gulf Coast. Real jobs, real addresses.",
+  cta: { label: "Browse recent projects", href: "/projects" },
+  cities: [
+    "Hattiesburg",
+    "Petal",
+    "Laurel",
+    "Jackson",
+    "Meridian",
+    "Gulfport",
+    "Biloxi",
+    "Picayune",
   ],
 } as const;
 
@@ -308,7 +316,7 @@ export const whyUs = {
   title: "A local company you can hold accountable",
   description:
     "We're not a storm-chasing outfit that disappears after the check clears. We live here, we build here, and our name is on every roof.",
-  photo: photoBySrc("hattiesburg-ms-005"),
+  photo: stockPhotos.rooferInstalling,
   points: [
     {
       icon: MapPin,
