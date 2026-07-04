@@ -577,6 +577,30 @@ export const residentialServices: ServiceContent[] = [
         },
       ],
     },
+    materials: {
+      title: "Options & add-ons",
+      description:
+        "Every gutter project is configured to your roof — and protected for good if you want it to be.",
+      items: [
+        {
+          title: "Seamless K-style runs",
+          text: "Formed on site in continuous lengths — no mid-run seams to split and drip.",
+        },
+        {
+          title: "Oversized gutters & downspouts",
+          text: "For big or steep roof planes that overwhelm standard sizing in Gulf-region rain.",
+        },
+        {
+          title: "Leaf guard add-on",
+          text: "Close the system to pine straw and leaves while it stays open to water — and retire the ladder. Ask for it on your gutter quote.",
+        },
+        {
+          title: "Color-matched finish",
+          text: "Gutter and downspout colors matched to your trim and fascia.",
+        },
+      ],
+      note: "Leaf guard protection can be added to your new gutters in the same visit — it appears as its own line on your itemized proposal, so you decide with the real number in front of you.",
+    },
     faqs: [
       {
         question: "Should I replace gutters when I replace my roof?",
@@ -601,22 +625,22 @@ export const residentialServices: ServiceContent[] = [
     ],
     related: [
       {
+        label: "Leaf Guard Systems",
+        href: "/residential/leaf-guard",
+        description:
+          "The add-on that keeps your new gutters clog-free for good.",
+      },
+      {
+        label: "Fascia Replacement",
+        href: "/residential/fascia",
+        description:
+          "New gutters deserve sound boards to hang on — we fix both.",
+      },
+      {
         label: "Roof Replacement",
         href: "/residential/roof-replacement",
         description:
           "Pairing gutters with a new roof gets both systems integrated correctly.",
-      },
-      {
-        label: "Roof Repair",
-        href: "/residential/roof-repair",
-        description:
-          "Fascia rot from overflowing gutters often comes with roof-edge damage — we fix both.",
-      },
-      {
-        label: "Ventilation",
-        href: "/residential/ventilation",
-        description:
-          "Moisture management doesn't stop at the eaves — attic airflow matters too.",
       },
     ],
   },

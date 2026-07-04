@@ -486,18 +486,21 @@ export const proposalSection = {
     subheading: "Itemized · sent to your email",
     lineItems: [
       { label: "Roof replacement", price: 7120 },
-      { label: "Synthetic underlayment", price: null },
-      { label: "Starter shingles", price: null },
+      { label: "Synthetic underlayment", price: 345 },
+      { label: "Starter shingles", price: 218 },
       { label: "Architectural shingles", price: null },
-      { label: "Ridge cap", price: null },
+      { label: "Ridge cap", price: 270 },
       { label: "Permit", price: 150 },
       { label: "Cleanup", price: null },
       { label: "Dumpster", price: 375 },
     ] as { label: string; price: number | null }[],
-    baseTotal: 7645,
+    /** Sum of priced line items — $8,478.00 (owner-specified) */
+    baseTotal: 8478,
+    /** All off by default: customers start at the $8,478 base and watch
+     *  the total climb as they flip upgrades — that's the lesson. */
     upgrades: [
-      { label: "Premium drip edge", price: 180, defaultOn: true },
-      { label: "Ridge vent upgrade", price: 420, defaultOn: true },
+      { label: "Premium drip edge", price: 180, defaultOn: false },
+      { label: "Ridge vent upgrade", price: 420, defaultOn: false },
       { label: "Premium synthetic underlayment", price: 350, defaultOn: false },
       { label: "Gutter replacement", price: 1850, defaultOn: false },
       { label: "Leaf guard", price: 850, defaultOn: false },
