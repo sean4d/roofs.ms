@@ -487,24 +487,29 @@ export const proposalSection = {
   example: {
     heading: "Example roofing proposal",
     subheading: "Itemized · sent to your email",
+    /** Wording mirrors the company's real Roofr proposals exactly —
+     *  no quantities/measurements shown, line cost only. */
     lineItems: [
-      { label: "Tear-off & disposal of existing roof", price: 1360 },
-      { label: "GAF Timberline HDZ architectural shingles", price: 5400 },
-      { label: "Synthetic underlayment", price: 180 },
-      { label: "Ice & water shield", price: 255 },
-      { label: "Starter strip", price: 315 },
-      { label: "Hip & ridge cap", price: 370 },
-      { label: "Dump charge", price: 550 },
+      { label: "Remove", price: 1360 },
+      {
+        label: "Install GAF Timberline® HDZ (50 Year Architectural)",
+        price: 5400,
+      },
+      { label: "Install Synthetic Felt", price: 180 },
+      { label: "Install Ice & Water Shield", price: 255 },
+      { label: "Install Starter Strip", price: 315 },
+      { label: "Install Hip/Ridge Cap", price: 370 },
+      { label: "Dump Charge", price: 550 },
     ] as { label: string; price: number | null }[],
     /** Sum of line items — $8,430.00 */
     baseTotal: 8430,
     /** All off by default: customers start at the real base and watch the
      *  total climb as they flip upgrades themselves — that's the lesson. */
     upgrades: [
-      { label: "Premium drip edge", price: 180, defaultOn: false },
-      { label: "Ridge vent upgrade", price: 420, defaultOn: false },
-      { label: "Gutter replacement", price: 1850, defaultOn: false },
-      { label: "Leaf guard", price: 850, defaultOn: false },
+      { label: "Install Drip Edge", price: 180, defaultOn: false },
+      { label: "Install Ridge Vent", price: 420, defaultOn: false },
+      { label: "Gutter Replacement", price: 1850, defaultOn: false },
+      { label: "Leaf Guard", price: 850, defaultOn: false },
     ],
     totalLabel: "Your total — no hidden fees",
     disclaimer:
