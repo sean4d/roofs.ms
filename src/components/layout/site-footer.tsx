@@ -6,6 +6,7 @@ import { footerColumns, legalLinks } from "@/config/navigation";
 import { siteConfig } from "@/config/site";
 import { brandAssets } from "@/content/brand-assets";
 import { PhoneLink } from "@/components/shared/phone-link";
+import { SocialLinks } from "@/components/shared/social-links";
 
 /**
  * 5-column footer on a deep navy surface — the one intentionally dark
@@ -60,6 +61,8 @@ export function SiteFooter() {
           <p className="mt-6 text-xs leading-relaxed text-steel-300">
             GAF Certified Contractor · BBB Accredited · MSBOC Licensed
           </p>
+          {/* Social profiles (owner-supplied 2026-07-04) */}
+          <SocialLinks className="mt-5 flex items-center gap-1" />
         </div>
 
         {/* Link columns */}

@@ -58,6 +58,18 @@ export const siteConfig = {
     instantEstimate:
       "https://app.roofr.com/instant-estimator/70b6fe06-8fb3-43ee-83d5-c27f43145413/SoutheastRoofing",
   },
+  /**
+   * Social profiles (owner-supplied 2026-07-04) — shown in the header top
+   * bar and included in schema sameAs. Nextdoor URL stripped of share
+   * tracking params.
+   */
+  socials: {
+    facebook: "https://www.facebook.com/southeastroofing.llc",
+    instagram: "https://www.instagram.com/southeastroofing.llc",
+    tiktok: "https://www.tiktok.com/@southeastroofing.llc",
+    nextdoor: "https://nextdoor.com/pages/southeast-roofing-hattiesburg-ms/",
+  },
+
   /** Hattiesburg, MS city center — refine when street address is confirmed */
   geo: { latitude: 31.3271, longitude: -89.2903 },
 
@@ -86,11 +98,15 @@ export const siteConfig = {
      */
     warranty: "Lifetime warranty",
   },
-  /** Schema sameAs — official profiles (GBP, BBB, GAF). [NEEDS: social media URLs] */
+  /** Schema sameAs — official profiles (GBP, BBB, GAF, socials — owner-supplied 2026-07-04) */
   socialProfiles: [
     "https://share.google/8jfoy7nN9HyddPKDb",
     "https://www.bbb.org/us/ms/hattiesburg/profile/roofing-contractors/southeast-roofing-llc-0523-235902892",
     "https://www.gaf.com/en-us/roofing-contractors/residential/usa/ms/hattiesburg/southeast-roofing-1147340",
+    "https://www.facebook.com/southeastroofing.llc",
+    "https://www.instagram.com/southeastroofing.llc",
+    "https://www.tiktok.com/@southeastroofing.llc",
+    "https://nextdoor.com/pages/southeast-roofing-hattiesburg-ms/",
   ] as string[],
 
   /**
