@@ -1,5 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import {
+  BadgeCheck,
   Banknote,
   Building2,
   CalendarCheck,
@@ -14,9 +15,11 @@ import {
   Landmark,
   Layers,
   MapPin,
+  Medal,
   PanelTop,
   School,
   ShieldCheck,
+  Star,
   Sun,
   Warehouse,
   Wrench,
@@ -46,22 +49,40 @@ import { stockPhotos } from "@/content/stock-photos";
 export const hero = {
   locationLine: "Hattiesburg, MS · serving all of South Mississippi",
   /**
-   * Owner rebalance 2026-07-04: brand-neutral headline — residential and
-   * commercial are presented evenly; never look residential-only.
+   * Phase 4 (owner directive 2026-07-04): trust-forward headline that
+   * stays factual and brand-neutral across both divisions.
    */
-  headline: { lead: "Roofing done", accent: "right.", tail: "" },
+  headline: {
+    lead: "South Mississippi's",
+    accent: "trusted",
+    tail: "roofing contractor",
+  },
   /**
-   * Mobile-first copy (owner directive 2026-07-04 refinement): short
-   * sentences, no long dashes that wrap awkwardly on phones.
+   * Mobile-first copy: short sentences, no long dashes that wrap awkwardly
+   * on phones. Architectural shingle leads (product positioning §13).
    */
   subhead:
-    "Premium residential and commercial roofing across South Mississippi. GAF-certified shingle systems, metal roofing, storm restoration, and real help with insurance claims.",
+    "Architectural shingle roofs are our specialty, installed to GAF spec and backed by a lifetime workmanship warranty. Storm restoration, metal systems, and commercial roofing too.",
   /** Full-bleed hero background (2400px licensed stock, dark overlay) */
   photo: stockPhotos.heroHome,
   /** Descriptive only — stock imagery is never presented as our project */
   photoBadge: "Architectural asphalt shingle roofing",
-  credentialLine: "GAF Certified Contractor · BBB Accredited · MSBOC Licensed",
 } as const;
+
+/**
+ * Above-the-fold hero trust bar (Phase 4 §1). Every item is an
+ * owner-confirmed fact (siteConfig.trustFacts, 2026-07-04) — wording stays
+ * in sync with that single source.
+ */
+export const heroTrustBar = [
+  { icon: Star, label: "5-Star Google Rating" },
+  { icon: ShieldCheck, label: "GAF Certified Contractor" },
+  { icon: BadgeCheck, label: "BBB Accredited · A Rating" },
+  { icon: Landmark, label: "Mississippi Licensed" },
+  { icon: FileCheck, label: "Fully Insured & Bonded" },
+  { icon: Banknote, label: "$0 Down Financing" },
+  { icon: Medal, label: "Lifetime Workmanship Warranty" },
+] as const;
 
 /* ------------------------------------------------------------------ */
 /* 2. Trust bar — confirmed credentials only, no invented stats        */
@@ -85,14 +106,14 @@ export const trustItems: TrustItem[] = [
     detail: "Our primary manufacturer certification",
   },
   {
-    icon: Landmark,
-    label: "MSBOC Licensed",
-    detail: "Mississippi State Board of Contractors",
+    icon: Medal,
+    label: "Lifetime Workmanship Warranty",
+    detail: "We stand behind every roof we install",
   },
   {
     icon: Handshake,
-    label: "BBB Accredited",
-    detail: "Accredited business standing",
+    label: "BBB Accredited · A Rating",
+    detail: "Verified Better Business Bureau standing",
   },
   {
     icon: FileCheck,
@@ -362,6 +383,11 @@ export const whyUs = {
       text: "Certified installation of GAF systems, plus Owens Corning shingle products — always to manufacturer specification.",
     },
     {
+      icon: Medal,
+      title: "Lifetime workmanship warranty",
+      text: "We stand behind our installation for the life of your roof.",
+    },
+    {
       icon: FileCheck,
       title: "Insurance claim experience",
       text: "Thorough documentation and adjuster coordination when storms hit.",
@@ -375,6 +401,70 @@ export const whyUs = {
 } as const;
 
 /* ------------------------------------------------------------------ */
+/* 8b. Roofing process — from first call to final walkthrough          */
+/* ------------------------------------------------------------------ */
+
+export const processSection = {
+  eyebrow: "How it works",
+  title: "A process you can see coming",
+  description:
+    "No mystery, no pressure. Every project follows the same five clear steps.",
+  steps: [
+    {
+      icon: CalendarCheck,
+      title: "Free inspection",
+      text: "We look at the whole roof system and document what we find with photos.",
+    },
+    {
+      icon: FileCheck,
+      title: "Straight recommendation",
+      text: "Repair or replace, in writing, with a clear price. No upselling.",
+    },
+    {
+      icon: ClipboardCheck,
+      title: "Insurance help, if it applies",
+      text: "Storm damage? We provide the documentation and can meet your adjuster.",
+    },
+    {
+      icon: Wrench,
+      title: "Build day",
+      text: "Most residential roofs are completed in one to two days, site left clean.",
+    },
+    {
+      icon: Medal,
+      title: "Walkthrough & warranty",
+      text: "You walk the finished roof with us — backed by our lifetime workmanship warranty.",
+    },
+  ],
+} as const;
+
+/* ------------------------------------------------------------------ */
+/* 8c. Manufacturer partnerships — factual wording only (Phase 4 §12)  */
+/* ------------------------------------------------------------------ */
+
+export const manufacturerSection = {
+  eyebrow: "Manufacturer partnerships",
+  title: "Certified on GAF. Experienced across brands.",
+  items: [
+    {
+      name: "GAF",
+      claim: "Certified Contractor",
+      text: "North America's largest shingle manufacturer — and our primary, certified system. Verify our certification on gaf.com.",
+      href: siteConfig.links.gafProfile,
+      cta: "Verify on gaf.com",
+    },
+    {
+      name: "Owens Corning",
+      /** Product installer ONLY — never "Preferred/Platinum Contractor" */
+      claim: "Product installer",
+      text: "We install Owens Corning shingle products when their style, color, or availability fits your project best.",
+      href: null,
+      cta: null,
+    },
+  ],
+} as const;
+
+/* ------------------------------------------------------------------ */
 /* 9. Financing — no invented rates or terms                           */
 /* ------------------------------------------------------------------ */
 
@@ -382,7 +472,7 @@ export const financingSection = {
   eyebrow: "Financing",
   title: "A new roof, on a budget that works",
   description:
-    "A roof rarely fails at a convenient time. Financing through our partner GoodLeap keeps the project moving without draining your savings.",
+    "A roof rarely fails at a convenient time. Financing through our partner GoodLeap keeps the project moving, with $0 down options available.",
   icon: Banknote,
   /** Simple, trustworthy framing — no invented rates or terms */
   points: [
@@ -449,7 +539,7 @@ export const reviewsSection = {
     {
       key: "google",
       title: "Google Reviews",
-      subtitle: "Read real customer reviews",
+      subtitle: "5-star rated by our customers",
       href: siteConfig.links.googleBusiness,
       cta: "View our profile",
     },
@@ -463,7 +553,7 @@ export const reviewsSection = {
     {
       key: "bbb",
       title: "BBB Accredited",
-      subtitle: "Better Business Bureau standing",
+      subtitle: "A rating with the Better Business Bureau",
       href: siteConfig.links.bbbProfile,
       cta: "Verify on bbb.org",
     },
@@ -526,7 +616,7 @@ export const homeFaqs: HomeFaq[] = [
 export const finalCta = {
   title: "Ready for a roof you don't have to think about?",
   description:
-    "Schedule a free inspection, or get an instant estimate on your roof right now.",
+    "Schedule a free inspection or get an instant estimate right now. $0 down financing available through GoodLeap.",
   primary: { label: "Schedule Free Inspection", href: "/free-inspection" },
   /** Roofr instant estimator (owner-supplied 2026-07-04) — external */
   estimate: {

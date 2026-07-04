@@ -67,6 +67,20 @@ export const siteConfig = {
   license: null as string | null,
   /** [NEEDS: real founding year] */
   foundingYear: null as number | null,
+
+  /**
+   * Trust facts (owner-confirmed 2026-07-04, Phase 4 directive). These are
+   * the owner's stated, factual credentials — keep wording exact and update
+   * here first if any changes.
+   */
+  trustFacts: {
+    googleRating: "5-star Google rating",
+    bbbRating: "BBB Accredited — A rating",
+    licensed: "Mississippi licensed",
+    insured: "Fully insured & bonded",
+    financing: "$0 down financing available",
+    warranty: "Lifetime workmanship warranty",
+  },
   /** Schema sameAs — official profiles (GBP, BBB, GAF). [NEEDS: social media URLs] */
   socialProfiles: [
     "https://share.google/8jfoy7nN9HyddPKDb",
@@ -85,27 +99,41 @@ export const siteConfig = {
    * content depth (PRD §5); `hub` drives display prominence.
    */
   serviceArea: [
-    { city: "Hattiesburg", tier: 1, hub: true },
-    { city: "Gulfport", tier: 1, hub: true },
-    { city: "Biloxi", tier: 1, hub: true },
-    { city: "Laurel", tier: 1, hub: true },
-    { city: "Petal", tier: 1, hub: true },
-    { city: "Picayune", tier: 2, hub: true },
-    { city: "Brookhaven", tier: 2, hub: true },
-    { city: "McComb", tier: 2, hub: true },
+    { city: "Hattiesburg", slug: "hattiesburg", tier: 1, hub: true },
+    { city: "Gulfport", slug: "gulfport", tier: 1, hub: true },
+    { city: "Biloxi", slug: "biloxi", tier: 1, hub: true },
+    { city: "Laurel", slug: "laurel", tier: 1, hub: true },
+    { city: "Petal", slug: "petal", tier: 1, hub: true },
+    { city: "Picayune", slug: "picayune", tier: 2, hub: true },
+    { city: "Brookhaven", slug: "brookhaven", tier: 2, hub: true },
+    { city: "McComb", slug: "mccomb", tier: 2, hub: true },
     // Pine Belt communities around Hattiesburg
-    { city: "Purvis", tier: 2, hub: false },
-    { city: "Sumrall", tier: 2, hub: false },
-    { city: "Seminary", tier: 2, hub: false },
-    { city: "Ellisville", tier: 2, hub: false },
-    { city: "Richton", tier: 2, hub: false },
-    { city: "Columbia", tier: 2, hub: false },
+    { city: "Purvis", slug: "purvis", tier: 2, hub: false },
+    { city: "Sumrall", slug: "sumrall", tier: 2, hub: false },
+    { city: "Seminary", slug: "seminary", tier: 2, hub: false },
+    { city: "Collins", slug: "collins", tier: 2, hub: false },
+    { city: "Ellisville", slug: "ellisville", tier: 2, hub: false },
+    { city: "Richton", slug: "richton", tier: 2, hub: false },
+    { city: "Columbia", slug: "columbia", tier: 2, hub: false },
     // South toward the Coast
-    { city: "Poplarville", tier: 2, hub: false },
-    { city: "Diamondhead", tier: 2, hub: false },
+    { city: "Poplarville", slug: "poplarville", tier: 2, hub: false },
+    { city: "Wiggins", slug: "wiggins", tier: 2, hub: false },
+    { city: "Lucedale", slug: "lucedale", tier: 2, hub: false },
+    { city: "Kiln", slug: "kiln", tier: 2, hub: false },
+    { city: "McHenry", slug: "mchenry", tier: 2, hub: false },
+    { city: "Saucier", slug: "saucier", tier: 2, hub: false },
+    { city: "Diamondhead", slug: "diamondhead", tier: 2, hub: false },
+    // Gulf Coast
+    { city: "Bay St. Louis", slug: "bay-st-louis", tier: 2, hub: false },
+    { city: "Pass Christian", slug: "pass-christian", tier: 2, hub: false },
+    { city: "Long Beach", slug: "long-beach", tier: 2, hub: false },
+    { city: "D'Iberville", slug: "d-iberville", tier: 2, hub: false },
+    { city: "Ocean Springs", slug: "ocean-springs", tier: 2, hub: false },
+    { city: "Moss Point", slug: "moss-point", tier: 2, hub: false },
+    { city: "Pascagoula", slug: "pascagoula", tier: 2, hub: false },
     // Larger metros at the edge of the radius
-    { city: "Jackson", tier: 2, hub: false },
-    { city: "Meridian", tier: 2, hub: false },
+    { city: "Jackson", slug: "jackson", tier: 2, hub: false },
+    { city: "Meridian", slug: "meridian", tier: 2, hub: false },
   ],
 
   /** Site-wide feature flags (storm banner etc. — later mirrored in Sanity siteFlags) */

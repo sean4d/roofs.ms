@@ -5,12 +5,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { Phone } from "lucide-react";
+
+import { siteConfig } from "@/config/site";
 import { mainNav, primaryCta } from "@/config/navigation";
 import { brandAssets } from "@/content/brand-assets";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { MobileNav } from "@/components/layout/mobile-nav";
-import { PhoneLink } from "@/components/shared/phone-link";
 
 /**
  * Sticky site header (PRD §6 v3 — light, premium). White surface that gains
@@ -93,8 +95,31 @@ export function SiteHeader() {
           </ul>
         </nav>
 
-        <div className="flex items-center gap-4">
-          <PhoneLink className="hidden text-sm text-primary 2xl:inline-flex" />
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          {/*
+            Call-first conversion (Phase 4 §6): the number is always one tap
+            away — full Call Now button on desktop, icon button on mobile.
+          */}
+          {siteConfig.phone.tel && (
+            <>
+              <Button
+                variant="outline"
+                render={<a href={`tel:${siteConfig.phone.tel}`} />}
+                nativeButton={false}
+                className="hidden lg:inline-flex"
+              >
+                <Phone className="size-4" aria-hidden="true" />
+                {siteConfig.phone.display}
+              </Button>
+              <a
+                href={`tel:${siteConfig.phone.tel}`}
+                aria-label={`Call Southeast Roofing at ${siteConfig.phone.display}`}
+                className="flex size-10 items-center justify-center rounded-full bg-navy-900 text-white transition-colors hover:bg-navy-700 lg:hidden"
+              >
+                <Phone className="size-4.5" aria-hidden="true" />
+              </a>
+            </>
+          )}
           <Button
             render={<Link href={primaryCta.href} />}
             nativeButton={false}
