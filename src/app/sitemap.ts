@@ -12,6 +12,9 @@ import { absoluteUrl } from "@/lib/seo";
 const launchedStaticRoutes = [
   "/",
   "/residential",
+  "/commercial",
+  "/commercial/industries",
+  "/commercial/request-consultation",
   "/metal-roofing",
   "/storm-damage",
   "/financing",

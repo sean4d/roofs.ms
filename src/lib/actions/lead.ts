@@ -46,6 +46,12 @@ export async function submitLead(
     preferredTime: text(formData, "preferredTime", 100) || undefined,
     message: text(formData, "message", 2000) || undefined,
     page: text(formData, "page", 200) || undefined,
+    company: text(formData, "company", 150) || undefined,
+    role: text(formData, "role", 100) || undefined,
+    propertyType: text(formData, "propertyType", 100) || undefined,
+    roofType: text(formData, "roofType", 100) || undefined,
+    squareFootage: text(formData, "squareFootage", 50) || undefined,
+    timeline: text(formData, "timeline", 100) || undefined,
   };
 
   const errors: Record<string, string> = {};

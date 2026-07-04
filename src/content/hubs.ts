@@ -396,3 +396,132 @@ export const financingHub = {
     },
   ] satisfies FaqEntry[],
 };
+
+/* ------------------------------------------------------------------ */
+/* Commercial hub (/commercial) — the "commercial homepage" (§4.2)     */
+/* ------------------------------------------------------------------ */
+
+export const commercialHub = {
+  metaTitle: "Commercial Roofing in Hattiesburg & South Mississippi",
+  metaDescription:
+    "Commercial roofing across South Mississippi: TPO, EPDM, PVC, modified bitumen, coatings, metal systems, and planned maintenance — engineered proposals, operations-first scheduling.",
+  hero: {
+    eyebrow: "Commercial division",
+    headline: "Protect your property, your tenants, and your budget",
+    subhead:
+      "Flat, metal, and everything between — engineered proposals, installation phased around your operations, and one accountable local contractor across your whole portfolio.",
+    photo: stockPhotos.commercialAerial,
+    photoBadge: "Commercial low-slope roofing",
+  },
+  /** Publishable proof only — no invented bonding limits or safety stats */
+  trustStrip: [
+    "MS License #R22245",
+    "Fully insured & bonded",
+    "GAF Certified Contractor",
+    "BBB Accredited · A Rating",
+  ],
+  services: [
+    {
+      icon: Layers,
+      label: "TPO Roofing",
+      href: "/commercial/tpo",
+      description: "The reflective single-ply workhorse of low-slope roofing.",
+    },
+    {
+      icon: Layers,
+      label: "EPDM Roofing",
+      href: "/commercial/epdm",
+      description: "Rubber membrane with a 50-year track record.",
+    },
+    {
+      icon: Layers,
+      label: "PVC Roofing",
+      href: "/commercial/pvc",
+      description: "Grease and chemical resistance for demanding roofs.",
+    },
+    {
+      icon: Layers,
+      label: "Modified Bitumen",
+      href: "/commercial/modified-bitumen",
+      description: "Multi-ply redundancy for high-traffic roofs.",
+    },
+    {
+      icon: Droplets,
+      label: "Roof Coatings",
+      href: "/commercial/roof-coatings",
+      description: "Restore a sound roof for a fraction of replacement.",
+    },
+    {
+      icon: PanelTop,
+      label: "Metal Roofing",
+      href: "/commercial/metal-roofing",
+      description: "Standing seam, R-panel, PBR, and structural systems.",
+    },
+    {
+      icon: Wrench,
+      label: "Roof Repair",
+      href: "/commercial/roof-repair",
+      description: "Leaks traced, fixed, and documented — fast.",
+    },
+    {
+      icon: Home,
+      label: "Roof Replacement",
+      href: "/commercial/roof-replacement",
+      description: "Capital projects run like capital projects.",
+    },
+    {
+      icon: Fan,
+      label: "Roof Maintenance",
+      href: "/commercial/roof-maintenance",
+      description: "Scheduled care that prevents five-figure surprises.",
+    },
+  ] satisfies HubServiceCard[],
+  process: {
+    title: "How commercial projects run",
+    steps: [
+      {
+        title: "Assessment & moisture data",
+        text: "Cores and condition mapping establish what's really up there before anything is proposed.",
+      },
+      {
+        title: "Engineered, itemized proposal",
+        text: "System options with specs and line-item pricing — written for boards, owners, and procurement.",
+      },
+      {
+        title: "Scheduling around operations",
+        text: "Staging, phasing, and noisy work planned with your team so the building keeps working.",
+      },
+      {
+        title: "Execution & documentation",
+        text: "Daily watertight closes, as-built records, and warranty registration at closeout.",
+      },
+      {
+        title: "Maintenance partnership",
+        text: "Scheduled inspections and reports that protect the investment for its whole life.",
+      },
+    ],
+  },
+  faqs: [
+    {
+      question: "Do you handle small commercial repairs or only big projects?",
+      answer:
+        "Both. Repairs and maintenance are how most commercial relationships start with us — the reroof conversation comes when the roof actually needs it, with the condition history to prove it.",
+    },
+    {
+      question: "Which flat-roof system is best?",
+      answer:
+        "The one that matches your building's exposure, drainage, traffic, and horizon. We install TPO, EPDM, PVC, modified bitumen, coatings, and metal — so the recommendation follows the assessment, not our inventory.",
+    },
+    {
+      question:
+        "Can you work with our board's or municipality's approval process?",
+      answer:
+        "Yes — itemized, spec-grade proposals designed for committee review and comparable bidding are standard practice for us.",
+    },
+    {
+      question: "Do you offer maintenance contracts?",
+      answer:
+        "Yes — scheduled programs with photo-documented visits, small fixes handled on the spot, and per-building condition tracking across portfolios.",
+    },
+  ] satisfies FaqEntry[],
+};

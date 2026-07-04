@@ -16,10 +16,21 @@ import { Button } from "@/components/ui/button";
 export function ServiceHero({
   hero,
   breadcrumbs,
+  audience = "residential",
 }: {
   hero: ServiceContent["hero"];
   breadcrumbs: BreadcrumbItem[];
+  /** Commercial pages swap the CTA to the consultation flow (PRD §4.2). */
+  audience?: "residential" | "commercial";
 }) {
+  const cta =
+    audience === "commercial"
+      ? {
+          label: "Request a Consultation",
+          href: "/commercial/request-consultation",
+        }
+      : { label: "Schedule Free Inspection", href: "/free-inspection" };
+
   return (
     <section className="border-b border-border bg-secondary">
       <div className="container-site grid items-center gap-10 py-14 sm:py-16 lg:grid-cols-2 lg:gap-14 lg:py-20">
@@ -38,10 +49,10 @@ export function ServiceHero({
             <Button
               size="lg"
               className="text-base"
-              render={<Link href="/free-inspection" />}
+              render={<Link href={cta.href} />}
               nativeButton={false}
             >
-              Schedule Free Inspection
+              {cta.label}
             </Button>
             <PhoneLink className="text-base text-navy-900" />
           </div>

@@ -3,6 +3,12 @@ import {
   residentialMetalChildren,
   residentialMetalHub,
 } from "@/content/services/residential-metal";
+import { commercialServices } from "@/content/services/commercial";
+import {
+  commercialMetalChildren,
+  commercialMetalHub,
+} from "@/content/services/commercial-metal";
+import { industries } from "@/content/services/industries";
 import { emergencyRoofing, insuranceClaims } from "@/content/services/storm";
 import type { ServiceContent } from "@/content/services/types";
 
@@ -16,6 +22,10 @@ export const allServices: ServiceContent[] = [
   ...residentialServices,
   residentialMetalHub,
   ...residentialMetalChildren,
+  ...commercialServices,
+  commercialMetalHub,
+  ...commercialMetalChildren,
+  ...industries,
   emergencyRoofing,
   insuranceClaims,
 ];
@@ -41,3 +51,17 @@ export {
   residentialMetalHub,
   residentialServices,
 };
+export {
+  commercialServices,
+  getCommercialService,
+} from "@/content/services/commercial";
+export {
+  commercialMetalChildren,
+  commercialMetalHub,
+  getCommercialMetalChild,
+} from "@/content/services/commercial-metal";
+export {
+  getIndustry,
+  industries,
+  industryCards,
+} from "@/content/services/industries";

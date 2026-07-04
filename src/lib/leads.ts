@@ -16,7 +16,7 @@ import { siteConfig } from "@/config/site";
  */
 
 export interface Lead {
-  /** "free-inspection" (short form) or "contact" (full form) */
+  /** "free-inspection", "contact", or "commercial-consultation" */
   source: string;
   name: string;
   phone: string;
@@ -30,6 +30,13 @@ export interface Lead {
   message?: string;
   /** Page path the lead came from, for attribution */
   page?: string;
+  /* Commercial consultation fields (PRD §4.2 — "commercial" tagging) */
+  company?: string;
+  role?: string;
+  propertyType?: string;
+  roofType?: string;
+  squareFootage?: string;
+  timeline?: string;
 }
 
 interface DeliveryResult {
@@ -46,7 +53,9 @@ async function sendWebhook(lead: Lead): Promise<boolean> {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       ...lead,
-      company: siteConfig.name,
+      // Note: keep metadata keys distinct from Lead fields — lead.company
+      // is the customer's organization and must never be clobbered.
+      brand: siteConfig.name,
       submittedAt: new Date().toISOString(),
     }),
   });
@@ -64,9 +73,15 @@ async function sendEmail(lead: Lead): Promise<boolean> {
     `Name: ${lead.name}`,
     `Phone: ${lead.phone}`,
     lead.email && `Email: ${lead.email}`,
+    lead.company && `Company: ${lead.company}`,
+    lead.role && `Role: ${lead.role}`,
+    lead.propertyType && `Property type: ${lead.propertyType}`,
     lead.city && `City/ZIP: ${lead.city}`,
     lead.address && `Address: ${lead.address}`,
     lead.service && `Service: ${lead.service}`,
+    lead.roofType && `Roof type: ${lead.roofType}`,
+    lead.squareFootage && `Approx. square footage: ${lead.squareFootage}`,
+    lead.timeline && `Timeline: ${lead.timeline}`,
     lead.storm !== undefined &&
       `Storm damage / insurance: ${lead.storm ? "YES" : "no"}`,
     lead.preferredTime && `Preferred time: ${lead.preferredTime}`,
