@@ -1,4 +1,5 @@
-import { residentialServices } from "@/content/services/residential";
+import { residentialServices as residentialCore } from "@/content/services/residential";
+import { exteriorServices } from "@/content/services/residential-exterior";
 import {
   residentialMetalChildren,
   residentialMetalHub,
@@ -17,6 +18,12 @@ import type { ServiceContent } from "@/content/services/types";
  * and call generateStaticParams from the exported lists, so adding a
  * service = one content entry, no new route code.
  */
+
+/** Core roofing services + exterior expansion, all under /residential/[service]. */
+export const residentialServices: ServiceContent[] = [
+  ...residentialCore,
+  ...exteriorServices,
+];
 
 export const allServices: ServiceContent[] = [
   ...residentialServices,
@@ -49,7 +56,6 @@ export {
   insuranceClaims,
   residentialMetalChildren,
   residentialMetalHub,
-  residentialServices,
 };
 export {
   commercialServices,

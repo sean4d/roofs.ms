@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Check, Mail } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 
 import { proposalSection } from "@/content/homepage";
 import { Section } from "@/components/shared/section";
@@ -7,17 +7,15 @@ import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/motion/reveal";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { InteractiveProposal } from "@/components/home/interactive-proposal";
 
 /**
  * Digital proposal section (owner directive 2026-07-04): the retail
- * experience, written for a discerning buyer — itemized transparency,
- * toggleable upgrades, no hidden fees. The proposal mock shows component
- * names and toggle states only; no invented dollar figures (PRD §0.2).
+ * experience for a discerning buyer — itemized transparency, toggleable
+ * upgrades, no hidden fees — now with a live interactive example the
+ * customer can play with (figures are owner-supplied example pricing).
  */
 export function DigitalProposal() {
-  const { mock } = proposalSection;
-
   return (
     <Section>
       <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
@@ -57,72 +55,8 @@ export function DigitalProposal() {
           </Reveal>
         </div>
 
-        {/* Illustrative proposal card — component names, no invented prices */}
         <Reveal delay={0.1}>
-          <div
-            aria-hidden="true"
-            className="shadow-premium rounded-3xl border border-border bg-white p-7 sm:p-8"
-          >
-            <div className="flex items-center justify-between border-b border-border pb-5">
-              <div>
-                <p className="font-display text-lg font-bold text-navy-900">
-                  {mock.heading}
-                </p>
-                <p className="mt-0.5 text-xs text-slate-500">
-                  {mock.subheading}
-                </p>
-              </div>
-              <span className="flex size-10 items-center justify-center rounded-full bg-steel-100">
-                <Mail className="size-4.5 text-navy-900" />
-              </span>
-            </div>
-
-            <ul className="divide-y divide-border/70">
-              {mock.included.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-center justify-between py-3 text-sm"
-                >
-                  <span className="text-slate-600">{item}</span>
-                  <Check className="size-4 text-success-600" />
-                </li>
-              ))}
-              {mock.toggles.map((toggle) => (
-                <li
-                  key={toggle.label}
-                  className="flex items-center justify-between py-3 text-sm"
-                >
-                  <span className="font-medium text-navy-900">
-                    {toggle.label}
-                    <span className="ml-2 rounded-full bg-steel-100 px-2 py-0.5 text-[0.65rem] font-semibold tracking-wide text-steel-500 uppercase">
-                      optional
-                    </span>
-                  </span>
-                  {/* Toggle pill */}
-                  <span
-                    className={cn(
-                      "flex h-5 w-9 items-center rounded-full p-0.5 transition-colors",
-                      toggle.on ? "bg-navy-900" : "bg-border",
-                    )}
-                  >
-                    <span
-                      className={cn(
-                        "size-4 rounded-full bg-white shadow transition-transform",
-                        toggle.on && "translate-x-4",
-                      )}
-                    />
-                  </span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-2 flex items-center justify-between rounded-xl bg-secondary px-4 py-3.5">
-              <span className="text-sm font-semibold text-navy-900">
-                {mock.totalLine}
-              </span>
-              <Check className="size-4 text-success-600" />
-            </div>
-          </div>
+          <InteractiveProposal />
         </Reveal>
       </div>
     </Section>

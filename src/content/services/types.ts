@@ -111,6 +111,9 @@ export interface ServiceContent {
     photos: ServicePhoto[];
   };
 
+  /** Visual education: render the roof-system anatomy diagram. */
+  anatomy?: boolean;
+
   /** §4.1.8 — service-specific FAQ (also emitted as FAQPage schema). */
   faqs: FaqEntry[];
 

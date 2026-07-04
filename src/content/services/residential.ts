@@ -148,6 +148,7 @@ export const residentialServices: ServiceContent[] = [
         "Every photo is a genuine Southeast Roofing project — real homes from Hattiesburg to the Gulf Coast.",
       photos: replacementGallery.map(({ src, alt }) => ({ src, alt })),
     },
+    anatomy: true,
     faqs: [
       {
         question: "How long does an asphalt shingle roof last in Mississippi?",
@@ -304,6 +305,7 @@ export const residentialServices: ServiceContent[] = [
         )
         .map(({ src, alt }) => ({ src, alt })),
     },
+    anatomy: true,
     faqs: [
       {
         question: "How long does a roof replacement take?",
@@ -500,15 +502,15 @@ export const residentialServices: ServiceContent[] = [
   {
     slug: "gutters",
     path: "/residential/gutters",
-    name: "Gutter Installation & Repair",
-    metaTitle: "Gutter Installation & Repair in Hattiesburg, MS",
+    name: "Seamless Gutters",
+    metaTitle: "Seamless Gutter Installation & Repair in Hattiesburg, MS",
     metaDescription:
-      "Gutters and downspouts sized for South Mississippi rainfall — installation, replacement, and repair alongside your roof, from Southeast Roofing in Hattiesburg.",
+      "Seamless gutters custom-formed on site and sized for South Mississippi rainfall — installation, replacement, and repair from Southeast Roofing in Hattiesburg.",
     hero: {
       eyebrow: "Residential roofing",
-      headline: "Gutters built for Gulf-region rain",
+      headline: "Seamless gutters, built for Gulf-region rain",
       subhead:
-        "South Mississippi gets some of the heaviest rainfall in the country, and your gutters are what stand between that water and your fascia, siding, and foundation. We install, replace, and repair them — properly sized and properly pitched.",
+        "Custom-formed on site in continuous runs — no seams to split, no joints to drip. South Mississippi gets some of the heaviest rainfall in the country, and seamless gutters are what stand between that water and your fascia, siding, and foundation.",
       photo: stockPhotos.residentialHome,
       photoBadge: "Residential exterior",
     },

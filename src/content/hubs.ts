@@ -6,6 +6,7 @@ import {
   Fan,
   Home,
   Layers,
+  Leaf,
   PanelTop,
   TreePine,
   Wind,
@@ -76,10 +77,34 @@ export const residentialHub = {
     },
     {
       icon: Droplets,
-      label: "Gutters",
+      label: "Seamless Gutters",
       href: "/residential/gutters",
+      description: "Custom-formed on site, sized for Gulf-region rainfall.",
+    },
+    {
+      icon: Leaf,
+      label: "Leaf Guard Systems",
+      href: "/residential/leaf-guard",
+      description: "Stop pine straw clogs for good — and retire the ladder.",
+    },
+    {
+      icon: Home,
+      label: "Vinyl Siding",
+      href: "/residential/vinyl-siding",
+      description: "The low-maintenance exterior — no painting, no rot.",
+    },
+    {
+      icon: Layers,
+      label: "Fiber Cement Siding",
+      href: "/residential/fiber-cement-siding",
       description:
-        "Sized for Gulf-region rainfall and integrated with your roof edge.",
+        "The premium, storm-tough exterior with a painted-wood look.",
+    },
+    {
+      icon: PanelTop,
+      label: "Fascia & Soffit",
+      href: "/residential/fascia",
+      description: "The roofline boards and vented eaves, repaired and capped.",
     },
     {
       icon: Fan,

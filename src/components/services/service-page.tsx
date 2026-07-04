@@ -1,5 +1,6 @@
 import type { BreadcrumbItem } from "@/lib/schema";
 import type { ServiceContent } from "@/content/services/types";
+import { serviceImageFor } from "@/content/service-images";
 import { ServiceHero } from "@/components/services/service-hero";
 import {
   RelatedServices,
@@ -12,6 +13,7 @@ import {
   ServiceSigns,
 } from "@/components/services/service-sections";
 import { HelpPanel } from "@/components/services/help-panel";
+import { RoofAnatomy } from "@/components/services/roof-anatomy";
 import { ServiceFaq } from "@/components/services/service-faq";
 import { CommercialCta } from "@/components/services/commercial-cta";
 import { FinalCta } from "@/components/home/final-cta";
@@ -36,16 +38,19 @@ export function ServicePage({
 }) {
   const commercial = audience === "commercial";
 
+  // Visual-first: heroes without dedicated photography automatically pick
+  // up the image registry slot for their route the moment one is filled.
+  const hero = service.hero.photo
+    ? service.hero
+    : { ...service.hero, photo: serviceImageFor(service.path) ?? undefined };
+
   return (
     <>
-      <ServiceHero
-        hero={service.hero}
-        breadcrumbs={breadcrumbs}
-        audience={audience}
-      />
+      <ServiceHero hero={hero} breadcrumbs={breadcrumbs} audience={audience} />
       <ServiceIntro intro={service.intro} />
       {service.signs && <ServiceSigns signs={service.signs} />}
       <ServiceApproach approach={service.approach} />
+      {service.anatomy && <RoofAnatomy />}
       {service.materials && <ServiceMaterials materials={service.materials} />}
       {service.checklist && <ServiceChecklist checklist={service.checklist} />}
       {service.gallery && <ServiceGallery gallery={service.gallery} />}

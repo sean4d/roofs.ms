@@ -476,22 +476,35 @@ export const proposalSection = {
       text: "It's in your inbox — study it, share it with whoever you trust, and approve it whenever you're ready.",
     },
   ],
-  /** Illustrative proposal mock — component names only, no invented prices */
-  mock: {
-    heading: "Your roofing proposal",
+  /**
+   * Interactive EXAMPLE proposal (owner-supplied example figures,
+   * 2026-07-04). Clearly labeled illustrative — real proposals are priced
+   * from the actual roof. baseTotal = sum of priced line items.
+   */
+  example: {
+    heading: "Example roofing proposal",
     subheading: "Itemized · sent to your email",
-    included: [
-      "Architectural shingle system",
-      "Synthetic underlayment",
-      "Ice & water protection",
-      "Flashing & starter strips",
-      "Tear-off, haul-off & cleanup",
+    lineItems: [
+      { label: "Roof replacement", price: 7120 },
+      { label: "Synthetic underlayment", price: null },
+      { label: "Starter shingles", price: null },
+      { label: "Architectural shingles", price: null },
+      { label: "Ridge cap", price: null },
+      { label: "Permit", price: 150 },
+      { label: "Cleanup", price: null },
+      { label: "Dumpster", price: 375 },
+    ] as { label: string; price: number | null }[],
+    baseTotal: 7645,
+    upgrades: [
+      { label: "Premium drip edge", price: 180, defaultOn: true },
+      { label: "Ridge vent upgrade", price: 420, defaultOn: true },
+      { label: "Premium synthetic underlayment", price: 350, defaultOn: false },
+      { label: "Gutter replacement", price: 1850, defaultOn: false },
+      { label: "Leaf guard", price: 850, defaultOn: false },
     ],
-    toggles: [
-      { label: "Ridge vent upgrade", on: true },
-      { label: "Drip edge upgrade", on: true },
-    ],
-    totalLine: "Itemized total — no hidden fees",
+    totalLabel: "Your total — no hidden fees",
+    disclaimer:
+      "Example pricing for a typical project — your proposal is priced line by line from your actual roof.",
   },
 } as const;
 
