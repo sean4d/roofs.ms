@@ -10,7 +10,7 @@ import { TrustBar } from "@/components/home/trust-bar";
 import { DivisionSplit } from "@/components/home/division-split";
 import { ServicesOverview } from "@/components/home/services-overview";
 import { StormInsurance } from "@/components/home/storm-insurance";
-import { MetalSystems } from "@/components/home/metal-systems";
+import { RoofingSystems } from "@/components/home/roofing-systems";
 import { FeaturedProjects } from "@/components/home/featured-projects";
 import { WhyUs } from "@/components/home/why-us";
 import { FinancingStrip } from "@/components/home/financing-strip";
@@ -36,7 +36,7 @@ export default function HomePage() {
       <DivisionSplit />
       <ServicesOverview />
       <StormInsurance />
-      <MetalSystems />
+      <RoofingSystems />
       <FeaturedProjects />
       <WhyUs />
       <FinancingStrip />

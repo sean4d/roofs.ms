@@ -17,6 +17,13 @@ export const brandAssets = {
     navy: "/images/brand/southeast-roofing-logo-02.png",
     /** Navy artwork, trimmed of padding */
     navyTrimmed: "/images/brand/southeast-roofing-logo-navy-trimmed.png",
+    /**
+     * Roof mark only (cropped from the official navy artwork) — paired
+     * with an HTML wordmark in the header so the name stays readable at
+     * small sizes.
+     */
+    mark: "/images/brand/southeast-roofing-mark.png",
+    markAspect: { width: 479, height: 208 },
     /** White knockout derived from official artwork — dark backgrounds */
     light: "/images/brand/southeast-roofing-logo-white.png",
     /** Intrinsic aspect ratio of the trimmed marks (479x278) */

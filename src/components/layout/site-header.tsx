@@ -42,20 +42,31 @@ export function SiteHeader() {
           scrolled ? "h-16" : "h-20",
         )}
       >
-        {/* Official navy logo on light surface (PRD §6.6) */}
+        {/*
+          Brand lockup (owner refinement 2026-07-04): roof mark + readable
+          HTML wordmark so "Southeast Roofing" is prominent even on phones.
+        */}
         <Link
           href="/"
-          className="shrink-0"
+          className="flex shrink-0 items-center gap-2.5"
           aria-label="Southeast Roofing — home"
         >
           <Image
-            src={brandAssets.logo.navyTrimmed}
-            alt="Southeast Roofing"
-            width={brandAssets.logo.aspect.width}
-            height={brandAssets.logo.aspect.height}
-            className="h-11 w-auto"
+            src={brandAssets.logo.mark}
+            alt=""
+            width={brandAssets.logo.markAspect.width}
+            height={brandAssets.logo.markAspect.height}
+            className={cn(
+              "w-auto transition-all duration-300",
+              scrolled ? "h-9 sm:h-10" : "h-10 sm:h-12",
+            )}
             priority
           />
+          <span className="font-display text-lg leading-none font-bold tracking-tight text-navy-900 sm:text-xl">
+            Southeast
+            <br className="sm:hidden" />
+            <span className="sm:before:content-['_']">Roofing</span>
+          </span>
         </Link>
 
         {/* Desktop navigation */}

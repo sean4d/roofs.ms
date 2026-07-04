@@ -75,27 +75,37 @@ export const siteConfig = {
   ] as string[],
 
   /**
-   * Launch service area (PRD §5). Tiers drive content depth on city pages.
-   * Coverage is a full 2-hour radius around Hattiesburg (owner-confirmed
-   * 2026-07-03) — Jackson, Meridian, the Gulf Coast, and towns between.
+   * Launch service area (PRD §5) — Mississippi only, within roughly a
+   * 2-hour radius of Hattiesburg (owner-confirmed 2026-07-03).
+   *
+   * Ordering + hub flags follow the owner's 2026-07-04 refinement
+   * directive: regional hubs first in this exact order, then smaller
+   * communities in geographic order (Pine Belt outward to the Coast, then
+   * the larger metros at the radius edge). `tier` still drives city-page
+   * content depth (PRD §5); `hub` drives display prominence.
    */
   serviceArea: [
-    { city: "Hattiesburg", tier: 1 },
-    { city: "Petal", tier: 1 },
-    { city: "Laurel", tier: 1 },
-    { city: "Gulfport", tier: 1 },
-    { city: "Biloxi", tier: 1 },
-    { city: "Purvis", tier: 2 },
-    { city: "Sumrall", tier: 2 },
-    { city: "Columbia", tier: 2 },
-    { city: "Ellisville", tier: 2 },
-    { city: "Richton", tier: 2 },
-    { city: "Seminary", tier: 2 },
-    { city: "Poplarville", tier: 2 },
-    { city: "Picayune", tier: 2 },
-    { city: "Diamondhead", tier: 2 },
-    { city: "Jackson", tier: 2 },
-    { city: "Meridian", tier: 2 },
+    { city: "Hattiesburg", tier: 1, hub: true },
+    { city: "Gulfport", tier: 1, hub: true },
+    { city: "Biloxi", tier: 1, hub: true },
+    { city: "Laurel", tier: 1, hub: true },
+    { city: "Petal", tier: 1, hub: true },
+    { city: "Picayune", tier: 2, hub: true },
+    { city: "Brookhaven", tier: 2, hub: true },
+    { city: "McComb", tier: 2, hub: true },
+    // Pine Belt communities around Hattiesburg
+    { city: "Purvis", tier: 2, hub: false },
+    { city: "Sumrall", tier: 2, hub: false },
+    { city: "Seminary", tier: 2, hub: false },
+    { city: "Ellisville", tier: 2, hub: false },
+    { city: "Richton", tier: 2, hub: false },
+    { city: "Columbia", tier: 2, hub: false },
+    // South toward the Coast
+    { city: "Poplarville", tier: 2, hub: false },
+    { city: "Diamondhead", tier: 2, hub: false },
+    // Larger metros at the edge of the radius
+    { city: "Jackson", tier: 2, hub: false },
+    { city: "Meridian", tier: 2, hub: false },
   ],
 
   /** Site-wide feature flags (storm banner etc. — later mirrored in Sanity siteFlags) */

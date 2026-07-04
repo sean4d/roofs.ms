@@ -44,14 +44,19 @@ import { stockPhotos } from "@/content/stock-photos";
 /* ------------------------------------------------------------------ */
 
 export const hero = {
-  locationLine: "Hattiesburg, MS — serving a 2-hour radius across Mississippi",
+  locationLine: "Hattiesburg, MS · serving all of South Mississippi",
   /**
    * Owner rebalance 2026-07-04: brand-neutral headline — residential and
    * commercial are presented evenly; never look residential-only.
    */
   headline: { lead: "Roofing done", accent: "right.", tail: "" },
+  /**
+   * Mobile-first copy (owner directive 2026-07-04 refinement): short
+   * sentences, no long dashes that wrap awkwardly on phones.
+   */
   subhead:
-    "Southeast Roofing protects South Mississippi homes and businesses alike — GAF-certified asphalt shingle replacement, commercial roofing systems, storm restoration, and insurance claim help, from first inspection to final walkthrough.",
+    "Premium residential and commercial roofing across South Mississippi. GAF-certified shingle systems, metal roofing, storm restoration, and real help with insurance claims.",
+  /** Full-bleed hero background (2400px licensed stock, dark overlay) */
   photo: stockPhotos.heroHome,
   /** Descriptive only — stock imagery is never presented as our project */
   photoBadge: "Architectural asphalt shingle roofing",
@@ -91,7 +96,7 @@ export const trustItems: TrustItem[] = [
   },
   {
     icon: FileCheck,
-    label: "Fully Licensed & Insured",
+    label: "Fully Insured & Bonded",
     detail: "Your home and project are protected",
   },
 ];
@@ -254,25 +259,57 @@ export const stormSection = {
 /* 6. Metal systems — a material within BOTH divisions (PRD §4.3)      */
 /* ------------------------------------------------------------------ */
 
-export const metalSection = {
-  eyebrow: "Metal roofing systems",
-  title: "Metal, engineered for homes and businesses alike",
+/**
+ * Owner refinement 2026-07-04: metal is presented as one of two roofing
+ * systems with EQUAL prominence — never as a niche or separate division.
+ * Matched cards: Asphalt Shingle Roofing and Metal Roofing, each covering
+ * both divisions.
+ */
+export const systemsSection = {
+  eyebrow: "Roofing systems",
+  title: "Two proven systems. One standard of installation.",
   description:
-    "Metal isn't a separate trade for us — it's a roofing system we install across both divisions, matched to the structure it protects.",
-  residential: {
-    title: "Residential Metal Roofing",
-    href: "/residential/metal-roofing",
-    text: "Standing seam and exposed-fastener systems in 26 and 29 gauge — clean lines and long service life for your home.",
-    systems: ["Standing seam", "Exposed fastener", "26 gauge", "29 gauge"],
-  },
-  commercial: {
-    title: "Commercial Metal Roofing",
-    href: "/commercial/metal-roofing",
-    text: "Standing seam, R-panel, PBR panel, and structural metal for facilities, warehouses, and agricultural buildings.",
-    systems: ["Standing seam", "R-panel", "PBR panel", "Structural metal"],
-  },
+    "Every roof we build is either architectural shingle or metal, chosen for the structure and the budget. We install both at the same standard, for homes and businesses alike.",
+  systems: [
+    {
+      icon: Home,
+      title: "Asphalt Shingle Roofing",
+      text: "The region's most popular roof, and for good reason. Affordable, storm-capable, and beautiful when installed to spec. GAF systems are our certified specialty.",
+      chips: [
+        "GAF certified installs",
+        "Owens Corning products",
+        "Architectural shingles",
+        "Full-system replacement",
+      ],
+      links: [
+        {
+          label: "Shingle roofing for homes",
+          href: "/residential/asphalt-shingle-roofing",
+        },
+        { label: "Roof replacement", href: "/residential/roof-replacement" },
+      ],
+    },
+    {
+      icon: PanelTop,
+      title: "Metal Roofing",
+      text: "Decades of service life, serious wind performance, and clean modern lines. Standing seam and panel systems for homes, businesses, and everything between.",
+      chips: [
+        "Standing seam",
+        "Exposed fastener & R-panel",
+        "26 & 29 gauge steel",
+        "Residential & commercial",
+      ],
+      links: [
+        {
+          label: "Metal roofing for homes",
+          href: "/residential/metal-roofing",
+        },
+        { label: "Commercial metal", href: "/commercial/metal-roofing" },
+      ],
+    },
+  ],
   hubNote: {
-    label: "Not sure which fits? Start with our metal roofing overview",
+    label: "Comparing the two? Read our honest metal vs. shingle breakdown",
     href: "/metal-roofing",
   },
 } as const;
@@ -345,8 +382,23 @@ export const financingSection = {
   eyebrow: "Financing",
   title: "A new roof, on a budget that works",
   description:
-    "A roof is a major investment — and it rarely comes at a convenient time. Apply for financing through our partner GoodLeap, or ask us about options with your estimate.",
+    "A roof rarely fails at a convenient time. Financing through our partner GoodLeap keeps the project moving without draining your savings.",
   icon: Banknote,
+  /** Simple, trustworthy framing — no invented rates or terms */
+  points: [
+    {
+      title: "Apply online in minutes",
+      text: "A short application, right from your phone.",
+    },
+    {
+      title: "See your real terms",
+      text: "GoodLeap shows you the plans you qualify for, directly.",
+    },
+    {
+      title: "No obligation",
+      text: "Get the numbers first. Decide when you're ready.",
+    },
+  ],
   /** GoodLeap application (owner-supplied 2026-07-04) — external */
   cta: {
     label: "Apply for financing",
@@ -354,8 +406,8 @@ export const financingSection = {
     external: true,
   },
   secondaryCta: {
-    label: "Schedule a free inspection",
-    href: "/free-inspection",
+    label: "Learn how it works",
+    href: "/financing",
   },
 } as const;
 
@@ -367,7 +419,9 @@ export const serviceAreaSection = {
   eyebrow: "Service area",
   title: "Hattiesburg-based. Region-wide reach.",
   description:
-    "We serve a full 2-hour radius around Hattiesburg — from Jackson to Meridian to the Gulf Coast, and every town in between.",
+    "Proudly serving Mississippi within about two hours of Hattiesburg, from the Pine Belt to the Gulf Coast.",
+  hubsLabel: "Regional hubs",
+  communitiesLabel: "And the communities around them",
   hubCta: { label: "See all service areas", href: "/service-areas" },
 } as const;
 
@@ -379,13 +433,48 @@ export const reviewsSection = {
   eyebrow: "Reputation",
   title: "Don't take our word for it",
   description:
-    "Read what real customers say on Google, and verify our credentials for yourself — every badge below links to the official record.",
+    "Verify us yourself. Every badge below links straight to the official record — our Google reviews, our GAF certification, our BBB accreditation.",
   /** Live Google Business Profile (owner-supplied 2026-07-04) — external */
   googleCta: {
     label: "Read our Google reviews",
     href: siteConfig.links.googleBusiness,
     external: true,
   },
+  /**
+   * Verification badges — each links to its official record. No unverified
+   * rating graphics (brandAssets.trust rules); the Google G is rendered as
+   * an inline SVG, not the do-not-display star artwork.
+   */
+  badges: [
+    {
+      key: "google",
+      title: "Google Reviews",
+      subtitle: "Read real customer reviews",
+      href: siteConfig.links.googleBusiness,
+      cta: "View our profile",
+    },
+    {
+      key: "gaf",
+      title: "GAF Certified",
+      subtitle: "Our primary manufacturer certification",
+      href: siteConfig.links.gafProfile,
+      cta: "Verify on gaf.com",
+    },
+    {
+      key: "bbb",
+      title: "BBB Accredited",
+      subtitle: "Better Business Bureau standing",
+      href: siteConfig.links.bbbProfile,
+      cta: "Verify on bbb.org",
+    },
+    {
+      key: "msboc",
+      title: "MSBOC Licensed",
+      subtitle: "Mississippi State Board of Contractors",
+      href: null,
+      cta: null,
+    },
+  ],
 } as const;
 
 /* ------------------------------------------------------------------ */
