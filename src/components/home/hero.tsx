@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, MapPin, ShieldCheck, Zap } from "lucide-react";
+import { ArrowRight, MapPin, Zap } from "lucide-react";
 
 import { siteConfig } from "@/config/site";
 import { primaryCta } from "@/config/navigation";
-import { hero } from "@/content/homepage";
+import { hero, heroTrustBar } from "@/content/homepage";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
 import { PhoneLink } from "@/components/shared/phone-link";
@@ -41,7 +41,7 @@ export function Hero() {
               <MapPin className="size-3.5 text-steel-300" aria-hidden="true" />
               {hero.locationLine}
             </p>
-            <h1 className="mt-7 font-display text-[2.75rem] leading-[1.04] font-bold text-white sm:text-6xl lg:text-7xl">
+            <h1 className="mt-7 font-display text-[2.5rem] leading-[1.06] font-bold text-white sm:text-5xl lg:text-6xl">
               {hero.headline.lead}{" "}
               <span className="text-steel-300">{hero.headline.accent}</span>
               {hero.headline.tail && ` ${hero.headline.tail}`}
@@ -100,18 +100,32 @@ export function Hero() {
               </Button>
             </div>
 
-            <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-steel-100">
-              <span className="inline-flex items-center gap-2">
-                <ShieldCheck
-                  className="size-4 text-steel-300"
-                  aria-hidden="true"
-                />
-                {hero.credentialLine}
-              </span>
+            <div className="mt-7">
               <PhoneLink className="text-white" />
             </div>
           </Reveal>
         </div>
+
+        {/*
+          Above-the-fold trust bar (Phase 4 §1): owner-confirmed facts only.
+          Horizontal on desktop, clean two-column stack on mobile.
+        */}
+        <Reveal delay={0.25}>
+          <ul className="mt-10 grid grid-cols-2 gap-x-5 gap-y-3 border-t border-white/15 pt-7 sm:flex sm:flex-wrap sm:items-center sm:gap-x-7 lg:mt-14">
+            {heroTrustBar.map((item) => (
+              <li
+                key={item.label}
+                className="flex items-center gap-2 text-xs font-medium text-steel-100 sm:text-[0.8125rem]"
+              >
+                <item.icon
+                  className="size-4 shrink-0 text-steel-300"
+                  aria-hidden="true"
+                />
+                {item.label}
+              </li>
+            ))}
+          </ul>
+        </Reveal>
       </div>
     </section>
   );

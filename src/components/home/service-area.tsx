@@ -9,8 +9,6 @@ import { Reveal } from "@/components/motion/reveal";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 import { Button } from "@/components/ui/button";
 
-const citySlug = (city: string) => city.toLowerCase().replace(/\s+/g, "-");
-
 /**
  * Service area (PRD §3.10, owner refinement 2026-07-04): Mississippi only.
  * Regional hubs lead with prominent chips in the owner-specified order;
@@ -34,10 +32,10 @@ export function ServiceArea() {
         className="mx-auto mt-12 flex max-w-3xl flex-wrap justify-center gap-3"
         aria-label={serviceAreaSection.hubsLabel}
       >
-        {hubs.map(({ city }) => (
+        {hubs.map(({ city, slug }) => (
           <StaggerItem as="li" key={city}>
             <Link
-              href={`/service-areas/${citySlug(city)}`}
+              href={`/service-areas/${slug}`}
               className="shadow-premium inline-flex items-center gap-2 rounded-full border border-border bg-white px-5 py-3 text-base font-semibold text-navy-900 transition-all duration-200 hover:-translate-y-0.5 hover:border-steel-500 hover:shadow-lg"
             >
               <MapPin className="size-4 text-steel-500" aria-hidden="true" />
@@ -52,10 +50,10 @@ export function ServiceArea() {
           {serviceAreaSection.communitiesLabel}
         </p>
         <ul className="mt-4 flex flex-wrap justify-center gap-x-2 gap-y-2">
-          {communities.map(({ city }) => (
+          {communities.map(({ city, slug }) => (
             <li key={city}>
               <Link
-                href={`/service-areas/${citySlug(city)}`}
+                href={`/service-areas/${slug}`}
                 className="inline-block rounded-full px-3 py-1.5 text-sm text-slate-600 transition-colors hover:bg-secondary hover:text-primary"
               >
                 {city}

@@ -11,6 +11,8 @@ import { DivisionSplit } from "@/components/home/division-split";
 import { ServicesOverview } from "@/components/home/services-overview";
 import { StormInsurance } from "@/components/home/storm-insurance";
 import { RoofingSystems } from "@/components/home/roofing-systems";
+import { ProcessTimeline } from "@/components/home/process-timeline";
+import { ManufacturerStrip } from "@/components/home/manufacturer-strip";
 import { FeaturedProjects } from "@/components/home/featured-projects";
 import { WhyUs } from "@/components/home/why-us";
 import { FinancingStrip } from "@/components/home/financing-strip";
@@ -35,8 +37,10 @@ export default function HomePage() {
       <TrustBar />
       <DivisionSplit />
       <ServicesOverview />
+      <ProcessTimeline />
       <StormInsurance />
       <RoofingSystems />
+      <ManufacturerStrip />
       <FeaturedProjects />
       <WhyUs />
       <FinancingStrip />

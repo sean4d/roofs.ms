@@ -371,6 +371,7 @@ export const financingHub = {
     ],
   },
   honestNotes: [
+    "$0 down plans are available — your GoodLeap application shows the exact options you qualify for.",
     "Rates, terms, and approval come from the lender, not from us — GoodLeap will show you exactly what you qualify for.",
     "We don't mark projects up to hide financing costs. The estimate is the estimate, financed or not.",
     "If storm damage caused this, check the insurance path first — a covered claim may change what you need to finance.",

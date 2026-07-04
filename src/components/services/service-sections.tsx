@@ -237,22 +237,37 @@ export function RelatedServices({
 
 /** §4.1.10 — service-area links ("We provide {service} in: …"). */
 export function ServiceAreaLinks({ serviceName }: { serviceName: string }) {
+  const hubs = siteConfig.serviceArea.filter((area) => area.hub);
+  const communities = siteConfig.serviceArea.filter((area) => !area.hub);
+
   return (
     <Section>
       <SectionHeading
         eyebrow="Service area"
         title={`Where we provide ${serviceName.toLowerCase()}`}
-        description="Based in Hattiesburg and serving a 2-hour radius across Mississippi — from Jackson to Meridian to the Gulf Coast."
+        description="Based in Hattiesburg and serving Mississippi within about two hours — from the Pine Belt to the Gulf Coast."
       />
       <Reveal className="mt-10">
         <ul className="flex flex-wrap gap-3">
-          {siteConfig.serviceArea.map(({ city }) => (
+          {hubs.map(({ city, slug }) => (
             <li key={city}>
               <Link
-                href={`/service-areas/${city.toLowerCase()}`}
-                className="inline-block rounded-full border border-border bg-secondary px-4 py-2 text-sm font-medium text-navy-900 transition-colors hover:border-steel-500 hover:bg-steel-100"
+                href={`/service-areas/${slug}`}
+                className="inline-block rounded-full border border-border bg-secondary px-4 py-2.5 text-sm font-semibold text-navy-900 transition-all duration-200 hover:-translate-y-0.5 hover:border-steel-500 hover:bg-steel-100"
               >
                 {city}, MS
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <ul className="mt-5 flex flex-wrap gap-x-1 gap-y-1.5">
+          {communities.map(({ city, slug }) => (
+            <li key={city}>
+              <Link
+                href={`/service-areas/${slug}`}
+                className="inline-block rounded-full px-2.5 py-1 text-sm text-slate-500 transition-colors hover:bg-secondary hover:text-primary"
+              >
+                {city}
               </Link>
             </li>
           ))}
