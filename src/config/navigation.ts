@@ -99,6 +99,7 @@ export const footerColumns: FooterColumn[] = [
       { label: "Reviews", href: "/reviews" },
       { label: "Financing", href: "/financing" },
       { label: "Learning Center", href: "/learn" },
+      { label: "Blog", href: "/blog" },
       { label: "Careers", href: "/careers" },
       { label: "Contact", href: "/contact" },
     ],

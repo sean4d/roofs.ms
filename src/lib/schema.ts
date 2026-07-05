@@ -105,6 +105,41 @@ export function faqSchema(faqs: FaqEntry[]): JsonLdObject {
   };
 }
 
+interface ArticleSchemaOptions {
+  headline: string;
+  description: string;
+  path: string;
+  /** ISO date string */
+  datePublished: string;
+  dateModified?: string;
+}
+
+/**
+ * Article schema for Learning Center guides and blog posts (PRD §10.4,
+ * Phase 7). Author/publisher is the organization — honest E-E-A-T until
+ * named-author bios exist.
+ */
+export function articleSchema({
+  headline,
+  description,
+  path,
+  datePublished,
+  dateModified,
+}: ArticleSchemaOptions): JsonLdObject {
+  return compact({
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline,
+    description,
+    url: absoluteUrl(path),
+    mainEntityOfPage: absoluteUrl(path),
+    datePublished,
+    dateModified: dateModified ?? datePublished,
+    author: { "@id": absoluteUrl("/#organization") },
+    publisher: { "@id": absoluteUrl("/#organization") },
+  });
+}
+
 interface ServiceSchemaOptions {
   name: string;
   description: string;

@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 
 import { allServices } from "@/content/services";
 import { cities } from "@/content/cities";
+import { articlePath, learnArticles } from "@/content/learn";
+import { blogPosts } from "@/content/blog";
 import { absoluteUrl } from "@/lib/seo";
 
 /**
@@ -28,6 +30,8 @@ const launchedStaticRoutes = [
   "/careers",
   "/privacy-policy",
   "/terms-of-service",
+  "/learn",
+  "/blog",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -49,5 +53,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticEntries, ...serviceEntries, ...cityEntries];
+  const learnEntries = learnArticles.map((article) => ({
+    url: absoluteUrl(articlePath(article)),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
+  const blogEntries = blogPosts.map((post) => ({
+    url: absoluteUrl(`/blog/${post.slug}`),
+    changeFrequency: "monthly" as const,
+    priority: 0.5,
+  }));
+
+  return [
+    ...staticEntries,
+    ...serviceEntries,
+    ...cityEntries,
+    ...learnEntries,
+    ...blogEntries,
+  ];
 }
