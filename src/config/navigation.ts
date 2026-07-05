@@ -92,6 +92,7 @@ export const footerColumns: FooterColumn[] = [
   {
     heading: "Company",
     links: [
+      { label: "Get a Quote", href: "/quote" },
       { label: "About Us", href: "/about" },
       { label: "Storm Damage", href: "/storm-damage" },
       { label: "Metal Roofing", href: "/metal-roofing" },
