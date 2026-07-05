@@ -18,21 +18,21 @@ Real offers (screenshot from GoodLeap portal): 5yr / 10yr / 15yr, all **12.99% A
 Residential:
 - [x] asphalt-shingle-roofing: current blurry/unprofessional → crisp professional architectural shingle roof
 - [x] residential metal-roofing: looks like white paint stains → clean replacement
-- [ ] roof-replacement: blurry → new
+- [x] roof-replacement: blurry → new
 - [x] gutters: downspout looks like PVC tube → white PAINTED SEAMLESS METAL K-style gutter + metal downspout, looks like ours
 - [x] leaf-guard: dirty guard + dirty shingles → clean new guard on clean shingles
 - [ ] REMOVE SIDING ENTIRELY: we do NOT do siding (only fascia + soffit). Delete /residential/vinyl-siding + /residential/fiber-cement-siding pages, registry entries, footer links, images, copy mentions
 - [x] fascia + soffit photos look like metal → we mainly do WOOD: clean painted wood fascia + wood soffit photos
-- [~] ventilation: turbine/box/power gallery ADDED; ridge-vent main photo still needs a non-GAF source. ORIG: photo shows no ridge vent → proper black plastic ridge vent with ridge cap shingled over. ALSO add photos + copy for: turbines, box vents, power attic vents (gallery on ventilation page)
+- [x] ventilation: ridge vent (OC VentSure) + turbine/box/power gallery. ORIG: photo shows no ridge vent → proper black plastic ridge vent with ridge cap shingled over. ALSO add photos + copy for: turbines, box vents, power attic vents (gallery on ventilation page)
 - [ ] While changing cards, add photos to each corresponding service PAGE too (visual learners, product knowledge)
 
 Commercial:
-- [ ] TPO: weird grid lines → flat rolls look
-- [ ] EPDM: janky lines → cleaner
+- [x] TPO: weird grid lines → flat rolls look
+- [x] EPDM: janky lines → cleaner
 - [ ] PVC: way too many lines → large sheets
 - [x] commercial metal-roofing: ugly/dirty → nicer color, black
 - [ ] commercial roof-replacement: horrible → crew blow-torching/working (torch-down scene)
-- [ ] warehouse (industries): looks fake → more realistic, NO vehicles
+- [x] warehouse (industries): looks fake → more realistic, NO vehicles
 
 ## Batch 4 — /storm-damage page photo swaps (indices = current storm gallery order, 1-based)
 - [x] Add link to storm response gallery (/projects storm tab — needs deep-linkable URL)

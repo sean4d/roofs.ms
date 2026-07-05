@@ -45,8 +45,8 @@ export const serviceImages: Record<string, ServiceImage | null> = {
     alt: "Architectural asphalt shingle roof on an upscale home",
   },
   "/residential/roof-replacement": {
-    src: stockPhotos.roofTearOff.src,
-    alt: stockPhotos.roofTearOff.alt,
+    src: "/images/services/roof-replacement-home.webp",
+    alt: "Newly completed architectural shingle roof replacement on a home",
   },
   "/residential/roof-repair": {
     src: stockPhotos.rooferInstalling.src,
@@ -82,7 +82,7 @@ export const serviceImages: Record<string, ServiceImage | null> = {
   },
   "/residential/ventilation": {
     src: "/images/services/ridge-vent.webp",
-    alt: "Shingle-over ridge vent running along the peak of an architectural shingle roof",
+    alt: "Black shingle-over ridge vent installed at the peak of an architectural shingle roof",
   },
 
   /* ── Storm ───────────────────────────────────────────────────── */
@@ -106,11 +106,11 @@ export const serviceImages: Record<string, ServiceImage | null> = {
   },
   "/commercial/tpo": {
     src: "/images/services/tpo-membrane.webp",
-    alt: "White TPO membrane roof with welded seams on a commercial building",
+    alt: "White TPO single-ply membrane roof on a commercial building",
   },
   "/commercial/epdm": {
     src: "/images/services/epdm-roof.webp",
-    alt: "Dark EPDM membrane on a commercial flat roof with rooftop units",
+    alt: "Roofer applying adhesive to a black EPDM membrane roof",
   },
   "/commercial/pvc": {
     src: "/images/services/pvc-membrane.webp",
@@ -176,7 +176,7 @@ export const serviceImages: Record<string, ServiceImage | null> = {
   },
   "/commercial/industries/warehouses": {
     src: "/images/services/distribution-warehouse.webp",
-    alt: "Distribution warehouse with loading docks and a large flat roof",
+    alt: "Distribution warehouse exterior with loading docks",
   },
   "/commercial/industries/municipal": {
     src: "/images/services/municipal-building.webp",
