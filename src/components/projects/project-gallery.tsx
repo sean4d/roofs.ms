@@ -1,63 +1,65 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, MapPin, X } from "lucide-react";
 
 import {
   projectPhotos,
   stormPhotos,
+  STORM_CATEGORY_LABELS,
   type StormCategory,
 } from "@/content/photos";
 import { EASE_OUT } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 /**
- * Filterable project gallery (PRD §13 Phase 6): every image is a real
- * Southeast Roofing job — the manifests in content/photos.ts are the only
- * source. Two collections (completed roofs / storm response), sub-filters
- * by city or damage type, FLIP grid animations, and an accessible lightbox.
+ * Filterable project gallery. Owner-corrected metadata (2026-07-05)
+ * drives the filters: completed roofs filter by city, shingle line, and
+ * color; in-progress photos get their own collection; storm response
+ * filters by damage type. Deep-linkable via ?c=storm | ?c=progress.
  */
 
 interface GalleryItem {
   src: string;
   alt: string;
-  /** Short label shown on the card and in the lightbox (city or damage type). */
   badge: string;
+  /** Extra line in the lightbox (shingle line + color) */
+  detail?: string;
 }
 
-type Collection = "roofs" | "storm";
+type Collection = "roofs" | "progress" | "storm";
 
-const STORM_LABELS: Record<StormCategory, string> = {
-  "hail-damage": "Hail damage",
-  "wind-damage": "Wind damage",
-  "missing-shingles": "Missing shingles",
-  "tree-damage": "Tree damage",
-  "emergency-tarp": "Emergency tarping",
-  "storm-damage": "Storm damage",
-};
+const completedPhotos = projectPhotos.filter((p) => p.kind === "completed");
+const progressPhotos = projectPhotos.filter((p) => p.kind === "in-progress");
 
-/** Cities present in the manifest, busiest first. */
-const CITY_FILTERS = (() => {
-  const counts = new Map<string, { slug: string; city: string; count: number }>();
-  for (const photo of projectPhotos) {
-    const entry = counts.get(photo.citySlug);
-    if (entry) entry.count += 1;
-    else counts.set(photo.citySlug, { slug: photo.citySlug, city: photo.city, count: 1 });
+function countFilters<T>(
+  items: T[],
+  key: (item: T) => string | undefined,
+): { value: string; count: number }[] {
+  const counts = new Map<string, number>();
+  for (const item of items) {
+    const value = key(item);
+    if (value) counts.set(value, (counts.get(value) ?? 0) + 1);
   }
-  return [...counts.values()].sort(
-    (a, b) => b.count - a.count || a.city.localeCompare(b.city),
-  );
-})();
+  return [...counts.entries()]
+    .map(([value, count]) => ({ value, count }))
+    .sort((a, b) => b.count - a.count || a.value.localeCompare(b.value));
+}
 
-const STORM_FILTERS = (() => {
-  const counts = new Map<StormCategory, number>();
-  for (const photo of stormPhotos) {
-    counts.set(photo.category, (counts.get(photo.category) ?? 0) + 1);
-  }
-  return [...counts.entries()].map(([category, count]) => ({ category, count }));
-})();
+const CITY_FILTERS = countFilters(completedPhotos, (p) => p.city);
+const LINE_FILTERS = countFilters(completedPhotos, (p) =>
+  p.manufacturer ? `${p.manufacturer} ${p.line}` : undefined,
+);
+const COLOR_FILTERS = countFilters(completedPhotos, (p) => p.color);
+const STORM_FILTERS = countFilters(stormPhotos, (p) => p.category).map(
+  (entry) => ({
+    ...entry,
+    label: STORM_CATEGORY_LABELS[entry.value as StormCategory],
+  }),
+);
 
 function FilterPill({
   active,
@@ -74,10 +76,10 @@ function FilterPill({
       onClick={onClick}
       aria-pressed={active}
       className={cn(
-        "rounded-full border px-4 py-2 text-sm font-semibold transition-all duration-200",
+        "rounded-full border px-3.5 py-1.5 text-sm font-semibold transition-all duration-200",
         active
           ? "border-navy-900 bg-navy-900 text-white shadow-md"
-          : "border-border bg-white text-slate-600 hover:-translate-y-0.5 hover:border-steel-500 hover:text-navy-900 hover:shadow-sm",
+          : "border-border bg-white text-slate-600 hover:border-steel-500 hover:text-navy-900",
       )}
     >
       {children}
@@ -85,32 +87,90 @@ function FilterPill({
   );
 }
 
-export function ProjectGallery() {
-  const [collection, setCollection] = useState<Collection>("roofs");
-  const [citySlug, setCitySlug] = useState<string | null>(null);
-  const [stormCategory, setStormCategory] = useState<StormCategory | null>(
-    null,
+function FilterRow({
+  label,
+  options,
+  selected,
+  onSelect,
+}: {
+  label: string;
+  options: { value: string; count: number; label?: string }[];
+  selected: string | null;
+  onSelect: (value: string | null) => void;
+}) {
+  return (
+    <div className="mt-4">
+      <p className="text-xs font-semibold tracking-wide text-slate-400 uppercase">
+        {label}
+      </p>
+      <div className="mt-2 flex flex-wrap gap-2">
+        <FilterPill active={selected === null} onClick={() => onSelect(null)}>
+          All
+        </FilterPill>
+        {options.map((option) => (
+          <FilterPill
+            key={option.value}
+            active={selected === option.value}
+            onClick={() =>
+              onSelect(selected === option.value ? null : option.value)
+            }
+          >
+            {option.label ?? option.value}{" "}
+            <span className="font-normal opacity-60">{option.count}</span>
+          </FilterPill>
+        ))}
+      </div>
+    </div>
   );
+}
+
+function GalleryInner() {
+  const searchParams = useSearchParams();
+  const initial: Collection =
+    searchParams.get("c") === "storm"
+      ? "storm"
+      : searchParams.get("c") === "progress"
+        ? "progress"
+        : "roofs";
+
+  const [collection, setCollection] = useState<Collection>(initial);
+  const [city, setCity] = useState<string | null>(null);
+  const [line, setLine] = useState<string | null>(null);
+  const [color, setColor] = useState<string | null>(null);
+  const [stormCategory, setStormCategory] = useState<string | null>(null);
   const [lightbox, setLightbox] = useState<number | null>(null);
 
   const items = useMemo<GalleryItem[]>(() => {
     if (collection === "roofs") {
-      return projectPhotos
-        .filter((photo) => !citySlug || photo.citySlug === citySlug)
-        .map((photo) => ({
-          src: photo.src,
-          alt: photo.alt,
-          badge: `${photo.city}, MS`,
+      return completedPhotos
+        .filter((p) => !city || p.city === city)
+        .filter((p) => !line || `${p.manufacturer} ${p.line}` === line)
+        .filter((p) => !color || p.color === color)
+        .map((p) => ({
+          src: p.src,
+          alt: p.alt,
+          badge: `${p.city}, MS`,
+          detail: p.manufacturer
+            ? `${p.manufacturer} ${p.line} · ${p.color}`
+            : undefined,
         }));
     }
-    return stormPhotos
-      .filter((photo) => !stormCategory || photo.category === stormCategory)
-      .map((photo) => ({
-        src: photo.src,
-        alt: photo.alt,
-        badge: STORM_LABELS[photo.category],
+    if (collection === "progress") {
+      return progressPhotos.map((p) => ({
+        src: p.src,
+        alt: p.alt,
+        badge: `${p.city}, MS`,
+        detail: p.stage,
       }));
-  }, [collection, citySlug, stormCategory]);
+    }
+    return stormPhotos
+      .filter((p) => !stormCategory || p.category === stormCategory)
+      .map((p) => ({
+        src: p.src,
+        alt: p.alt,
+        badge: `${STORM_CATEGORY_LABELS[p.category]} · ${p.city}`,
+      }));
+  }, [collection, city, line, color, stormCategory]);
 
   const close = useCallback(() => setLightbox(null), []);
   const step = useCallback(
@@ -124,7 +184,6 @@ export function ProjectGallery() {
     [items.length],
   );
 
-  // Keyboard controls + scroll lock while the lightbox is open
   useEffect(() => {
     if (lightbox === null) return;
     const onKeyDown = (event: KeyboardEvent) => {
@@ -149,11 +208,12 @@ export function ProjectGallery() {
       <div
         role="group"
         aria-label="Gallery collection"
-        className="inline-flex rounded-full border border-border bg-white p-1 shadow-sm"
+        className="inline-flex max-w-full flex-wrap rounded-2xl border border-border bg-white p-1 shadow-sm sm:rounded-full"
       >
         {(
           [
-            { key: "roofs", label: `Completed roofs (${projectPhotos.length})` },
+            { key: "roofs", label: `Completed roofs (${completedPhotos.length})` },
+            { key: "progress", label: `During install (${progressPhotos.length})` },
             { key: "storm", label: `Storm response (${stormPhotos.length})` },
           ] as const
         ).map((tab) => (
@@ -177,96 +237,85 @@ export function ProjectGallery() {
         ))}
       </div>
 
-      {/* Sub-filters */}
-      <div className="mt-6 flex flex-wrap gap-2">
-        {collection === "roofs" ? (
-          <>
-            <FilterPill
-              active={citySlug === null}
-              onClick={() => setCitySlug(null)}
-            >
-              All cities
-            </FilterPill>
-            {CITY_FILTERS.map((entry) => (
-              <FilterPill
-                key={entry.slug}
-                active={citySlug === entry.slug}
-                onClick={() =>
-                  setCitySlug(citySlug === entry.slug ? null : entry.slug)
-                }
-              >
-                {entry.city}{" "}
-                <span className="font-normal opacity-60">{entry.count}</span>
-              </FilterPill>
-            ))}
-          </>
-        ) : (
-          <>
-            <FilterPill
-              active={stormCategory === null}
-              onClick={() => setStormCategory(null)}
-            >
-              All damage types
-            </FilterPill>
-            {STORM_FILTERS.map((entry) => (
-              <FilterPill
-                key={entry.category}
-                active={stormCategory === entry.category}
-                onClick={() =>
-                  setStormCategory(
-                    stormCategory === entry.category ? null : entry.category,
-                  )
-                }
-              >
-                {STORM_LABELS[entry.category]}{" "}
-                <span className="font-normal opacity-60">{entry.count}</span>
-              </FilterPill>
-            ))}
-          </>
-        )}
-      </div>
+      {/* Filters */}
+      {collection === "roofs" && (
+        <>
+          <FilterRow
+            label="City"
+            options={CITY_FILTERS}
+            selected={city}
+            onSelect={setCity}
+          />
+          <FilterRow
+            label="Shingle line"
+            options={LINE_FILTERS}
+            selected={line}
+            onSelect={setLine}
+          />
+          <FilterRow
+            label="Color"
+            options={COLOR_FILTERS}
+            selected={color}
+            onSelect={setColor}
+          />
+        </>
+      )}
+      {collection === "storm" && (
+        <FilterRow
+          label="Damage type"
+          options={STORM_FILTERS}
+          selected={stormCategory}
+          onSelect={setStormCategory}
+        />
+      )}
 
       {/* FLIP grid */}
-      <motion.ul
-        layout
-        className="mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4"
-      >
-        <AnimatePresence mode="popLayout">
-          {items.map((item, index) => (
-            <motion.li
-              key={item.src}
-              layout
-              initial={{ opacity: 0, scale: 0.94 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.94 }}
-              transition={{ duration: 0.35, ease: EASE_OUT }}
-            >
-              <button
-                type="button"
-                onClick={() => setLightbox(index)}
-                className="group relative block w-full overflow-hidden rounded-2xl border border-border focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy-900"
-                aria-label={`View larger: ${item.alt}`}
+      {items.length === 0 ? (
+        <p className="mt-10 rounded-2xl border border-border bg-white p-6 text-slate-600">
+          No photos match that combination — clear a filter to see more.
+        </p>
+      ) : (
+        <motion.ul
+          layout
+          className="mt-8 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4"
+        >
+          <AnimatePresence mode="popLayout">
+            {items.map((item, index) => (
+              <motion.li
+                key={item.src}
+                layout
+                initial={{ opacity: 0, scale: 0.94 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.94 }}
+                transition={{ duration: 0.35, ease: EASE_OUT }}
               >
-                <Image
-                  src={item.src}
-                  alt={item.alt}
-                  width={600}
-                  height={450}
-                  sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, 50vw"
-                  className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy-950/70 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                <span className="pointer-events-none absolute bottom-2.5 left-2.5 inline-flex items-center gap-1 rounded-full bg-navy-950/80 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur sm:bottom-3 sm:left-3 sm:gap-1.5 sm:px-3 sm:text-xs">
-                  {collection === "roofs" && (
-                    <MapPin className="size-3" aria-hidden="true" />
-                  )}
-                  {item.badge}
-                </span>
-              </button>
-            </motion.li>
-          ))}
-        </AnimatePresence>
-      </motion.ul>
+                <button
+                  type="button"
+                  onClick={() => setLightbox(index)}
+                  className="group relative block w-full overflow-hidden rounded-2xl border border-border focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy-900"
+                  aria-label={`View larger: ${item.alt}`}
+                >
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    width={600}
+                    height={450}
+                    sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, 50vw"
+                    className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy-950/70 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <span className="pointer-events-none absolute bottom-2.5 left-2.5 inline-flex items-center gap-1 rounded-full bg-navy-950/80 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur sm:bottom-3 sm:left-3 sm:gap-1.5 sm:px-3 sm:text-xs">
+                    {collection !== "storm" && (
+                      <MapPin className="size-3" aria-hidden="true" />
+                    )}
+                    {item.badge}
+                  </span>
+                </button>
+              </motion.li>
+            ))}
+          </AnimatePresence>
+        </motion.ul>
+      )}
 
       {/* Lightbox */}
       <AnimatePresence>
@@ -342,12 +391,25 @@ export function ProjectGallery() {
               )}
             </div>
 
-            <p className="px-4 pb-4 text-center text-sm text-steel-300 sm:px-6">
-              {active.alt}
-            </p>
+            <div className="px-4 pb-4 text-center sm:px-6">
+              {active.detail && (
+                <p className="text-sm font-semibold text-white">
+                  {active.detail}
+                </p>
+              )}
+              <p className="mt-1 text-sm text-steel-300">{active.alt}</p>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+export function ProjectGallery() {
+  return (
+    <Suspense fallback={null}>
+      <GalleryInner />
+    </Suspense>
   );
 }

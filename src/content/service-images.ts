@@ -1,4 +1,4 @@
-import { projectPhotos, stormPhotos } from "@/content/photos";
+import { stormPhotos } from "@/content/photos";
 import { stockPhotos } from "@/content/stock-photos";
 
 /**
@@ -32,20 +32,22 @@ export interface ServiceImage {
   alt: string;
 }
 
-/** Pick a real project photo by filename fragment (stable across reorders). */
-const project = (fileFragment: string): ServiceImage => {
-  const photo = projectPhotos.find((p) => p.src.includes(fileFragment))!;
-  return { src: photo.src, alt: photo.alt };
-};
-
 export const serviceImages: Record<string, ServiceImage | null> = {
   /* ── Residential ─────────────────────────────────────────────── */
   "/residential": {
     src: stockPhotos.residentialHome.src,
     alt: stockPhotos.residentialHome.alt,
   },
-  "/residential/asphalt-shingle-roofing": project("hattiesburg-ms-004"),
-  "/residential/roof-replacement": project("petal-ms-001"),
+  // Interim licensed stock (owner 2026-07-05: service cards never use
+  // gallery photos; Higgsfield replacements queued in OWNER-FEEDBACK doc)
+  "/residential/asphalt-shingle-roofing": {
+    src: stockPhotos.heroHome.src,
+    alt: stockPhotos.heroHome.alt,
+  },
+  "/residential/roof-replacement": {
+    src: stockPhotos.roofTearOff.src,
+    alt: stockPhotos.roofTearOff.alt,
+  },
   "/residential/roof-repair": {
     src: stockPhotos.rooferInstalling.src,
     alt: stockPhotos.rooferInstalling.alt,
@@ -93,12 +95,12 @@ export const serviceImages: Record<string, ServiceImage | null> = {
 
   /* ── Storm ───────────────────────────────────────────────────── */
   "/storm-damage": {
-    src: stormPhotos.find((p) => p.category === "storm-damage")!.src,
-    alt: stormPhotos.find((p) => p.category === "storm-damage")!.alt,
+    src: stormPhotos.find((p) => p.category === "wind-damage")!.src,
+    alt: stormPhotos.find((p) => p.category === "wind-damage")!.alt,
   },
   "/storm-damage/emergency-roofing": {
-    src: stormPhotos.find((p) => p.category === "emergency-tarp")!.src,
-    alt: stormPhotos.find((p) => p.category === "emergency-tarp")!.alt,
+    src: stormPhotos.find((p) => p.category === "rotted-decking")!.src,
+    alt: stormPhotos.find((p) => p.category === "rotted-decking")!.alt,
   },
   "/storm-damage/insurance-claims": {
     src: stormPhotos.find((p) => p.category === "hail-damage")!.src,

@@ -3,9 +3,9 @@ import type { CityContent } from "@/content/cities/types";
 /**
  * City pages batch 2 (PRD §5, Tier 2 depth): the Pine Belt communities and
  * the Highway 49/59/98 corridors. Same anti-doorway rules as batch 1 —
- * unique local copy, and only cities with real project photos (Purvis,
- * Sumrall, Columbia, Poplarville, Ocean Springs) reference completed
- * local work.
+ * unique local copy, and only cities with real project photos (per the
+ * owner's 2026-07-05 relabel: Purvis, Ellisville, Richton, Poplarville,
+ * Wiggins, Lucedale) reference completed local work.
  */
 
 export const citiesBatch2: CityContent[] = [
@@ -75,7 +75,7 @@ export const citiesBatch2: CityContent[] = [
     driveTime: "about 25 minutes",
     metaTitle: "Roofing in Sumrall, MS | Southeast Roofing",
     metaDescription:
-      "Roof replacement and repair in Sumrall, MS — Longleaf Trace country, twenty-five minutes from Hattiesburg, with completed Sumrall work in our gallery.",
+      "Roof replacement and repair in Sumrall, MS — Longleaf Trace country, twenty-five minutes from Hattiesburg, with fast Lamar County scheduling.",
     hero: {
       headline: "Sumrall roofs, along the Longleaf Trace",
       subhead:
@@ -85,7 +85,7 @@ export const citiesBatch2: CityContent[] = [
       title: "Small town, serious growth",
       paragraphs: [
         "Sumrall has become one of Lamar County's favorite places to build — good schools, the Longleaf Trace running through town, and country quiet inside a half-hour of Hattiesburg. That growth shows up on rooflines: newer subdivisions with builder-grade shingles reaching their first replacement cycle, alongside established homes and working farm buildings that have seen decades of Pine Belt weather.",
-        "We've completed work in Sumrall — photographed on the job here — and Highway 42 makes it an easy twenty-five minute run from our office. Shingle replacements and repairs lead the schedule, with metal roofing a steady favorite for the shops, barns, and country homes on acreage.",
+        "Highway 42 makes Sumrall an easy twenty-five minute run from our office. Shingle replacements and repairs lead the schedule, with metal roofing a steady favorite for the shops, barns, and country homes on acreage.",
       ],
     },
     localAreas: {
@@ -106,7 +106,7 @@ export const citiesBatch2: CityContent[] = [
       {
         question: "Have you worked in Sumrall before?",
         answer:
-          "Yes — completed Sumrall work is photographed in our gallery, and west Lamar County is regular territory for our crews.",
+          "Yes — west Lamar County is regular territory for our crews, twenty-five minutes out Highway 42, with scheduling to match.",
       },
       {
         question: "My builder-grade roof is 15 years old. Should I worry?",
@@ -354,16 +354,16 @@ export const citiesBatch2: CityContent[] = [
     driveTime: "about 40 minutes",
     metaTitle: "Roofing in Columbia, MS | Southeast Roofing",
     metaDescription:
-      "Roof replacement and repair in Columbia, MS — the historic Marion County seat on the Pearl River, with completed Columbia projects in our gallery.",
+      "Roof replacement and repair in Columbia, MS — the historic Marion County seat on the Pearl River, an easy Highway 98 run from our Hattiesburg office.",
     hero: {
       headline: "Columbia roofing, on the Pearl",
       subhead:
-        "Marion County's historic seat — once Mississippi's capital for a season — keeps a downtown worth preserving and neighborhoods worth roofing right. Our completed Columbia projects are already in the gallery.",
+        "Marion County's historic seat — once Mississippi's capital for a season — keeps a downtown worth preserving and neighborhoods worth roofing right. Highway 98 makes the run from our office an easy one.",
     },
     intro: {
       title: "A river town with history to protect",
       paragraphs: [
-        "Columbia wears more history than most towns its size — a stint as Mississippi's temporary capital, a downtown of genuine old storefronts, and neighborhoods where homes have stood through a century of Pearl River weather. We've completed roofs here, photographed at real Columbia addresses, and Highway 98 West makes the forty-minute run straightforward to schedule.",
+        "Columbia wears more history than most towns its size — a stint as Mississippi's temporary capital, a downtown of genuine old storefronts, and neighborhoods where homes have stood through a century of Pearl River weather. Highway 98 West makes the forty-minute run straightforward to schedule, and our storm documentation from Marion County is part of the gallery.",
         "The work spans the town's range: careful replacements on older homes near downtown, family roofs in the established neighborhoods, and country properties spreading toward the river and the Marion County line. Storm response rounds it out — this stretch of 98 catches its share of spring cells and tropical leftovers riding up the Pearl.",
       ],
     },
@@ -383,9 +383,9 @@ export const citiesBatch2: CityContent[] = [
     },
     faqs: [
       {
-        question: "Have you completed projects in Columbia?",
+        question: "Do you regularly work in Columbia?",
         answer:
-          "Yes — real Columbia roofs are photographed in our gallery. Marion County is established territory, not a stretch.",
+          "Yes — Marion County is established territory for us, an easy run west on Highway 98, and Columbia calls schedule quickly.",
       },
       {
         question: "Can you work on the older homes near downtown?",
@@ -580,17 +580,17 @@ export const citiesBatch2: CityContent[] = [
     driveTime: "about 85 minutes",
     metaTitle: "Roofing in Ocean Springs, MS | Southeast Roofing",
     metaDescription:
-      "Roof replacement and repair in Ocean Springs, MS — the Coast's arts town of live oaks and historic cottages, with completed Ocean Springs projects in our gallery.",
+      "Roof replacement and repair in Ocean Springs, MS — the Coast's arts town of live oaks and historic cottages, roofed to coastal wind standards.",
     hero: {
       headline: "Ocean Springs roofs, under the live oaks",
       subhead:
-        "The Coast's arts town guards its character — historic cottages, oak canopies, and a downtown people drive hours to walk. We roof to that standard, with completed Ocean Springs projects to show.",
+        "The Coast's arts town guards its character — historic cottages, oak canopies, and a downtown people drive hours to walk. We roof to that standard — coastal wind specs and all.",
     },
     intro: {
       title: "A town that cares how things look",
       paragraphs: [
         "Ocean Springs is the Coast at its most personal — Walter Anderson's town, a walkable downtown of galleries and porches, and neighborhoods where century-old cottages sit under live oaks older still. Roofing here is character work: steep little gables, tree canopy that never quits, and streetscapes where a clumsy roofline would be noticed by everyone at the farmers market.",
-        "We've completed projects in Ocean Springs, photographed on our own job sites, and we treat the eighty-five minute run as the cost of working somewhere worth it. The oak canopy sets the maintenance rhythm — limbs, leaves, and shade-fed algae — while the Gulf sets the stakes: this is Katrina country, where wind-rated installation is simply the standard.",
+        "We treat the eighty-five minute run as the cost of working somewhere worth it. The oak canopy sets the maintenance rhythm — limbs, leaves, and shade-fed algae — while the Gulf sets the stakes: this is Katrina country, where wind-rated installation is simply the standard.",
       ],
     },
     localAreas: {
@@ -610,9 +610,9 @@ export const citiesBatch2: CityContent[] = [
     },
     faqs: [
       {
-        question: "Have you completed work in Ocean Springs?",
+        question: "Do you regularly work in Ocean Springs?",
         answer:
-          "Yes — real Ocean Springs projects are photographed in our gallery. The east Coast towns are established territory for us.",
+          "Yes — the east Coast towns are established territory for us, scheduled in efficient Coast blocks alongside Biloxi and Gulfport.",
       },
       {
         question: "Can you roof the historic cottages downtown?",

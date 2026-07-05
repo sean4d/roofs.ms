@@ -3,16 +3,16 @@
 Working checklist from Sean's full-site review. Execute in batches; check off as PRs merge.
 
 ## Batch 1 — quick fixes + real reviews (in progress)
-- [ ] Homepage hero trust chips misaligned on desktop → even grid (4 per line)
-- [ ] Hero phone + email row not lined up → align
-- [ ] Replace "Real roofs, real addresses" → "Real roofs. Real Southeast Roofing projects." Never imply customer addresses are shared — purge all "real addresses" phrasing site-wide (homepage.ts, reviews page, city copy: Petal, Gulfport, Biloxi FAQ, Jackson, Meridian, Sumrall, Ocean Springs)
-- [ ] /reviews: add real Google review quotes (permission granted 2026-07-05). 11 usable: Lynne, Dan, Barbara Watts, Raqual Brewer, Melanie Rouzano, Jim Blake, Barbara Blount, Lashae Jones, Vicky, JC Grines, Matthew Martin, E Rankin. EXCLUDED: Nene Jackson (review names "Roofing Society" — flagged to owner)
-- [ ] Storm Center more findable: button on /storm-damage page
+- [x] Homepage hero trust chips misaligned on desktop → even grid (4 per line)
+- [x] Hero phone + email row not lined up → align
+- [x] Replace "Real roofs, real addresses" → "Real roofs. Real Southeast Roofing projects." Never imply customer addresses are shared — purge all "real addresses" phrasing site-wide (homepage.ts, reviews page, city copy: Petal, Gulfport, Biloxi FAQ, Jackson, Meridian, Sumrall, Ocean Springs)
+- [x] /reviews: add real Google review quotes (permission granted 2026-07-05). 11 usable: Lynne, Dan, Barbara Watts, Raqual Brewer, Melanie Rouzano, Jim Blake, Barbara Blount, Lashae Jones, Vicky, JC Grines, Matthew Martin, E Rankin. EXCLUDED: Nene Jackson (review names "Roofing Society" — flagged to owner)
+- [x] Storm Center more findable: button on /storm-damage page
 
 ## Batch 2 — financing calculator (GoodLeap terms supplied 2026-07-05)
 Real offers (screenshot from GoodLeap portal): 5yr / 10yr / 15yr, all **12.99% APR with Autopay — Standard installment**.
-- [ ] /financing calculator: amount input → monthly payment per term, standard amortization
-- [ ] Disclaimers: estimate only, subject to GoodLeap credit approval, terms may change, autopay pricing
+- [x] /financing calculator: amount input → monthly payment per term, standard amortization
+- [x] Disclaimers: estimate only, subject to GoodLeap credit approval, terms may change, autopay pricing
 
 ## Batch 3 — image regeneration (Higgsfield/online ONLY — never project-gallery photos for service slots)
 Residential:
@@ -35,13 +35,14 @@ Commercial:
 - [ ] warehouse (industries): looks fake → more realistic, NO vehicles
 
 ## Batch 4 — /storm-damage page photo swaps (indices = current storm gallery order, 1-based)
-- [ ] Add link to storm response gallery (/projects storm tab — needs deep-linkable URL)
-- [ ] Main top photo → storm gallery #21
-- [ ] Tree/debris impact picture → #20
-- [ ] Missing shingles photo → #3
-- [ ] Wind damage photo → #24
+- [x] Add link to storm response gallery (/projects storm tab — needs deep-linkable URL)
+- [x] Main top photo → storm gallery #21
+- [x] Tree/debris impact picture → #20
+- [x] Missing shingles photo → #3
+- [x] Wind damage photo → #24
 
-## Batch 5 — storm gallery relabel (stormPhotos array, 1-based current order)
+## Batch 5 — storm gallery relabel ✅ DONE (PR pending)
+### was: (stormPhotos array, 1-based current order)
 Rename files for SEO; add city; new categories. DELETE #2 (not our work) and #17.
 1. Granular loss — Hattiesburg
 2. DELETE ENTIRELY
@@ -68,7 +69,8 @@ Rename files for SEO; add city; new categories. DELETE #2 (not our work) and #17
 23. Hail damage — Richton
 24. Wind damage — Columbia
 
-## Batch 6 — completed-roofs gallery relabel + NEW FILTERS (projectPhotos, 1-based current order)
+## Batch 6 — completed-roofs relabel + filters ✅ DONE except #27 (held, awaiting owner label)
+### was: (projectPhotos, 1-based current order)
 Build filters: manufacturer, product, color, material. Separate "during install" gallery. Rename files for SEO; update alt/schema/meta.
 1. GAF Natural Shadow, Slate — Hattiesburg
 2. DELETE ENTIRELY (site-wide)
