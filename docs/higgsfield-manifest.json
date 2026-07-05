@@ -1,34 +1,156 @@
 {
   "_readme": "Higgsfield generation jobs for the service-image slots in src/content/service-images.ts (prompt pack: 2026-07-05, model soul_location, 4:3, 2048x1536). Files download from the job's results.rawUrl once the network policy allows d8j0ntlcm91z4.cloudfront.net, or from the owner's Higgsfield library. Images are AI-generated illustrative assets: generic alt text only, never described as Southeast Roofing work (integrity rule, docs/PHOTOS.md).",
   "jobs": [
-    { "slot": "/commercial/tpo", "jobId": "4451c5f7-3b6d-4f82-ac01-c433a01c0a00", "file": "tpo-membrane.webp" },
-    { "slot": "/commercial/epdm", "jobId": "0ee162a2-c6ba-4beb-9359-ea37443414bc", "file": "epdm-roof.webp" },
-    { "slot": "/commercial/pvc", "jobId": "f98ca0fd-0305-4266-aff4-52364de2880a", "file": "pvc-membrane.webp" },
-    { "slot": "/commercial/modified-bitumen", "jobId": "392a9b62-fb1e-44c9-a688-d7502c483710", "file": "modified-bitumen.webp" },
-    { "slot": "/commercial/roof-coatings", "jobId": "ce18ee11-e52e-487a-86e2-e096593b4f3a", "file": "roof-coating-application.webp" },
-    { "slot": "/commercial/roof-maintenance", "jobId": "a82e9255-bd34-4efd-b657-04fe13b9503e", "file": "roof-maintenance-inspection.webp" },
-    { "slot": "/commercial/roof-replacement", "jobId": "a8c1dba3-e4a1-48c3-a8de-8351ab96f9a6", "file": "commercial-roof-replacement.webp" },
-    { "slot": "/commercial/roof-repair", "jobId": "09801b57-d83a-4551-ba76-77769a62f720", "file": "membrane-repair-welding.webp" },
-    { "slot": "/residential/metal-roofing", "jobId": "81016c03-a221-4228-8a51-7b4c2e11284d", "file": "residential-standing-seam-home.webp" },
-    { "slot": "/residential/metal-roofing/standing-seam", "jobId": "204ec61d-66cb-474b-89c2-438ffe3888b8", "file": "standing-seam-closeup.webp" },
-    { "slot": "/residential/metal-roofing/exposed-fastener", "jobId": "44e6cc31-c9d1-4910-80ca-5ce152f9253a", "file": "exposed-fastener-panel-roof.webp" },
-    { "slot": "/commercial/metal-roofing", "jobId": "ab0fb32a-6746-4dd7-802b-8834a4dc6e12", "file": "commercial-metal-building.webp" },
-    { "slot": "/commercial/metal-roofing/standing-seam", "jobId": "02fb0a26-ce2d-4e79-8cd4-6eb037f59bf2", "file": "architectural-standing-seam.webp" },
-    { "slot": "/commercial/metal-roofing/r-panel", "jobId": "3cfa630b-a688-4046-a8c9-eb6310d9e4c9", "file": "r-panel-roof.webp" },
-    { "slot": "/commercial/metal-roofing/pbr-panel", "jobId": "307b6d75-3f2a-4f7f-a33a-2d4c6607b03c", "file": "pbr-panel-building.webp" },
-    { "slot": "/commercial/metal-roofing/structural-metal", "jobId": "fa742543-01bf-47ca-a0e7-649e6fd10e09", "file": "pre-engineered-steel-building.webp" },
-    { "slot": "/residential/gutters", "jobId": "52149819-6b5c-41dd-946d-001cb38b4813", "file": "seamless-gutter-installation.webp" },
-    { "slot": "/residential/leaf-guard", "jobId": "06da31f1-e910-4eac-9ee3-f21a8260d301", "file": "leaf-guard-mesh.webp" },
-    { "slot": "/residential/vinyl-siding", "jobId": "47b4f54e-98dd-4398-b259-d442b3cc2d33", "file": "vinyl-siding-home.webp" },
-    { "slot": "/residential/fiber-cement-siding", "jobId": "27d8771b-f48a-4746-b399-62ea0aef71bc", "file": "fiber-cement-siding.webp" },
-    { "slot": "/residential/fascia", "jobId": "6cb398b2-0241-4a92-be33-f179730ae29b", "file": "fascia-capping.webp" },
-    { "slot": "/residential/soffit", "jobId": "fb597dd6-b950-47de-a5f8-2a237b7ba8a4", "file": "vented-soffit.webp" },
-    { "slot": "/residential/ventilation", "jobId": "dfe44710-3aa8-446c-a0a3-7073c6c1ab33", "file": "ridge-vent.webp" },
-    { "slot": "/commercial/industries/schools", "jobId": "a123936b-71a5-47d8-b4f4-5419cfe282e2", "file": "school-building.webp" },
-    { "slot": "/commercial/industries/churches", "jobId": "7e2ef095-1a2d-4925-ba48-9b732b59dd6e", "file": "church-building.webp" },
-    { "slot": "/commercial/industries/apartments", "jobId": "359a9f68-2e9e-4539-9715-7a575969d1a9", "file": "apartment-complex.webp" },
-    { "slot": "/commercial/industries/industrial", "jobId": "c5b603b3-1b19-4e59-896a-cab6f860b89d", "file": "manufacturing-facility.webp" },
-    { "slot": "/commercial/industries/warehouses", "jobId": "efcad5e8-e202-47b7-b06d-1c5161a27119", "file": "distribution-warehouse.webp" },
-    { "slot": "/commercial/industries/municipal", "jobId": "24770383-83e0-4c5f-94be-d22ba6cdcc0e", "file": "municipal-building.webp" }
-  ]
+    {
+      "slot": "/commercial/tpo",
+      "jobId": "b18601c2-7ce2-492e-9c67-86617b851fae",
+      "file": "tpo-membrane.webp",
+      "note": "re-roll 2026-07-05 (first attempt rejected in QA)"
+    },
+    {
+      "slot": "/commercial/epdm",
+      "jobId": "0ee162a2-c6ba-4beb-9359-ea37443414bc",
+      "file": "epdm-roof.webp"
+    },
+    {
+      "slot": "/commercial/pvc",
+      "jobId": "f98ca0fd-0305-4266-aff4-52364de2880a",
+      "file": "pvc-membrane.webp"
+    },
+    {
+      "slot": "/commercial/modified-bitumen",
+      "jobId": "392a9b62-fb1e-44c9-a688-d7502c483710",
+      "file": "modified-bitumen.webp"
+    },
+    {
+      "slot": "/commercial/roof-coatings",
+      "jobId": "f95b8299-e855-4aa0-ab93-6ca729261a08",
+      "file": "roof-coating-application.webp",
+      "note": "re-roll 2026-07-05 (first attempt rejected in QA)"
+    },
+    {
+      "slot": "/commercial/roof-maintenance",
+      "jobId": "a82e9255-bd34-4efd-b657-04fe13b9503e",
+      "file": "roof-maintenance-inspection.webp"
+    },
+    {
+      "slot": "/commercial/roof-replacement",
+      "jobId": "e28a63f5-c28d-42fd-9bab-2a6151223be8",
+      "file": "commercial-roof-replacement.webp",
+      "note": "re-roll 2026-07-05 (first attempt rejected in QA)"
+    },
+    {
+      "slot": "/commercial/roof-repair",
+      "jobId": "09801b57-d83a-4551-ba76-77769a62f720",
+      "file": "membrane-repair-welding.webp"
+    },
+    {
+      "slot": "/residential/metal-roofing",
+      "jobId": "81016c03-a221-4228-8a51-7b4c2e11284d",
+      "file": "residential-standing-seam-home.webp"
+    },
+    {
+      "slot": "/residential/metal-roofing/standing-seam",
+      "jobId": "204ec61d-66cb-474b-89c2-438ffe3888b8",
+      "file": "standing-seam-closeup.webp"
+    },
+    {
+      "slot": "/residential/metal-roofing/exposed-fastener",
+      "jobId": "44e6cc31-c9d1-4910-80ca-5ce152f9253a",
+      "file": "exposed-fastener-panel-roof.webp"
+    },
+    {
+      "slot": "/commercial/metal-roofing",
+      "jobId": "ab0fb32a-6746-4dd7-802b-8834a4dc6e12",
+      "file": "commercial-metal-building.webp"
+    },
+    {
+      "slot": "/commercial/metal-roofing/standing-seam",
+      "jobId": "02fb0a26-ce2d-4e79-8cd4-6eb037f59bf2",
+      "file": "architectural-standing-seam.webp"
+    },
+    {
+      "slot": "/commercial/metal-roofing/r-panel",
+      "jobId": "206fbff0-f652-4ded-8589-b1d9bc84e3cd",
+      "file": "r-panel-roof.webp",
+      "note": "re-roll 2026-07-05 (first attempt rejected in QA)"
+    },
+    {
+      "slot": "/commercial/metal-roofing/pbr-panel",
+      "jobId": "ad09ba1a-ca76-4b57-b518-3d6ba8d6c11c",
+      "file": "pbr-panel-building.webp",
+      "note": "re-roll 2026-07-05 (first attempt rejected in QA)"
+    },
+    {
+      "slot": "/commercial/metal-roofing/structural-metal",
+      "jobId": "fa742543-01bf-47ca-a0e7-649e6fd10e09",
+      "file": "pre-engineered-steel-building.webp"
+    },
+    {
+      "slot": "/residential/gutters",
+      "jobId": "52149819-6b5c-41dd-946d-001cb38b4813",
+      "file": "seamless-gutter-installation.webp"
+    },
+    {
+      "slot": "/residential/leaf-guard",
+      "jobId": "06da31f1-e910-4eac-9ee3-f21a8260d301",
+      "file": "leaf-guard-mesh.webp"
+    },
+    {
+      "slot": "/residential/vinyl-siding",
+      "jobId": "47b4f54e-98dd-4398-b259-d442b3cc2d33",
+      "file": "vinyl-siding-home.webp"
+    },
+    {
+      "slot": "/residential/fiber-cement-siding",
+      "jobId": "27d8771b-f48a-4746-b399-62ea0aef71bc",
+      "file": "fiber-cement-siding.webp"
+    },
+    {
+      "slot": "/residential/fascia",
+      "jobId": "6cb398b2-0241-4a92-be33-f179730ae29b",
+      "file": "fascia-capping.webp"
+    },
+    {
+      "slot": "/residential/soffit",
+      "jobId": "fb597dd6-b950-47de-a5f8-2a237b7ba8a4",
+      "file": "vented-soffit.webp"
+    },
+    {
+      "slot": "/residential/ventilation",
+      "jobId": "dfe44710-3aa8-446c-a0a3-7073c6c1ab33",
+      "file": "ridge-vent.webp"
+    },
+    {
+      "slot": "/commercial/industries/schools",
+      "jobId": "a123936b-71a5-47d8-b4f4-5419cfe282e2",
+      "file": "school-building.webp"
+    },
+    {
+      "slot": "/commercial/industries/churches",
+      "jobId": "7e2ef095-1a2d-4925-ba48-9b732b59dd6e",
+      "file": "church-building.webp"
+    },
+    {
+      "slot": "/commercial/industries/apartments",
+      "jobId": "359a9f68-2e9e-4539-9715-7a575969d1a9",
+      "file": "apartment-complex.webp"
+    },
+    {
+      "slot": "/commercial/industries/industrial",
+      "jobId": "c5b603b3-1b19-4e59-896a-cab6f860b89d",
+      "file": "manufacturing-facility.webp"
+    },
+    {
+      "slot": "/commercial/industries/warehouses",
+      "jobId": "efcad5e8-e202-47b7-b06d-1c5161a27119",
+      "file": "distribution-warehouse.webp"
+    },
+    {
+      "slot": "/commercial/industries/municipal",
+      "jobId": "24770383-83e0-4c5f-94be-d22ba6cdcc0e",
+      "file": "municipal-building.webp"
+    }
+  ],
+  "_placed": "All 29 slots filled in src/content/service-images.ts on 2026-07-05; files live in public/images/services/."
 }

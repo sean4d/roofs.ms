@@ -21,7 +21,10 @@ import { stockPhotos } from "@/content/stock-photos";
  * `null` = no honest imagery exists yet; the card renders the clean icon
  * treatment. INTEGRITY RULE: never present sourced/stock photography as
  * Southeast Roofing project work — keep alt text descriptive and generic
- * unless the photo is genuinely ours.
+ * unless the photo is genuinely ours. The /images/services/ assets are
+ * AI-generated illustrative images (owner's Higgsfield account, 2026-07-05
+ * — see docs/higgsfield-manifest.json); they are never captioned as
+ * completed Southeast Roofing work.
  */
 
 export interface ServiceImage {
@@ -47,16 +50,46 @@ export const serviceImages: Record<string, ServiceImage | null> = {
     src: stockPhotos.rooferInstalling.src,
     alt: stockPhotos.rooferInstalling.alt,
   },
-  "/residential/metal-roofing": null, // [NEEDS: residential metal photo]
-  "/residential/metal-roofing/standing-seam": null, // [NEEDS: standing seam photo]
-  "/residential/metal-roofing/exposed-fastener": null, // [NEEDS: exposed fastener photo]
-  "/residential/gutters": null, // [NEEDS: seamless gutter installation photo]
-  "/residential/leaf-guard": null, // [NEEDS: leaf guard close-up photo]
-  "/residential/vinyl-siding": null, // [NEEDS: vinyl siding photo]
-  "/residential/fiber-cement-siding": null, // [NEEDS: fiber cement siding photo]
-  "/residential/fascia": null, // [NEEDS: fascia installation photo]
-  "/residential/soffit": null, // [NEEDS: soffit installation photo]
-  "/residential/ventilation": null, // [NEEDS: ridge vent close-up photo]
+  "/residential/metal-roofing": {
+    src: "/images/services/residential-standing-seam-home.webp",
+    alt: "Farmhouse-style home with a charcoal standing seam metal roof and wraparound porch",
+  },
+  "/residential/metal-roofing/standing-seam": {
+    src: "/images/services/standing-seam-closeup.webp",
+    alt: "Close-up of standing seam metal roof panels with concealed fasteners",
+  },
+  "/residential/metal-roofing/exposed-fastener": {
+    src: "/images/services/exposed-fastener-panel-roof.webp",
+    alt: "Red exposed-fastener ribbed metal panel roof on a country home",
+  },
+  "/residential/gutters": {
+    src: "/images/services/seamless-gutter-installation.webp",
+    alt: "White seamless aluminum gutter and downspout on a brick home",
+  },
+  "/residential/leaf-guard": {
+    src: "/images/services/leaf-guard-mesh.webp",
+    alt: "Mesh gutter guard keeping leaves out of a gutter beneath a shingle roof edge",
+  },
+  "/residential/vinyl-siding": {
+    src: "/images/services/vinyl-siding-home.webp",
+    alt: "White vinyl lap siding on a home exterior",
+  },
+  "/residential/fiber-cement-siding": {
+    src: "/images/services/fiber-cement-siding.webp",
+    alt: "Sage green fiber cement lap siding with wood-grain texture",
+  },
+  "/residential/fascia": {
+    src: "/images/services/fascia-capping.webp",
+    alt: "White aluminum fascia capping where the roofline meets the gutter",
+  },
+  "/residential/soffit": {
+    src: "/images/services/vented-soffit.webp",
+    alt: "Vented soffit panels under a home's eave",
+  },
+  "/residential/ventilation": {
+    src: "/images/services/ridge-vent.webp",
+    alt: "Shingle-over ridge vent running along the peak of an architectural shingle roof",
+  },
 
   /* ── Storm ───────────────────────────────────────────────────── */
   "/storm-damage": {
@@ -77,32 +110,84 @@ export const serviceImages: Record<string, ServiceImage | null> = {
     src: stockPhotos.commercialAerial.src,
     alt: stockPhotos.commercialAerial.alt,
   },
-  // Aerial of white membrane roofs — honest generic for TPO until a
-  // dedicated membrane close-up is supplied
   "/commercial/tpo": {
-    src: stockPhotos.commercialAerial.src,
-    alt: stockPhotos.commercialAerial.alt,
+    src: "/images/services/tpo-membrane.webp",
+    alt: "White TPO membrane roof with welded seams on a commercial building",
   },
-  "/commercial/epdm": null, // [NEEDS: black EPDM roof photo]
-  "/commercial/pvc": null, // [NEEDS: white PVC roof photo]
-  "/commercial/modified-bitumen": null, // [NEEDS: mod-bit roof photo]
-  "/commercial/roof-coatings": null, // [NEEDS: coating application photo]
-  "/commercial/roof-maintenance": null, // [NEEDS: rooftop inspection photo]
-  "/commercial/roof-replacement": null, // [NEEDS: commercial reroof photo]
-  "/commercial/roof-repair": null, // [NEEDS: commercial repair photo]
-  "/commercial/metal-roofing": null, // [NEEDS: commercial metal photo]
-  "/commercial/metal-roofing/standing-seam": null,
-  "/commercial/metal-roofing/r-panel": null,
-  "/commercial/metal-roofing/pbr-panel": null,
-  "/commercial/metal-roofing/structural-metal": null,
+  "/commercial/epdm": {
+    src: "/images/services/epdm-roof.webp",
+    alt: "Dark EPDM membrane on a commercial flat roof with rooftop units",
+  },
+  "/commercial/pvc": {
+    src: "/images/services/pvc-membrane.webp",
+    alt: "White PVC membrane roof on a commercial building",
+  },
+  "/commercial/modified-bitumen": {
+    src: "/images/services/modified-bitumen.webp",
+    alt: "Granulated modified bitumen roofing on a commercial flat roof",
+  },
+  "/commercial/roof-coatings": {
+    src: "/images/services/roof-coating-application.webp",
+    alt: "Roller applying bright white silicone coating on a commercial roof",
+  },
+  "/commercial/roof-maintenance": {
+    src: "/images/services/roof-maintenance-inspection.webp",
+    alt: "Technician inspecting a white commercial flat roof",
+  },
+  "/commercial/roof-replacement": {
+    src: "/images/services/commercial-roof-replacement.webp",
+    alt: "Commercial flat roof mid-replacement, old dark membrane beside new white membrane",
+  },
+  "/commercial/roof-repair": {
+    src: "/images/services/membrane-repair-welding.webp",
+    alt: "Heat-welding a repair patch on a white membrane roof",
+  },
+  "/commercial/metal-roofing": {
+    src: "/images/services/commercial-metal-building.webp",
+    alt: "Commercial building with a light gray metal roof",
+  },
+  "/commercial/metal-roofing/standing-seam": {
+    src: "/images/services/architectural-standing-seam.webp",
+    alt: "Curved architectural standing seam metal roof on a modern commercial building",
+  },
+  "/commercial/metal-roofing/r-panel": {
+    src: "/images/services/r-panel-roof.webp",
+    alt: "Ribbed R-panel metal roof on a workshop building",
+  },
+  "/commercial/metal-roofing/pbr-panel": {
+    src: "/images/services/pbr-panel-building.webp",
+    alt: "Metal building with tan PBR panel roof and walls",
+  },
+  "/commercial/metal-roofing/structural-metal": {
+    src: "/images/services/pre-engineered-steel-building.webp",
+    alt: "Pre-engineered steel building with a full metal roof and wall system",
+  },
 
   /* ── Industries — photos should match the building type ─────── */
-  "/commercial/industries/schools": null, // [NEEDS: school building photo]
-  "/commercial/industries/churches": null, // [NEEDS: church photo]
-  "/commercial/industries/apartments": null, // [NEEDS: apartment complex photo]
-  "/commercial/industries/industrial": null, // [NEEDS: industrial facility photo]
-  "/commercial/industries/warehouses": null, // [NEEDS: warehouse photo]
-  "/commercial/industries/municipal": null, // [NEEDS: civic building photo]
+  "/commercial/industries/schools": {
+    src: "/images/services/school-building.webp",
+    alt: "Single-story brick school building with covered walkways",
+  },
+  "/commercial/industries/churches": {
+    src: "/images/services/church-building.webp",
+    alt: "Brick church with a steep sanctuary roof and white steeple",
+  },
+  "/commercial/industries/apartments": {
+    src: "/images/services/apartment-complex.webp",
+    alt: "Garden-style apartment buildings with architectural shingle roofs",
+  },
+  "/commercial/industries/industrial": {
+    src: "/images/services/manufacturing-facility.webp",
+    alt: "Manufacturing facility with a metal roof and tall bay doors",
+  },
+  "/commercial/industries/warehouses": {
+    src: "/images/services/distribution-warehouse.webp",
+    alt: "Distribution warehouse with loading docks and a large flat roof",
+  },
+  "/commercial/industries/municipal": {
+    src: "/images/services/municipal-building.webp",
+    alt: "Brick civic building with columns and a flagpole",
+  },
 };
 
 /** Look up a card image by route path (null when awaiting photography). */
