@@ -1,11 +1,8 @@
 import {
   CalendarClock,
-  CloudRain,
   Droplets,
-  Home,
   Layers,
   Leaf,
-  Paintbrush,
   TriangleAlert,
   Waves,
   Wind,
@@ -131,217 +128,7 @@ export const exteriorServices: ServiceContent[] = [
     ],
   },
 
-  /* ------------------------------------------------------------------ */
-  /* Vinyl siding                                                        */
-  /* ------------------------------------------------------------------ */
-  {
-    slug: "vinyl-siding",
-    path: "/residential/vinyl-siding",
-    name: "Vinyl Siding",
-    metaTitle: "Vinyl Siding Installation | South Mississippi",
-    metaDescription:
-      "Vinyl siding installation and replacement for South Mississippi homes — low-maintenance exteriors that stand up to heat, humidity, and storm season.",
-    hero: {
-      eyebrow: "Residential exterior",
-      headline: "Vinyl siding: the low-maintenance exterior",
-      subhead:
-        "No painting, no rot, no termites' favorite meal — vinyl remains the most practical exterior in the South. Installed straight, locked, and flashed correctly, it looks sharp for decades.",
-      chips: ["Never needs paint", "Storm-rated profiles", "Full color range"],
-    },
-    intro: {
-      title: "Practical protection for a humid climate",
-      paragraphs: [
-        "Wood exteriors in South Mississippi fight a losing battle — humidity swells it, sun peels it, and repainting never ends. Vinyl ended that fight for most homeowners: color runs through the material, moisture can't rot it, and washing it is maintenance. Modern profiles have real depth and texture, a long way from the flimsy panels of decades past.",
-        "Like roofing, siding lives or dies on installation. Vinyl expands and contracts more than any other exterior, so it must be hung — nailed loose on the flange, locked course to course, flashed at every window and corner. Siding slapped on tight buckles in the first summer. We install it the way the manufacturer engineered it to move.",
-      ],
-    },
-    signs: {
-      title: "Signs it's time for new siding",
-      items: [
-        {
-          icon: Paintbrush,
-          title: "The repaint cycle is back",
-          text: "Peeling and fading every few years is money that vinyl retires permanently.",
-        },
-        {
-          icon: Wind,
-          title: "Storm-cracked panels",
-          text: "Hail strikes and wind-thrown debris crack aging siding — often an insurance conversation.",
-        },
-        {
-          icon: Droplets,
-          title: "Moisture getting behind",
-          text: "Warped boards, soft spots, or mildew lines mean the envelope is leaking.",
-        },
-        {
-          icon: Home,
-          title: "Curb appeal is dated",
-          text: "New siding transforms a home's face faster than any other exterior project.",
-        },
-      ],
-    },
-    approach: {
-      title: "How we install vinyl siding",
-      steps: [
-        {
-          title: "Inspect what's underneath",
-          text: "Sheathing and moisture barrier checked and corrected — siding is only as good as its base.",
-        },
-        {
-          title: "Profile and color selection",
-          text: "Panel style, texture, and color chosen with real samples against your home.",
-        },
-        {
-          title: "Hung to move",
-          text: "Loose-nailed, locked, and flashed so panels ride thermal swings without buckling.",
-        },
-        {
-          title: "Trim-out and cleanup",
-          text: "Corners, windows, and soffit transitions finished clean; site left spotless.",
-        },
-      ],
-    },
-    faqs: [
-      {
-        question: "How long does vinyl siding last?",
-        answer:
-          "Decades — quality vinyl routinely serves 20–40 years in our climate. Fade resistance has improved dramatically, and the material itself doesn't rot, feed insects, or need paint.",
-      },
-      {
-        question: "Vinyl or fiber cement — how do I choose?",
-        answer:
-          "Vinyl wins on price and zero maintenance; fiber cement wins on impact toughness and a painted-wood look. We install both, so the honest answer comes from your budget and the look you want — see our fiber cement page for the comparison.",
-      },
-      {
-        question: "Does hail damage vinyl siding, and does insurance cover it?",
-        answer:
-          "Hail can crack vinyl, especially in cold snaps, and wind-driven debris does the rest. Storm-damaged siding is commonly part of the same insurance claim as the roof — we document both together.",
-      },
-    ],
-    related: [
-      {
-        label: "Fiber Cement Siding",
-        href: "/residential/fiber-cement-siding",
-        description: "The premium alternative — tougher, paintable, refined.",
-      },
-      {
-        label: "Fascia Replacement",
-        href: "/residential/fascia",
-        description: "Finish the exterior at the roofline too.",
-      },
-      {
-        label: "Storm Damage",
-        href: "/storm-damage",
-        description: "Siding damage is often part of the roof claim.",
-      },
-    ],
-  },
 
-  /* ------------------------------------------------------------------ */
-  /* Fiber cement siding                                                 */
-  /* ------------------------------------------------------------------ */
-  {
-    slug: "fiber-cement-siding",
-    path: "/residential/fiber-cement-siding",
-    name: "Fiber Cement Siding",
-    metaTitle: "Fiber Cement Siding Installation | South Mississippi",
-    metaDescription:
-      "Fiber cement siding for South Mississippi homes — the premium, storm-tough exterior with the look of painted wood and none of the rot.",
-    hero: {
-      eyebrow: "Residential exterior",
-      headline: "Fiber cement: the premium exterior",
-      subhead:
-        "Cement, sand, and cellulose pressed into boards that look like painted wood and shrug off what Mississippi throws at them — hail, humidity, termites, and time.",
-      chips: ["Painted-wood look", "Impact tough", "Fire & pest resistant"],
-    },
-    intro: {
-      title: "Why discerning homeowners step up to fiber cement",
-      paragraphs: [
-        "Fiber cement is what you choose when you want the crisp, substantial look of wood siding without wood's appetite for maintenance. The boards are dense and dimensionally stable — they hold paint far longer than wood, stand up to hail that cracks vinyl, don't burn, and give termites nothing to eat. On a premium home, the depth and shadow lines read unmistakably higher-end.",
-        "The material demands craft: it's heavy, it cuts with dust controls, and it must be gapped, flashed, and fastened to spec or moisture finds its way in. This is exactly the kind of exterior work where installation discipline — the same discipline we bring to roofing — decides how the next twenty years go.",
-      ],
-    },
-    signs: {
-      title: "When fiber cement is the right call",
-      items: [
-        {
-          icon: Home,
-          title: "A long-term home",
-          text: "The premium up front pays back over decades of holding paint and shrugging off weather.",
-        },
-        {
-          icon: TriangleAlert,
-          title: "Hail country toughness",
-          text: "Dense boards resist the impacts that crack vinyl and dent aluminum.",
-        },
-        {
-          icon: Paintbrush,
-          title: "You want real architecture",
-          text: "Deep shadow lines, wood-grain texture, and any paint color you'll ever want.",
-        },
-        {
-          icon: CloudRain,
-          title: "Humidity without rot",
-          text: "Cement-based boards don't swell, rot, or feed mold the way wood does.",
-        },
-      ],
-    },
-    approach: {
-      title: "How we install fiber cement",
-      steps: [
-        {
-          title: "Envelope inspection",
-          text: "Sheathing, moisture barrier, and flashing plan verified before the first board hangs.",
-        },
-        {
-          title: "Board, texture, and color selection",
-          text: "Lap widths, trim packages, and factory-finish colors chosen with real samples.",
-        },
-        {
-          title: "Spec-disciplined installation",
-          text: "Correct gapping, clearances, flashing, and fasteners — the details that keep moisture out for decades.",
-        },
-        {
-          title: "Sealed, painted, finished",
-          text: "Joints sealed and touch-ups completed, with a walkaround before we call it done.",
-        },
-      ],
-    },
-    faqs: [
-      {
-        question: "How much more does fiber cement cost than vinyl?",
-        answer:
-          "Meaningfully more installed — the material is pricier and the labor is more demanding. What you buy is impact toughness, fire resistance, and a premium architectural look. We'll quote both side by side so the trade-off is concrete, not abstract.",
-      },
-      {
-        question: "Does fiber cement need painting?",
-        answer:
-          "Factory-finished boards carry long warranties on the finish and eventually can be repainted — think 10–15+ year cycles rather than wood's constant upkeep. The boards hold paint exceptionally well because they don't swell and shrink like wood.",
-      },
-      {
-        question: "Is it worth it in storm country?",
-        answer:
-          "It's one of the best exteriors for it — dense boards resist hail and wind-borne debris that total lesser sidings, which can also matter to your insurer. Ask about premium credits when you talk to your agent.",
-      },
-    ],
-    related: [
-      {
-        label: "Vinyl Siding",
-        href: "/residential/vinyl-siding",
-        description: "The value alternative — compare honestly.",
-      },
-      {
-        label: "Soffit Replacement",
-        href: "/residential/soffit",
-        description: "Complete the exterior where roof meets wall.",
-      },
-      {
-        label: "Roof Replacement",
-        href: "/residential/roof-replacement",
-        description: "Roof and siding together transform the whole home.",
-      },
-    ],
-  },
 
   /* ------------------------------------------------------------------ */
   /* Fascia                                                              */
@@ -547,11 +334,7 @@ export const exteriorServices: ServiceContent[] = [
         href: "/residential/fascia",
         description: "The roofline board soffit meets at the eave.",
       },
-      {
-        label: "Vinyl Siding",
-        href: "/residential/vinyl-siding",
-        description: "Match the whole exterior while you're at it.",
-      },
+
     ],
   },
 ];

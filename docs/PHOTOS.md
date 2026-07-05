@@ -63,8 +63,6 @@ fill the slots:
 ### Residential exterior
 - [ ] `/residential/gutters` — seamless gutter installation
 - [ ] `/residential/leaf-guard` — guard installed on a gutter (close-up)
-- [ ] `/residential/vinyl-siding` — vinyl siding install or finished wall
-- [ ] `/residential/fiber-cement-siding` — fiber cement lap siding
 - [ ] `/residential/fascia` — fascia board/capping install close-up
 - [ ] `/residential/soffit` — vented soffit panels under an eave
 - [ ] `/residential/ventilation` — ridge vent close-up

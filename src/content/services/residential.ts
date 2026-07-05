@@ -509,14 +509,14 @@ export const residentialServices: ServiceContent[] = [
       eyebrow: "Residential roofing",
       headline: "Seamless gutters, built for Gulf-region rain",
       subhead:
-        "Custom-formed on site in continuous runs — no seams to split, no joints to drip. South Mississippi gets some of the heaviest rainfall in the country, and seamless gutters are what stand between that water and your fascia, siding, and foundation.",
+        "Custom-formed on site in continuous runs — no seams to split, no joints to drip. South Mississippi gets some of the heaviest rainfall in the country, and seamless gutters are what stand between that water and your fascia, walls, and foundation.",
       photo: stockPhotos.residentialHome,
       photoBadge: "Residential exterior",
     },
     intro: {
       title: "The system that protects everything below the roof",
       paragraphs: [
-        "A roof sheds water; gutters decide where it goes. When they're undersized, clogged, or pulling away from the fascia, every heavy storm pours water against your eaves, behind your siding, and into the soil at your foundation. In a climate where multi-inch rain days are routine, that adds up to rotted fascia boards, stained brick, washed-out beds, and settlement cracks.",
+        "A roof sheds water; gutters decide where it goes. When they're undersized, clogged, or pulling away from the fascia, every heavy storm pours water against your eaves, behind your walls, and into the soil at your foundation. In a climate where multi-inch rain days are routine, that adds up to rotted fascia boards, stained brick, washed-out beds, and settlement cracks.",
         "Because we're a roofing company first, we look at gutters as part of the roof system — sized to your actual roof area and pitch, hung with the right fall toward downspouts, and integrated correctly with drip edge and flashing. Replacing your roof? That's the ideal moment to evaluate the gutters too, and we'll give you an honest read on whether yours can stay.",
       ],
     },

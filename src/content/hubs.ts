@@ -88,19 +88,6 @@ export const residentialHub = {
       description: "Stop pine straw clogs for good — and retire the ladder.",
     },
     {
-      icon: Home,
-      label: "Vinyl Siding",
-      href: "/residential/vinyl-siding",
-      description: "The low-maintenance exterior — no painting, no rot.",
-    },
-    {
-      icon: Layers,
-      label: "Fiber Cement Siding",
-      href: "/residential/fiber-cement-siding",
-      description:
-        "The premium, storm-tough exterior with a painted-wood look.",
-    },
-    {
       icon: PanelTop,
       label: "Fascia & Soffit",
       href: "/residential/fascia",

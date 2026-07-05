@@ -55,7 +55,6 @@ export const footerColumns: FooterColumn[] = [
       { label: "Roof Repair", href: "/residential/roof-repair" },
       { label: "Seamless Gutters", href: "/residential/gutters" },
       { label: "Leaf Guard", href: "/residential/leaf-guard" },
-      { label: "Siding", href: "/residential/vinyl-siding" },
       { label: "Fascia & Soffit", href: "/residential/fascia" },
       { label: "Ventilation", href: "/residential/ventilation" },
     ],

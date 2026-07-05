@@ -50,7 +50,7 @@ const RESIDENTIAL_SERVICES: StepOption[] = [
   { value: "Roof repair", label: "Roof repair", hint: "Leak, damage, or wear in one area" },
   { value: "Storm damage / insurance", label: "Storm damage", hint: "Recent storm, possible claim" },
   { value: "Metal roofing", label: "Metal roofing", hint: "New metal roof or conversion" },
-  { value: "Gutters / exterior", label: "Gutters & exterior", hint: "Gutters, leaf guard, siding, fascia" },
+  { value: "Gutters / exterior", label: "Gutters & exterior", hint: "Gutters, leaf guard, fascia & soffit" },
   { value: "Not sure — inspection", label: "Not sure yet", hint: "Have a pro look and tell me straight" },
 ];
 

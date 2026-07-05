@@ -112,7 +112,7 @@ export const learnArticles: LearnArticle[] = [
       { type: "h2", text: "A closer look at Timberline HDZ" },
       {
         type: "p",
-        text: "The shingle we install most often deserves its own tour. GAF's Timberline HDZ tool below shows the colors and construction details up close — useful for picturing a color against your brick or siding before we bring physical samples.",
+        text: "The shingle we install most often deserves its own tour. GAF's Timberline HDZ tool below shows the colors and construction details up close — useful for picturing a color against your brick or trim before we bring physical samples.",
       },
       {
         type: "widget",

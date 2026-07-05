@@ -72,14 +72,6 @@ export const serviceImages: Record<string, ServiceImage | null> = {
     src: "/images/services/leaf-guard-mesh.webp",
     alt: "Mesh gutter guard keeping leaves out of a gutter beneath a shingle roof edge",
   },
-  "/residential/vinyl-siding": {
-    src: "/images/services/vinyl-siding-home.webp",
-    alt: "White vinyl lap siding on a home exterior",
-  },
-  "/residential/fiber-cement-siding": {
-    src: "/images/services/fiber-cement-siding.webp",
-    alt: "Sage green fiber cement lap siding with wood-grain texture",
-  },
   "/residential/fascia": {
     src: "/images/services/fascia-capping.webp",
     alt: "White aluminum fascia capping where the roofline meets the gutter",
