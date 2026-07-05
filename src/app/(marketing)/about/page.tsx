@@ -100,7 +100,7 @@ const credentials = [
 ];
 
 const heroPhoto = projectPhotos.find(
-  (photo) => photo.citySlug === "hattiesburg",
+  (photo) => photo.kind === "completed" && photo.citySlug === "hattiesburg",
 );
 
 export default function AboutPage() {

@@ -13,7 +13,10 @@ import {
 } from "lucide-react";
 
 import { siteConfig } from "@/config/site";
-import { stormPhotos, type StormCategory } from "@/content/photos";
+import {
+  stormPhotos,
+  STORM_CATEGORY_LABELS,
+} from "@/content/photos";
 import { buildMetadata } from "@/lib/seo";
 import { breadcrumbSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -70,21 +73,14 @@ const CHECKLIST = [
   },
 ];
 
-const DAMAGE_LABELS: Record<StormCategory, string> = {
-  "hail-damage": "Hail damage",
-  "wind-damage": "Wind damage",
-  "missing-shingles": "Missing shingles",
-  "tree-damage": "Tree damage",
-  "emergency-tarp": "Emergency tarping",
-  "storm-damage": "General storm damage",
-};
-
-// One real photo per damage category
-const damageCards = Object.entries(DAMAGE_LABELS).map(([category, label]) => ({
-  category,
-  label,
-  photo: stormPhotos.find((photo) => photo.category === category)!,
-}));
+// One real photo per damage category (owner-corrected labels 2026-07-05)
+const damageCards = Object.entries(STORM_CATEGORY_LABELS).map(
+  ([category, label]) => ({
+    category,
+    label,
+    photo: stormPhotos.find((photo) => photo.category === category)!,
+  }),
+);
 
 const RESOURCES = [
   {

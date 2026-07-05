@@ -18,11 +18,18 @@ import { FinalCta } from "@/components/home/final-cta";
  * content/photos.ts — real Southeast Roofing job sites only, never stock.
  */
 
-const cityCount = new Set(projectPhotos.map((photo) => photo.citySlug)).size;
+const completedCount = projectPhotos.filter(
+  (photo) => photo.kind === "completed",
+).length;
+const cityCount = new Set(
+  projectPhotos
+    .filter((photo) => photo.kind === "completed")
+    .map((photo) => photo.citySlug),
+).size;
 
 export const metadata: Metadata = buildMetadata({
   title: "Project Gallery | Real Roofs by Southeast Roofing",
-  description: `Browse ${projectPhotos.length} completed Southeast Roofing projects across ${cityCount} South Mississippi communities, plus real storm-damage documentation from our inspections. No stock photos.`,
+  description: `Browse ${completedCount} completed Southeast Roofing roofs across ${cityCount} South Mississippi communities — filter by shingle line and color — plus real storm-damage documentation. No stock photos.`,
   path: "/projects",
 });
 

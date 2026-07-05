@@ -24,20 +24,20 @@ import type { ServiceContent } from "@/content/services/types";
  * qualitatively. No invented prices, warranty terms, or stats (PRD §0.2).
  */
 
+// One completed roof per city, first four cities (owner-verified labels)
 const replacementGallery = projectPhotos
-  .filter((photo) =>
-    ["hattiesburg", "petal", "gulfport", "jackson"].includes(photo.citySlug),
-  )
+  .filter((photo) => photo.kind === "completed")
   .filter(
     (photo, index, all) =>
       all.findIndex((p) => p.citySlug === photo.citySlug) === index,
-  );
+  )
+  .slice(0, 4);
 
 const repairGallery = [
-  stormPhotos.find((p) => p.category === "missing-shingles"),
   stormPhotos.find((p) => p.category === "wind-damage"),
-  stormPhotos.find((p) => p.category === "tree-damage"),
-  stormPhotos.find((p) => p.category === "emergency-tarp"),
+  stormPhotos.find((p) => p.category === "hail-damage"),
+  stormPhotos.find((p) => p.category === "rotted-decking"),
+  stormPhotos.find((p) => p.category === "aged-components"),
 ].filter((photo) => photo !== undefined);
 
 export const residentialServices: ServiceContent[] = [
@@ -296,13 +296,12 @@ export const residentialServices: ServiceContent[] = [
       description:
         "Real Southeast Roofing projects — from Hattiesburg and Petal to Jackson and the Coast.",
       photos: projectPhotos
-        .filter((photo) =>
-          ["biloxi", "laurel", "meridian", "columbia"].includes(photo.citySlug),
-        )
+        .filter((photo) => photo.kind === "completed")
         .filter(
           (photo, index, all) =>
             all.findIndex((p) => p.citySlug === photo.citySlug) === index,
         )
+        .slice(4, 8)
         .map(({ src, alt }) => ({ src, alt })),
     },
     anatomy: true,

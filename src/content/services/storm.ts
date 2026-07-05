@@ -8,8 +8,10 @@ import type { ServiceContent } from "@/content/services/types";
  * owner-confirmed ([NEEDS: real 24/7 emergency availability]).
  */
 
+// Owner relabel 2026-07-05: no tarping photos remain in the manifest —
+// the emergency page shows the wind damage that drives emergency calls.
 const tarpPhotos = stormPhotos
-  .filter((photo) => photo.category === "emergency-tarp")
+  .filter((photo) => photo.category === "wind-damage")
   .slice(0, 4);
 
 export const emergencyRoofing: ServiceContent = {
@@ -205,8 +207,8 @@ export const insuranceClaims: ServiceContent = {
     photos: [
       stormPhotos.find((p) => p.category === "hail-damage")!,
       stormPhotos.find((p) => p.category === "wind-damage")!,
-      stormPhotos.find((p) => p.category === "missing-shingles")!,
-      stormPhotos.find((p) => p.category === "storm-damage")!,
+      stormPhotos.find((p) => p.category === "rotted-decking")!,
+      stormPhotos.find((p) => p.category === "granular-loss")!,
     ].map(({ src, alt }) => ({ src, alt })),
   },
   faqs: [

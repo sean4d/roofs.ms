@@ -43,7 +43,8 @@ export function CityPage({
   breadcrumbs: BreadcrumbItem[];
 }) {
   const localPhotos = projectPhotos.filter(
-    (photo) => photo.citySlug === cityContent.slug,
+    (photo) =>
+      photo.kind === "completed" && photo.citySlug === cityContent.slug,
   );
   const heroPhoto = localPhotos[0];
 

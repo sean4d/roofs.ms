@@ -135,6 +135,17 @@ export default function StormDamagePage() {
             </StaggerItem>
           ))}
         </StaggerGroup>
+        <div className="mt-10">
+          <Button
+            size="lg"
+            variant="outline"
+            render={<Link href="/projects?c=storm" />}
+            nativeButton={false}
+          >
+            See the full storm response gallery
+            <ArrowRight aria-hidden="true" />
+          </Button>
+        </div>
       </Section>
 
       <ServiceApproach approach={stormHub.process} />

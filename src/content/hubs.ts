@@ -152,8 +152,9 @@ export const stormHub = {
     subhead:
       "Hail cells, straight-line winds, tropical systems — South Mississippi's weather earns its reputation. When your roof takes the hit, one local team handles the whole aftermath: documentation, emergency protection, the insurance claim, and the restoration.",
     photo: {
-      src: stormPhotos.find((p) => p.category === "storm-damage")!.src,
-      alt: stormPhotos.find((p) => p.category === "storm-damage")!.alt,
+      // Owner pick 2026-07-05: storm gallery #21
+      src: stormPhotos.find((p) => p.src.includes("wind-damage-missing-shingles-hattiesburg"))!.src,
+      alt: stormPhotos.find((p) => p.src.includes("wind-damage-missing-shingles-hattiesburg"))!.alt,
     },
     photoBadge: "Storm damage inspection",
   },
@@ -162,25 +163,28 @@ export const stormHub = {
       icon: CloudLightning,
       title: "Hail damage",
       text: "Bruised shingles and dented metal that may not leak for months — but shorten the roof's life and are time-sensitive for claims.",
-      photo: stormPhotos.find((p) => p.category === "hail-damage")!,
+      photo: stormPhotos.find((p) => p.src.includes("hail-damage-roof-purvis"))!,
     },
     {
       icon: Wind,
       title: "Wind damage",
       text: "Creased, lifted, and missing shingles from straight-line winds and tropical systems — the region's most common storm claim.",
-      photo: stormPhotos.find((p) => p.category === "wind-damage")!,
+      // Owner pick: storm gallery #24
+      photo: stormPhotos.find((p) => p.src.includes("wind-damage-roof-columbia"))!,
     },
     {
       icon: Layers,
       title: "Missing shingles",
       text: "Open spots that let the next rain straight through to the decking. Small to see, urgent to fix.",
-      photo: stormPhotos.find((p) => p.category === "missing-shingles")!,
+      // Owner pick: storm gallery #3
+      photo: stormPhotos.find((p) => p.src.includes("wind-damage-missing-shingles-petal"))!,
     },
     {
       icon: TreePine,
       title: "Tree & debris impact",
       text: "From a limb strike to a trunk through the ridge — structural checks, emergency protection, and repair in the right order.",
-      photo: stormPhotos.find((p) => p.category === "tree-damage")!,
+      // Owner pick: storm gallery #20
+      photo: stormPhotos.find((p) => p.src.includes("rotted-decking-tear-off-hattiesburg-ms-003"))!,
     },
   ],
   process: {

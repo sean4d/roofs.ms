@@ -40,7 +40,11 @@ const breadcrumbs = [
 
 // A quick cross-section of real completed work — one photo per city
 const recentWork = Object.values(
-  Object.fromEntries(projectPhotos.map((photo) => [photo.citySlug, photo])),
+  Object.fromEntries(
+    projectPhotos
+      .filter((photo) => photo.kind === "completed")
+      .map((photo) => [photo.citySlug, photo]),
+  ),
 ).slice(0, 4);
 
 export default function ReviewsPage() {
