@@ -101,7 +101,7 @@ const citiesBatch1: CityContent[] = [
     intro: {
       title: "Ten minutes away, and it shows",
       paragraphs: [
-        "Petal is about the shortest service call we make. From our US-98 office it's a quick run across the Leaf River, which means repairs get scheduled fast, inspections don't wait, and an active leak in Petal is the kind of call we can jump on the same day. The completed roofs in our gallery from Petal neighborhoods are the proof — real addresses, real shingles, real cleanup.",
+        "Petal is about the shortest service call we make. From our US-98 office it's a quick run across the Leaf River, which means repairs get scheduled fast, inspections don't wait, and an active leak in Petal is the kind of call we can jump on the same day. The completed roofs in our gallery from Petal neighborhoods are the proof — real projects, real shingles, real cleanup.",
         "Petal's housing runs from established neighborhoods off Central Avenue to newer construction pushing out toward the Evelyn Gandy Parkway, and the roofing needs run just as wide: twenty-year-old shingle roofs due for honest assessments, growing families adding gutters and ventilation, and the tree-heavy lots that keep our repair crews busy after every windstorm.",
         "Like Hattiesburg across the river, Petal knows real storms — the January 2017 tornado is still fresh memory on both sides of the Leaf. When weather hits, our documentation-first storm process and insurance claim help are ten minutes away, not ninety.",
       ],
@@ -220,7 +220,7 @@ const citiesBatch1: CityContent[] = [
       title: "Roofing where the coast sets the rules",
       paragraphs: [
         "Gulfport roofs live a harder life than roofs an hour north. Salt air works on fasteners and flashing year-round, coastal sun cooks southern exposures, and every June the calendar turns toward hurricane season with names nobody here needs reminding about. Roofing on the Coast means specifying for all of it — wind-rated installation, corrosion-aware metal choices, and honest talk about what different systems endure at the beach versus up in Orange Grove.",
-        "We work Gulfport from Bayou View to North Gulfport and along the Highway 49 spine, and our gallery carries completed Gulfport replacements photographed at real addresses. The drive from Hattiesburg is a straight seventy-minute shot down 49 — close enough for responsive scheduling, far enough that we plan Coast days efficiently and communicate timing straight.",
+        "We work Gulfport from Bayou View to North Gulfport and along the Highway 49 spine, and our gallery carries completed Gulfport replacements photographed on real job sites. The drive from Hattiesburg is a straight seventy-minute shot down 49 — close enough for responsive scheduling, far enough that we plan Coast days efficiently and communicate timing straight.",
         "Katrina rebuilt this city's relationship with roofs, and Zeta in 2020 refreshed the lesson: on the Coast, the roof is the house's first line. Our storm documentation and claim assistance were built for exactly this market — thorough, photographed, and honest about what insurers need to see.",
       ],
     },
@@ -303,7 +303,7 @@ const citiesBatch1: CityContent[] = [
       {
         question: "Do you have completed projects in Biloxi?",
         answer:
-          "Yes — real Biloxi roofs, photographed at real addresses, are in our project gallery. We're not new to the Coast.",
+          "Yes — real Biloxi roofs, photographed on our own job sites, are in our project gallery. We're not new to the Coast.",
       },
       {
         question: "Does salt air really change roofing choices in Biloxi?",
@@ -511,7 +511,7 @@ const citiesBatch1: CityContent[] = [
     intro: {
       title: "Jackson is worth the drive",
       paragraphs: [
-        "Jackson's neighborhoods hold some of Mississippi's best residential architecture — the craftsman streets of Fondren and Belhaven, stately Eastover, and the established curves of Northeast Jackson. Roofs here range from historic steep-slope work to sprawling modern hips, and our completed Jackson projects, photographed at real addresses, show the standard we bring to all of it.",
+        "Jackson's neighborhoods hold some of Mississippi's best residential architecture — the craftsman streets of Fondren and Belhaven, stately Eastover, and the established curves of Northeast Jackson. Roofs here range from historic steep-slope work to sprawling modern hips, and our completed Jackson projects, photographed on real job sites, show the standard we bring to all of it.",
         "The metro sits at our radius's northern edge, and we work it deliberately: inspections and estimates scheduled in efficient metro blocks, materials staged so build days start on time, and the same itemized digital proposals that let a Jackson homeowner scrutinize every line before committing to a contractor from out of town — exactly as they should.",
         "Metro weather earns the attention too. Jackson's hail history is the stuff of insurance legend, and spring supercells track the I-20 corridor regularly. Our storm documentation is built for those claims: thorough, photographed, and credible with every adjuster who reads it.",
       ],
@@ -570,7 +570,7 @@ const citiesBatch1: CityContent[] = [
       title: "East Mississippi's anchor city",
       paragraphs: [
         "Meridian built big when it was Mississippi's largest city, and the legacy shows: ornate rooflines in the historic districts, solid mid-century neighborhoods like Poplar Springs and North Hills, and a downtown whose restoration keeps gaining steam. Roofing the Queen City spans that whole range — steep historic work, straightforward family-home replacements, and the commercial systems that keep downtown's revival dry.",
-        "Our completed Meridian projects are photographed in the gallery at real addresses, and the city marks the northeastern point of our service radius — about eighty-five minutes up Highway 45 from Hattiesburg. We schedule East Mississippi work in dedicated blocks, which keeps our crews efficient and your timeline honest.",
+        "Our completed Meridian projects are photographed in the gallery, and the city marks the northeastern point of our service radius — about eighty-five minutes up Highway 45 from Hattiesburg. We schedule East Mississippi work in dedicated blocks, which keeps our crews efficient and your timeline honest.",
         "Lauderdale County weather splits the difference between Pine Belt and Alabama storm country: spring fronts that mean business, summer downpours, and enough hail history to keep adjusters familiar with the area. Our documentation-first storm process translates perfectly — evidence, photos, and straight answers about whether a claim makes sense.",
       ],
     },

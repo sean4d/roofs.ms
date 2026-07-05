@@ -128,7 +128,7 @@ export default function StormCenterPage() {
               <CloudLightning className="size-4" aria-hidden="true" />
               Storm Center
             </div>
-            <h1 className="mt-5 max-w-2xl font-display text-4xl font-bold sm:text-5xl">
+            <h1 className="mt-5 max-w-2xl font-display text-4xl font-bold text-white sm:text-5xl">
               When the weather turns, start here
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-steel-100">

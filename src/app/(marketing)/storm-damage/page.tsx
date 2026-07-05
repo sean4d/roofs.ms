@@ -7,6 +7,7 @@ import { stormHub } from "@/content/hubs";
 import { buildMetadata } from "@/lib/seo";
 import { breadcrumbSchema, faqSchema, serviceSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/json-ld";
+import { Button } from "@/components/ui/button";
 import { ServiceHero } from "@/components/services/service-hero";
 import { ServiceApproach } from "@/components/services/service-sections";
 import { ServiceFaq } from "@/components/services/service-faq";
@@ -44,6 +45,27 @@ export default function StormDamagePage() {
       />
 
       <ServiceHero hero={stormHub.hero} breadcrumbs={breadcrumbs} />
+
+      {/* Storm Center strip (owner request 2026-07-05: make it findable) */}
+      <section className="border-b border-border bg-navy-950">
+        <div className="container-site flex flex-col items-start justify-between gap-4 py-6 sm:flex-row sm:items-center">
+          <p className="text-sm leading-relaxed text-steel-100 sm:text-base">
+            <span className="font-display font-bold text-white">
+              Storm Center:
+            </span>{" "}
+            live Mississippi weather alerts, the first-hours checklist, and
+            real damage photos — all in one place.
+          </p>
+          <Button
+            className="shrink-0 bg-white text-primary hover:bg-steel-100"
+            render={<Link href="/storm-center" />}
+            nativeButton={false}
+          >
+            Open the Storm Center
+            <ArrowRight aria-hidden="true" />
+          </Button>
+        </div>
+      </section>
 
       {/* Two paths — emergency + insurance, the hub's primary job */}
       <Section>

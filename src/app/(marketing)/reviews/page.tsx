@@ -5,6 +5,7 @@ import { ArrowRight, ExternalLink, ShieldCheck, Star } from "lucide-react";
 
 import { siteConfig } from "@/config/site";
 import { projectPhotos } from "@/content/photos";
+import { googleReviews } from "@/content/reviews";
 import { buildMetadata } from "@/lib/seo";
 import { breadcrumbSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -18,16 +19,17 @@ import { Button } from "@/components/ui/button";
 import { FinalCta } from "@/components/home/final-cta";
 
 /**
- * Reviews page (PRD §2, §13 Phase 6). Integrity rule is absolute here:
- * no pasted quotes, no invented ratings, no AggregateRating schema until
- * real reviews + permission are supplied — everything links out to records
- * we cannot edit (Google, BBB, GAF).
+ * Reviews page (PRD §2, §13 Phase 6). Real reviews only: quotes are
+ * transcribed verbatim from the owner's Google profile (permission
+ * granted 2026-07-05, see content/reviews.ts) and every claim links to
+ * a record we cannot edit (Google, BBB, GAF). No AggregateRating
+ * schema — self-collected review markup is against Google guidelines.
  */
 
 export const metadata: Metadata = buildMetadata({
   title: "Reviews | Southeast Roofing | Verify Us Yourself",
   description:
-    "Read Southeast Roofing's 5-star Google reviews at the source, verify our GAF certification and BBB A rating, and see the real roofs behind the reputation.",
+    "Real 5-star Google reviews from Southeast Roofing customers, quoted verbatim and verifiable at the source — plus our GAF certification and BBB A rating.",
   path: "/reviews",
 });
 
@@ -78,10 +80,10 @@ export default function ReviewsPage() {
               Our reputation lives where we can&apos;t edit it
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600">
-              You won&apos;t find hand-picked quotes on this page. Reviews only
-              mean something when you can verify them — so we send you straight
-              to the source: our live Google profile, where every review is
-              written by a real customer and we can&apos;t touch a word of it.
+              Every quote below is copied word-for-word from our live Google
+              profile — where reviews are written by real customers and we
+              can&apos;t touch a word of them. Don&apos;t take our page&apos;s
+              word for it either: the source is one tap away.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Button
@@ -115,7 +117,61 @@ export default function ReviewsPage() {
       {/* Verification badges (shared with homepage) */}
       <ReviewsTrust />
 
-      {/* Why no pasted quotes */}
+      {/* Real Google reviews — republished verbatim with owner permission */}
+      <Section>
+        <SectionHeading
+          eyebrow="In their words"
+          title="What customers wrote on Google"
+          description="Quoted word-for-word from our public Google reviews — typos and all, because editing reviews is where trust dies. Every one is verifiable on our live profile."
+        />
+        <StaggerGroup className="mt-12 columns-1 gap-5 md:columns-2 lg:columns-3 [&>*]:mb-5 [&>*]:break-inside-avoid">
+          {googleReviews.map((review) => (
+            <StaggerItem
+              key={review.name + review.when}
+              className="shadow-premium rounded-2xl border border-border bg-white p-6"
+            >
+              <div
+                className="flex gap-0.5"
+                role="img"
+                aria-label="5 out of 5 stars"
+              >
+                {Array.from({ length: 5 }, (_, i) => (
+                  <Star
+                    key={i}
+                    className="size-4 fill-amber-400 text-amber-400"
+                    aria-hidden="true"
+                  />
+                ))}
+              </div>
+              <p className="mt-3 leading-relaxed text-slate-600">
+                &ldquo;{review.text}&rdquo;
+              </p>
+              <div className="mt-4 flex items-baseline justify-between gap-3">
+                <p className="font-semibold text-navy-900">{review.name}</p>
+                <p className="text-xs text-slate-400">{review.when}</p>
+              </div>
+              {review.services && (
+                <p className="mt-1.5 text-xs text-slate-500">
+                  {review.services}
+                </p>
+              )}
+            </StaggerItem>
+          ))}
+        </StaggerGroup>
+        <Reveal className="mt-10 text-center">
+          <a
+            href={siteConfig.links.googleBusiness}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 font-semibold text-navy-900 underline-offset-4 hover:underline"
+          >
+            Verify every word on our Google profile
+            <ExternalLink className="size-4" aria-hidden="true" />
+          </a>
+        </Reveal>
+      </Section>
+
+      {/* Our review policy */}
       <Section tone="navy">
         <div className="mx-auto max-w-3xl text-center">
           <Reveal>
@@ -123,15 +179,14 @@ export default function ReviewsPage() {
               Our policy
             </p>
             <h2 className="mt-3 font-display text-3xl font-bold text-white sm:text-4xl">
-              Why we don&apos;t paste quotes here
+              Quoted exactly, verifiable always
             </h2>
             <p className="mt-5 text-lg leading-relaxed text-steel-100">
-              Any contractor can fill a page with glowing testimonials — you
-              have no way of knowing which are real, which are edited, and
-              which are missing. On our Google profile, reviews are tied to
-              real accounts, shown in full, good and bad, and we can&apos;t
-              cherry-pick or reword a single one. That&apos;s the standard we
-              think you should hold every roofer to.
+              Every quote above appears word-for-word as the customer wrote it
+              on Google, where reviews are tied to real accounts and we
+              can&apos;t edit, reword, or bury a single one. Read them at the
+              source, good and bad — that&apos;s the standard we think you
+              should hold every roofer to.
             </p>
           </Reveal>
         </div>
@@ -141,7 +196,7 @@ export default function ReviewsPage() {
       <Section>
         <SectionHeading
           eyebrow="The work behind the words"
-          title="Real roofs, real addresses"
+          title="Real roofs. Real Southeast Roofing projects."
           description="Reviews tell you how the job went. The gallery shows you what we left behind — every photo from a genuine Southeast Roofing job site."
         />
         <StaggerGroup className="mt-12 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">

@@ -85,7 +85,7 @@ export const citiesBatch2: CityContent[] = [
       title: "Small town, serious growth",
       paragraphs: [
         "Sumrall has become one of Lamar County's favorite places to build — good schools, the Longleaf Trace running through town, and country quiet inside a half-hour of Hattiesburg. That growth shows up on rooflines: newer subdivisions with builder-grade shingles reaching their first replacement cycle, alongside established homes and working farm buildings that have seen decades of Pine Belt weather.",
-        "We've completed work in Sumrall — photographed at a real address here — and Highway 42 makes it an easy twenty-five minute run from our office. Shingle replacements and repairs lead the schedule, with metal roofing a steady favorite for the shops, barns, and country homes on acreage.",
+        "We've completed work in Sumrall — photographed on the job here — and Highway 42 makes it an easy twenty-five minute run from our office. Shingle replacements and repairs lead the schedule, with metal roofing a steady favorite for the shops, barns, and country homes on acreage.",
       ],
     },
     localAreas: {
@@ -590,7 +590,7 @@ export const citiesBatch2: CityContent[] = [
       title: "A town that cares how things look",
       paragraphs: [
         "Ocean Springs is the Coast at its most personal — Walter Anderson's town, a walkable downtown of galleries and porches, and neighborhoods where century-old cottages sit under live oaks older still. Roofing here is character work: steep little gables, tree canopy that never quits, and streetscapes where a clumsy roofline would be noticed by everyone at the farmers market.",
-        "We've completed projects in Ocean Springs, photographed at real addresses, and we treat the eighty-five minute run as the cost of working somewhere worth it. The oak canopy sets the maintenance rhythm — limbs, leaves, and shade-fed algae — while the Gulf sets the stakes: this is Katrina country, where wind-rated installation is simply the standard.",
+        "We've completed projects in Ocean Springs, photographed on our own job sites, and we treat the eighty-five minute run as the cost of working somewhere worth it. The oak canopy sets the maintenance rhythm — limbs, leaves, and shade-fed algae — while the Gulf sets the stakes: this is Katrina country, where wind-rated installation is simply the standard.",
       ],
     },
     localAreas: {

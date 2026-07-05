@@ -100,7 +100,7 @@ export function Hero() {
               </Button>
             </div>
 
-            <div className="mt-7 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+            <div className="mt-7 flex flex-wrap items-center gap-x-8 gap-y-3">
               <PhoneLink className="text-white" />
               {siteConfig.email && (
                 <a
@@ -120,7 +120,8 @@ export function Hero() {
           Horizontal on desktop, clean two-column stack on mobile.
         */}
         <Reveal delay={0.25}>
-          <ul className="mt-10 grid grid-cols-2 gap-x-5 gap-y-3 border-t border-white/15 pt-7 sm:flex sm:flex-wrap sm:items-center sm:gap-x-7 lg:mt-14">
+          {/* Even 4-per-line grid on desktop (owner request 2026-07-05) */}
+          <ul className="mt-10 grid grid-cols-2 gap-x-5 gap-y-3.5 border-t border-white/15 pt-7 md:grid-cols-4 lg:mt-14">
             {heroTrustBar.map((item) => (
               <li
                 key={item.label}

@@ -349,9 +349,9 @@ export const systemsSection = {
  */
 export const featuredProjects = {
   eyebrow: "Recent work",
-  title: "Real roofs, real addresses",
+  title: "Real roofs. Real Southeast Roofing projects.",
   description:
-    "Every photo in our project gallery is a genuine Southeast Roofing job — completed roofs from Hattiesburg to Jackson, Meridian, and the Gulf Coast. Real jobs, real addresses.",
+    "Every photo in our project gallery is a genuine Southeast Roofing job — completed roofs from Hattiesburg to Jackson, Meridian, and the Gulf Coast. Real jobs, really ours.",
   cta: { label: "Browse recent projects", href: "/projects" },
   cities: [
     "Hattiesburg",

@@ -10,6 +10,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { ServiceHero } from "@/components/services/service-hero";
 import { ServiceApproach } from "@/components/services/service-sections";
 import { ServiceFaq } from "@/components/services/service-faq";
+import { FinancingCalculator } from "@/components/financing/financing-calculator";
 import { Section } from "@/components/shared/section";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 import { Reveal } from "@/components/motion/reveal";
@@ -44,6 +45,13 @@ export default function FinancingPage() {
       />
 
       <ServiceHero hero={financingHub.hero} breadcrumbs={breadcrumbs} />
+
+      {/* Payment estimator — real GoodLeap terms only (owner-supplied 2026-07-05) */}
+      <Section tone="surface">
+        <div className="mx-auto max-w-3xl">
+          <FinancingCalculator />
+        </div>
+      </Section>
 
       <ServiceApproach approach={financingHub.steps} />
 
