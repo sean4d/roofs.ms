@@ -1,13 +1,18 @@
 import type { MetadataRoute } from "next";
 
-import { ICON_BACKGROUND } from "@/config/brand-icon";
 import { siteConfig } from "@/config/site";
 
 /**
  * Web app manifest (PRD §10.5). Makes the site installable and — crucially —
  * supplies the icons Android/Chrome use for the "Add to Home Screen" / installed
- * PWA tile. iOS pulls its home-screen icon from `apple-icon` instead.
+ * PWA tile. iOS pulls its home-screen icon from `apple-icon.png` instead.
+ *
+ * Icons are the real Southeast Roofing emblem composited onto a white tile
+ * (public/icons/*, generated from public/images/brand/southeast-roofing-mark.png).
  */
+
+/** Brand navy (globals.css --primary) for the browser/status-bar chrome. */
+const THEME_COLOR = "#123b63";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
@@ -16,23 +21,23 @@ export default function manifest(): MetadataRoute.Manifest {
     description: siteConfig.description,
     start_url: "/",
     display: "standalone",
-    background_color: ICON_BACKGROUND,
-    theme_color: ICON_BACKGROUND,
+    background_color: "#ffffff",
+    theme_color: THEME_COLOR,
     icons: [
       {
-        src: "/manifest-icons/192.png",
+        src: "/icons/icon-192.png",
         sizes: "192x192",
         type: "image/png",
         purpose: "any",
       },
       {
-        src: "/manifest-icons/512.png",
+        src: "/icons/icon-512.png",
         sizes: "512x512",
         type: "image/png",
         purpose: "any",
       },
       {
-        src: "/manifest-icons/512.png",
+        src: "/icons/icon-maskable-512.png",
         sizes: "512x512",
         type: "image/png",
         purpose: "maskable",
