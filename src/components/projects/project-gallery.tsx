@@ -152,7 +152,9 @@ function GalleryInner() {
           badge: `${p.city}, MS`,
           detail: p.manufacturer
             ? `${p.manufacturer} ${p.line} · ${p.color}`
-            : undefined,
+            : p.material === "metal"
+              ? "29-gauge Galvalume metal"
+              : undefined,
         }));
     }
     if (collection === "progress") {
