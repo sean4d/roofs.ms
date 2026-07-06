@@ -114,11 +114,11 @@ export const serviceImages: Record<string, ServiceImage | null> = {
   },
   "/commercial/pvc": {
     src: "/images/services/pvc-membrane.webp",
-    alt: "White PVC membrane roof on a commercial building",
+    alt: "White PVC single-ply membrane roof in large welded sheets on a commercial building",
   },
   "/commercial/modified-bitumen": {
     src: "/images/services/modified-bitumen.webp",
-    alt: "Granulated modified bitumen roofing on a commercial flat roof",
+    alt: "Modified bitumen membrane roof with a reflective cap sheet on a commercial building",
   },
   "/commercial/roof-coatings": {
     src: "/images/services/roof-coating-application.webp",
@@ -130,7 +130,7 @@ export const serviceImages: Record<string, ServiceImage | null> = {
   },
   "/commercial/roof-replacement": {
     src: "/images/services/commercial-roof-replacement.webp",
-    alt: "Commercial flat roof mid-replacement, old dark membrane beside new white membrane",
+    alt: "Roofer torch-applying a modified bitumen membrane during a commercial roof replacement",
   },
   "/commercial/roof-repair": {
     src: "/images/services/membrane-repair-welding.webp",

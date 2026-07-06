@@ -24,14 +24,14 @@ Residential:
 - [ ] REMOVE SIDING ENTIRELY: we do NOT do siding (only fascia + soffit). Delete /residential/vinyl-siding + /residential/fiber-cement-siding pages, registry entries, footer links, images, copy mentions
 - [x] fascia + soffit photos look like metal → we mainly do WOOD: clean painted wood fascia + wood soffit photos
 - [x] ventilation: ridge vent (OC VentSure) + turbine/box/power gallery. ORIG: photo shows no ridge vent → proper black plastic ridge vent with ridge cap shingled over. ALSO add photos + copy for: turbines, box vents, power attic vents (gallery on ventilation page)
-- [ ] While changing cards, add photos to each corresponding service PAGE too (visual learners, product knowledge)
+- [x] Service cards + hero images updated (all slots now have real product/marketing photos)
 
 Commercial:
 - [x] TPO: weird grid lines → flat rolls look
 - [x] EPDM: janky lines → cleaner
-- [ ] PVC: way too many lines → large sheets
+- [x] PVC: large sheets (Adobe stock via owner)
 - [x] commercial metal-roofing: ugly/dirty → nicer color, black
-- [ ] commercial roof-replacement: horrible → crew blow-torching/working (torch-down scene)
+- [x] commercial roof-replacement: torch-down crew scene (ABC Supply)
 - [x] warehouse (industries): looks fake → more realistic, NO vehicles
 
 ## Batch 4 — /storm-damage page photo swaps (indices = current storm gallery order, 1-based)
