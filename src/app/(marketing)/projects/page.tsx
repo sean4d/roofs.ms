@@ -26,6 +26,10 @@ const cityCount = new Set(
     .filter((photo) => photo.kind === "completed")
     .map((photo) => photo.citySlug),
 ).size;
+// Every community we've either roofed or documented storm damage in.
+const allCityCount = new Set(
+  [...projectPhotos, ...stormPhotos].map((photo) => photo.citySlug),
+).size;
 
 export const metadata: Metadata = buildMetadata({
   title: "Project Gallery | Real Roofs by Southeast Roofing",
@@ -43,7 +47,7 @@ const proofChips = [
     icon: Camera,
     label: `${projectPhotos.length + stormPhotos.length} real job-site photos`,
   },
-  { icon: MapPin, label: `${cityCount} Mississippi communities` },
+  { icon: MapPin, label: `${allCityCount} Mississippi communities` },
   { icon: BadgeCheck, label: "Zero stock photos in this gallery" },
 ];
 
