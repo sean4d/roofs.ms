@@ -104,15 +104,24 @@ export default function ReviewsPage() {
                 Read our Google reviews
                 <ExternalLink className="size-4" aria-hidden="true" />
               </Button>
-              <a
-                href={siteConfig.links.googleBusiness}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-base font-semibold text-navy-900 underline-offset-4 hover:underline"
+              <Button
+                size="xl"
+                variant="outline"
+                render={
+                  <a
+                    href={siteConfig.links.googleReview}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  />
+                }
+                nativeButton={false}
               >
-                Worked with us? Leave a review
-                <ExternalLink className="size-4" aria-hidden="true" />
-              </a>
+                <Star
+                  className="size-4 fill-amber-400 text-amber-400"
+                  aria-hidden="true"
+                />
+                Leave a Google Review
+              </Button>
             </div>
           </Reveal>
         </div>
@@ -162,7 +171,33 @@ export default function ReviewsPage() {
             </StaggerItem>
           ))}
         </StaggerGroup>
-        <Reveal className="mt-10 text-center">
+        <Reveal className="mt-12 flex flex-col items-center gap-5">
+          <div className="text-center">
+            <h3 className="font-display text-2xl font-bold text-navy-900">
+              Had a great experience with our crew?
+            </h3>
+            <p className="mt-2 text-slate-600">
+              A quick Google review helps neighbors find a roofer they can
+              trust.
+            </p>
+          </div>
+          <Button
+            size="xl"
+            render={
+              <a
+                href={siteConfig.links.googleReview}
+                target="_blank"
+                rel="noopener noreferrer"
+              />
+            }
+            nativeButton={false}
+          >
+            <Star
+              className="size-4 fill-amber-400 text-amber-400"
+              aria-hidden="true"
+            />
+            Leave a Google Review
+          </Button>
           <a
             href={siteConfig.links.googleBusiness}
             target="_blank"
