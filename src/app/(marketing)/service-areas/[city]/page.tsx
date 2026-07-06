@@ -30,6 +30,8 @@ export async function generateMetadata(
     title: cityContent.metaTitle,
     description: cityContent.metaDescription,
     path: `/service-areas/${cityContent.slug}`,
+    // City titles are keyword-complete already; skip the brand suffix.
+    titleAbsolute: true,
   });
 }
 

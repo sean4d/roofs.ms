@@ -18,6 +18,12 @@ interface BuildMetadataOptions {
   ogImage?: string;
   /** Reserved/unlaunched routes set this until their phase ships. */
   noIndex?: boolean;
+  /**
+   * Render the title verbatim, skipping the "%s | Southeast Roofing" template.
+   * Used where the title is already keyword-complete and the brand would only
+   * push it past the SERP truncation limit (e.g. city pages).
+   */
+  titleAbsolute?: boolean;
 }
 
 /**
@@ -30,6 +36,7 @@ export function buildMetadata({
   path,
   ogImage,
   noIndex = false,
+  titleAbsolute = false,
 }: BuildMetadataOptions): Metadata {
   const url = absoluteUrl(path);
 
@@ -55,7 +62,10 @@ export function buildMetadata({
      * duplicated; brand-free titles fall through and let the template append
      * it exactly once.
      */
-    title: title.includes(siteConfig.name) ? { absolute: title } : title,
+    title:
+      titleAbsolute || title.includes(siteConfig.name)
+        ? { absolute: title }
+        : title,
     description,
     alternates: { canonical: url },
     openGraph: {

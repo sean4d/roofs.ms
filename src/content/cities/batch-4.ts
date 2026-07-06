@@ -18,7 +18,7 @@ export const citiesBatch4: CityContent[] = [
     city: "Waynesboro",
     county: "Wayne County",
     driveTime: "about an hour",
-    metaTitle: "Roofing in Waynesboro, MS | Southeast Roofing",
+    metaTitle: "Waynesboro Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement, repair, and storm response in Waynesboro, MS — GAF-certified roofing for Wayne County, an hour east of our Hattiesburg office.",
     hero: {
@@ -84,7 +84,7 @@ export const citiesBatch4: CityContent[] = [
     city: "Crystal Springs",
     county: "Copiah County",
     driveTime: "about an hour and forty-five minutes",
-    metaTitle: "Roofing in Crystal Springs, MS | Southeast Roofing",
+    metaTitle: "Crystal Springs Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement, repair, and storm response in Crystal Springs, MS — GAF-certified roofing for Copiah County along the I-55 corridor.",
     hero: {

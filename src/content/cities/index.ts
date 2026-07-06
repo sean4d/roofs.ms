@@ -22,8 +22,7 @@ const citiesBatch1: CityContent[] = [
     city: "Hattiesburg",
     county: "Forrest & Lamar County",
     driveTime: "0 minutes — this is home",
-    metaTitle:
-      "Roofing in Hattiesburg, MS | Southeast Roofing — Local & GAF Certified",
+    metaTitle: "Hattiesburg Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Hattiesburg's hometown roofer: GAF-certified shingle, metal, and commercial roofing from our office on US-98. Free inspections across the Hub City.",
     hero: {
@@ -91,7 +90,7 @@ const citiesBatch1: CityContent[] = [
     city: "Petal",
     county: "Forrest County",
     driveTime: "about 10 minutes",
-    metaTitle: "Roofing in Petal, MS | Southeast Roofing",
+    metaTitle: "Petal Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement, repair, and storm response in Petal, MS — ten minutes from our Hattiesburg office, with completed Petal projects to show for it.",
     hero: {
@@ -149,7 +148,7 @@ const citiesBatch1: CityContent[] = [
     city: "Laurel",
     county: "Jones County",
     driveTime: "about 30 minutes",
-    metaTitle: "Roofing in Laurel, MS | Southeast Roofing",
+    metaTitle: "Laurel Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roofing for the City Beautiful: replacements, repairs, and storm response in Laurel, MS from a GAF-certified Pine Belt contractor 30 minutes away.",
     hero: {
@@ -209,7 +208,7 @@ const citiesBatch1: CityContent[] = [
     city: "Gulfport",
     county: "Harrison County",
     driveTime: "about 70 minutes",
-    metaTitle: "Roofing in Gulfport, MS | Southeast Roofing",
+    metaTitle: "Gulfport Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Coast-grade roofing in Gulfport, MS: hurricane-season expertise, salt-air-aware inspections, and completed Gulfport projects from a GAF-certified contractor.",
     hero: {
@@ -268,7 +267,7 @@ const citiesBatch1: CityContent[] = [
     city: "Biloxi",
     county: "Harrison County",
     driveTime: "about 80 minutes",
-    metaTitle: "Roofing in Biloxi, MS | Southeast Roofing",
+    metaTitle: "Biloxi Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement, repair, and hurricane response in Biloxi, MS — from Back Bay to Woolmarket, with completed Biloxi projects from a GAF-certified contractor.",
     hero: {
@@ -327,7 +326,7 @@ const citiesBatch1: CityContent[] = [
     city: "Picayune",
     county: "Pearl River County",
     driveTime: "about 55 minutes",
-    metaTitle: "Roofing in Picayune, MS | Southeast Roofing",
+    metaTitle: "Picayune Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in Picayune, MS — Pearl River County's hurricane corridor, served by a GAF-certified contractor with completed Picayune projects.",
     hero: {
@@ -385,7 +384,7 @@ const citiesBatch1: CityContent[] = [
     city: "Brookhaven",
     county: "Lincoln County",
     driveTime: "about 80 minutes",
-    metaTitle: "Roofing in Brookhaven, MS | Southeast Roofing",
+    metaTitle: "Brookhaven Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roofing for the Home Seeker's Paradise — replacement, repair, and storm response in Brookhaven, MS from a GAF-certified Mississippi contractor.",
     hero: {
@@ -443,7 +442,7 @@ const citiesBatch1: CityContent[] = [
     city: "McComb",
     county: "Pike County",
     driveTime: "about 90 minutes",
-    metaTitle: "Roofing in McComb, MS | Southeast Roofing",
+    metaTitle: "McComb Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement, repair, and storm response in McComb, MS — the Camellia City, served by a GAF-certified Mississippi contractor with itemized proposals.",
     hero: {
@@ -501,7 +500,7 @@ const citiesBatch1: CityContent[] = [
     city: "Jackson",
     county: "Hinds County",
     driveTime: "about 90 minutes",
-    metaTitle: "Roofing in Jackson, MS | Southeast Roofing",
+    metaTitle: "Jackson Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in Jackson, MS — from Fondren to Northeast Jackson, documentation-first roofing from a GAF-certified contractor.",
     hero: {
@@ -559,7 +558,7 @@ const citiesBatch1: CityContent[] = [
     city: "Meridian",
     county: "Lauderdale County",
     driveTime: "about 85 minutes",
-    metaTitle: "Roofing in Meridian, MS | Southeast Roofing",
+    metaTitle: "Meridian Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in Meridian, MS — the Queen City's historic homes and modern neighborhoods, served in dedicated East Mississippi scheduling blocks.",
     hero: {

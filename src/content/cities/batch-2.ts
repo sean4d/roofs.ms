@@ -17,7 +17,7 @@ export const citiesBatch2: CityContent[] = [
     city: "Purvis",
     county: "Lamar County",
     driveTime: "about 20 minutes",
-    metaTitle: "Roofing in Purvis, MS | Southeast Roofing",
+    metaTitle: "Purvis Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in Purvis, MS — the Lamar County seat, twenty minutes from our Hattiesburg office, with completed Purvis projects in our gallery.",
     hero: {
@@ -73,7 +73,7 @@ export const citiesBatch2: CityContent[] = [
     city: "Sumrall",
     county: "Lamar County",
     driveTime: "about 25 minutes",
-    metaTitle: "Roofing in Sumrall, MS | Southeast Roofing",
+    metaTitle: "Sumrall Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in Sumrall, MS — Longleaf Trace country, twenty-five minutes from Hattiesburg, with fast Lamar County scheduling.",
     hero: {
@@ -129,7 +129,7 @@ export const citiesBatch2: CityContent[] = [
     city: "Seminary",
     county: "Covington County",
     driveTime: "about 25 minutes",
-    metaTitle: "Roofing in Seminary, MS | Southeast Roofing",
+    metaTitle: "Seminary Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in Seminary, MS — Okatoma country on the Highway 49 corridor, served from Hattiesburg with itemized proposals and honest inspections.",
     hero: {
@@ -184,7 +184,7 @@ export const citiesBatch2: CityContent[] = [
     city: "Collins",
     county: "Covington County",
     driveTime: "about 35 minutes",
-    metaTitle: "Roofing in Collins, MS | Southeast Roofing",
+    metaTitle: "Collins Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in Collins, MS — the Covington County seat on Highway 49, served from Hattiesburg with free inspections and itemized proposals.",
     hero: {
@@ -240,7 +240,7 @@ export const citiesBatch2: CityContent[] = [
     city: "Ellisville",
     county: "Jones County",
     driveTime: "about 25 minutes",
-    metaTitle: "Roofing in Ellisville, MS | Southeast Roofing",
+    metaTitle: "Ellisville Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in Ellisville, MS — Jones College's hometown, twenty-five minutes up I-59 from our Hattiesburg office.",
     hero: {
@@ -296,7 +296,7 @@ export const citiesBatch2: CityContent[] = [
     city: "Richton",
     county: "Perry County",
     driveTime: "about 35 minutes",
-    metaTitle: "Roofing in Richton, MS | Southeast Roofing",
+    metaTitle: "Richton Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in Richton, MS — Perry County timber country, thirty-five minutes east of Hattiesburg with honest inspections and metal expertise.",
     hero: {
@@ -352,7 +352,7 @@ export const citiesBatch2: CityContent[] = [
     city: "Columbia",
     county: "Marion County",
     driveTime: "about 40 minutes",
-    metaTitle: "Roofing in Columbia, MS | Southeast Roofing",
+    metaTitle: "Columbia Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in Columbia, MS — the historic Marion County seat on the Pearl River, an easy Highway 98 run from our Hattiesburg office.",
     hero: {
@@ -409,7 +409,7 @@ export const citiesBatch2: CityContent[] = [
     city: "Poplarville",
     county: "Pearl River County",
     driveTime: "about 40 minutes",
-    metaTitle: "Roofing in Poplarville, MS | Southeast Roofing",
+    metaTitle: "Poplarville Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in Poplarville, MS — the Blueberry Capital and Pearl River County seat, with completed Poplarville projects in our gallery.",
     hero: {
@@ -465,7 +465,7 @@ export const citiesBatch2: CityContent[] = [
     city: "Wiggins",
     county: "Stone County",
     driveTime: "about 40 minutes",
-    metaTitle: "Roofing in Wiggins, MS | Southeast Roofing",
+    metaTitle: "Wiggins Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in Wiggins, MS — the Stone County seat between the Pine Belt and the Coast, served from Hattiesburg down Highway 49.",
     hero: {
@@ -521,7 +521,7 @@ export const citiesBatch2: CityContent[] = [
     city: "Lucedale",
     county: "George County",
     driveTime: "about 60 minutes",
-    metaTitle: "Roofing in Lucedale, MS | Southeast Roofing",
+    metaTitle: "Lucedale Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in Lucedale, MS — the George County seat in Mississippi's agricultural southeast, served from Hattiesburg on Highway 98.",
     hero: {
@@ -578,7 +578,7 @@ export const citiesBatch2: CityContent[] = [
     city: "Ocean Springs",
     county: "Jackson County",
     driveTime: "about 85 minutes",
-    metaTitle: "Roofing in Ocean Springs, MS | Southeast Roofing",
+    metaTitle: "Ocean Springs Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in Ocean Springs, MS — the Coast's arts town of live oaks and historic cottages, roofed to coastal wind standards.",
     hero: {

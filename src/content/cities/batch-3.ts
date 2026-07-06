@@ -17,7 +17,7 @@ export const citiesBatch3: CityContent[] = [
     city: "Kiln",
     county: "Hancock County",
     driveTime: "about 75 minutes",
-    metaTitle: "Roofing in Kiln, MS | Southeast Roofing",
+    metaTitle: "Kiln Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in Kiln, MS — Jourdan River country in Hancock County, served by a MSBOC-licensed, GAF-certified contractor from Hattiesburg.",
     hero: {
@@ -74,7 +74,7 @@ export const citiesBatch3: CityContent[] = [
     city: "McHenry",
     county: "Stone County",
     driveTime: "about 45 minutes",
-    metaTitle: "Roofing in McHenry, MS | Southeast Roofing",
+    metaTitle: "McHenry Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in McHenry, MS — the Stone County community on Highway 49, forty-five minutes from our Hattiesburg office.",
     hero: {
@@ -129,7 +129,7 @@ export const citiesBatch3: CityContent[] = [
     city: "Saucier",
     county: "Harrison County",
     driveTime: "about 55 minutes",
-    metaTitle: "Roofing in Saucier, MS | Southeast Roofing",
+    metaTitle: "Saucier Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in Saucier, MS — Harrison County's country side, between De Soto National Forest and the Coast, served from Hattiesburg.",
     hero: {
@@ -185,7 +185,7 @@ export const citiesBatch3: CityContent[] = [
     city: "Diamondhead",
     county: "Hancock County",
     driveTime: "about 80 minutes",
-    metaTitle: "Roofing in Diamondhead, MS | Southeast Roofing",
+    metaTitle: "Diamondhead Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in Diamondhead, MS — the planned community on the Bay of St. Louis, served by a GAF-certified contractor with itemized proposals.",
     hero: {
@@ -241,7 +241,7 @@ export const citiesBatch3: CityContent[] = [
     city: "Bay St. Louis",
     county: "Hancock County",
     driveTime: "about 85 minutes",
-    metaTitle: "Roofing in Bay St. Louis, MS | Southeast Roofing",
+    metaTitle: "Bay St. Louis Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in Bay St. Louis, MS — Old Town cottages to bayfront homes, from a MSBOC-licensed contractor that takes Hancock County wind seriously.",
     hero: {
@@ -299,7 +299,7 @@ export const citiesBatch3: CityContent[] = [
     city: "Pass Christian",
     county: "Harrison County",
     driveTime: "about 80 minutes",
-    metaTitle: "Roofing in Pass Christian, MS | Southeast Roofing",
+    metaTitle: "Pass Christian Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in Pass Christian, MS — Scenic Drive to the harbor, built to the wind standard a town that survived Camille and Katrina demands.",
     hero: {
@@ -356,7 +356,7 @@ export const citiesBatch3: CityContent[] = [
     city: "Long Beach",
     county: "Harrison County",
     driveTime: "about 75 minutes",
-    metaTitle: "Roofing in Long Beach, MS | Southeast Roofing",
+    metaTitle: "Long Beach Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in Long Beach, MS — the Friendly City's neighborhoods from the beach to the college, roofed to coastal wind standards.",
     hero: {
@@ -413,7 +413,7 @@ export const citiesBatch3: CityContent[] = [
     city: "D'Iberville",
     county: "Harrison County",
     driveTime: "about 75 minutes",
-    metaTitle: "Roofing in D'Iberville, MS | Southeast Roofing",
+    metaTitle: "D'Iberville Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in D'Iberville, MS — the Back Bay city at I-10 and I-110, residential and commercial roofing from a GAF-certified contractor.",
     hero: {
@@ -469,7 +469,7 @@ export const citiesBatch3: CityContent[] = [
     city: "Moss Point",
     county: "Jackson County",
     driveTime: "about 90 minutes",
-    metaTitle: "Roofing in Moss Point, MS | Southeast Roofing",
+    metaTitle: "Moss Point Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in Moss Point, MS — the River City on the Pascagoula and Escatawpa, roofed for Jackson County wind, rain, and river humidity.",
     hero: {
@@ -525,7 +525,7 @@ export const citiesBatch3: CityContent[] = [
     city: "Pascagoula",
     county: "Jackson County",
     driveTime: "about 90 minutes",
-    metaTitle: "Roofing in Pascagoula, MS | Southeast Roofing",
+    metaTitle: "Pascagoula Roofing Contractor, MS | Repair & Replacement",
     metaDescription:
       "Roof replacement and repair in Pascagoula, MS — the Jackson County seat and shipbuilding city, with residential and commercial roofing built for Gulf-front wind.",
     hero: {
@@ -558,7 +558,8 @@ export const citiesBatch3: CityContent[] = [
     },
     faqs: [
       {
-        question: "Do you take on commercial and industrial roofs in Pascagoula?",
+        question:
+          "Do you take on commercial and industrial roofs in Pascagoula?",
         answer:
           "Yes — TPO, metal, and coating systems for the warehouses, offices, and commercial buildings that support the working waterfront, with maintenance programs available.",
       },
