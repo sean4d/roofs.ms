@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Archivo, Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 
 import { siteConfig } from "@/config/site";
 
@@ -50,7 +51,10 @@ export default function RootLayout({
       lang="en"
       className={`${archivo.variable} ${inter.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
