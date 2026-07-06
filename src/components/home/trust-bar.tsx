@@ -17,6 +17,9 @@ export function TrustBar() {
       className="border-y border-border bg-secondary py-12"
     >
       <div className="container-site">
+        {/* Screen-reader-only section heading — keeps the document outline
+            sequential (h1 → h2 → the h3 badge titles), no visual change. */}
+        <h2 className="sr-only">Our credentials</h2>
         <StaggerGroup as="ul" className="grid grid-cols-4 gap-2 sm:gap-4">
           {reviewsSection.badges.map((badge) => {
             const inner = (
