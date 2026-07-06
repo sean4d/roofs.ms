@@ -65,7 +65,8 @@ export const learnArticles: LearnArticle[] = [
     slug: "architectural-vs-3-tab-shingles",
     category: "materials",
     title: "Architectural vs. 3-tab shingles: what you're really choosing",
-    metaTitle: "Architectural vs 3-Tab Shingles | Southeast Roofing Learning Center",
+    metaTitle:
+      "Architectural vs 3-Tab Shingles | Southeast Roofing Learning Center",
     metaDescription:
       "The real differences between 3-tab and architectural shingles — wind ratings, lifespan, looks, and cost — explained by a GAF-certified Mississippi roofer, with GAF's own comparison tools.",
     excerpt:
@@ -152,7 +153,10 @@ export const learnArticles: LearnArticle[] = [
       },
     ],
     related: [
-      { label: "Asphalt Shingle Roofing", href: "/residential/asphalt-shingle-roofing" },
+      {
+        label: "Asphalt Shingle Roofing",
+        href: "/residential/asphalt-shingle-roofing",
+      },
       { label: "Roof Replacement", href: "/residential/roof-replacement" },
       { label: "Financing Options", href: "/financing" },
     ],
@@ -243,7 +247,8 @@ export const learnArticles: LearnArticle[] = [
     slug: "how-roof-insurance-claims-work-mississippi",
     category: "insurance-claims",
     title: "How a roof insurance claim actually works in Mississippi",
-    metaTitle: "How Roof Insurance Claims Work in Mississippi | Southeast Roofing",
+    metaTitle:
+      "How Roof Insurance Claims Work in Mississippi | Southeast Roofing",
     metaDescription:
       "From storm to settled claim: documentation, adjuster meetings, wind deductibles, and where a roofing contractor legitimately helps — explained step by step.",
     excerpt:
@@ -285,7 +290,7 @@ export const learnArticles: LearnArticle[] = [
         title: "What we never do",
         items: [
           "Promise your claim will be approved — coverage decisions belong to your insurer under your policy.",
-          "Offer to \"eat the deductible\" — that's insurance fraud in plain terms, and a contractor who volunteers it is telling you how they do business.",
+          'Offer to "eat the deductible" — that\'s insurance fraud in plain terms, and a contractor who volunteers it is telling you how they do business.',
           "Inflate scope. Our reports show what the storm did, and equally, what it didn't.",
         ],
       },
@@ -315,7 +320,10 @@ export const learnArticles: LearnArticle[] = [
       },
     ],
     related: [
-      { label: "Insurance Claims Assistance", href: "/storm-damage/insurance-claims" },
+      {
+        label: "Insurance Claims Assistance",
+        href: "/storm-damage/insurance-claims",
+      },
       { label: "Storm Damage", href: "/storm-damage" },
       { label: "Free Inspection", href: "/free-inspection" },
     ],
@@ -328,7 +336,8 @@ export const learnArticles: LearnArticle[] = [
     slug: "hurricane-season-roof-checklist",
     category: "storm-prep",
     title: "The hurricane-season roof checklist for South Mississippi",
-    metaTitle: "Hurricane Season Roof Checklist | Southeast Roofing Learning Center",
+    metaTitle:
+      "Hurricane Season Roof Checklist | Southeast Roofing Learning Center",
     metaDescription:
       "What to check on your roof before June 1, what to do when a storm is named, and the first moves after it passes — a practical checklist from Mississippi roofers.",
     excerpt:
@@ -405,7 +414,8 @@ export const learnArticles: LearnArticle[] = [
     slug: "standing-seam-vs-exposed-fastener",
     category: "metal-roofing",
     title: "Standing seam vs. exposed fastener: picking the right metal roof",
-    metaTitle: "Standing Seam vs Exposed Fastener Metal Roofing | Southeast Roofing",
+    metaTitle:
+      "Standing Seam vs Exposed Fastener Metal Roofing | Southeast Roofing",
     metaDescription:
       "The two families of metal roofing compared honestly — cost, lifespan, maintenance, and where each one belongs, from crews that install both across South Mississippi.",
     excerpt:
@@ -473,8 +483,14 @@ export const learnArticles: LearnArticle[] = [
       },
     ],
     related: [
-      { label: "Residential Metal Roofing", href: "/residential/metal-roofing" },
-      { label: "Standing Seam", href: "/residential/metal-roofing/standing-seam" },
+      {
+        label: "Residential Metal Roofing",
+        href: "/residential/metal-roofing",
+      },
+      {
+        label: "Standing Seam",
+        href: "/residential/metal-roofing/standing-seam",
+      },
       { label: "Commercial Metal Roofing", href: "/commercial/metal-roofing" },
     ],
   },
@@ -559,7 +575,8 @@ export const learnArticles: LearnArticle[] = [
     slug: "tpo-epdm-coatings-flat-roof-guide",
     category: "commercial",
     title: "TPO, EPDM, or a coating? A building owner's flat-roof guide",
-    metaTitle: "TPO vs EPDM vs Roof Coatings | Southeast Roofing Learning Center",
+    metaTitle:
+      "TPO vs EPDM vs Roof Coatings | Southeast Roofing Learning Center",
     metaDescription:
       "The three moves available on an aging flat roof — TPO, EPDM, or a restorative coating — compared by cost logic, building type, and roof condition.",
     excerpt:
@@ -699,13 +716,216 @@ export const learnArticles: LearnArticle[] = [
       },
       {
         question: "Do you charge for the inspection or the proposal?",
-        answer: "No. Inspection, measurements, and the itemized proposal are free, with no obligation.",
+        answer:
+          "No. Inspection, measurements, and the itemized proposal are free, with no obligation.",
       },
     ],
     related: [
       { label: "Roof Replacement", href: "/residential/roof-replacement" },
       { label: "Financing", href: "/financing" },
       { label: "Free Instant Estimate", href: "/free-inspection" },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  /* Materials: metal vs. asphalt shingle (money keyword comparison)     */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "metal-vs-asphalt-shingle-roofing",
+    category: "materials",
+    title: "Metal vs. asphalt shingle roofing in Mississippi",
+    metaTitle:
+      "Metal vs Asphalt Shingle Roofing in Mississippi | Southeast Roofing",
+    metaDescription:
+      "An honest comparison of metal and asphalt shingle roofing for South Mississippi homes — cost, lifespan, storm performance, and energy — from a GAF-certified roofer that installs both.",
+    excerpt:
+      "Cost, lifespan, storm performance, and energy — the real trade-offs between metal and shingle, from a crew that installs both.",
+    updated: "2026-07-05",
+    readMinutes: 7,
+    hero: {
+      headline: "Metal vs. asphalt shingle: which roof for your home?",
+      subhead:
+        "Both are good roofs. The right one comes down to your budget, how long you're staying, and how much you value never thinking about your roof again.",
+    },
+    body: [
+      {
+        type: "p",
+        text: "Drive through any South Mississippi neighborhood and you'll see both choices side by side: architectural asphalt shingles on most homes, and standing-seam or exposed-fastener metal on farmhouses, cabins, and a growing number of new builds. Neither is a mistake. Which one is right for you comes down to budget, how long you plan to stay, and how much you value longevity over upfront cost.",
+      },
+      {
+        type: "h2",
+        text: "The upfront cost gap is real — but it isn't the whole story",
+      },
+      {
+        type: "p",
+        text: "Asphalt shingles cost less to buy and install, usually by a wide margin. A metal roof is a bigger check up front — more material, more labor, more specialized installation. What narrows the gap is time: a quality metal roof can outlast two shingle roofs, so measured per year of service, the two move much closer together. We quote both from the same free inspection, so you compare real numbers for your roof instead of averages off the internet.",
+      },
+      {
+        type: "callout",
+        title: "See the numbers for your roof",
+        text: "Cost depends on your roof's size, pitch, and access far more than any online average. Our free inspection turns those into an itemized proposal — and we can price both systems side by side.",
+        href: "/free-inspection",
+        linkLabel: "Schedule a free inspection",
+      },
+      { type: "h2", text: "How each holds up to our climate" },
+      {
+        type: "list",
+        title: "Metal vs. shingle in South Mississippi",
+        items: [
+          "Lifespan: architectural shingles typically deliver 15–25 years in our heat and humidity; a quality metal roof often lasts 40 years or more.",
+          "Wind: both can be rated for hurricane-country winds when installed to spec — architectural shingles commonly 110–130 mph, and standing-seam metal performs very well against uplift.",
+          "Heat & energy: reflective metal finishes bounce solar heat back and can ease the load on your AC through a Mississippi summer; shingles absorb more.",
+          "Rain noise: over solid decking and underlayment, metal is far quieter than the old tin-roof myth — but still louder than shingle in a hard downpour.",
+          "Maintenance: metal has fewer components to fail; shingles are simpler and cheaper to repair one section at a time.",
+          "Fire: metal is non-combustible — a plus on rural and wooded properties.",
+        ],
+      },
+      { type: "h2", text: "Where metal is worth the premium" },
+      {
+        type: "p",
+        text: "If you're staying in your home for the long haul, a metal roof can be the last roof you buy — and for many homeowners, that settles it. It's also a strong fit for rural and country properties, steep showpiece homes, and low-slope sections where shingles struggle. We install standing seam, R-panel, and exposed-fastener systems across both homes and commercial buildings, matched to the structure they protect.",
+      },
+      { type: "h2", text: "Where asphalt shingles still make the most sense" },
+      {
+        type: "p",
+        text: "For most South Mississippi homes, a quality architectural shingle system is the practical answer: lower upfront cost, a huge range of colors, easy repairs, and — installed correctly with the right underlayment, ventilation, and flashing — genuinely strong storm performance. If you're on a budget, planning to move within a decade, or matching a neighborhood look, shingles are usually the smart buy. As a GAF Certified Contractor, most of the roofs we install are GAF shingle systems.",
+      },
+      {
+        type: "callout",
+        title: "We install both — and we'll tell you which fits",
+        text: "Our recommendation is based on your roof, your budget, and how long you're staying — never on what we'd rather sell. Financing through GoodLeap is available either way.",
+        href: "/financing",
+        linkLabel: "See financing options",
+      },
+    ],
+    faqs: [
+      {
+        question: "Is a metal roof really worth the extra cost?",
+        answer:
+          "It depends on how long you'll stay. Over the long haul, a metal roof's longevity often justifies the premium since it can outlast two shingle roofs. If you expect to move within a decade, a quality shingle roof usually makes more financial sense. We quote both so you can decide with real numbers.",
+      },
+      {
+        question: "Does a metal roof lower my energy bills?",
+        answer:
+          "Reflective metal finishes can reduce heat gain and ease your AC's load through our summers. The actual savings vary with your home's color, insulation, and ventilation, so we won't promise a specific number — but the effect is real.",
+      },
+      {
+        question: "Is metal roofing loud when it rains?",
+        answer:
+          "Much quieter than its old reputation. Installed over solid decking and underlayment, it's a soft sound, not a drumming tin roof — though it is still somewhat louder than shingle in heavy rain.",
+      },
+      {
+        question: "Can you install metal over my existing shingles?",
+        answer:
+          "Sometimes it's permitted, but we usually recommend a full tear-off first so we can inspect and repair the decking. We'll tell you honestly what your specific roof needs.",
+      },
+    ],
+    related: [
+      {
+        label: "Residential Metal Roofing",
+        href: "/residential/metal-roofing",
+      },
+      {
+        label: "Asphalt Shingle Roofing",
+        href: "/residential/asphalt-shingle-roofing",
+      },
+      { label: "Financing Options", href: "/financing" },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  /* Maintenance: repair vs. replace (high-intent decision guide)        */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "roof-repair-vs-replacement",
+    category: "maintenance",
+    title: "Roof repair vs. replacement: how to know which you need",
+    metaTitle: "Roof Repair vs. Replacement: How to Decide | Southeast Roofing",
+    metaDescription:
+      "How to tell whether your roof needs a repair or a full replacement — the signs for each, the gray areas, and the insurance timing — from a Hattiesburg roofer who'll recommend the cheaper path when it's enough.",
+    excerpt:
+      "The signs that point to a repair, the ones that point to replacement, and how to read the gray area in between.",
+    updated: "2026-07-05",
+    readMinutes: 6,
+    hero: {
+      headline: "Repair or replace? How to know which your roof needs",
+      subhead:
+        "It comes down to three things: how bad the damage is, how widespread it is, and how much life the rest of the roof has left.",
+    },
+    body: [
+      {
+        type: "p",
+        text: "It's the question behind most calls we get: is this a repair, or is it time for a new roof? The honest answer depends on three things — how bad the damage is, how widespread it is, and how much service life the rest of the roof has left. Here's how we work through it on every inspection, so you can think it through too.",
+      },
+      { type: "h2", text: "Signs a repair is all you need" },
+      {
+        type: "list",
+        items: [
+          "The damage is localized — a wind-torn section, a few missing shingles, or one leaky valley — on a roof that's otherwise in good shape.",
+          "Your roof still has years of life left (generally under 15 years old for shingles in our climate).",
+          "A single, findable leak source — flashing around a chimney or a cracked vent boot is the most common culprit we repair.",
+          "Storm damage confined to one slope or one side of the house.",
+        ],
+      },
+      {
+        type: "p",
+        text: "When the roof underneath is sound, a proper repair is the right — and cheaper — call, and we'll say so plainly.",
+      },
+      { type: "h2", text: "Signs it's replacement time" },
+      {
+        type: "list",
+        items: [
+          "Leaks in multiple rooms or across multiple slopes — the system as a whole is failing, not one spot.",
+          "The roof is 20+ years old and shingles are curling, cracking, or shedding granules across whole sections.",
+          "Widespread storm damage that both your insurer and the manufacturer would favor replacing over patching.",
+          "Repairs that keep coming back — if you're calling a roofer every year, the math has already flipped.",
+          "A sagging roofline, which can signal decking or structural moisture damage.",
+        ],
+      },
+      { type: "h2", text: "The gray area: age plus damage" },
+      {
+        type: "p",
+        text: "The hardest cases sit in the middle — say a 15-year-old roof with real but not catastrophic damage. Here, patching can be throwing good money after bad: the repair might hold, but the surrounding shingles are close behind, and you'll be back. We weigh the cost of the repair against the roof's remaining life and lay out both options with prices, so the decision is yours, not ours.",
+      },
+      { type: "h2", text: "When a storm is involved, timing matters" },
+      {
+        type: "p",
+        text: "If wind or hail caused the damage, there's an insurance clock running. Hail bruising and wind-lifted shingles often don't leak right away — but they've shortened the roof's life, and claim windows don't stay open forever. Documenting the damage early protects your options. We inspect, photograph everything, and help you navigate the claim; the decision always rests with your insurer, but you won't do it alone.",
+      },
+      {
+        type: "callout",
+        title: "Get an honest answer, free",
+        text: "Our inspection documents the whole system — shingles, flashing, decking, ventilation — and tells you plainly whether you need a repair, a replacement, or nothing yet, with photos to back it up.",
+        href: "/free-inspection",
+        linkLabel: "Schedule a free inspection",
+      },
+    ],
+    faqs: [
+      {
+        question: "How do I know if I need a repair or a full replacement?",
+        answer:
+          "Localized damage on a roof with life left in it is a repair; widespread failure, chronic leaks, or major storm damage across slopes points to replacement. Our free inspection gives you the answer with photo evidence — and we recommend the cheaper path whenever it's genuinely enough.",
+      },
+      {
+        question: "Will a repair look mismatched against my old shingles?",
+        answer:
+          "We match materials as closely as supply allows, but colors weather over time, so a repair may read slightly different at first and blend as it ages. A good repair won't compromise the rest of the roof.",
+      },
+      {
+        question: "Is it worth repairing a 20-year-old roof?",
+        answer:
+          "Usually not, if the damage is more than trivial — the surrounding shingles are near the end of their life too. We'll show you the repair cost against the roof's remaining life so you can make the call with real numbers.",
+      },
+      {
+        question: "Does insurance cover a repair, or only a full replacement?",
+        answer:
+          "It depends on the cause and extent of the covered damage — wind and hail are commonly covered perils, and the insurer decides the scope. We document thoroughly to support whatever the damage actually warrants, repair or replacement.",
+      },
+    ],
+    related: [
+      { label: "Roof Repair", href: "/residential/roof-repair" },
+      { label: "Roof Replacement", href: "/residential/roof-replacement" },
+      { label: "Storm Damage & Insurance", href: "/storm-damage" },
     ],
   },
 ];
