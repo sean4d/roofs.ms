@@ -63,14 +63,20 @@ export function RoofDiagram() {
       {/* Detail */}
       <div className="lg:sticky lg:top-24 lg:self-start">
         <div className="overflow-hidden rounded-2xl border border-border bg-white">
-          <div className="aspect-[16/10] bg-secondary">
+          <div className="relative aspect-[16/10] bg-secondary">
             {active.photo ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={active.photo}
-                alt={`${active.name} on a Southeast Roofing job`}
-                className="h-full w-full object-cover"
-              />
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={active.photo.src}
+                  alt={active.photo.alt}
+                  title={active.photo.caption}
+                  className="h-full w-full object-cover"
+                />
+                <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-950/85 to-transparent p-3 pt-8 text-xs font-medium leading-snug text-white">
+                  {active.photo.caption}
+                </span>
+              </>
             ) : (
               <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-navy-800 to-navy-950 p-6 text-center">
                 <span className="font-display text-2xl font-bold text-white/90">
