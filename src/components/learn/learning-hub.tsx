@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Clock, Search } from "lucide-react";
+import { ArrowRight, Clock, MapPin, Search } from "lucide-react";
 import { track } from "@vercel/analytics";
 
 import { cn } from "@/lib/utils";
@@ -16,6 +16,8 @@ export interface HubArticle {
   readMinutes: number;
   path: string;
   thumb?: string;
+  /** City/town of the real job photo used as the thumbnail (location tag). */
+  thumbCity?: string;
 }
 
 export interface HubCategory {
@@ -104,15 +106,23 @@ export function LearningHub({
                 onClick={() => track("learn_card_click", { slug: a.slug })}
                 className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-steel-500 hover:shadow-xl"
               >
-                <div className="aspect-[16/9] overflow-hidden bg-secondary">
+                <div className="relative aspect-[16/9] overflow-hidden bg-secondary">
                   {a.thumb ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={a.thumb}
-                      alt=""
-                      loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
+                    <>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={a.thumb}
+                        alt=""
+                        loading="lazy"
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                      {a.thumbCity && (
+                        <span className="absolute bottom-2 left-2 inline-flex items-center gap-1 rounded-full bg-navy-950/70 px-2 py-0.5 text-xs font-semibold text-white">
+                          <MapPin className="size-3" aria-hidden="true" />
+                          {a.thumbCity}
+                        </span>
+                      )}
+                    </>
                   ) : (
                     <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-navy-800 to-navy-950 p-4 text-center">
                       <span className="font-display text-lg font-bold text-white/90">

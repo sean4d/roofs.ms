@@ -76,7 +76,11 @@ export function estimateCost(input: CalcInput): CalcResult | null {
   const mat = pricingConfig.materials[input.material];
   if (!mat || !input.homeSize || input.homeSize <= 0) return null;
 
-  const footprint = input.homeSize / (input.stories === "two" ? 2 : 1);
+  // Home size is treated as the roof-footprint basis. We deliberately do NOT
+  // shrink it for two-story homes: a two-story job is harder and costlier to
+  // access, so the two-story surcharge below must only ever ADD to the price
+  // (owner rule — a two-story selection can never lower the estimate).
+  const footprint = input.homeSize;
   const roofArea =
     footprint * pricingConfig.pitch[input.pitch].factor * pricingConfig.wasteFactor;
   const squares = roofArea / 100;

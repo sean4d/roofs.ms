@@ -10,6 +10,7 @@ import {
 } from "@/content/learn";
 import type { LearnCategorySlug } from "@/content/learn/types";
 import { buildMetadata, absoluteUrl } from "@/lib/seo";
+import { staticJobForSrc } from "@/lib/gallery";
 import { breadcrumbSchema } from "@/lib/schema";
 import type { JsonLdObject } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -53,16 +54,22 @@ const CATEGORY_THUMB: Partial<Record<LearnCategorySlug, string>> = {
 const categoryLabel = (slug: LearnCategorySlug) =>
   learnCategories.find((c) => c.slug === slug)?.label ?? slug;
 
-const hubArticles = learnArticles.map((a) => ({
-  slug: a.slug,
-  category: a.category,
-  categoryLabel: categoryLabel(a.category),
-  title: a.title,
-  excerpt: a.excerpt,
-  readMinutes: a.readMinutes,
-  path: articlePath(a),
-  thumb: CATEGORY_THUMB[a.category],
-}));
+const hubArticles = learnArticles.map((a) => {
+  const thumb = CATEGORY_THUMB[a.category];
+  return {
+    slug: a.slug,
+    category: a.category,
+    categoryLabel: categoryLabel(a.category),
+    title: a.title,
+    excerpt: a.excerpt,
+    readMinutes: a.readMinutes,
+    path: articlePath(a),
+    thumb,
+    // Real job photo → tag it with its city/town (owner rule: every job photo
+    // on the site shows where it was taken).
+    thumbCity: thumb ? staticJobForSrc(thumb)?.city : undefined,
+  };
+});
 
 const hubCategories = learnCategories
   .filter((c) => articlesByCategory(c.slug).length > 0)

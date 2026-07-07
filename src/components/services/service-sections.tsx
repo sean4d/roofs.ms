@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
@@ -8,6 +7,7 @@ import { Section } from "@/components/shared/section";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/motion/reveal";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
+import { JobPhotoTile } from "@/components/projects/job-photo-tile";
 
 /**
  * Section renderers for the core service-page template (PRD §4.1).
@@ -177,13 +177,12 @@ export function ServiceGallery({
       <StaggerGroup className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {gallery.photos.map((photo) => (
           <StaggerItem as="div" key={photo.src}>
-            <Image
+            {/* JobPhotoTile shows the city/town tag and opens the job card —
+                every real job photo carries its location (owner rule). */}
+            <JobPhotoTile
               src={photo.src}
               alt={photo.alt}
-              width={600}
-              height={450}
-              sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-              className="aspect-[4/3] w-full rounded-2xl border border-border object-cover"
+              className="aspect-[4/3] w-full rounded-2xl border border-border"
             />
           </StaggerItem>
         ))}
