@@ -70,6 +70,12 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        // Typo slug from the old site, confirmed indexed as-is.
+        source: "/commerical-roofing",
+        destination: "/commercial",
+        permanent: true,
+      },
+      {
         source: "/gutters",
         destination: "/residential/gutters",
         permanent: true,
@@ -85,7 +91,7 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       { source: "/areas", destination: "/service-areas", permanent: true },
-      { source: "/services", destination: "/", permanent: true },
+      { source: "/services", destination: "/residential", permanent: true },
       { source: "/christmas-lights", destination: "/", permanent: true },
     ];
   },

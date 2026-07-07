@@ -37,7 +37,8 @@ export function roofingContractorSchema(): JsonLdObject {
     slogan: siteConfig.tagline,
     url: siteConfig.url,
     logo: logoUrl,
-    image: logoUrl,
+    image: absoluteUrl("/opengraph-image"),
+    priceRange: "$$",
     telephone: siteConfig.phone.tel, // omitted until the real number is supplied
     email: siteConfig.email,
     address: compact({
@@ -105,19 +106,28 @@ export function roofingContractorSchema(): JsonLdObject {
         url: absoluteUrl(service.path),
       },
     })),
-    // MS contractor license as a verifiable credential (owner-confirmed).
-    hasCredential: siteConfig.license
-      ? {
-          "@type": "EducationalOccupationalCredential",
-          credentialCategory: "license",
-          name: "Mississippi Roofing Contractor License",
-          identifier: siteConfig.license,
-          recognizedBy: {
-            "@type": "GovernmentOrganization",
-            name: "Mississippi State Board of Contractors",
-          },
-        }
-      : null,
+    // Verifiable credentials (owner-confirmed): MS contractor license +
+    // GAF manufacturer certification.
+    hasCredential: [
+      siteConfig.license
+        ? {
+            "@type": "EducationalOccupationalCredential",
+            credentialCategory: "license",
+            name: "Mississippi Roofing Contractor License",
+            identifier: siteConfig.license,
+            recognizedBy: {
+              "@type": "GovernmentOrganization",
+              name: "Mississippi State Board of Contractors",
+            },
+          }
+        : null,
+      {
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: "certification",
+        name: "GAF Certified Contractor",
+        recognizedBy: { "@type": "Organization", name: "GAF" },
+      },
+    ].filter(Boolean),
     sameAs: [...siteConfig.socialProfiles],
     foundingDate: siteConfig.foundingYear
       ? String(siteConfig.foundingYear)
