@@ -35,7 +35,7 @@ export async function getLiveProjects(): Promise<LiveProject[]> {
     return await client.fetch(
       LIVE_PROJECTS_QUERY,
       {},
-      { next: { revalidate: 3600 } },
+      { next: { revalidate: 600 } },
     );
   } catch {
     // If Sanity is unreachable, the live section simply doesn't render —

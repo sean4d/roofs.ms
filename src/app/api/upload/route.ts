@@ -1,18 +1,22 @@
 import { randomUUID } from "node:crypto";
 
+import { revalidatePath } from "next/cache";
+
 import { getWriteClient } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { getJobType, type PhaseKey } from "@/config/job-taxonomy";
 import { siteConfig } from "@/config/site";
 import {
+  assembleCaption,
+  deterministicBody,
   jobSummary,
   jobTags,
   jobTitle,
   photoSeo,
   slugify,
-  socialCaption,
   type JobSubmission,
 } from "@/lib/job-content";
+import { polishCaption } from "@/lib/ai-caption";
 import { syndicate } from "@/lib/syndicate";
 
 export const runtime = "nodejs";
@@ -108,7 +112,12 @@ async function handleCreate(request: Request) {
     filename: m.filename,
   }));
 
-  const caption = socialCaption(submission);
+  // Polished caption: AI when a key is set, deterministic template otherwise.
+  // Never the owner's raw notes verbatim.
+  const aiBody = await polishCaption(submission);
+  const caption = aiBody
+    ? assembleCaption(submission, aiBody)
+    : assembleCaption(submission, deterministicBody(submission));
   const tags = jobTags(submission);
 
   const doc = await client.create({
@@ -123,7 +132,6 @@ async function handleCreate(request: Request) {
     details,
     media: mediaDocs,
     tags,
-    completedAt: submission.completedAt || undefined,
     featured: Boolean(submission.featured),
     socialCaption: caption,
   });
@@ -157,6 +165,10 @@ async function handleCreate(request: Request) {
       })),
     })
     .commit();
+
+  // Regenerate the gallery now so the new job (and its filter) appear immediately.
+  revalidatePath("/projects");
+  if (submission.featured) revalidatePath("/");
 
   return Response.json({ ok: true, id: doc._id, title, slug, url: projectUrl });
 }

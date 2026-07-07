@@ -1,5 +1,15 @@
 import type { NextConfig } from "next";
 
+import { siteConfig } from "./src/config/site";
+
+/** Legacy Wix city URLs (/{city}-services) → new service-area pages. Driven by
+ *  the service-area list so every community Google has indexed is covered. */
+const legacyCityRedirects = siteConfig.serviceArea.map((c) => ({
+  source: `/${c.slug}-services`,
+  destination: `/service-areas/${c.slug}`,
+  permanent: true,
+}));
+
 const nextConfig: NextConfig = {
   images: {
     // Next.js 16 defaults images.qualities to [75] only and coerces any other
@@ -18,11 +28,7 @@ const nextConfig: NextConfig = {
         destination: "/storm-damage/insurance-claims",
         permanent: true,
       },
-      {
-        source: "/hattiesburg-services",
-        destination: "/service-areas/hattiesburg",
-        permanent: true,
-      },
+      ...legacyCityRedirects,
       {
         source: "/emergency-roofing",
         destination: "/storm-damage/emergency-roofing",

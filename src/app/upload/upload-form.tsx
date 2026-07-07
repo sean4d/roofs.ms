@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import {
   CHANNELS,
@@ -48,13 +48,10 @@ async function compressImage(file: File): Promise<File> {
 }
 
 export function UploadForm() {
-  const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
-
   const [jobType, setJobType] = useState("");
   const [channel, setChannel] = useState<"residential" | "commercial">("residential");
   const [city, setCity] = useState("");
   const [cityCustom, setCityCustom] = useState("");
-  const [completedAt, setCompletedAt] = useState(today);
   const [featured, setFeatured] = useState(false);
   const [description, setDescription] = useState("");
   const [details, setDetails] = useState<Record<string, DetailValue>>({});
@@ -102,7 +99,6 @@ export function UploadForm() {
       city: resolvedCity,
       details,
       description,
-      completedAt,
       featured,
     };
 
@@ -285,26 +281,16 @@ export function UploadForm() {
           />
         </Field>
 
-        {/* Date + featured */}
-        <div className="flex flex-wrap items-end gap-5">
-          <Field label="Completed">
-            <input
-              type="date"
-              value={completedAt}
-              onChange={(e) => setCompletedAt(e.target.value)}
-              className={inputClass}
-            />
-          </Field>
-          <label className="flex cursor-pointer items-center gap-2 pb-2 text-sm font-medium text-navy-900">
-            <input
-              type="checkbox"
-              checked={featured}
-              onChange={(e) => setFeatured(e.target.checked)}
-              className="h-4 w-4"
-            />
-            Feature on homepage
-          </label>
-        </div>
+        {/* Featured */}
+        <label className="flex cursor-pointer items-center gap-2 text-sm font-medium text-navy-900">
+          <input
+            type="checkbox"
+            checked={featured}
+            onChange={(e) => setFeatured(e.target.checked)}
+            className="h-4 w-4"
+          />
+          Feature on homepage
+        </label>
 
         {message && (
           <p className="rounded-lg bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{message}</p>

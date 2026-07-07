@@ -22,8 +22,6 @@ export interface JobSubmission {
   /** Keyed by DetailField.key; value is string or string[] (multi). */
   details: Record<string, string | string[]>;
   description: string;
-  /** ISO date (YYYY-MM-DD). */
-  completedAt: string;
   featured: boolean;
 }
 
@@ -187,33 +185,46 @@ export function photoSeo(
   return { title, alt, metaDescription, filename: `${filenameBase}.jpg` };
 }
 
-/** Multi-line social caption reused across FB / IG / GMB / TikTok / Nextdoor. */
-export function socialCaption(sub: JobSubmission): string {
+/**
+ * Deterministic, polished caption body — NEVER the owner's raw notes verbatim.
+ * Used as the fallback when AI polish (lib/ai-caption) isn't available.
+ */
+export function deterministicBody(sub: JobSubmission): string {
   const jt = getJobType(sub.jobType);
   const where = sub.city ? `${sub.city}, ${REGION}` : `South ${REGION}`;
   const lead = productLead(sub);
   const noun = jt?.noun ?? "roofing project";
 
-  let headline: string;
   if (sub.jobType === "storm-damage") {
     const dmg = arr(sub.details.damage).join(", ").toLowerCase();
-    headline = `Storm response in ${where}${dmg ? ` — ${dmg}` : ""}.`;
-  } else {
-    const what = [lead, noun].filter(Boolean).join(" ");
-    headline = `Another ${what} done right in ${where}. ✅`;
+    return (
+      `Storm response in ${where}${dmg ? ` — addressing ${dmg}` : ""}. ` +
+      `Our crew documented the damage and got this ${sub.channel} property protected.`
+    );
   }
+  const what = [lead, noun].filter(Boolean).join(" ");
+  const color = str(sub.details.color);
+  return (
+    `Another ${what}${color ? ` in ${titleCase(color)}` : ""} done right in ${where}. ` +
+    `Quality materials, clean workmanship, and a ${sub.channel} customer we're proud to serve.`
+  );
+}
 
-  const note = sub.description.trim();
+/** Wrap a caption body with the shared CTA + hashtags (all platforms). */
+export function assembleCaption(sub: JobSubmission, body: string): string {
   const cta =
     `📞 ${siteConfig.phone.display} · Free inspection & estimate` +
     (siteConfig.links.booking ? `\n📅 Book online: ${siteConfig.links.booking}` : "");
-
   const tags = jobTags(sub)
     .map((t) => "#" + t.replace(/[^A-Za-z0-9]+/g, ""))
     .slice(0, 6);
   const localTags = ["#Roofing", "#MississippiRoofer", "#SoutheastRoofing"];
-
-  return [headline, note, cta, [...localTags, ...tags].join(" ")]
+  return [body.trim(), cta, [...localTags, ...tags].join(" ")]
     .filter(Boolean)
     .join("\n\n");
+}
+
+/** Full caption from the deterministic body (fallback path). */
+export function socialCaption(sub: JobSubmission): string {
+  return assembleCaption(sub, deterministicBody(sub));
 }
