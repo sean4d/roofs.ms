@@ -20,20 +20,26 @@ export function SiteFooter() {
 
   return (
     <footer className="bg-navy-900 text-white">
-      <div className="container-site grid gap-12 py-20 sm:grid-cols-2 lg:grid-cols-5">
-        {/* Brand column */}
-        <div className="sm:col-span-2 lg:col-span-1">
-          <Image
-            src={brandAssets.logo.light}
-            alt="Southeast Roofing"
-            width={brandAssets.logo.aspect.width}
-            height={brandAssets.logo.aspect.height}
-            className="h-16 w-auto"
-          />
-          <p className="mt-5 max-w-xs text-sm leading-relaxed text-steel-300">
-            {siteConfig.tagline}.
-          </p>
-          <div className="mt-6 flex flex-col gap-2.5 text-sm text-steel-100">
+      <div className="container-site py-16 sm:py-20">
+        {/* Brand block */}
+        <div className="flex flex-col gap-8 border-b border-white/10 pb-10 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-sm">
+            <Image
+              src={brandAssets.logo.light}
+              alt="Southeast Roofing"
+              width={brandAssets.logo.aspect.width}
+              height={brandAssets.logo.aspect.height}
+              className="h-16 w-auto"
+            />
+            <p className="mt-5 text-sm leading-relaxed text-steel-300">
+              {siteConfig.tagline}.
+            </p>
+            <p className="mt-5 text-xs leading-relaxed text-steel-300">
+              GAF Certified Contractor · BBB Accredited · MSBOC Licensed
+            </p>
+            <SocialLinks className="mt-5 flex items-center gap-1" />
+          </div>
+          <div className="flex flex-col gap-2.5 text-sm text-steel-100">
             <PhoneLink />
             {siteConfig.email && (
               <a
@@ -58,33 +64,44 @@ export function SiteFooter() {
               </span>
             </span>
           </div>
-          <p className="mt-6 text-xs leading-relaxed text-steel-300">
-            GAF Certified Contractor · BBB Accredited · MSBOC Licensed
-          </p>
-          {/* Social profiles (owner-supplied 2026-07-04) */}
-          <SocialLinks className="mt-5 flex items-center gap-1" />
         </div>
 
         {/* Link columns */}
-        {footerColumns.map((column) => (
-          <nav key={column.heading} aria-label={column.heading}>
-            <h2 className="font-display text-sm font-semibold tracking-wide text-white">
-              {column.heading}
-            </h2>
-            <ul className="mt-5 space-y-3">
-              {column.links.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-steel-300 transition-colors hover:text-white"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        ))}
+        <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
+          {footerColumns.map((column) => (
+            <nav key={column.heading} aria-label={column.heading}>
+              <h2 className="font-display text-sm font-semibold tracking-wide text-white">
+                {column.heading}
+              </h2>
+              <ul className="mt-5 space-y-3">
+                {column.links.map((link) => {
+                  const external = link.href.startsWith("http");
+                  return (
+                    <li key={link.href}>
+                      {external ? (
+                        <a
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm text-steel-300 transition-colors hover:text-white"
+                        >
+                          {link.label}
+                        </a>
+                      ) : (
+                        <Link
+                          href={link.href}
+                          className="text-sm text-steel-300 transition-colors hover:text-white"
+                        >
+                          {link.label}
+                        </Link>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+          ))}
+        </div>
       </div>
 
       {/* Legal bar */}

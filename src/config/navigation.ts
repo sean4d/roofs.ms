@@ -7,6 +7,8 @@
  * "on the roadmap" 404 until their phase ships.
  */
 
+import { siteConfig } from "@/config/site";
+
 export interface NavLink {
   label: string;
   href: string;
@@ -73,6 +75,19 @@ export const footerColumns: FooterColumn[] = [
         label: "Request Consultation",
         href: "/commercial/request-consultation",
       },
+    ],
+  },
+  {
+    heading: "Roofing Tools",
+    links: [
+      { label: "Roof Cost Calculator", href: "/roof-cost-calculator" },
+      { label: "Roof Color Visualizer", href: "/roof-color-visualizer" },
+      { label: "Instant Roof Estimate", href: siteConfig.links.instantEstimate },
+      { label: "Roof Damage Analyzer", href: "/roof-damage-analyzer" },
+      { label: "Insurance Claim Wizard", href: "/storm-damage/insurance-claims/wizard" },
+      { label: "Roof AI Assistant", href: "/roof-assistant" },
+      { label: "Project Map", href: "/project-map" },
+      { label: "Anatomy of a Roof", href: "/anatomy-of-a-roof" },
     ],
   },
   {
