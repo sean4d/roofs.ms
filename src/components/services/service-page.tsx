@@ -47,6 +47,12 @@ export function ServicePage({
   const tools =
     service.tools ??
     (commercial ? [] : defaultServiceTools(`${service.slug} ${service.path}`));
+  const toolHeading =
+    tools[0] === "insurance-wizard"
+      ? "Storm damage & insurance tools"
+      : tools[0] === "damage-analyzer"
+        ? "Roof repair & inspection tools"
+        : `Plan your ${service.name.toLowerCase()}`;
 
   // Visual-first: heroes without dedicated photography automatically pick
   // up the image registry slot for their route the moment one is filled.
@@ -73,7 +79,7 @@ export function ServicePage({
       <RelatedServices related={service.related} />
       {tools.length > 0 && (
         <Section>
-          <ToolStrip tools={tools} heading={`Plan your ${service.name.toLowerCase()}`} />
+          <ToolStrip tools={tools} heading={toolHeading} />
         </Section>
       )}
       <ServiceAreaLinks serviceName={service.name} />
