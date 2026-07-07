@@ -1,8 +1,14 @@
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+
 import type { BreadcrumbItem } from "@/lib/schema";
 import type { ServiceContent } from "@/content/services/types";
 import { serviceImageFor } from "@/content/service-images";
+import { industryCards } from "@/content/services";
 import { defaultServiceTools } from "@/config/tools";
 import { Section } from "@/components/shared/section";
+import { SectionHeading } from "@/components/shared/section-heading";
+import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 import { ToolStrip } from "@/components/tools/tool-strip";
 import { ServiceHero } from "@/components/services/service-hero";
 import {
@@ -54,6 +60,10 @@ export function ServicePage({
         ? "Roof repair & inspection tools"
         : `Plan your ${service.name.toLowerCase()}`;
 
+  // Commercial service pages cross-link to the industries we serve (industry
+  // pages already link back to services via their own related list).
+  const showIndustries = commercial && !service.path.includes("/industries/");
+
   // Visual-first: heroes without dedicated photography automatically pick
   // up the image registry slot for their route the moment one is filled.
   const hero = service.hero.photo
@@ -77,6 +87,45 @@ export function ServicePage({
         title={`${service.name} questions, answered`}
       />
       <RelatedServices related={service.related} />
+      {showIndustries && (
+        <Section tone="surface">
+          <SectionHeading
+            eyebrow="Industries we serve"
+            title="Built for your kind of building"
+            description="Every facility type has its own schedule, budget, and roof. We roof them all across South Mississippi."
+          />
+          <StaggerGroup
+            as="ul"
+            className="mx-auto mt-10 grid max-w-4xl grid-cols-2 gap-4 sm:grid-cols-3"
+          >
+            {industryCards.map((industry) => (
+              <StaggerItem as="li" key={industry.slug}>
+                <Link
+                  href={`/commercial/industries/${industry.slug}`}
+                  className="group flex h-full flex-col items-center gap-3 rounded-2xl border border-border bg-white p-6 text-center transition-all duration-200 hover:-translate-y-0.5 hover:border-steel-500 hover:shadow-lg"
+                >
+                  <industry.icon
+                    className="size-7 text-steel-500 transition-colors group-hover:text-navy-900"
+                    aria-hidden="true"
+                  />
+                  <span className="font-display font-semibold">
+                    {industry.label}
+                  </span>
+                </Link>
+              </StaggerItem>
+            ))}
+          </StaggerGroup>
+          <div className="mt-8 text-center">
+            <Link
+              href="/commercial/industries"
+              className="inline-flex items-center gap-1.5 font-semibold text-primary underline-offset-4 hover:underline"
+            >
+              Explore all industries
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+          </div>
+        </Section>
+      )}
       {tools.length > 0 && (
         <Section>
           <ToolStrip tools={tools} heading={toolHeading} />
