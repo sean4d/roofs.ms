@@ -105,6 +105,30 @@ const heroPhoto = projectPhotos.find(
   (photo) => photo.kind === "completed" && photo.citySlug === "hattiesburg",
 );
 
+/** Real photos of our Hattiesburg office (owner-supplied 2026-07-07). */
+const officePhotos = [
+  {
+    src: "/images/office/southeast-roofing-office-exterior-hattiesburg-ms.webp",
+    alt: "Southeast Roofing's office storefront at 6668 US-98, Suite F in Hattiesburg, Mississippi.",
+    caption: "Our office on Highway 98 in Hattiesburg.",
+  },
+  {
+    src: "/images/office/southeast-roofing-office-reception-hattiesburg-ms.webp",
+    alt: "The branded reception and waiting area inside Southeast Roofing's Hattiesburg office.",
+    caption: "Come on in — our lobby.",
+  },
+  {
+    src: "/images/office/southeast-roofing-office-credentials-hattiesburg-ms.webp",
+    alt: "Framed Mississippi license and manufacturer certifications on the wall of Southeast Roofing's office.",
+    caption: "Credentials you can see on the wall.",
+  },
+  {
+    src: "/images/office/southeast-roofing-office-showroom-shingle-samples-hattiesburg-ms.webp",
+    alt: "Shingle sample displays in Southeast Roofing's Hattiesburg showroom.",
+    caption: "Real shingle samples to see in person.",
+  },
+];
+
 export default function AboutPage() {
   return (
     <>
@@ -308,7 +332,37 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      <CompanyAtAGlance tone="surface" />
+      {/* Our office — real local storefront (owner photos 2026-07-07) */}
+      <Section tone="surface">
+        <SectionHeading
+          eyebrow="Come see us"
+          title="Our Hattiesburg office"
+          description="A real local office on Highway 98 — stop by during business hours to see shingle samples in person and put a face to the company."
+        />
+        <StaggerGroup className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {officePhotos.map((photo) => (
+            <StaggerItem
+              as="div"
+              key={photo.src}
+              className="shadow-premium overflow-hidden rounded-2xl border border-border bg-white"
+            >
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                width={1200}
+                height={1600}
+                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                className="aspect-[3/4] w-full object-cover"
+              />
+              <p className="px-4 py-3 text-sm leading-snug text-slate-600">
+                {photo.caption}
+              </p>
+            </StaggerItem>
+          ))}
+        </StaggerGroup>
+      </Section>
+
+      <CompanyAtAGlance tone="white" />
 
       <FinalCta />
     </>

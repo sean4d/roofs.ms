@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Mail, MapPin, Phone } from "lucide-react";
+import Image from "next/image";
+import { Clock, Mail, MapPin, Phone } from "lucide-react";
 
 import { siteConfig } from "@/config/site";
 import { buildMetadata } from "@/lib/seo";
@@ -94,6 +95,17 @@ export default function ContactPage() {
                   {address.postalCode}
                 </span>
               </li>
+              <li className="flex items-start gap-3">
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-border bg-white">
+                  <Clock className="size-5 text-steel-500" aria-hidden="true" />
+                </span>
+                <span className="font-medium">
+                  {siteConfig.hours.display}
+                  <span className="mt-0.5 block text-sm font-normal text-slate-500">
+                    {siteConfig.hours.note}
+                  </span>
+                </span>
+              </li>
             </ul>
 
             <div className="mt-10">
@@ -102,6 +114,21 @@ export default function ContactPage() {
               </p>
               <SocialLinks className="mt-3 flex items-center gap-1 [&_a]:text-steel-500 [&_a:hover]:bg-secondary [&_a:hover]:text-navy-900" />
             </div>
+
+            {/* Real storefront so visitors recognize the building */}
+            <figure className="mt-10">
+              <Image
+                src="/images/office/southeast-roofing-office-exterior-hattiesburg-ms.webp"
+                alt="Southeast Roofing's office storefront at 6668 US-98, Suite F in Hattiesburg, Mississippi."
+                width={1200}
+                height={1600}
+                sizes="(min-width: 1024px) 40vw, 100vw"
+                className="shadow-premium aspect-[4/3] w-full rounded-2xl border border-border object-cover"
+              />
+              <figcaption className="mt-2 text-sm text-slate-500">
+                Look for the Southeast Roofing sign — Suite F, right on Highway 98.
+              </figcaption>
+            </figure>
           </Reveal>
 
           <Reveal delay={0.1}>
