@@ -81,14 +81,16 @@ export const siteConfig = {
   geo: { latitude: 31.3271, longitude: -89.2903 },
 
   /**
-   * Business hours (Google Business Profile, owner-confirmed 2026-07-05):
-   * open 24 hours, 7 days a week. `spec` feeds schema.org
-   * openingHoursSpecification (00:00–23:59 all days = 24/7); `display`/`note`
-   * are for visible surfaces (footer, contact page).
+   * Business hours (owner-confirmed 2026-07-07): office staffed Monday–Friday
+   * 8 AM–5 PM, closed weekends — matching the storefront door and every
+   * directory listing (Yelp, Angi, etc.). After-hours storm/emergency calls
+   * are still taken via the emergency line, so `note` keeps that promise
+   * without claiming the office is staffed round the clock. `spec` feeds
+   * schema.org openingHoursSpecification (weekend days omitted = closed).
    */
   hours: {
-    display: "Open 24 hours, 7 days a week",
-    note: "Call anytime — nights and weekends included",
+    display: "Monday–Friday, 8 AM – 5 PM",
+    note: "Storm or leak after hours? Our emergency line is open 24/7.",
     spec: [
       {
         days: [
@@ -97,11 +99,9 @@ export const siteConfig = {
           "Wednesday",
           "Thursday",
           "Friday",
-          "Saturday",
-          "Sunday",
         ] as const,
-        opens: "00:00",
-        closes: "23:59",
+        opens: "08:00",
+        closes: "17:00",
       },
     ],
   },

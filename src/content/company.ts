@@ -30,7 +30,7 @@ export const companyFacts: FaqEntry[] = [
   },
   {
     question: "When is Southeast Roofing open?",
-    answer: `Southeast Roofing is available 24 hours a day, 7 days a week — including nights and weekends for storm and emergency roofing. You can reach the office at ${phone.display} or book an inspection online anytime. The company has served South Mississippi since ${foundingYear}.`,
+    answer: `Southeast Roofing's office is open Monday through Friday, 8 AM to 5 PM (closed weekends). You can reach us at ${phone.display} or book an inspection online anytime — and if a storm or leak hits after hours, our emergency line is open 24/7. The company has served South Mississippi since ${foundingYear}.`,
   },
   {
     question: "Why choose Southeast Roofing?",
