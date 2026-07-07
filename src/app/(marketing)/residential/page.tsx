@@ -10,6 +10,7 @@ import { HubServiceGrid } from "@/components/services/hub-service-grid";
 import { HelpPanel } from "@/components/services/help-panel";
 import { ServiceFaq } from "@/components/services/service-faq";
 import { ServiceAreaLinks } from "@/components/services/service-sections";
+import { ToolStrip } from "@/components/tools/tool-strip";
 import { Section } from "@/components/shared/section";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
@@ -82,6 +83,14 @@ export default function ResidentialHubPage() {
         title="Residential roofing questions, answered"
       />
       <ServiceAreaLinks serviceName="residential roofing" />
+
+      <Section>
+        <ToolStrip
+          tools={["cost-calculator", "color-visualizer", "instant-estimate"]}
+          heading="Plan your new roof"
+        />
+      </Section>
+
       <FinalCta />
     </>
   );

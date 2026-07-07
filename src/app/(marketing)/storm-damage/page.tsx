@@ -14,6 +14,7 @@ import { ServiceFaq } from "@/components/services/service-faq";
 import { Section } from "@/components/shared/section";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
+import { ToolStrip } from "@/components/tools/tool-strip";
 import { FinalCta } from "@/components/home/final-cta";
 
 /** Storm hub (PRD §2): damage types, response process, routes to children. */
@@ -154,6 +155,14 @@ export default function StormDamagePage() {
         faqs={[...stormHub.faqs]}
         title="Storm damage questions, answered"
       />
+
+      <Section>
+        <ToolStrip
+          tools={["insurance-wizard", "damage-analyzer", "ai-assistant"]}
+          heading="Storm damage tools"
+        />
+      </Section>
+
       <FinalCta />
     </>
   );
