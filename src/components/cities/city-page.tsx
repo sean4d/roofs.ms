@@ -6,6 +6,7 @@ import type { BreadcrumbItem } from "@/lib/schema";
 import type { CityContent } from "@/content/cities/types";
 import { projectPhotos } from "@/content/photos";
 import { JobPhotoTile } from "@/components/projects/job-photo-tile";
+import { ToolStrip } from "@/components/tools/tool-strip";
 import { Breadcrumbs } from "@/components/services/breadcrumbs";
 import { ServiceFaq } from "@/components/services/service-faq";
 import { HelpPanel } from "@/components/services/help-panel";
@@ -185,6 +186,13 @@ export function CityPage({
             </ul>
           </Reveal>
         )}
+
+        <div className="mt-12">
+          <ToolStrip
+            tools={["instant-estimate", "cost-calculator", "project-map"]}
+            heading={`Explore your ${cityContent.city} roof`}
+          />
+        </div>
       </Section>
 
       {/* Storm context */}

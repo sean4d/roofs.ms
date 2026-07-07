@@ -18,6 +18,7 @@ import { ServiceFaq } from "@/components/services/service-faq";
 import { Section } from "@/components/shared/section";
 import { Reveal } from "@/components/motion/reveal";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
+import { ToolStrip } from "@/components/tools/tool-strip";
 import { FinalCta } from "@/components/home/final-cta";
 
 /**
@@ -172,6 +173,13 @@ export default async function LearnArticlePage({
             </ul>
           </Reveal>
         </div>
+      </Section>
+
+      <Section>
+        <ToolStrip
+          tools={["ai-assistant", "roof-anatomy", "cost-calculator"]}
+          heading="Still have questions?"
+        />
       </Section>
 
       <FinalCta />
