@@ -73,6 +73,51 @@ export function roofingContractorSchema(): JsonLdObject {
       "@type": "City",
       name: `${city}, MS`,
     })),
+    // Topical signals + explicit service catalog strengthen entity
+    // recognition for search and answer engines (PRD §10 AI discoverability).
+    knowsAbout: [
+      "Roof replacement",
+      "Roof repair",
+      "Asphalt shingle roofing",
+      "Metal roofing",
+      "Standing seam metal roofing",
+      "Storm damage roof repair",
+      "Roof insurance claims",
+      "Commercial roofing",
+      "TPO roofing",
+      "EPDM roofing",
+      "Seamless gutters",
+    ],
+    makesOffer: [
+      { name: "Residential Roofing", path: "/residential" },
+      { name: "Roof Replacement", path: "/residential/roof-replacement" },
+      { name: "Roof Repair", path: "/residential/roof-repair" },
+      { name: "Metal Roofing", path: "/residential/metal-roofing" },
+      { name: "Storm Damage & Insurance Claims", path: "/storm-damage" },
+      { name: "Seamless Gutters", path: "/residential/gutters" },
+      { name: "Commercial Roofing", path: "/commercial" },
+    ].map((service) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: service.name,
+        serviceType: service.name,
+        url: absoluteUrl(service.path),
+      },
+    })),
+    // MS contractor license as a verifiable credential (owner-confirmed).
+    hasCredential: siteConfig.license
+      ? {
+          "@type": "EducationalOccupationalCredential",
+          credentialCategory: "license",
+          name: "Mississippi Roofing Contractor License",
+          identifier: siteConfig.license,
+          recognizedBy: {
+            "@type": "GovernmentOrganization",
+            name: "Mississippi State Board of Contractors",
+          },
+        }
+      : null,
     sameAs: [...siteConfig.socialProfiles],
     foundingDate: siteConfig.foundingYear
       ? String(siteConfig.foundingYear)

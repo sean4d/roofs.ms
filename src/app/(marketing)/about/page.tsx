@@ -13,9 +13,11 @@ import {
 
 import { siteConfig } from "@/config/site";
 import { projectPhotos } from "@/content/photos";
+import { companyFacts } from "@/content/company";
 import { buildMetadata } from "@/lib/seo";
-import { breadcrumbSchema } from "@/lib/schema";
+import { breadcrumbSchema, faqSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/json-ld";
+import { CompanyAtAGlance } from "@/components/about/company-at-a-glance";
 import { Breadcrumbs } from "@/components/services/breadcrumbs";
 import { Section } from "@/components/shared/section";
 import { SectionHeading } from "@/components/shared/section-heading";
@@ -106,7 +108,7 @@ const heroPhoto = projectPhotos.find(
 export default function AboutPage() {
   return (
     <>
-      <JsonLd data={breadcrumbSchema(breadcrumbs)} />
+      <JsonLd data={[breadcrumbSchema(breadcrumbs), faqSchema(companyFacts)]} />
 
       {/* Hero */}
       <section className="border-b border-border bg-secondary">
@@ -305,6 +307,8 @@ export default function AboutPage() {
           </Reveal>
         </div>
       </Section>
+
+      <CompanyAtAGlance tone="surface" />
 
       <FinalCta />
     </>
