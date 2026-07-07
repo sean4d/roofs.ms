@@ -1,10 +1,12 @@
 /**
- * Sanity environment. The project ID is a placeholder until the owner
- * creates the (free) Sanity project — see docs/DEPLOYMENT.md. The studio
- * and queries activate once NEXT_PUBLIC_SANITY_PROJECT_ID is set.
+ * Sanity environment. Defaults to the live Southeast Roofing project
+ * (7ap5ct9c, dataset "production"). The project ID is public — it ships in
+ * the browser bundle with every request — so baking it in as the default is
+ * safe and lets the Studio/queries work without a build-time env var. An
+ * env override still wins if one is ever set (e.g. a staging project).
  */
 export const projectId =
-  process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? "placeholder";
+  process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? "7ap5ct9c";
 
 export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production";
 
