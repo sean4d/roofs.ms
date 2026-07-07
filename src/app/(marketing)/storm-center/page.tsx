@@ -28,6 +28,7 @@ import { PhoneLink } from "@/components/shared/phone-link";
 import { Reveal } from "@/components/motion/reveal";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 import { Button } from "@/components/ui/button";
+import { ToolStrip } from "@/components/tools/tool-strip";
 import { FinalCta } from "@/components/home/final-cta";
 
 /**
@@ -324,6 +325,13 @@ export default function StormCenterPage() {
             already rolling.
           </p>
         </Reveal>
+      </Section>
+
+      <Section>
+        <ToolStrip
+          tools={["insurance-wizard", "damage-analyzer", "ai-assistant"]}
+          heading="Storm damage & insurance tools"
+        />
       </Section>
 
       <FinalCta />

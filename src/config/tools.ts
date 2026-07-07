@@ -91,18 +91,24 @@ export type ToolKey = keyof typeof TOOLS;
 
 /**
  * Picks the interactive tools that fit a residential service page from its
- * slug/path — shingle & metal get the color visualizer, repair/leak/storm get
- * the damage analyzer, and every page gets the instant estimate + calculator.
- * Capped at three so the strip stays quiet. Pages may override via
- * ServiceContent.tools. Commercial pages opt in explicitly instead (their
- * audience and pricing differ), so this intentionally returns residential
- * tools only.
+ * slug/path, capped at three so the strip stays quiet. Two intents:
+ *  - storm/insurance/emergency pages → insurance wizard, damage analyzer,
+ *    roof assistant (a homeowner in this situation isn't shopping a new roof)
+ *  - everything else → color visualizer (shingle/metal), damage analyzer
+ *    (repair/leak), plus the instant estimate + cost calculator
+ * Pages may override via ServiceContent.tools. Commercial pages opt in
+ * explicitly instead (their audience and pricing differ).
  */
 export function defaultServiceTools(slugAndPath: string): ToolKey[] {
   const s = slugAndPath.toLowerCase();
   const picks: ToolKey[] = [];
-  if (/shingle|metal/.test(s)) picks.push("color-visualizer");
-  if (/repair|leak|storm|hail|wind|damage/.test(s)) picks.push("damage-analyzer");
-  picks.push("instant-estimate", "cost-calculator");
+  if (/insurance|claim|emergency|storm|hail|wind|damage/.test(s)) {
+    if (/insurance|claim/.test(s)) picks.push("insurance-wizard");
+    picks.push("damage-analyzer", "insurance-wizard", "ai-assistant");
+  } else {
+    if (/shingle|metal/.test(s)) picks.push("color-visualizer");
+    if (/repair|leak/.test(s)) picks.push("damage-analyzer");
+    picks.push("instant-estimate", "cost-calculator");
+  }
   return [...new Set(picks)].slice(0, 3);
 }
