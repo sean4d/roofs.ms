@@ -8,6 +8,8 @@ import { breadcrumbSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Breadcrumbs } from "@/components/services/breadcrumbs";
 import { ProjectGallery } from "@/components/projects/project-gallery";
+import { LiveProjects } from "@/components/projects/live-projects";
+import { getLiveProjects } from "@/sanity/lib/queries";
 import { Section } from "@/components/shared/section";
 import { Reveal } from "@/components/motion/reveal";
 import { FinalCta } from "@/components/home/final-cta";
@@ -51,7 +53,9 @@ const proofChips = [
   { icon: BadgeCheck, label: "Zero stock photos in this gallery" },
 ];
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const liveProjects = await getLiveProjects();
+
   return (
     <>
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
@@ -87,6 +91,9 @@ export default function ProjectsPage() {
           </Reveal>
         </div>
       </section>
+
+      {/* Live feed — jobs posted via /upload (renders nothing when empty) */}
+      <LiveProjects projects={liveProjects} />
 
       {/* Gallery */}
       <Section>
