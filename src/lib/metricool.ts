@@ -31,9 +31,14 @@ const TIMEZONE = "America/Chicago";
 /** Body field carrying the image URLs. See media heads-up above. */
 const MEDIA_FIELD = "media";
 
-/** Our internal platform key → Metricool network string. */
+/**
+ * Our internal platform key → Metricool network string. Valid Metricool
+ * network names (from the API's own validation error): twitter, facebook,
+ * instagram, instagram_business, linkedin, gmb, pinterest, tiktok,
+ * tiktokbusiness, youtube, threads, bluesky.
+ */
 const NETWORK: Record<"google-business" | "tiktok", string> = {
-  "google-business": "google",
+  "google-business": "gmb",
   tiktok: "tiktok",
 };
 
@@ -130,6 +135,45 @@ async function publish(
       status: "error",
       note: err instanceof Error ? err.message : "Unknown error",
     };
+  }
+}
+
+/** YYYY-MM-DD in TIMEZONE, `dayOffset` days from today. */
+function dayStamp(dayOffset: number): string {
+  const when = new Date(Date.now() + dayOffset * 86_400_000);
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: TIMEZONE,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(when);
+  const get = (t: string) => parts.find((p) => p.type === t)?.value ?? "01";
+  return `${get("year")}-${get("month")}-${get("day")}`;
+}
+
+/**
+ * Owner-facing diagnostic: read back recent scheduled posts from Metricool so
+ * we can see each post's real per-network status/errors (a schedule request
+ * returning 200 doesn't guarantee the network published). Returns the raw
+ * response so the exact shape is visible. Never leaks the token.
+ */
+export async function inspectMetricool(): Promise<unknown> {
+  if (!metricoolConfigured()) return { configured: false };
+  const token = process.env.METRICOOL_API_TOKEN!;
+  const userId = process.env.METRICOOL_USER_ID!;
+  const blogId = process.env.METRICOOL_BLOG_ID!;
+  const start = `${dayStamp(-2)}T00:00:00`;
+  const end = `${dayStamp(2)}T23:59:59`;
+  const url = `${ENDPOINT}?userId=${encodeURIComponent(userId)}&blogId=${encodeURIComponent(blogId)}&start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}`;
+  try {
+    const res = await fetch(url, {
+      headers: { "X-Mc-Auth": token },
+      cache: "no-store",
+    });
+    const text = await res.text();
+    return { status: res.status, window: { start, end }, body: text.slice(0, 6000) };
+  } catch (e) {
+    return { error: e instanceof Error ? e.message : "fetch failed" };
   }
 }
 

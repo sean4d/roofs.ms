@@ -18,7 +18,7 @@ import {
 } from "@/lib/job-content";
 import { polishCaption } from "@/lib/ai-caption";
 import { syndicate } from "@/lib/syndicate";
-import { postViaMetricool } from "@/lib/metricool";
+import { postViaMetricool, inspectMetricool } from "@/lib/metricool";
 import { diagnoseReviews } from "@/lib/google-reviews";
 import { badgeImage } from "@/lib/social-badge";
 
@@ -112,7 +112,8 @@ async function handleCheck() {
     blogIdPresent: Boolean(process.env.METRICOOL_BLOG_ID),
   };
   const anthropicKeyPresent = Boolean(process.env.ANTHROPIC_API_KEY);
-  return Response.json({ reviews, metricool, anthropicKeyPresent });
+  const metricoolPosts = await inspectMetricool();
+  return Response.json({ reviews, metricool, anthropicKeyPresent, metricoolPosts });
 }
 
 interface ProjectDoc {
