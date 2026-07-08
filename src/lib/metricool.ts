@@ -170,17 +170,39 @@ export async function inspectMetricool(): Promise<unknown> {
       headers: { "X-Mc-Auth": token },
       cache: "no-store",
     });
-    const text = await res.text();
-    return { status: res.status, window: { start, end }, body: text.slice(0, 6000) };
+    const raw = (await res.json()) as {
+      data?: Array<{
+        publicationDate?: { dateTime?: string };
+        text?: string;
+        providers?: Array<{ network?: string; status?: string; detailedStatus?: string }>;
+      }>;
+    };
+    // Compact newest-first so recent posts are always visible (untruncated).
+    const posts = (raw.data ?? [])
+      .slice()
+      .reverse()
+      .map((p) => ({
+        when: p.publicationDate?.dateTime,
+        text: (p.text ?? "").slice(0, 40),
+        providers: (p.providers ?? []).map((pr) => ({
+          network: pr.network,
+          status: pr.status,
+          detail: pr.detailedStatus,
+        })),
+      }));
+    return { status: res.status, window: { start, end }, count: posts.length, posts };
   } catch (e) {
     return { error: e instanceof Error ? e.message : "fetch failed" };
   }
 }
 
 /**
- * Fan out to Google Business Profile + TikTok. No-op (skipped results) until
- * the Metricool credentials are set. Never throws. `only` optionally restricts
- * which networks to post (handy for retrying a single network).
+ * Fan out to Metricool. By DEFAULT this is Google Business Profile only:
+ * TikTok's posting API is video-first and hard-rejects photo posts ("the video
+ * file format did not meet the resolution specifications"), so auto-posting our
+ * photo jobs there just produces failures. TikTok stays reachable via an
+ * explicit `only: ["tiktok"]` for the day we post real video. No-op until the
+ * Metricool credentials are set; never throws.
  */
 export async function postViaMetricool(
   post: MetricoolPost,
@@ -188,15 +210,29 @@ export async function postViaMetricool(
 ): Promise<MetricoolResult[]> {
   const targets: Array<"google-business" | "tiktok"> = only?.length
     ? only
-    : ["google-business", "tiktok"];
+    : ["google-business"];
+
   if (!metricoolConfigured()) {
-    return targets.map((network) => ({
+    const results: MetricoolResult[] = targets.map((network) => ({
       network,
       status: "skipped" as const,
       note: "Not connected yet",
     }));
+    // Keep the log honest about TikTok when running the default fan-out.
+    if (!only?.length) {
+      results.push({ network: "tiktok", status: "skipped", note: "Not connected yet" });
+    }
+    return results;
   }
+
   const out: MetricoolResult[] = [];
   for (const network of targets) out.push(await publish(network, post));
+  if (!only?.length) {
+    out.push({
+      network: "tiktok",
+      status: "skipped",
+      note: "Needs video — TikTok rejects photo posts",
+    });
+  }
   return out;
 }
