@@ -172,6 +172,7 @@ export async function inspectMetricool(): Promise<unknown> {
     });
     const raw = (await res.json()) as {
       data?: Array<{
+        id?: number;
         publicationDate?: { dateTime?: string };
         text?: string;
         providers?: Array<{ network?: string; status?: string; detailedStatus?: string }>;
@@ -182,6 +183,7 @@ export async function inspectMetricool(): Promise<unknown> {
       .slice()
       .reverse()
       .map((p) => ({
+        id: p.id,
         when: p.publicationDate?.dateTime,
         text: (p.text ?? "").slice(0, 40),
         providers: (p.providers ?? []).map((pr) => ({
@@ -194,6 +196,40 @@ export async function inspectMetricool(): Promise<unknown> {
   } catch (e) {
     return { error: e instanceof Error ? e.message : "fetch failed" };
   }
+}
+
+export interface MetricoolListPost {
+  id?: number;
+  when?: string;
+  text: string;
+  providers: Array<{ network?: string; status?: string; detail?: string }>;
+}
+
+/** Typed variant of inspectMetricool for programmatic cleanup. */
+export async function listMetricoolPosts(): Promise<MetricoolListPost[]> {
+  const data = (await inspectMetricool()) as { posts?: MetricoolListPost[] };
+  return data.posts ?? [];
+}
+
+/** Delete Metricool posts by id (stops PENDING ones from publishing). */
+export async function deleteMetricoolPosts(
+  ids: number[],
+): Promise<Array<{ id: number; status: number; ok: boolean }>> {
+  if (!metricoolConfigured()) return [];
+  const token = process.env.METRICOOL_API_TOKEN!;
+  const userId = process.env.METRICOOL_USER_ID!;
+  const blogId = process.env.METRICOOL_BLOG_ID!;
+  const out: Array<{ id: number; status: number; ok: boolean }> = [];
+  for (const id of ids) {
+    try {
+      const url = `${ENDPOINT}/${id}?userId=${encodeURIComponent(userId)}&blogId=${encodeURIComponent(blogId)}`;
+      const res = await fetch(url, { method: "DELETE", headers: { "X-Mc-Auth": token } });
+      out.push({ id, status: res.status, ok: res.ok });
+    } catch {
+      out.push({ id, status: 0, ok: false });
+    }
+  }
+  return out;
 }
 
 /**

@@ -18,7 +18,12 @@ import {
 } from "@/lib/job-content";
 import { polishCaption } from "@/lib/ai-caption";
 import { syndicate } from "@/lib/syndicate";
-import { postViaMetricool, inspectMetricool } from "@/lib/metricool";
+import {
+  postViaMetricool,
+  inspectMetricool,
+  listMetricoolPosts,
+  deleteMetricoolPosts,
+} from "@/lib/metricool";
 import { diagnoseReviews } from "@/lib/google-reviews";
 import { badgeImage } from "@/lib/social-badge";
 
@@ -80,6 +85,7 @@ export async function POST(request: Request) {
     if (step === "create") return await handleCreate(request);
     if (step === "delete") return await handleDelete(request);
     if (step === "metricool") return await handleMetricool(request);
+    if (step === "metricool-clean") return await handleMetricoolClean(request);
     if (step === "check") return await handleCheck();
     return Response.json({ error: "Unknown step" }, { status: 400 });
   } catch (err) {
@@ -114,6 +120,48 @@ async function handleCheck() {
   const anthropicKeyPresent = Boolean(process.env.ANTHROPIC_API_KEY);
   const metricoolPosts = await inspectMetricool();
   return Response.json({ reviews, metricool, anthropicKeyPresent, metricoolPosts });
+}
+
+/**
+ * Cleanup for the runaway-loop incident: delete Metricool posts on the given
+ * networks + statuses. Defaults to a DRY RUN listing what WOULD be deleted;
+ * pass { confirm: true } to actually delete. Only touches gmb/tiktok by default
+ * (the API-posted networks), never the owner's Facebook/Instagram posts.
+ */
+async function handleMetricoolClean(request: Request) {
+  const {
+    confirm = false,
+    networks = ["gmb", "tiktok"],
+    statuses = ["PENDING", "ERROR"],
+  } = (await request.json().catch(() => ({}))) as {
+    confirm?: boolean;
+    networks?: string[];
+    statuses?: string[];
+  };
+
+  const posts = await listMetricoolPosts();
+  const targets = posts.filter((p) =>
+    (p.providers ?? []).some(
+      (pr) =>
+        pr.network &&
+        networks.includes(pr.network) &&
+        pr.status &&
+        statuses.includes(pr.status),
+    ),
+  );
+  const ids = targets.map((p) => p.id).filter((v): v is number => typeof v === "number");
+
+  const byStatus: Record<string, number> = {};
+  for (const p of targets)
+    for (const pr of p.providers ?? [])
+      if (pr.status) byStatus[`${pr.network}:${pr.status}`] = (byStatus[`${pr.network}:${pr.status}`] ?? 0) + 1;
+
+  if (!confirm) {
+    return Response.json({ dryRun: true, matched: ids.length, byStatus, ids });
+  }
+  const deleted = await deleteMetricoolPosts(ids);
+  const okCount = deleted.filter((d) => d.ok).length;
+  return Response.json({ dryRun: false, attempted: ids.length, deleted: okCount, results: deleted });
 }
 
 interface ProjectDoc {
