@@ -47,6 +47,8 @@ export interface MetricoolPost {
   text: string;
   /** Public JPEG URLs (from the Sanity CDN). */
   imageUrls: string[];
+  /** Public MP4 URL for TikTok (the slideshow). TikTok requires video. */
+  videoUrl?: string;
 }
 
 export interface MetricoolResult {
@@ -94,11 +96,18 @@ async function publish(
   const userId = process.env.METRICOOL_USER_ID!;
   const blogId = process.env.METRICOOL_BLOG_ID!;
 
-  // GBP posts are single-image; TikTok takes the full set.
-  const media =
-    network === "google-business" ? post.imageUrls.slice(0, 1) : post.imageUrls;
-  if (media.length === 0) {
-    return { network, status: "skipped", note: "No photos" };
+  // GBP posts a single image; TikTok is video-only (the slideshow MP4).
+  let media: string[];
+  if (network === "tiktok") {
+    if (!post.videoUrl) {
+      return { network, status: "skipped", note: "Needs video — TikTok rejects photo posts" };
+    }
+    media = [post.videoUrl];
+  } else {
+    media = post.imageUrls.slice(0, 1);
+    if (media.length === 0) {
+      return { network, status: "skipped", note: "No photos" };
+    }
   }
 
   const body = {
@@ -244,31 +253,23 @@ export async function postViaMetricool(
   post: MetricoolPost,
   only?: Array<"google-business" | "tiktok">,
 ): Promise<MetricoolResult[]> {
+  // Default targets GBP; TikTok is included only when it can actually post,
+  // i.e. a slideshow video was built. publish() self-skips TikTok without one.
   const targets: Array<"google-business" | "tiktok"> = only?.length
     ? only
-    : ["google-business"];
+    : post.videoUrl
+      ? ["google-business", "tiktok"]
+      : ["google-business"];
 
   if (!metricoolConfigured()) {
-    const results: MetricoolResult[] = targets.map((network) => ({
+    return targets.map((network) => ({
       network,
       status: "skipped" as const,
       note: "Not connected yet",
     }));
-    // Keep the log honest about TikTok when running the default fan-out.
-    if (!only?.length) {
-      results.push({ network: "tiktok", status: "skipped", note: "Not connected yet" });
-    }
-    return results;
   }
 
   const out: MetricoolResult[] = [];
   for (const network of targets) out.push(await publish(network, post));
-  if (!only?.length) {
-    out.push({
-      network: "tiktok",
-      status: "skipped",
-      note: "Needs video — TikTok rejects photo posts",
-    });
-  }
   return out;
 }

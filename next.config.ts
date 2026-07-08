@@ -17,6 +17,14 @@ const nextConfig: NextConfig = {
     // image's lower quality (under its heavy navy overlay) actually applies.
     qualities: [65, 70, 75],
   },
+  // The TikTok slideshow builder shells out to a static ffmpeg binary in
+  // @ffmpeg-installer/<platform>. The wrapper does dynamic requires the bundler
+  // can't statically resolve, so keep it external (required at runtime), and
+  // explicitly ship the binary + platform package into the upload route bundle.
+  serverExternalPackages: ["@ffmpeg-installer/ffmpeg"],
+  outputFileTracingIncludes: {
+    "/api/upload": ["./node_modules/@ffmpeg-installer/**/*"],
+  },
   // Permanent (301/308) redirects from legacy Wix URLs Google still has
   // indexed to the closest equivalent page — preserves SEO equity and keeps
   // old search-result clicks off the 404 page. Add more here as Search

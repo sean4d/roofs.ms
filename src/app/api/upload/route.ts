@@ -26,9 +26,36 @@ import {
 } from "@/lib/metricool";
 import { diagnoseReviews } from "@/lib/google-reviews";
 import { badgeImage } from "@/lib/social-badge";
+import { buildSlideshow } from "@/lib/slideshow";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+// Building the TikTok slideshow (download + sharp frames + ffmpeg encode) plus
+// the social fan-out needs more than the default budget.
+export const maxDuration = 60;
+
+/**
+ * Build the TikTok slideshow MP4 from the job's social photos and upload it to
+ * Sanity as a public file, returning its CDN URL (or undefined on any failure —
+ * TikTok then simply skips). Kept here (not in metricool.ts) because it needs
+ * the Sanity client to host the video.
+ */
+async function tiktokVideoUrl(
+  imageUrls: string[],
+  client: ReturnType<typeof getWriteClient>,
+): Promise<string | undefined> {
+  try {
+    const mp4 = await buildSlideshow(imageUrls);
+    if (!mp4) return undefined;
+    const asset = await client.assets.upload("file", mp4, {
+      filename: `tiktok-slideshow-${Date.now()}.mp4`,
+      contentType: "video/mp4",
+    });
+    return asset.url;
+  } catch {
+    return undefined;
+  }
+}
 
 /** Install-timeline order so social carousels read before -> during -> after. */
 const PHASE_RANK: Record<string, number> = { before: 0, progress: 1, after: 2 };
@@ -220,7 +247,19 @@ async function handleMetricool(request: Request) {
   const imageUrls = await socialImageUrls(media, client, labelPhotos);
   const caption = doc.socialCaption ?? doc.title ?? "";
 
-  const results = await postViaMetricool({ text: caption, imageUrls }, networks);
+  // Repost default targets BOTH networks; build the TikTok slideshow whenever
+  // TikTok is in scope so it posts a real video instead of rejected photos.
+  const targets: Array<"google-business" | "tiktok"> = networks?.length
+    ? networks
+    : ["google-business", "tiktok"];
+  const videoUrl = targets.includes("tiktok")
+    ? await tiktokVideoUrl(imageUrls, client)
+    : undefined;
+
+  const results = await postViaMetricool(
+    { text: caption, imageUrls, videoUrl },
+    targets,
+  );
 
   // Merge into the syndication log: keep FB/IG (and anything else) untouched,
   // replace only the google-business + tiktok entries with this run's outcome.
