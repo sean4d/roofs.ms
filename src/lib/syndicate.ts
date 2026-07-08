@@ -8,6 +8,8 @@
  * website upload still fully succeeds.
  */
 
+import { postViaMetricool } from "@/lib/metricool";
+
 const GRAPH = "https://graph.facebook.com/v21.0";
 
 export type Platform =
@@ -193,10 +195,22 @@ export async function syndicate(
     results.push({ platform: "instagram", status: "skipped", note: "Not connected yet" });
   }
 
-  // Not yet implemented — safe no-ops until connected.
-  for (const platform of ["google-business", "tiktok", "nextdoor"] as Platform[]) {
-    results.push({ platform, status: "skipped", note: "Not connected yet" });
+  // Google Business Profile + TikTok go through Metricool — Meta's Graph API
+  // can't reach them. Safe no-op until the METRICOOL_* credentials are set.
+  for (const r of await postViaMetricool({
+    text: input.caption,
+    imageUrls: input.imageUrls,
+  })) {
+    results.push({ platform: r.network, status: r.status, note: r.note });
   }
+
+  // Nextdoor has no practical third-party posting API (its Publish API is gated
+  // to large partners), so it stays a manual post.
+  results.push({
+    platform: "nextdoor",
+    status: "skipped",
+    note: "Manual — no posting API",
+  });
 
   return results;
 }
