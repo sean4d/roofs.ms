@@ -18,7 +18,7 @@ export const emergencyRoofing: ServiceContent = {
   slug: "emergency-roofing",
   path: "/storm-damage/emergency-roofing",
   name: "Emergency Roofing",
-  metaTitle: "Emergency Roof Tarping & Repair | South Mississippi",
+  metaTitle: "Emergency Roof Repair in Mississippi | Southeast Roofing",
   metaDescription:
     "Roof leaking now? Southeast Roofing responds fast across South Mississippi with emergency tarping and mitigation — then a documented path to the permanent fix.",
   hero: {
@@ -134,7 +134,7 @@ export const insuranceClaims: ServiceContent = {
   slug: "insurance-claims",
   path: "/storm-damage/insurance-claims",
   name: "Insurance Claim Assistance",
-  metaTitle: "Roof Insurance Claim Help | Hattiesburg & South Mississippi",
+  metaTitle: "Insurance Roof Claims in Mississippi | Southeast Roofing",
   metaDescription:
     "Storm-damage insurance claims without the confusion: thorough documentation, adjuster meetings, and factual guidance from a local Hattiesburg roofing contractor.",
   hero: {

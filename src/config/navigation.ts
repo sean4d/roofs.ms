@@ -14,14 +14,18 @@ export interface NavLink {
   href: string;
 }
 
+// Main nav favors the highest-intent pages (services + conversion routes) so
+// they carry the most internal link weight and are the strongest candidates for
+// Google sitelinks. Learning Center / Blog / tools stay one click away in the
+// footer rather than diluting the primary bar.
 export const mainNav: NavLink[] = [
   { label: "Residential Roofing", href: "/residential" },
   { label: "Commercial Roofing", href: "/commercial" },
+  { label: "Roof Repair", href: "/residential/roof-repair" },
   { label: "Storm Damage", href: "/storm-damage" },
-  { label: "Learning Center", href: "/learn" },
-  { label: "About", href: "/about" },
   { label: "Financing", href: "/financing" },
   { label: "Projects", href: "/projects" },
+  { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -82,9 +86,15 @@ export const footerColumns: FooterColumn[] = [
     links: [
       { label: "Roof Cost Calculator", href: "/roof-cost-calculator" },
       { label: "Roof Color Visualizer", href: "/roof-color-visualizer" },
-      { label: "Instant Roof Estimate", href: siteConfig.links.instantEstimate },
+      {
+        label: "Instant Roof Estimate",
+        href: siteConfig.links.instantEstimate,
+      },
       { label: "Roof Damage Analyzer", href: "/roof-damage-analyzer" },
-      { label: "Insurance Claim Wizard", href: "/storm-damage/insurance-claims/wizard" },
+      {
+        label: "Insurance Claim Wizard",
+        href: "/storm-damage/insurance-claims/wizard",
+      },
       { label: "Roof AI Assistant", href: "/roof-assistant" },
       { label: "Project Map", href: "/project-map" },
       { label: "Anatomy of a Roof", href: "/anatomy-of-a-roof" },
@@ -109,6 +119,7 @@ export const footerColumns: FooterColumn[] = [
       { label: "Get a Quote", href: "/quote" },
       { label: "About Us", href: "/about" },
       { label: "Storm Damage", href: "/storm-damage" },
+      { label: "Insurance Claims", href: "/storm-damage/insurance-claims" },
       { label: "Storm Center", href: "/storm-center" },
       { label: "Metal Roofing", href: "/metal-roofing" },
       { label: "Project Gallery", href: "/projects" },

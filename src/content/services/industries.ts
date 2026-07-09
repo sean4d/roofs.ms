@@ -32,7 +32,7 @@ export const industries: ServiceContent[] = [
     slug: "schools",
     path: "/commercial/industries/schools",
     name: "Roofing for Schools",
-    metaTitle: "Roofing for Schools & Educational Facilities | South MS",
+    metaTitle: "School Roofing in Mississippi | Southeast Roofing",
     metaDescription:
       "School roofing across South Mississippi — summer-window scheduling, campus safety protocols, and documentation built for board approval.",
     hero: {
@@ -155,8 +155,7 @@ export const industries: ServiceContent[] = [
     slug: "churches",
     path: "/commercial/industries/churches",
     name: "Roofing for Churches",
-    metaTitle:
-      "Church Roofing | Steep-Slope & Sanctuary Specialists | South MS",
+    metaTitle: "Church Roofing in Mississippi | Southeast Roofing",
     metaDescription:
       "Church roofing across South Mississippi — steep sanctuary slopes, architectural features, congregation budgets, and Sunday-safe scheduling.",
     hero: {
@@ -285,7 +284,7 @@ export const industries: ServiceContent[] = [
     slug: "apartments",
     path: "/commercial/industries/apartments",
     name: "Roofing for Apartments & Multifamily",
-    metaTitle: "Apartment & Multifamily Roofing | South Mississippi",
+    metaTitle: "Apartment & Multifamily Roofing in MS | Southeast Roofing",
     metaDescription:
       "Multifamily roofing across South Mississippi — tenant-aware scheduling, phased buildings, and documentation property managers can forward upstairs.",
     hero: {
@@ -410,7 +409,7 @@ export const industries: ServiceContent[] = [
     slug: "industrial",
     path: "/commercial/industries/industrial",
     name: "Roofing for Industrial Facilities",
-    metaTitle: "Industrial Roofing | Manufacturing & Process Facilities | MS",
+    metaTitle: "Industrial Roofing in Mississippi | Southeast Roofing",
     metaDescription:
       "Industrial roofing across South Mississippi — large spans, production continuity, safety compliance, and systems that stand up to process environments.",
     hero: {
@@ -534,7 +533,7 @@ export const industries: ServiceContent[] = [
     slug: "warehouses",
     path: "/commercial/industries/warehouses",
     name: "Roofing for Warehouses",
-    metaTitle: "Warehouse & Distribution Roofing | South Mississippi",
+    metaTitle: "Warehouse Roofing in Mississippi | Southeast Roofing",
     metaDescription:
       "Warehouse roofing across South Mississippi — huge flat spans, inventory protection, and economics engineered for cost per square foot.",
     hero: {
@@ -657,7 +656,7 @@ export const industries: ServiceContent[] = [
     slug: "municipal",
     path: "/commercial/industries/municipal",
     name: "Roofing for Municipal Buildings",
-    metaTitle: "Municipal & Government Building Roofing | South Mississippi",
+    metaTitle: "Municipal & Government Roofing in MS | Southeast Roofing",
     metaDescription:
       "Municipal roofing across South Mississippi — public-accountability documentation, procurement-ready proposals, and continuity for essential services.",
     hero: {

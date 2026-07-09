@@ -10,7 +10,7 @@ export const commercialMetalHub: ServiceContent = {
   slug: "metal-roofing",
   path: "/commercial/metal-roofing",
   name: "Commercial Metal Roofing",
-  metaTitle: "Commercial Metal Roofing | South Mississippi",
+  metaTitle: "Commercial Metal Roofing in Mississippi | Southeast Roofing",
   metaDescription:
     "Commercial metal roofing across South Mississippi — architectural standing seam, R-panel and PBR systems, and structural metal for facilities, warehouses, and ag buildings.",
   hero: {
@@ -116,7 +116,7 @@ export const commercialMetalChildren: ServiceContent[] = [
     slug: "standing-seam",
     path: "/commercial/metal-roofing/standing-seam",
     name: "Commercial Standing Seam",
-    metaTitle: "Architectural Standing Seam for Commercial Buildings | MS",
+    metaTitle: "Standing Seam Metal Roofing in MS | Southeast Roofing",
     metaDescription:
       "Architectural standing seam metal roofing for South Mississippi commercial buildings — concealed fasteners, low-slope capability, and decades of service.",
     hero: {
@@ -197,7 +197,7 @@ export const commercialMetalChildren: ServiceContent[] = [
     slug: "r-panel",
     path: "/commercial/metal-roofing/r-panel",
     name: "R-Panel Metal Roofing",
-    metaTitle: "R-Panel Metal Roofing | South Mississippi Commercial & Ag",
+    metaTitle: "R-Panel Metal Roofing in Mississippi | Southeast Roofing",
     metaDescription:
       "R-panel metal roofing for South Mississippi shops, warehouses, and ag buildings — economical exposed-fastener panels installed to spec.",
     hero: {
@@ -274,7 +274,7 @@ export const commercialMetalChildren: ServiceContent[] = [
     slug: "pbr-panel",
     path: "/commercial/metal-roofing/pbr-panel",
     name: "PBR Panel Metal Roofing",
-    metaTitle: "PBR Panel Metal Roofing | South Mississippi",
+    metaTitle: "PBR Panel Metal Roofing in Mississippi | Southeast Roofing",
     metaDescription:
       "PBR panel roofing for South Mississippi metal buildings — purlin-bearing strength for pre-engineered structures, shops, and warehouses.",
     hero: {
@@ -352,7 +352,7 @@ export const commercialMetalChildren: ServiceContent[] = [
     slug: "structural-metal",
     path: "/commercial/metal-roofing/structural-metal",
     name: "Structural Metal Roofing",
-    metaTitle: "Structural Metal Roof Systems | South Mississippi",
+    metaTitle: "Structural Metal Roofing in Mississippi | Southeast Roofing",
     metaDescription:
       "Structural metal roof systems for South Mississippi — panels engineered to span open framing on pre-engineered buildings, warehouses, and industrial structures.",
     hero: {

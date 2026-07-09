@@ -17,7 +17,7 @@ import { Reveal } from "@/components/motion/reveal";
  */
 
 export const metadata: Metadata = buildMetadata({
-  title: "Get a Roofing Quote | Southeast Roofing",
+  title: "Instant Roof Estimate in Hattiesburg, MS | Southeast Roofing",
   description:
     "Answer six quick questions and get a real, itemized roofing quote from a Mississippi-licensed contractor — residential or commercial, no spam, no pressure.",
   path: "/quote",

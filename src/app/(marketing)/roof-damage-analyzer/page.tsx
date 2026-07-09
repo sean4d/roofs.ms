@@ -15,7 +15,7 @@ import { DamageAnalyzer } from "./damage-analyzer";
  */
 
 export const metadata: Metadata = buildMetadata({
-  title: "Roof Damage Photo Analyzer — Mississippi",
+  title: "AI Roof Damage Analyzer in Mississippi | Southeast Roofing",
   description:
     "See roof damage and not sure how bad it is? Upload photos, tell us what you're seeing, and get a preliminary read plus a free inspection from Southeast Roofing. Storm and insurance-ready.",
   path: "/roof-damage-analyzer",

@@ -23,9 +23,9 @@ import { FaqSection } from "@/components/home/faq-section";
 import { FinalCta } from "@/components/home/final-cta";
 
 export const metadata: Metadata = buildMetadata({
-  title: `${siteConfig.name} — Roofing Contractor in Hattiesburg, MS`,
+  title: `${siteConfig.name} | Licensed Roofing Contractor in Hattiesburg, MS`,
   description:
-    "Premium residential and commercial roofing across South Mississippi. Roof replacement, repair, metal roofing systems, storm damage response, and insurance claim help — based in Hattiesburg, MS.",
+    "Southeast Roofing is a licensed Mississippi roofing contractor serving Hattiesburg and surrounding communities. Residential, commercial, metal roofing, storm damage, financing, and free inspections.",
   path: "/",
 });
 

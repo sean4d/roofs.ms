@@ -18,7 +18,7 @@ import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 /** Industry hub (PRD §2) — routes into the six industry pages. */
 
 export const metadata: Metadata = buildMetadata({
-  title: "Industries We Serve | Commercial Roofing | South Mississippi",
+  title: "Commercial Roofing by Industry in MS | Southeast Roofing",
   description:
     "Commercial roofing tuned to your industry: schools, churches, apartments, industrial, warehouses, and municipal buildings across South Mississippi.",
   path: "/commercial/industries",

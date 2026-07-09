@@ -16,7 +16,7 @@ import { CTASection } from "@/components/tools/cta-section";
  */
 
 export const metadata: Metadata = buildMetadata({
-  title: "Project Map — Roofs Across South Mississippi",
+  title: "Roofing Project Map in South Mississippi | Southeast Roofing",
   description:
     "See where Southeast Roofing has completed roofs across South Mississippi. Tap a pin on the map to view real jobs by city, product, and color — from Hattiesburg to the Gulf Coast.",
   path: "/project-map",

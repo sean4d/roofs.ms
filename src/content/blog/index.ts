@@ -21,7 +21,8 @@ export interface BlogPost {
 export const blogPosts: BlogPost[] = [
   {
     slug: "new-website-real-photos-real-proposals",
-    title: "The new southeastroofing.llc: real photos, real pricing, nothing to hide",
+    title:
+      "The new southeastroofing.llc: real photos, real pricing, nothing to hide",
     metaTitle: "Our New Website | Southeast Roofing Blog",
     metaDescription:
       "Southeast Roofing's new site is live: a gallery of real completed roofs across South Mississippi, a real itemized proposal you can explore, and 31 community pages.",
@@ -68,8 +69,18 @@ export function getPost(slug: string): BlogPost | undefined {
 export function formatPostDate(iso: string): string {
   const [year, month, day] = iso.split("-").map(Number);
   const months = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
   return `${months[month - 1]} ${day}, ${year}`;
 }

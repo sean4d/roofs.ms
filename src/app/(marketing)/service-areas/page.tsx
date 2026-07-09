@@ -22,7 +22,7 @@ import { FinalCta } from "@/components/home/final-cta";
  */
 
 export const metadata: Metadata = buildMetadata({
-  title: "Service Areas | Southeast Roofing | South Mississippi",
+  title: "Roofing Service Areas in South Mississippi | Southeast Roofing",
   description:
     "Southeast Roofing serves Mississippi within about two hours of Hattiesburg — the Pine Belt, the Gulf Coast, Jackson, and Meridian. Find your community.",
   path: "/service-areas",

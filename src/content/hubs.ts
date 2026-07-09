@@ -35,7 +35,7 @@ export interface HubServiceCard {
 /* ------------------------------------------------------------------ */
 
 export const residentialHub = {
-  metaTitle: "Residential Roofing in Hattiesburg & South Mississippi",
+  metaTitle: "Residential Roofing in Hattiesburg, MS | Southeast Roofing",
   metaDescription:
     "The full residential roofing lineup from Southeast Roofing: shingle and metal systems, replacement, repair, gutters, and ventilation — one local, GAF-certified team.",
   hero: {
@@ -130,7 +130,7 @@ export const residentialHub = {
 /* ------------------------------------------------------------------ */
 
 export const stormHub = {
-  metaTitle: "Storm Damage Roof Repair in South Mississippi",
+  metaTitle: "Storm Damage Roof Repair in Mississippi | Southeast Roofing",
   metaDescription:
     "Hail, wind, hurricane, and tree damage — Southeast Roofing documents it, tarps it, helps with the insurance claim, and restores the roof. Hattiesburg-based, region-wide.",
   hero: {
@@ -140,8 +140,12 @@ export const stormHub = {
       "Hail cells, straight-line winds, tropical systems — South Mississippi's weather earns its reputation. When your roof takes the hit, one local team handles the whole aftermath: documentation, emergency protection, the insurance claim, and the restoration.",
     photo: {
       // Owner pick 2026-07-05: storm gallery #21
-      src: stormPhotos.find((p) => p.src.includes("wind-damage-missing-shingles-hattiesburg"))!.src,
-      alt: stormPhotos.find((p) => p.src.includes("wind-damage-missing-shingles-hattiesburg"))!.alt,
+      src: stormPhotos.find((p) =>
+        p.src.includes("wind-damage-missing-shingles-hattiesburg"),
+      )!.src,
+      alt: stormPhotos.find((p) =>
+        p.src.includes("wind-damage-missing-shingles-hattiesburg"),
+      )!.alt,
     },
     photoBadge: "Storm damage inspection",
   },
@@ -150,28 +154,36 @@ export const stormHub = {
       icon: CloudLightning,
       title: "Hail damage",
       text: "Bruised shingles and dented metal that may not leak for months — but shorten the roof's life and are time-sensitive for claims.",
-      photo: stormPhotos.find((p) => p.src.includes("hail-damage-roof-purvis"))!,
+      photo: stormPhotos.find((p) =>
+        p.src.includes("hail-damage-roof-purvis"),
+      )!,
     },
     {
       icon: Wind,
       title: "Wind damage",
       text: "Creased, lifted, and missing shingles from straight-line winds and tropical systems — the region's most common storm claim.",
       // Owner pick: storm gallery #24
-      photo: stormPhotos.find((p) => p.src.includes("wind-damage-roof-columbia"))!,
+      photo: stormPhotos.find((p) =>
+        p.src.includes("wind-damage-roof-columbia"),
+      )!,
     },
     {
       icon: Layers,
       title: "Missing shingles",
       text: "Open spots that let the next rain straight through to the decking. Small to see, urgent to fix.",
       // Owner pick: storm gallery #3
-      photo: stormPhotos.find((p) => p.src.includes("wind-damage-missing-shingles-petal"))!,
+      photo: stormPhotos.find((p) =>
+        p.src.includes("wind-damage-missing-shingles-petal"),
+      )!,
     },
     {
       icon: TreePine,
       title: "Tree & debris impact",
       text: "From a limb strike to a trunk through the ridge — structural checks, emergency protection, and repair in the right order.",
       // Owner pick: storm gallery #20
-      photo: stormPhotos.find((p) => p.src.includes("rotted-decking-tear-off-hattiesburg-ms-003"))!,
+      photo: stormPhotos.find((p) =>
+        p.src.includes("rotted-decking-tear-off-hattiesburg-ms-003"),
+      )!,
     },
   ],
   process: {
@@ -238,7 +250,7 @@ export const stormHub = {
 /* ------------------------------------------------------------------ */
 
 export const metalHub = {
-  metaTitle: "Metal Roofing in Hattiesburg & South Mississippi",
+  metaTitle: "Metal Roofing in Hattiesburg, MS | Southeast Roofing",
   metaDescription:
     "Metal roofing for homes and commercial buildings across South Mississippi — standing seam, panel systems, honest metal-vs-shingle guidance, and free estimates.",
   hero: {
@@ -350,7 +362,7 @@ export const metalHub = {
 /* ------------------------------------------------------------------ */
 
 export const financingHub = {
-  metaTitle: "Roof Financing in Hattiesburg & South Mississippi",
+  metaTitle: "Roof Financing in Mississippi | Southeast Roofing",
   metaDescription:
     "Finance your roof through our partner GoodLeap — apply online in minutes and decide with real numbers in hand. Free estimates from Southeast Roofing first.",
   hero: {
@@ -423,7 +435,7 @@ export const financingHub = {
 /* ------------------------------------------------------------------ */
 
 export const commercialHub = {
-  metaTitle: "Commercial Roofing in Hattiesburg & South Mississippi",
+  metaTitle: "Commercial Roofing Contractor in Mississippi | Southeast Roofing",
   metaDescription:
     "Commercial roofing across South Mississippi: TPO, EPDM, PVC, modified bitumen, coatings, metal systems, and planned maintenance — engineered proposals, operations-first scheduling.",
   hero: {

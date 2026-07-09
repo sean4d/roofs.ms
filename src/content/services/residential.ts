@@ -48,7 +48,7 @@ export const residentialServices: ServiceContent[] = [
     slug: "asphalt-shingle-roofing",
     path: "/residential/asphalt-shingle-roofing",
     name: "Asphalt Shingle Roofing",
-    metaTitle: "Asphalt Shingle Roofing in Hattiesburg & South Mississippi",
+    metaTitle: "GAF Shingle Roofing in Mississippi | Southeast Roofing",
     metaDescription:
       "GAF-certified asphalt shingle roofing across South Mississippi. Architectural shingles installed to manufacturer spec — with straight answers on brands, colors, and cost.",
     hero: {
@@ -206,7 +206,7 @@ export const residentialServices: ServiceContent[] = [
     slug: "roof-replacement",
     path: "/residential/roof-replacement",
     name: "Roof Replacement",
-    metaTitle: "Roof Replacement in Hattiesburg & South Mississippi",
+    metaTitle: "Roof Replacement in Hattiesburg, MS | Southeast Roofing",
     metaDescription:
       "Full residential roof replacement, done in as little as one to two days once materials arrive. Free inspection, honest recommendation, clean job site — Southeast Roofing.",
     hero: {
@@ -366,7 +366,7 @@ export const residentialServices: ServiceContent[] = [
     slug: "roof-repair",
     path: "/residential/roof-repair",
     name: "Roof Repair",
-    metaTitle: "Roof Repair in Hattiesburg & South Mississippi",
+    metaTitle: "Roof Repair in Hattiesburg, MS | Southeast Roofing",
     metaDescription:
       "Roof leak and storm damage repair across South Mississippi. We find the real source, fix it right, and tell you honestly when a repair is all you need.",
     hero: {
@@ -502,7 +502,7 @@ export const residentialServices: ServiceContent[] = [
     slug: "gutters",
     path: "/residential/gutters",
     name: "Seamless Gutters",
-    metaTitle: "Seamless Gutter Installation & Repair in Hattiesburg, MS",
+    metaTitle: "Seamless Gutters in Hattiesburg, MS | Southeast Roofing",
     metaDescription:
       "Seamless gutters custom-formed on site and sized for South Mississippi rainfall — installation, replacement, and repair from Southeast Roofing in Hattiesburg.",
     hero: {
@@ -651,7 +651,7 @@ export const residentialServices: ServiceContent[] = [
     slug: "ventilation",
     path: "/residential/ventilation",
     name: "Roof & Attic Ventilation",
-    metaTitle: "Roof & Attic Ventilation in Hattiesburg, MS",
+    metaTitle: "Roof & Attic Ventilation in Hattiesburg | Southeast Roofing",
     metaDescription:
       "Attic ventilation for the South Mississippi climate — ridge vents, intake, and airflow balancing that extend shingle life and take load off your AC.",
     hero: {

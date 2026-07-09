@@ -28,7 +28,7 @@ const allCityCount = new Set(
 ).size;
 
 export const metadata: Metadata = buildMetadata({
-  title: "Project Gallery | Real Roofs by Southeast Roofing",
+  title: "Roofing Projects in South Mississippi | Southeast Roofing",
   description: `Browse ${completedCount}+ completed Southeast Roofing roofs across ${cityCount} South Mississippi communities — filter by city, product line, and color — plus real storm-damage documentation. No stock photos.`,
   path: "/projects",
 });

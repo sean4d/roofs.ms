@@ -40,7 +40,7 @@ import { FinalCta } from "@/components/home/final-cta";
 export const revalidate = 1800;
 
 export const metadata: Metadata = buildMetadata({
-  title: "Storm Center | Live Alerts & Storm Damage Help | Southeast Roofing",
+  title: "Storm Center: Alerts & Roof Help in MS | Southeast Roofing",
   description:
     "Live Mississippi weather alerts, the first-hours storm damage checklist, real damage identification photos, and how insurance claims work — from South Mississippi's storm roofers.",
   path: "/storm-center",

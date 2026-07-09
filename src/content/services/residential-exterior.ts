@@ -25,7 +25,7 @@ export const exteriorServices: ServiceContent[] = [
     slug: "leaf-guard",
     path: "/residential/leaf-guard",
     name: "Leaf Guard Systems",
-    metaTitle: "Leaf Guard & Gutter Protection | South Mississippi",
+    metaTitle: "Leaf Guard & Gutter Protection in MS | Southeast Roofing",
     metaDescription:
       "Leaf guard systems for South Mississippi homes — stop pine straw and leaves from clogging your gutters, and retire the ladder for good.",
     hero: {
@@ -128,8 +128,6 @@ export const exteriorServices: ServiceContent[] = [
     ],
   },
 
-
-
   /* ------------------------------------------------------------------ */
   /* Fascia                                                              */
   /* ------------------------------------------------------------------ */
@@ -137,7 +135,7 @@ export const exteriorServices: ServiceContent[] = [
     slug: "fascia",
     path: "/residential/fascia",
     name: "Fascia Replacement",
-    metaTitle: "Fascia Repair & Replacement | South Mississippi",
+    metaTitle: "Fascia Repair & Replacement in MS | Southeast Roofing",
     metaDescription:
       "Fascia repair and replacement in South Mississippi — fix the rotted boards at your roof edge and cap them so the problem never comes back.",
     hero: {
@@ -243,7 +241,7 @@ export const exteriorServices: ServiceContent[] = [
     slug: "soffit",
     path: "/residential/soffit",
     name: "Soffit Replacement",
-    metaTitle: "Soffit Repair & Replacement | South Mississippi",
+    metaTitle: "Soffit Repair & Replacement in MS | Southeast Roofing",
     metaDescription:
       "Soffit repair and replacement in South Mississippi — vented panels that feed your attic airflow and close the overhang to pests and moisture.",
     hero: {
@@ -334,7 +332,6 @@ export const exteriorServices: ServiceContent[] = [
         href: "/residential/fascia",
         description: "The roofline board soffit meets at the eave.",
       },
-
     ],
   },
 ];

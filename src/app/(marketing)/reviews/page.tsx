@@ -28,7 +28,7 @@ import { FinalCta } from "@/components/home/final-cta";
  */
 
 export const metadata: Metadata = buildMetadata({
-  title: "Reviews | Southeast Roofing | Verify Us Yourself",
+  title: "Roofing Reviews in Hattiesburg, MS | Southeast Roofing",
   description:
     "Real 5-star Google reviews from Southeast Roofing customers, quoted verbatim and verifiable at the source — plus our GAF certification and BBB A rating.",
   path: "/reviews",

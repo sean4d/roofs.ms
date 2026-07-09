@@ -34,7 +34,7 @@ export const commercialServices: ServiceContent[] = [
     slug: "tpo",
     path: "/commercial/tpo",
     name: "TPO Roofing",
-    metaTitle: "TPO Roofing for Commercial Buildings | South Mississippi",
+    metaTitle: "TPO Commercial Roofing in Mississippi | Southeast Roofing",
     metaDescription:
       "TPO single-ply roofing for South Mississippi facilities — heat-welded seams, reflective white membrane, and installation scheduled around your operations.",
     hero: {
@@ -148,8 +148,7 @@ export const commercialServices: ServiceContent[] = [
     slug: "epdm",
     path: "/commercial/epdm",
     name: "EPDM Roofing",
-    metaTitle:
-      "EPDM Rubber Roofing for Commercial Buildings | South Mississippi",
+    metaTitle: "EPDM Commercial Roofing in Mississippi | Southeast Roofing",
     metaDescription:
       "EPDM rubber-membrane roofing for South Mississippi facilities — a half-century track record, simple detailing, and dependable performance in heat and storms.",
     hero: {
@@ -263,7 +262,7 @@ export const commercialServices: ServiceContent[] = [
     slug: "pvc",
     path: "/commercial/pvc",
     name: "PVC Roofing",
-    metaTitle: "PVC Roofing for Commercial Buildings | South Mississippi",
+    metaTitle: "PVC Commercial Roofing in Mississippi | Southeast Roofing",
     metaDescription:
       "PVC single-ply roofing for South Mississippi — hot-welded seams and standout resistance to grease and chemicals, ideal for restaurants and food service.",
     hero: {
@@ -376,7 +375,7 @@ export const commercialServices: ServiceContent[] = [
     slug: "modified-bitumen",
     path: "/commercial/modified-bitumen",
     name: "Modified Bitumen Roofing",
-    metaTitle: "Modified Bitumen Roofing | South Mississippi Commercial",
+    metaTitle: "Modified Bitumen Roofing in Mississippi | Southeast Roofing",
     metaDescription:
       "Modified bitumen roofing for South Mississippi commercial buildings — multi-ply asphalt redundancy, foot-traffic durability, and proven storm performance.",
     hero: {
@@ -488,7 +487,7 @@ export const commercialServices: ServiceContent[] = [
     slug: "roof-coatings",
     path: "/commercial/roof-coatings",
     name: "Roof Coatings & Restoration",
-    metaTitle: "Commercial Roof Coatings & Restoration | South Mississippi",
+    metaTitle: "Commercial Roof Coatings in Mississippi | Southeast Roofing",
     metaDescription:
       "Silicone and acrylic roof coatings across South Mississippi — restore a sound commercial roof for a fraction of replacement cost, with no tear-off and no downtime.",
     hero: {
@@ -601,7 +600,7 @@ export const commercialServices: ServiceContent[] = [
     slug: "roof-maintenance",
     path: "/commercial/roof-maintenance",
     name: "Commercial Roof Maintenance",
-    metaTitle: "Commercial Roof Maintenance Programs | South Mississippi",
+    metaTitle: "Commercial Roof Maintenance in MS | Southeast Roofing",
     metaDescription:
       "Planned commercial roof maintenance across South Mississippi — scheduled inspections, documentation, and small fixes that prevent five-figure surprises.",
     hero: {
@@ -718,7 +717,7 @@ export const commercialServices: ServiceContent[] = [
     slug: "roof-replacement",
     path: "/commercial/roof-replacement",
     name: "Commercial Roof Replacement",
-    metaTitle: "Commercial Roof Replacement | South Mississippi",
+    metaTitle: "Commercial Roof Replacement in MS | Southeast Roofing",
     metaDescription:
       "Commercial roof replacement across South Mississippi — engineered specs, itemized proposals, and installation phased around your operations.",
     hero: {
@@ -831,7 +830,7 @@ export const commercialServices: ServiceContent[] = [
     slug: "roof-repair",
     path: "/commercial/roof-repair",
     name: "Commercial Roof Repair",
-    metaTitle: "Commercial Roof Repair | South Mississippi",
+    metaTitle: "Commercial Roof Repair in Mississippi | Southeast Roofing",
     metaDescription:
       "Commercial roof leak response across South Mississippi — membrane-matched repairs, documented causes, and fixes that respect your operations.",
     hero: {

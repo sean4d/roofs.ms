@@ -27,7 +27,7 @@ export const residentialMetalHub: ServiceContent = {
   slug: "metal-roofing",
   path: "/residential/metal-roofing",
   name: "Residential Metal Roofing",
-  metaTitle: "Residential Metal Roofing in Hattiesburg & South Mississippi",
+  metaTitle: "Residential Metal Roofing in Hattiesburg | Southeast Roofing",
   metaDescription:
     "Standing seam and exposed-fastener metal roofing for South Mississippi homes, in 26 and 29 gauge. Honest guidance on styles, value, and insurance considerations.",
   hero: {
@@ -154,7 +154,7 @@ export const residentialMetalChildren: ServiceContent[] = [
     slug: "standing-seam",
     path: "/residential/metal-roofing/standing-seam",
     name: "Standing Seam Metal Roofing",
-    metaTitle: "Standing Seam Metal Roofing for Homes | South Mississippi",
+    metaTitle: "Standing Seam Roofing for Homes | Southeast Roofing",
     metaDescription:
       "Concealed-fastener standing seam metal roofing for South Mississippi homes — clean lines, decades of life, and serious storm performance. Southeast Roofing, Hattiesburg.",
     hero: {
@@ -279,7 +279,7 @@ export const residentialMetalChildren: ServiceContent[] = [
     slug: "exposed-fastener",
     path: "/residential/metal-roofing/exposed-fastener",
     name: "Exposed-Fastener Metal Roofing",
-    metaTitle: "Exposed-Fastener Metal Roofing for Homes | South Mississippi",
+    metaTitle: "Exposed-Fastener Metal Roofing | Southeast Roofing",
     metaDescription:
       "Cost-effective exposed-fastener metal roofing for South Mississippi homes, shops, and barns — honest guidance on where it shines and what to expect long-term.",
     hero: {

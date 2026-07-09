@@ -14,7 +14,7 @@ import { SocialLinks } from "@/components/shared/social-links";
 /** Contact page (PRD §2 conversion) — full form + complete NAP. */
 
 export const metadata: Metadata = buildMetadata({
-  title: "Contact Southeast Roofing | Hattiesburg, MS",
+  title: "Contact Our Hattiesburg, MS Roofers | Southeast Roofing",
   description:
     "Reach Southeast Roofing in Hattiesburg: call, email, or send the form and we'll get back to you fast. Serving all of South Mississippi.",
   path: "/contact",

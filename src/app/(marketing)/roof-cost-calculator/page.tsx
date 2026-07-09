@@ -15,7 +15,7 @@ import { CostCalculator } from "./calculator";
  */
 
 export const metadata: Metadata = buildMetadata({
-  title: "Roof Replacement Cost Calculator — Mississippi",
+  title: "Roof Cost Calculator in Mississippi | Southeast Roofing",
   description:
     "Estimate a roof replacement cost range in South Mississippi by material, home size, and pitch. Free, instant, no email required — then get an exact price with a free inspection.",
   path: "/roof-cost-calculator",

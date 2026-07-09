@@ -28,7 +28,7 @@ import { Button } from "@/components/ui/button";
  */
 
 export const metadata: Metadata = buildMetadata({
-  title: "Careers | Join Southeast Roofing | Hattiesburg, MS",
+  title: "Roofing Careers in Hattiesburg, MS | Southeast Roofing",
   description:
     "Southeast Roofing is always interested in meeting skilled roofers, project consultants, and office talent in South Mississippi. Introduce yourself.",
   path: "/careers",

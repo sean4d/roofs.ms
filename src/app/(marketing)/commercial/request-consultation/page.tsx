@@ -21,7 +21,7 @@ import { PhoneLink } from "@/components/shared/phone-link";
  */
 
 export const metadata: Metadata = buildMetadata({
-  title: "Request a Commercial Roofing Consultation | South Mississippi",
+  title: "Commercial Roofing Consultation in MS | Southeast Roofing",
   description:
     "Request a commercial roofing consultation from Southeast Roofing — assessment, engineered proposal, and honest guidance for facilities across South Mississippi.",
   path: "/commercial/request-consultation",

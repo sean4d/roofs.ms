@@ -17,7 +17,7 @@ import { RoofDiagram } from "./roof-diagram";
  */
 
 export const metadata: Metadata = buildMetadata({
-  title: "Anatomy of a Roof — Every Part Explained",
+  title: "Anatomy of a Roof: Parts Explained | Southeast Roofing",
   description:
     "An interactive roof diagram from Southeast Roofing: click each part of a roof system — decking, underlayment, ice & water shield, flashing, ridge vent, and more — to learn what it is, why it matters, and what goes wrong when it's done badly.",
   path: "/anatomy-of-a-roof",

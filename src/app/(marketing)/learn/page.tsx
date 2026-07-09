@@ -28,7 +28,7 @@ import { FinalCta } from "@/components/home/final-cta";
  */
 
 export const metadata: Metadata = buildMetadata({
-  title: "Roofing Learning Center | Southeast Roofing",
+  title: "Roofing Guides & Learning Center | Southeast Roofing",
   description:
     "Plain-English roofing guides from a Mississippi contractor: shingles and materials, insurance claims, storm prep, metal roofing, maintenance, and honest cost guides. Filter and search by topic.",
   path: "/learn",
