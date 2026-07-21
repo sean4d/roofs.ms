@@ -51,6 +51,18 @@ const nextConfig: NextConfig = {
         destination: "/storm-damage/insurance-claims",
         permanent: true,
       },
+      {
+        // Wix auto-generated "copy of" duplicate drafts Google still has
+        // (surfaced under Crawled - currently not indexed).
+        source: "/copy-of-insurance-solutions",
+        destination: "/storm-damage/insurance-claims",
+        permanent: true,
+      },
+      {
+        source: "/copy-of-roof-repairs",
+        destination: "/residential/roof-repair",
+        permanent: true,
+      },
       ...legacyCityRedirects,
       ...legacyCompactCityRedirects,
       {
