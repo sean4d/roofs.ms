@@ -71,6 +71,22 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/emergency-roof-services",
+        destination: "/storm-damage/emergency-roofing",
+        permanent: true,
+      },
+      {
+        source: "/roof-inspections",
+        destination: "/free-inspection",
+        permanent: true,
+      },
+      {
+        // Old Wix appointment page → the current scheduling/inspection flow.
+        source: "/booking-form",
+        destination: "/free-inspection",
+        permanent: true,
+      },
+      {
         source: "/roof-revive",
         destination: "/residential/roof-repair",
         permanent: true,
