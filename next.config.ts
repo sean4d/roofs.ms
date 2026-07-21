@@ -10,6 +10,21 @@ const legacyCityRedirects = siteConfig.serviceArea.map((c) => ({
   permanent: true,
 }));
 
+/**
+ * Wix concatenated multi-word city names with NO hyphen (e.g.
+ * `/oceansprings-services`, confirmed 404 in Search Console), while our slugs
+ * are hyphenated (`ocean-springs`), so the map above misses those. Add the
+ * compact no-hyphen alias for every multi-word city — harmless where the old
+ * URL never existed, and mops up latent 404s before Google finds them.
+ */
+const legacyCompactCityRedirects = siteConfig.serviceArea
+  .filter((c) => c.slug.includes("-"))
+  .map((c) => ({
+    source: `/${c.slug.replace(/-/g, "")}-services`,
+    destination: `/service-areas/${c.slug}`,
+    permanent: true,
+  }));
+
 const nextConfig: NextConfig = {
   images: {
     // Next.js 16 defaults images.qualities to [75] only and coerces any other
@@ -37,6 +52,7 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       ...legacyCityRedirects,
+      ...legacyCompactCityRedirects,
       {
         source: "/emergency-roofing",
         destination: "/storm-damage/emergency-roofing",
