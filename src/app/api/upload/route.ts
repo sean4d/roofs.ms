@@ -520,6 +520,26 @@ async function handleCreate(request: Request) {
 
   const results = await syndicate({ caption, imageUrls, title, projectUrl });
 
+  // TikTok rejects photo posts, so syndicate() skips it. Build the slideshow
+  // MP4 and post it to TikTok via Metricool as a video — best-effort and AFTER
+  // the other networks, so a slow or failed encode never blocks FB/IG/GBP or
+  // the upload itself. tiktokVideoUrl returns undefined on any failure.
+  const videoUrl = await tiktokVideoUrl(imageUrls, client);
+  if (videoUrl) {
+    for (const r of await postViaMetricool(
+      { text: caption, imageUrls, videoUrl },
+      ["tiktok"],
+    )) {
+      results.push({ platform: r.network, status: r.status, note: r.note });
+    }
+  } else {
+    results.push({
+      platform: "tiktok",
+      status: "skipped",
+      note: "Slideshow video could not be built",
+    });
+  }
+
   // Record what happened on each platform (no-op targets show as "skipped").
   await client
     .patch(doc._id)
