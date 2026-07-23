@@ -31,6 +31,17 @@ import {
 import { diagnoseReviews } from "@/lib/google-reviews";
 import { badgeImage } from "@/lib/social-badge";
 import { buildSlideshow } from "@/lib/slideshow";
+import {
+  gbpConfigured,
+  gbpReady,
+  discoverGbp,
+  authConsentUrl,
+  exchangeAuthCode,
+  postJobToGbp,
+  uploadGbpPhotos,
+  createGbpUpdate,
+  type GbpPostResult,
+} from "@/lib/gbp";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -124,6 +135,8 @@ export async function POST(request: Request) {
     if (step === "metricool") return await handleMetricool(request);
     if (step === "metricool-clean") return await handleMetricoolClean(request);
     if (step === "gbp-photo") return await handleGbpPhoto(request);
+    if (step === "gbp") return await handleGbp(request);
+    if (step === "gbp-auth") return await handleGbpAuth(request);
     if (step === "check") return await handleCheck();
     if (step === "revalidate") return handleRevalidate();
     return Response.json({ error: "Unknown step" }, { status: 400 });
@@ -163,11 +176,25 @@ async function handleCheck() {
   };
   const anthropicKeyPresent = Boolean(process.env.ANTHROPIC_API_KEY);
   const metricoolPosts = await inspectMetricool();
+  // Official Google Business Profile API — Tier 1. Presence booleans only,
+  // never the secret values. `ready` means uploads auto-post to GBP.
+  const gbp = {
+    clientIdPresent: Boolean(process.env.GBP_CLIENT_ID),
+    clientSecretPresent: Boolean(process.env.GBP_CLIENT_SECRET),
+    refreshTokenPresent: Boolean(process.env.GBP_REFRESH_TOKEN),
+    accountIdPresent: Boolean(process.env.GBP_ACCOUNT_ID),
+    locationIdPresent: Boolean(process.env.GBP_LOCATION_ID),
+    // OAuth creds set (can discover ids / do the one-time auth):
+    configured: gbpConfigured(),
+    // Fully wired — every upload now auto-posts to GBP:
+    autoPost: gbpReady(),
+  };
   return Response.json({
     reviews,
     metricool,
     anthropicKeyPresent,
     metricoolPosts,
+    gbp,
   });
 }
 
@@ -281,6 +308,130 @@ async function handleGbpPhoto(request: Request) {
     dryRun: !confirm,
   });
   return Response.json({ ok: true, dryRun: !confirm, result });
+}
+
+/**
+ * Official Google Business Profile API control panel (password-gated).
+ *
+ * Body (all optional):
+ *   {}                     — discover: list authorized accounts, and (if
+ *                            GBP_ACCOUNT_ID is set) that account's locations,
+ *                            so the owner can read off the ids for env.
+ *   { test: true, id }     — post a real Update + gallery photo for an existing
+ *                            project, to confirm the connection end-to-end.
+ *   { test: true, imageUrl, summary } — post an ad-hoc test Update/photo.
+ *
+ * Nothing posts unless `test: true` is passed AND all five GBP env vars are set.
+ */
+async function handleGbp(request: Request) {
+  const {
+    test = false,
+    id,
+    imageUrl,
+    summary,
+  } = (await request.json().catch(() => ({}))) as {
+    test?: boolean;
+    id?: string;
+    imageUrl?: string;
+    summary?: string;
+  };
+
+  if (!test) {
+    return Response.json({ ok: true, discovery: await discoverGbp() });
+  }
+
+  if (!gbpReady()) {
+    return Response.json(
+      {
+        ok: false,
+        note: "GBP not fully connected — set GBP_CLIENT_ID/SECRET/REFRESH_TOKEN/ACCOUNT_ID/LOCATION_ID",
+        discovery: await discoverGbp(),
+      },
+      { status: 400 },
+    );
+  }
+
+  // Test against an existing project (preferred) or an ad-hoc image.
+  if (id) {
+    const client = getWriteClient();
+    const doc = (await client.getDocument(id)) as ProjectDoc | undefined;
+    if (!doc)
+      return Response.json({ error: "Project not found" }, { status: 404 });
+    const assetIds = (doc.media ?? [])
+      .slice()
+      .sort(
+        (a, b) =>
+          (a.phase === "after" ? -1 : 0) - (b.phase === "after" ? -1 : 0),
+      )
+      .map((m) => m.image?.asset?._ref)
+      .filter((v): v is string => Boolean(v));
+    if (assetIds.length === 0) {
+      return Response.json({ error: "Project has no photos" }, { status: 400 });
+    }
+    const slug = (doc as { slug?: { current?: string } }).slug?.current;
+    const results = await postJobToGbp({
+      summary: doc.socialCaption ?? doc.title ?? "New roofing project",
+      imageUrls: assetIds.map((a) => jpgUrl(a)),
+      learnMoreUrl: slug
+        ? `${siteConfig.url}/projects/${slug}`
+        : `${siteConfig.url}/projects`,
+    });
+    return Response.json({ ok: true, id, results });
+  }
+
+  if (imageUrl) {
+    const update = await createGbpUpdate({
+      summary: summary ?? "Southeast Roofing — quality roofing across South Mississippi.",
+      imageUrl,
+      learnMoreUrl: `${siteConfig.url}/projects`,
+    });
+    const gallery = await uploadGbpPhotos([imageUrl]);
+    return Response.json({ ok: true, results: [update, ...gallery] });
+  }
+
+  return Response.json(
+    { error: "Provide a project id or an imageUrl to test" },
+    { status: 400 },
+  );
+}
+
+/**
+ * One-time OAuth helper (password-gated). Two modes:
+ *   { redirectUri }        — returns the Google consent URL to open once. The
+ *                            owner approves, and Google redirects to redirectUri
+ *                            with a `?code=...` — copy that code.
+ *   { code, redirectUri }  — exchanges the code for a REFRESH TOKEN, returned
+ *                            once so the owner can paste it into Vercel env as
+ *                            GBP_REFRESH_TOKEN. We never store it ourselves.
+ * Use "urn:ietf:wg:oauth:2.0:oob" or an authorized redirect URI configured on
+ * the OAuth client; the same value must be used for both calls.
+ */
+async function handleGbpAuth(request: Request) {
+  const { code, redirectUri = "urn:ietf:wg:oauth:2.0:oob" } =
+    (await request.json().catch(() => ({}))) as {
+      code?: string;
+      redirectUri?: string;
+    };
+
+  if (!process.env.GBP_CLIENT_ID || !process.env.GBP_CLIENT_SECRET) {
+    return Response.json(
+      { error: "Set GBP_CLIENT_ID + GBP_CLIENT_SECRET in env first" },
+      { status: 400 },
+    );
+  }
+
+  if (!code) {
+    return Response.json({
+      ok: true,
+      step: "authorize",
+      consentUrl: authConsentUrl(redirectUri),
+      redirectUri,
+      note: "Open consentUrl, approve, then POST back { code, redirectUri } with the returned code.",
+    });
+  }
+
+  const result = await exchangeAuthCode(code, redirectUri);
+  return Response.json(result);
 }
 
 interface ProjectDoc {
@@ -567,6 +718,51 @@ async function handleCreate(request: Request) {
     gallery = await postGbpPhotos(afterUrls.length ? afterUrls : imageUrls);
   }
 
+  // Tier 1: the OFFICIAL Google Business Profile API push — the finished-work
+  // photos to the Photos gallery AND one "Update" (photo + caption + Learn-more
+  // button to this job's project page). Prefers "after" photos. No-op until all
+  // five GBP env vars are set (gbpReady), so it never blocks the upload. Runs
+  // after the Sanity write so the project page the button links to already
+  // exists.
+  let gbp: GbpPostResult[] | undefined;
+  if (gbpReady()) {
+    const afterUrls = imageUrls.filter((_, i) => media[i]?.phase === "after");
+    gbp = await postJobToGbp({
+      summary: caption,
+      imageUrls: afterUrls.length ? afterUrls : imageUrls,
+      learnMoreUrl: `${siteConfig.url}/projects/${slug}`,
+    });
+    // Fold the GBP outcome into the syndication log under "google-business".
+    const now = new Date().toISOString();
+    const posted = gbp.some((r) => r.status === "posted");
+    const errored = gbp.find((r) => r.status === "error");
+    try {
+      const existing = ((await client.getDocument(doc._id)) as ProjectDoc)
+        ?.syndication as Array<Record<string, unknown>> | undefined;
+      const kept = (existing ?? []).filter(
+        (s) => s.platform !== "google-business",
+      );
+      await client
+        .patch(doc._id)
+        .set({
+          syndication: [
+            ...kept,
+            {
+              _key: randomUUID(),
+              _type: "syndicationTarget",
+              platform: "google-business",
+              status: posted ? "posted" : errored ? "error" : "skipped",
+              note: errored?.note,
+              postedAt: posted ? now : undefined,
+            },
+          ],
+        })
+        .commit();
+    } catch {
+      // Logging the outcome is best-effort — the posts already went out.
+    }
+  }
+
   // Regenerate the gallery now so the new job (and its filter) appear
   // immediately. revalidateTag purges the (fresh, non-CDN) project fetch cache
   // reliably; revalidatePath rebuilds the pages that render it.
@@ -582,5 +778,6 @@ async function handleCreate(request: Request) {
     slug,
     url: projectUrl,
     gallery,
+    gbp,
   });
 }
