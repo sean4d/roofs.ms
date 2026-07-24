@@ -36,6 +36,7 @@ const launchedStaticRoutes = [
   "/blog",
   "/quote",
   "/storm-center",
+  "/roofing-tools",
   "/roof-cost-calculator",
   "/roof-color-visualizer",
   "/anatomy-of-a-roof",

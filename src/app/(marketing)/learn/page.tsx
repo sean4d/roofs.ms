@@ -39,8 +39,49 @@ const breadcrumbs = [
   { name: "Learning Center", path: "/learn" },
 ];
 
-/** Category → representative real photo (thumbnail). Commercial has no photo
- *  yet, so its cards fall back to a branded gradient. */
+/**
+ * Per-article thumbnail — a DISTINCT real Southeast Roofing photo for every
+ * guide, chosen to fit the topic (owner request 2026-07-24: no two cards share
+ * a photo). Keyed by article slug. Every image is a registered gallery photo,
+ * so each card also gets its city tag. New articles without an entry fall back
+ * to the category photo below.
+ */
+const ARTICLE_THUMB: Record<string, string> = {
+  "architectural-vs-3-tab-shingles":
+    "/images/projects/gaf-timberline-hdz-pewter-gray-hattiesburg-ms-001.webp",
+  "parts-of-a-roof-explained":
+    "/images/projects/roof-felt-ice-water-shield-waynesboro-ms.webp",
+  "how-roof-insurance-claims-work-mississippi":
+    "/images/storm/hail-damage-roof-hattiesburg-ms.webp",
+  "hurricane-season-roof-checklist":
+    "/images/storm/wind-damage-missing-shingles-hattiesburg-ms.webp",
+  "standing-seam-vs-exposed-fastener":
+    "/images/projects/29-gauge-galvalume-metal-roof-mccomb-ms-001.webp",
+  "ten-minute-roof-check":
+    "/images/projects/roof-synthetic-underlayment-lucedale-ms.webp",
+  "tpo-epdm-coatings-flat-roof-guide":
+    "/images/projects/roof-tear-off-decking-gulfport-ms.webp",
+  "roof-replacement-cost-south-mississippi":
+    "/images/projects/owens-corning-duration-driftwood-waynesboro-ms-001.webp",
+  "metal-vs-asphalt-shingle-roofing":
+    "/images/projects/gaf-timberline-hdz-weathered-wood-poplarville-ms-001.webp",
+  "roof-repair-vs-replacement":
+    "/images/projects/roof-shingle-install-hattiesburg-ms.webp",
+  "how-to-choose-a-roofing-contractor":
+    "/images/projects/gaf-timberline-hdz-slate-hattiesburg-ms-001.webp",
+  "how-long-does-a-roof-last":
+    "/images/projects/gaf-timberline-hdz-hickory-monticello-ms-001.webp",
+  "signs-you-need-a-new-roof":
+    "/images/storm/granular-loss-shingles-hattiesburg-ms.webp",
+  "roof-financing-options-mississippi":
+    "/images/projects/residential-roof-replacement-ocean-springs-ms-001.webp",
+  "what-to-do-after-storm-damage":
+    "/images/storm/wind-damage-exposed-decking-collins-ms.webp",
+  "commercial-roof-replacement-guide":
+    "/images/projects/roof-tear-off-decking-columbia-ms.webp",
+};
+
+/** Category fallback for any future article missing an ARTICLE_THUMB entry. */
 const CATEGORY_THUMB: Partial<Record<LearnCategorySlug, string>> = {
   materials: "/images/projects/gaf-timberline-hdz-pewter-gray-hattiesburg-ms-001.webp",
   "insurance-claims": "/images/storm/hail-damage-roof-hattiesburg-ms.webp",
@@ -55,7 +96,7 @@ const categoryLabel = (slug: LearnCategorySlug) =>
   learnCategories.find((c) => c.slug === slug)?.label ?? slug;
 
 const hubArticles = learnArticles.map((a) => {
-  const thumb = CATEGORY_THUMB[a.category];
+  const thumb = ARTICLE_THUMB[a.slug] ?? CATEGORY_THUMB[a.category];
   return {
     slug: a.slug,
     category: a.category,
