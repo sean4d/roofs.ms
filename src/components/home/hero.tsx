@@ -18,7 +18,7 @@ import { PhoneLink } from "@/components/shared/phone-link";
  */
 export function Hero() {
   return (
-    <section className="relative flex min-h-[88svh] items-center overflow-hidden bg-navy-950 lg:min-h-[min(92svh,60rem)]">
+    <section className="relative flex min-h-[88svh] items-start overflow-hidden bg-navy-950 lg:min-h-[min(92svh,60rem)] lg:items-center">
       {/* Full-bleed background photography */}
       <Image
         src={hero.photo.src}
@@ -37,14 +37,16 @@ export function Hero() {
         className="absolute inset-0 bg-gradient-to-t from-navy-950/95 via-navy-950/70 to-navy-900/35 lg:bg-gradient-to-r lg:from-navy-950/90 lg:via-navy-950/65 lg:to-navy-900/20"
       />
 
-      <div className="container-site relative w-full py-24 pb-28 sm:py-28 lg:py-32">
+      {/* Mobile: content rides high under the header (owner request 2026-07-24 —
+          no big blank gap at the top). Desktop spacing unchanged. */}
+      <div className="container-site relative w-full pt-6 pb-14 sm:py-28 lg:py-32">
         <div className="max-w-2xl">
           <Reveal>
             <p className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-xs font-medium tracking-wide text-white backdrop-blur-sm">
               <MapPin className="size-3.5 text-steel-300" aria-hidden="true" />
               {hero.locationLine}
             </p>
-            <h1 className="mt-7 font-display text-[2.5rem] leading-[1.06] font-bold text-white sm:text-5xl lg:text-6xl">
+            <h1 className="mt-5 font-display text-[2.5rem] leading-[1.06] font-bold text-white sm:mt-7 sm:text-5xl lg:text-6xl">
               {hero.headline.lead}{" "}
               <span className="text-steel-300">{hero.headline.accent}</span>
               {hero.headline.tail && ` ${hero.headline.tail}`}
@@ -55,7 +57,7 @@ export function Hero() {
           </Reveal>
 
           <Reveal delay={0.15}>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            <div className="mt-6 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center">
               {/* Primary conversion: Roofr instant estimate — external */}
               <Button
                 size="xl"
@@ -103,7 +105,7 @@ export function Hero() {
               </Button>
             </div>
 
-            <div className="mt-7 flex flex-wrap items-center gap-x-8 gap-y-3">
+            <div className="mt-5 flex flex-wrap items-center gap-x-8 gap-y-3 sm:mt-7">
               <PhoneLink className="text-white" />
               {siteConfig.email && (
                 <a
@@ -124,7 +126,7 @@ export function Hero() {
         */}
         <Reveal delay={0.25}>
           {/* Even 4-per-line grid on desktop (owner request 2026-07-05) */}
-          <ul className="mt-10 grid grid-cols-2 gap-x-5 gap-y-3.5 border-t border-white/15 pt-7 md:grid-cols-4 lg:mt-14">
+          <ul className="mt-8 grid grid-cols-2 gap-x-5 gap-y-3.5 border-t border-white/15 pt-6 md:grid-cols-4 sm:pt-7 lg:mt-14">
             {heroTrustBar.map((item) => (
               <li
                 key={item.label}
