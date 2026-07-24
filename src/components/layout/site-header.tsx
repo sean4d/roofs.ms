@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { Phone } from "lucide-react";
+import { ChevronDown, Phone } from "lucide-react";
+
+import type { NavLink } from "@/config/navigation";
 
 import { siteConfig } from "@/config/site";
 import { mainNav, primaryCta } from "@/config/navigation";
@@ -20,6 +22,9 @@ import { MobileNav } from "@/components/layout/mobile-nav";
  */
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
+  // Which nav dropdown (by href) is open; only one at a time.
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const navRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -28,6 +33,33 @@ export function SiteHeader() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Close when the user clicks away or presses Escape. (Navigating via a nav
+  // link closes it through the links' own onClick, since this client component
+  // doesn't unmount on route change.)
+  useEffect(() => {
+    if (!openMenu) return;
+    const onClick = (e: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setOpenMenu(null);
+      }
+    };
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpenMenu(null);
+    document.addEventListener("mousedown", onClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onClick);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [openMenu]);
+
+  const isActive = (link: NavLink) =>
+    link.href === pathname ||
+    pathname.startsWith(`${link.href}/`) ||
+    (link.children?.some(
+      (c) => c.href === pathname || pathname.startsWith(`${c.href}/`),
+    ) ??
+      false);
 
   return (
     <header
@@ -72,16 +104,41 @@ export function SiteHeader() {
         </Link>
 
         {/* Desktop navigation */}
-        <nav aria-label="Main navigation" className="hidden xl:block">
-          <ul className="flex items-center gap-5">
+        <nav
+          ref={navRef}
+          aria-label="Main navigation"
+          className="hidden xl:block"
+        >
+          <ul className="flex items-center gap-4">
             {mainNav.map((link) => {
-              const active =
-                link.href === pathname || pathname.startsWith(`${link.href}/`);
+              const active = isActive(link);
+
+              if (!link.children) {
+                return (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      aria-current={active ? "page" : undefined}
+                      className={cn(
+                        "text-sm font-medium transition-colors hover:text-primary",
+                        active ? "text-primary" : "text-slate-600",
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                );
+              }
+
+              // Item with a dropdown: the label links to its landing page; the
+              // chevron button toggles the sub-menu (owner request).
+              const open = openMenu === link.href;
               return (
-                <li key={link.href}>
+                <li key={link.href} className="relative flex items-center">
                   <Link
                     href={link.href}
                     aria-current={active ? "page" : undefined}
+                    onClick={() => setOpenMenu(null)}
                     className={cn(
                       "text-sm font-medium transition-colors hover:text-primary",
                       active ? "text-primary" : "text-slate-600",
@@ -89,6 +146,59 @@ export function SiteHeader() {
                   >
                     {link.label}
                   </Link>
+                  <button
+                    type="button"
+                    aria-label={`${link.label} menu`}
+                    aria-expanded={open}
+                    aria-haspopup="menu"
+                    onClick={() => setOpenMenu(open ? null : link.href)}
+                    className="ml-0.5 grid size-6 place-items-center rounded text-slate-500 transition-colors hover:text-primary"
+                  >
+                    <ChevronDown
+                      className={cn(
+                        "size-4 transition-transform duration-200",
+                        open && "rotate-180",
+                      )}
+                      aria-hidden="true"
+                    />
+                  </button>
+                  {open && (
+                    <ul
+                      role="menu"
+                      className="shadow-premium absolute left-0 top-full z-50 mt-2 w-60 rounded-2xl border border-border bg-white p-2"
+                    >
+                      {link.children.map((child) => {
+                        const external = child.href.startsWith("http");
+                        const cls =
+                          "block rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-secondary hover:text-primary";
+                        return (
+                          <li key={child.href} role="none">
+                            {external ? (
+                              <a
+                                href={child.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                role="menuitem"
+                                onClick={() => setOpenMenu(null)}
+                                className={cls}
+                              >
+                                {child.label}
+                              </a>
+                            ) : (
+                              <Link
+                                href={child.href}
+                                role="menuitem"
+                                onClick={() => setOpenMenu(null)}
+                                className={cls}
+                              >
+                                {child.label}
+                              </Link>
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
                 </li>
               );
             })}
