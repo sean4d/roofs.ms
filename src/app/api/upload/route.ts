@@ -32,6 +32,10 @@ import { diagnoseReviews } from "@/lib/google-reviews";
 import { badgeImage } from "@/lib/social-badge";
 import { buildSlideshow } from "@/lib/slideshow";
 import { submitToIndexNow } from "@/lib/indexnow";
+import {
+  sendReviewRequestEmail,
+  reviewRequestLinks,
+} from "@/lib/review-request";
 import sitemap from "@/app/sitemap";
 import {
   gbpConfigured,
@@ -879,6 +883,29 @@ async function handleCreate(request: Request) {
     `${siteConfig.url}/project-map`,
   ]);
 
+  // Post-job Google review request: auto-email the customer (if an email was
+  // provided) and always return tap-to-send sms/mailto links so the owner can
+  // fire one off from their phone. Opt-in per upload — nothing without contact.
+  let reviewRequest:
+    | { emailSent: boolean; smsHref?: string; mailtoHref?: string }
+    | undefined;
+  if (submission.customerEmail || submission.customerPhone) {
+    const emailSent = submission.customerEmail
+      ? await sendReviewRequestEmail({
+          name: submission.customerName,
+          email: submission.customerEmail,
+        })
+      : false;
+    reviewRequest = {
+      emailSent,
+      ...reviewRequestLinks({
+        name: submission.customerName,
+        email: submission.customerEmail,
+        phone: submission.customerPhone,
+      }),
+    };
+  }
+
   return Response.json({
     ok: true,
     id: doc._id,
@@ -888,5 +915,6 @@ async function handleCreate(request: Request) {
     gallery,
     gbp,
     indexnow,
+    reviewRequest,
   });
 }

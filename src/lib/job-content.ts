@@ -23,6 +23,11 @@ export interface JobSubmission {
   details: Record<string, string | string[]>;
   description: string;
   featured: boolean;
+  /** Optional customer contact — if present, an automatic Google review
+   *  request is sent/prepared after the job posts. Never shown publicly. */
+  customerName?: string;
+  customerEmail?: string;
+  customerPhone?: string;
 }
 
 const REGION = siteConfig.address.addressRegion; // "MS"
