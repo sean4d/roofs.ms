@@ -54,13 +54,25 @@ export function UploadForm() {
   const [cityCustom, setCityCustom] = useState("");
   const [featured, setFeatured] = useState(false);
   const [description, setDescription] = useState("");
+  const [customerName, setCustomerName] = useState("");
+  const [customerEmail, setCustomerEmail] = useState("");
+  const [customerPhone, setCustomerPhone] = useState("");
   const [details, setDetails] = useState<Record<string, DetailValue>>({});
   const [files, setFiles] = useState<Files>({ before: [], progress: [], after: [] });
 
   const [status, setStatus] = useState<"idle" | "working" | "done" | "error">("idle");
   const [progress, setProgress] = useState("");
   const [message, setMessage] = useState("");
-  const [result, setResult] = useState<{ title: string; url: string; caption?: string } | null>(null);
+  const [result, setResult] = useState<{
+    title: string;
+    url: string;
+    caption?: string;
+    reviewRequest?: {
+      emailSent: boolean;
+      smsHref?: string;
+      mailtoHref?: string;
+    };
+  } | null>(null);
 
   const activeJob = getJobType(jobType);
   const totalPhotos = files.before.length + files.progress.length + files.after.length;
@@ -100,6 +112,9 @@ export function UploadForm() {
       details,
       description,
       featured,
+      customerName: customerName.trim() || undefined,
+      customerEmail: customerEmail.trim() || undefined,
+      customerPhone: customerPhone.trim() || undefined,
     };
 
     try {
@@ -130,7 +145,12 @@ export function UploadForm() {
       });
       if (!res.ok) throw new Error((await res.json()).error ?? "Publish failed");
       const data = await res.json();
-      setResult({ title: data.title, url: data.url, caption: data.caption });
+      setResult({
+        title: data.title,
+        url: data.url,
+        caption: data.caption,
+        reviewRequest: data.reviewRequest,
+      });
       setStatus("done");
     } catch (err) {
       setMessage(err instanceof Error ? err.message : "Something went wrong.");
@@ -146,6 +166,38 @@ export function UploadForm() {
         <p className="text-slate-600">
           <strong>{result.title}</strong> is now on your project gallery.
         </p>
+
+        {result.reviewRequest && (
+          <div className="rounded-2xl border border-border bg-secondary/50 p-5 text-left">
+            <p className="text-sm font-semibold text-navy-900">
+              Ask this customer for a review
+            </p>
+            {result.reviewRequest.emailSent && (
+              <p className="mt-1 text-xs font-medium text-emerald-600">
+                ✓ Review request emailed automatically.
+              </p>
+            )}
+            <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+              {result.reviewRequest.smsHref && (
+                <a
+                  href={result.reviewRequest.smsHref}
+                  className="flex-1 rounded-full bg-navy-900 px-5 py-2.5 text-center text-sm font-semibold text-white"
+                >
+                  Text the customer
+                </a>
+              )}
+              {result.reviewRequest.mailtoHref && (
+                <a
+                  href={result.reviewRequest.mailtoHref}
+                  className="flex-1 rounded-full border border-border bg-white px-5 py-2.5 text-center text-sm font-semibold text-navy-900"
+                >
+                  Email the customer
+                </a>
+              )}
+            </div>
+          </div>
+        )}
+
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
           <a
             href={result.url}
@@ -161,6 +213,9 @@ export function UploadForm() {
               setFiles({ before: [], progress: [], after: [] });
               setDescription("");
               setDetails({});
+              setCustomerName("");
+              setCustomerEmail("");
+              setCustomerPhone("");
             }}
             className="rounded-full border border-border px-6 py-3 font-semibold text-navy-900"
           >
@@ -280,6 +335,40 @@ export function UploadForm() {
             className={inputClass}
           />
         </Field>
+
+        {/* Customer contact — optional, powers the auto review request */}
+        <div className="flex flex-col gap-4 rounded-2xl border border-border bg-secondary/40 p-4">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-steel-500">
+              Customer (optional)
+            </p>
+            <p className="mt-1 text-xs text-slate-500">
+              Add the customer&apos;s email and/or phone to automatically ask
+              them for a Google review after posting.
+            </p>
+          </div>
+          <input
+            type="text"
+            value={customerName}
+            onChange={(e) => setCustomerName(e.target.value)}
+            placeholder="Customer name"
+            className={inputClass}
+          />
+          <input
+            type="email"
+            value={customerEmail}
+            onChange={(e) => setCustomerEmail(e.target.value)}
+            placeholder="Customer email (we'll email them the review link)"
+            className={inputClass}
+          />
+          <input
+            type="tel"
+            value={customerPhone}
+            onChange={(e) => setCustomerPhone(e.target.value)}
+            placeholder="Customer phone (for a one-tap text)"
+            className={inputClass}
+          />
+        </div>
 
         {/* Featured */}
         <label className="flex cursor-pointer items-center gap-2 text-sm font-medium text-navy-900">
