@@ -332,15 +332,19 @@ async function handleGbp(request: Request) {
     id,
     imageUrl,
     summary,
+    accountId,
   } = (await request.json().catch(() => ({}))) as {
     test?: boolean;
     id?: string;
     imageUrl?: string;
     summary?: string;
+    accountId?: string;
   };
 
   if (!test) {
-    return Response.json({ ok: true, discovery: await discoverGbp() });
+    // accountId in the body lets us list locations before GBP_ACCOUNT_ID is
+    // set in env (one fewer redeploy during first-time setup).
+    return Response.json({ ok: true, discovery: await discoverGbp(accountId) });
   }
 
   if (!gbpReady()) {
