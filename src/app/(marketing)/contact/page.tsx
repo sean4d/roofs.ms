@@ -10,6 +10,7 @@ import { Breadcrumbs } from "@/components/services/breadcrumbs";
 import { LeadForm } from "@/components/forms/lead-form";
 import { Reveal } from "@/components/motion/reveal";
 import { SocialLinks } from "@/components/shared/social-links";
+import { GoogleMapEmbed } from "@/components/shared/google-map";
 
 /** Contact page (PRD §2 conversion) — full form + complete NAP. */
 
@@ -133,6 +134,28 @@ export default function ContactPage() {
 
           <Reveal delay={0.1}>
             <LeadForm variant="full" source="contact" />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Interactive map to the office */}
+      <section className="border-t border-border">
+        <div className="container-site py-14 sm:py-16">
+          <Reveal>
+            <h2 className="font-display text-2xl font-bold text-navy-900 sm:text-3xl">
+              Find our office
+            </h2>
+            <p className="mt-2 text-slate-600">
+              {address.streetAddress}, {address.addressLocality},{" "}
+              {address.addressRegion} {address.postalCode} — right on Highway 98.
+            </p>
+          </Reveal>
+          <Reveal className="mt-6">
+            <GoogleMapEmbed
+              query={`${siteConfig.name}, ${address.streetAddress}, ${address.addressLocality}, ${address.addressRegion} ${address.postalCode}`}
+              title="Map to Southeast Roofing's Hattiesburg office"
+              className="shadow-premium h-[22rem] w-full rounded-2xl border border-border sm:h-[26rem]"
+            />
           </Reveal>
         </div>
       </section>
