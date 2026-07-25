@@ -21,7 +21,7 @@ import { FinalCta } from "@/components/home/final-cta";
 export const metadata: Metadata = buildMetadata({
   title: "Free Roofing Tools & Calculators | Southeast Roofing",
   description:
-    "Free roofing tools from a Mississippi contractor: roof cost calculator, color visualizer, instant estimate, damage analyzer, insurance claim wizard, roof assistant, project map, and an interactive anatomy of a roof.",
+    "Free roofing tools from a Mississippi contractor: cost calculator, color visualizer, instant estimate, damage analyzer, insurance claim helper, and more.",
   path: "/roofing-tools",
 });
 

@@ -19,7 +19,7 @@ import { ColorVisualizer, type VisualizerRealPhoto } from "./visualizer";
 export const metadata: Metadata = buildMetadata({
   title: "Roof Color Visualizer in Mississippi | Southeast Roofing",
   description:
-    "Preview shingle and metal roof colors — GAF Timberline HDZ, Owens Corning Duration, and more — and see real Southeast Roofing roofs in those colors across South Mississippi.",
+    "Preview shingle and metal roof colors — GAF Timberline HDZ, Owens Corning Duration, and more — on real Southeast Roofing roofs across South Mississippi.",
   path: "/roof-color-visualizer",
   titleAbsolute: true,
 });

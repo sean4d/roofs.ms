@@ -19,7 +19,7 @@ import { RoofDiagram } from "./roof-diagram";
 export const metadata: Metadata = buildMetadata({
   title: "Anatomy of a Roof: Parts Explained | Southeast Roofing",
   description:
-    "An interactive roof diagram from Southeast Roofing: click each part of a roof system — decking, underlayment, ice & water shield, flashing, ridge vent, and more — to learn what it is, why it matters, and what goes wrong when it's done badly.",
+    "An interactive roof diagram: click each part — decking, underlayment, ice & water shield, flashing, ridge vent — to see what it does and why it matters.",
   path: "/anatomy-of-a-roof",
   titleAbsolute: true,
 });

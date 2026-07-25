@@ -18,7 +18,7 @@ import { CTASection } from "@/components/tools/cta-section";
 export const metadata: Metadata = buildMetadata({
   title: "Roofing Project Map in South Mississippi | Southeast Roofing",
   description:
-    "See where Southeast Roofing has completed roofs across South Mississippi. Tap a pin on the map to view real jobs by city, product, and color — from Hattiesburg to the Gulf Coast.",
+    "See where Southeast Roofing has completed roofs across South Mississippi. Tap a pin to view real jobs by city, product, and color — Hattiesburg to the Coast.",
   path: "/project-map",
   titleAbsolute: true,
 });

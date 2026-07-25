@@ -36,7 +36,7 @@ import { FinalCta } from "@/components/home/final-cta";
 export const metadata: Metadata = buildMetadata({
   title: "About Southeast Roofing | Hattiesburg, MS Roofing Contractor",
   description:
-    "Southeast Roofing is a Hattiesburg-based, Mississippi-licensed roofing contractor serving South Mississippi — every roof system, residential and commercial, insurance and retail, done right.",
+    "Southeast Roofing is a Hattiesburg-based, Mississippi-licensed roofing contractor serving South Mississippi — residential and commercial, insurance and retail.",
   path: "/about",
 });
 
