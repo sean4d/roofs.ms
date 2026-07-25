@@ -139,6 +139,7 @@ export async function POST(request: Request) {
     if (step === "gbp-photo") return await handleGbpPhoto(request);
     if (step === "gbp") return await handleGbp(request);
     if (step === "gbp-auth") return await handleGbpAuth(request);
+    if (step === "gbp-backfill") return await handleGbpBackfill(request);
     if (step === "check") return await handleCheck();
     if (step === "indexnow") return await handleIndexNow();
     if (step === "revalidate") return handleRevalidate();
@@ -400,6 +401,86 @@ async function handleGbp(request: Request) {
     { error: "Provide a project id or an imageUrl to test" },
     { status: 400 },
   );
+}
+
+/**
+ * Backfill the GBP *Photos gallery* for jobs uploaded before the GBP API was
+ * connected (password-gated). PHOTOS ONLY — no "Update" post, since those jobs
+ * already went to the Posts feed + socials; this just gets their finished-work
+ * photos into the profile's Photos tab. Prefers "after" photos.
+ *
+ * Body (all optional):
+ *   { limit }            — how many most-recent projects to include (default 5)
+ *   { ids: [...] }       — specific project ids instead of "most recent"
+ *   { perProject }       — max photos per job (default 3, to respect quota)
+ *   { confirm: true }    — actually post. WITHOUT it, a DRY RUN lists what would
+ *                          be posted (project titles + photo counts), no calls.
+ */
+async function handleGbpBackfill(request: Request) {
+  const {
+    limit = 5,
+    ids,
+    perProject = 3,
+    confirm = false,
+  } = (await request.json().catch(() => ({}))) as {
+    limit?: number;
+    ids?: string[];
+    perProject?: number;
+    confirm?: boolean;
+  };
+
+  if (!gbpReady()) {
+    return Response.json(
+      { ok: false, note: "GBP not connected (set all five GBP_* env vars)" },
+      { status: 400 },
+    );
+  }
+
+  const client = getWriteClient();
+  const n = Math.min(Math.max(1, limit), 20);
+  const projects: ProjectDoc[] = ids?.length
+    ? ((await Promise.all(ids.map((id) => client.getDocument(id)))).filter(
+        Boolean,
+      ) as ProjectDoc[])
+    : await client.fetch(
+        `*[_type == "project"] | order(_createdAt desc)[0...${n}]{ _id, title, media }`,
+      );
+
+  // Build each job's after-photo URL list (fall back to all photos).
+  const plan = projects.map((p) => {
+    const media = p.media ?? [];
+    const refs = (
+      media.some((m) => m.phase === "after")
+        ? media.filter((m) => m.phase === "after")
+        : media
+    )
+      .map((m) => m.image?.asset?._ref)
+      .filter((v): v is string => Boolean(v))
+      .slice(0, Math.max(1, perProject));
+    return { id: p._id, title: p.title ?? "(untitled)", photos: refs.map(jpgUrl) };
+  });
+
+  if (!confirm) {
+    return Response.json({
+      dryRun: true,
+      count: plan.length,
+      projects: plan.map((p) => ({
+        id: p.id,
+        title: p.title,
+        photos: p.photos.length,
+      })),
+    });
+  }
+
+  const results = [];
+  for (const p of plan) {
+    results.push({
+      id: p.id,
+      title: p.title,
+      gallery: await uploadGbpPhotos(p.photos, perProject),
+    });
+  }
+  return Response.json({ ok: true, count: results.length, results });
 }
 
 /**
