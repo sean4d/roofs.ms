@@ -15,6 +15,10 @@
  * review markup as self-serving).
  */
 
+import { unstable_cache } from "next/cache";
+
+import { getGbpReviews } from "@/lib/gbp";
+
 /** Owner-supplied identifiers (2026-07-07). Public values — safe to inline. */
 const FEATURABLE_WIDGET_ID =
   process.env.FEATURABLE_WIDGET_ID ?? "dd7a34c6-f6cb-4661-8edb-e9e0ab6fddfd";
@@ -27,6 +31,8 @@ export interface LiveReview {
   text: string;
   when: string;
   photo?: string;
+  /** The owner's public reply to this review, if any (GBP source only). */
+  reply?: string;
 }
 
 export interface GoogleReviewData {
@@ -137,8 +143,41 @@ async function fromPlacesApi(): Promise<GoogleReviewData | null> {
   }
 }
 
-/** Live rating, review count, and reviews — or null to use curated fallback. */
+/**
+ * Official GBP API → ALL reviews (not the Places cap of 5), with owner replies.
+ * Cached a day and tagged so a manual revalidate or a new review refreshes it.
+ * The heavy lifting (OAuth, pagination) lives in lib/gbp; here we just cache it
+ * and normalize the timestamps to the same "N months ago" the other sources use.
+ */
+const cachedGbpReviews = unstable_cache(
+  async (): Promise<GoogleReviewData | null> => {
+    const raw = await getGbpReviews();
+    if (!raw) return null;
+    const reviews: LiveReview[] = raw.reviews
+      .map((r) => ({
+        author: r.author,
+        rating: r.stars,
+        text: r.text.trim(),
+        when: relativeWhen(r.createTime),
+        photo: r.photo,
+        reply: r.reply,
+      }))
+      .filter((r) => r.text.length > 0);
+    return { rating: raw.rating, count: raw.count, reviews };
+  },
+  ["gbp-reviews-v1"],
+  { revalidate: 86400, tags: ["google-reviews"] },
+);
+
+/**
+ * Live rating, review count, and reviews — or null to use curated fallback.
+ * Source priority: the official GBP API (all reviews) → Featurable → Places.
+ * GBP wins because it returns every review, freshest, with the owner's replies.
+ */
 export async function getGoogleReviewData(): Promise<GoogleReviewData | null> {
+  const gbp = await cachedGbpReviews();
+  // Prefer GBP only when it actually returned displayable reviews.
+  if (gbp && gbp.reviews.length > 0) return gbp;
   return (await fromFeaturable()) ?? (await fromPlacesApi());
 }
 

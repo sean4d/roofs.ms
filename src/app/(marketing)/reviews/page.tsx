@@ -4,8 +4,7 @@ import { ArrowRight, ExternalLink, ShieldCheck, Star } from "lucide-react";
 
 import { siteConfig } from "@/config/site";
 import { projectPhotos } from "@/content/photos";
-import { googleReviews } from "@/content/reviews";
-import { getGoogleReviewData } from "@/lib/google-reviews";
+import { getSiteReviews } from "@/lib/reviews";
 import { buildMetadata } from "@/lib/seo";
 import { breadcrumbSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -49,23 +48,11 @@ const recentWork = Object.values(
 ).slice(0, 4);
 
 export default async function ReviewsPage() {
-  // Live Google data when GOOGLE_PLACES_API_KEY is set; otherwise falls back
-  // to the curated reviews. Live reviews show first (freshest), then any
-  // curated reviews from reviewers not already covered — so the page stays
-  // rich AND auto-updates.
-  const live = await getGoogleReviewData();
-  const liveMapped = (live?.reviews ?? []).map((r) => ({
-    name: r.author,
-    when: r.when,
-    text: r.text,
-    services: undefined as string | undefined,
-  }));
-  const firstName = (n: string) => n.trim().toLowerCase().split(/\s+/)[0];
-  const seen = new Set(liveMapped.map((r) => firstName(r.name)));
-  const displayReviews = [
-    ...liveMapped,
-    ...googleReviews.filter((r) => !seen.has(firstName(r.name))),
-  ];
+  // Every live Google review (via the GBP API), freshest first, with the
+  // owner's replies — new reviews appear here on their own. Curated verbatim
+  // reviews fill in behind them only for reviewers the live feed hasn't covered.
+  const { live, rating, count, reviews: displayReviews } =
+    await getSiteReviews();
 
   return (
     <>
@@ -82,8 +69,8 @@ export default async function ReviewsPage() {
                   className="size-3.5 fill-amber-400 text-amber-400"
                   aria-hidden="true"
                 />
-                {live
-                  ? `${live.rating.toFixed(1)} from ${live.count} Google reviews`
+                {live && rating
+                  ? `${rating.toFixed(1)} from ${count} Google reviews`
                   : siteConfig.trustFacts.googleRating}
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-3.5 py-1.5 text-xs font-medium text-slate-600">
@@ -167,12 +154,16 @@ export default async function ReviewsPage() {
               <div
                 className="flex gap-0.5"
                 role="img"
-                aria-label="5 out of 5 stars"
+                aria-label={`${review.rating} out of 5 stars`}
               >
                 {Array.from({ length: 5 }, (_, i) => (
                   <Star
                     key={i}
-                    className="size-4 fill-amber-400 text-amber-400"
+                    className={
+                      i < review.rating
+                        ? "size-4 fill-amber-400 text-amber-400"
+                        : "size-4 fill-slate-200 text-slate-200"
+                    }
                     aria-hidden="true"
                   />
                 ))}
@@ -188,6 +179,16 @@ export default async function ReviewsPage() {
                 <p className="mt-1.5 text-xs text-slate-500">
                   {review.services}
                 </p>
+              )}
+              {review.reply && (
+                <div className="mt-4 rounded-xl border border-border bg-secondary/60 p-4">
+                  <p className="text-xs font-semibold text-navy-900">
+                    Response from Southeast Roofing
+                  </p>
+                  <p className="mt-1.5 text-sm leading-relaxed text-slate-600">
+                    {review.reply}
+                  </p>
+                </div>
               )}
             </StaggerItem>
           ))}

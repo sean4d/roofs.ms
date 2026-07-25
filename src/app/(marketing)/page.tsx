@@ -18,6 +18,7 @@ import { FeaturedProjects } from "@/components/home/featured-projects";
 import { WhyUs } from "@/components/home/why-us";
 import { FinancingStrip } from "@/components/home/financing-strip";
 import { ServiceArea } from "@/components/home/service-area";
+import { HomeReviews } from "@/components/home/home-reviews";
 import { ReviewsTrust } from "@/components/home/reviews-trust";
 import { FaqSection } from "@/components/home/faq-section";
 import { FinalCta } from "@/components/home/final-cta";
@@ -47,6 +48,7 @@ export default function HomePage() {
       <WhyUs />
       <FinancingStrip />
       <ServiceArea />
+      <HomeReviews />
       <ReviewsTrust />
       <FaqSection />
       <FinalCta />
