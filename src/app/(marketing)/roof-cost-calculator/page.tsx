@@ -17,7 +17,7 @@ import { CostCalculator } from "./calculator";
 export const metadata: Metadata = buildMetadata({
   title: "Roof Cost Calculator in Mississippi | Southeast Roofing",
   description:
-    "Estimate a roof replacement cost range in South Mississippi by material, home size, and pitch. Free, instant, no email required — then get an exact price with a free inspection.",
+    "Estimate a roof replacement cost range in South Mississippi by material, size, and pitch. Free and instant — no email needed. Exact price from a free inspection.",
   path: "/roof-cost-calculator",
   titleAbsolute: true,
 });

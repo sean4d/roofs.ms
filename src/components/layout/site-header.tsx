@@ -87,7 +87,10 @@ export function SiteHeader() {
         >
           <Image
             src={brandAssets.logo.mark}
-            alt=""
+            /* Descriptive alt for crawlers/image search. The anchor's
+               aria-label supplies the accessible name, so screen readers
+               announce the link once — no duplicate announcement. */
+            alt="Southeast Roofing logo"
             width={brandAssets.logo.markAspect.width}
             height={brandAssets.logo.markAspect.height}
             className={cn(

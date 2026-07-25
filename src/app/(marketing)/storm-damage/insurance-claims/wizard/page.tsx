@@ -16,7 +16,7 @@ import { InsuranceWizard } from "./insurance-wizard";
 export const metadata: Metadata = buildMetadata({
   title: "Roof Insurance Claim Help in MS | Southeast Roofing",
   description:
-    "Not sure what to do after storm damage? Answer a few questions and Southeast Roofing will point you to the right next step — emergency help, a free inspection before filing, or claim support — with honest, plain-English guidance.",
+    "Not sure what to do after storm damage? Answer a few questions and we'll point you to the right next step — emergency help, inspection, or claim support.",
   path: "/storm-damage/insurance-claims/wizard",
   titleAbsolute: true,
 });

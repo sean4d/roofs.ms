@@ -42,7 +42,7 @@ export const revalidate = 1800;
 export const metadata: Metadata = buildMetadata({
   title: "Storm Center: Alerts & Roof Help in MS | Southeast Roofing",
   description:
-    "Live Mississippi weather alerts, the first-hours storm damage checklist, real damage identification photos, and how insurance claims work — from South Mississippi's storm roofers.",
+    "Live Mississippi weather alerts, a first-hours storm damage checklist, real damage photos, and how insurance claims work — from South Mississippi roofers.",
   path: "/storm-center",
 });
 

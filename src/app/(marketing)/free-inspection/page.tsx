@@ -23,7 +23,7 @@ import { PhoneLink } from "@/components/shared/phone-link";
 export const metadata: Metadata = buildMetadata({
   title: "Free Roof Inspection in Hattiesburg, MS | Southeast Roofing",
   description:
-    "Schedule a free, no-obligation roof inspection anywhere in South Mississippi. Photo documentation, straight answers, and an itemized digital proposal — from a local, GAF-certified team.",
+    "Schedule a free, no-obligation roof inspection anywhere in South Mississippi. Photo documentation, straight answers, and an itemized digital proposal.",
   path: "/free-inspection",
 });
 
