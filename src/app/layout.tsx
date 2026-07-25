@@ -52,11 +52,24 @@ export const metadata: Metadata = {
     // suppresses file-convention auto-detection, so declare it explicitly.
     apple: "/apple-icon.png",
   },
-  // Google Search Console verification — set the token in env to emit the tag.
-  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+  // Search-engine ownership verification — set a token in env to emit its tag.
+  // Google Search Console + Bing Webmaster Tools (Bing also offers a one-click
+  // "import from Google Search Console" that needs no tag).
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ||
+  process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
     ? {
         verification: {
-          google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+          ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+            ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+            : {}),
+          ...(process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+            ? {
+                other: {
+                  "msvalidate.01":
+                    process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION,
+                },
+              }
+            : {}),
         },
       }
     : {}),
