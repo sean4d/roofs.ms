@@ -533,7 +533,7 @@ export function JobCard({
 
           <div className="mt-1 flex flex-wrap gap-3">
             <Link
-              href="/free-inspection"
+              href="/quote"
               className="inline-flex items-center rounded-full bg-navy-900 px-5 py-2.5 text-sm font-semibold text-white"
             >
               Get a roof like this
