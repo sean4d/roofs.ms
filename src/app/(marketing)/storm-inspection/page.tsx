@@ -5,12 +5,12 @@ import { buildMetadata } from "@/lib/seo";
 import { RequestPage } from "@/components/forms/request-page";
 
 /**
- * Free inspection — the on-site visit request. One of several request types
- * (see config/lead-requests); CTAs that promise something else (an itemized
- * estimate, a repair, a storm inspection) now have their own matching pages.
+ * Storm damage inspection request — where storm/insurance CTAs land. Prefills
+ * the storm flag and service so the lead reaches the office already tagged as
+ * an insurance-track job.
  */
 
-const request = LEAD_REQUESTS["free-inspection"];
+const request = LEAD_REQUESTS["storm-inspection"];
 
 export const metadata: Metadata = buildMetadata({
   title: request.metaTitle,
@@ -19,6 +19,6 @@ export const metadata: Metadata = buildMetadata({
   titleAbsolute: true,
 });
 
-export default function FreeInspectionPage() {
+export default function StormInspectionPage() {
   return <RequestPage request={request} />;
 }

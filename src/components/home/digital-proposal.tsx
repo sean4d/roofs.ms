@@ -46,7 +46,7 @@ export function DigitalProposal() {
           <Reveal className="mt-9">
             <Button
               size="xl"
-              render={<Link href="/free-inspection" />}
+              render={<Link href="/estimate" />}
               nativeButton={false}
             >
               Get your itemized proposal

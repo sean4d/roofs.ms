@@ -17,11 +17,15 @@ export function ServiceHero({
   hero,
   breadcrumbs,
   audience = "residential",
+  ctaOverride,
 }: {
   hero: ServiceContent["hero"];
   breadcrumbs: BreadcrumbItem[];
   /** Commercial pages swap the CTA to the consultation flow (PRD §4.2). */
   audience?: "residential" | "commercial";
+  /** Overrides the residential CTA so the page asks for what it's about —
+   *  a repair page requests a repair, a storm page a storm inspection. */
+  ctaOverride?: { label: string; href: string };
 }) {
   const cta =
     audience === "commercial"
@@ -29,7 +33,10 @@ export function ServiceHero({
           label: "Request a Consultation",
           href: "/commercial/request-consultation",
         }
-      : { label: "Schedule Free Inspection", href: "/free-inspection" };
+      : (ctaOverride ?? {
+          label: "Schedule Free Inspection",
+          href: "/free-inspection",
+        });
 
   return (
     <section className="border-b border-border bg-secondary">
