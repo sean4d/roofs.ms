@@ -9,6 +9,7 @@ import { defaultServiceTools } from "@/config/tools";
 import { Section } from "@/components/shared/section";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
+import { requestForSlug, requestCtaLabel } from "@/config/lead-requests";
 import { ToolStrip } from "@/components/tools/tool-strip";
 import { ServiceHero } from "@/components/services/service-hero";
 import {
@@ -70,9 +71,22 @@ export function ServicePage({
     ? service.hero
     : { ...service.hero, photo: serviceImageFor(service.path) ?? undefined };
 
+  // Make the CTA ask for what the page is actually about: a repair page
+  // requests a repair, a storm page a storm inspection. Commercial pages keep
+  // their consultation flow (handled inside ServiceHero).
+  const request = requestForSlug(`${service.slug} ${service.path}`);
+  const ctaOverride = commercial
+    ? undefined
+    : { label: requestCtaLabel(request), href: request.path };
+
   return (
     <>
-      <ServiceHero hero={hero} breadcrumbs={breadcrumbs} audience={audience} />
+      <ServiceHero
+        hero={hero}
+        breadcrumbs={breadcrumbs}
+        audience={audience}
+        ctaOverride={ctaOverride}
+      />
       <ServiceIntro intro={service.intro} />
       {service.signs && <ServiceSigns signs={service.signs} />}
       <ServiceApproach approach={service.approach} />

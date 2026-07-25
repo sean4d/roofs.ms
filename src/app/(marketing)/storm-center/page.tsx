@@ -149,7 +149,7 @@ export default function StormCenterPage() {
                 size="xl"
                 variant="outline"
                 className="border-white/40 bg-white/5 text-white hover:bg-white/10"
-                render={<Link href="/free-inspection" />}
+                render={<Link href="/storm-inspection" />}
                 nativeButton={false}
               >
                 Request a storm inspection

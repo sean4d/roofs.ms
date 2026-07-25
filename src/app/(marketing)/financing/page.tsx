@@ -92,7 +92,7 @@ export default function FinancingPage() {
                 size="lg"
                 variant="outline"
                 className="border-white/40 bg-white/5 text-base text-white hover:border-white hover:bg-white/15"
-                render={<Link href="/free-inspection" />}
+                render={<Link href="/estimate" />}
                 nativeButton={false}
               >
                 Get the estimate first

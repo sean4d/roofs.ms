@@ -729,7 +729,7 @@ export const learnArticles: LearnArticle[] = [
     related: [
       { label: "Roof Replacement", href: "/residential/roof-replacement" },
       { label: "Financing", href: "/financing" },
-      { label: "Free Instant Estimate", href: "/free-inspection" },
+      { label: "Free Itemized Estimate", href: "/estimate" },
     ],
   },
 

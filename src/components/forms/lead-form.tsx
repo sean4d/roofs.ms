@@ -73,14 +73,32 @@ function Field({
 export function LeadForm({
   variant,
   source,
+  submitLabel,
+  successTitle,
+  successBody,
+  defaultService,
+  defaultStorm,
+  showBooking = true,
 }: {
   variant: "short" | "full";
   source: string;
+  /** Restates what the visitor is asking for (per request type). */
+  submitLabel?: string;
+  successTitle?: string;
+  successBody?: string;
+  /** Prefills the "What do you need?" select. */
+  defaultService?: string;
+  /** Pre-checks the storm/insurance box (storm request pages). */
+  defaultStorm?: boolean;
+  /** Offer the "pick a time" booking button on success — only makes sense
+   *  for requests that involve us coming out. */
+  showBooking?: boolean;
 }) {
   const [state, formAction, pending] = useActionState(submitLead, initialState);
   const pathname = usePathname();
-  const bookingUrl =
-    process.env.NEXT_PUBLIC_BOOKING_URL ?? siteConfig.links.booking;
+  const bookingUrl = showBooking
+    ? (process.env.NEXT_PUBLIC_BOOKING_URL ?? siteConfig.links.booking)
+    : undefined;
 
   useEffect(() => {
     if (state.status === "success") {
@@ -99,11 +117,11 @@ export function LeadForm({
           aria-hidden="true"
         />
         <h2 className="mt-5 font-display text-2xl font-bold">
-          Got it — we&apos;ll call you shortly.
+          {successTitle ?? "Got it — we'll call you shortly."}
         </h2>
         <p className="mx-auto mt-3 max-w-sm leading-relaxed text-slate-600">
-          Your request is in. During business hours you&apos;ll usually hear
-          from us the same day.
+          {successBody ??
+            "Your request is in. During business hours you'll usually hear from us the same day."}
         </p>
         <div className="mt-8 flex flex-col items-center gap-4">
           {bookingUrl && (
@@ -224,7 +242,12 @@ export function LeadForm({
         </Field>
 
         <Field label="What do you need?" name="service">
-          <select id="service" name="service" className={inputClass}>
+          <select
+            id="service"
+            name="service"
+            defaultValue={defaultService}
+            className={inputClass}
+          >
             {SERVICES.map((service) => (
               <option key={service} value={service}>
                 {service}
@@ -264,6 +287,7 @@ export function LeadForm({
         <input
           type="checkbox"
           name="storm"
+          defaultChecked={defaultStorm}
           className="mt-0.5 size-4 accent-navy-900"
         />
         <span className="text-sm leading-relaxed text-slate-600">
@@ -293,9 +317,10 @@ export function LeadForm({
           </>
         ) : (
           <>
-            {variant === "short"
-              ? "Request my free inspection"
-              : "Send message"}
+            {submitLabel ??
+              (variant === "short"
+                ? "Request my free inspection"
+                : "Send message")}
             <ArrowRight aria-hidden="true" />
           </>
         )}
