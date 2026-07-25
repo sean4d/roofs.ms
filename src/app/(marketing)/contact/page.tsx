@@ -11,6 +11,7 @@ import { LeadForm } from "@/components/forms/lead-form";
 import { Reveal } from "@/components/motion/reveal";
 import { SocialLinks } from "@/components/shared/social-links";
 import { GoogleMapEmbed } from "@/components/shared/google-map";
+import { OpenStatus } from "@/components/shared/open-status";
 
 /** Contact page (PRD §2 conversion) — full form + complete NAP. */
 
@@ -101,7 +102,10 @@ export default function ContactPage() {
                   <Clock className="size-5 text-steel-500" aria-hidden="true" />
                 </span>
                 <span className="font-medium">
-                  {siteConfig.hours.display}
+                  <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                    {siteConfig.hours.display}
+                    <OpenStatus spec={[...siteConfig.hours.spec]} />
+                  </span>
                   <span className="mt-0.5 block text-sm font-normal text-slate-500">
                     {siteConfig.hours.note}
                   </span>
