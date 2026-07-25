@@ -222,7 +222,9 @@ export interface GbpDiscovery {
  * locations, so the owner can read off the ids to set GBP_ACCOUNT_ID /
  * GBP_LOCATION_ID. Read-only; never throws.
  */
-export async function discoverGbp(): Promise<GbpDiscovery> {
+export async function discoverGbp(
+  accountIdOverride?: string,
+): Promise<GbpDiscovery> {
   if (!gbpConfigured()) {
     return { configured: false, note: "Set GBP_CLIENT_ID/SECRET/REFRESH_TOKEN" };
   }
@@ -240,7 +242,9 @@ export async function discoverGbp(): Promise<GbpDiscovery> {
     let locations:
       | Array<{ name?: string; title?: string; address?: string }>
       | undefined;
-    const accountId = bareId(process.env.GBP_ACCOUNT_ID);
+    // An explicit accountId (passed in the request) lets us list locations
+    // BEFORE GBP_ACCOUNT_ID is set in env — saves a redeploy during setup.
+    const accountId = bareId(accountIdOverride ?? process.env.GBP_ACCOUNT_ID);
     if (accountId) {
       const loc = await gbpFetch(
         `${BUSINESS_INFO}/accounts/${accountId}/locations?readMask=name,title,storefrontAddress&pageSize=100`,
