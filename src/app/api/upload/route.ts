@@ -31,6 +31,8 @@ import {
 import { diagnoseReviews } from "@/lib/google-reviews";
 import { badgeImage } from "@/lib/social-badge";
 import { buildSlideshow } from "@/lib/slideshow";
+import { submitToIndexNow } from "@/lib/indexnow";
+import sitemap from "@/app/sitemap";
 import {
   gbpConfigured,
   gbpReady,
@@ -138,6 +140,7 @@ export async function POST(request: Request) {
     if (step === "gbp") return await handleGbp(request);
     if (step === "gbp-auth") return await handleGbpAuth(request);
     if (step === "check") return await handleCheck();
+    if (step === "indexnow") return await handleIndexNow();
     if (step === "revalidate") return handleRevalidate();
     return Response.json({ error: "Unknown step" }, { status: 400 });
   } catch (err) {
@@ -534,6 +537,18 @@ async function handleMetricool(request: Request) {
   });
 }
 
+/**
+ * Submit every sitemap URL to IndexNow (Bing/Yandex/DuckDuckGo instant crawl —
+ * NOT Google). Password-gated; run once now to seed the engines, and any time a
+ * batch of pages changes. Returns how many URLs were sent + the engines' ack.
+ */
+async function handleIndexNow() {
+  const entries = await sitemap();
+  const urls = entries.map((e) => (typeof e.url === "string" ? e.url : ""));
+  const result = await submitToIndexNow(urls);
+  return Response.json({ ok: result.status !== "error", ...result });
+}
+
 /** Force-refresh cached content on demand (password-gated). Covers live Google
  *  reviews (cached ~24h) AND the project gallery — so a just-uploaded job can be
  *  pushed live instantly instead of waiting out the gallery's cache window. */
@@ -771,6 +786,14 @@ async function handleCreate(request: Request) {
   revalidatePath("/project-map");
   if (submission.featured) revalidatePath("/");
 
+  // Ping IndexNow so Bing/DuckDuckGo pick up the new job page fast (best-effort;
+  // Google ignores IndexNow and finds it via the sitemap instead).
+  const indexnow = await submitToIndexNow([
+    `${siteConfig.url}/projects/${slug}`,
+    `${siteConfig.url}/projects`,
+    `${siteConfig.url}/project-map`,
+  ]);
+
   return Response.json({
     ok: true,
     id: doc._id,
@@ -779,5 +802,6 @@ async function handleCreate(request: Request) {
     url: projectUrl,
     gallery,
     gbp,
+    indexnow,
   });
 }
