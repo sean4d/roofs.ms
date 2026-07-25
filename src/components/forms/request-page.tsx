@@ -83,6 +83,7 @@ export function RequestPage({ request }: { request: LeadRequest }) {
               defaultService={request.defaultService}
               defaultStorm={request.defaultStorm}
               showBooking={request.showBooking}
+              choice={request.choice}
             />
           </Reveal>
         </div>

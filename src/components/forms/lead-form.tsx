@@ -79,9 +79,16 @@ export function LeadForm({
   defaultService,
   defaultStorm,
   showBooking = true,
+  choice,
 }: {
   variant: "short" | "full";
   source: string;
+  /** Optional radio group (e.g. emailed ballpark vs on-site measure). */
+  choice?: {
+    legend: string;
+    name: "preference";
+    options: { value: string; label: string; hint: string }[];
+  };
   /** Restates what the visitor is asking for (per request type). */
   submitLabel?: string;
   successTitle?: string;
@@ -281,6 +288,38 @@ export function LeadForm({
             />
           </Field>
         </div>
+      )}
+
+      {choice && (
+        <fieldset className="mt-5">
+          <legend className="mb-2 text-sm font-semibold text-navy-900">
+            {choice.legend}
+          </legend>
+          <div className="grid gap-2.5">
+            {choice.options.map((option, i) => (
+              <label
+                key={option.value}
+                className="flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-secondary px-4 py-3.5 transition-colors hover:border-steel-500"
+              >
+                <input
+                  type="radio"
+                  name={choice.name}
+                  value={option.value}
+                  defaultChecked={i === 0}
+                  className="mt-0.5 size-4 accent-navy-900"
+                />
+                <span>
+                  <span className="block text-sm font-semibold text-navy-900">
+                    {option.label}
+                  </span>
+                  <span className="mt-0.5 block text-sm leading-relaxed text-slate-600">
+                    {option.hint}
+                  </span>
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
       )}
 
       <label className="mt-5 flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-secondary px-4 py-3.5">

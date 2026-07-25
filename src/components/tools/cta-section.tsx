@@ -31,13 +31,23 @@ export function CTASection({
         <p className="mx-auto mt-4 max-w-xl text-steel-100/90">{subtext}</p>
 
         <div className="mt-8 flex flex-wrap justify-center gap-3">
+          {/* Tool pages catch people mid-research, so the low-friction wizard
+              leads here — six taps beats a form when you're still exploring. */}
+          <Link
+            href="/quote"
+            onClick={() => fire("quote-wizard")}
+            className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-navy-900 transition hover:bg-steel-100"
+          >
+            Get my quote in 6 taps
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </Link>
+
           <Link
             href="/free-inspection"
             onClick={() => fire("free-inspection")}
-            className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-navy-900 transition hover:bg-steel-100"
+            className="inline-flex items-center gap-2 rounded-full border border-steel-500 px-6 py-3 font-semibold text-white transition hover:bg-navy-900"
           >
             Schedule free inspection
-            <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
 
           {siteConfig.links.instantEstimate && (

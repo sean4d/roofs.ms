@@ -53,6 +53,13 @@ export interface LeadRequest {
   defaultStorm?: boolean;
   /** Show the "pick a time" booking button on success (visit-based requests). */
   showBooking?: boolean;
+  /** Optional radio choice shown on the form (e.g. emailed ballpark vs on-site
+   *  measure). The selected label rides along to the office + CRM. */
+  choice?: {
+    legend: string;
+    name: "preference";
+    options: { value: string; label: string; hint: string }[];
+  };
   /** The three reassurance points beside the form. */
   points: LeadRequestPoint[];
 }
@@ -108,6 +115,23 @@ export const LEAD_REQUESTS = {
     successTitle: "Got it — your estimate is being put together.",
     successBody:
       "A real person is reviewing your request. We'll reach out to confirm a couple of details, then email your itemized estimate.",
+    // Not everyone wants someone on their roof yet — let them say so up front.
+    choice: {
+      legend: "How would you like your estimate?",
+      name: "preference",
+      options: [
+        {
+          value: "Emailed ballpark — no visit yet",
+          label: "Email me a ballpark first",
+          hint: "A range based on your details and aerial measurements. Nobody comes out until you say so.",
+        },
+        {
+          value: "On-site measure for an exact price",
+          label: "Come measure for an exact price",
+          hint: "We inspect the roof, check the decking and flashing, and price it line by line.",
+        },
+      ],
+    },
     points: [
       {
         icon: FileCheck,

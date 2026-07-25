@@ -43,6 +43,7 @@ export async function submitLead(
     address: text(formData, "address", 200) || undefined,
     service: text(formData, "service", 100) || undefined,
     storm: formData.get("storm") === "on",
+    preference: text(formData, "preference", 120) || undefined,
     preferredTime: text(formData, "preferredTime", 100) || undefined,
     message: text(formData, "message", 2000) || undefined,
     page: text(formData, "page", 200) || undefined,

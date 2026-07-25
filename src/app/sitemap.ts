@@ -36,6 +36,7 @@ const launchedStaticRoutes = [
   "/privacy-policy",
   "/terms-of-service",
   "/learn",
+  "/faq",
   "/blog",
   "/quote",
   "/storm-center",

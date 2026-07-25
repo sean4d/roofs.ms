@@ -26,6 +26,9 @@ export interface Lead {
   service?: string;
   /** Customer indicated storm damage / insurance claim involvement */
   storm?: boolean;
+  /** How they want the estimate handled — e.g. emailed ballpark vs on-site
+   *  measure. Set by request pages that offer the choice. */
+  preference?: string;
   preferredTime?: string;
   message?: string;
   /** Page path the lead came from, for attribution */
@@ -106,6 +109,7 @@ async function sendEmail(lead: Lead): Promise<boolean> {
     lead.city && `City/ZIP: ${lead.city}`,
     lead.address && `Address: ${lead.address}`,
     lead.service && `Service: ${lead.service}`,
+    lead.preference && `Estimate preference: ${lead.preference}`,
     lead.roofType && `Roof type: ${lead.roofType}`,
     lead.squareFootage && `Approx. square footage: ${lead.squareFootage}`,
     lead.timeline && `Timeline: ${lead.timeline}`,
