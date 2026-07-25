@@ -32,6 +32,23 @@ export interface SiteReviews {
 
 const firstName = (n: string) => n.trim().toLowerCase().split(/\s+/)[0];
 
+/**
+ * Deterministically pick `n` reviews for a given key (e.g. a city slug), so
+ * each page shows a stable but varied subset — different cities surface
+ * different reviews, which keeps the content unique page to page.
+ */
+export function pickReviews(
+  reviews: DisplayReview[],
+  key: string,
+  n = 3,
+): DisplayReview[] {
+  if (reviews.length <= n) return reviews;
+  let h = 0;
+  for (let i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) >>> 0;
+  const start = h % reviews.length;
+  return Array.from({ length: n }, (_, i) => reviews[(start + i) % reviews.length]);
+}
+
 export async function getSiteReviews(): Promise<SiteReviews> {
   const live = await getGoogleReviewData();
 

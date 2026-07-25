@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { cities, getCity } from "@/content/cities";
 import { buildMetadata } from "@/lib/seo";
+import { getSiteReviews, pickReviews } from "@/lib/reviews";
 import { breadcrumbSchema, faqSchema, serviceSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/json-ld";
 import { CityPage } from "@/components/cities/city-page";
@@ -49,6 +50,10 @@ export default async function ServiceAreaCityPage(
     { name: cityContent.city, path },
   ];
 
+  // A stable, varied trio of real Google reviews for this city (local proof).
+  const { reviews } = await getSiteReviews();
+  const cityReviews = pickReviews(reviews, cityContent.slug, 3);
+
   return (
     <>
       <JsonLd
@@ -63,7 +68,11 @@ export default async function ServiceAreaCityPage(
           faqSchema(cityContent.faqs),
         ]}
       />
-      <CityPage cityContent={cityContent} breadcrumbs={breadcrumbs} />
+      <CityPage
+        cityContent={cityContent}
+        breadcrumbs={breadcrumbs}
+        reviews={cityReviews}
+      />
     </>
   );
 }

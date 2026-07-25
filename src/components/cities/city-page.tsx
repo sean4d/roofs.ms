@@ -1,11 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Clock, MapPin } from "lucide-react";
+import { ArrowRight, Clock, MapPin, Star } from "lucide-react";
 
 import type { BreadcrumbItem } from "@/lib/schema";
 import type { CityContent } from "@/content/cities/types";
+import type { DisplayReview } from "@/lib/reviews";
 import { nearbyCities } from "@/content/cities/nearby";
 import { projectPhotos } from "@/content/photos";
+import { GoogleMapEmbed } from "@/components/shared/google-map";
 import { JobPhotoTile } from "@/components/projects/job-photo-tile";
 import { ToolStrip } from "@/components/tools/tool-strip";
 import { Breadcrumbs } from "@/components/services/breadcrumbs";
@@ -41,9 +43,11 @@ const CITY_SERVICES = [
 export function CityPage({
   cityContent,
   breadcrumbs,
+  reviews = [],
 }: {
   cityContent: CityContent;
   breadcrumbs: BreadcrumbItem[];
+  reviews?: DisplayReview[];
 }) {
   const localPhotos = projectPhotos.filter(
     (photo) =>
@@ -223,6 +227,67 @@ export function CityPage({
             </div>
           </Reveal>
         </div>
+      </Section>
+
+      {/* Local reviews + map — real proof and a pin on this community */}
+      <Section tone="surface">
+        <SectionHeading
+          eyebrow="Trusted nearby"
+          title={`Why ${cityContent.city}-area homeowners choose us`}
+          description="Real 5-star Google reviews from customers across South Mississippi — and where to find us."
+        />
+        <div className="mt-12 grid gap-8 lg:grid-cols-[1.15fr_1fr] lg:gap-10">
+          {reviews.length > 0 && (
+            <StaggerGroup className="grid content-start gap-5 sm:grid-cols-2 lg:grid-cols-1">
+              {reviews.map((review) => (
+                <StaggerItem
+                  key={review.name + review.when}
+                  className="rounded-2xl border border-border bg-white p-5 shadow-sm"
+                >
+                  <div
+                    className="flex gap-0.5"
+                    role="img"
+                    aria-label={`${review.rating} out of 5 stars`}
+                  >
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <Star
+                        key={i}
+                        className={
+                          i < review.rating
+                            ? "size-4 fill-amber-400 text-amber-400"
+                            : "size-4 fill-slate-200 text-slate-200"
+                        }
+                        aria-hidden="true"
+                      />
+                    ))}
+                  </div>
+                  <p className="mt-3 line-clamp-4 text-sm leading-relaxed text-slate-600">
+                    &ldquo;{review.text}&rdquo;
+                  </p>
+                  <p className="mt-3 text-sm font-semibold text-navy-900">
+                    {review.name}
+                  </p>
+                </StaggerItem>
+              ))}
+            </StaggerGroup>
+          )}
+          <Reveal>
+            <GoogleMapEmbed
+              query={`${cityContent.city}, Mississippi`}
+              title={`Map of ${cityContent.city}, Mississippi — Southeast Roofing service area`}
+              className="h-full min-h-[20rem] w-full rounded-2xl border border-border"
+            />
+          </Reveal>
+        </div>
+        <Reveal className="mt-8">
+          <Link
+            href="/reviews"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-navy-900 underline-offset-4 hover:text-steel-500 hover:underline"
+          >
+            Read all our Google reviews
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </Link>
+        </Reveal>
       </Section>
 
       {/* Nearby communities — weave the service-area hub together */}
