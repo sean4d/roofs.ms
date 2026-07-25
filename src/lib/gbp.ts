@@ -423,6 +423,88 @@ export async function createGbpUpdate(
   }
 }
 
+// ── Reading reviews (all of them, not the Places-API cap of 5) ──────────────
+
+const STAR_WORD: Record<string, number> = {
+  ONE: 1,
+  TWO: 2,
+  THREE: 3,
+  FOUR: 4,
+  FIVE: 5,
+};
+
+export interface GbpReview {
+  author: string;
+  stars: number;
+  text: string;
+  /** ISO timestamp — the caller formats it. */
+  createTime?: string;
+  photo?: string;
+  /** The owner's public reply, if any. */
+  reply?: string;
+}
+
+export interface GbpReviewsResult {
+  rating: number;
+  count: number;
+  reviews: GbpReview[];
+}
+
+/**
+ * Read EVERY review on the profile via the GBP API (paginated) — the whole
+ * point being that Google's Places API caps at 5, while this returns them all,
+ * with the owner's replies and the true average + total count. Cap the page
+ * walk so a viral profile can't loop forever. Returns null on any failure so
+ * callers fall back to the Places/curated sources. Never throws.
+ */
+export async function getGbpReviews(
+  maxPages = 6,
+): Promise<GbpReviewsResult | null> {
+  if (!gbpReady()) return null;
+  try {
+    const collected: GbpReview[] = [];
+    let rating = 0;
+    let count = 0;
+    let pageToken: string | undefined;
+    for (let page = 0; page < maxPages; page++) {
+      const url =
+        `${V4}/${locationParent()}/reviews?pageSize=50&orderBy=updateTime desc` +
+        (pageToken ? `&pageToken=${encodeURIComponent(pageToken)}` : "");
+      const res = await gbpFetch(url);
+      if (!res.ok) return page === 0 ? null : { rating, count, reviews: collected };
+      const body = res.body as {
+        reviews?: Array<{
+          reviewer?: { displayName?: string; profilePhotoUrl?: string };
+          starRating?: string;
+          comment?: string;
+          createTime?: string;
+          reviewReply?: { comment?: string };
+        }>;
+        averageRating?: number;
+        totalReviewCount?: number;
+        nextPageToken?: string;
+      };
+      rating = body.averageRating ?? rating;
+      count = body.totalReviewCount ?? count;
+      for (const r of body.reviews ?? []) {
+        collected.push({
+          author: r.reviewer?.displayName ?? "Google customer",
+          stars: STAR_WORD[r.starRating ?? "FIVE"] ?? 5,
+          text: (r.comment ?? "").trim(),
+          createTime: r.createTime,
+          photo: r.reviewer?.profilePhotoUrl,
+          reply: r.reviewReply?.comment?.trim() || undefined,
+        });
+      }
+      pageToken = body.nextPageToken;
+      if (!pageToken) break;
+    }
+    return { rating, count, reviews: collected };
+  } catch {
+    return null;
+  }
+}
+
 /**
  * The whole Tier-1 GBP push for one finished job: post the Update (highest
  * SEO value, so it goes first while quota is freshest) then a capped set of

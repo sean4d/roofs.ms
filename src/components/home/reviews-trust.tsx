@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { ArrowRight, ExternalLink, Star } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 
 import { reviewsSection } from "@/content/homepage";
-import { getGoogleReviewData } from "@/lib/google-reviews";
 import { brandMarks } from "@/components/shared/brand-marks";
 import { Section } from "@/components/shared/section";
 import { SectionHeading } from "@/components/shared/section-heading";
@@ -19,10 +18,7 @@ import { Button } from "@/components/ui/button";
  * inline; GAF/BBB seals get sourced when official assets are supplied.
  */
 
-export async function ReviewsTrust() {
-  // Live Google rating when GOOGLE_PLACES_API_KEY is set; otherwise hidden.
-  const live = await getGoogleReviewData();
-
+export function ReviewsTrust() {
   return (
     <Section tone="surface">
       <SectionHeading
@@ -31,24 +27,6 @@ export async function ReviewsTrust() {
         description={reviewsSection.description}
         align="center"
       />
-
-      {live && (
-        <Reveal className="mt-6 flex justify-center">
-          <a
-            href={reviewsSection.googleCta.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-2 text-sm font-semibold text-navy-900 shadow-sm transition-colors hover:border-steel-500"
-          >
-            <span className="flex" aria-hidden="true">
-              {Array.from({ length: 5 }, (_, i) => (
-                <Star key={i} className="size-4 fill-amber-400 text-amber-400" />
-              ))}
-            </span>
-            {live.rating.toFixed(1)} from {live.count} Google reviews
-          </a>
-        </Reveal>
-      )}
 
       <StaggerGroup className="mx-auto mt-14 grid max-w-5xl gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {reviewsSection.badges.map((badge) => {
