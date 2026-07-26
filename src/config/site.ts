@@ -118,7 +118,7 @@ export const siteConfig = {
   trustFacts: {
     googleRating: "5-star Google rating",
     googleGuaranteed: "Google Guaranteed",
-    bbbRating: "BBB Accredited — A rating",
+    bbbRating: "BBB Accredited — A+ rating",
     licensed: "Mississippi licensed",
     insured: "Fully insured & bonded",
     financing: "$0 down financing available",

@@ -1,11 +1,34 @@
-import { Accordion as AccordionPrimitive } from "@base-ui/react/accordion";
+import { ChevronDownIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 
-function Accordion({ className, ...props }: AccordionPrimitive.Root.Props) {
+/**
+ * FAQ accordion built on native <details>/<summary>.
+ *
+ * Every place this component is used is an FAQ (homepage, service pages, and
+ * the /faq hub), and <details> is the element the platform provides for exactly
+ * that. Using it instead of a JS disclosure buys four things that matter here:
+ *
+ *  1. Answers ship in the server-rendered HTML and stay in the DOM. Our pages
+ *     emit FAQPage structured data, and that markup has to mirror content that
+ *     is genuinely on the page — schema whose answers exist only in JSON-LD
+ *     reads as markup written for crawlers rather than people.
+ *  2. It works with JavaScript disabled. Open/close is browser behaviour; there
+ *     is no hydration step between the reader and the answer.
+ *  3. Keyboard and screen-reader support are native — <summary> is focusable,
+ *     Enter and Space toggle it, and state is exposed without any ARIA of ours.
+ *  4. Find-in-page (Ctrl+F) locates text inside a closed answer and browsers
+ *     expand it automatically.
+ *
+ * The API mirrors the previous component so call sites didn't change.
+ */
+
+function Accordion({
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<"div">) {
   return (
-    <AccordionPrimitive.Root
+    <div
       data-slot="accordion"
       className={cn("flex w-full flex-col", className)}
       {...props}
@@ -13,11 +36,16 @@ function Accordion({ className, ...props }: AccordionPrimitive.Root.Props) {
   );
 }
 
-function AccordionItem({ className, ...props }: AccordionPrimitive.Item.Props) {
+function AccordionItem({
+  className,
+  /** Accepted for API compatibility with the previous implementation. */
+  value: _value,
+  ...props
+}: React.ComponentPropsWithoutRef<"details"> & { value?: string }) {
   return (
-    <AccordionPrimitive.Item
+    <details
       data-slot="accordion-item"
-      className={cn("not-last:border-b", className)}
+      className={cn("group/accordion-item not-last:border-b", className)}
       {...props}
     />
   );
@@ -27,28 +55,26 @@ function AccordionTrigger({
   className,
   children,
   ...props
-}: AccordionPrimitive.Trigger.Props) {
+}: React.ComponentPropsWithoutRef<"summary">) {
   return (
-    <AccordionPrimitive.Header className="flex">
-      <AccordionPrimitive.Trigger
-        data-slot="accordion-trigger"
-        className={cn(
-          "group/accordion-trigger relative flex flex-1 items-start justify-between rounded-lg border border-transparent py-2.5 text-left text-sm font-medium transition-all outline-none hover:underline focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:after:border-ring aria-disabled:pointer-events-none aria-disabled:opacity-50 **:data-[slot=accordion-trigger-icon]:ml-auto **:data-[slot=accordion-trigger-icon]:size-4 **:data-[slot=accordion-trigger-icon]:text-muted-foreground",
-          className,
-        )}
-        {...props}
-      >
-        {children}
-        <ChevronDownIcon
-          data-slot="accordion-trigger-icon"
-          className="pointer-events-none shrink-0 group-aria-expanded/accordion-trigger:hidden"
-        />
-        <ChevronUpIcon
-          data-slot="accordion-trigger-icon"
-          className="pointer-events-none hidden shrink-0 group-aria-expanded/accordion-trigger:inline"
-        />
-      </AccordionPrimitive.Trigger>
-    </AccordionPrimitive.Header>
+    <summary
+      data-slot="accordion-trigger"
+      className={cn(
+        // list-none + ::-webkit-details-marker hides the default triangle so
+        // our chevron is the only affordance.
+        "flex cursor-pointer list-none items-start justify-between gap-4 rounded-lg border border-transparent py-2.5 text-left text-sm font-medium transition-all outline-none select-none",
+        "hover:underline focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
+        "[&::-webkit-details-marker]:hidden",
+        className,
+      )}
+      {...props}
+    >
+      {children}
+      <ChevronDownIcon
+        aria-hidden="true"
+        className="mt-0.5 size-4 shrink-0 text-muted-foreground transition-transform duration-200 group-open/accordion-item:rotate-180"
+      />
+    </summary>
   );
 }
 
@@ -56,22 +82,18 @@ function AccordionContent({
   className,
   children,
   ...props
-}: AccordionPrimitive.Panel.Props) {
+}: React.ComponentPropsWithoutRef<"div">) {
   return (
-    <AccordionPrimitive.Panel
+    <div
       data-slot="accordion-content"
-      className="overflow-hidden text-sm data-open:animate-accordion-down data-closed:animate-accordion-up"
+      className={cn(
+        "pt-0 pb-2.5 text-sm [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4",
+        className,
+      )}
       {...props}
     >
-      <div
-        className={cn(
-          "h-(--accordion-panel-height) pt-0 pb-2.5 data-ending-style:h-0 data-starting-style:h-0 [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4",
-          className,
-        )}
-      >
-        {children}
-      </div>
-    </AccordionPrimitive.Panel>
+      {children}
+    </div>
   );
 }
 

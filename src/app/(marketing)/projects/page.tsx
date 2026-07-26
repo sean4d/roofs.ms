@@ -39,7 +39,12 @@ const breadcrumbs = [
 ];
 
 const proofChips = [
-  { icon: Camera, label: `${projectPhotos.length + stormPhotos.length}+ real job-site photos` },
+  // Rounded DOWN to the nearest ten so the badge reads as a clean claim
+  // ("100+") instead of an oddly precise one, and stays true as photos grow.
+  {
+    icon: Camera,
+    label: `${Math.floor((projectPhotos.length + stormPhotos.length) / 10) * 10}+ real job-site photos`,
+  },
   { icon: MapPin, label: `${allCityCount} Mississippi communities` },
   { icon: BadgeCheck, label: "Zero stock photos in this gallery" },
 ];

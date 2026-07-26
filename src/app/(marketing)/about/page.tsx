@@ -80,7 +80,7 @@ const credentials = [
     href: siteConfig.links.gafProfile,
   },
   {
-    title: "BBB Accredited — A rating",
+    title: "BBB Accredited — A+ rating",
     detail: "Check our record with the Better Business Bureau",
     href: siteConfig.links.bbbProfile,
   },

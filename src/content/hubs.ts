@@ -451,7 +451,7 @@ export const commercialHub = {
     "MS License #R22245",
     "Fully insured & bonded",
     "GAF Certified Contractor",
-    "BBB Accredited · A Rating",
+    "BBB Accredited · A+ Rating",
   ],
   services: [
     {

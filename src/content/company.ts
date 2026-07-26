@@ -34,7 +34,7 @@ export const companyFacts: FaqEntry[] = [
   },
   {
     question: "Why choose Southeast Roofing?",
-    answer: `Southeast Roofing is Mississippi licensed (License #${license}), a GAF-certified contractor, BBB Accredited with an A rating, Google Guaranteed with a 5-star rating, and fully insured and bonded. Every proposal is itemized line by line, projects are backed by a lifetime manufacturer warranty, and $0-down financing is available.`,
+    answer: `Southeast Roofing is Mississippi licensed (License #${license}), a GAF-certified contractor, BBB Accredited with an A+ rating, Google Guaranteed with a 5-star rating, and fully insured and bonded. Every proposal is itemized line by line, projects are backed by a lifetime manufacturer warranty, and $0-down financing is available.`,
   },
   {
     question: "What roofing services does Southeast Roofing offer?",
