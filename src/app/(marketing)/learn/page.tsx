@@ -79,6 +79,14 @@ const ARTICLE_THUMB: Record<string, string> = {
     "/images/storm/wind-damage-exposed-decking-collins-ms.webp",
   "commercial-roof-replacement-guide":
     "/images/projects/roof-tear-off-decking-columbia-ms.webp",
+  "metal-roof-cost-mississippi":
+    "/images/projects/29-gauge-galvalume-metal-roof-mccomb-ms-002.webp",
+  "tree-fell-on-roof-who-pays":
+    "/images/storm/wind-damage-roof-columbia-ms.webp",
+  "roof-replacement-permits-hattiesburg":
+    "/images/projects/roof-tear-off-decking-hattiesburg-ms.webp",
+  "best-roof-colors-mississippi-heat":
+    "/images/projects/gaf-timberline-hdz-charcoal-ellisville-ms-001.webp",
 };
 
 /** Category fallback for any future article missing an ARTICLE_THUMB entry. */

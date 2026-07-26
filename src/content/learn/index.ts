@@ -1548,6 +1548,423 @@ export const learnArticles: LearnArticle[] = [
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Cost guides: metal roof pricing (money keyword)                     */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "metal-roof-cost-mississippi",
+    category: "cost-guides",
+    title: "What a metal roof really costs in Mississippi",
+    metaTitle: "Metal Roof Cost in Mississippi | Southeast Roofing",
+    metaDescription:
+      "What a metal roof really costs in South Mississippi — the five things that set the price, how it compares to shingle, and why per-square quotes mislead.",
+    excerpt:
+      "The five things that set the number, how metal really compares to shingle over time, and why a per-square quote tells you almost nothing.",
+    updated: "2026-07-26",
+    readMinutes: 7,
+    hero: {
+      headline: "What a metal roof really costs here",
+      subhead:
+        "Metal spans a huge price range — a shop roof and a standing-seam home aren't the same product. Here's what actually drives the number on your roof.",
+    },
+    body: [
+      {
+        type: "p",
+        text: "Ask what a metal roof costs and you'll get answers a factor of three apart, because \"metal roof\" isn't one product. An exposed-fastener panel on a barn and a concealed-clip standing-seam system on a coastal home share a material and almost nothing else. Before any number means anything, you have to know which one you're pricing.",
+      },
+      { type: "h2", text: "The two families, and why the gap is so wide" },
+      {
+        type: "p",
+        text: "Exposed-fastener panels (R-panel, PBR, and similar) screw straight through the metal into the structure, with a gasketed washer sealing each screw. Fast to install, economical, genuinely durable. Standing seam attaches with hidden clips inside raised, interlocking seams, so nothing penetrates the weather surface — it costs meaningfully more to buy and to install, and it's what most people are picturing when they say they want a metal roof.",
+      },
+      {
+        type: "p",
+        text: "In our market, exposed fastener is often the difference between metal being in budget or not. Standing seam is a premium purchase that buys you no gaskets to age, better uplift performance, and the architectural look.",
+      },
+      { type: "h2", text: "The five things that set your number" },
+      {
+        type: "list",
+        items: [
+          "System type — exposed fastener versus standing seam is the single biggest lever, bigger than anything else on this list.",
+          "Gauge — the metal's thickness. 29ga is common and perfectly good on the right building; 26ga and 24ga cost more and dent less. We spell out the gauge on every proposal, because \"metal roof\" without a gauge is not a specification.",
+          "Panel finish — bare Galvalume versus a quality painted finish (like a Kynar-class coating) changes both price and how the color holds up in our UV.",
+          "Roof complexity — valleys, dormers, hips, and steep pitch mean more cutting, more trim, more flashing, and more labor. A simple gable costs far less per square foot than a cut-up roofline of the same area.",
+          "What's underneath — decking condition, whether the old roof comes off, and what underlayment goes down. Rotten decking gets replaced per sheet; we price that possibility up front instead of springing it mid-job.",
+        ],
+      },
+      { type: "h2", text: "Coastal roofs are a different spec" },
+      {
+        type: "p",
+        text: "Near the water, salt exposure changes the right answer. Panel metallurgy and fastener selection have to be specified for that environment, and a spec that's fine in Hattiesburg can corrode early in Bay St. Louis or Long Beach. If you're on the Coast, that belongs in the conversation before anyone quotes a price.",
+      },
+      { type: "h2", text: "Metal versus shingle, honestly" },
+      {
+        type: "p",
+        text: "Up front, shingles win — usually by a wide margin, though exposed-fastener metal narrows it. Over time the comparison shifts: a quality metal roof can outlast two shingle roofs in our climate, so measured per year of service the two move much closer together. The deciding question usually isn't which roof is better. It's how long you plan to own the house.",
+      },
+      {
+        type: "callout",
+        title: "See both numbers for your actual roof",
+        text: "We install metal and shingle, so we'll quote them side by side from one free inspection — real measurements, itemized, no pressure either direction.",
+        href: "/estimate",
+        linkLabel: "Get my itemized estimate",
+      },
+      { type: "h2", text: "Why a per-square price tells you nothing" },
+      {
+        type: "p",
+        text: "A quoted rate per square is meaningless until you know what's inside it. Does it include tear-off and disposal? A decking allowance? Trim, closures, and ridge cap, or are those \"extras\"? Code-required ventilation? Two metal quotes several thousand dollars apart are usually two different scopes wearing the same units. This is exactly why our proposals price each component on its own line — so you can lay ours next to anyone else's and see what's actually different.",
+      },
+      {
+        type: "callout",
+        title: "Financing is on the table either way",
+        text: "$0-down options through GoodLeap mean the choice between metal and shingle doesn't have to come down to what's in savings this month.",
+        href: "/financing",
+        linkLabel: "See financing options",
+      },
+    ],
+    faqs: [
+      {
+        question: "Is a metal roof worth it in Mississippi?",
+        answer:
+          "It depends on how long you're staying. A quality metal roof can outlast two shingle roofs in our heat and humidity, so over the long haul the premium often pays for itself. If you expect to move within a decade, a quality architectural shingle roof usually makes more financial sense. We quote both so you can decide with real numbers rather than averages.",
+      },
+      {
+        question: "How much more does standing seam cost than exposed fastener?",
+        answer:
+          "Meaningfully more — it's a different system with hidden clips, more trim, and more labor, not just a different-looking panel. The right way to see the gap is both systems priced on your actual roof, since complexity affects standing seam more than it affects exposed fastener.",
+      },
+      {
+        question: "Can metal go over my existing shingles?",
+        answer:
+          "Sometimes, with the right substructure, but we evaluate case by case. Trapping a failing roof under a new one can hide problems you'd rather fix once, properly — and it makes any future decking issue much more expensive to reach.",
+      },
+      {
+        question: "Does a metal roof lower my insurance?",
+        answer:
+          "Some carriers offer credits for impact- or wind-rated roofing, but it varies by insurer and policy, so we won't promise a discount. It's worth a call to your agent before you decide — ask specifically what rating they'd need to see documented.",
+      },
+    ],
+    related: [
+      { label: "Residential Metal Roofing", href: "/residential/metal-roofing" },
+      { label: "Standing Seam", href: "/residential/metal-roofing/standing-seam" },
+      { label: "Financing Options", href: "/financing" },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  /* Insurance: tree falls on roof (very high local intent)              */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "tree-fell-on-roof-who-pays",
+    category: "insurance-claims",
+    title: "A tree fell on your roof — whose insurance pays?",
+    metaTitle: "Tree Fell on Your Roof? Who Pays | Southeast Roofing",
+    metaDescription:
+      "A tree hit your roof in Mississippi — whose insurance pays? How coverage works for your tree, a neighbor's tree, and storm damage, plus what to do first.",
+    excerpt:
+      "Your tree, your neighbor's tree, or an act of God — how coverage actually sorts out, and the first four things to do before anyone climbs a ladder.",
+    updated: "2026-07-26",
+    readMinutes: 6,
+    hero: {
+      headline: "A tree hit your roof. Now what?",
+      subhead:
+        "In the Pine Belt, trees cause as much roof damage as wind itself. Here's how the insurance question actually sorts out — and what to do in the first hour.",
+    },
+    body: [
+      {
+        type: "p",
+        text: "Pine trees and hurricane-season wind are a bad combination, and it's one of the most common calls we get after a storm. The question everyone asks first is whose insurance pays — and the answer surprises most people.",
+      },
+      { type: "h2", text: "The first hour matters more than the paperwork" },
+      {
+        type: "list",
+        title: "Before you worry about the claim",
+        items: [
+          "People first. Get everyone out from under the damaged area. If the tree hit a corner of the house, treat the ceiling below it as unsafe until someone qualified looks at it.",
+          "Assume every downed line is live. Trees bring wires down with them. Do not approach the tree if lines are involved — call the power company.",
+          "Photograph everything before anything moves. Wide shots showing the tree and the house together, then closer shots of the roof damage and any interior water. Once a tree service cuts that trunk up, the evidence of what happened is gone.",
+          "Stop the water. If it's raining into the house, a professional tarp is the priority — insurers expect reasonable mitigation, and the damage compounds fast. Keep the invoice; it goes in the claim file.",
+        ],
+      },
+      { type: "h2", text: "Whose tree was it? (It usually doesn't matter.)" },
+      {
+        type: "p",
+        text: "Here's the part people find counterintuitive: in most cases, if a tree hits your house, you file on your own homeowners policy — even if the tree grew in your neighbor's yard. Property insurance generally follows the property that was damaged, not the property the tree came from. Your insurer pays to repair your roof, and if they believe someone else was legally at fault, they may pursue that themselves through subrogation.",
+      },
+      {
+        type: "p",
+        text: "The exception is negligence. If the tree was visibly dead or dying, the neighbor knew about it, and it was documented that they knew — a written notice, for example — their liability coverage can come into play. That's a much harder, slower path, and it hinges on proof that existed before the tree fell.",
+      },
+      {
+        type: "p",
+        text: "We're roofers, not adjusters or attorneys, so treat this as orientation rather than advice on your specific policy. What we can tell you is what we see: the fastest path to a repaired roof is almost always your own carrier.",
+      },
+      { type: "h2", text: "What your policy is likely to cover" },
+      {
+        type: "list",
+        items: [
+          "The structural repair — the roof system itself, decking, rafters or trusses, and the interior damage from water that came in through the opening.",
+          "Removal of the tree, but often only the portion that's on the structure, and typically up to a capped amount. The rest of the trunk lying in your yard is frequently your cost.",
+          "Reasonable emergency mitigation like tarping — which is why the invoice matters.",
+          "Additional living expenses if the home genuinely isn't habitable, on many policies.",
+        ],
+      },
+      {
+        type: "p",
+        text: "Two things to find in your declarations page before you call: your deductible type (many Mississippi policies carry a separate wind/hail deductible calculated as a percentage of dwelling coverage, not a flat dollar figure) and whether you have replacement-cost or actual-cash-value coverage. Those two lines determine what you actually receive.",
+      },
+      { type: "h2", text: "Where we come in" },
+      {
+        type: "p",
+        text: "About half our work is insurance restoration. On a tree strike we document the damage the way a claim file needs it, meet your adjuster on the roof so nothing in the scope gets missed, and build to what's approved. What we won't do is promise your claim will be approved — that decision belongs to your insurer under your policy — or offer to cover your deductible, which is fraud no matter how casually it's offered.",
+      },
+      {
+        type: "callout",
+        title: "Tree on the roof right now?",
+        text: "Emergency tarping and documented storm inspections are the front end of our storm response, and our line is open 24/7.",
+        href: "/storm-inspection",
+        linkLabel: "Request a storm inspection",
+      },
+    ],
+    faqs: [
+      {
+        question: "My neighbor's tree fell on my house. Do they pay?",
+        answer:
+          "Usually not directly. In most cases you file on your own homeowners policy, because property insurance generally follows the damaged property rather than the tree's origin. Your insurer may pursue the neighbor's carrier separately if negligence is involved. The exception is a tree that was visibly dead and the neighbor had been notified — that documented warning is what changes the analysis.",
+      },
+      {
+        question: "Will insurance pay to remove the whole tree?",
+        answer:
+          "Often only the part on your structure, and frequently up to a capped amount. The portion lying in your yard is commonly the homeowner's cost. Check your policy language — this varies more between carriers than almost anything else in a tree claim.",
+      },
+      {
+        question: "Should I cut the tree up before the adjuster comes?",
+        answer:
+          "Photograph everything first. You can and should take emergency steps to stop water and make the property safe, but once the tree is cut apart the physical evidence of how it fell and what it hit is gone. Photos taken before cleanup are worth a great deal in a disputed claim.",
+      },
+      {
+        question: "What if the damage is less than my deductible?",
+        answer:
+          "Then filing gains you nothing and adds a claim to your history. Our inspection gives you the honest repair number first, so you can make that call with real information instead of guessing.",
+      },
+    ],
+    related: [
+      { label: "Emergency Roofing", href: "/storm-damage/emergency-roofing" },
+      {
+        label: "Insurance Claims Assistance",
+        href: "/storm-damage/insurance-claims",
+      },
+      { label: "Storm Center", href: "/storm-center" },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  /* Hiring: roofing permits (hyper-local, almost no competition)         */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "roof-replacement-permits-hattiesburg",
+    category: "hiring",
+    title: "Do you need a permit to replace a roof in Hattiesburg?",
+    metaTitle: "Roof Replacement Permits in Hattiesburg | Southeast Roofing",
+    metaDescription:
+      "Whether a roof replacement needs a permit in Hattiesburg and South Mississippi, who pulls it, what inspectors check, and why skipping it costs you later.",
+    excerpt:
+      "Short answer: usually yes, and your contractor should pull it. Here's what the permit actually buys you — and what skipping it costs at resale.",
+    updated: "2026-07-26",
+    readMinutes: 5,
+    hero: {
+      headline: "Permits, plainly",
+      subhead:
+        "Homeowners ask this constantly, usually because a contractor told them a permit wasn't necessary. Here's what's actually going on.",
+    },
+    body: [
+      {
+        type: "p",
+        text: "Roof replacement is permitted work in most Mississippi jurisdictions, including here in the Hattiesburg area. Requirements, fees, and inspection steps are set locally and do change, so confirm the specifics with your city or county building department for your address — but plan on a permit being part of a legitimate replacement, and be suspicious of anyone who tells you otherwise.",
+      },
+      { type: "h2", text: "Who is supposed to pull it" },
+      {
+        type: "p",
+        text: "Your contractor. A licensed roofer pulls the permit under their license, which is part of what you're paying for. When a contractor asks the homeowner to pull the permit instead, that should stop you cold — it usually means they can't, because they aren't properly licensed. It also shifts liability onto you: if the work fails inspection, the person on the hook is whoever's name is on the permit.",
+      },
+      {
+        type: "list",
+        title: "Questions worth asking before you sign",
+        items: [
+          "Will you pull the permit under your license, and is the permit cost included in this proposal?",
+          "What's your Mississippi State Board of Contractors license number? (Ours is R22245 — check it.)",
+          "Who meets the inspector, and what happens if something needs correcting?",
+          "Will you provide the final documentation once the work passes?",
+        ],
+      },
+      { type: "h2", text: "What the permit actually buys you" },
+      {
+        type: "p",
+        text: "It's easy to read a permit as bureaucratic friction. It isn't — it's the only independent check on work you'll never see once the shingles are on.",
+      },
+      {
+        type: "list",
+        items: [
+          "An inspector who is not paid by your contractor looks at the work. That is the entire point.",
+          "Code compliance on the things that matter in hurricane country — nailing patterns, fastener counts, underlayment, drip edge, and ventilation. These are exactly the corners that get cut, and exactly what wind finds.",
+          "A clean record at resale. Unpermitted structural work turns up in inspections and title work, and it can stall or reprice a sale years later.",
+          "Insurance standing. If a future claim involves the roof, work done without required permits can complicate coverage — an unwelcome discovery at the worst moment.",
+        ],
+      },
+      { type: "h2", text: "Repairs are often different" },
+      {
+        type: "p",
+        text: "Small repairs frequently fall below permit thresholds, while a full tear-off and replacement generally doesn't. Thresholds vary by jurisdiction — sometimes defined by square footage, sometimes by cost of work. When we scope a job we tell you which category it falls in and why, rather than leaving you to guess.",
+      },
+      { type: "h2", text: "The storm-chaser angle" },
+      {
+        type: "p",
+        text: "After every major storm, out-of-town crews arrive with a pitch built on speed. Permits slow them down and require a license they may not hold in Mississippi, so the permit conversation is often where the story falls apart. If someone knocked on your door uninvited, wants to start tomorrow, and waves off the permit question — that's your answer about the rest of the job too.",
+      },
+      {
+        type: "callout",
+        title: "We handle the permit as part of the job",
+        text: "Licensed in Mississippi (MSBOC #R22245), GAF Certified, and glad to be checked before you commit to anything.",
+        href: "/free-inspection",
+        linkLabel: "Schedule a free inspection",
+      },
+    ],
+    faqs: [
+      {
+        question: "Do I need a permit to replace my roof in Hattiesburg?",
+        answer:
+          "Plan on it — full roof replacement is permitted work in most Mississippi jurisdictions, and your licensed contractor should pull it under their license as part of the job. Requirements and fees are set locally and change, so confirm specifics with your city or county building department for your address.",
+      },
+      {
+        question: "What if my contractor says a permit isn't needed?",
+        answer:
+          "Ask them to put that in writing along with their license number, then verify it with the building department yourself. Most of the time the real reason is that they can't pull one. A contractor asking you to pull the permit instead is an even louder warning — it moves the liability to you.",
+      },
+      {
+        question: "Does a permit slow the job down?",
+        answer:
+          "Not meaningfully. Most residential replacements are still a single day of work; the permit is administrative and handled before the crew arrives. Anyone using \"permits take too long\" as a reason to skip one is telling you something about how they operate.",
+      },
+      {
+        question: "What happens if roof work was done without a permit?",
+        answer:
+          "It commonly surfaces during a home inspection when you sell, and can complicate the sale or an insurance claim. Depending on the jurisdiction it may be possible to resolve after the fact, though that usually costs more than doing it right the first time.",
+      },
+    ],
+    related: [
+      { label: "About Southeast Roofing", href: "/about" },
+      { label: "Roof Replacement", href: "/residential/roof-replacement" },
+      { label: "Reviews & Credentials", href: "/reviews" },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  /* Materials: roof color + heat (ties to the color visualizer)          */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "best-roof-colors-mississippi-heat",
+    category: "materials",
+    title: "Does roof color matter in Mississippi heat?",
+    metaTitle: "Best Roof Colors for Mississippi Heat | Southeast Roofing",
+    metaDescription:
+      "Does roof color actually lower cooling bills in Mississippi? What shade, reflectivity, and ventilation really do — and how to pick a color you'll still like.",
+    excerpt:
+      "Yes, but less than you've been told — and far less than ventilation. What actually affects attic temperature, and how to choose a color you won't regret.",
+    updated: "2026-07-26",
+    readMinutes: 5,
+    hero: {
+      headline: "Does a lighter roof really cool your house?",
+      subhead:
+        "It's the question we get every single summer. The honest answer has a real effect in it — just not the one most people expect.",
+    },
+    body: [
+      {
+        type: "p",
+        text: "Stand on a dark roof in July in South Mississippi and you'll believe color matters. The surface genuinely runs hotter. The question homeowners actually care about, though, is different: does that translate into a cooler house and a smaller power bill? Partly — and much less than what's happening underneath.",
+      },
+      { type: "h2", text: "What color actually does" },
+      {
+        type: "p",
+        text: "A lighter or more reflective surface absorbs less solar energy, so it runs cooler. That's real physics, and on a metal roof with a reflective factory finish the effect is meaningful enough that it's a legitimate selling point. On asphalt shingles the difference between a light and dark shingle exists but is smaller than the color contrast suggests — asphalt is a dark, absorptive material regardless of the granule color on top of it.",
+      },
+      {
+        type: "p",
+        text: "We won't attach a percentage to your bill, because the honest range depends on your insulation, ductwork, attic ventilation, tree cover, and how your house is oriented. Anyone quoting you a specific savings figure for a shingle color is guessing.",
+      },
+      { type: "h2", text: "What matters more than color" },
+      {
+        type: "list",
+        items: [
+          "Attic ventilation. A poorly vented attic in our climate traps heat and moisture, cooks shingles from below, shortens their life, and can void warranties. Intake at the soffits and exhaust at the ridge, correctly balanced, does more for attic temperature than any color choice.",
+          "Insulation. What separates the hot attic from your living space matters more than what separates the sun from the attic.",
+          "Ductwork in the attic. If your ducts run through a 140-degree attic, sealing and insulating them will outperform a roof color decision by a wide margin.",
+          "Material. A reflective metal roof genuinely outperforms asphalt on heat gain — that's a material decision, not a color decision.",
+        ],
+      },
+      {
+        type: "callout",
+        title: "Every inspection includes a ventilation check",
+        text: "It's the single most overlooked part of a roof in our heat, and the cheapest thing to fix while a roof is already open.",
+        href: "/residential/ventilation",
+        linkLabel: "How roof ventilation works",
+      },
+      { type: "h2", text: "So how should you actually choose?" },
+      {
+        type: "p",
+        text: "Choose for the house. You'll look at this roof for two decades, and the resale and curb-appeal effect of a color that suits your brick, trim, and neighborhood is far more valuable than a marginal thermal difference. Weathered Wood, Pewter Gray, Charcoal, Barkwood, Hickory, and Slate all read differently against different exteriors, and they look different here than they do in a brochure photographed in Arizona.",
+      },
+      {
+        type: "list",
+        title: "Two things that help more than a swatch",
+        items: [
+          "See the color on a real roof, outdoors, in Mississippi light. A one-inch sample in a showroom is misleading; a full roof in afternoon sun is the truth.",
+          "Look at it against your own brick or siding. Colors that look distinct on a sample board can wash together against warm brick.",
+        ],
+      },
+      {
+        type: "callout",
+        title: "Preview colors on real local roofs",
+        text: "Our color visualizer shows GAF Timberline HDZ, Owens Corning Duration, and metal finishes on actual Southeast Roofing projects across South Mississippi — not renderings.",
+        href: "/roof-color-visualizer",
+        linkLabel: "Open the color visualizer",
+      },
+      { type: "h2", text: "A note on algae streaking" },
+      {
+        type: "p",
+        text: "Our humidity produces the dark streaking you see on roofs all over the Pine Belt. It's algae, it's cosmetic, and it shows more obviously on lighter roofs. Most quality shingle lines now include algae-resistant technology — worth asking about specifically if you're leaning light, and worth knowing that the streaks aren't damaging your roof when they do appear.",
+      },
+    ],
+    faqs: [
+      {
+        question: "Will a lighter roof lower my power bill in Mississippi?",
+        answer:
+          "It can help, but less than most people expect on asphalt shingles, and the honest amount depends on your insulation, ventilation, and ductwork more than the color itself. Reflective metal roofing shows a more meaningful effect. We won't quote you a savings percentage, because for your specific house it would be a guess.",
+      },
+      {
+        question: "Do dark shingles wear out faster in the South?",
+        answer:
+          "Surface temperature is higher on dark roofs, but in practice the bigger driver of shingle life here is attic ventilation. A well-vented dark roof commonly outlasts a poorly vented light one.",
+      },
+      {
+        question: "What roof color is best for resale?",
+        answer:
+          "Something that suits your home's exterior and doesn't fight the neighborhood. Mid-tone grays and browns are safe and popular here for good reason. The costliest color mistake is a bold choice that limits buyer appeal, not a slightly warmer shade of gray.",
+      },
+      {
+        question: "Why does my roof have black streaks?",
+        answer:
+          "Algae — extremely common in our humidity and cosmetic rather than damaging. Moss is the one to act on, since it holds moisture against the shingles. Either way, never pressure-wash a shingle roof; it strips the granules that protect it.",
+      },
+    ],
+    related: [
+      {
+        label: "Asphalt Shingle Roofing",
+        href: "/residential/asphalt-shingle-roofing",
+      },
+      { label: "Ventilation", href: "/residential/ventilation" },
+      { label: "Roof Color Visualizer", href: "/roof-color-visualizer" },
+    ],
+  },
 ];
 
 export function getArticle(
