@@ -59,6 +59,119 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "peak-hurricane-season-roof-prep",
+    title: "Peak hurricane season starts now — the 20 minutes that matter",
+    metaTitle: "Peak Hurricane Season Roof Prep | Southeast Roofing Blog",
+    metaDescription:
+      "August through October is the busiest stretch of hurricane season in South Mississippi. Here's the short list we give homeowners before a storm is named.",
+    excerpt:
+      "August through October is the peak of it. Twenty minutes now is worth more than anything you can do once a storm has a name.",
+    date: "2026-07-26",
+    readMinutes: 4,
+    body: [
+      {
+        type: "p",
+        text: "Hurricane season officially runs June through November, but in South Mississippi the back half is what gets our attention. August, September, and October are historically the busiest stretch, and they're also when our phones start ringing with things that could have been caught in July.",
+      },
+      {
+        type: "p",
+        text: "Almost nothing on the list below requires a ladder, and none of it requires us. It's simply the stuff we wish every homeowner did before a storm rather than after.",
+      },
+      { type: "h2", text: "From the ground, right now" },
+      {
+        type: "list",
+        items: [
+          "Walk the perimeter and look up. Lifted or missing shingles, sagging gutter runs, exposed nail heads along the ridge. A phone camera zoom works fine.",
+          "Check the gutters. Overflowing gutters push water under the roof edge exactly where wind wants to start peeling.",
+          "Trim limbs over the roofline. In the Pine Belt, trees do as much roof damage as wind — and a limb you can reach in July is a claim you avoid in September.",
+          "Take dated photos of your roof and each side of the house. This is the single highest-value five minutes on the list. Dated \"before\" photos make an after-storm claim dramatically cleaner.",
+        ],
+      },
+      { type: "h2", text: "In the attic, after the next hard rain" },
+      {
+        type: "p",
+        text: "Take a flashlight up and look for daylight where there shouldn't be any, water stains along nail lines and around penetrations, and matted or damp insulation. A musty smell is a finding, not just an old-house quirk. Active leaks that seem minor in an August thunderstorm behave very differently under a hurricane's rain.",
+      },
+      { type: "h2", text: "Know two things about your policy" },
+      {
+        type: "p",
+        text: "Before a storm is named, find your deductible type and your coverage basis. Many Mississippi policies carry a separate wind/hail deductible calculated as a percentage of dwelling coverage rather than a flat dollar figure, and coastal policies often handle named-storm wind separately. Replacement-cost and actual-cash-value policies pay very differently. Ten minutes with your declarations page now beats finding out during a claim.",
+      },
+      { type: "h2", text: "When a storm does get named" },
+      {
+        type: "list",
+        items: [
+          "Secure anything in the yard that can become a projectile. More shingle punctures come from flying debris than from raw wind speed.",
+          "Do not put anyone on a roof for last-minute repairs in deteriorating weather. Nothing up there is worth it.",
+          "Have your documents and photos somewhere you can reach them without power.",
+        ],
+      },
+      {
+        type: "callout",
+        title: "Not sure what you're looking at?",
+        text: "A documented inspection is free and no-obligation, and it date-stamps your roof's condition — which helps if a claim comes later. We'll tell you honestly when the answer is that your roof is fine.",
+        href: "/free-inspection",
+        linkLabel: "Schedule a free inspection",
+      },
+      {
+        type: "p",
+        text: "And if a storm does hit: our emergency line is open around the clock for tarping and urgent response. We're local, so we're here before it, during it, and long after the out-of-town trucks have moved on.",
+      },
+    ],
+  },
+
+  {
+    slug: "every-google-review-now-on-our-site",
+    title: "Every one of our Google reviews now lives on our site",
+    metaTitle: "All Our Google Reviews, Live on the Site | Southeast Roofing",
+    metaDescription:
+      "We connected our site directly to Google, so every review we have shows up automatically — including new ones, and including our replies. Here's why.",
+    excerpt:
+      "We connected the site straight to Google. Every review shows automatically now — new ones included — with nothing hand-picked in between.",
+    date: "2026-07-26",
+    readMinutes: 3,
+    body: [
+      {
+        type: "p",
+        text: "Most contractor websites show you five carefully chosen testimonials. We used to show a curated handful too, transcribed by hand from our Google profile. It was accurate, but it was still us deciding which ones you saw.",
+      },
+      {
+        type: "p",
+        text: "That's changed. Our site now connects directly to our Google Business Profile and pulls in every review we have — not a selection, not a top five. New reviews appear on their own within a day of being written, and our public replies come along with them.",
+      },
+      { type: "h2", text: "Why this matters more than it sounds" },
+      {
+        type: "p",
+        text: "A hand-picked testimonial page can't be verified and everyone knows it. A live feed can: what's on our site is what's on Google, where reviews are tied to real accounts and we cannot edit, reword, or bury a single one. If we ever got a bad one, it would appear here the same as the rest. That's the point.",
+      },
+      { type: "h2", text: "Where you'll see it" },
+      {
+        type: "list",
+        items: [
+          "The homepage now carries a live wall of reviews alongside our current Google rating and review count.",
+          "The reviews page shows all of them, with our replies where we've responded.",
+          "Every one of our 31 community pages shows real reviews too, so you can read what people near you actually said.",
+        ],
+      },
+      { type: "h2", text: "The rest of the honesty stack" },
+      {
+        type: "p",
+        text: "This fits how the rest of the site is built. The project gallery is real photos from our own job sites, tagged with the town they were taken in — no stock photography anywhere. The example proposal on our homepage is our actual format, with every line priced separately and upgrades you can toggle. The credentials link out to records we don't control: our Mississippi license, our GAF certification, our BBB profile.",
+      },
+      {
+        type: "callout",
+        title: "Read them at the source",
+        text: "Don't take our page's word for it — the Google profile is one tap away, good and bad, exactly as customers wrote it.",
+        href: "/reviews",
+        linkLabel: "See all our reviews",
+      },
+      {
+        type: "p",
+        text: "If we've worked on your roof and you haven't left a review yet, it genuinely helps your neighbors find a roofer they can trust — and now it shows up here automatically too.",
+      },
+    ],
+  },
 ];
 
 export function getPost(slug: string): BlogPost | undefined {
