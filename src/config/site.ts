@@ -150,8 +150,12 @@ export const siteConfig = {
     "https://maps.apple.com/place?place-id=IFA6389F87BE4B40A",
     "https://www.bing.com/maps?ss=ypid%3AYNF5FB5973B62E00B9",
     "https://www.mapquest.com/us/mississippi/southeast-roofing-778746474",
+    // Waze resolves by our Google Place ID, so it corroborates the same entity.
+    "https://www.waze.com/live-map/directions/us/ms/hattiesburg/southeast-roofing?to=place.ChIJxf_jHarfnIgRnliLC-o1F40",
     "https://www.yelp.com/biz/southeast-roofing-hattiesburg",
     "https://www.yellowpages.com/hattiesburg-ms/mip/southeast-roofing-578982581",
+    "https://www.manta.com/c/m1hb56p/southeast-roofing",
+    "https://www.hotfrog.com/company/78d347f4542871ef2a641a2303ca484c/southeast-roofing/hattiesburg/roofs-ceilings",
     // Home-services marketplaces
     "https://www.thumbtack.com/ms/hattiesburg/roofing/southeast-roofing/service/548708522880925705",
     "https://www.houzz.com/hznb/professionals/roofing-and-gutters/southeast-roofing-pfvwus-pf~1481771383",
