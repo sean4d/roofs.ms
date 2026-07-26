@@ -155,11 +155,15 @@ export const siteConfig = {
     // Home-services marketplaces
     "https://www.thumbtack.com/ms/hattiesburg/roofing/southeast-roofing/service/548708522880925705",
     "https://www.houzz.com/hznb/professionals/roofing-and-gutters/southeast-roofing-pfvwus-pf~1481771383",
-    // Reviews + trade directories
+    // Reviews
     "https://www.trustpilot.com/review/southeastroofing.llc",
-    "https://www.roofingquotes.com/united-states/hattiesburg/roofing-contractor/southeast-roofing",
-    "https://www.usaroofers.io/listing/southeast-roofing",
-    "https://smallbiztrackers.com/directory/ms/hattiesburg/roofing/southeast-roofing/",
+    // NOTE: auto-generated scraper directories (roofingquotes, usaroofers,
+    // smallbiztrackers, nears.me, tydl.io, roofs.fyi, prosgrade, findglocal,
+    // whosmypro, realreviews, etc.) are deliberately EXCLUDED. sameAs should
+    // declare authoritative profiles we actually own or were verified on —
+    // padding it with scraped listings adds noise, not authority. Those links
+    // are harmless where they are and need no disavow; they just don't belong
+    // in our identity graph.
   ] as string[],
 
   /**
