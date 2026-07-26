@@ -129,21 +129,37 @@ export const siteConfig = {
     warranty: "Lifetime warranty",
   },
   /**
-   * Schema sameAs — official profiles that strengthen entity recognition.
-   * GBP, BBB, GAF, socials (owner-supplied 2026-07-04) + review/directory
-   * profiles Yelp, MapQuest, Trustpilot (owner-supplied 2026-07-05).
+   * Schema sameAs — every verified profile for THIS business, so search
+   * engines can consolidate them into one entity ("all of these are us").
+   * Only listings confirmed to be the Hattiesburg roofing company belong
+   * here — never Southeast Lights, never a same-named company in another
+   * state. URLs are kept canonical (tracking/query junk stripped) so they
+   * stay stable. Verified inventory as of 2026-07-26.
    */
   socialProfiles: [
+    // Google + core credentials
     "https://share.google/8jfoy7nN9HyddPKDb",
     "https://www.bbb.org/us/ms/hattiesburg/profile/roofing-contractors/southeast-roofing-llc-0523-235902892",
     "https://www.gaf.com/en-us/roofing-contractors/residential/usa/ms/hattiesburg/southeast-roofing-1147340",
+    // Owned social
     "https://www.facebook.com/southeastroofing.llc",
     "https://www.instagram.com/southeastroofing.llc",
     "https://www.tiktok.com/@southeastroofing.llc",
     "https://nextdoor.com/pages/southeast-roofing-hattiesburg-ms/",
-    "https://www.yelp.com/biz/southeast-roofing-hattiesburg",
+    // Maps + major directories
+    "https://maps.apple.com/place?place-id=IFA6389F87BE4B40A",
+    "https://www.bing.com/maps?ss=ypid%3AYNF5FB5973B62E00B9",
     "https://www.mapquest.com/us/mississippi/southeast-roofing-778746474",
+    "https://www.yelp.com/biz/southeast-roofing-hattiesburg",
+    "https://www.yellowpages.com/hattiesburg-ms/mip/southeast-roofing-578982581",
+    // Home-services marketplaces
+    "https://www.thumbtack.com/ms/hattiesburg/roofing/southeast-roofing/service/548708522880925705",
+    "https://www.houzz.com/hznb/professionals/roofing-and-gutters/southeast-roofing-pfvwus-pf~1481771383",
+    // Reviews + trade directories
     "https://www.trustpilot.com/review/southeastroofing.llc",
+    "https://www.roofingquotes.com/united-states/hattiesburg/roofing-contractor/southeast-roofing",
+    "https://www.usaroofers.io/listing/southeast-roofing",
+    "https://smallbiztrackers.com/directory/ms/hattiesburg/roofing/southeast-roofing/",
   ] as string[],
 
   /**
