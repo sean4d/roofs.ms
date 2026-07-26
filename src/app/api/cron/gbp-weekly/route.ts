@@ -25,7 +25,7 @@ const MESSAGES = [
   "Storm season is a fact of life here. The best time to check your roof is before the next system — we document everything so you're covered if a claim ever comes. Book a free inspection anytime.",
   "Thinking about metal vs. shingle? We install both across South Mississippi and will quote them side by side from one free inspection — so you decide with real numbers, not averages off the internet.",
   "Every roof we build is priced line by line — shingle, underlayment, flashing, disposal — so you see exactly what you're paying for. Nothing pre-checked, no surprises. Ask us for an itemized proposal.",
-  "Licensed (MSBOC #R22245), GAF-certified, BBB A-rated, and 5-star reviewed on Google — and still here after the storm-chasers leave. Get a free, no-obligation roof inspection from a local crew.",
+  "Licensed (MSBOC #R22245), GAF-certified, BBB A+ rated, and 5-star reviewed on Google — and still here after the storm-chasers leave. Get a free, no-obligation roof inspection from a local crew.",
   "Missing shingles, a ceiling stain, or granules in the gutter? Those small signs are cheapest to fix early. Send us a photo or book a free inspection and we'll tell you straight what's going on.",
 ];
 

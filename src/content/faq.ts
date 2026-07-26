@@ -53,7 +53,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes. We're licensed by the Mississippi State Board of Contractors (MSBOC #R22245), carry general liability and workers' compensation insurance, are a GAF Certified Contractor, and hold an A rating with the BBB. We're glad to provide documentation for any of it before you commit to anything.",
+          "Yes. We're licensed by the Mississippi State Board of Contractors (MSBOC #R22245), carry general liability and workers' compensation insurance, are a GAF Certified Contractor, and hold an A+ rating with the BBB. We're glad to provide documentation for any of it before you commit to anything.",
       },
       {
         question: "Do roofers in Mississippi have to be licensed?",

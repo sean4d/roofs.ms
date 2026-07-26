@@ -146,7 +146,7 @@ export const LEAD_REQUESTS = {
       {
         icon: ShieldCheck,
         title: "From a licensed local crew",
-        text: "GAF Certified, MS License #R22245, BBB A-rated — and still here long after the storm-chasers leave.",
+        text: "GAF Certified, MS License #R22245, BBB A+ rated — and still here long after the storm-chasers leave.",
       },
     ],
   },

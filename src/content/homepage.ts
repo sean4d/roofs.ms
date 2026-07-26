@@ -71,7 +71,7 @@ export const heroTrustBar = [
   { icon: Star, label: "5-Star Google Rating" },
   { icon: BadgeCheck, label: "Google Guaranteed" },
   { icon: ShieldCheck, label: "GAF Certified Contractor" },
-  { icon: Handshake, label: "BBB Accredited · A Rating" },
+  { icon: Handshake, label: "BBB Accredited · A+ Rating" },
   { icon: Landmark, label: "Mississippi Licensed" },
   { icon: FileCheck, label: "Fully Insured & Bonded" },
   { icon: Banknote, label: "$0 Down Financing" },
@@ -106,7 +106,7 @@ export const trustItems: TrustItem[] = [
   },
   {
     icon: Handshake,
-    label: "BBB Accredited · A Rating",
+    label: "BBB Accredited · A+ Rating",
     detail: "Verified Better Business Bureau standing",
   },
   {

@@ -1013,7 +1013,7 @@ export const learnArticles: LearnArticle[] = [
       {
         type: "callout",
         title: "Vet us the same way",
-        text: "We're glad to be checked: MSBOC license #R22245, GAF Certified Contractor, BBB A-rated, and 5-star reviewed on Google — every credential links to a record we can't edit. Our office is on US-98 in Hattiesburg.",
+        text: "We're glad to be checked: MSBOC license #R22245, GAF Certified Contractor, BBB A+ rated, and 5-star reviewed on Google — every credential links to a record we can't edit. Our office is on US-98 in Hattiesburg.",
         href: "/reviews",
         linkLabel: "Verify our credentials",
       },
