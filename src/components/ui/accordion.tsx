@@ -38,7 +38,12 @@ function Accordion({
 
 function AccordionItem({
   className,
-  /** Accepted for API compatibility with the previous implementation. */
+  /**
+   * Accepted for API compatibility with the previous implementation, and
+   * deliberately discarded: `value` is not a valid attribute on <details>, so
+   * letting it through the rest spread would put stray markup in the DOM.
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   value: _value,
   ...props
 }: React.ComponentPropsWithoutRef<"details"> & { value?: string }) {

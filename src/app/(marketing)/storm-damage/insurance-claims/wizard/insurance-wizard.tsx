@@ -206,10 +206,10 @@ export function InsuranceWizard() {
     return (
       <div className="mx-auto max-w-lg rounded-2xl border border-border bg-white p-8 text-center">
         <CheckCircle2 className="mx-auto size-12 text-emerald-600" />
-        <h2 className="mt-4 text-2xl font-bold text-navy-900">We've got it</h2>
+        <h2 className="mt-4 text-2xl font-bold text-navy-900">We&apos;ve got it</h2>
         <p className="mt-2 text-slate-600">
-          Thanks — we'll reach out shortly to help with your storm damage and claim. If
-          it's urgent, call us anytime at{" "}
+          Thanks — we&apos;ll reach out shortly to help with your storm damage and claim.
+          If it&apos;s urgent, call us anytime at{" "}
           <a href={`tel:${siteConfig.phone.tel}`} className="font-semibold text-navy-900">
             {siteConfig.phone.display}
           </a>
