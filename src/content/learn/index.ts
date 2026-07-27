@@ -174,43 +174,69 @@ export const learnArticles: LearnArticle[] = [
   {
     slug: "parts-of-a-roof-explained",
     category: "materials",
-    title: "Parts of a roof, explained in plain English",
-    metaTitle: "Parts of a Roof Explained | Southeast Roofing Learning Center",
+    title: "The GAF roofing system, component by component",
+    metaTitle: "The GAF Roofing System Explained | Southeast Roofing",
     metaDescription:
-      "Decking, underlayment, ice and water shield, starter strip, shingles, ridge vent, flashing — every layer of a roof system explained with interactive diagrams.",
+      "What makes a GAF roof a system: Timberline HDZ shingles, WeatherWatch and StormGuard leak barriers, FeltBuster underlayment, Pro-Start starter, Cobra ventilation, and Seal-A-Ridge caps.",
     excerpt:
-      "Every layer between your family and the weather, explained with two interactive diagrams — ours and GAF's.",
-    updated: "2026-07-05",
-    readMinutes: 5,
+      "Timberline HDZ, Pro-Start, WeatherWatch, Cobra, Seal-A-Ridge — what each GAF component is, and why the system matters more than the shingle.",
+    updated: "2026-07-27",
+    readMinutes: 6,
     hero: {
-      headline: "Parts of a roof, in plain English",
+      headline: "The GAF roofing system, component by component",
       subhead:
-        "When your proposal says starter strip, ice and water shield, or ridge cap, you should know exactly what you're paying for. Here's every layer.",
+        "We're a GAF Certified Contractor, and GAF doesn't sell shingles so much as a system. Here's what each piece is called, what it does, and why the parts you never see decide how long the roof lasts.",
     },
     body: [
       {
         type: "p",
-        text: "A roof is a system, not a surface. The shingles you see from the street are the last of half a dozen layers, and the ones you can't see — decking, underlayment, flashing, ventilation — decide whether the roof actually keeps water out for twenty years. Because our proposals price each component on its own line, this page doubles as a decoder ring.",
+        text: "Most homeowners shop roofs by shingle: a brand, a colour, a warranty length. But a shingle sitting on the wrong underlayment, without a starter course, over an unvented attic, will not deliver the life printed on the wrapper — and the warranty knows it. GAF builds its products to work as a set, and the accessories are where a roof is actually won or lost.",
       },
-      { type: "h2", text: "The layers, from the wood up" },
-      { type: "anatomy" },
-      {
-        type: "list",
-        title: "What each layer does",
-        items: [
-          "Decking — the plywood or OSB skeleton everything attaches to. Rotten decking gets replaced during tear-off, priced per sheet, never hidden.",
-          "Ice & water shield — self-sealing membrane at valleys, eaves, and penetrations, where water concentrates. In our climate it's leak insurance where roofs actually fail.",
-          "Synthetic underlayment — the felt-replacement layer across the whole deck; a second water barrier and a safer working surface.",
-          "Starter strip — purpose-made first course at the edges that seals the row above against wind lift. Skipping it is how corners peel in storms.",
-          "Shingles or panels — the visible weather surface, asphalt or metal.",
-          "Flashing — the metal at walls, chimneys, and penetrations. More leaks start at flashing than anywhere else on a roof.",
-          "Ridge vent & ridge cap — the exhaust for your attic's heat and humidity, capped with shaped shingles that finish the peak.",
-        ],
-      },
-      { type: "h2", text: "GAF's interactive version" },
       {
         type: "p",
-        text: "GAF publishes its own interactive parts-of-a-roof tool showing how its system components fit together — explore it below and the vocabulary on your proposal will never be mysterious again.",
+        text: "Southeast Roofing is a GAF Certified Contractor, which means GAF has vetted and trained us to install these systems to specification. Below is the vocabulary you'll see on our proposals, in GAF's own product names, so nothing on your estimate is a mystery line item.",
+      },
+      { type: "h2", text: "The shingle: Timberline HDZ" },
+      {
+        type: "p",
+        text: "Timberline HDZ is the architectural shingle we install most often. Its distinguishing feature is the LayerLock bonding and a widened nailing zone — a strip roughly 600% larger than the old standard — which matters because the single most common installation error in roofing is a nail placed above or below the correct line. A wider target means more nails land where they hold. Properly installed with the required accessories, HDZ carries GAF's WindProven limited wind warranty with no maximum wind speed, which is not a small thing on the Gulf Coast.",
+      },
+      { type: "h2", text: "The leak barriers: WeatherWatch and StormGuard" },
+      {
+        type: "p",
+        text: "These are GAF's peel-and-stick membranes for the places water concentrates: eaves, valleys, and around every penetration. WeatherWatch is the mineral-surfaced version; StormGuard is film-surfaced. Both self-seal around nail shanks, which is exactly what you want in the parts of a roof that see the most water and the most fasteners. In our climate this is less about ice and more about wind-driven rain finding its way uphill.",
+      },
+      { type: "h2", text: "The underlayment: FeltBuster or Tiger Paw" },
+      {
+        type: "p",
+        text: "Synthetic underlayment across the whole deck, replacing old felt paper. Felt tears in wind, wrinkles when it gets damp, and telegraphs those wrinkles through the shingles. Synthetic lies flat, stays intact through a rain event mid-project, and gives our crews a safer surface to walk.",
+      },
+      { type: "h2", text: "The starter: Pro-Start" },
+      {
+        type: "p",
+        text: "A purpose-made first course along the eaves and rakes with a factory-applied sealant bead positioned to grab the first row of shingles. Some contractors cut up field shingles and flip them backwards to save a few dollars a square — it puts the sealant in the wrong place, and edge blow-off in the first real storm is the result.",
+      },
+      { type: "h2", text: "The ventilation: Cobra" },
+      {
+        type: "p",
+        text: "Ridge exhaust that lets superheated attic air out at the peak, paired with intake at the soffits. This is the component homeowners skip and manufacturers care most about, because an unvented attic cooks shingles from underneath. Under-ventilating can void a shingle warranty outright.",
+      },
+      { type: "h2", text: "The ridge cap: Seal-A-Ridge or TimberTex" },
+      {
+        type: "p",
+        text: "Pre-formed, thicker caps shaped for the peak and hips. The shortcut here is cutting three-tab shingles into squares and bending them over the ridge — they aren't formulated to be folded, and they crack years early along the fold.",
+      },
+      {
+        type: "callout",
+        title: "Why the accessories decide the warranty",
+        text: "GAF's enhanced system warranties are only available when enough qualifying accessories are installed by a certified contractor. That's not upselling — it's the manufacturer saying a shingle alone isn't a roof. Ask any contractor which specific warranty level their proposal qualifies for, and what it would take to reach the next one.",
+        href: "/residential/asphalt-shingle-roofing",
+        linkLabel: "Our asphalt shingle roofing",
+      },
+      { type: "h2", text: "Explore GAF's own interactive diagram" },
+      {
+        type: "p",
+        text: "GAF publishes an interactive tool showing how these components stack up on a real roof. Explore it below — the names in it are the same names on your Southeast Roofing proposal.",
       },
       {
         type: "widget",
@@ -221,22 +247,125 @@ export const learnArticles: LearnArticle[] = [
       },
       {
         type: "callout",
-        title: "Ventilation is the layer everyone forgets",
-        text: "In South Mississippi heat, a poorly vented attic cooks shingles from below and voids warranties. Every inspection we do includes a ventilation check.",
-        href: "/residential/ventilation",
-        linkLabel: "How roof ventilation works",
+        title: "Want the generic version first?",
+        text: "If you'd rather learn the parts of a roof without brand names attached, our own interactive anatomy guide covers every component — decking through gutters — plus the nine kinds of flashing.",
+        href: "/learn/materials/anatomy-of-a-roof",
+        linkLabel: "Anatomy of a roof",
       },
     ],
     faqs: [
       {
-        question: "Do I need every one of these layers?",
+        question: "Do I have to use every GAF accessory?",
         answer:
-          "A code-compliant, warranty-eligible roof needs them all doing their jobs. What varies is the grade — how much ice and water shield, which underlayment, what vent style — and that's exactly what an itemized proposal lets you see and decide.",
+          "No, and we'll price it either way. What changes is the warranty level you qualify for and how the roof performs at its weak points. We'll show you what each accessory adds and what dropping it saves, so it's your call with real numbers rather than a package you can't see inside.",
+      },
+      {
+        question: "Is a GAF Certified Contractor the same as a GAF employee?",
+        answer:
+          "No. GAF certifies independent contractors it has vetted and trained to install its systems to specification. We're an independent Mississippi company (MSBOC #R22245) — the certification is a manufacturer's standard we meet, and you can verify it directly on GAF's website rather than taking our word for it.",
+      },
+      {
+        question: "Does using one manufacturer's full system really matter?",
+        answer:
+          "For the warranty, yes — enhanced coverage requires qualifying components installed by a certified contractor. For performance, what matters most is that the accessories exist and are installed correctly: real starter at the edges, leak barrier in the valleys, adequate ventilation. A mixed-brand roof done right will outlast a single-brand roof done badly.",
+      },
+    ],
+    related: [
+      { label: "Asphalt Shingle Roofing", href: "/residential/asphalt-shingle-roofing" },
+      { label: "Roof Replacement", href: "/residential/roof-replacement" },
+      { label: "Ventilation", href: "/residential/ventilation" },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  /* Materials: our own anatomy guide (carries the interactive diagram)   */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "anatomy-of-a-roof",
+    category: "materials",
+    title: "Anatomy of a roof: every part, explained",
+    metaTitle: "Anatomy of a Roof: Every Part Explained | Southeast Roofing",
+    metaDescription:
+      "An interactive, brand-neutral guide to every part of a roof — decking, underlayment, ice and water shield, starter, shingles, ridge vent, flashing, valleys, gutters, soffit and fascia.",
+    excerpt:
+      "Click any part of the house and find out what it is, why it matters, and how it gets done wrong. No brand names, no jargon.",
+    updated: "2026-07-27",
+    readMinutes: 7,
+    hero: {
+      headline: "Anatomy of a roof",
+      subhead:
+        "Thirteen components sit between your family and the weather, and you can see maybe three of them from the street. Here's the whole system — what each part is, why it matters, and the shortcuts that cause it to fail.",
+    },
+    body: [
+      {
+        type: "p",
+        text: "A roof is a system, not a surface. The shingles you see are the last layer of half a dozen, and the ones you can't see — decking, underlayment, leak barrier, flashing, ventilation — decide whether it actually keeps water out for twenty years. Because our proposals price each component on its own line, this guide doubles as a decoder ring for your estimate.",
+      },
+      {
+        type: "p",
+        text: "Use the diagram below the same way we'd walk you around your own house: pick a spot, find out what lives there. The numbered pins sit on the parts they name, and the list underneath covers the same thirteen components if you'd rather read straight through.",
+      },
+      { type: "h2", text: "The interactive diagram" },
+      { type: "anatomy" },
+      { type: "h2", text: "Reading it top to bottom" },
+      {
+        type: "list",
+        title: "From the peak down to the ground",
+        items: [
+          "Ridge cap and ridge vent — the peak is the most exposed line on the roof. The vent lets superheated attic air out; the cap seals and finishes it. Cut-up three-tab shingles used as cap crack years early.",
+          "Field shingles — the visible weather surface. Nail placement is everything; nails driven high or into the wrong zone let wind peel courses off in the first big storm.",
+          "Starter shingles — a purpose-made first course at the eaves and rakes whose sealant bead bonds the row above against wind uplift.",
+          "Ice and water shield — self-sealing membrane at valleys, eaves, and penetrations, where water concentrates and fasteners are densest.",
+          "Synthetic underlayment — a second water barrier across the whole deck that stays flat and intact where old felt paper tears and wrinkles.",
+          "Roof decking — the plywood or OSB the whole system nails into. Soft or delaminated decking won't hold a nail, and roofing over it guarantees early failure.",
+          "Drip edge — metal at every roof edge that throws water clear of the fascia instead of letting it wick back underneath.",
+          "Flashing — the metal at walls, chimneys, dormers, and penetrations. More leaks start here than anywhere else.",
+          "Valleys — where two slopes meet and the water volume concentrates. Fasteners in the flow path are a classic cause of leaks.",
+          "Pipe boots — the collars sealing each plumbing vent. Cheap rubber dry-rots in a few Mississippi summers; it's one of the most common leaks we find.",
+          "Gutters — carry runoff away from the fascia, siding, and foundation.",
+          "Soffit and fascia — the trim at the eave, and the vented intake that feeds the airflow the ridge vent exhausts.",
+        ],
+      },
+      {
+        type: "callout",
+        title: "Ventilation is the layer everyone forgets",
+        text: "Intake at the soffits and exhaust at the ridge work as a pair — one without the other does almost nothing. In South Mississippi heat, a poorly vented attic cooks shingles from below and can void a manufacturer's warranty. Every inspection we do includes a ventilation check.",
+        href: "/residential/ventilation",
+        linkLabel: "How roof ventilation works",
+      },
+      { type: "h2", text: "Flashing deserves its own conversation" },
+      {
+        type: "p",
+        text: "Flashing is one pin on the diagram and nine separate pieces on a real roof — step, counter, apron, kickout, valley, drip edge, pipe, cricket, and Z-flashing. Kickout flashing in particular is the single most-skipped piece in the trade, and its absence rots wall sheathing quietly for years before anyone sees a stain. Our full interactive tool breaks each piece out with what it does and how it fails.",
+      },
+      {
+        type: "callout",
+        title: "See every part on an interactive house",
+        text: "The full Anatomy of a Roof tool has the same diagram plus a dedicated flashing section covering all nine pieces.",
+        href: "/anatomy-of-a-roof",
+        linkLabel: "Open the interactive tool",
+      },
+    ],
+    faqs: [
+      {
+        question: "Do I need every one of these parts?",
+        answer:
+          "A code-compliant, warranty-eligible roof needs them all doing their jobs. What varies is the grade — how much ice and water shield, which underlayment, what vent style — and that's exactly what an itemized proposal lets you see and decide on.",
       },
       {
         question: "Why do leaks usually start at flashing?",
         answer:
-          "Flashing lives where materials meet — chimney to shingles, wall to roof — and joints move with heat and settling. Age, bad sealant, or sloppy installation there leaks long before the field of the roof wears out.",
+          "Flashing lives where materials meet — chimney to shingles, wall to roof — and those joints move with heat and settling. Age, failed sealant, or sloppy installation leaks there long before the field of the roof wears out.",
+      },
+      {
+        question: "How can I tell if my decking is bad without tearing the roof off?",
+        answer:
+          "Often you can't from the outside, which is why any honest proposal prices decking replacement per sheet up front as a possibility rather than pretending it won't happen. From inside the attic you can look for daylight, staining, or sagging between rafters — that's a real signal worth a call.",
+      },
+      {
+        question: "What is the most common thing you find done wrong?",
+        answer:
+          "Missing or improvised starter course at the edges, and pipe boots that have dry-rotted and split. Both are cheap to do right, both cause expensive damage, and both are easy to spot once you know to look.",
       },
     ],
     related: [

@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
-import { ROOF_PARTS } from "@/config/roof-anatomy";
+import { FLASHING_TYPES, ROOF_PARTS } from "@/config/roof-anatomy";
 import { buildMetadata } from "@/lib/seo";
 import { breadcrumbSchema } from "@/lib/schema";
 import type { JsonLdObject } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Breadcrumbs } from "@/components/services/breadcrumbs";
 import { CTASection } from "@/components/tools/cta-section";
-
-import { RoofDiagram } from "./roof-diagram";
+import { RoofDiagram } from "@/components/roof/roof-diagram";
+import { FlashingDiagram } from "@/components/roof/flashing-diagram";
 
 /**
  * Anatomy of a Roof (tool #4) — interactive exploded diagram. Educational,
@@ -29,14 +29,22 @@ const breadcrumbs = [
   { name: "Anatomy of a Roof", path: "/anatomy-of-a-roof" },
 ];
 
+/**
+ * Glossary of every labelled component, flashing pieces included, so
+ * assistants can quote the parts and their definitions. Mirrors exactly what
+ * the page renders — nothing here that a reader can't also see.
+ */
 const glossarySchema: JsonLdObject = {
   "@context": "https://schema.org",
   "@type": "ItemList",
   name: "Parts of a roof system",
-  itemListElement: ROOF_PARTS.map((part, i) => ({
+  itemListElement: [
+    ...ROOF_PARTS.map((part) => ({ name: part.name, description: part.what })),
+    ...FLASHING_TYPES.map((f) => ({ name: f.name, description: f.what })),
+  ].map((item, i) => ({
     "@type": "ListItem",
     position: i + 1,
-    item: { "@type": "DefinedTerm", name: part.name, description: part.what },
+    item: { "@type": "DefinedTerm", name: item.name, description: item.description },
   })),
 };
 
@@ -61,6 +69,24 @@ export default function AnatomyOfARoofPage() {
 
       <section className="container-site py-12 sm:py-16">
         <RoofDiagram />
+      </section>
+
+      <section className="border-t border-border bg-secondary">
+        <div className="container-site py-12 sm:py-16">
+          <h2 className="max-w-2xl font-display text-2xl font-bold text-navy-900 sm:text-3xl">
+            Flashing: the part that decides whether a roof leaks
+          </h2>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-600">
+            Flashing is one pin on the diagram above and nine separate pieces on a
+            real roof. More leaks start here than anywhere else — not in the middle
+            of the shingles, but at the edges, walls, chimneys, and penetrations
+            where materials meet. These are the names you&apos;ll see on a proposal
+            or an adjuster&apos;s report, and what each one actually does.
+          </p>
+          <div className="mt-8">
+            <FlashingDiagram />
+          </div>
+        </div>
       </section>
 
       <CTASection

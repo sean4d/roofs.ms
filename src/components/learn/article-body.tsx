@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 import type { ArticleBlock } from "@/content/learn/types";
 import { GafWidget } from "@/components/learn/gaf-widget";
-import { RoofAnatomy } from "@/components/services/roof-anatomy";
+import { RoofDiagram } from "@/components/roof/roof-diagram";
 import { Reveal } from "@/components/motion/reveal";
 
 /**
@@ -88,9 +88,11 @@ export function ArticleBody({ blocks }: { blocks: ArticleBlock[] }) {
               />
             );
           case "anatomy":
+            // The interactive hot-spot diagram, not the static exploded stack
+            // that service pages use — an article reader is here to explore.
             return (
-              <div key={key} className="mt-8">
-                <RoofAnatomy />
+              <div key={key} className="my-10">
+                <RoofDiagram />
               </div>
             );
         }

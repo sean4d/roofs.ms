@@ -18,6 +18,23 @@
   /* Very subtle orange — only when absolutely necessary (PRD §6.1) */
   --color-ember-500: #c9702e;
 
+  /* Pulsing halo behind each hot spot on the roof-anatomy diagram. Scale and
+     fade together so the pins read as "tap me" without drawing the eye away
+     from the artwork. Wrapped in motion-safe: at the call site. */
+  --animate-roof-hotspot: roof-hotspot 2.4s ease-in-out infinite;
+
+  @keyframes roof-hotspot {
+    0%,
+    100% {
+      opacity: 0;
+      transform: scale(0.65);
+    }
+    50% {
+      opacity: 0.45;
+      transform: scale(2.1);
+    }
+  }
+
   /* ---- Semantic tokens (shadcn/ui) ---- */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
