@@ -7,7 +7,7 @@ import { AlertTriangle, ArrowRight, CheckCircle2, Info } from "lucide-react";
 
 import { ROOF_PARTS } from "@/config/roof-anatomy";
 import { cn } from "@/lib/utils";
-import { RoofHouseSvg, ROOF_SVG_VIEWBOX } from "./roof-house-svg";
+import { HotspotHouse } from "./hotspot-house";
 
 /**
  * Anatomy of a Roof — interactive hotspot diagram.
@@ -43,56 +43,18 @@ export function RoofDiagram() {
   }
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
+    <div id="anatomy-diagram" className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
       {/* ---------------- Illustration + numbered list ---------------- */}
       <div>
         <p className="mb-3 text-xs font-semibold tracking-wide text-steel-500 uppercase">
           Tap a hot spot to see what it does
         </p>
 
-        <div className="relative overflow-hidden rounded-2xl border border-border bg-white">
-          <RoofHouseSvg activeKey={activeKey} />
-
-          {/* Hotspot pins, positioned in the SVG's own coordinate space. */}
-          {ROOF_PARTS.map((part, i) => {
-            const isActive = part.key === activeKey;
-            return (
-              <button
-                key={part.key}
-                type="button"
-                onClick={() => select(part.key, part.name, true)}
-                aria-pressed={isActive}
-                aria-label={`${part.name} — ${part.short}`}
-                title={part.name}
-                style={{
-                  left: `${(part.hotspot.x / ROOF_SVG_VIEWBOX.width) * 100}%`,
-                  top: `${(part.hotspot.y / ROOF_SVG_VIEWBOX.height) * 100}%`,
-                }}
-                className="group absolute grid size-7 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full outline-none sm:size-8"
-              >
-                {/* Pulsing halo — the "this is clickable" cue. */}
-                <span
-                  aria-hidden="true"
-                  className={cn(
-                    "absolute inset-0 rounded-full bg-ember-500 motion-safe:animate-roof-hotspot",
-                    isActive && "motion-safe:animate-none",
-                  )}
-                  style={{ animationDelay: `${i * 90}ms` }}
-                />
-                <span
-                  className={cn(
-                    "relative grid size-full place-items-center rounded-full border-2 text-xs font-bold transition-colors duration-200 group-focus-visible:ring-3 group-focus-visible:ring-ring/60",
-                    isActive
-                      ? "border-navy-900 bg-navy-900 text-white"
-                      : "border-navy-900 bg-ember-500 text-navy-900 group-hover:bg-white",
-                  )}
-                >
-                  {i + 1}
-                </span>
-              </button>
-            );
-          })}
-        </div>
+        <HotspotHouse
+          items={ROOF_PARTS}
+          activeKey={activeKey}
+          onSelect={(key, name) => select(key, name, true)}
+        />
 
         <ol
           ref={listRef}
