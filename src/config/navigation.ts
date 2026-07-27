@@ -37,6 +37,19 @@ export const roofingToolsNav: NavLink[] = [
   { label: "Anatomy of a Roof", href: "/anatomy-of-a-roof" },
 ];
 
+/**
+ * The subset shown in the header's "Roofing Tools" dropdown (owner request
+ * 2026-07-27). The Damage Analyzer and AI Assistant are deliberately absent
+ * here — a long dropdown pushes the rest of the nav out of reach on phones —
+ * but they remain in the footer column and on the /roofing-tools hub, so
+ * nothing is orphaned and no URL changes.
+ */
+const HEADER_TOOL_EXCLUSIONS = ["/roof-damage-analyzer", "/roof-assistant"];
+
+export const headerToolsNav: NavLink[] = roofingToolsNav.filter(
+  (tool) => !HEADER_TOOL_EXCLUSIONS.includes(tool.href),
+);
+
 // Main nav favors the highest-intent pages (services + conversion routes). The
 // Learning Center and the Roofing Tools hub sit between Storm Damage and
 // Financing so homeowners can actually find them (owner request 2026-07-24):
@@ -48,7 +61,7 @@ export const mainNav: NavLink[] = [
   { label: "Roof Repair", href: "/residential/roof-repair" },
   { label: "Storm Damage", href: "/storm-damage" },
   { label: "Learning Center", href: "/learn" },
-  { label: "Roofing Tools", href: "/roofing-tools", children: roofingToolsNav },
+  { label: "Roofing Tools", href: "/roofing-tools", children: headerToolsNav },
   { label: "Financing", href: "/financing" },
   { label: "Projects", href: "/projects" },
   { label: "About", href: "/about" },

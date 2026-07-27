@@ -42,7 +42,19 @@ export function MobileNav() {
             Southeast Roofing
           </SheetTitle>
         </SheetHeader>
-        <nav aria-label="Mobile navigation" className="mt-2 px-4">
+        {/*
+          The drawer is a fixed, full-height flex column, so this scroller is
+          what keeps the list reachable: expanding "Roofing Tools" adds enough
+          rows to run past the bottom of the screen, and without an explicit
+          overflow the items below it (Financing, Projects, About, Contact)
+          were simply unreachable. `min-h-0` is required — a flex child's
+          default `min-height: auto` refuses to shrink below its content and
+          would defeat the overflow. `pb-10` clears the phone home indicator.
+        */}
+        <nav
+          aria-label="Mobile navigation"
+          className="mt-2 min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-10"
+        >
           <ul className="flex flex-col gap-1">
             {mainNav.map((link) => {
               if (!link.children) {
