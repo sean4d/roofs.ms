@@ -28,7 +28,7 @@ export interface RoofPart {
   photo?: RoofPartPhoto;
   /**
    * Where this component's numbered pin sits on the illustration, in the
-   * SVG's own 960x600 viewBox coordinates. Produced by
+   * SVG's own 1040x620 viewBox coordinates. Produced by
    * docs/roof-house-geometry.py alongside the artwork — regenerate both
    * together or the pins drift off the parts they label.
    */
@@ -38,7 +38,7 @@ export interface RoofPart {
 export const ROOF_PARTS: RoofPart[] = [
   {
     key: "ridge-cap",
-    hotspot: { x: 634, y: 80 },
+    hotspot: { x: 172, y: 210 },
     name: "Ridge Cap",
     short: "Caps the peak",
     what: "Thicker, pre-bent shingles that cover the very peak where two roof slopes meet.",
@@ -52,7 +52,7 @@ export const ROOF_PARTS: RoofPart[] = [
   },
   {
     key: "ridge-vent",
-    hotspot: { x: 345, y: 155 },
+    hotspot: { x: 528, y: 126 },
     name: "Ridge Vent",
     short: "Lets hot air escape",
     what: "A vent that runs along the peak so hot, humid attic air can escape.",
@@ -66,7 +66,7 @@ export const ROOF_PARTS: RoofPart[] = [
   },
   {
     key: "field-shingles",
-    hotspot: { x: 595, y: 149 },
+    hotspot: { x: 555, y: 194 },
     name: "Shingles",
     short: "The surface you see",
     what: "The main field of shingles — the visible, weather-facing layer of the roof.",
@@ -80,7 +80,7 @@ export const ROOF_PARTS: RoofPart[] = [
   },
   {
     key: "starter-shingles",
-    hotspot: { x: 252, y: 325 },
+    hotspot: { x: 422, y: 347 },
     name: "Starter Shingles",
     short: "Seals the edges",
     what: "A special first course along the eaves and rakes with a factory sealant strip.",
@@ -94,7 +94,7 @@ export const ROOF_PARTS: RoofPart[] = [
   },
   {
     key: "ice-water-shield",
-    hotspot: { x: 299, y: 340 },
+    hotspot: { x: 720, y: 216 },
     name: "Ice & Water Shield",
     short: "Leak barrier at weak points",
     what: "A peel-and-stick waterproof membrane at eaves, valleys, and around penetrations.",
@@ -108,7 +108,7 @@ export const ROOF_PARTS: RoofPart[] = [
   },
   {
     key: "underlayment",
-    hotspot: { x: 345, y: 355 },
+    hotspot: { x: 260, y: 297 },
     name: "Synthetic Underlayment",
     short: "Second layer of defense",
     what: "A tough synthetic sheet rolled over the whole deck, under the shingles.",
@@ -122,7 +122,7 @@ export const ROOF_PARTS: RoofPart[] = [
   },
   {
     key: "decking",
-    hotspot: { x: 391, y: 371 },
+    hotspot: { x: 215, y: 316 },
     name: "Roof Decking",
     short: "The wood foundation",
     what: "The plywood or OSB sheathing nailed to your rafters — the surface everything else attaches to.",
@@ -136,7 +136,7 @@ export const ROOF_PARTS: RoofPart[] = [
   },
   {
     key: "drip-edge",
-    hotspot: { x: 497, y: 343 },
+    hotspot: { x: 621, y: 318 },
     name: "Drip Edge",
     short: "Protects the roof edges",
     what: "A metal edging along the eaves and rakes that directs water off the roof and into the gutters.",
@@ -150,7 +150,7 @@ export const ROOF_PARTS: RoofPart[] = [
   },
   {
     key: "flashing",
-    hotspot: { x: 433, y: 132 },
+    hotspot: { x: 464, y: 248 },
     name: "Flashing",
     short: "Seals against walls & chimneys",
     what: "Metal pieces that seal where the roof meets walls, chimneys, and dormers.",
@@ -163,22 +163,8 @@ export const ROOF_PARTS: RoofPart[] = [
     },
   },
   {
-    key: "valleys",
-    hotspot: { x: 592, y: 243 },
-    name: "Valleys",
-    short: "Where two slopes meet",
-    what: "The channels where two roof planes join and funnel a lot of water.",
-    why: "Done right (with membrane and proper technique) valleys move heavy water without leaking.",
-    bad: "A weak or improperly woven valley is a fast path to leaks because so much water runs through it.",
-    photo: {
-      src: "/images/anatomy/roof-closed-valley.webp",
-      alt: "A closed roof valley where two shingle slopes meet and channel rainwater.",
-      caption: "A closed valley funnels heavy water off the roof without leaking.",
-    },
-  },
-  {
     key: "pipe-boots",
-    hotspot: { x: 399, y: 255 },
+    hotspot: { x: 414, y: 238 },
     name: "Pipe Boots",
     short: "Seals roof penetrations",
     what: "Rubber-and-metal collars that seal around plumbing vent pipes.",
@@ -192,7 +178,7 @@ export const ROOF_PARTS: RoofPart[] = [
   },
   {
     key: "gutters",
-    hotspot: { x: 569, y: 339 },
+    hotspot: { x: 538, y: 370 },
     name: "Gutters",
     short: "Carry water away",
     what: "Channels along the eaves that collect roof runoff and route it away from your foundation.",
@@ -206,7 +192,7 @@ export const ROOF_PARTS: RoofPart[] = [
   },
   {
     key: "soffit-fascia",
-    hotspot: { x: 627, y: 294 },
+    hotspot: { x: 735, y: 301 },
     name: "Soffit & Fascia",
     short: "The roof's trim & intake vents",
     what: "The boards under the eave (fascia) and the vented underside (soffit) that let fresh air into the attic.",
@@ -238,6 +224,8 @@ export const ROOF_PARTS: RoofPart[] = [
 export interface FlashingType {
   key: string;
   name: string;
+  /** Pin position on the shared house illustration (1040x620 viewBox). */
+  hotspot: { x: number; y: number };
   /** Where on the roof it lives. */
   where: string;
   what: string;
@@ -249,6 +237,7 @@ export interface FlashingType {
 export const FLASHING_TYPES: FlashingType[] = [
   {
     key: "step-flashing",
+    hotspot: { x: 500, y: 215 },
     name: "Step Flashing",
     where: "Roof meets a sidewall",
     what: "Individual L-shaped metal pieces woven in one per shingle course where a slope runs alongside a wall or chimney.",
@@ -262,6 +251,7 @@ export const FLASHING_TYPES: FlashingType[] = [
   },
   {
     key: "counter-flashing",
+    hotspot: { x: 429, y: 181 },
     name: "Counter Flashing",
     where: "Over step flashing on masonry",
     what: "The upper piece, let into a groove cut in the brick or stone, that laps down over the top of the step flashing.",
@@ -270,6 +260,7 @@ export const FLASHING_TYPES: FlashingType[] = [
   },
   {
     key: "apron-flashing",
+    hotspot: { x: 559, y: 149 },
     name: "Apron / Headwall Flashing",
     where: "Roof runs into a wall face",
     what: "A single bent piece running along the top of a slope where it dead-ends into a wall — common at dormers and second-story walls.",
@@ -278,6 +269,7 @@ export const FLASHING_TYPES: FlashingType[] = [
   },
   {
     key: "kickout-flashing",
+    hotspot: { x: 530, y: 272 },
     name: "Kickout Flashing",
     where: "Bottom of a roof-to-wall run",
     what: "A small flared piece at the very bottom of a step-flashing run that kicks water out into the gutter.",
@@ -286,6 +278,7 @@ export const FLASHING_TYPES: FlashingType[] = [
   },
   {
     key: "valley-flashing",
+    hotspot: { x: 720, y: 216 },
     name: "Valley Flashing",
     where: "Where two slopes meet",
     what: "Metal, membrane, or a woven shingle treatment down the channel where two roof planes join.",
@@ -299,6 +292,7 @@ export const FLASHING_TYPES: FlashingType[] = [
   },
   {
     key: "drip-edge-flashing",
+    hotspot: { x: 431, y: 363 },
     name: "Drip Edge",
     where: "Eaves and rakes",
     what: "Bent metal along every roof edge, running under the underlayment at the rakes and over it at the eaves.",
@@ -312,6 +306,7 @@ export const FLASHING_TYPES: FlashingType[] = [
   },
   {
     key: "pipe-flashing",
+    hotspot: { x: 414, y: 238 },
     name: "Pipe Flashing / Boot",
     where: "Plumbing vent penetrations",
     what: "A metal base with a rubber or lead collar that seals around each pipe coming through the roof.",
@@ -325,6 +320,7 @@ export const FLASHING_TYPES: FlashingType[] = [
   },
   {
     key: "chimney-cricket",
+    hotspot: { x: 402, y: 103 },
     name: "Chimney Cricket / Saddle",
     where: "Uphill side of a wide chimney",
     what: "A small peaked structure built behind the chimney to split water around it.",
@@ -333,6 +329,7 @@ export const FLASHING_TYPES: FlashingType[] = [
   },
   {
     key: "z-flashing",
+    hotspot: { x: 346, y: 396 },
     name: "Z-Flashing / Drip Cap",
     where: "Above windows, doors, and trim",
     what: "A Z-shaped profile set above an opening or where siding materials change.",

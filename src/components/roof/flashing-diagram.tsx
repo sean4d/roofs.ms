@@ -6,15 +6,17 @@ import { AlertTriangle, CheckCircle2, Info, MapPin } from "lucide-react";
 
 import { FLASHING_TYPES } from "@/config/roof-anatomy";
 import { cn } from "@/lib/utils";
+import { HotspotHouse } from "./hotspot-house";
 
 /**
  * Flashing, broken out from the main diagram.
  *
- * Flashing is one pin on the house illustration but nine different pieces in
+ * Flashing is one pin on the anatomy diagram but nine different pieces in
  * practice, and it is where most roofs actually leak — so it gets its own
- * selector rather than being buried in a single paragraph. Same interaction as
- * the main diagram (pick a name, read what it does and how it fails) minus the
- * artwork, because these pieces live in places a whole-house view can't show.
+ * diagram. It reuses the same generated house: the shed dormer supplies the
+ * step, apron, and kickout locations, the chimney supplies counter flashing
+ * and the cricket, the cross gable supplies the valleys, and the window head
+ * supplies the Z-flashing, so every piece is pinned where it really lives.
  */
 
 export function FlashingDiagram() {
@@ -23,8 +25,25 @@ export function FlashingDiagram() {
     FLASHING_TYPES.find((f) => f.key === activeKey) ?? FLASHING_TYPES[0];
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)]">
-      <ol className="flex flex-col gap-1.5">
+    <div id="flashing-diagram" className="grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
+      <div>
+        <HotspotHouse
+          items={FLASHING_TYPES.map((f) => ({ ...f, short: f.where }))}
+          activeKey={activeKey}
+          onSelect={(key, name) => {
+            setActiveKey(key);
+            track("diagram_component_clicked", {
+              tool: "flashing-diagram",
+              component: name,
+            });
+          }}
+          label="Illustration of a house with each type of roof flashing marked in place"
+        />
+        <p className="mt-3 text-xs leading-relaxed text-slate-500">
+          Not every flashing detail appears on one house — roof shapes vary. The
+          list below covers the full set we install.
+        </p>
+      <ol className="mt-4 flex max-h-80 flex-col gap-1.5 overflow-y-auto overscroll-contain rounded-2xl border border-border bg-secondary p-2">
         {FLASHING_TYPES.map((f, i) => {
           const isActive = f.key === activeKey;
           return (
@@ -43,7 +62,7 @@ export function FlashingDiagram() {
                   "flex w-full items-center gap-3 rounded-lg border px-3 py-2.5 text-left transition-all duration-200",
                   isActive
                     ? "border-ember-500 bg-white shadow-sm"
-                    : "border-border bg-white/60 hover:border-steel-300 hover:bg-white",
+                    : "border-transparent bg-white/55 hover:bg-white",
                 )}
               >
                 <span
@@ -65,6 +84,7 @@ export function FlashingDiagram() {
           );
         })}
       </ol>
+      </div>
 
       <div className="overflow-hidden rounded-2xl border border-border bg-white lg:sticky lg:top-24 lg:self-start">
         {active.photo ? (

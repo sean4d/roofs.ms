@@ -1,0 +1,94 @@
+{
+  "viewBox": {
+    "width": 1040,
+    "height": 620
+  },
+  "parts": {
+    "ridge-cap": {
+      "x": 172,
+      "y": 210
+    },
+    "ridge-vent": {
+      "x": 528,
+      "y": 126
+    },
+    "field-shingles": {
+      "x": 555,
+      "y": 194
+    },
+    "starter-shingles": {
+      "x": 422,
+      "y": 347
+    },
+    "ice-water-shield": {
+      "x": 720,
+      "y": 216
+    },
+    "underlayment": {
+      "x": 260,
+      "y": 297
+    },
+    "decking": {
+      "x": 215,
+      "y": 316
+    },
+    "drip-edge": {
+      "x": 621,
+      "y": 318
+    },
+    "flashing": {
+      "x": 464,
+      "y": 248
+    },
+    "pipe-boots": {
+      "x": 414,
+      "y": 238
+    },
+    "gutters": {
+      "x": 538,
+      "y": 370
+    },
+    "soffit-fascia": {
+      "x": 735,
+      "y": 301
+    }
+  },
+  "flashing": {
+    "step-flashing": {
+      "x": 500,
+      "y": 215
+    },
+    "counter-flashing": {
+      "x": 429,
+      "y": 181
+    },
+    "apron-flashing": {
+      "x": 559,
+      "y": 149
+    },
+    "kickout-flashing": {
+      "x": 530,
+      "y": 272
+    },
+    "valley-flashing": {
+      "x": 720,
+      "y": 216
+    },
+    "drip-edge-flashing": {
+      "x": 431,
+      "y": 363
+    },
+    "pipe-flashing": {
+      "x": 414,
+      "y": 238
+    },
+    "chimney-cricket": {
+      "x": 402,
+      "y": 103
+    },
+    "z-flashing": {
+      "x": 346,
+      "y": 396
+    }
+  }
+}
