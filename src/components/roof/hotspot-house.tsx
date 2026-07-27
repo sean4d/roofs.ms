@@ -2,14 +2,16 @@
 
 import { cn } from "@/lib/utils";
 import { RoofHouseSvg, ROOF_SVG_VIEWBOX } from "./roof-house-svg";
+import { FlashingHouseSvg, FLASHING_SVG_VIEWBOX } from "./flashing-house-svg";
 
 /**
- * The illustration plus its numbered pins.
+ * An illustration plus its numbered pins.
  *
- * Shared by the anatomy diagram and the flashing diagram, which draw the same
- * house from the same generated artwork and differ only in which components
- * they pin. Pins are real buttons layered over the SVG rather than shapes
- * inside it — that buys focus rings, tab order, and touch targets for free.
+ * Two generated houses share this shell: the anatomy house (cutaway layers,
+ * gutter, ridge assembly) and the flashing house (modelled on the Gibraltar
+ * diagram the owner supplied — centre gable, chimney with cricket, shed
+ * dormer, door head). Pins are real buttons layered over the SVG rather than
+ * shapes inside it — that buys focus rings, tab order, and touch targets.
  */
 
 export interface HotspotItem {
@@ -25,13 +27,17 @@ export function HotspotHouse({
   onSelect,
   label,
   className,
+  house = "anatomy",
 }: {
   items: HotspotItem[];
   activeKey: string;
   onSelect: (key: string, name: string) => void;
   label?: string;
   className?: string;
+  house?: "anatomy" | "flashing";
 }) {
+  const Svg = house === "flashing" ? FlashingHouseSvg : RoofHouseSvg;
+  const viewBox = house === "flashing" ? FLASHING_SVG_VIEWBOX : ROOF_SVG_VIEWBOX;
   return (
     <div
       className={cn(
@@ -39,7 +45,7 @@ export function HotspotHouse({
         className,
       )}
     >
-      <RoofHouseSvg activeKey={activeKey} label={label} />
+      <Svg activeKey={activeKey} label={label} />
 
       {items.map((item, i) => {
         const isActive = item.key === activeKey;
@@ -52,8 +58,8 @@ export function HotspotHouse({
             aria-label={`${item.name} — ${item.short}`}
             title={item.name}
             style={{
-              left: `${(item.hotspot.x / ROOF_SVG_VIEWBOX.width) * 100}%`,
-              top: `${(item.hotspot.y / ROOF_SVG_VIEWBOX.height) * 100}%`,
+              left: `${(item.hotspot.x / viewBox.width) * 100}%`,
+              top: `${(item.hotspot.y / viewBox.height) * 100}%`,
             }}
             className="group absolute grid size-7 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full outline-none sm:size-8"
           >

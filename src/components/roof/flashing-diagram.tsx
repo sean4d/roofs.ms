@@ -13,10 +13,10 @@ import { HotspotHouse } from "./hotspot-house";
  *
  * Flashing is one pin on the anatomy diagram but nine different pieces in
  * practice, and it is where most roofs actually leak — so it gets its own
- * diagram. It reuses the same generated house: the shed dormer supplies the
- * step, apron, and kickout locations, the chimney supplies counter flashing
- * and the cricket, the cross gable supplies the valleys, and the window head
- * supplies the Z-flashing, so every piece is pinned where it really lives.
+ * diagram, drawn on its own dedicated house (modelled on the Gibraltar
+ * flashing diagram the owner supplied): the shed dormer supplies step, apron,
+ * and kickout; the chimney supplies counter flashing and the cricket; the
+ * centre gable supplies the valleys; the door head supplies the Z-flashing.
  */
 
 export function FlashingDiagram() {
@@ -38,6 +38,7 @@ export function FlashingDiagram() {
             });
           }}
           label="Illustration of a house with each type of roof flashing marked in place"
+          house="flashing"
         />
         <p className="mt-3 text-xs leading-relaxed text-slate-500">
           Not every flashing detail appears on one house — roof shapes vary. The
