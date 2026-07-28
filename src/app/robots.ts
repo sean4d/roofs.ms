@@ -26,7 +26,7 @@ const AI_CRAWLERS = [
   "Applebot-Extended",
 ];
 
-const DISALLOW = ["/studio", "/upload"];
+const DISALLOW = ["/studio", "/upload", "/production"];
 
 export default function robots(): MetadataRoute.Robots {
   return {
