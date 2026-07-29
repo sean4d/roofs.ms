@@ -42,11 +42,17 @@ const MATERIAL_BY_JOBTYPE: Record<string, VisualizerRealPhoto["material"]> = {
 async function sanityColorPhotos(): Promise<VisualizerRealPhoto[]> {
   const live = await getLiveProjects();
   return live.flatMap((p) => {
-    const color = p.details?.find((d) => d.key === "color")?.value;
-    const productName =
+    // Trim: upload-form values sometimes carry stray whitespace (a live job
+    // was saved as "Burgundy ") and the visualizer matches colors exactly.
+    const color = p.details?.find((d) => d.key === "color")?.value?.trim();
+    const productName = (
       p.details?.find((d) => d.key === "product")?.value ??
-      p.details?.find((d) => d.key === "productType")?.value;
-    const first = p.media?.find((m) => m.ref);
+      p.details?.find((d) => d.key === "productType")?.value
+    )?.trim();
+    // Show the finished roof: prefer an "after" photo over before/progress.
+    const first =
+      p.media?.find((m) => m.ref && m.phase === "after") ??
+      p.media?.find((m) => m.ref);
     if (!color || !first?.ref || !p.jobType) return [];
     const material = MATERIAL_BY_JOBTYPE[p.jobType];
     if (!material) return [];

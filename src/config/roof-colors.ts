@@ -59,6 +59,7 @@ export const ROOF_PRODUCTS: RoofProduct[] = [
     line: "Timberline HDZ",
     colors: [
       { name: "Pewter Gray", hex: "#71767b" },
+      { name: "Oyster Gray", hex: "#a1a4a0" },
       { name: "Charcoal", hex: "#35383b" },
       { name: "Slate", hex: "#565c62" },
       { name: "Barkwood", hex: "#574636" },
