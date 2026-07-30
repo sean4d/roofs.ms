@@ -127,6 +127,12 @@ export const siteConfig = {
      * Always word as just "lifetime warranty" — intentionally unspecific.
      */
     warranty: "Lifetime warranty",
+    /**
+     * Owner-supplied 2026-07-30. COMBINED across the team — deliberately not
+     * "in business 10 years" (the company was founded 2023). Keep the word
+     * "combined" in every rendering so the claim stays accurate.
+     */
+    experience: "10+ years of combined roofing experience",
   },
   /**
    * Schema sameAs — every verified profile for THIS business, so search
