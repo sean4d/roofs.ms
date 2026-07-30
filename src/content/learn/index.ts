@@ -271,7 +271,10 @@ export const learnArticles: LearnArticle[] = [
       },
     ],
     related: [
-      { label: "Asphalt Shingle Roofing", href: "/residential/asphalt-shingle-roofing" },
+      {
+        label: "Asphalt Shingle Roofing",
+        href: "/residential/asphalt-shingle-roofing",
+      },
       { label: "Roof Replacement", href: "/residential/roof-replacement" },
       { label: "Ventilation", href: "/residential/ventilation" },
     ],
@@ -358,7 +361,8 @@ export const learnArticles: LearnArticle[] = [
           "Flashing lives where materials meet — chimney to shingles, wall to roof — and those joints move with heat and settling. Age, failed sealant, or sloppy installation leaks there long before the field of the roof wears out.",
       },
       {
-        question: "How can I tell if my decking is bad without tearing the roof off?",
+        question:
+          "How can I tell if my decking is bad without tearing the roof off?",
         answer:
           "Often you can't from the outside, which is why any honest proposal prices decking replacement per sheet up front as a possibility rather than pretending it won't happen. From inside the attic you can look for daylight, staining, or sagging between rafters — that's a real signal worth a call.",
       },
@@ -583,7 +587,7 @@ export const learnArticles: LearnArticle[] = [
         items: [
           "Up-front cost: exposed fastener is meaningfully cheaper — often the difference between metal being in budget or not.",
           "Service life: both outlast asphalt; standing seam typically leads because there are no gaskets to age.",
-          "Maintenance: exposed fastener wants periodic fastener checks; standing seam is close to maintenance-free.",
+          "Maintenance: exposed fastener wants periodic fastener checks; standing seam has no exposed field fasteners, though flashings and penetrations still need inspection.",
           "Wind & coast: concealed clips and interlocked seams give standing seam the edge where hurricanes and salt air do their worst.",
           "Looks: standing seam reads architectural; exposed fastener reads practical. On the right building either is correct.",
         ],
@@ -741,7 +745,7 @@ export const learnArticles: LearnArticle[] = [
       { type: "h2", text: "Coatings: restoration, not replacement" },
       {
         type: "p",
-        text: "A fluid-applied silicone or acrylic layer over an existing roof that's aging but fundamentally sound. The economics are the draw: a fraction of replacement cost, minimal business disruption, typically renewable, and often classifiable as maintenance rather than capital expense — worth asking your accountant. The discipline is the catch: coatings rescue tired roofs, not failed ones. Saturated insulation or widespread seam failure means the money belongs in a new roof, and we'll say so.",
+        text: "A fluid-applied silicone or acrylic layer over an existing roof that's aging but fundamentally sound. The economics are the draw: commonly well below the cost of a full replacement when the roof qualifies, minimal business disruption, typically renewable, and often classifiable as maintenance rather than capital expense — worth asking your accountant. The discipline is the catch: coatings rescue tired roofs, not failed ones. Saturated insulation or widespread seam failure means the money belongs in a new roof, and we'll say so.",
       },
       {
         type: "list",
@@ -918,7 +922,7 @@ export const learnArticles: LearnArticle[] = [
       { type: "h2", text: "Where metal is worth the premium" },
       {
         type: "p",
-        text: "If you're staying in your home for the long haul, a metal roof can be the last roof you buy — and for many homeowners, that settles it. It's also a strong fit for rural and country properties, steep showpiece homes, and low-slope sections where shingles struggle. We install standing seam, R-panel, and exposed-fastener systems across both homes and commercial buildings, matched to the structure they protect.",
+        text: "If you're staying in your home for the long haul, a metal roof can be the only roof you buy for decades — and for many homeowners, that settles it. It's also a strong fit for rural and country properties, steep showpiece homes, and low-slope sections where shingles struggle. We install standing seam, R-panel, and exposed-fastener systems across both homes and commercial buildings, matched to the structure they protect.",
       },
       { type: "h2", text: "Where asphalt shingles still make the most sense" },
       {
@@ -1605,7 +1609,7 @@ export const learnArticles: LearnArticle[] = [
       { type: "h2", text: "First question: repair, restore, or replace?" },
       {
         type: "p",
-        text: "Not every aging commercial roof needs tearing off. A roof with localized problems but a sound membrane may only need targeted repairs. A weathered but structurally intact roof can sometimes be restored with a coating system that adds years and reflectivity for a fraction of replacement cost. Full replacement is the answer when the membrane is failing widely, moisture has saturated the insulation, or repeated leaks have taken over your maintenance budget. We assess which stage your roof is in before recommending the biggest spend.",
+        text: "Not every aging commercial roof needs tearing off. A roof with localized problems but a sound membrane may only need targeted repairs. A weathered but structurally intact roof can sometimes be restored with a coating system that adds years and reflectivity without a full tear-off. Full replacement is the answer when the membrane is failing widely, moisture has saturated the insulation, or repeated leaks have taken over your maintenance budget. We assess which stage your roof is in before recommending the biggest spend.",
       },
       { type: "h2", text: "Choosing a system" },
       {
@@ -1715,7 +1719,7 @@ export const learnArticles: LearnArticle[] = [
         type: "list",
         items: [
           "System type — exposed fastener versus standing seam is the single biggest lever, bigger than anything else on this list.",
-          "Gauge — the metal's thickness. 29ga is common and perfectly good on the right building; 26ga and 24ga cost more and dent less. We spell out the gauge on every proposal, because \"metal roof\" without a gauge is not a specification.",
+          'Gauge — the metal\'s thickness. 29ga is common and perfectly good on the right building; 26ga and 24ga cost more and dent less. We spell out the gauge on every proposal, because "metal roof" without a gauge is not a specification.',
           "Panel finish — bare Galvalume versus a quality painted finish (like a Kynar-class coating) changes both price and how the color holds up in our UV.",
           "Roof complexity — valleys, dormers, hips, and steep pitch mean more cutting, more trim, more flashing, and more labor. A simple gable costs far less per square foot than a cut-up roofline of the same area.",
           "What's underneath — decking condition, whether the old roof comes off, and what underlayment goes down. Rotten decking gets replaced per sheet; we price that possibility up front instead of springing it mid-job.",
@@ -1755,10 +1759,11 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "Is a metal roof worth it in Mississippi?",
         answer:
-          "It depends on how long you're staying. A quality metal roof can outlast two shingle roofs in our heat and humidity, so over the long haul the premium often pays for itself. If you expect to move within a decade, a quality architectural shingle roof usually makes more financial sense. We quote both so you can decide with real numbers rather than averages.",
+          "It depends on how long you're staying. A quality metal roof can outlast two shingle roofs in our heat and humidity, so over the long haul the premium is commonly easier to justify. If you expect to move within a decade, a quality architectural shingle roof usually makes more financial sense. We quote both so you can decide with real numbers rather than averages.",
       },
       {
-        question: "How much more does standing seam cost than exposed fastener?",
+        question:
+          "How much more does standing seam cost than exposed fastener?",
         answer:
           "Meaningfully more — it's a different system with hidden clips, more trim, and more labor, not just a different-looking panel. The right way to see the gap is both systems priced on your actual roof, since complexity affects standing seam more than it affects exposed fastener.",
       },
@@ -1774,8 +1779,14 @@ export const learnArticles: LearnArticle[] = [
       },
     ],
     related: [
-      { label: "Residential Metal Roofing", href: "/residential/metal-roofing" },
-      { label: "Standing Seam", href: "/residential/metal-roofing/standing-seam" },
+      {
+        label: "Residential Metal Roofing",
+        href: "/residential/metal-roofing",
+      },
+      {
+        label: "Standing Seam",
+        href: "/residential/metal-roofing/standing-seam",
+      },
       { label: "Financing Options", href: "/financing" },
     ],
   },
@@ -1972,7 +1983,7 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "Does a permit slow the job down?",
         answer:
-          "Not meaningfully. Most residential replacements are still a single day of work; the permit is administrative and handled before the crew arrives. Anyone using \"permits take too long\" as a reason to skip one is telling you something about how they operate.",
+          'Not meaningfully. Most residential replacements are still a single day of work; the permit is administrative and handled before the crew arrives. Anyone using "permits take too long" as a reason to skip one is telling you something about how they operate.',
       },
       {
         question: "What happens if roof work was done without a permit?",

@@ -295,6 +295,7 @@ export const residentialServices: ServiceContent[] = [
       photos: replacementGallery.map(({ src, alt }) => ({ src, alt })),
     },
     anatomy: true,
+    flashingDiagram: true,
     faqs: [
       {
         question: "How long does an asphalt shingle roof last in Mississippi?",

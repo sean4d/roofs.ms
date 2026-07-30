@@ -113,11 +113,20 @@ export function roofingContractorSchema(): JsonLdObject {
         ? {
             "@type": "EducationalOccupationalCredential",
             credentialCategory: "license",
+            // Deliberately NOT "residential license" — Southeast Roofing is
+            // licensed for both residential and commercial work, and the
+            // public MSBOC record simply lives in their residential index
+            // (see siteConfig.links.msbocLicense). Narrower wording here
+            // would teach search engines and AI assistants that we only do
+            // homes, which is false.
             name: "Mississippi Roofing Contractor License",
             identifier: siteConfig.license,
+            /** Third-party verifiable record on the licensing authority's site. */
+            url: siteConfig.links.msbocLicense,
             recognizedBy: {
               "@type": "GovernmentOrganization",
               name: "Mississippi State Board of Contractors",
+              url: "https://www.msboc.us/",
             },
           }
         : null,

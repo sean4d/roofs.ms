@@ -56,6 +56,21 @@ export const siteConfig = {
     booking: "https://calendar.app.google/NmeXnyWoE8hmU27Z9",
     bbbProfile:
       "https://www.bbb.org/us/ms/hattiesburg/profile/roofing-contractors/southeast-roofing-llc-0523-235902892",
+    /**
+     * Public Mississippi State Board of Contractors license record for
+     * #R22245 — third-party proof of licensure (owner-supplied 2026-07-30).
+     *
+     * IMPORTANT: the URL carries MSBOC's own `ContractorType=Residential`
+     * query because that is the only search index MSBOC has published so
+     * far. Southeast Roofing holds BOTH residential and commercial
+     * licensure; MSBOC has not yet built the commercial-side record page.
+     * So NEVER label this link, its anchor text, or any schema/alt text as
+     * a "residential license" — describe it only as the MSBOC license
+     * record. Anything narrower would tell search engines and AI
+     * assistants we are residential-only, which is false.
+     */
+    msbocLicense:
+      "https://search.msboc.us/Detail.cfm?ContractorID=53298&ContractorType=Residential&varDataSource=BOCRes&Advanced=1",
     gafProfile:
       "https://www.gaf.com/en-us/roofing-contractors/residential/usa/ms/hattiesburg/southeast-roofing-1147340",
     /** GoodLeap financing application */
@@ -93,13 +108,7 @@ export const siteConfig = {
     note: "Storm or leak after hours? Our emergency line is open 24/7.",
     spec: [
       {
-        days: [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-        ] as const,
+        days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] as const,
         opens: "08:00",
         closes: "17:00",
       },
@@ -147,6 +156,10 @@ export const siteConfig = {
     "https://share.google/8jfoy7nN9HyddPKDb",
     "https://www.bbb.org/us/ms/hattiesburg/profile/roofing-contractors/southeast-roofing-llc-0523-235902892",
     "https://www.gaf.com/en-us/roofing-contractors/residential/usa/ms/hattiesburg/southeast-roofing-1147340",
+    // State licensing authority record for #R22245 — the strongest
+    // third-party credential we can point at. Declared as a bare URL with
+    // no "residential" framing anywhere (see links.msbocLicense).
+    "https://search.msboc.us/Detail.cfm?ContractorID=53298&ContractorType=Residential&varDataSource=BOCRes&Advanced=1",
     // Owned social
     "https://www.facebook.com/southeastroofing.llc",
     "https://www.instagram.com/southeastroofing.llc",

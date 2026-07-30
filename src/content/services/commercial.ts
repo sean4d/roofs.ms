@@ -172,7 +172,7 @@ export const commercialServices: ServiceContent[] = [
         },
         {
           title: "Detail density",
-          text: "Every curb, penetration, drain, and wall termination is hand work — equipment-crowded roofs cost more per square foot than open ones.",
+          text: "Every curb, penetration, drain, and wall termination is hand work — equipment-crowded roofs take far more labor than wide-open ones.",
         },
         {
           title: "Edge metal and terminations",

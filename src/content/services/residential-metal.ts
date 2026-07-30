@@ -51,8 +51,8 @@ export const residentialMetalHub: ServiceContent = {
     {
       title: "Standing seam, exposed fastener, or shingles — side by side",
       paragraphs: [
-        "Most homeowners narrow the decision to three systems: standing seam metal, exposed-fastener metal, and architectural shingles. All three are legitimate roofs. The real question is which set of trade-offs fits your house, your budget, and how long you intend to own it — so here is the short version, without the sales gloss.",
-        "The table summarizes; the two metal pages linked below carry the actual specifications, and our shingle page makes the case for asphalt honestly. One decision — concealed fasteners or exposed — drives most of the difference in price and long-term upkeep between the two metal systems.",
+        "Most homeowners narrow the decision to three systems: standing seam metal, exposed-fastener metal, and architectural shingles. The real question is which trade-offs fit your house, your budget, and how long you intend to own it — here is the short version, without the sales gloss.",
+        "The table summarizes; the two metal pages linked below carry the actual specifications, and our shingle page makes the case for asphalt honestly.",
       ],
       table: {
         title: "Three residential roof systems compared",
@@ -130,29 +130,20 @@ export const residentialMetalHub: ServiceContent = {
     {
       title: "Gauge and finish: the two spec choices that follow",
       paragraphs: [
-        "Steel gauge runs backwards from what most people expect: the lower the number, the thicker the metal, so 26 gauge is thicker than 29. Thicker panels are stiffer, resist foot traffic and hail denting better, and tend to show less waviness in the flat areas. 29 gauge is lighter and more economical, and it remains a sensible choice for many outbuildings and budget-driven projects — the 29-gauge Gibraltar Rib panel is one line we install regularly on area projects. We stock samples of both gauges so you can feel the difference rather than take our word for it.",
-        "Finish is the other lasting decision. Bare Galvalume gives a classic silvery agricultural look; painted panels come in dozens of colors under two common paint families. PVDF finishes are the premium resin system, commonly holding color and gloss longer — especially in dark or vivid colors — while SMP (silicone-modified polyester) finishes are the economical standard that serves well in mid-range colors. Closer to the coast, salt exposure makes both the paint system and the metallic coating underneath worth a deliberate conversation, and we'll have it with you plainly.",
+        "Steel gauge runs backwards from what most people expect: the lower the number, the thicker the metal, so 26 gauge is thicker than 29. Thicker panels are stiffer, resist hail denting better, and show less waviness in the flats; 29 gauge is lighter and more economical — a sensible choice for many outbuildings and budget-driven projects, and the 29-gauge Gibraltar Rib is one line we install regularly on area projects.",
+        "Finish is the other lasting decision. Bare Galvalume gives a classic silvery agricultural look; painted panels come in dozens of colors under two paint families — PVDF, the premium resin system that commonly holds color and gloss longer, especially in dark or vivid colors, and SMP (silicone-modified polyester), the economical standard that serves well in mid-range colors. Closer to the coast, salt exposure makes the paint system and the metallic coating underneath worth a deliberate conversation.",
       ],
     },
     {
       title: "What sits under the panels matters as much as the panels",
       paragraphs: [
-        "Houses are decked structures: metal goes down over solid sheathing with an underlayment rated for metal roofing — commonly a high-temperature synthetic, because metal panels run hotter than shingles on a July afternoon. Barns and pole structures are usually open-framed, with panels screwed straight to purlins and no deck at all. The two builds behave differently for sound, condensation, and which panels are appropriate, which is why our estimate starts with what your structure actually is.",
-        "Condensation deserves a plain mention. Metal sheds nighttime heat quickly, and on humid Mississippi mornings the underside of an open-framed panel can sweat; decked, underlaid homes manage this as part of the normal roof assembly, while open outbuildings may call for vapor-management measures. And on the perennial question of installing metal over existing shingles: it can be done in some cases — a single flat layer over sound decking, with an appropriate underlayment between — but a tear-off is often still the better call, because it lets us inspect and repair the deck and avoids sealing unknowns beneath a decades-long roof.",
-      ],
-    },
-    {
-      title: "Hail, rain noise, and Mississippi heat — honest answers",
-      paragraphs: [
-        "Hail is where metal's story needs nuance. Steel panels resist hail puncture and water penetration very well, but large hail can leave cosmetic dents, and thinner 29-gauge panels dent more readily than 26. Some insurance policies treat cosmetic metal denting differently than functional damage, so it's worth reading yours before you buy — we'll tell you what we see on inspections either way.",
-        "Two worries we can mostly retire: noise and heat. Over solid decking and underlayment, rain on a metal roof sounds about like rain on shingles — the loud tin roof of memory is an uninsulated, open-framed barn. And on heat, reflective painted finishes absorb less summer sun than dark shingles, which takes real load off the AC. Metal fits more structures than people assume: full homes, porch roofs alongside shingle main roofs, barndominiums, shops, and barns all wear it well.",
+        "Houses are decked structures: metal goes down over solid sheathing with an underlayment rated for metal roofing — commonly a high-temperature synthetic, because panels run hotter than shingles on a July afternoon. Barns and pole structures are usually open-framed, with panels screwed straight to purlins and no deck at all, which changes the sound, condensation, and panel-choice picture.",
+        "Condensation deserves a plain mention. Metal sheds nighttime heat quickly, and on humid Mississippi mornings the underside of an open-framed panel can sweat; decked, underlaid homes manage this as part of the normal roof assembly, while open outbuildings may call for vapor-management measures.",
       ],
     },
   ],
   costFactors: {
     title: "What affects the cost of a residential metal roof?",
-    description:
-      "We never price a metal roof from a satellite photo — these are the factors your written estimate is actually built from.",
     items: [
       {
         title: "System choice",
@@ -237,7 +228,7 @@ export const residentialMetalHub: ServiceContent = {
     {
       question: "How long does a metal roof last compared to shingles?",
       answer:
-        "Metal systems commonly deliver several decades of service — often outlasting two shingle roofs in our climate, depending on the system, finish, and upkeep. Shingles here typically run 15–25 years. We'll give you a realistic planning range for the specific panel and finish you're considering rather than a one-size promise.",
+        "Metal systems commonly deliver several decades of service — often outlasting two shingle roofs in our climate, depending on the system, finish, and upkeep. Shingles here typically run 15–25 years, and we'll give you a realistic planning range for the specific panel and finish you're considering.",
     },
     {
       question: "Is a metal roof loud when it rains?",
@@ -314,14 +305,14 @@ export const residentialMetalChildren: ServiceContent[] = [
       paragraphs: [
         "Every roof system has a weak point, and on most it's the fasteners — thousands of penetrations, each sealed by a gasket that ages in the sun. Standing seam removes that weakness from the field of the roof entirely: panels attach with concealed clips, and adjacent panels lock together at raised seams that stand above the water line.",
         "The clip attachment does something else clever — it lets each panel expand and contract with temperature swings without stressing the fasteners. In a climate that goes from 95-degree afternoons to cool storm fronts, that freedom of movement is a quiet, decades-long advantage.",
-        "The result is the residential roof with the fewest maintenance points we install: clean modern lines, excellent wind performance, and no screw heads on the panel field to re-tighten or gaskets to weather. Flashings, penetrations, and sealants still deserve a periodic look — no roof is exempt from that — but the list is short.",
+        "The result is the residential roof with the fewest maintenance points we install: no screw heads on the panel field to re-tighten or gaskets to weather. Flashings, penetrations, and sealants still deserve a periodic look, but the list is short.",
       ],
     },
     sections: [
       {
         title: "Residential standing seam at a glance",
         paragraphs: [
-          "These are the numbers that define a residential standing seam roof. They vary by manufacturer and profile, so treat the table as a representative planning sheet — the approval documents for the specific panel we spec for your home are what govern the installation.",
+          "The numbers that define a residential standing seam roof, as a representative planning sheet — the approval documents for the specific panel we spec for your home govern the installation.",
         ],
         table: {
           title: "Representative residential standing seam specifications",
@@ -355,36 +346,36 @@ export const residentialMetalChildren: ServiceContent[] = [
       {
         title: "Clips or fastening flange: two ways to hide the screws",
         paragraphs: [
-          "Concealed fastening comes in two flavors. Clip-attached panels float over separate clips screwed to the deck; the clip grips the seam while letting the panel slide as it expands and contracts, which is why clips are the standard answer for longer panel runs. Fastening-flange panels — often called nail-strip profiles — screw directly through a hidden flange along one panel edge, with slotted holes providing a more limited allowance for movement.",
-          "Both are legitimate residential systems, and both keep every screw out of the weather. On a typical home with moderate panel lengths, either can serve; on long, unbroken runs from eave to ridge, we lean toward clips because controlled thermal movement matters more as panels get longer. This is a spec decision we make from your roof's dimensions, not a default.",
+          "Concealed fastening comes in two flavors. Clip-attached panels float over separate clips screwed to the deck; the clip grips the seam while letting the panel slide as it expands and contracts. Fastening-flange panels — often called nail-strip profiles — screw directly through a hidden flange along one panel edge, with slotted holes providing a more limited allowance for movement.",
+          "Both keep every screw out of the weather; on long, unbroken eave-to-ridge runs we lean toward clips, because controlled thermal movement matters more as panels get longer. It's a spec decision made from your roof's dimensions, not a default.",
         ],
       },
       {
         title: "Snap-lock vs. mechanically seamed",
         paragraphs: [
-          "Snap-lock panels have seams that press together by hand — one panel's leg snaps over its neighbor's, quickly and cleanly. They're the common residential choice, and they commonly require a slope of around 3:12 or steeper because the snapped seam, while weathertight, isn't folded shut.",
-          "Mechanically seamed panels get their seams rolled closed by a powered seaming tool after installation, folding the two panel edges into each other — often with sealant inside the fold. That tighter closure is why mechanically seamed profiles may be approved for lower slopes than snap-lock, subject to the manufacturer's requirements. If part of your roof runs shallow — a low porch tie-in, for example — this is the distinction that decides which panel goes there, and it's never safe to assume every standing seam profile handles every slope.",
+          "Snap-lock panels have seams that press together by hand — one panel's leg snaps over its neighbor's. They're the common residential choice, and they commonly require a slope of around 3:12 or steeper because the snapped seam, while weathertight, isn't folded shut.",
+          "Mechanically seamed panels get their seams rolled closed by a powered seaming tool after installation, folding the two panel edges into each other — often with sealant inside the fold. That tighter closure is why mechanically seamed profiles may be approved for lower slopes than snap-lock, subject to the manufacturer's requirements. If part of your roof runs shallow, this distinction decides which panel goes there — it's never safe to assume every standing seam profile handles every slope.",
         ],
       },
       {
         title: "Panel width and oil canning, explained honestly",
         paragraphs: [
-          "Oil canning is the visible waviness that can appear in the flat area of a metal panel — light reflecting off slight ripples in the steel. It's a cosmetic phenomenon, not a structural failure, and some degree of it is an inherent characteristic of light-gauge flat metal that no installer can promise to eliminate.",
-          "You can stack the odds in your favor, though. Narrower pans show less waviness than wide ones; thicker steel shows less than thin; light colors show less than dark; and striations or ribs pressed into the pan break up the reflection. Substrate irregularities and installation stresses play a role too, which is why deck prep matters. If a glassy dark-color roof is the dream, we'll talk you through pan width, gauge, and striation options before you commit.",
+          "Oil canning is the visible waviness that can appear in the flat area of a metal panel — light reflecting off slight ripples in the steel. It's cosmetic, not a structural failure, and some degree of it is inherent to light-gauge flat metal; no installer can promise to eliminate it.",
+          "You can stack the odds in your favor, though. Narrower pans show less waviness than wide ones; thicker steel shows less than thin; light colors show less than dark; and striations or ribs pressed into the pan break up the reflection. Substrate irregularities and installation stresses play a role too, which is why deck prep matters.",
         ],
       },
       {
         title: "Deck, underlayment, and the flashing details that decide it",
         paragraphs: [
-          "Residential standing seam is an architectural system: it installs over a continuous solid deck, not open framing. We inspect and repair the sheathing at tear-off, then run an underlayment rated for metal — commonly a high-temperature synthetic, since panel temperatures exceed what standard shingle underlayments are rated to live under.",
-          "Then comes the part that actually separates installers: flashing. Chimneys get formed metal counterflashing let into the masonry; sidewalls get flashing tucked behind the cladding, not surface-caulked; valleys get wide open-valley metal with panel edges hemmed and held clear of the waterway; pipes get boots detailed for panel movement. On a standing seam roof, the field almost never leaks — the details are where quality lives, and it's where we spend our time.",
+          "Residential standing seam is an architectural system: it installs over a continuous solid deck, not open framing. We inspect and repair the sheathing at tear-off, then run an underlayment rated for metal — commonly a high-temperature synthetic, since panels run hotter than standard shingle underlayments are rated for.",
+          "Then comes the part that actually separates installers: flashing. Chimneys get formed metal counterflashing let into the masonry; sidewalls get flashing tucked behind the cladding, not surface-caulked; valleys get wide open-valley metal with panel edges hemmed and held clear of the waterway; pipes get boots detailed for panel movement — the details are where a standing seam roof's quality lives.",
         ],
       },
       {
         title: "How standing seam compares to your other options",
         paragraphs: [
-          "Against exposed-fastener metal, the trade is straightforward: standing seam costs more and removes the field fasteners — the component that needs attention as any screw-down roof ages. Exposed-fastener panels deliver real metal performance for meaningfully less, with periodic fastener checkups as part of the deal. Long-horizon owners tend to land on standing seam; budget-focused projects and outbuildings tend to land on exposed fastener.",
-          "Against architectural shingles, standing seam is a different investment class: higher initial investment, longer expected service, better performance on low-slope sections, and a distinctly different look. Shingles remain the right answer for plenty of homes — especially where initial cost or neighborhood character leads. We install both, so the comparison you get from us is priced, not theoretical.",
+          "Against exposed-fastener metal, the trade is straightforward: standing seam costs more and removes the field fasteners — the component that needs attention as any screw-down roof ages. Long-horizon owners tend to land on standing seam; budget-focused projects and outbuildings on exposed fastener.",
+          "Against architectural shingles, it's a different investment class: higher initial investment, longer expected service, better low-slope performance, and a distinctly different look. Shingles remain the right answer for plenty of homes, and because we install both, the comparison you get from us is priced, not theoretical.",
         ],
         links: [
           {
@@ -404,8 +395,6 @@ export const residentialMetalChildren: ServiceContent[] = [
     ],
     costFactors: {
       title: "What we evaluate before pricing a standing seam roof",
-      description:
-        "Standing seam quotes vary more than homeowners expect, because the system is made to order for each roof. These are the real levers.",
       items: [
         {
           title: "Profile and seam type",
@@ -425,11 +414,7 @@ export const residentialMetalChildren: ServiceContent[] = [
         },
         {
           title: "Tear-off and deck repair",
-          text: "The existing roof comes off and the sheathing gets repaired where needed; the inspection sets this line, not an allowance.",
-        },
-        {
-          title: "Underlayment specification",
-          text: "High-temperature synthetic underlayment rated for metal is part of a correct assembly and part of the price.",
+          text: "The existing roof comes off, the sheathing gets repaired where needed, and metal-rated underlayment goes down — the inspection sets this line.",
         },
         {
           title: "Panel length and access",
@@ -497,37 +482,27 @@ export const residentialMetalChildren: ServiceContent[] = [
       {
         question: "Why does standing seam cost more than other metal roofing?",
         answer:
-          "The panels are more complex to manufacture and install: concealed clips, formed seams, and precision detailing take skill and time that screwed-down panels don't. You're buying the removal of the roof's most common failure point — exposed fasteners.",
+          "Concealed clips, formed seams, and precision detailing take skill and time that screwed-down panels don't. You're buying the removal of the roof's most common failure point — exposed fasteners.",
       },
       {
         question: "How does standing seam handle hurricanes and high wind?",
         answer:
-          "Very well — it's one of the reasons coastal builders favor it. The panels interlock along their full length and anchor with clips rather than through-fasteners, which gives the system excellent wind resistance. Exact ratings depend on the panel profile and installation spec for your project.",
+          "Very well — it's one of the reasons coastal builders favor it. The panels interlock along their full length and anchor with clips rather than through-fasteners, with exact ratings depending on the panel profile and installation spec for your project.",
       },
       {
         question: "What roof pitch does standing seam need?",
         answer:
-          "It depends on the profile. Snap-lock panels — the common residential choice — typically need around 3:12 or steeper, while mechanically seamed profiles may be approved for lower slopes, subject to the manufacturer's requirements. If part of your roof runs shallow, we spec the panel to the shallowest section rather than hoping.",
+          "It depends on the profile: snap-lock panels typically need around 3:12 or steeper, while mechanically seamed profiles may be approved for lower slopes, subject to the manufacturer's requirements. If part of your roof runs shallow, we spec the panel to the shallowest section.",
       },
       {
         question: "What maintenance does a standing seam roof need?",
         answer:
-          "Less than most systems, but not none: keep debris out of valleys, keep gutters flowing, and have flashings, sealants, and penetrations checked periodically — especially after major storms. What you don't have is a field full of gasketed screws to service, and that's the system's core advantage.",
+          "Less than most systems, but not none: keep debris out of valleys and gutters flowing, and have flashings, sealants, and penetrations checked periodically — especially after major storms. What you don't have is a field full of gasketed screws to service.",
       },
       {
         question: "What is oil canning, and will my roof have it?",
         answer:
-          "Oil canning is a visible waviness in the flat part of metal panels — a cosmetic characteristic of light-gauge flat metal, not a defect or structural problem. It shows more with wide pans, thin steel, and dark colors. We'll walk you through pan width, gauge, and striation options that minimize it.",
-      },
-      {
-        question: "Snap-lock or mechanically seamed for my house?",
-        answer:
-          "For most homes at typical pitches, snap-lock is the practical answer — faster to install and fully weathertight at its approved slopes. Mechanically seamed earns its extra cost on low-slope sections and where owners want the most robust seam available. Roof geometry usually makes the call, and we'll show you where each fits on yours.",
-      },
-      {
-        question: "Does standing seam require solid decking?",
-        answer:
-          "Residential architectural standing seam does, yes — it's designed to install over a continuous deck with a metal-rated underlayment, not to span open framing. If you're roofing an open-framed shop or barn, an exposed-fastener panel or a structural system is the appropriate family instead.",
+          "Oil canning is a visible waviness in the flat part of metal panels — cosmetic, not a defect or structural problem. It shows more with wide pans, thin steel, and dark colors, and we'll walk you through pan width, gauge, and striation options that minimize it.",
       },
     ],
     related: [
@@ -581,8 +556,8 @@ export const residentialMetalChildren: ServiceContent[] = [
       {
         title: "The two panel families we install",
         paragraphs: [
-          "Exposed-fastener panels aren't one product — the market splits into two representative families, and the difference matters. The classic ag/residential rib panel is the familiar barn-and-farmhouse profile; the commercial-style panel (the R-panel type) carries taller, wider-spaced ribs and heavier common gauges. The 29-gauge Gibraltar Rib is one ag-family line we install regularly on area projects.",
-          "Which one belongs on your building depends on the structure, the look you want, and the loads involved. The table below lays out the representative differences; exact rib geometry, gauges, and fastening requirements come from the specific manufacturer's panel manual.",
+          "Exposed-fastener panels aren't one product — the market splits into two representative families. The classic ag/residential rib panel is the familiar barn-and-farmhouse profile; the commercial-style panel (the R-panel type) carries taller, wider-spaced ribs and heavier common gauges. The 29-gauge Gibraltar Rib is one ag-family line we install regularly on area projects.",
+          "The table lays out the representative differences; exact rib geometry, gauges, and fastening requirements come from the specific manufacturer's panel manual.",
         ],
         table: {
           title: "Representative exposed-fastener panel families",
@@ -620,36 +595,36 @@ export const residentialMetalChildren: ServiceContent[] = [
       {
         title: "26 or 29 gauge: what the number buys you",
         paragraphs: [
-          "Gauge numbers run opposite to thickness — 26 gauge is thicker steel than 29. On an exposed-fastener roof that thickness translates to stiffer panels between supports, better resistance to hail denting and foot traffic, and a somewhat flatter, quieter appearance in the panel flats.",
-          "29 gauge is the economical staple of the ag-panel world, and it's an honest fit for barns, sheds, porches, and budget-driven projects. For a house you plan to keep — especially one with long panel runs or hail worries — we usually recommend stepping up to 26 gauge where the budget allows. We install both, we'll price both, and the choice stays yours.",
+          "Gauge numbers run opposite to thickness — 26 gauge is thicker steel than 29. On an exposed-fastener roof that translates to stiffer panels between supports, better resistance to hail denting and foot traffic, and a flatter appearance in the panel flats.",
+          "29 gauge is the economical staple of the ag-panel world, and it's an honest fit for barns, sheds, porches, and budget-driven projects. For a house you plan to keep — especially one with long panel runs or hail worries — we usually recommend stepping up to 26 gauge where the budget allows.",
         ],
       },
       {
         title: "Screws, washers, and why driving depth decides the roof",
         paragraphs: [
-          "Every fastener on this system passes through the panel, and each one seals with a compressible gasketed washer under the screw head. That washer only works when the screw goes in straight and stops at the right depth: underdrive it and the washer never compresses against the panel, leaving a gap; overdrive it and the washer splits or squeezes out, and the dimpled panel can pool water at the screw. A crooked screw does both at once.",
-          "Placement is not improvised either — the panel manufacturer's manual dictates where screws land relative to ribs and how the pattern runs, and side laps and end laps may require sealant depending on the panel and slope. Panel length, the eave-to-ridge dimension, temperature movement, and the manufacturer's limits all shape the layout before the first screw is driven. This is unglamorous work, and it is the entire difference between a twenty-minute callback and a roof that quietly does its job.",
+          "Every fastener passes through the panel and seals with a compressible gasketed washer under the screw head. That washer only works when the screw goes in straight and stops at the right depth: underdrive it and the washer never compresses, leaving a gap; overdrive it and the washer splits or squeezes out, and the dimpled panel can pool water at the screw. A crooked screw does both at once.",
+          "Placement is not improvised either — the panel manufacturer's manual dictates where screws land relative to ribs and how the pattern runs, and side laps and end laps may require sealant depending on the panel and slope. Panel length, the eave-to-ridge dimension, temperature movement, and the manufacturer's limits all shape the layout before the first screw is driven.",
         ],
       },
       {
         title: "Fastener maintenance, without the myths",
         paragraphs: [
-          "You'll read online that all the screws on a metal roof must be replaced every 10 years. That's a myth — there is no calendar that applies to every roof. What's true is that gasketed washers weather in the sun and panels move with temperature, so the fasteners deserve periodic inspection over the roof's life, and screws get re-seated or replaced based on what the inspection actually finds.",
-          "How fast washers age depends on the washer material, sun exposure, how much the panels move, and — more than anything — whether the screws were driven correctly on day one. A well-installed roof may go many years before any fastener needs attention; a badly installed one can leak the first spring. Our installation practices target the first outcome, and our repair crews see plenty of the second on roofs we didn't install.",
+          "You'll read online that all the screws on a metal roof must be replaced every 10 years. That's a myth — no calendar applies to every roof. Gasketed washers weather in the sun and panels move with temperature, so fasteners deserve periodic inspection over the roof's life, with screws re-seated or replaced based on what the inspection actually finds.",
+          "How fast washers age depends on the washer material, sun exposure, how much the panels move, and — more than anything — whether the screws were driven correctly on day one. A well-installed roof may go many years before any fastener needs attention; a badly installed one can leak the first spring.",
         ],
       },
       {
         title: "On a decked house vs. an open-framed outbuilding",
         paragraphs: [
-          "The same panel lives two different lives depending on the structure. On a house, it installs over solid decking with a metal-rated underlayment beneath — which improves sound, adds a secondary water barrier, and helps manage the condensation that humid Mississippi nights produce. On a pole barn or shop, panels commonly screw straight to open purlins with no deck, which is economical and normal for those buildings but changes the sound, condensation, and fastener-loading picture.",
-          "Slope matters in both cases: many exposed-fastener profiles want roughly 3:12 or steeper without special detailing, while certain R-panel and PBR-type assemblies are approved for lower slopes with sealed laps. No residential rib panel should be assumed fine on a shallow roof — we check the profile's approval against your actual pitch, every time.",
+          "The same panel lives two different lives. On a house, it installs over solid decking with a metal-rated underlayment beneath — improving sound, adding a secondary water barrier, and helping manage the condensation humid Mississippi nights produce. On a pole barn or shop, panels commonly screw straight to open purlins with no deck — economical and normal for those buildings, with a different sound, condensation, and fastener-loading picture.",
+          "Slope matters in both cases: many exposed-fastener profiles want roughly 3:12 or steeper without special detailing, while certain R-panel and PBR-type assemblies are approved for lower slopes with sealed laps. We check the profile's approval against your actual pitch, every time.",
         ],
       },
       {
         title: "Where exposed fastener sits against your alternatives",
         paragraphs: [
-          "Versus standing seam: you're trading concealed fasteners for a meaningfully lower price. The panels themselves are comparably tough steel; the difference is thousands of gasketed screws in the weather versus none, and the periodic checkups that come with them. For outbuildings and budget-led projects that trade usually favors exposed fastener; for a forever home, it's a genuine coin worth flipping carefully.",
-          "Versus shingles: exposed-fastener metal commonly costs somewhat more installed but brings longer expected service and steel's wind behavior — panels screwed to the manufacturer's pattern hold on well in the thunderstorm winds that strip aging shingles, though no roof of any type is immune to severe storms. If the ribbed look suits your house, it's one of the strongest value plays in roofing.",
+          "Versus standing seam: you're trading concealed fasteners for a meaningfully lower price — the panels are comparably tough steel, but thousands of gasketed screws sit in the weather with the periodic checkups that come with them. For outbuildings and budget-led projects the trade usually favors exposed fastener; for a forever home it's a genuine coin worth flipping carefully.",
+          "Versus shingles: exposed-fastener metal commonly costs somewhat more installed but brings longer expected service — panels screwed to the manufacturer's pattern hold on well in the thunderstorm winds that strip aging shingles, though no roof of any type is immune to severe storms. If the ribbed look suits your house, it's one of the strongest value plays in roofing.",
         ],
         links: [
           {
@@ -669,8 +644,6 @@ export const residentialMetalChildren: ServiceContent[] = [
     ],
     costFactors: {
       title: "Factors that shape an exposed-fastener quote",
-      description:
-        "This is the most economical metal system we install, but the price still moves with real variables — here's what they are.",
       items: [
         {
           title: "Panel family and profile",
@@ -758,12 +731,12 @@ export const residentialMetalChildren: ServiceContent[] = [
       {
         question: "How much cheaper is exposed fastener than standing seam?",
         answer:
-          "Meaningfully — it's the most affordable metal system we install, thanks to simpler panels and faster installation. Exact numbers depend on your roof, so we'll price both systems in your free estimate and let you compare directly.",
+          "Meaningfully — it's the most affordable metal system we install, thanks to simpler panels and faster installation. We'll price both systems in your free estimate so you can compare directly.",
       },
       {
         question: "Will the screws leak eventually?",
         answer:
-          "The fasteners seal with compression gaskets that age in the sun over many years. That's why we drive them straight to correct depth on day one and recommend a periodic checkup as the roof ages — re-seating or replacing fasteners based on inspection is quick, inexpensive maintenance that keeps the system tight.",
+          "The fasteners seal with compression gaskets that age in the sun over many years. That's why we drive them straight to correct depth on day one and recommend a periodic checkup as the roof ages — re-seating or replacing fasteners as inspection warrants keeps the system tight.",
       },
       {
         question: "Do all the screws really need replacing every 10 years?",
@@ -779,16 +752,6 @@ export const residentialMetalChildren: ServiceContent[] = [
         question: "What's the difference between 26 and 29 gauge panels?",
         answer:
           "Lower gauge means thicker steel: 26 gauge is stiffer and more dent-resistant, 29 gauge is lighter and more economical. For homes we usually lean 26 gauge where the budget allows; for many outbuildings 29 gauge is a sensible choice. We install both and will show you samples.",
-      },
-      {
-        question: "What roof slope do these panels need?",
-        answer:
-          "Many exposed-fastener profiles want roughly 3:12 or steeper without special detailing, while certain R-panel and PBR-type assemblies carry lower-slope approvals with sealed laps. It varies by panel, so we verify the specific profile's approval against your measured pitch rather than assuming.",
-      },
-      {
-        question: "How long does an exposed-fastener metal roof last?",
-        answer:
-          "Commonly multiple decades, depending on the gauge, finish, exposure, and — critically — installation quality and periodic fastener upkeep. The panels themselves are long-lived steel; the fasteners and details are what determine whether the roof reaches the panel's potential.",
       },
     ],
     related: [

@@ -35,7 +35,7 @@ const citiesBatch1: CityContent[] = [
       paragraphs: [
         "Southeast Roofing is headquartered right here at 6668 US-98, and Hattiesburg work fills our schedule year-round: roof replacements in Oak Grove and Bellevue, repairs in the historic Avenues where mature oaks drop limbs with every storm, and commercial work along the Hardy Street and Highway 49 corridors. This is the market we're judged in daily, at the supply house and the ballpark alike.",
         "Hattiesburg roofs work hard. Pine Belt humidity ages shingles from below while long summers bake them from above, and the tree canopy that makes neighborhoods near USM and William Carey so beautiful also keeps roofs shaded, damp, and littered after every front. Our inspections here read that whole picture — shingles, ventilation, flashing, and the gutters fighting the pine straw.",
-        "Being local also means being accountable after the storm. When severe weather hits the Pine Belt, out-of-town crews flood in behind it and vanish just as fast. We're the opposite bet: a MSBOC-licensed, GAF-certified contractor whose office you can drive past — and whose lifetime warranty means something because we'll still be here to honor it.",
+        "Being local also means being accountable after the storm. When severe weather hits the Pine Belt, out-of-town crews flood in behind it and vanish just as fast. We're the opposite bet: a MSBOC-licensed, GAF-certified contractor whose office you can drive past — and whose warranty registrations mean something because we'll still be here when you need them.",
       ],
     },
     localAreas: {

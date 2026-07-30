@@ -161,8 +161,16 @@ export interface ServiceContent {
     photos: ServicePhoto[];
   };
 
-  /** Visual education: render the roof-system anatomy diagram. */
+  /**
+   * Visual education: render the INTERACTIVE roof-anatomy diagram — the same
+   * numbered-hotspot house built for /anatomy-of-a-roof (owner directive
+   * 2026-07-30: that diagram is the only parts-of-a-roof illustration used
+   * anywhere on the site; the old static exploded stack is retired).
+   */
   anatomy?: boolean;
+
+  /** Visual education: render the interactive flashing-types diagram. */
+  flashingDiagram?: boolean;
 
   /** Visual education: render the attic-airflow (intake/exhaust) diagram. */
   ventDiagram?: boolean;

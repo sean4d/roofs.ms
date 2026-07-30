@@ -102,7 +102,9 @@ export const trustItems: TrustItem[] = [
   {
     icon: Medal,
     label: "Lifetime Warranty",
-    detail: "Coverage that lasts the life of your roof",
+    // Hedged on purpose: the coverage is a manufacturer limited-lifetime
+    // warranty on qualifying systems, not a Southeast Roofing guarantee.
+    detail: "Manufacturer options on qualifying systems",
   },
   {
     icon: Handshake,
@@ -389,7 +391,7 @@ export const whyUs = {
     {
       icon: Medal,
       title: "Lifetime warranty",
-      text: "Our roofs are backed by lifetime warranty coverage.",
+      text: "Manufacturer limited-lifetime warranty options are available on qualifying roofing systems — coverage depends on the products and system components selected.",
     },
     {
       icon: ClipboardCheck,
@@ -442,7 +444,7 @@ export const processSection = {
     {
       icon: Medal,
       title: "Final review & warranty",
-      text: "We review the completed project with you, photos included — backed by a lifetime warranty.",
+      text: "We review the completed project with you, photos included, and register the manufacturer warranty your system qualifies for.",
     },
   ],
 } as const;
@@ -632,7 +634,7 @@ export const reviewsSection = {
     {
       key: "bbb",
       title: "BBB Accredited",
-      subtitle: "A rating with the Better Business Bureau",
+      subtitle: "A+ rating with the Better Business Bureau",
       href: siteConfig.links.bbbProfile,
       cta: "Verify on bbb.org",
     },
@@ -640,8 +642,11 @@ export const reviewsSection = {
       key: "msboc",
       title: "MSBOC Licensed",
       subtitle: `License #${siteConfig.license} · Mississippi State Board of Contractors`,
-      href: null,
-      cta: null,
+      // Neutral label on purpose: the public MSBOC record page happens to
+      // sit in their residential index, but our licensure covers both
+      // divisions (see siteConfig.links.msbocLicense).
+      href: siteConfig.links.msbocLicense,
+      cta: "Verify on msboc.us",
     },
   ],
 } as const;
