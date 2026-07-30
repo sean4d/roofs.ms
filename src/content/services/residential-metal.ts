@@ -413,7 +413,7 @@ export const residentialMetalChildren: ServiceContent[] = [
         },
         {
           title: "Gauge and pan width",
-          text: "24 gauge costs more than 26; narrower pans mean more seams per square of roof, which adds material and installation time.",
+          text: "24 gauge costs more than 26; narrower pans mean more seams across the same roof, which adds material and installation time.",
         },
         {
           title: "Finish system",

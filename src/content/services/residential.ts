@@ -70,8 +70,8 @@ export const residentialServices: ServiceContent[] = [
       {
         title: "Architectural vs. three-tab: what you're actually choosing",
         paragraphs: [
-          "Architectural shingles — also called laminated or dimensional shingles — are the normal replacement product on South Mississippi homes today. Each shingle is built from two or more layers of asphalt-coated fiberglass mat laminated together, which gives the roof a thicker profile, a varied shadow-line appearance, and, on most product lines, stronger wind-warranty options than the older style.",
-          "Three-tab shingles are the earlier single-layer product: thinner, flatter, and cut with notches so every course looks identical. They still make sense on some rental properties, outbuildings, and match-the-existing repairs, but they appear less and less on premium replacements — the labor to install either product is similar, so the laminated shingle's added material tends to be the smaller part of the overall difference.",
+          "Architectural shingles — also called laminated or dimensional shingles — are the normal replacement product here: two or more layers of asphalt-coated fiberglass mat laminated together for a thicker profile, varied shadow lines, and, on most product lines, stronger wind-warranty options.",
+          "Three-tab shingles are the earlier single-layer product — thinner, flatter, uniform. They still fit some rentals, outbuildings, and matching repairs, but since labor runs similar either way, the laminated shingle's added material is usually the smaller part of the difference on a full replacement.",
         ],
         table: {
           title: "Architectural vs. three-tab at a glance",
@@ -89,7 +89,7 @@ export const residentialServices: ServiceContent[] = [
             ],
             [
               "Wind-warranty options",
-              "Commonly higher tiers available, subject to required accessories and installation",
+              "Commonly higher tiers, subject to required accessories and installation",
               "Commonly lower tiers",
             ],
             [
@@ -103,7 +103,7 @@ export const residentialServices: ServiceContent[] = [
               "Lower initial investment",
             ],
           ],
-          note: "Warranty tiers and wind coverage vary by manufacturer and product line — eligibility depends on the required components and correct installation.",
+          note: "Warranty tiers vary by manufacturer and product line — eligibility depends on required components and correct installation.",
         },
         links: [
           {
@@ -119,16 +119,16 @@ export const residentialServices: ServiceContent[] = [
       {
         title: "The layers that make shingles a system",
         paragraphs: [
-          "Shingles are only the visible layer of an assembly that works — or fails — as a whole. On many product lines, wind-warranty eligibility depends on installing a required combination of components, not on the field shingle alone. Leaving one out to trim the material list can quietly change what the written warranty covers. Here's what goes into every shingle roof we build, from the deck up:",
+          "Shingles are only the visible layer of an assembly that works — or fails — as a whole. On many product lines, wind-warranty eligibility depends on installing a required combination of components, not the field shingle alone. From the deck up:",
         ],
         bullets: [
-          "Decking — shingles require a continuous, solidly supported roof deck; soft or rotten sections are replaced before anything new goes down",
-          "Underlayment — the water-shedding layer between deck and shingles, synthetic or felt per the product spec",
-          "Leak barrier — self-adhering membrane in valleys and around penetrations, where water concentrates",
-          "Starter strips — factory-sealed edge courses at eaves and rakes that anchor the first line of wind resistance",
-          "Field shingles — the architectural or three-tab product you see from the street",
+          "Decking — a continuous, solidly supported deck; soft sections replaced before anything new goes down",
+          "Underlayment — the water-shedding layer between deck and shingles",
+          "Leak barrier — self-adhering membrane in valleys and around penetrations",
+          "Starter strips — sealed edge courses at eaves and rakes, the first line of wind resistance",
+          "Field shingles — the product you see from the street",
           "Hip and ridge shingles — purpose-made caps, not field shingles bent over the peak",
-          "Flashing — metal at every wall, chimney, and pipe where shingles alone can't seal",
+          "Flashing — metal wherever shingles alone can't seal",
           "Ventilation — balanced intake and exhaust so the attic doesn't cook the shingles from below",
         ],
         links: [
@@ -141,29 +141,29 @@ export const residentialServices: ServiceContent[] = [
       {
         title: "Slope rules: where shingles can and can't go",
         paragraphs: [
-          "Shingles shed water — they don't seal it out the way a membrane does. That's why most shingle products require a roof slope of at least 2:12, meaning two inches of rise for every twelve inches of horizontal run. From 2:12 up to (but not including) 4:12, manufacturers commonly require a special low-slope underlayment treatment — such as doubled underlayment or a self-adhering membrane over the full area — per the selected manufacturer's instructions. Standard single-layer underlayment commonly begins at 4:12.",
-          "This matters on real houses more than you'd expect. Porch roofs, additions, and dormer tie-ins often flatten out below the main roof's pitch, and running a standard shingle assembly across those sections is one of the more common leak causes we're called to repair. On sections below 2:12, we'll recommend a different covering entirely rather than pushing shingles past what they're designed to do.",
+          "Most shingle products require a slope of at least 2:12 — two inches of rise per foot of run — because shingles shed water rather than sealing it out. From 2:12 up to (but not including) 4:12, manufacturers commonly require a special low-slope underlayment treatment per the selected product's instructions; standard underlayment commonly begins at 4:12.",
+          "Porch roofs, additions, and dormer tie-ins often flatten below the main pitch, and running a standard shingle assembly across them is one of the most common leak causes we repair. Below 2:12, we'll recommend a different covering entirely.",
         ],
       },
       {
         title: "Four nails or six — and why placement beats quantity",
         paragraphs: [
-          "Standard fastening on most architectural shingles is four nails per shingle. Enhanced wind specifications and steep slopes may require six, and some wind-warranty tiers make six-nail fastening a condition of coverage. But placement matters more than count: nails belong in the manufacturer's marked nailing zone, driven flush with the shingle surface — not angled, not overdriven so the head cuts into the mat, and not underdriven so the head props up the course above.",
-          "One caution about warranty marketing: some wind warranties advertise coverage with no stated maximum wind speed when the required accessories are installed. That's a description of warranty terms, not a physics claim — no shingle is immune to blow-off, and eligibility depends on the required component combination and correct installation. We install to the spec and register what qualifies, and we won't tell you a label makes your roof stormproof.",
+          "Standard fastening is commonly four nails per shingle; enhanced wind specifications and steep slopes may require six, and some wind-warranty tiers make six-nail fastening a condition of coverage. Placement beats quantity: nails belong in the manufacturer's marked nailing zone, driven flush — not angled, not overdriven into the mat, not underdriven to prop the course above.",
+          "One caution: some wind warranties advertise coverage with no stated maximum wind speed when required accessories are installed. That's a warranty term, not a physics claim — no shingle is immune to blow-off. We install to spec, register what qualifies, and won't tell you a label makes your roof stormproof.",
         ],
       },
       {
         title: "Flashing: valleys, walls, chimneys, and pipes",
         paragraphs: [
-          "Ask any repair crew where shingle roofs leak and they'll rarely say \"the shingles.\" It's the transitions: valleys where two roof planes concentrate water, sidewalls and headwalls where roof meets siding or brick, chimneys that need a complete flashing assembly, and pipe boots whose rubber collars split in Mississippi heat years before the shingles wear out.",
-          "On our installs, valleys get leak-barrier membrane beneath the valley treatment, walls get step flashing woven in course by course rather than a smeared bead of sealant, chimneys get base and counter-flashing, and every penetration gets a new boot. Reusing tired flashing under new shingles is a shortcut that resurfaces as a leak halfway through the roof's life — we don't take it.",
+          "Ask any repair crew where shingle roofs leak and they'll rarely say \"the shingles.\" It's the transitions: valleys concentrating two planes of water, sidewalls and headwalls where roof meets siding or brick, chimney assemblies, and pipe boots that split in our heat years before the shingles wear out.",
+          "On our installs, valleys get leak-barrier membrane, walls get step flashing woven in course by course rather than a smeared bead of sealant, chimneys get base and counter-flashing, and every penetration gets a new boot — reusing tired flashing under new shingles is a shortcut that resurfaces as a leak mid-life.",
         ],
       },
       {
         title: "GAF vs. Owens Corning — and what actually decides service life",
         paragraphs: [
-          "There's no universal winner between the two brands. Both make quality architectural shingles with comparable warranty structures, and the right pick usually comes down to color, availability, budget tier, and which warranty package fits your plans. We're a GAF Certified Contractor, which affects the enhanced warranty options we can register on GAF systems; we also install Owens Corning shingle products, though we're not an Owens Corning certified or preferred contractor — and we'll never pretend otherwise.",
-          "Whichever brand you choose, don't read the warranty label as a lifespan promise. A \"30-year\" or \"limited lifetime\" label describes warranty terms, not a service-life prediction. Around here, real service life depends on heat and humidity, algae exposure, attic ventilation, tree cover, storm history, and — more than anything — installation quality. Algae-resistant lines with copper-bearing granules help with the black streaking common in our climate, and steady granule loss into the gutters is the honest signal a roof is winding down, regardless of the number on the wrapper.",
+          "There's no universal winner between the brands — both make quality architectural shingles with comparable warranty structures, and the pick usually comes down to color, availability, budget tier, and warranty package. We're a GAF Certified Contractor, which affects the enhanced warranty options we can register on GAF systems; we also install Owens Corning shingle products, though we're not an Owens Corning certified or preferred contractor.",
+          'Either way, a "30-year" or "limited lifetime" label describes warranty terms, not a service-life prediction. Real service life here depends on heat, humidity, algae, ventilation, tree cover, storms, and — above all — installation quality. Algae-resistant lines with copper-bearing granules help with the black streaking common locally, and steady granule loss in the gutters is the honest sign a roof is winding down.',
         ],
         links: [
           {
@@ -180,35 +180,35 @@ export const residentialServices: ServiceContent[] = [
     costFactors: {
       title: "What determines your shingle roofing proposal?",
       description:
-        "Two houses with the same footprint can carry very different roofs. These are the factors we measure before putting a number in writing — never a guess from the street.",
+        "These are the factors we measure before putting a number in writing — never a guess from the street.",
       items: [
         {
           title: "Roof area and pitch",
-          text: "Roofs are measured in squares of actual roof surface — pitch adds area a floor plan doesn't show, and steeper slopes take more time and staging.",
+          text: "Squares of actual roof surface — pitch adds area a floor plan doesn't show and slows production.",
         },
         {
           title: "Complexity of the roof",
-          text: "Valleys, hips, dormers, skylights, and penetrations each add cutting, flashing, and detail work.",
+          text: "Valleys, hips, dormers, skylights, and penetrations add cutting and flashing time.",
         },
         {
           title: "Tear-off and disposal",
-          text: "The number of existing shingle layers coming off drives labor and haul-off volume.",
+          text: "Existing layers coming off drive labor and haul-off volume.",
         },
         {
           title: "Decking condition",
-          text: "Soft or rotten decking found at tear-off is replaced before the new system goes down — we photograph it and talk to you first.",
+          text: "Soft decking found at tear-off is photographed, discussed with you, then replaced.",
         },
         {
           title: "Shingle line and warranty tier",
-          text: "Product families differ in cost, and enhanced warranty tiers can require specific accessory combinations.",
+          text: "Enhanced warranty tiers can require specific accessory combinations.",
         },
         {
           title: "Ventilation corrections",
-          text: "Adding intake, cutting a ridge vent, or removing conflicting exhaust affects scope — and the roof's service life.",
+          text: "Intake fixes and ridge vents affect scope — and the roof's service life.",
         },
         {
           title: "Access and stories",
-          text: "Multi-story homes, tight lots, and long carries change staging, safety setup, and crew time.",
+          text: "Multi-story homes and tight lots change staging, safety setup, and crew time.",
         },
       ],
     },
@@ -325,12 +325,12 @@ export const residentialServices: ServiceContent[] = [
       {
         question: "Can shingles go on my low-slope porch roof?",
         answer:
-          "It depends on the actual pitch. Most shingle products require at least a 2:12 slope, and from 2:12 up to 4:12 manufacturers commonly require a special low-slope underlayment treatment. Below 2:12, shingles aren't designed to work — we'll recommend an appropriate low-slope covering for that section instead.",
+          "It depends on the pitch. Most shingle products require at least 2:12, with special low-slope underlayment commonly required from 2:12 up to 4:12. Below 2:12, shingles aren't designed to work — we'll recommend an appropriate low-slope covering for that section instead.",
       },
       {
         question: "What are the black streaks running down my shingles?",
         answer:
-          "Usually algae, which thrives in our humidity and feeds on the limestone filler in shingles. It's mostly cosmetic in the near term, but it's also why we typically recommend algae-resistant shingle lines with copper-bearing granules on replacements here. Harsh pressure washing is worse than the streaks — it strips granules and shortens the roof's life.",
+          "Usually algae, which thrives in our humidity. It's mostly cosmetic in the near term, but it's why we typically recommend algae-resistant lines with copper-bearing granules here. Skip the pressure washer — it strips granules and shortens the roof's life.",
       },
     ],
     related: [
@@ -431,12 +431,7 @@ export const residentialServices: ServiceContent[] = [
         ],
         table: {
           title: "Replacement systems compared",
-          columns: [
-            "System",
-            "Relative cost",
-            "Strengths",
-            "Trade-offs",
-          ],
+          columns: ["System", "Relative cost", "Strengths", "Trade-offs"],
           rows: [
             [
               "Architectural shingles",
@@ -715,7 +710,7 @@ export const residentialServices: ServiceContent[] = [
         title: "Tarps, sealant, and what counts as a permanent repair",
         paragraphs: [
           "A tarp is triage, not treatment. When a roof is actively taking on water — or a storm is inbound — tarping stops the damage and buys time for a proper fix. It's the right first move, and our emergency line exists for exactly that. But a tarp left on for months does its own damage, so it should always come with a plan for the permanent repair behind it.",
-          "The same goes for sealant. A bead of roofing sealant over a split boot or a lifted flashing usually reads as \"fixed\" for a season or two, then fails — sealant alone is a temporary measure in most applications. A permanent repair replaces the failed component: a new boot, new step flashing, shingles woven into the field, decking swapped where it's soft. It costs more than a caulk gun and lasts years instead of months.",
+          'The same goes for sealant. A bead of roofing sealant over a split boot or a lifted flashing usually reads as "fixed" for a season or two, then fails — sealant alone is a temporary measure in most applications. A permanent repair replaces the failed component: a new boot, new step flashing, shingles woven into the field, decking swapped where it\'s soft. It costs more than a caulk gun and lasts years instead of months.',
         ],
         links: [
           {
@@ -1019,7 +1014,7 @@ export const residentialServices: ServiceContent[] = [
         title: "Roof geometry decides how much water arrives",
         paragraphs: [
           "Two houses with identical gutter footage can put wildly different demands on them. What matters is the roof area draining to each run, how fast the pitch delivers it, and where valleys concentrate it. A steep roof fires water into the gutter with real velocity, and a valley can aim the collected flow of two whole planes at a single point on one run — which is why we so often find overflow damage right below a valley.",
-          "Layer on the local conditions — multi-inch rain days that are routine here, and pine straw that mats in the channel and quietly shrinks its capacity — and \"standard gutters, standard spacing\" stops being a plan. We walk the roof, map where the water goes, and size each run for its actual load.",
+          'Layer on the local conditions — multi-inch rain days that are routine here, and pine straw that mats in the channel and quietly shrinks its capacity — and "standard gutters, standard spacing" stops being a plan. We walk the roof, map where the water goes, and size each run for its actual load.',
         ],
       },
       {
@@ -1268,10 +1263,7 @@ export const residentialServices: ServiceContent[] = [
           columns: ["Step", "Example figure"],
           rows: [
             ["Attic floor area", "1,500 sq ft"],
-            [
-              "Ratio applied",
-              "1:300 (where qualifying conditions are met)",
-            ],
+            ["Ratio applied", "1:300 (where qualifying conditions are met)"],
             ["Total NFA target", "5 sq ft = 720 sq in"],
             ["Intake share (soffits)", "About half — roughly 360 sq in NFA"],
             ["Exhaust share (ridge)", "About half — roughly 360 sq in NFA"],
@@ -1443,7 +1435,7 @@ export const residentialServices: ServiceContent[] = [
       {
         question: "Does attic ventilation really affect shingle life?",
         answer:
-          "Yes — significantly, especially in the South. Trapped attic heat accelerates asphalt aging from the underside, and shingle manufacturers require adequate ventilation as a condition of their coverage. It's one of the cheapest ways to protect an expensive roof.",
+          "Yes — significantly, especially in the South. Trapped attic heat accelerates asphalt aging from the underside, and shingle manufacturers require adequate ventilation as a condition of their coverage. It's one of the most economical ways to protect an expensive roof.",
       },
       {
         question: "What's the best ventilation setup for this climate?",
@@ -1460,6 +1452,21 @@ export const residentialServices: ServiceContent[] = [
         answer:
           "Sometimes — but they can also depressurize the attic and pull cooled air out of the living space if intake is inadequate. We generally favor balanced passive systems first and recommend powered options only where the attic genuinely needs them.",
       },
+      {
+        question: "Is the 1-in-300 ventilation ratio a code requirement?",
+        answer:
+          "Not universally. The 1:300 figure is a common baseline that applies when qualifying conditions are met; some assemblies and jurisdictions call for 1:150 instead. What applies to your home depends on the attic assembly and local requirements — which is exactly what our assessment sorts out before anything gets installed.",
+      },
+      {
+        question: "Should my gable vents stay open if I add a ridge vent?",
+        answer:
+          "Often not. Open gable vents near a new ridge vent can become the ridge's nearest air source, short-circuiting the soffit-to-ridge path that's supposed to sweep the whole attic. We evaluate the layout and will recommend closing or baffling the gables when they'd undercut the new system.",
+      },
+      {
+        question: "Is it okay for my bathroom fan to vent into the attic?",
+        answer:
+          "No — never. A bath fan or dryer duct ending in the attic pumps warm, moist air straight into the space ventilation is trying to dry out, feeding condensation, mildew, and rot. Exhaust ducts should terminate outdoors through the roof or wall, and rerouting them is a routine part of our ventilation work.",
+      },
     ],
     related: [
       {
@@ -1472,7 +1479,7 @@ export const residentialServices: ServiceContent[] = [
         label: "Roof Replacement",
         href: "/residential/roof-replacement",
         description:
-          "Every replacement we do includes a ventilation assessment — it's the cheapest time to fix it.",
+          "Every replacement we do includes a ventilation assessment — it's the most economical time to fix it.",
       },
       {
         label: "Gutters",
