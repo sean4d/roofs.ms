@@ -68,7 +68,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "How do I avoid storm-chasing contractors?",
         answer:
-          "Ask for a Mississippi license number and check it. Ask for a physical local address you could drive to. Be wary of anyone who knocked on your door uninvited, pressures you to sign today, wants a large payment up front, asks for the insurance check signed over to them, or offers to \"waive your deductible\" — that last one is insurance fraud, and it tells you how they do business.",
+          'Ask for a Mississippi license number and check it. Ask for a physical local address you could drive to. Be wary of anyone who knocked on your door uninvited, pressures you to sign today, wants a large payment up front, asks for the insurance check signed over to them, or offers to "waive your deductible" — that last one is insurance fraud, and it tells you how they do business.',
       },
     ],
   },
@@ -136,7 +136,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Is a metal roof worth the extra cost?",
         answer:
-          "It depends on how long you're staying. A quality metal roof can outlast two shingle roofs, so over the long haul the premium often pays for itself. If you expect to move within a decade, a quality architectural shingle roof usually makes more financial sense. We install both and quote them side by side from one inspection, so you decide with real numbers for your roof.",
+          "It depends on how long you're staying. A quality metal roof can outlast two shingle roofs, so over the long haul the premium is commonly easier to justify. If you expect to move within a decade, a quality architectural shingle roof usually makes more financial sense. We install both and quote them side by side from one inspection, so you decide with real numbers for your roof.",
       },
       {
         question: "How long does a roof last in South Mississippi?",

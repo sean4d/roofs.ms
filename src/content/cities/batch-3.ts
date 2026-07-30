@@ -254,7 +254,7 @@ export const citiesBatch3: CityContent[] = [
       paragraphs: [
         "Bay St. Louis is the Coast's arts town — Old Town's galleries and cottages, Beach Boulevard on the low bluff, and neighborhoods that mix century-old homes with everything rebuilt since 2005. Roofing here spans that same range: careful replacements on older homes where details matter, modern wind-rated systems on newer construction, and metal roofs that suit both the cottage look and the salt air.",
         "This is also the town that stood closest to Katrina's eye. Bay St. Louis measures its history in storms the way other towns use decades, and it rebuilt with the Gulf in mind. We work to that standard: manufacturer-spec fastening, sealed edges, corrosion-aware material choices near the water, and storm documentation thorough enough for the wind claims this county knows too well.",
-        "The Hancock County seat sits about eighty-five minutes from our Hattiesburg office via I-10 — a run we plan in efficient Coast blocks with honest scheduling. Free inspections, itemized proposals, and a lifetime warranty come standard, same as everywhere we work.",
+        "The Hancock County seat sits about eighty-five minutes from our Hattiesburg office via I-10 — a run we plan in efficient Coast blocks with honest scheduling. Free inspections and itemized proposals come standard, same as everywhere we work, with manufacturer warranty options on qualifying systems.",
       ],
     },
     localAreas: {

@@ -156,14 +156,157 @@ export const insuranceClaims: ServiceContent = {
       "From first inspection to final invoice, you'll know what step you're on and who owes what to whom. No mystery, no pressure, and no outcome promises — just the process done right.",
     ],
   },
+  sections: [
+    {
+      title: "Who does what in a roof insurance claim",
+      paragraphs: [
+        "A storm claim has four parties, and knowing each one's job keeps the process from feeling like a maze. You, the policyholder, own the claim: you file it, you make the decisions, and the policy is a contract between you and your insurer. The insurance company decides what is and isn't covered — not us, and not any contractor. The adjuster inspects on the insurer's behalf and contributes the scope of loss, which is the insurer's written list of the work it agrees the covered damage requires. Our job as the contractor is the physical evidence and the build: we document the roof's actual condition, prepare a proposal for the repairs, and complete the approved work.",
+        "One thing worth saying plainly: this page is general information about how the process typically works. It is not legal advice, and it is not an interpretation of your policy — your policy language and your insurer's decisions control. When a coverage question matters, the answers come from your policy, your agent, or your insurer.",
+      ],
+      links: [
+        {
+          label: "Start with our storm damage overview",
+          href: "/storm-damage",
+        },
+        {
+          label: "Schedule a free roof inspection",
+          href: "/free-inspection",
+        },
+        {
+          label: "Walk the claim process in our step-by-step wizard",
+          href: "/storm-damage/insurance-claims/wizard",
+        },
+      ],
+    },
+    {
+      title: "The terms on your claim paperwork, translated",
+      paragraphs: [
+        "Claim documents use a vocabulary most people meet exactly once — usually while standing in a driveway looking at a damaged roof. Here are the terms that show up on nearly every roof claim, in plain English. Your policy's own definitions govern; these are the general meanings.",
+      ],
+      table: {
+        title: "Insurance claim vocabulary",
+        columns: ["Term", "What it means"],
+        rows: [
+          [
+            "ACV",
+            "Actual Cash Value — the depreciated value of the roof at the time of loss: replacement cost minus depreciation for age and wear.",
+          ],
+          [
+            "RCV",
+            "Replacement Cost Value — what it costs to replace the damaged roof with materials of similar kind and quality today, before depreciation is subtracted.",
+          ],
+          [
+            "Deductible",
+            "The portion of a covered loss you are responsible for by contract. It is always the policyholder's to pay — no honest contractor offers to absorb it.",
+          ],
+          [
+            "Depreciation",
+            "The value the roof lost to age and wear. Under many RCV policies it is recoverable — released after the work is completed and documented; under ACV policies it typically is not.",
+          ],
+          [
+            "Supplement",
+            "A documented request to adjust the scope when covered conditions turn up that the original scope missed — rotten decking found at tear-off, for example.",
+          ],
+          [
+            "Scope of loss",
+            "The insurer's written, line-by-line list of the repair work it has agreed the covered damage requires.",
+          ],
+          [
+            "Exclusion",
+            "Policy language that removes certain causes or types of damage from coverage — wear and tear and installation defects are common examples.",
+          ],
+          [
+            "Endorsement",
+            "A written modification that adds, removes, or changes coverage on the standard policy — roof-specific endorsements are increasingly common.",
+          ],
+          [
+            "Mortgagee",
+            "Your mortgage lender. When it holds an interest in the property, it is commonly named on claim payments and may have its own endorsement and inspection steps before funds are released.",
+          ],
+        ],
+        note: "General definitions only — your policy's own wording governs how each term applies to your claim.",
+      },
+    },
+    {
+      title: "ACV, RCV, and how depreciation actually plays out",
+      paragraphs: [
+        "Whether your policy pays on an ACV or an RCV basis is the single biggest variable in how a roof claim feels. Under a typical RCV policy, the insurer's first payment reflects the actual cash value of the covered damage — the replacement cost minus depreciation — less your deductible. The withheld depreciation is commonly recoverable: once the work is completed and documented, we submit the completion paperwork and final invoice, and the insurer releases it. Under an ACV policy, that second step usually doesn't exist — depreciation is non-recoverable, and the gap between the depreciated payment and the real replacement is yours to carry.",
+        "Roof age drives depreciation, so the same hailstorm can produce very different claim outcomes on a five-year-old roof and a twenty-year-old one. Some policies also apply separate roof deductibles or roof-payment schedules by endorsement. We can't change any of that — but we can make sure you understand which structure you're in before you make decisions, and that the completion documentation needed to request recoverable depreciation goes in promptly and correctly.",
+      ],
+    },
+    {
+      title: "Supplements, code items, and your mortgage company",
+      paragraphs: [
+        "Adjusters work fast and roofs hide things, so initial scopes sometimes miss real conditions — decking that turns out to be rotten under the shingles, flashing that can't be reused, or quantities that don't match the actual roof. When that happens, the fix is a supplement: a documented request, with photos and measurements, asking the insurer to adjust the scope. Where the policy supports it, code-related items can also enter the claim — some policies carry ordinance-or-law coverage for upgrades the current building code requires, such as drip edge or underlayment changes, and some don't. The insurer decides; our job is to document the condition clearly so the request stands on evidence.",
+        "If you have a mortgage, expect your lender's name on the claim check — that's the mortgagee clause at work, and it's routine. Lenders have their own endorsement procedures, and larger payments often involve the lender holding funds and releasing them against inspections or completion paperwork. It adds steps, not drama: we provide the documentation the mortgage company asks for, and the process moves.",
+      ],
+    },
+    {
+      title:
+        "What claims commonly don't cover — and how commercial claims differ",
+      paragraphs: [
+        "Not everything wrong with a roof is storm damage, and insurers are right to draw that line. Ordinary wear and aging, installation defects, and long-standing leaks that predate the storm are commonly excluded — a claim covers sudden loss from a covered cause, not deferred maintenance. That's exactly why we tell you before you file when what we find on your roof looks like age rather than impact: filing a claim that documents wear helps nobody.",
+        "Commercial claims run on the same skeleton but with more moving parts: larger scopes, membrane and insulation assemblies that require core sampling to evaluate, business-interruption considerations, and policy forms that differ meaningfully from homeowner policies. Timelines on any claim — residential or commercial — depend on your policy terms, your insurer's process, and regional storm volume, so nobody can honestly promise you a date. What we control is our part: thorough documentation, a prompt proposal, and completion paperwork the day the work wraps.",
+      ],
+      links: [
+        {
+          label: "What a residential roof replacement involves",
+          href: "/residential/roof-replacement",
+        },
+        {
+          label: "See our commercial roof replacement process",
+          href: "/commercial/roof-replacement",
+        },
+      ],
+    },
+  ],
+  costFactors: {
+    title: "What determines the scope — and our proposal",
+    description:
+      "No two claims price alike because no two losses are alike. These are the real variables behind the scope of loss and the proposal we prepare against it.",
+    items: [
+      {
+        title: "Extent and type of documented damage",
+        text: "Hail bruising across full slopes reads differently than wind damage on one elevation — the documented damage drives the scope.",
+      },
+      {
+        title: "Your policy structure",
+        text: "ACV versus RCV, roof-specific endorsements, and separate wind/hail deductibles all shape what the claim pays and when.",
+      },
+      {
+        title: "Roof size, pitch, and complexity",
+        text: "Steeper pitches, multiple stories, and cut-up rooflines change labor, safety measures, and material quantities.",
+      },
+      {
+        title: "Code-related items where applicable",
+        text: "When current code requires components the old roof lacked, they enter the proposal — and coverage depends on your policy's ordinance-or-law terms.",
+      },
+      {
+        title: "Matching and material availability",
+        text: "Discontinued shingles and hard-to-match products raise real scope questions the insurer has to weigh.",
+      },
+      {
+        title: "Accessory and collateral damage",
+        text: "Gutters, vents, flashing, skylights, and soft-metal damage belong in the documentation, not as afterthoughts.",
+      },
+      {
+        title: "Conditions found during the work",
+        text: "Hidden decking damage discovered at tear-off is handled through the supplement process, with photos, where the policy supports it.",
+      },
+    ],
+  },
   approach: {
     title: "The claim process, step by step",
     description:
-      "Insurers differ in the details, but a storm claim generally moves like this.",
+      "Insurers differ in the details, but a storm claim generally moves through these ten steps.",
     steps: [
       {
-        title: "Free damage inspection",
-        text: "We document every impact point with photos and give you a straight answer — including when the damage isn't worth a claim.",
+        title: "Inspection and documentation",
+        text: "We photograph every impact point, slope by slope — the roof-level record everything else builds on.",
+      },
+      {
+        title: "An honest recommendation",
+        text: "We tell you whether what we found looks like storm damage worth reporting — including when it doesn't and a claim isn't reasonable.",
       },
       {
         title: "You file the claim",
@@ -171,19 +314,31 @@ export const insuranceClaims: ServiceContent = {
       },
       {
         title: "Adjuster inspection",
-        text: "Your insurer sends an adjuster. We can meet them on site so the walk covers everything we found — roof-to-roof, professional-to-professional.",
+        text: "Your insurer sends an adjuster. We can meet them on your roof so the walk covers everything we documented.",
       },
       {
-        title: "Scope and approval",
-        text: "The insurer issues a scope of loss. We review it against the real damage and flag anything the scope missed.",
+        title: "Scope review",
+        text: "The insurer issues a scope of loss. We review it against the roof's real condition and flag anything it missed.",
       },
       {
-        title: "The build",
-        text: "Once approved, we schedule and complete the work to the approved scope — most residential replacements take one to two days on site.",
+        title: "Our proposal",
+        text: "You get a written proposal aligned to the approved scope, with system and material options spelled out.",
       },
       {
-        title: "Final documentation",
-        text: "Completion paperwork and the final invoice go to you and the insurer, closing out the claim cleanly, including any recoverable depreciation.",
+        title: "Supplements where supported",
+        text: "If covered conditions surface that the scope missed, we document them and submit a supplement for the insurer to evaluate.",
+      },
+      {
+        title: "Contract and material selection",
+        text: "You sign, pick colors and products, and we order materials and set the schedule.",
+      },
+      {
+        title: "The work gets done",
+        text: "We complete the build to the approved scope — most homes are done in one to two days on site.",
+      },
+      {
+        title: "Final documents and depreciation",
+        text: "Completion paperwork and the final invoice go to you and the insurer — including the request for recoverable depreciation where your policy provides it.",
       },
     ],
   },
@@ -236,6 +391,16 @@ export const insuranceClaims: ServiceContent = {
       question: "Do you work with all insurance companies?",
       answer:
         "We work with the claims process of any insurer our customers have. We're hired by you, not the insurance company — our documentation serves your claim.",
+    },
+    {
+      question: "What's the difference between an ACV and an RCV policy?",
+      answer:
+        "An RCV (replacement cost value) policy pays toward replacing the roof at today's cost, typically releasing withheld depreciation after the work is completed and documented. An ACV (actual cash value) policy pays the depreciated value only, and the gap is yours. Your policy documents or agent can tell you which structure you have — it's worth knowing before you file.",
+    },
+    {
+      question: "Why is my mortgage company's name on the insurance check?",
+      answer:
+        "Because your lender holds an interest in the property, most policies name it as mortgagee on claim payments. It's routine: the lender endorses the check, and on larger claims may hold funds and release them against inspections or completion paperwork. We supply whatever documentation the mortgage company requests.",
     },
   ],
   related: [

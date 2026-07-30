@@ -71,8 +71,11 @@ const commitments = [
 const credentials = [
   {
     title: "Mississippi licensed",
-    detail: `MS State Board of Contractors — License #${siteConfig.license}`,
-    href: null,
+    // Residential AND commercial licensure; the public MSBOC record lives in
+    // their residential index, so the label stays neutral (see
+    // siteConfig.links.msbocLicense).
+    detail: `MS State Board of Contractors — License #${siteConfig.license}. Verify it on msboc.us`,
+    href: siteConfig.links.msbocLicense,
   },
   {
     title: "GAF Certified Contractor",
@@ -189,24 +192,27 @@ export default function AboutPage() {
 
       {/* Story */}
       <Section>
-        <SectionHeading eyebrow="Who we are" title="Roofing done right — literally" />
+        <SectionHeading
+          eyebrow="Who we are"
+          title="Roofing done right — literally"
+        />
         <Reveal className="mt-6 max-w-3xl space-y-5">
           <p className="text-lg leading-relaxed text-slate-600">
             South Mississippi is hard on roofs. Gulf humidity, brutal summer
             heat, and a hurricane season that runs half the year mean a roof
             here doesn&apos;t just need to look good on day one — it has to be
             built for the next storm. That reality shapes everything about how
-            we work: the systems we install, the way we flash and ventilate,
-            and the way we document our jobs.
+            we work: the systems we install, the way we flash and ventilate, and
+            the way we document our jobs.
           </p>
           <p className="text-lg leading-relaxed text-slate-600">
-            We&apos;re deliberately not a one-trick shop. About half our work
-            is storm and insurance restoration, and half is retail — families
-            and building owners who simply want the best roof for their money.
-            We install architectural shingle, standing-seam and panel metal,
-            TPO, EPDM, and coating systems, which means our recommendation
-            starts with your building and your budget, not with the one
-            product we know how to sell.
+            We&apos;re deliberately not a one-trick shop. About half our work is
+            storm and insurance restoration, and half is retail — families and
+            building owners who simply want the best roof for their money. We
+            install architectural shingle, standing-seam and panel metal, TPO,
+            EPDM, and coating systems, which means our recommendation starts
+            with your building and your budget, not with the one product we know
+            how to sell.
           </p>
           <p className="text-lg leading-relaxed text-slate-600">
             And because trust is earned with proof, not promises, we keep the
@@ -258,7 +264,10 @@ export default function AboutPage() {
           description="Every credential below is real, current, and checkable — most link straight to the official record."
           onDark
         />
-        <StaggerGroup as="ul" className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <StaggerGroup
+          as="ul"
+          className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+        >
           {credentials.map((credential) => {
             const inner = (
               <>

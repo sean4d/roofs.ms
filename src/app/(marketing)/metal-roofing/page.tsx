@@ -7,7 +7,10 @@ import { buildMetadata } from "@/lib/seo";
 import { breadcrumbSchema, faqSchema, serviceSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/json-ld";
 import { ServiceHero } from "@/components/services/service-hero";
-import { ServiceMaterials } from "@/components/services/service-sections";
+import {
+  ServiceMaterials,
+  ServiceProse,
+} from "@/components/services/service-sections";
 import { ServiceFaq } from "@/components/services/service-faq";
 import { Section } from "@/components/shared/section";
 import { SectionHeading } from "@/components/shared/section-heading";
@@ -143,6 +146,7 @@ export default function MetalRoofingHubPage() {
         </StaggerGroup>
       </Section>
 
+      <ServiceProse sections={[...metalHub.sections]} />
       <ServiceFaq
         faqs={[...metalHub.faqs]}
         title="Metal roofing questions, answered"

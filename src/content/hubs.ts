@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 
 import type { FaqEntry } from "@/lib/schema";
+import type { ProseSection } from "@/content/services/types";
 import { stormPhotos } from "@/content/photos";
 import { stockPhotos } from "@/content/stock-photos";
 
@@ -101,6 +102,83 @@ export const residentialHub = {
         "Balanced attic airflow that extends shingle life and cools your house.",
     },
   ] satisfies HubServiceCard[],
+  sections: [
+    {
+      title: "Not sure where to start? Match your situation",
+      paragraphs: [
+        "Most homeowners don't call us asking for a specific service — they call with a symptom: a stain on the ceiling, shingles in the yard, gutters pouring over at the corners. This table matches the situation you're seeing to the service that usually addresses it, and to what our free inspection checks before anyone recommends anything.",
+      ],
+      table: {
+        title: "Where to start, by situation",
+        columns: [
+          "What you're seeing",
+          "Likely starting point",
+          "What the inspection checks",
+        ],
+        rows: [
+          [
+            "Active leak or ceiling stain",
+            "Roof repair",
+            "The actual entry point — often flashing or a pipe boot, not the shingles below the stain",
+          ],
+          [
+            "Shingles aging, curling, or shedding granules",
+            "Replacement consultation",
+            "Remaining service life, decking condition, and whether repair still makes sense",
+          ],
+          [
+            "Missing or creased shingles after wind",
+            "Storm inspection",
+            "Storm-related damage worth documenting before any insurance conversation",
+          ],
+          [
+            "Comparing shingle and metal",
+            "Replacement consultation",
+            "Roof geometry, pitch, and budget fit for each system — we install both",
+          ],
+          [
+            "Gutters overflowing or pulling loose",
+            "Seamless gutters",
+            "Sizing, slope, downspout capacity, and the fascia behind the gutter",
+          ],
+          [
+            "Rot at the roof edge or behind gutters",
+            "Fascia & soffit",
+            "How far the rot runs and what's feeding it — usually a drainage or drip-edge problem",
+          ],
+          [
+            "Hot upstairs, high summer bills",
+            "Ventilation",
+            "Intake and exhaust balance, blocked soffits, and attic moisture",
+          ],
+          [
+            "Buying or selling a house",
+            "Free inspection",
+            "A documented condition report you can hand to the other side of the table",
+          ],
+        ],
+        note: "Every path starts with the same free inspection — the service recommendation comes after we've seen the roof, not before.",
+      },
+    },
+    {
+      title: "One accountable team for the whole roofline",
+      paragraphs: [
+        "A home's roof isn't just shingles. It's decking, underlayment, flashing, ventilation, fascia, and drainage working as one system — and most of the failures we repair started where two of those meet. Because we handle all of it under one roof, nothing gets orphaned between trades: the gutter crew and the shingle crew are the same company, so the drip edge, fascia, and gutter line get detailed together instead of blamed on each other.",
+        "That matters in South Mississippi more than most places. Gulf heat and humidity age shingles from below when attics can't breathe, pine straw loads gutters year-round, and every summer brings wind events that test each detail. The services above aren't a menu of unrelated products — they're the parts of one system, and the free inspection looks at all of them every time.",
+      ],
+      links: [
+        {
+          label: "See how a full replacement runs",
+          href: "/residential/roof-replacement",
+        },
+        {
+          label: "Compare shingle and metal systems",
+          href: "/residential/metal-roofing",
+        },
+        { label: "Book the free inspection", href: "/free-inspection" },
+      ],
+    },
+  ] satisfies ProseSection[],
   faqs: [
     {
       question: "Where do I start if I don't know what my roof needs?",
@@ -221,6 +299,65 @@ export const stormHub = {
         "The claim process step by step, what we document, and honest answers about how it really works.",
     },
   ],
+  sections: [
+    {
+      title: "The first hour after the storm",
+      paragraphs: [
+        "What you do in the first hour matters more for safety than for the roof. If a tree has hit the structure or the ceiling is sagging with water weight, get everyone out and stay out until it's been looked at. Do not climb onto a wet or storm-damaged roof — that's the single most common way a bad day gets worse, and everything on the roof can be documented by people with fall protection and a reason to be up there.",
+      ],
+      bullets: [
+        "Kill power to rooms with water coming through fixtures or hitting outlets.",
+        "Catch what you can and move furniture, electronics, and documents out of the drip line.",
+        "Photograph interior damage before you clean anything up — stains, wet flooring, fallen debris, standing water.",
+        "Keep damaged materials (shingles in the yard, fallen limbs cut from the roof) until they've been photographed.",
+        "Save every receipt for tarps, fans, or emergency work — insurers commonly reimburse reasonable emergency mitigation, and the receipts are the record.",
+        "Then call us. The emergency line answers 24/7, and tarping an active opening is the first move — it stops the damage from compounding while everything else runs.",
+      ],
+      links: [
+        {
+          label: "Emergency tarping, step by step",
+          href: "/storm-damage/emergency-roofing",
+        },
+      ],
+    },
+    {
+      title: "Storm damage vs. wear — and why it matters",
+      paragraphs: [
+        "Wind damage shows up as creased, lifted, or missing shingles — a crease breaks the shingle's seal even when it lays back down, which is why a roof can look fine from the driveway and still be compromised. Hail shows up as bruising in the shingle mat and dents in the soft metals: vents, gutters, and flashing take dents at hail sizes that shingles can hide. Tree and debris impact ranges from a scuff to a structural problem, and water entry from any of them can travel along decking and rafters before it ever shows on a ceiling — damage commonly exists well before a leak announces it.",
+        "Here's the honest part many storm-season visitors won't tell you: age-related deterioration is not storm damage, and the insurance company — not the contractor — decides what's covered. Blistering, granule loss from age, and old installation problems generally aren't claimable, and pretending otherwise sets homeowners up for denied claims and bad decisions. Our inspection documents what's actually there, dates it against the storm where the evidence supports that, and tells you plainly when a claim isn't worth filing.",
+      ],
+      links: [
+        {
+          label: "How the insurance claim actually works",
+          href: "/storm-damage/insurance-claims",
+        },
+        { label: "Book a storm inspection", href: "/storm-inspection" },
+      ],
+    },
+    {
+      title: "How to spot a storm chaser",
+      paragraphs: [
+        "After every named storm and hail map, out-of-area crews sweep through South Mississippi. Some do fine work; many don't stay long enough for you to find out. Signals worth your attention before you sign anything:",
+      ],
+      bullets: [
+        "They knocked on your door first, and the truck has out-of-state plates or a magnetic sign.",
+        "They declare your roof “totaled” on the spot — before any insurer has evaluated the loss.",
+        "They ask you to sign an assignment of benefits or contingency agreement “just to get the process started.”",
+        "They offer to “take care of” your deductible — that's insurance fraud, and it's the homeowner who carries the risk.",
+        "There's no local address, no Mississippi license number to verify, and no local jobs to drive past.",
+      ],
+    },
+    {
+      title: "Homes and commercial buildings after the same storm",
+      paragraphs: [
+        "The same weather hits both, but the response differs. On homes, the priorities are tarping openings, documenting shingle and soft-metal damage, and walking the homeowner through a claim that most people only ever file once. On commercial buildings, the first moves are protecting inventory and operations, mapping where water is entering large low-slope assemblies (rarely directly above the drip), and coordinating documentation with property managers and adjusters — commercial claims carry more scope detail and more stakeholders. We run both, from the same office, with the same rule: document first, promise nothing the evidence doesn't support.",
+      ],
+      links: [
+        { label: "Commercial roof repair", href: "/commercial/roof-repair" },
+        { label: "Residential roof repair", href: "/residential/roof-repair" },
+      ],
+    },
+  ] satisfies ProseSection[],
   faqs: [
     {
       question: "Should I call you or my insurance company first?",
@@ -319,7 +456,7 @@ export const metalHub = {
         "Commonly outlasts two shingle roofs",
         "Excellent wind and shed performance",
         "Reflects summer heat",
-        "Standing seam is near-zero maintenance",
+        "Standing seam hides its fasteners — less routine upkeep, though flashings still need periodic checks",
       ],
     },
     shingle: {
@@ -333,6 +470,122 @@ export const metalHub = {
       ],
     },
   },
+  sections: [
+    {
+      title: "Which metal system fits which building",
+      paragraphs: [
+        "“Metal roof” covers everything from a concealed-fastener architectural system on a farmhouse to a structural panel spanning open purlins on a warehouse — and picking by appearance alone is how buildings end up with the wrong panel. The forks that actually matter: concealed versus exposed fasteners, architectural panels (which need a solid deck under them) versus structural panels (engineered to span open framing), and the gauge of the steel itself — where a lower number means thicker metal, so 24 gauge is heavier than 26, and 26 heavier than 29.",
+        "Two behaviors are worth knowing before any panel conversation. Minimum slope varies by profile: some mechanically seamed and structural systems are approved on very low slopes, while snap-lock and most exposed-fastener profiles commonly want around 3:12 — no single number covers all metal. And oil canning — visible waviness in flat panel areas — is a cosmetic behavior of light-gauge flat metal, more visible with wider pans, thinner steel, and dark colors; it isn't a structural failure, but it's the kind of thing to discuss before choosing a 24-inch pan in gloss black. Closer to the coast, corrosion resistance and wind-uplift engineering join the list.",
+      ],
+      table: {
+        title: "Metal system selector",
+        columns: [
+          "System",
+          "Typical building",
+          "Fasteners",
+          "Typical gauge",
+          "Substrate",
+          "Slope capability",
+          "Maintenance note",
+          "Relative cost",
+        ],
+        rows: [
+          [
+            "Residential standing seam",
+            "Homes, porches, barndominiums",
+            "Concealed clips",
+            "24–26",
+            "Solid deck",
+            "Snap-lock commonly ~3:12+",
+            "Flashings and penetrations checked periodically",
+            "Higher initial investment",
+          ],
+          [
+            "Residential exposed fastener",
+            "Homes, shops, barns",
+            "Exposed gasketed screws",
+            "26–29",
+            "Deck or open framing",
+            "Commonly ~3:12+ per profile",
+            "Fastener washers need periodic inspection",
+            "Moderate initial investment",
+          ],
+          [
+            "Commercial standing seam",
+            "Churches, schools, offices",
+            "Concealed clips",
+            "Commonly 24",
+            "Solid deck",
+            "Varies — seamed profiles go lower",
+            "Concealed field, detailed flashings",
+            "Higher initial investment",
+          ],
+          [
+            "Structural standing seam",
+            "PEMBs, large facilities",
+            "Concealed clips at purlins",
+            "24–22",
+            "Open purlins",
+            "Certain profiles approved very low",
+            "Engineered assembly, inspected seams",
+            "Higher initial investment",
+          ],
+          [
+            "R-panel",
+            "Shops, storage, walls",
+            "Exposed gasketed screws",
+            "Commonly 26",
+            "Deck or framing per version",
+            "Profile- and sealant-dependent",
+            "Exposed washers need periodic inspection",
+            "Lower initial investment",
+          ],
+          [
+            "PBR panel",
+            "Metal buildings, warehouses",
+            "Exposed, through-fastened",
+            "26 (24/22 options)",
+            "Open purlins",
+            "Some systems approved near low slopes",
+            "Laps and fasteners on the inspection list",
+            "Lower initial investment",
+          ],
+        ],
+        note: "Representative values — gauge, slope approval, and attachment come from the selected manufacturer's tested assembly, not from a chart.",
+      },
+      links: [
+        {
+          label: "Residential metal systems",
+          href: "/residential/metal-roofing",
+        },
+        {
+          label: "Residential standing seam specs",
+          href: "/residential/metal-roofing/standing-seam",
+        },
+        {
+          label: "Economical exposed-fastener metal",
+          href: "/residential/metal-roofing/exposed-fastener",
+        },
+        {
+          label: "Commercial metal systems",
+          href: "/commercial/metal-roofing",
+        },
+        {
+          label: "Commercial standing seam specs",
+          href: "/commercial/metal-roofing/standing-seam",
+        },
+        { label: "R-panel details", href: "/commercial/metal-roofing/r-panel" },
+        {
+          label: "How PBR attaches to open purlins",
+          href: "/commercial/metal-roofing/pbr-panel",
+        },
+        {
+          label: "Structural metal, explained",
+          href: "/commercial/metal-roofing/structural-metal",
+        },
+      ],
+    },
+  ] satisfies ProseSection[],
   faqs: [
     {
       question: "Is metal roofing worth the extra cost?",
@@ -482,7 +735,8 @@ export const commercialHub = {
       icon: Droplets,
       label: "Roof Coatings",
       href: "/commercial/roof-coatings",
-      description: "Restore a sound roof for a fraction of replacement.",
+      description:
+        "Silicone, acrylic, and urethane restoration for roofs that qualify.",
     },
     {
       icon: PanelTop,
@@ -534,6 +788,130 @@ export const commercialHub = {
       },
     ],
   },
+  sections: [
+    {
+      title: "Choosing a commercial system: the honest selector",
+      paragraphs: [
+        "No single system wins every building. TPO's welded seams and reflectivity earn it the biggest share of new low-slope work; EPDM's large sheets suit big open roofs; PVC earns its premium where grease or chemicals would attack other membranes; modified bitumen brings multi-ply redundancy to high-traffic roofs; a coating can restore a roof that still qualifies; and metal spans the gap from architectural standing seam to structural panels over open purlins. The table below is how we frame the first conversation — the actual recommendation follows core samples and a moisture assessment, not a brochure.",
+      ],
+      table: {
+        title: "Commercial roof-system selector",
+        columns: [
+          "System",
+          "Seam method",
+          "Typical spec",
+          "Best fit",
+          "Primary strength",
+          "Main limitation",
+          "Relative cost",
+        ],
+        rows: [
+          [
+            "TPO",
+            "Hot-air welded",
+            "45–80 mil (60 common)",
+            "Offices, retail, schools, most low-slope",
+            "Welded seams + reflectivity",
+            "Punctures near equipment without walk pads",
+            "Moderate initial investment",
+          ],
+          [
+            "EPDM",
+            "Primer + seam tape",
+            "45–90 mil (60 common)",
+            "Large open roofs, simple geometries",
+            "Big sheets, long track record, repairable",
+            "Standard black absorbs heat; grease attacks it",
+            "Moderate initial investment",
+          ],
+          [
+            "PVC",
+            "Hot-air welded",
+            "~50–80 mil",
+            "Restaurants, kitchens, some industrial",
+            "Resistance to grease and many chemicals",
+            "Compatibility must be verified per exposure",
+            "Higher initial investment",
+          ],
+          [
+            "Modified bitumen",
+            "Multi-ply, adhered or welded",
+            "Base + cap sheet",
+            "High-traffic and service-heavy roofs",
+            "Redundant plies, tolerates foot traffic",
+            "More seams and laps to detail",
+            "Moderate initial investment",
+          ],
+          [
+            "Roof coating",
+            "Fluid-applied",
+            "Silicone, acrylic, urethane",
+            "Sound, dry roofs that qualify",
+            "Restores without tear-off",
+            "Never a fix for wet insulation or bad decks",
+            "Lower initial investment",
+          ],
+          [
+            "Standing seam metal",
+            "Concealed clips",
+            "Commonly 24 ga",
+            "Public-facing and steep-slope buildings",
+            "Concealed fasteners, long service life",
+            "Higher up-front; slope rules vary by profile",
+            "Higher initial investment",
+          ],
+          [
+            "R-panel / PBR",
+            "Exposed fasteners",
+            "Commonly 26 ga",
+            "Shops, warehouses, metal buildings",
+            "Economical, spans open purlins (PBR)",
+            "Exposed washers need periodic inspection",
+            "Lower initial investment",
+          ],
+          [
+            "Structural metal",
+            "Profile-dependent",
+            "Commonly 24–22 ga",
+            "PEMBs and no-deck buildings",
+            "Engineered span over open framing",
+            "Assembly is engineering-driven, not catalog-driven",
+            "Depends heavily on the existing assembly",
+          ],
+        ],
+        note: "Relative cost is directional only — the existing assembly, insulation, drainage, and access move every project. Specs vary by manufacturer and tested assembly.",
+      },
+      links: [
+        { label: "Compare TPO and EPDM in depth", href: "/commercial/tpo" },
+        {
+          label: "See the commercial metal lineup",
+          href: "/commercial/metal-roofing",
+        },
+        {
+          label: "Find out if your roof qualifies for a coating",
+          href: "/commercial/roof-coatings",
+        },
+      ],
+    },
+    {
+      title: "What a commercial roof decision actually involves",
+      paragraphs: [
+        "Before any system is proposed, the existing roof has to be understood: core samples establish the assembly and layer count, moisture scanning maps any wet insulation, and the deck gets identified — because a recover over a wet or failing assembly just buries the problem. Code limits on roof layers, insulation R-value, tapered drainage, cover boards, edge metal, and wind-uplift zones all get settled in the proposal stage, in writing, where a board or owner can compare options line by line.",
+        "The other half of commercial roofing is operational: staging that doesn't block your docks, phasing that keeps tenants and classrooms working, daily watertight tie-ins so an afternoon storm doesn't find an open roof, and closeout documentation — as-builts, warranty registration, and the manufacturer inspection where the selected warranty requires one. Buildings keep operating; the roof project has to fit around that, not the other way around.",
+      ],
+      links: [
+        {
+          label: "How capital replacements run",
+          href: "/commercial/roof-replacement",
+        },
+        {
+          label: "Set up planned maintenance",
+          href: "/commercial/roof-maintenance",
+        },
+        { label: "Roofing by industry", href: "/commercial/industries" },
+      ],
+    },
+  ] satisfies ProseSection[],
   faqs: [
     {
       question: "Do you handle small commercial repairs or only big projects?",

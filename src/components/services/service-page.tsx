@@ -17,13 +17,16 @@ import {
   ServiceApproach,
   ServiceAreaLinks,
   ServiceChecklist,
+  ServiceCostFactors,
   ServiceGallery,
   ServiceIntro,
   ServiceMaterials,
+  ServiceProse,
   ServiceSigns,
 } from "@/components/services/service-sections";
 import { HelpPanel } from "@/components/services/help-panel";
-import { RoofAnatomy } from "@/components/services/roof-anatomy";
+import { RoofDiagram } from "@/components/roof/roof-diagram";
+import { FlashingDiagram } from "@/components/roof/flashing-diagram";
 import { VentilationAirflow } from "@/components/services/ventilation-airflow";
 import { ServiceFaq } from "@/components/services/service-faq";
 import { CommercialCta } from "@/components/services/commercial-cta";
@@ -89,11 +92,50 @@ export function ServicePage({
       />
       <ServiceIntro intro={service.intro} />
       {service.signs && <ServiceSigns signs={service.signs} />}
+      {service.sections && <ServiceProse sections={service.sections} />}
       <ServiceApproach approach={service.approach} />
-      {service.anatomy && <RoofAnatomy />}
+      {/* The interactive hotspot diagram from /anatomy-of-a-roof — one
+          parts-of-a-roof illustration site-wide (owner directive 2026-07-30). */}
+      {service.anatomy && (
+        <Section tone="surface">
+          <SectionHeading
+            eyebrow="How a roof is built"
+            title="Every layer, and what it actually does"
+            description="Tap any numbered part to see what it is, why it matters, and the shortcuts bad roofers take. This is what we install and inspect on every job."
+          />
+          <div className="mt-10">
+            <RoofDiagram />
+          </div>
+        </Section>
+      )}
+      {service.flashingDiagram && (
+        <Section>
+          <SectionHeading
+            eyebrow="Flashing"
+            title="The metal that decides whether a roof leaks"
+            description="Most leaks start at a transition, not in the field of the roof. Tap each flashing type to see where it goes and how it fails."
+          />
+          <div className="mt-10">
+            <FlashingDiagram />
+          </div>
+        </Section>
+      )}
       {service.ventDiagram && <VentilationAirflow />}
       {service.materials && <ServiceMaterials materials={service.materials} />}
       {service.checklist && <ServiceChecklist checklist={service.checklist} />}
+      {service.costFactors && (
+        <ServiceCostFactors
+          costFactors={service.costFactors}
+          ctaLabel={
+            commercial
+              ? "Request a commercial assessment"
+              : requestCtaLabel(request)
+          }
+          ctaHref={
+            commercial ? "/commercial/request-consultation" : request.path
+          }
+        />
+      )}
       {service.gallery && <ServiceGallery gallery={service.gallery} />}
       {!commercial && <HelpPanel />}
       <ServiceFaq

@@ -53,12 +53,13 @@ export function GET() {
 - Office hours: ${hours.display}, closed weekends. ${hours.note}
 - Founded: ${foundingYear} (Hattiesburg, Mississippi — locally owned, not a franchise or storm-chasing out-of-state crew)
 - Experience: ${trust.experience} across the team
-- License: Mississippi State Board of Contractors #${license}
+- License: Mississippi State Board of Contractors #${license} — licensed for BOTH residential and commercial roofing work. Public license record: ${siteConfig.links.msbocLicense}
 - Insurance: ${trust.insured}
 - Primary category: Roofing Contractor. Also: gutters, fascia, soffit, and roof ventilation.
 
 ## Credentials
 - GAF Certified Contractor — most shingle roofs we install are GAF systems
+- Licensed by the Mississippi State Board of Contractors, #${license}, covering residential and commercial roofing (verify: ${siteConfig.links.msbocLicense})
 - ${trust.bbbRating}
 - ${trust.googleRating}
 - ${trust.googleGuaranteed}
@@ -149,6 +150,7 @@ Mississippi only, within roughly a two-hour drive of Hattiesburg.
 - [Google Business Profile](${siteConfig.links.googleBusiness})
 - [BBB](${siteConfig.links.bbbProfile})
 - [GAF contractor profile](${siteConfig.links.gafProfile})
+- [Mississippi State Board of Contractors license record](${siteConfig.links.msbocLicense})
 - [Facebook](${siteConfig.socials.facebook})
 - [Instagram](${siteConfig.socials.instagram})
 `;

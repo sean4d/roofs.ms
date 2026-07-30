@@ -40,6 +40,35 @@ export interface RelatedService {
   description: string;
 }
 
+/** Responsive data table (spec sheet, comparison, decision aid). */
+export interface ServiceTable {
+  title: string;
+  description?: string;
+  columns: string[];
+  rows: string[][];
+  /** Honest qualifier under the table (e.g. "representative values"). */
+  note?: string;
+}
+
+/**
+ * Deep-dive prose section — the page-specific technical content that
+ * differentiates each service page (2026-07 content expansion). Every
+ * section must be unique to its page: no paragraph reuse across pages.
+ */
+export interface ProseSection {
+  title: string;
+  paragraphs: string[];
+  /** Optional bullet list rendered after the paragraphs. */
+  bullets?: string[];
+  /** Optional table rendered inside this section. */
+  table?: ServiceTable;
+  /**
+   * Crawlable in-context links with DESCRIPTIVE anchors ("Compare TPO and
+   * EPDM", never "learn more"). Rendered as link chips under the section.
+   */
+  links?: { label: string; href: string }[];
+}
+
 export interface ServiceContent {
   /** URL path segment under the division (also the registry key). */
   slug: string;
@@ -70,6 +99,26 @@ export interface ServiceContent {
   intro: {
     title: string;
     paragraphs: string[];
+  };
+
+  /**
+   * Deep technical sections rendered after the intro (2026-07 expansion).
+   * This is where each page earns its indexing: system specifications,
+   * comparisons, installation facts, and decision guidance. Never pricing —
+   * dollar figures are banned site-wide on service pages (owner directive
+   * 2026-07-30); use costFactors instead.
+   */
+  sections?: ProseSection[];
+
+  /**
+   * "What affects the cost" block (owner directive 2026-07-30: explain the
+   * real pricing factors, never publish dollar amounts). Rendered with an
+   * inspection/estimate CTA. Titles should vary page to page.
+   */
+  costFactors?: {
+    title: string;
+    description?: string;
+    items: MaterialItem[];
   };
 
   /** §4.1.3 — "Signs you need this" icon list. */
@@ -112,8 +161,16 @@ export interface ServiceContent {
     photos: ServicePhoto[];
   };
 
-  /** Visual education: render the roof-system anatomy diagram. */
+  /**
+   * Visual education: render the INTERACTIVE roof-anatomy diagram — the same
+   * numbered-hotspot house built for /anatomy-of-a-roof (owner directive
+   * 2026-07-30: that diagram is the only parts-of-a-roof illustration used
+   * anywhere on the site; the old static exploded stack is retired).
+   */
   anatomy?: boolean;
+
+  /** Visual education: render the interactive flashing-types diagram. */
+  flashingDiagram?: boolean;
 
   /** Visual education: render the attic-airflow (intake/exhaust) diagram. */
   ventDiagram?: boolean;
