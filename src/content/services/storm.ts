@@ -242,7 +242,8 @@ export const insuranceClaims: ServiceContent = {
       ],
     },
     {
-      title: "What claims commonly don't cover — and how commercial claims differ",
+      title:
+        "What claims commonly don't cover — and how commercial claims differ",
       paragraphs: [
         "Not everything wrong with a roof is storm damage, and insurers are right to draw that line. Ordinary wear and aging, installation defects, and long-standing leaks that predate the storm are commonly excluded — a claim covers sudden loss from a covered cause, not deferred maintenance. That's exactly why we tell you before you file when what we find on your roof looks like age rather than impact: filing a claim that documents wear helps nobody.",
         "Commercial claims run on the same skeleton but with more moving parts: larger scopes, membrane and insulation assemblies that require core sampling to evaluate, business-interruption considerations, and policy forms that differ meaningfully from homeowner policies. Timelines on any claim — residential or commercial — depend on your policy terms, your insurer's process, and regional storm volume, so nobody can honestly promise you a date. What we control is our part: thorough documentation, a prompt proposal, and completion paperwork the day the work wraps.",
