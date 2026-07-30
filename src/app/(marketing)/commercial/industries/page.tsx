@@ -10,6 +10,8 @@ import { breadcrumbSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Breadcrumbs } from "@/components/services/breadcrumbs";
 import { CommercialCta } from "@/components/services/commercial-cta";
+import { ServiceProse } from "@/components/services/service-sections";
+import type { ProseSection } from "@/content/services/types";
 import { Section } from "@/components/shared/section";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/motion/reveal";
@@ -28,6 +30,93 @@ const breadcrumbs = [
   { name: "Home", path: "/" },
   { name: "Commercial Roofing", path: "/commercial" },
   { name: "Industries", path: "/commercial/industries" },
+];
+
+/**
+ * Hub prose (2026-07 expansion): why roof decisions differ by industry, plus
+ * the routing table. Detail lives on the six industry pages — this page's job
+ * is to get each owner to the right one.
+ */
+const industriesSections: ProseSection[] = [
+  {
+    title: "Why the building type changes the roofing answer",
+    paragraphs: [
+      "Two buildings with identical roof areas can need entirely different roofs — because the roof decision is never just about square footage. Occupancy drives scheduling: a school can concentrate work into summer, a church has to protect Sunday no matter what, and a manufacturer may not be able to stop the line at all. Operations drive the system: grease exhaust points toward PVC, heavy rooftop service traffic argues for multi-ply or walk-pad planning, and an open-purlin metal building narrows the field to structural systems engineered for it.",
+      "Money moves differently too. A school board, a church committee, an apartment owner, and a city procurement office approve projects on different calendars, with different documentation, and different tolerance for phasing. The six pages below get specific about each: the buildings involved, the systems commonly considered, the scheduling realities, and what each decision-maker needs from a roofing proposal. This table is the short version.",
+    ],
+    table: {
+      title: "Industry routing table",
+      columns: [
+        "Industry",
+        "Typical roofs on site",
+        "Main operational concern",
+        "Common failure point",
+        "Systems often considered",
+      ],
+      rows: [
+        [
+          "Schools",
+          "Low-slope wings, gyms, canopies, portables",
+          "Working around the school calendar",
+          "Aged sections from different building eras",
+          "TPO, modified bitumen, standing seam",
+        ],
+        [
+          "Churches",
+          "Steep sanctuary + low-slope halls on one campus",
+          "Protecting services, weddings, funerals",
+          "Steeple flashing, dead valleys, transitions",
+          "Shingles, standing seam, TPO, modified bitumen",
+        ],
+        [
+          "Apartments",
+          "Repeated shingle or low-slope buildings",
+          "Occupied units, parking, tenant notice",
+          "The same detail failing on every building",
+          "Architectural shingles, TPO, phased programs",
+        ],
+        [
+          "Industrial",
+          "Metal decks, open purlins, process rooftops",
+          "Production schedules and hot-work control",
+          "Chemical exposure, traffic, vibration",
+          "PVC, TPO, structural metal, coatings",
+        ],
+        [
+          "Warehouses",
+          "Very large low-slope or metal panel roofs",
+          "Inventory protection at scale",
+          "Skylights, edge zones, drainage capacity",
+          "TPO, EPDM, PBR, structural metal",
+        ],
+        [
+          "Municipal",
+          "Mixed portfolio, public-facing facilities",
+          "Procurement, continuity of public services",
+          "Deferred maintenance across budget cycles",
+          "TPO, standing seam, maintenance programs",
+        ],
+      ],
+      note: "Every recommendation still starts with a building-specific assessment — this table routes the conversation, it doesn't replace it.",
+    },
+    links: [
+      { label: "Roofing for schools", href: "/commercial/industries/schools" },
+      {
+        label: "Roofing for churches",
+        href: "/commercial/industries/churches",
+      },
+      {
+        label: "Roofing for apartments",
+        href: "/commercial/industries/apartments",
+      },
+      {
+        label: "Industrial roofing",
+        href: "/commercial/industries/industrial",
+      },
+      { label: "Warehouse roofing", href: "/commercial/industries/warehouses" },
+      { label: "Municipal roofing", href: "/commercial/industries/municipal" },
+    ],
+  },
 ];
 
 export default function IndustriesHubPage() {
@@ -122,6 +211,8 @@ export default function IndustriesHubPage() {
           })}
         </StaggerGroup>
       </Section>
+
+      <ServiceProse sections={industriesSections} />
 
       <CommercialCta />
     </>

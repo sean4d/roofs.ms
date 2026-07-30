@@ -9,7 +9,10 @@ import { ServiceHero } from "@/components/services/service-hero";
 import { HubServiceGrid } from "@/components/services/hub-service-grid";
 import { HelpPanel } from "@/components/services/help-panel";
 import { ServiceFaq } from "@/components/services/service-faq";
-import { ServiceAreaLinks } from "@/components/services/service-sections";
+import {
+  ServiceAreaLinks,
+  ServiceProse,
+} from "@/components/services/service-sections";
 import { ToolStrip } from "@/components/tools/tool-strip";
 import { Section } from "@/components/shared/section";
 import { SectionHeading } from "@/components/shared/section-heading";
@@ -78,6 +81,7 @@ export default function ResidentialHubPage() {
       </Section>
 
       <HelpPanel />
+      <ServiceProse sections={[...residentialHub.sections]} />
       <ServiceFaq
         faqs={[...residentialHub.faqs]}
         title="Residential roofing questions, answered"

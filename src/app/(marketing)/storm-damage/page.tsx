@@ -9,7 +9,10 @@ import { breadcrumbSchema, faqSchema, serviceSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Button } from "@/components/ui/button";
 import { ServiceHero } from "@/components/services/service-hero";
-import { ServiceApproach } from "@/components/services/service-sections";
+import {
+  ServiceApproach,
+  ServiceProse,
+} from "@/components/services/service-sections";
 import { ServiceFaq } from "@/components/services/service-faq";
 import { Section } from "@/components/shared/section";
 import { SectionHeading } from "@/components/shared/section-heading";
@@ -54,8 +57,8 @@ export default function StormDamagePage() {
             <span className="font-display font-bold text-white">
               Storm Center:
             </span>{" "}
-            live Mississippi weather alerts, the first-hours checklist, and
-            real damage photos — all in one place.
+            live Mississippi weather alerts, the first-hours checklist, and real
+            damage photos — all in one place.
           </p>
           <Button
             className="shrink-0 bg-white text-primary hover:bg-steel-100"
@@ -151,6 +154,7 @@ export default function StormDamagePage() {
 
       <ServiceApproach approach={stormHub.process} />
 
+      <ServiceProse sections={[...stormHub.sections]} />
       <ServiceFaq
         faqs={[...stormHub.faqs]}
         title="Storm damage questions, answered"

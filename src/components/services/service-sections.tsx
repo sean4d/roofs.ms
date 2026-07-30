@@ -2,7 +2,11 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 import { siteConfig } from "@/config/site";
-import type { ServiceContent } from "@/content/services/types";
+import type {
+  ProseSection,
+  ServiceContent,
+  ServiceTable,
+} from "@/content/services/types";
 import { Section } from "@/components/shared/section";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/motion/reveal";
@@ -25,6 +29,187 @@ export function ServiceIntro({ intro }: { intro: ServiceContent["intro"] }) {
             {paragraph}
           </p>
         ))}
+      </Reveal>
+    </Section>
+  );
+}
+
+/** Responsive data table — horizontal scroll on narrow screens, with a
+ *  visible edge cue so mobile users know there's more to the right. */
+export function ServiceDataTable({ table }: { table: ServiceTable }) {
+  return (
+    <figure className="mt-6">
+      {table.description && (
+        <p className="mb-4 max-w-3xl leading-relaxed text-slate-600">
+          {table.description}
+        </p>
+      )}
+      <div
+        className="overflow-x-auto rounded-2xl border border-border"
+        tabIndex={0}
+        role="region"
+        aria-label={table.title}
+      >
+        <table className="w-full min-w-[40rem] border-collapse text-left text-sm">
+          <caption className="sr-only">{table.title}</caption>
+          <thead>
+            <tr className="bg-secondary">
+              {table.columns.map((column) => (
+                <th
+                  key={column}
+                  scope="col"
+                  className="px-4 py-3 font-display font-semibold whitespace-nowrap text-navy-900"
+                >
+                  {column}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {table.rows.map((row, i) => (
+              <tr
+                key={row[0] ?? i}
+                className="border-t border-border bg-background"
+              >
+                {row.map((cell, j) =>
+                  j === 0 ? (
+                    <th
+                      key={j}
+                      scope="row"
+                      className="px-4 py-3 align-top font-semibold text-navy-900"
+                    >
+                      {cell}
+                    </th>
+                  ) : (
+                    <td
+                      key={j}
+                      className="px-4 py-3 align-top leading-relaxed text-slate-600"
+                    >
+                      {cell}
+                    </td>
+                  ),
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {table.note && (
+        <figcaption className="mt-3 max-w-3xl text-sm text-slate-500">
+          {table.note}
+        </figcaption>
+      )}
+    </figure>
+  );
+}
+
+/**
+ * Deep-dive technical sections (2026-07 expansion) — the page-specific
+ * prose, bullets, and tables that differentiate each service page.
+ * Alternating tones keep long pages readable.
+ */
+export function ServiceProse({ sections }: { sections: ProseSection[] }) {
+  return (
+    <>
+      {sections.map((section, index) => (
+        <Section
+          key={section.title}
+          tone={index % 2 === 0 ? "surface" : undefined}
+        >
+          <SectionHeading title={section.title} />
+          <Reveal className="mt-6 max-w-3xl space-y-5">
+            {section.paragraphs.map((paragraph) => (
+              <p key={paragraph} className="leading-relaxed text-slate-600">
+                {paragraph}
+              </p>
+            ))}
+            {section.bullets && (
+              <ul className="space-y-2.5">
+                {section.bullets.map((bullet) => (
+                  <li key={bullet} className="flex items-start gap-3">
+                    <CheckCircle2
+                      className="mt-1 size-4 shrink-0 text-steel-500"
+                      aria-hidden="true"
+                    />
+                    <span className="leading-relaxed text-slate-600">
+                      {bullet}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </Reveal>
+          {section.table && <ServiceDataTable table={section.table} />}
+          {section.links && (
+            <Reveal className="mt-7">
+              <ul className="flex flex-wrap gap-3">
+                {section.links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-4 py-2 text-sm font-semibold text-navy-900 transition-all hover:-translate-y-0.5 hover:border-steel-500"
+                    >
+                      {link.label}
+                      <ArrowRight className="size-3.5" aria-hidden="true" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          )}
+        </Section>
+      ))}
+    </>
+  );
+}
+
+/**
+ * "What affects the cost" block (owner directive 2026-07-30): explains the
+ * real proposal factors and routes to an inspection — never dollar figures.
+ */
+export function ServiceCostFactors({
+  costFactors,
+  ctaLabel,
+  ctaHref,
+}: {
+  costFactors: NonNullable<ServiceContent["costFactors"]>;
+  ctaLabel: string;
+  ctaHref: string;
+}) {
+  return (
+    <Section tone="navy">
+      <SectionHeading
+        title={costFactors.title}
+        description={costFactors.description}
+        onDark
+      />
+      <StaggerGroup
+        as="ul"
+        className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+      >
+        {costFactors.items.map((item) => (
+          <StaggerItem
+            as="li"
+            key={item.title}
+            className="rounded-2xl border border-white/15 bg-white/5 p-5"
+          >
+            <h3 className="font-display font-semibold text-white">
+              {item.title}
+            </h3>
+            <p className="mt-1.5 text-sm leading-relaxed text-steel-100">
+              {item.text}
+            </p>
+          </StaggerItem>
+        ))}
+      </StaggerGroup>
+      <Reveal className="mt-10">
+        <Link
+          href={ctaHref}
+          className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 font-semibold text-navy-900 transition hover:bg-steel-100"
+        >
+          {ctaLabel}
+          <ArrowRight className="size-4" aria-hidden="true" />
+        </Link>
       </Reveal>
     </Section>
   );

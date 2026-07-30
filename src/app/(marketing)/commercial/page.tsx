@@ -9,7 +9,10 @@ import { breadcrumbSchema, faqSchema, serviceSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/json-ld";
 import { ServiceHero } from "@/components/services/service-hero";
 import { HubServiceGrid } from "@/components/services/hub-service-grid";
-import { ServiceApproach } from "@/components/services/service-sections";
+import {
+  ServiceApproach,
+  ServiceProse,
+} from "@/components/services/service-sections";
 import { ServiceFaq } from "@/components/services/service-faq";
 import { CommercialCta } from "@/components/services/commercial-cta";
 import { Section } from "@/components/shared/section";
@@ -120,6 +123,7 @@ export default function CommercialHubPage() {
 
       <ServiceApproach approach={commercialHub.process} />
 
+      <ServiceProse sections={[...commercialHub.sections]} />
       <ServiceFaq
         faqs={[...commercialHub.faqs]}
         title="Commercial roofing questions, answered"

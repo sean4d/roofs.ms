@@ -17,9 +17,11 @@ import {
   ServiceApproach,
   ServiceAreaLinks,
   ServiceChecklist,
+  ServiceCostFactors,
   ServiceGallery,
   ServiceIntro,
   ServiceMaterials,
+  ServiceProse,
   ServiceSigns,
 } from "@/components/services/service-sections";
 import { HelpPanel } from "@/components/services/help-panel";
@@ -89,11 +91,25 @@ export function ServicePage({
       />
       <ServiceIntro intro={service.intro} />
       {service.signs && <ServiceSigns signs={service.signs} />}
+      {service.sections && <ServiceProse sections={service.sections} />}
       <ServiceApproach approach={service.approach} />
       {service.anatomy && <RoofAnatomy />}
       {service.ventDiagram && <VentilationAirflow />}
       {service.materials && <ServiceMaterials materials={service.materials} />}
       {service.checklist && <ServiceChecklist checklist={service.checklist} />}
+      {service.costFactors && (
+        <ServiceCostFactors
+          costFactors={service.costFactors}
+          ctaLabel={
+            commercial
+              ? "Request a commercial assessment"
+              : requestCtaLabel(request)
+          }
+          ctaHref={
+            commercial ? "/commercial/request-consultation" : request.path
+          }
+        />
+      )}
       {service.gallery && <ServiceGallery gallery={service.gallery} />}
       {!commercial && <HelpPanel />}
       <ServiceFaq
