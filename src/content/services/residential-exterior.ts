@@ -50,7 +50,7 @@ export const exteriorServices: ServiceContent[] = [
       {
         title: "The five families of gutter protection",
         paragraphs: [
-          "\"Leaf guard\" covers five genuinely different product families, and they don't perform alike — especially under pine straw. Here's the honest comparison we walk homeowners through before recommending anything:",
+          '"Leaf guard" covers five genuinely different product families, and they don\'t perform alike — especially under pine straw:',
         ],
         table: {
           title: "Gutter guard types compared",
@@ -66,7 +66,7 @@ export const exteriorServices: ServiceContent[] = [
           rows: [
             [
               "Perforated metal screen",
-              "Stops leaves; needles and fine debris can enter or mat on top",
+              "Stops leaves; needles can enter or mat on top",
               "Handles high flow well",
               "Periodic brush-off and flush",
               "Low profile",
@@ -75,7 +75,7 @@ export const exteriorServices: ServiceContent[] = [
             ],
             [
               "Expanded-metal screen",
-              "Stops most leaves; diamond openings still admit fine debris",
+              "Stops most leaves; openings admit fine debris",
               "Good flow capacity",
               "Brush-off; occasional lift-and-clean",
               "Low profile",
@@ -85,7 +85,7 @@ export const exteriorServices: ServiceContent[] = [
             [
               "Micro-mesh",
               "Blocks needles, shingle granules, and seed pods",
-              "Very good when kept clean; pollen film can shed water until rinsed",
+              "Very good when clean; pollen film can shed water until rinsed",
               "Surface rinse or soft-brush as needed",
               "Low profile",
               "Heavy pine straw — the usual pick here",
@@ -94,7 +94,7 @@ export const exteriorServices: ServiceContent[] = [
             [
               "Solid surface-tension cover",
               "Sheds most debris off the nose",
-              "Can overshoot in intense downpours, especially on steep roofs and below valleys",
+              "Can overshoot in intense downpours, especially on steep roofs",
               "Occasional nose cleaning",
               "Most visible from the ground",
               "Heavy leaf load on moderate pitches",
@@ -104,27 +104,27 @@ export const exteriorServices: ServiceContent[] = [
               "Foam or brush inserts",
               "Debris collects on top and works in",
               "Reduces the gutter's own capacity",
-              "Frequent removal and cleaning; degrades in UV",
+              "Frequent cleaning; degrades in UV",
               "Invisible",
               "Short-term stopgap only",
-              "Clogs, breaks down, and hides problems — we don't recommend them",
+              "Clogs, breaks down, hides problems — we don't recommend them",
             ],
           ],
-          note: "Representative behavior by family — specific products vary, which is why we spec from your trees, roof pitch, and gutters rather than a brand pitch.",
+          note: "Representative behavior by family — specific products vary, which is why we spec from your trees, pitch, and gutters.",
         },
       },
       {
         title: "Pine straw is the entrance exam",
         paragraphs: [
-          "Most guards are designed and marketed around broad leaves, and broad leaves are the easy problem — they sit on top and blow off. Pine needles are the local test: thin enough to thread through screen openings, prone to matting into a thatch that bridges right over a guard, and dropped in volume for much of the year. Add what else lands on a South Mississippi roof — shingle granules washing off in every rain, oak tassels and seed pods in spring — and fine-opening protection stops being a luxury.",
-          "Valleys concentrate the problem. A valley delivers the debris and the water of two roof planes to one short stretch of gutter, so that's where bridging starts and where overflow shows up first. On homes with big valleys over gutter runs, we pay special attention to guard choice and fastening in that zone.",
+          "Most guards are designed around broad leaves, and broad leaves are the easy problem — they sit on top and blow off. Pine needles are the local test: thin enough to thread through screen openings, prone to matting into a thatch that bridges over a guard, and dropped for much of the year. Add shingle granules washing off in every rain and seed pods in spring, and fine-opening protection stops being a luxury.",
+          "Valleys concentrate the problem: two roof planes' debris and water arrive at one short stretch of gutter, so that's where bridging starts and overflow shows first. On homes with big valleys over gutter runs, guard choice and fastening in that zone get special attention.",
         ],
       },
       {
         title: "Heavy rain: the other half of the test",
         paragraphs: [
-          "A guard that stops needles but can't swallow a Gulf downpour just relocates the overflow. Fine-mesh products shed water well when the surface is clean, but a film of pollen or granule dust can make water skate over the mesh until it's rinsed — an honest maintenance point the brochures skip. Solid surface-tension covers carry a different risk: at high rain intensity, especially on steep pitches and below valleys, water can overshoot the nose entirely.",
-          "And no guard adds capacity. If the gutter is undersized for its roof plane or the downspouts can't drain what arrives, a guard won't fix the overflow — which is why we evaluate the gutter system first and the guard second.",
+          "A guard that stops needles but can't swallow a Gulf downpour just relocates the overflow. Fine mesh sheds water well when clean, but a film of pollen or granule dust can make water skate over it until rinsed — an honest maintenance point the brochures skip. Solid covers carry a different risk: at high rain intensity, especially on steep pitches and below valleys, water can overshoot the nose entirely.",
+          "And no guard adds capacity. If the gutter is undersized or the downspouts can't drain what arrives, a guard won't fix the overflow — we evaluate the gutter system first, the guard second.",
         ],
         links: [
           {
@@ -136,15 +136,15 @@ export const exteriorServices: ServiceContent[] = [
       {
         title: "What guards don't do",
         paragraphs: [
-          "No guard eliminates maintenance entirely — anyone telling you otherwise is selling, not advising. The honest expectation with a well-chosen guard: climbing and scooping ends, and what remains is an occasional visual check and surface brush-off in heavy pine areas, plus keeping an eye on downspouts and any underground drains, which can still collect what gets past the system over the years.",
-          "One more thing worth knowing: some guard designs install by sliding under the first course of shingles. Lifting the roof edge can raise concerns with the shingle manufacturer's requirements and the roof's wind performance, so we prefer designs that fasten to the gutter and fascia without disturbing the shingles — a detail that matters more when your roof is newer or carries registered warranty coverage.",
+          "No guard eliminates maintenance entirely — anyone saying otherwise is selling, not advising. The honest expectation: climbing and scooping ends, replaced by an occasional visual check and surface brush-off in heavy pine areas, plus an eye on downspouts and underground drains, which can still collect what slips past over the years.",
+          "Also worth knowing: some guard designs install by sliding under the first course of shingles. Lifting the roof edge can raise concerns with the shingle manufacturer's requirements and wind performance, so we prefer designs that fasten to the gutter and fascia without disturbing the shingles — especially on newer roofs with registered warranty coverage.",
         ],
       },
       {
         title: "Healthy gutters first — always",
         paragraphs: [
-          "A guard is a lid, and a lid on a failing system locks the failure in. We never install guards over gutters that are back-pitched, rusted through, or pulling loose, and never over rotten fascia — the fix starts below, or the guard money is wasted. Gutter size and condition also drive which guards fit: profiles differ between 5-inch and 6-inch K-style, and a guard has to match the gutter it protects.",
-          "That's the advantage of getting guards from a roofing company rather than a guard-only franchise: we check the shingle edge, drip edge, fascia, and gutters as one system, fix what's actually wrong, and only then close the top.",
+          "A guard is a lid, and a lid on a failing system locks the failure in. We never install guards over gutters that are back-pitched, rusted through, or pulling loose, and never over rotten fascia — the fix starts below, or the guard money is wasted. Size matters too: a guard has to match the profile of the gutter it protects.",
+          "That's the advantage of a roofing company over a guard-only franchise: we check shingle edge, drip edge, fascia, and gutters as one system, fix what's actually wrong, and only then close the top.",
         ],
         links: [
           {
@@ -250,17 +250,17 @@ export const exteriorServices: ServiceContent[] = [
       {
         question: "Which gutter guard type is best?",
         answer:
-          "There's no universal winner — the right answer depends on your trees, roof pitch, gutter size, and budget. Under heavy pine straw, fine micro-mesh usually earns the recommendation; under mostly oak leaves, a quality screen can do the job for less. We spec from what your roof actually sheds, not from a single product line.",
+          "There's no universal winner — it depends on your trees, roof pitch, gutter size, and budget. Under heavy pine straw, fine micro-mesh usually earns the recommendation; under mostly oak leaves, a quality screen can do the job for less. We spec from what your roof actually sheds.",
       },
       {
         question: "Will a guard affect my shingle warranty?",
         answer:
-          "It can, depending on the design. Guards that slide under the first shingle course lift the roof edge, which can raise concerns with the shingle manufacturer's installation requirements and wind performance. We favor designs that mount to the gutter and fascia without disturbing the shingles, especially on newer roofs with registered coverage.",
+          "It can, depending on the design. Guards that slide under the first shingle course lift the roof edge, which can raise concerns with the manufacturer's installation requirements and wind performance. We favor designs that mount to the gutter and fascia without touching the shingles.",
       },
       {
         question: "Can leaf guards handle our downpours?",
         answer:
-          "Good ones, correctly matched to the roof, yes — but rain intensity is exactly where guard families differ. Solid covers can overshoot in intense rain on steep pitches, and mesh sheds best when its surface is clean. The gutter and downspouts underneath still have to be sized for the water; a guard never adds capacity.",
+          "Good ones, correctly matched to the roof, yes — but rain intensity is where guard families differ. Solid covers can overshoot on steep pitches, and mesh sheds best when clean. The gutter and downspouts underneath still have to be sized for the water; a guard never adds capacity.",
       },
     ],
     related: [
@@ -310,22 +310,22 @@ export const exteriorServices: ServiceContent[] = [
       {
         title: "The anatomy of a roof edge",
         paragraphs: [
-          "A few terms make every fascia conversation clearer. The fascia is the finished vertical board you see at the roof edge — the one gutters hang on. Behind it there's often a subfascia: a rougher structural board nailed across the cut ends of the rafters (the rafter tails) that carries the load. The soffit is the horizontal surface closing the underside of the overhang, and it comes vented — feeding the attic's intake air — or solid. Above it all, the roof decking runs out to the edge, where a strip of metal directs water off the shingles: drip edge in the standard L-profile, or a gutter apron with a longer leg that reaches down over the gutter's back.",
-          "These parts fail together because they share the same water. When the edge metal is missing or short, or the gutter overflows, the fascia takes it first, then the subfascia and rafter tails behind it, then the last course of decking. That's why a fascia quote from us starts with probing what's behind the visible board — replacing the face while the tails rot behind it fixes the paint, not the problem.",
+          "A few terms make every fascia conversation clearer. The fascia is the finished vertical board at the roof edge — the one gutters hang on. Behind it there's often a subfascia, a rougher structural board nailed across the rafter tails (the cut ends of the rafters). The soffit closes the underside of the overhang, vented or solid. And at the top, edge metal directs water off the shingles: L-profile drip edge, or a gutter apron whose longer leg reaches down over the gutter's back.",
+          "These parts fail together because they share the same water: when edge metal is missing or the gutter overflows, the fascia takes it first, then the subfascia and rafter tails, then the last course of decking. That's why our quotes start with probing behind the visible board — replacing the face while the tails rot behind it fixes the paint, not the problem.",
         ],
       },
       {
         title: "How fascia actually rots",
         paragraphs: [
-          "Fascia rot almost always has an upstream cause, and finding it is the difference between a repair and a repeat visit. The patterns we see most:",
+          "Fascia rot almost always has an upstream cause, and finding it is the difference between a repair and a repeat visit:",
         ],
         bullets: [
-          "Water running behind the gutter — missing, short, or badly lapped drip edge lets runoff track down the back of the gutter and soak the board day after day",
-          "Chronic overflow — clogged gutters or undersized downspouts pour water over the edge and across the fascia every storm",
-          "Back-pitched or sagging gutters — standing water in the run keeps the wood behind it damp between rains",
-          "Paint failure — once the coating opens, bare wood wicks moisture and the rot cycle starts",
-          "Animal and insect damage — squirrels, woodpeckers, and carpenter bees open holes that let water into sound wood",
-          "Moisture sealed behind old aluminum wrap — capping installed over damp or unflashed wood traps water against the board and hides the rot until the gutter pulls loose",
+          "Water running behind the gutter — missing or short drip edge lets runoff track down the gutter's back and soak the board",
+          "Chronic overflow — clogged gutters or undersized downspouts wash the fascia every storm",
+          "Back-pitched gutters — standing water keeps the wood behind them damp between rains",
+          "Paint failure — once the coating opens, bare wood wicks moisture",
+          "Animal and insect damage — squirrels, woodpeckers, and carpenter bees open water paths into sound wood",
+          "Moisture sealed behind old aluminum wrap — capping over damp wood traps water and hides the rot until a gutter pulls loose",
         ],
         links: [
           {
@@ -337,15 +337,15 @@ export const exteriorServices: ServiceContent[] = [
       {
         title: "Repair, replace, or wrap — and the wrap trap",
         paragraphs: [
-          "Localized soft spots can sometimes be cut out and patched with new wood, but fascia is long and continuous, and once rot shows in several places along a run, replacing the full board is usually the cleaner, longer-lasting call. We check the subfascia and rafter tails while the board is off — if they're soft, they get sistered or replaced too, because new fascia screwed to rotten framing won't hold a gutter for long.",
-          "Aluminum wrap deserves its own honest paragraph. Capping new or sound fascia in color-matched aluminum is a genuinely good upgrade: the repaint cycle ends and the edge sheds water. But wrapping over rotten wood is not a repair — it's a cover-up that traps moisture, hides the progression, and usually surfaces later as a sagging gutter or a hole a squirrel found first. If a crew offers to wrap what they haven't probed, get a second opinion. We wrap only over wood we've verified or replaced, with the drip edge relationship corrected above it.",
+          "Localized soft spots can sometimes be cut out and patched, but once rot shows in several places along a run, replacing the full board is the cleaner, longer-lasting call. We check the subfascia and rafter tails while the board is off — if they're soft, they get sistered or replaced too, because new fascia screwed to rotten framing won't hold a gutter for long.",
+          "Aluminum wrap deserves an honest paragraph. Capping sound fascia in color-matched aluminum is a genuinely good upgrade — the repaint cycle ends and the edge sheds water. But wrapping rotten wood is not a repair; it's a cover-up that traps moisture and surfaces later as a sagging gutter or a hole a squirrel found first. We wrap only over wood we've verified or replaced, with the drip edge corrected above it — if a crew offers to wrap what they haven't probed, get a second opinion.",
         ],
       },
       {
         title: "What fascia work touches — and what it can't avoid",
         paragraphs: [
-          "Fascia doesn't come off in isolation. Gutters attached to the board have to come down and go back up, which is the natural moment to correct their pitch and replace tired hangers — re-hanging on fresh wood is part of every fascia job we do. At the top edge, the drip edge laps over the fascia from under the shingles, so replacing a run cleanly can mean lifting the first shingle course or replacing edge metal; done carelessly, that detail is how a fascia job creates a roof leak. If the last course of decking turns out soft, we'll show you photos before touching anything beyond the quote.",
-          "Where the job extends into the soffit, remember that the overhang is the intake side of your attic's ventilation. Replacing soffit panels changes how much air the attic breathes — for better or worse — so we keep vented area at or above what the attic needs rather than accidentally sealing it shut behind fresh trim.",
+          "Fascia doesn't come off in isolation. Gutters have to come down and go back up — the natural moment to correct their pitch and replace tired hangers, which is part of every fascia job we do. At the top edge, the drip edge laps over the fascia from under the shingles, so a clean replacement can mean lifting the first shingle course or renewing edge metal; done carelessly, that detail is how a fascia job creates a roof leak. If the last course of decking turns out soft, you'll see photos before we touch anything beyond the quote.",
+          "Where the job extends into the soffit, remember the overhang is the intake side of your attic's ventilation. Replacing soffit panels changes how much air the attic breathes, so we keep vented area at or above what the attic needs rather than sealing it shut behind fresh trim.",
         ],
         links: [
           {
@@ -362,11 +362,11 @@ export const exteriorServices: ServiceContent[] = [
       items: [
         {
           title: "Length affected",
-          text: "A single soft section behind one gutter bracket is a different job than full runs on multiple elevations.",
+          text: "One soft section behind a gutter bracket is a different job than full runs on multiple elevations.",
         },
         {
           title: "How deep the rot goes",
-          text: "Face board only, or subfascia, rafter tails, and edge decking behind it — probing tells us before the quote does.",
+          text: "Face board only, or subfascia, rafter tails, and edge decking behind it.",
         },
         {
           title: "Stories and access",
@@ -374,15 +374,15 @@ export const exteriorServices: ServiceContent[] = [
         },
         {
           title: "Gutter removal and re-hang",
-          text: "Gutters come down for the work and go back up on corrected pitch with sound fasteners.",
+          text: "Gutters come down for the work and go back up on corrected pitch.",
         },
         {
           title: "Material choice",
-          text: "Primed and painted wood, rot-resistant composite or PVC trim, and optional aluminum capping each price differently.",
+          text: "Painted wood, rot-resistant composite or PVC trim, and optional aluminum capping each price differently.",
         },
         {
           title: "Edge metal correction",
-          text: "Fixing the missing or short drip edge that caused the rot — otherwise the new board inherits the old problem.",
+          text: "Fixing the drip edge that caused the rot — otherwise the new board inherits the old problem.",
         },
         {
           title: "Finish work",
@@ -455,17 +455,17 @@ export const exteriorServices: ServiceContent[] = [
       {
         question: "Why did my fascia rot right behind the gutters?",
         answer:
-          "Because that's where the water runs when the edge details fail. Missing or short drip edge lets runoff track down the back of the gutter and soak the board, and a back-pitched gutter keeps standing water against the wood between rains. The gutter face hides it, so the rot is usually well established by the time paint bubbles or a hanger pulls loose.",
+          "Because that's where the water runs when edge details fail: missing or short drip edge lets runoff track down the gutter's back and soak the board, and a back-pitched gutter keeps the wood damp between rains. The gutter face hides it, so the rot is usually well established by the time paint bubbles or a hanger pulls loose.",
       },
       {
         question: "Can you just wrap the existing fascia in aluminum?",
         answer:
-          "Only if the wood underneath is sound and dry — we probe before we wrap. Capping over rotten or damp fascia traps moisture, hides the damage, and fails later as sagging gutters or animal entry. If a run is soft, we replace it first, then wrap it if you want the repaint cycle gone.",
+          "Only if the wood underneath is sound and dry — we probe before we wrap. Capping over rotten or damp fascia traps moisture and hides the damage. If a run is soft, we replace it first, then wrap it if you want the repaint cycle gone.",
       },
       {
         question: "Will fascia work disturb my roof or gutters?",
         answer:
-          "The gutters come down and go back up — that's routine, and re-hanging them on corrected pitch is part of the job. At the roof edge, the drip edge overlaps the fascia from under the shingles, so a clean replacement can involve lifting the first shingle course or renewing the edge metal. Done properly, your roof is undisturbed where it counts.",
+          "The gutters come down and go back up on corrected pitch — that's routine and part of the job. At the roof edge, a clean replacement can involve lifting the first shingle course or renewing the edge metal that laps over the fascia. Done properly, your roof is undisturbed where it counts.",
       },
     ],
     related: [
