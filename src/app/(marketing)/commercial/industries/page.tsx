@@ -117,6 +117,35 @@ const industriesSections: ProseSection[] = [
       { label: "Municipal roofing", href: "/commercial/industries/municipal" },
     ],
   },
+  {
+    title: "What every industry has in common",
+    paragraphs: [
+      "However different these buildings are, the sequence we follow doesn't change. We establish what's actually on the roof before recommending anything — core samples to identify the assembly and layer count, moisture scanning to find wet insulation, and a deck check, because a recover installed over a saturated assembly only hides the problem until it gets expensive. Then the proposal gets written in the language the decision-maker actually uses: line-itemized for an owner, spec-graded for a bid table, phased for a board that funds work across budget cycles.",
+      "The other constant is that the building keeps operating. Nobody closes a school, empties a warehouse, or cancels a Sunday service for a roof, so staging, access routes, noise windows, and daily watertight tie-ins get planned with your people before a crew shows up. And when the work is done, the closeout paperwork — as-builts, warranty registration, photo documentation, and the manufacturer inspection if the selected warranty requires one — goes into your records, not just ours.",
+    ],
+    bullets: [
+      "Assessment first: cores, moisture mapping, and deck identification before any system is named.",
+      "Written scope that survives review — by an owner, a committee, a board, or a procurement office.",
+      "Recover versus tear-off decided by evidence and code, not by whichever is cheaper to sell.",
+      "Scheduling built around your operating calendar, with daily dry-in so weather can't punish an open roof.",
+      "Documented closeout: as-builts, warranty registration, and photo records you keep.",
+      "Ongoing inspections available afterward, because the cheapest roof problem is the one caught early.",
+    ],
+    links: [
+      {
+        label: "How commercial replacements run",
+        href: "/commercial/roof-replacement",
+      },
+      {
+        label: "Set up planned maintenance",
+        href: "/commercial/roof-maintenance",
+      },
+      {
+        label: "Request a commercial roof assessment",
+        href: "/commercial/request-consultation",
+      },
+    ],
+  },
 ];
 
 export default function IndustriesHubPage() {

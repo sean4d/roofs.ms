@@ -91,3 +91,66 @@ self-canonical ✓, in sitemap ✓, FAQPage schema where FAQs render ✓.
 - Content clusters: A residential (7 pages), B commercial membranes+ops (8),
   C metal (7), D storm+industries (7), hubs (5, incl. this file's author).
 - Deployment/verification status: recorded in the final report at merge.
+
+## Final measured results (rendered `<main>`, local production build 2026-07-30)
+
+Counts include the shared service-area block, help panel, tool strip, and CTA
+band, so they run higher than page-specific body copy. "Cost factors" replaces
+the pricing column per the owner directive — **no page publishes a dollar
+figure**; the only `$` on any service page is the allowed "$0 down financing
+through GoodLeap" claim.
+
+| Route | Words before | Words after | Tables | FAQ schema | Internal links | Dollar pricing | Cost factors + estimate CTA |
+|---|---|---|---|---|---|---|---|
+| `/metal-roofing` | 536 | 961 | 1 | yes | 11 | none | yes |
+| `/storm-damage` | 605 | 1251 | 0 | yes | 12 | none | yes |
+| `/storm-damage/insurance-claims` | 1094 | 2554 | 1 | yes | 48 | none | yes |
+| `/residential` | 648 | 1061 | 1 | yes | 49 | none | yes |
+| `/residential/asphalt-shingle-roofing` | 1287 | 2569 | 1 | yes | 47 | none | yes |
+| `/residential/metal-roofing` | 1112 | 1956 | 1 | yes | 45 | none | yes |
+| `/residential/metal-roofing/standing-seam` | 928 | 1850 | 1 | yes | 47 | none | yes |
+| `/residential/metal-roofing/exposed-fastener` | 961 | 1926 | 1 | yes | 47 | none | yes |
+| `/residential/roof-replacement` | 1211 | 2095 | 1 | yes | 47 | none | yes |
+| `/residential/roof-repair` | 1018 | 1937 | 1 | yes | 47 | none | yes |
+| `/residential/gutters` | 1026 | 1893 | 1 | yes | 44 | none | yes |
+| `/residential/leaf-guard` | 761 | 1733 | 1 | yes | 44 | none | yes |
+| `/residential/fascia` | 727 | 1655 | 0 | yes | 45 | none | yes |
+| `/residential/ventilation` | 1092 | 2136 | 1 | yes | 47 | none | yes |
+| `/commercial` | 463 | 1000 | 1 | yes | 18 | none | yes |
+| `/commercial/tpo` | 699 | 1992 | 1 | yes | 49 | none | yes |
+| `/commercial/epdm` | 682 | 1827 | 1 | yes | 49 | none | yes |
+| `/commercial/pvc` | 665 | 1691 | 1 | yes | 47 | none | yes |
+| `/commercial/modified-bitumen` | 640 | 1690 | 1 | yes | 47 | none | yes |
+| `/commercial/roof-coatings` | 738 | 1826 | 1 | yes | 49 | none | yes |
+| `/commercial/metal-roofing` | 695 | 1417 | 1 | yes | 48 | none | yes |
+| `/commercial/metal-roofing/standing-seam` | 539 | 1504 | 1 | yes | 48 | none | yes |
+| `/commercial/metal-roofing/r-panel` | 551 | 1490 | 1 | yes | 48 | none | yes |
+| `/commercial/metal-roofing/pbr-panel` | 570 | 1564 | 1 | yes | 48 | none | yes |
+| `/commercial/metal-roofing/structural-metal` | 551 | 1544 | 2 | yes | 47 | none | yes |
+| `/commercial/roof-repair` | 673 | 1808 | 1 | yes | 51 | none | yes |
+| `/commercial/roof-replacement` | 712 | 1880 | 1 | yes | 48 | none | yes |
+| `/commercial/roof-maintenance` | 680 | 1719 | 1 | yes | 46 | none | yes |
+| `/commercial/industries` | 211 | 821 | 1 | hub (no FAQ block) | 9 | none | yes |
+| `/commercial/industries/schools` | 649 | 1907 | 1 | yes | 43 | none | yes |
+| `/commercial/industries/churches` | 642 | 1826 | 1 | yes | 43 | none | yes |
+| `/commercial/industries/apartments` | 621 | 1825 | 1 | yes | 43 | none | yes |
+| `/commercial/industries/industrial` | 596 | 1705 | 1 | yes | 43 | none | yes |
+| `/commercial/industries/warehouses` | 623 | 1851 | 1 | yes | 44 | none | yes |
+| `/commercial/industries/municipal` | 592 | 1813 | 1 | yes | 42 | none | yes |
+
+### Duplication review (rendered text, not source)
+
+Method: fetched all 35 rendered pages, stripped `<main>`, removed the 17
+sentences appearing on 5+ pages (shared template: global CTA, service-area
+list, help panel, tool strip), then compared every one of the 595 page pairs.
+
+- **3 of 595 pairs share any sentence at all**, and all three are shared
+  *components*, not body copy: the interactive diagram's own hotspot labels
+  (shingles vs replacement), the tool-strip card text (storm pages), and one
+  related-services card (r-panel vs structural-metal).
+- **Zero shared body sentences** between the four commercial metal children —
+  previously 24–30% shared, which is what Google rejected them for. They now
+  carry 50–58 unique body sentences each.
+- Titles: 35/35 unique. Meta descriptions: 35/35 unique. One H1 per page,
+  self-referencing canonical on the apex domain, all indexable, no page
+  canonicalized to a parent.
