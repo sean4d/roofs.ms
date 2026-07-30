@@ -142,6 +142,14 @@ const nextConfig: NextConfig = {
         destination: "/residential/gutters",
         permanent: true,
       },
+      {
+        // Wix's default homepage path. Search Console flagged it as a hard 404
+        // (crawled 2026-07-24 on the legacy www host) — the last of the three
+        // 404s whose validation kept failing.
+        source: "/home",
+        destination: "/",
+        permanent: true,
+      },
       { source: "/areas", destination: "/service-areas", permanent: true },
       { source: "/services", destination: "/residential", permanent: true },
       { source: "/christmas-lights", destination: "/", permanent: true },
