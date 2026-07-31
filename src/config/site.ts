@@ -89,17 +89,16 @@ export const siteConfig = {
   partners: {
     /**
      * Exterior-cleaning subcontractor for roof washing (owner-confirmed
-     * 2026-07-30). Performs residential and commercial roof-washing work
-     * under our contract.
+     * 2026-07-30; URL owner-supplied 2026-07-31).
      *
-     * [NEEDS: official website URL] — until the owner supplies it, `url`
-     * stays null and the partner is credited as plain text rather than a
-     * link (integrity rule: never invent a URL). Set it here and the
-     * credit becomes a link everywhere it appears, with no other change.
+     * PLACEMENT RULE (owner directive 2026-07-31): this partner is credited
+     * in the roof-washing BLOG POST ONLY. Service pages are for services,
+     * FAQs, and knowledge — they do not name or promote this company. Do
+     * not reintroduce a "who does the work" section on any service page.
      */
     exteriorCleaning: {
       name: "South Mississippi Power Washing",
-      url: null as string | null,
+      url: "https://southmspowerwashing.com",
     },
   },
 

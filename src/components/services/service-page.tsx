@@ -29,7 +29,6 @@ import { RoofDiagram } from "@/components/roof/roof-diagram";
 import { FlashingDiagram } from "@/components/roof/flashing-diagram";
 import { VentilationAirflow } from "@/components/services/ventilation-airflow";
 import { ServiceFaq } from "@/components/services/service-faq";
-import { SubcontractorCredit } from "@/components/services/subcontractor-credit";
 import { CommercialCta } from "@/components/services/commercial-cta";
 import { FinalCta } from "@/components/home/final-cta";
 
@@ -137,7 +136,6 @@ export function ServicePage({
           }
         />
       )}
-      {service.subcontractorCredit && <SubcontractorCredit />}
       {service.gallery && <ServiceGallery gallery={service.gallery} />}
       {!commercial && <HelpPanel />}
       <ServiceFaq
