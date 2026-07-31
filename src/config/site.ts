@@ -81,6 +81,29 @@ export const siteConfig = {
       "https://app.roofr.com/instant-estimator/70b6fe06-8fb3-43ee-83d5-c27f43145413/SoutheastRoofing",
   },
   /**
+   * Trade partners who perform work under Southeast Roofing as
+   * subcontractors. The customer always contracts, schedules, and
+   * communicates with Southeast Roofing; we stay responsible for the
+   * customer relationship, the roof evaluation, coordination, and scope.
+   */
+  partners: {
+    /**
+     * Exterior-cleaning subcontractor for roof washing (owner-confirmed
+     * 2026-07-30). Performs residential and commercial roof-washing work
+     * under our contract.
+     *
+     * [NEEDS: official website URL] — until the owner supplies it, `url`
+     * stays null and the partner is credited as plain text rather than a
+     * link (integrity rule: never invent a URL). Set it here and the
+     * credit becomes a link everywhere it appears, with no other change.
+     */
+    exteriorCleaning: {
+      name: "South Mississippi Power Washing",
+      url: null as string | null,
+    },
+  },
+
+  /**
    * Social profiles (owner-supplied 2026-07-04) — shown in the header top
    * bar and included in schema sameAs. Nextdoor URL stripped of share
    * tracking params.

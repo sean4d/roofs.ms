@@ -20,6 +20,84 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "roof-washing-now-offered-south-mississippi",
+    title:
+      "We now offer roof washing — and we\u2019re doing it the roofer\u2019s way",
+    metaTitle: "Roof Washing Now Offered | Southeast Roofing Blog",
+    metaDescription:
+      "Southeast Roofing now offers residential and commercial roof washing across South Mississippi, performed by our exterior-cleaning subcontractor and evaluated by roofers first.",
+    excerpt:
+      "Black streaks aren\u2019t dirt \u2014 they\u2019re alive, and they feed on your shingles. Here\u2019s our new roof-washing service, who performs it, and why the roof gets evaluated before anything touches it.",
+    date: "2026-07-30",
+    readMinutes: 4,
+    body: [
+      {
+        type: "p",
+        text: "Southeast Roofing now offers roof washing for both homes and commercial buildings across South Mississippi. It is a service customers have asked us about for a long time, and we have held off until we could offer it the way a roofing company should \u2014 with the roof evaluated before anything touches it.",
+      },
+      { type: "h2", text: "Those black streaks are alive" },
+      {
+        type: "p",
+        text: "The dark streaks running down roofs across the Pine Belt and the Coast are not dirt, and they are not simply age. They are algae, and our climate is close to ideal for them: heat, humidity, shade, and a long growing season. That is why the shaded slope of a roof often looks a decade older than the sunny side of the same house.",
+      },
+      {
+        type: "p",
+        text: "It matters beyond appearance. The organism feeds on filler material in asphalt shingles, holds moisture against the roof surface, and darkens the roof so it absorbs more heat. Moss and lichen take it further \u2014 moss holds water at the shingle edges like a sponge, and lichen roots into the granule surface, which is why removing it carelessly does more harm than leaving it alone.",
+      },
+      { type: "h2", text: "Why we would not offer this before" },
+      {
+        type: "p",
+        text: "The honest reason is that roof washing done wrong destroys roofs. Asphalt shingles are protected by a layer of ceramic-coated granules \u2014 that surface is what blocks ultraviolet light and carries the shingle\u2019s weather performance. Drive water at it under pressure and you strip granules, force water backward under the courses, and take years off a roof that was otherwise fine. Shingle manufacturers direct owners away from high-pressure washing for exactly this reason.",
+      },
+      {
+        type: "p",
+        text: "We have inspected the aftermath more than once: bare patches on the slopes that were cleaned hardest, granules collected in the gutters, and an owner who paid to age their own roof. So we were not willing to put our name on roof washing until the evaluation came first.",
+      },
+      {
+        type: "list",
+        title: "What we establish before any wash is scheduled",
+        items: [
+          "What the roof covering actually is, and how old it is",
+          "Granule condition \u2014 whether the roof can afford to be cleaned at all",
+          "Whether the growth is surface algae, thick moss, or rooted lichen",
+          "The condition of flashings, pipe boots, and penetrations",
+          "Slope, height, access, and what sits below the work area",
+          "Gutter and drainage condition, since everything rinsed off ends up there",
+        ],
+      },
+      { type: "h2", text: "Who performs the work" },
+      {
+        type: "p",
+        text: "The cleaning itself is performed by South Mississippi Power Washing, our exterior-cleaning subcontractor. They bring the exterior-cleaning experience; we bring the roofing judgement about what a given roof can take. It is the same way good contractors handle any specialty trade.",
+      },
+      {
+        type: "p",
+        text: "For you, the arrangement is simple: you contract with Southeast Roofing, you schedule through Southeast Roofing, and you call Southeast Roofing if anything needs attention. We evaluate the roof, set the scope, coordinate the crew, and stay responsible for the customer relationship from the first call through the walkthrough. Nobody hands you off to a second company.",
+      },
+      { type: "h2", text: "When washing is the wrong answer" },
+      {
+        type: "p",
+        text: "Washing does not add life to a roof that is finished. If the shingles are brittle or shedding granules widely, cleaning buys appearance and very little else, and that money is usually better held toward the replacement. We would rather say so than take the job \u2014 which is the whole advantage of having a roofer make the call instead of a cleaning vendor.",
+      },
+      {
+        type: "p",
+        text: "Where a wash genuinely earns its keep is the roof with real service life left that simply looks older than it is: staining on the shaded slopes, moss starting in the valleys, sound shingles underneath. That roof is worth cleaning \u2014 and worth keeping clean, because the conditions that grew the algae the first time are still there afterward.",
+      },
+      { type: "h2", text: "Commercial properties too" },
+      {
+        type: "p",
+        text: "Commercial roof washing runs through the same arrangement, with one extra wrinkle: a single property often carries several roof surfaces \u2014 membrane on the main building, metal on canopies, shingles on an office wing \u2014 and they do not respond to cleaning the same way. Each roof area gets its own evaluation, and the schedule gets planned around how the building actually operates.",
+      },
+      {
+        type: "callout",
+        title: "Wondering whether your roof is a candidate?",
+        text: "The evaluation is a roofing inspection, and you get an honest answer either way \u2014 including when the answer is that washing is not worth your money.",
+        href: "/residential/roof-washing",
+        linkLabel: "See how roof washing works",
+      },
+    ],
+  },
+  {
     slug: "new-website-real-photos-real-proposals",
     title:
       "The new southeastroofing.llc: real photos, real pricing, nothing to hide",
@@ -85,7 +163,7 @@ export const blogPosts: BlogPost[] = [
           "Walk the perimeter and look up. Lifted or missing shingles, sagging gutter runs, exposed nail heads along the ridge. A phone camera zoom works fine.",
           "Check the gutters. Overflowing gutters push water under the roof edge exactly where wind wants to start peeling.",
           "Trim limbs over the roofline. In the Pine Belt, trees do as much roof damage as wind — and a limb you can reach in July is a claim you avoid in September.",
-          "Take dated photos of your roof and each side of the house. This is the single highest-value five minutes on the list. Dated \"before\" photos make an after-storm claim dramatically cleaner.",
+          'Take dated photos of your roof and each side of the house. This is the single highest-value five minutes on the list. Dated "before" photos make an after-storm claim dramatically cleaner.',
         ],
       },
       { type: "h2", text: "In the attic, after the next hard rain" },

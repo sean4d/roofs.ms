@@ -4,13 +4,17 @@ import {
   residentialMetalChildren,
   residentialMetalHub,
 } from "@/content/services/residential-metal";
-import { commercialServices } from "@/content/services/commercial";
+import { commercialServices as commercialCore } from "@/content/services/commercial";
 import {
   commercialMetalChildren,
   commercialMetalHub,
 } from "@/content/services/commercial-metal";
 import { industries } from "@/content/services/industries";
 import { emergencyRoofing, insuranceClaims } from "@/content/services/storm";
+import {
+  commercialRoofWashing,
+  residentialRoofWashing,
+} from "@/content/services/roof-washing";
 import type { ServiceContent } from "@/content/services/types";
 
 /**
@@ -23,6 +27,13 @@ import type { ServiceContent } from "@/content/services/types";
 export const residentialServices: ServiceContent[] = [
   ...residentialCore,
   ...exteriorServices,
+  residentialRoofWashing,
+];
+
+/** Commercial systems + roof washing, all under /commercial/[service]. */
+export const commercialServices: ServiceContent[] = [
+  ...commercialCore,
+  commercialRoofWashing,
 ];
 
 export const allServices: ServiceContent[] = [
@@ -57,10 +68,10 @@ export {
   residentialMetalChildren,
   residentialMetalHub,
 };
-export {
-  commercialServices,
-  getCommercialService,
-} from "@/content/services/commercial";
+/** Commercial services rendered by /commercial/[service]. */
+export function getCommercialService(slug: string): ServiceContent | undefined {
+  return commercialServices.find((service) => service.slug === slug);
+}
 export {
   commercialMetalChildren,
   commercialMetalHub,

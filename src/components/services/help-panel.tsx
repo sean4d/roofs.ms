@@ -29,7 +29,9 @@ const panels = [
   {
     icon: Medal,
     title: "Lifetime warranty",
-    text: "Our roofs are backed by lifetime warranty coverage. Ask what applies to your roof at your free inspection.",
+    // Hedged per the warranty rule: manufacturer limited-lifetime options on
+    // qualifying systems — never a blanket Southeast Roofing guarantee.
+    text: "Manufacturer limited-lifetime warranty options are available on qualifying roofing systems. Ask what applies to your roof at your free inspection.",
     href: "/free-inspection",
     cta: "Start with a free inspection",
   },
