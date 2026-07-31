@@ -26,9 +26,9 @@ export const blogPosts: BlogPost[] = [
       "We now offer roof washing — and we\u2019re doing it the roofer\u2019s way",
     metaTitle: "Roof Washing Now Offered | Southeast Roofing Blog",
     metaDescription:
-      "Southeast Roofing now offers residential and commercial roof washing across South Mississippi, performed by our exterior-cleaning subcontractor and evaluated by roofers first.",
+      "Southeast Roofing now offers residential and commercial roof washing across South Mississippi \u2014 with an exterior-cleaning partner alongside us, and the roof evaluated by roofers first.",
     excerpt:
-      "Black streaks aren\u2019t dirt \u2014 they\u2019re alive, and they feed on your shingles. Here\u2019s our new roof-washing service, who performs it, and why the roof gets evaluated before anything touches it.",
+      "Black streaks aren\u2019t dirt \u2014 they\u2019re alive, and they feed on your shingles. Here\u2019s our new roof-washing service, how it works, and why the roof gets evaluated before anything touches it.",
     date: "2026-07-30",
     readMinutes: 4,
     body: [
@@ -66,12 +66,14 @@ export const blogPosts: BlogPost[] = [
           "Gutter and drainage condition, since everything rinsed off ends up there",
         ],
       },
-      { type: "h2", text: "Who performs the work" },
+      { type: "h2", text: "A partnership, not a handoff" },
       {
         type: "p",
-        text: "The cleaning itself is performed by South Mississippi Power Washing, our exterior-cleaning subcontractor. They bring the exterior-cleaning experience; we bring the roofing judgement about what a given roof can take. It is the same way good contractors handle any specialty trade.",
         // Owner directive 2026-07-31: this is the ONE place on the site where
-        // the subcontractor is named and linked. Service pages stay clean.
+        // our exterior-cleaning partner is named and linked — service pages
+        // stay clean. Owner directive (same day): keep the customer-facing
+        // wording in partnership terms; no "contract" or "subcontract".
+        text: "We have teamed up with South Mississippi Power Washing to bring this service to our customers. They bring the exterior-cleaning experience; we bring the roofing judgement about what a given roof can take. Neither half is much good without the other, which is exactly why we waited to find the right people rather than guess at it ourselves.",
         link: {
           text: "South Mississippi Power Washing",
           href: siteConfig.partners.exteriorCleaning.url,
@@ -80,12 +82,12 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: "p",
-        text: "For you, the arrangement is simple: you contract with Southeast Roofing, you schedule through Southeast Roofing, and you call Southeast Roofing if anything needs attention. We evaluate the roof, set the scope, coordinate the crew, and stay responsible for the customer relationship from the first call through the walkthrough. Nobody hands you off to a second company.",
+        text: "None of that changes who you are dealing with. Southeast Roofing is who you call, who schedules the work, and who stands behind the result. We inspect the roof, decide what it can take, plan the job, and are there from the first call through the final walkthrough — with cleaning specialists working alongside us rather than in place of us.",
       },
       { type: "h2", text: "When washing is the wrong answer" },
       {
         type: "p",
-        text: "Washing does not add life to a roof that is finished. If the shingles are brittle or shedding granules widely, cleaning buys appearance and very little else, and that money is usually better held toward the replacement. We would rather say so than take the job \u2014 which is the whole advantage of having a roofer make the call instead of a cleaning vendor.",
+        text: "Washing does not add life to a roof that is finished. If the shingles are brittle or shedding granules widely, cleaning buys appearance and very little else, and that money is usually better held toward the replacement. We would rather say so than take the job \u2014 which is the whole point of having a roofer make that call.",
       },
       {
         type: "p",
@@ -94,7 +96,7 @@ export const blogPosts: BlogPost[] = [
       { type: "h2", text: "Commercial properties too" },
       {
         type: "p",
-        text: "Commercial roof washing runs through the same arrangement, with one extra wrinkle: a single property often carries several roof surfaces \u2014 membrane on the main building, metal on canopies, shingles on an office wing \u2014 and they do not respond to cleaning the same way. Each roof area gets its own evaluation, and the schedule gets planned around how the building actually operates.",
+        text: "Commercial roof washing works the same way, with one extra wrinkle: a single property often carries several roof surfaces \u2014 membrane on the main building, metal on canopies, shingles on an office wing \u2014 and they do not respond to cleaning the same way. Each roof area gets its own evaluation, and the schedule gets planned around how the building actually operates.",
       },
       {
         type: "callout",
