@@ -8,6 +8,7 @@ import {
   Layers,
   Leaf,
   PanelTop,
+  Sparkles,
   TreePine,
   Wind,
   Wrench,
@@ -100,6 +101,13 @@ export const residentialHub = {
       href: "/residential/ventilation",
       description:
         "Balanced attic airflow that extends shingle life and cools your house.",
+    },
+    {
+      icon: Sparkles,
+      label: "Roof Washing",
+      href: "/residential/roof-washing",
+      description:
+        "Black streaks and moss removed — with the roof evaluated by roofers first.",
     },
   ] satisfies HubServiceCard[],
   sections: [
@@ -761,6 +769,13 @@ export const commercialHub = {
       label: "Roof Maintenance",
       href: "/commercial/roof-maintenance",
       description: "Scheduled care that prevents five-figure surprises.",
+    },
+    {
+      icon: Sparkles,
+      label: "Roof Washing",
+      href: "/commercial/roof-washing",
+      description:
+        "Staining and growth removed, scoped by roof system and scheduled around operations.",
     },
   ] satisfies HubServiceCard[],
   process: {

@@ -172,6 +172,13 @@ export interface ServiceContent {
   /** Visual education: render the interactive flashing-types diagram. */
   flashingDiagram?: boolean;
 
+  /**
+   * Render the exterior-cleaning subcontractor credit (roof-washing pages).
+   * States who performs the work and confirms the customer contracts,
+   * schedules, and communicates through Southeast Roofing.
+   */
+  subcontractorCredit?: boolean;
+
   /** Visual education: render the attic-airflow (intake/exhaust) diagram. */
   ventDiagram?: boolean;
 
