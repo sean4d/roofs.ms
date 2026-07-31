@@ -8,30 +8,29 @@ import {
 } from "lucide-react";
 
 import type { ServiceContent } from "@/content/services/types";
-import { siteConfig } from "@/config/site";
 
 /**
  * Roof washing — residential (/residential/roof-washing) and commercial
  * (/commercial/roof-washing).
  *
  * Owner-confirmed 2026-07-30: Southeast Roofing now offers roof washing.
- * South Mississippi Power Washing performs the work as our exterior-cleaning
- * SUBCONTRACTOR. The customer contracts, schedules, and communicates through
- * Southeast Roofing, and we stay responsible for the customer relationship,
- * the roof evaluation, coordination, and overall scope.
+ *
+ * SUBCONTRACTOR RULE (owner directive 2026-07-31): our exterior-cleaning
+ * subcontractor is named and linked in the roof-washing BLOG POST ONLY.
+ * These service pages carry services, FAQs, and knowledge — they do not
+ * name, credit, or promote that company, and they carry no "who does the
+ * work" section. Do not reintroduce one here.
  *
  * INTEGRITY LIMITS for this service (owner directive): do NOT state specific
  * chemicals, mixes or ratios, equipment, warranties, certifications,
  * manufacturer approvals, safety credentials, or proprietary process names.
- * Nothing here does. What IS said is either owner-confirmed (the arrangement
- * above) or general, well-established roofing knowledge stated with hedges —
- * notably that shingle manufacturers direct owners AWAY from high-pressure
- * washing, which is why a roof gets evaluated before anything is cleaned.
+ * Nothing here does. What IS said is either owner-confirmed or general,
+ * well-established roofing knowledge stated with hedges — notably that
+ * shingle manufacturers direct owners AWAY from high-pressure washing,
+ * which is why a roof gets evaluated before anything is cleaned.
  *
  * Pricing rule (owner directive 2026-07-30): no dollar figures anywhere.
  */
-
-const partner = siteConfig.partners.exteriorCleaning;
 
 export const residentialRoofWashing: ServiceContent = {
   slug: "roof-washing",
@@ -153,18 +152,28 @@ export const residentialRoofWashing: ServiceContent = {
       ],
     },
     {
-      title: "Who does the work, and who you deal with",
+      title: "Metal and tile roofs are a different job",
       paragraphs: [
-        `Southeast Roofing offers and coordinates this service, and the cleaning work is performed by ${partner.name}, our exterior-cleaning subcontractor. It's the same arrangement good contractors use for any specialty trade: the specialists bring the exterior-cleaning experience, and we bring the roofing judgement about what the roof can take.`,
-        "What that means for you is simple. You contract with Southeast Roofing, you schedule through Southeast Roofing, and you call Southeast Roofing if anything needs attention. We evaluate the roof, define the scope, coordinate the crew, and stay responsible for the customer relationship from the first call to the walkthrough. You don't get handed off to a second company to chase.",
-        "It also means the roof stays under a roofer's eye. If the evaluation turns up a lifted shingle, a failing pipe boot, or flashing that's opened up, that finding comes to you as a roofing observation — not as an upsell attached to a cleaning invoice.",
+        "Not every home in South Mississippi wears asphalt. Standing seam and exposed-fastener metal, and the tile roofs found on some coastal and Mediterranean-style homes, collect the same staining in the same climate — but none of them react to cleaning the way a shingle roof does. Treating all three the same way is how finishes get ruined and water ends up somewhere it was never meant to go.",
+        "On metal, the concern is direction and detail rather than granules. Panels are built to shed water one way, and laps, seams, and fastener penetrations are designed around water running that direction; forcing water uphill across a lap, or straight into an exposed fastener and its washer, works against the way the roof was assembled. The factory finish is its own consideration — it's the layer carrying the corrosion and color performance, and it isn't something to scour.",
+        "Tile brings a third set of problems. The tiles themselves are durable, but the underlayment beneath them is what actually keeps water out, and a tile roof walked carelessly cracks pieces that then have to be matched and replaced. Growth in the channels and along the laps is common and it is removable — but the roof has to be accessed and staged by someone who knows what tile will and won't take.",
       ],
       bullets: [
-        "You contract, schedule, and communicate through Southeast Roofing.",
-        "Southeast Roofing evaluates the roof and sets the scope of work.",
-        `${partner.name} performs the cleaning work as our subcontractor.`,
-        "Southeast Roofing coordinates the project and owns the relationship start to finish.",
-        "Anything the evaluation finds on the roof itself is reported to you plainly.",
+        "Metal: water is kept moving with the panel, not driven back against laps, seams, or fasteners.",
+        "Metal: the factory finish is treated as the protective layer it is, not as a surface to scrub down.",
+        "Tile: the working assumption is that the underlayment below — not the tile — is the waterproofing.",
+        "Tile: breakage is a real cost, so access and staging get settled before anyone steps on the roof.",
+        "Any covering: if the evaluation says the roof shouldn't be washed, that's the answer you get.",
+      ],
+      links: [
+        {
+          label: "Residential metal roofing systems",
+          href: "/residential/metal-roofing",
+        },
+        {
+          label: "How exposed-fastener panels are built",
+          href: "/residential/metal-roofing/exposed-fastener",
+        },
       ],
     },
     {
@@ -217,7 +226,7 @@ export const residentialRoofWashing: ServiceContent = {
       },
       {
         title: "Scheduling through us",
-        text: "We coordinate the date with you and with our exterior-cleaning crew, and we handle the communication in between.",
+        text: "We coordinate the date with you and handle the communication in between, so there's one schedule and one number to call.",
       },
       {
         title: "Property protection",
@@ -225,7 +234,7 @@ export const residentialRoofWashing: ServiceContent = {
       },
       {
         title: "The wash itself",
-        text: `Performed by ${partner.name} as our subcontractor, using an approach matched to your roof covering rather than a one-size setting.`,
+        text: "Carried out with an approach matched to your roof covering and its condition, rather than one setting used on every roof.",
       },
       {
         title: "Walkthrough and findings",
@@ -233,8 +242,6 @@ export const residentialRoofWashing: ServiceContent = {
       },
     ],
   },
-
-  subcontractorCredit: true,
 
   costFactors: {
     title: "What we evaluate before quoting a roof wash",
@@ -279,8 +286,9 @@ export const residentialRoofWashing: ServiceContent = {
         "It can, if it's done with high pressure — that strips the protective granules that shingles depend on, and manufacturers direct owners away from pressure washing for exactly that reason. That's why we evaluate the roof covering and its condition first and match the approach to the roof, and why we'll tell you when a roof shouldn't be washed at all.",
     },
     {
-      question: "Who actually performs the work?",
-      answer: `Southeast Roofing offers and coordinates the service, and ${partner.name} performs the cleaning as our exterior-cleaning subcontractor. You contract, schedule, and communicate with Southeast Roofing throughout, and we stay responsible for the evaluation, the scope, and the relationship.`,
+      question: "What happens to my landscaping and everything below the roof?",
+      answer:
+        "Protecting what sits under the work area is part of the scope, not an afterthought. Landscaping, walkways, decks, patios, and anything else below the roofline are planned for before the work starts, and where the rinse water leaves the roof is part of that plan. If something below the roof needs particular care, tell us at the evaluation so it's built into the scope rather than handled on the fly.",
     },
     {
       question: "Are those black streaks actually hurting my roof?",
@@ -300,7 +308,7 @@ export const residentialRoofWashing: ServiceContent = {
     {
       question: "Do you wash commercial roofs too?",
       answer:
-        "Yes — commercial roof washing runs through the same arrangement, with the evaluation matched to the roof system involved and the work scheduled around how your building operates. There's a dedicated commercial page with those details.",
+        "Yes — commercial roof washing runs through the same process, with the evaluation matched to the roof system involved and the work scheduled around how your building operates. There's a dedicated commercial page with those details.",
     },
   ],
 
@@ -421,17 +429,28 @@ export const commercialRoofWashing: ServiceContent = {
       ],
     },
     {
-      title: "Who performs the work and who holds the contract",
+      title: "What a wash won't fix on a commercial roof",
       paragraphs: [
-        `Southeast Roofing offers, scopes, and coordinates commercial roof washing, and ${partner.name} performs the cleaning work as our exterior-cleaning subcontractor. For a property manager or owner, that means a single contract, a single schedule, and a single number to call — with a roofing contractor, not a cleaning vendor, accountable for the outcome.`,
-        "It also means the roof assessment and the cleaning aren't separate conversations. If the evaluation finds open seams, failing terminations, or drainage problems, those come back to you as roofing findings with a path to fixing them — which is a materially different service from a wash quote that treats the roof as a surface to be cleaned.",
+        "Cleaning changes how a roof looks. It does not change how a roof performs, and on commercial buildings those two things get confused often enough to be worth stating plainly. A membrane that has pulled at its terminations, seams that have opened, insulation that has taken on water under the deck, drains that have never carried the roof properly — a wash leaves every one of those exactly where it found them, just cleaner.",
+        "The distinction matters most when a property is being cleaned for a reason: a sale, an appraisal, a lender's inspection, a tenant complaint that finally reached the office. A roof that photographs well and still leaks hasn't solved the problem it was cleaned for. The assessment that comes with the wash is the part that tells you which of the two you actually have.",
+        "Where the assessment finds a roof that's sound but weathered, cleaning is a reasonable thing to spend money on and we'll do it. Where it finds a system near the end of its service life, restoration or replacement planning is the honest answer — and coating an aged roof is a different project with different economics from washing one, which is a conversation worth having before the budget cycle closes rather than after.",
       ],
       bullets: [
-        "Southeast Roofing holds the contract and owns the customer relationship.",
-        "Southeast Roofing evaluates the roof system and defines the scope.",
-        `${partner.name} performs the cleaning work as our subcontractor.`,
-        "One point of contact for scheduling, questions, and follow-up.",
-        "Roofing findings reported as roofing findings, with options.",
+        "Open seams, failed terminations, and lap problems are repair items, not cleaning items.",
+        "Wet or saturated insulation is a system condition no surface wash can reach.",
+        "Ponding and poor drainage return the moment the roof dries out.",
+        "Staining on an otherwise sound roof is cosmetic — and wanting it gone is perfectly reasonable.",
+        "A system near the end of its life is better served by a restoration or replacement plan.",
+      ],
+      links: [
+        {
+          label: "Roof coatings and restoration",
+          href: "/commercial/roof-coatings",
+        },
+        {
+          label: "Commercial roof replacement",
+          href: "/commercial/roof-replacement",
+        },
       ],
     },
   ],
@@ -457,7 +476,7 @@ export const commercialRoofWashing: ServiceContent = {
       },
       {
         title: "The wash",
-        text: `Performed by ${partner.name} as our subcontractor, matched to each roof surface on the property.`,
+        text: "Carried out surface by surface, matched to each roof area on the property rather than one method run across the whole building.",
       },
       {
         title: "Documentation and findings",
@@ -465,8 +484,6 @@ export const commercialRoofWashing: ServiceContent = {
       },
     ],
   },
-
-  subcontractorCredit: true,
 
   costFactors: {
     title: "What determines a commercial roof-washing proposal",
@@ -506,8 +523,9 @@ export const commercialRoofWashing: ServiceContent = {
 
   faqs: [
     {
-      question: "Who holds the contract for commercial roof washing?",
-      answer: `Southeast Roofing does. We scope and coordinate the work and ${partner.name} performs the cleaning as our exterior-cleaning subcontractor, so you have one contract, one schedule, and one point of contact throughout.`,
+      question: "How often does a commercial roof need washing?",
+      answer:
+        "It depends far more on the building's exposure than on a calendar. Shade, tree cover, nearby vegetation, and how long the roof surface stays damp are what drive regrowth, so a shaded rear elevation can look stained again long before a fully exposed roof does. We'd rather give you a realistic expectation for your property than a fixed interval — and on buildings under a maintenance program, the roof is being looked at on schedule anyway.",
     },
     {
       question:

@@ -1,4 +1,5 @@
 import type { ArticleBlock } from "@/content/learn/types";
+import { siteConfig } from "@/config/site";
 
 /**
  * Blog registry (PRD §13 Phase 7): timely posts — company news, storm
@@ -69,6 +70,13 @@ export const blogPosts: BlogPost[] = [
       {
         type: "p",
         text: "The cleaning itself is performed by South Mississippi Power Washing, our exterior-cleaning subcontractor. They bring the exterior-cleaning experience; we bring the roofing judgement about what a given roof can take. It is the same way good contractors handle any specialty trade.",
+        // Owner directive 2026-07-31: this is the ONE place on the site where
+        // the subcontractor is named and linked. Service pages stay clean.
+        link: {
+          text: "South Mississippi Power Washing",
+          href: siteConfig.partners.exteriorCleaning.url,
+          external: true,
+        },
       },
       {
         type: "p",

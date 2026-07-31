@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-import type { ArticleBlock } from "@/content/learn/types";
+import type { ArticleBlock, InlineLink } from "@/content/learn/types";
 import { GafWidget } from "@/components/learn/gaf-widget";
 import { RoofDiagram } from "@/components/roof/roof-diagram";
 import { Reveal } from "@/components/motion/reveal";
@@ -11,6 +11,41 @@ import { Reveal } from "@/components/motion/reveal";
  * scannable (owner directive: customers are visual learners) instead of
  * walls of prose.
  */
+/**
+ * Renders a paragraph with one optional inline link. The link phrase must
+ * appear verbatim in the text; if it doesn't, the paragraph renders plain
+ * rather than silently dropping copy.
+ */
+function ParagraphText({ text, link }: { text: string; link?: InlineLink }) {
+  if (!link) return <>{text}</>;
+  const at = text.indexOf(link.text);
+  if (at === -1) return <>{text}</>;
+
+  const anchorClass =
+    "font-semibold text-navy-900 underline underline-offset-4 decoration-steel-500 hover:decoration-navy-900";
+
+  return (
+    <>
+      {text.slice(0, at)}
+      {link.external ? (
+        <a
+          href={link.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={anchorClass}
+        >
+          {link.text}
+        </a>
+      ) : (
+        <Link href={link.href} className={anchorClass}>
+          {link.text}
+        </Link>
+      )}
+      {text.slice(at + link.text.length)}
+    </>
+  );
+}
+
 export function ArticleBody({ blocks }: { blocks: ArticleBlock[] }) {
   return (
     <div className="max-w-3xl">
@@ -23,7 +58,7 @@ export function ArticleBody({ blocks }: { blocks: ArticleBlock[] }) {
                 key={key}
                 className="mt-6 text-lg leading-relaxed text-slate-600"
               >
-                {block.text}
+                <ParagraphText text={block.text} link={block.link} />
               </p>
             );
           case "h2":

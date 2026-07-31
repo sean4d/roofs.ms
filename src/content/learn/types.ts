@@ -29,8 +29,19 @@ export interface LearnCategory {
 export type GafWidgetKey =
   "hdz-widget" | "parts-of-a-roof-widget" | "shingle-comparison-chart";
 
+/**
+ * One inline link inside a paragraph. `text` must appear verbatim in the
+ * paragraph's `text`; the renderer splits on the first occurrence and turns
+ * that phrase into the link. External links open in a new tab.
+ */
+export interface InlineLink {
+  text: string;
+  href: string;
+  external?: boolean;
+}
+
 export type ArticleBlock =
-  | { type: "p"; text: string }
+  | { type: "p"; text: string; link?: InlineLink }
   | { type: "h2"; text: string }
   | { type: "list"; title?: string; items: string[] }
   | {
