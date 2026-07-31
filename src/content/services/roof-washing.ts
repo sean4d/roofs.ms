@@ -46,12 +46,13 @@ export const residentialRoofWashing: ServiceContent = {
     headline: "Roof washing, handled by roofers first",
     subhead:
       "Those black streaks aren't dirt — they're a living organism feeding on your shingles. We now offer residential roof washing across South Mississippi, and because we're a roofing company, the roof gets evaluated before anything touches it.",
-    chips: [
-      "Black streak removal",
-      "Moss & lichen",
-      "Shingle-safe methods",
-      "Roof evaluated first",
-    ],
+    // Owner-supplied 2026-07-31. Sourced photography, not a Southeast Roofing
+    // project — the badge describes the service, never claims the job.
+    photo: {
+      src: "/images/services/roof-washing-asphalt-shingle-roof.jpg",
+      alt: "Technician rinsing algae staining from an asphalt shingle roof with a low-pressure spray",
+    },
+    photoBadge: "Residential roof washing",
   },
 
   intro: {
@@ -338,12 +339,13 @@ export const commercialRoofWashing: ServiceContent = {
     headline: "Commercial roof washing, coordinated by your roofer",
     subhead:
       "Staining and growth on a commercial roof is a curb-appeal problem and a roofing question at the same time. We evaluate the system first, scope the work, and schedule it around how your building actually operates.",
-    chips: [
-      "Property & tenant-facing buildings",
-      "System evaluated first",
-      "Scheduled around operations",
-      "One point of contact",
-    ],
+    // Owner-supplied 2026-07-31. Sourced photography, not a Southeast Roofing
+    // project — the badge describes the service, never claims the job.
+    photo: {
+      src: "/images/services/commercial-roof-washing-tile-roof.jpg",
+      alt: "Washing a terracotta tile roof section on a commercial building",
+    },
+    photoBadge: "Commercial roof washing",
   },
 
   intro: {

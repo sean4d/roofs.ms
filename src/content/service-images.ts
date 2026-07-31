@@ -84,6 +84,14 @@ export const serviceImages: Record<string, ServiceImage | null> = {
     src: "/images/services/ridge-vent.webp",
     alt: "Black shingle-over ridge vent installed at the peak of an architectural shingle roof",
   },
+  // Owner-supplied roof-washing imagery (2026-07-31). Sourced photography,
+  // never captioned as completed Southeast Roofing work — alt text describes
+  // only what the frame shows. These feed the HUB CARDS; each roof-washing
+  // page sets its own distinct hero photo in content/services/roof-washing.ts.
+  "/residential/roof-washing": {
+    src: "/images/services/residential-roof-washing-shingle-roof.jpg",
+    alt: "Technician on a ladder washing algae staining from an asphalt shingle roof",
+  },
 
   /* ── Storm ───────────────────────────────────────────────────── */
   "/storm-damage": {
@@ -127,6 +135,10 @@ export const serviceImages: Record<string, ServiceImage | null> = {
   "/commercial/roof-maintenance": {
     src: "/images/services/roof-maintenance-inspection.webp",
     alt: "Technician inspecting a white commercial flat roof",
+  },
+  "/commercial/roof-washing": {
+    src: "/images/services/commercial-roof-washing-flat-roof.webp",
+    alt: "Rotary surface cleaner being run across a white commercial flat roof membrane",
   },
   "/commercial/roof-replacement": {
     src: "/images/services/commercial-roof-replacement.webp",
