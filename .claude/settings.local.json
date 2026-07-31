@@ -36,7 +36,9 @@
       "WebFetch(domain:unsplash.com)",
       "PowerShell($src = \"C:\\\\Users\\\\seanm\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-seanm-OneDrive-Documents-Projects-southeast-roofing-website\\\\26c9a039-4f49-49cb-9846-58e3b913fbb2\\\\scratchpad\\\\stock\"; New-Item -ItemType Directory -Force \"public\\\\images\\\\stock\" | Out-Null; Copy-Item \"$src\\\\house-gray.jpg\" \"public\\\\images\\\\stock\\\\premium-home-architectural-shingle-roof.jpg\"; Copy-Item \"$src\\\\house-lawn.jpg\" \"public\\\\images\\\\stock\\\\home-asphalt-shingle-roof-golden-hour.jpg\"; Copy-Item \"$src\\\\roofer-drill.jpg\" \"public\\\\images\\\\stock\\\\roofer-installing-asphalt-shingle-roof.jpg\"; Copy-Item \"$src\\\\roofer-standing.jpg\" \"public\\\\images\\\\stock\\\\asphalt-shingle-roof-replacement-tear-off.jpg\"; Get-ChildItem \"public\\\\images\\\\stock\" | Select-Object Name, @{n='KB';e={[math]::Round\\($_.Length/1KB\\)}})",
       "PowerShell(Copy-Item \"C:\\\\Users\\\\seanm\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-seanm-OneDrive-Documents-Projects-southeast-roofing-website\\\\26c9a039-4f49-49cb-9846-58e3b913fbb2\\\\scratchpad\\\\stock\\\\aerial-warehouse-parking.jpg\" \"public\\\\images\\\\stock\\\\commercial-flat-roof-aerial-view.jpg\"; Get-Item \"public\\\\images\\\\stock\\\\commercial-flat-roof-aerial-view.jpg\" | Select-Object Name, @{n='KB';e={[math]::Round\\($_.Length/1KB\\)}})",
-      "mcp__bf7c680d-5fdc-5ef4-b4a0-abadb619bf0a__list_repos"
+      "mcp__bf7c680d-5fdc-5ef4-b4a0-abadb619bf0a__list_repos",
+      "Bash(cp /root/.claude/uploads/85ddd989-1cdb-5fc8-835b-83db0edcad02/b73d6d69-IMG_2071.webp public/images/services/commercial-roof-washing-metal-roof.webp)",
+      "Bash(git rm *)"
     ]
   }
 }
