@@ -136,9 +136,12 @@ export const serviceImages: Record<string, ServiceImage | null> = {
     src: "/images/services/roof-maintenance-inspection.webp",
     alt: "Technician inspecting a white commercial flat roof",
   },
+  // Owner swap 2026-07-31: replaced the rotary surface-cleaner shot — a
+  // high-pressure machine reads as exactly the approach these pages warn
+  // against — with a wand-and-hose photo on a commercial metal roof.
   "/commercial/roof-washing": {
-    src: "/images/services/commercial-roof-washing-flat-roof.webp",
-    alt: "Rotary surface cleaner being run across a white commercial flat roof membrane",
+    src: "/images/services/commercial-roof-washing-metal-roof.webp",
+    alt: "Technician washing a white commercial metal roof with a spray wand, working between rooftop HVAC units",
   },
   "/commercial/roof-replacement": {
     src: "/images/services/commercial-roof-replacement.webp",
