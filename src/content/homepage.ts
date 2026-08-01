@@ -492,7 +492,7 @@ export const proposalSection = {
     /** Wording mirrors the company's real Roofr proposals exactly —
      *  no quantities/measurements shown, line cost only. */
     lineItems: [
-      { label: "Remove", price: 1360 },
+      { label: "Remove existing roof system down to the decking", price: 1360 },
       {
         label: "Install GAF Timberline® HDZ (50 Year Architectural)",
         price: 5400,
