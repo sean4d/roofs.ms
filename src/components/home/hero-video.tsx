@@ -60,7 +60,16 @@ function connectionAllows(): boolean {
 export function HeroVideo() {
   const [show, setShow] = useState(false);
   const [visible, setVisible] = useState(false);
+  /**
+   * Why the video is or isn't playing, shown only on ?video=debug. Video
+   * autoplay fails differently on every engine and there is no console on a
+   * phone, so diagnosing this by guessing costs a round trip each time. This
+   * turns "not seeing any vid" into an actual answer.
+   */
+  const [debug, setDebug] = useState<string[] | null>(null);
   const ref = useRef<HTMLVideoElement | null>(null);
+  /** Gate results, kept for the debug panel to read without re-measuring. */
+  const gate = useRef<string[]>([]);
 
   useEffect(() => {
     if (typeof window === "undefined" || !window.matchMedia) return;
@@ -68,64 +77,122 @@ export function HeroVideo() {
     const motionOk = window.matchMedia(
       "(prefers-reduced-motion: no-preference)",
     ).matches;
-    if (!isPhone || !motionOk || !connectionAllows()) return;
+    const netOk = connectionAllows();
+    const nav = navigator as Navigator & { connection?: NetworkInfo };
+    gate.current = [
+      `phone (<1024px): ${isPhone}  [${window.innerWidth}px]`,
+      `motion allowed: ${motionOk}`,
+      `connection ok: ${netOk}  [${nav.connection?.effectiveType ?? "unknown"}${nav.connection?.saveData ? ", saveData" : ""}]`,
+    ];
+
+    // Poll into the panel from a timer rather than setting state straight from
+    // the effect body.
+    let poll: number | undefined;
+    if (new URLSearchParams(window.location.search).has("video")) {
+      poll = window.setInterval(() => {
+        const v = ref.current;
+        setDebug([
+          ...gate.current,
+          `mounted: ${Boolean(v)}`,
+          v
+            ? `paused: ${v.paused}  readyState: ${v.readyState}  err: ${v.error?.code ?? "none"}`
+            : "video element not rendered",
+          v?.currentSrc
+            ? `src: ${v.currentSrc.split("/").pop()}`
+            : "src: (none yet)",
+        ]);
+      }, 500);
+    }
+
+    if (!isPhone || !motionOk || !netOk) {
+      return () => window.clearInterval(poll);
+    }
 
     // One frame after mount, so the photo has already been handed to the
     // browser and the video never races it.
     const id = window.setTimeout(() => setShow(true), 400);
-    return () => window.clearTimeout(id);
+    return () => {
+      window.clearTimeout(id);
+      window.clearInterval(poll);
+    };
   }, []);
 
-  if (!show) return null;
+  /**
+   * Ask to play, from every angle, and never punish a refusal. A rejection can
+   * mean "not ready yet", "this source will not decode, trying the next one",
+   * or a genuine policy block — and we cannot tell them apart. Swallowing it is
+   * safe: if playback never starts the video simply stays transparent over the
+   * photo, which is the fallback anyway. Only onError (all sources exhausted)
+   * tears it down.
+   */
+  function tryPlay() {
+    const el = ref.current;
+    if (!el || !el.paused) return;
+    el.play()
+      .then(() => setVisible(true))
+      .catch(() => {
+        /* not fatal — another event will call us back */
+      });
+  }
+
+  const panel = debug ? (
+    <div className="absolute top-2 left-2 z-30 max-w-[92%] rounded-lg bg-black/85 p-2.5 font-mono text-[10px] leading-snug text-lime-300">
+      {debug.map((line) => (
+        <div key={line}>{line}</div>
+      ))}
+    </div>
+  ) : null;
+
+  if (!show) return panel;
 
   return (
-    <video
-      // Mounted only after the gate passes, so first paint is long done and
-      // letting it preload here costs the photo nothing. (preload="none" is a
-      // dead end: canplay never fires, so nothing ever starts.)
-      ref={(el) => {
-        ref.current = el;
-        if (!el) return;
-        // React sets `muted` as a DOM PROPERTY and never emits the HTML
-        // attribute. Chromium checks the property and plays anyway; iOS Safari
-        // checks the ATTRIBUTE, refuses autoplay without it, and we fall back
-        // to the photo — which is what the owner saw on his iPhone
-        // (2026-08-01). Set both, and set them before the element loads.
-        el.setAttribute("muted", "");
-        el.muted = true;
-      }}
-      // Wait for a source to be READY before playing. Calling play() straight
-      // from the ref raced source selection: if the first source could not be
-      // decoded, the rejection unmounted us before the browser ever tried the
-      // second one.
-      onCanPlay={() => {
-        ref.current
-          ?.play()
-          .then(() => setVisible(true))
-          // Refused (iOS Low Power Mode, browser policy) — stay on the photo.
-          .catch(() => setShow(false));
-      }}
-      muted
-      loop
-      playsInline
-      preload="auto"
-      aria-hidden="true"
-      tabIndex={-1}
-      // A failing <source> surfaces here too, and treating that as fatal
-      // unmounted us the moment the first source could not be decoded — before
-      // the browser had tried the second. Only the VIDEO itself failing (every
-      // source exhausted) means there is nothing left to play.
-      onError={(e) => {
-        if (e.target !== e.currentTarget) return;
-        setShow(false);
-      }}
-      className={`absolute inset-0 size-full object-cover transition-opacity duration-[1200ms] ease-out lg:hidden ${
-        visible ? "opacity-100" : "opacity-0"
-      }`}
-    >
-      {SOURCES.map((s) => (
-        <source key={s.src} src={s.src} type={s.type} />
-      ))}
-    </video>
+    <>
+      {panel}
+      <video
+        // Mounted only after the gate passes, so first paint is long done and
+        // letting it preload here costs the photo nothing. (preload="none" is a
+        // dead end: canplay never fires, so nothing ever starts.)
+        ref={(el) => {
+          ref.current = el;
+          if (!el) return;
+          // React sets `muted` as a DOM PROPERTY and never emits the HTML
+          // attribute. Chromium checks the property and plays anyway; iOS Safari
+          // checks the ATTRIBUTE and refuses autoplay without it. Set both, and
+          // set them before the element loads.
+          el.setAttribute("muted", "");
+          el.muted = true;
+          // Ask immediately. iOS ignores preload and will not buffer a single
+          // byte until play() is called, so waiting for canplay there means
+          // waiting forever — that is what left the hero photo-only.
+          tryPlay();
+        }}
+        // ...and ask again whenever the browser reaches a playable state. Engines
+        // that DO preload land here; so does the second <source> after the first
+        // one fails to decode.
+        onCanPlay={tryPlay}
+        onLoadedData={tryPlay}
+        muted
+        loop
+        playsInline
+        preload="auto"
+        aria-hidden="true"
+        tabIndex={-1}
+        // A failing <source> surfaces here too, and treating that as fatal
+        // unmounted us the moment the first source could not be decoded — before
+        // the browser had tried the second. Only the VIDEO itself failing (every
+        // source exhausted) means there is nothing left to play.
+        onError={(e) => {
+          if (e.target !== e.currentTarget) return;
+          setShow(false);
+        }}
+        className={`absolute inset-0 size-full object-cover transition-opacity duration-[1200ms] ease-out lg:hidden ${
+          visible ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        {SOURCES.map((s) => (
+          <source key={s.src} src={s.src} type={s.type} />
+        ))}
+      </video>
+    </>
   );
 }
