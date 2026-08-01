@@ -3,7 +3,7 @@ import { absoluteUrl } from "@/lib/seo";
 
 /**
  * JSON-LD builders (PRD §10.4). Every builder emits only fields backed by
- * real data in siteConfig — null [NEEDS] values are omitted entirely rather
+ * real data in siteConfig, null [NEEDS] values are omitted entirely rather
  * than filled with invented placeholders (integrity rule, PRD §0.2).
  */
 
@@ -20,7 +20,7 @@ function compact(obj: JsonLdObject): JsonLdObject {
   );
 }
 
-/** Site-wide RoofingContractor (LocalBusiness) schema — rendered on every page. */
+/** Site-wide RoofingContractor (LocalBusiness) schema, rendered on every page. */
 export function roofingContractorSchema(): JsonLdObject {
   const { address, geo } = siteConfig;
   const logoUrl = absoluteUrl(
@@ -113,7 +113,7 @@ export function roofingContractorSchema(): JsonLdObject {
         ? {
             "@type": "EducationalOccupationalCredential",
             credentialCategory: "license",
-            // Deliberately NOT "residential license" — Southeast Roofing is
+            // Deliberately NOT "residential license", Southeast Roofing is
             // licensed for both residential and commercial work, and the
             // public MSBOC record simply lives in their residential index
             // (see siteConfig.links.msbocLicense). Narrower wording here
@@ -144,7 +144,7 @@ export function roofingContractorSchema(): JsonLdObject {
   });
 }
 
-/** WebSite schema — homepage only. */
+/** WebSite schema: homepage only. */
 export function webSiteSchema(): JsonLdObject {
   return {
     "@context": "https://schema.org",
@@ -206,7 +206,7 @@ interface ArticleSchemaOptions {
 
 /**
  * Article schema for Learning Center guides and blog posts (PRD §10.4,
- * Phase 7). Author/publisher is the organization — honest E-E-A-T until
+ * Phase 7). Author/publisher is the organization, honest E-E-A-T until
  * named-author bios exist.
  */
 export function articleSchema({

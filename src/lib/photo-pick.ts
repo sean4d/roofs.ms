@@ -1,22 +1,22 @@
 /**
- * Picks which finished-roof photo leads. Single-image surfaces — the Google
- * Business Profile update, the map pin, the gallery card — show exactly one
+ * Picks which finished-roof photo leads. Single-image surfaces: the Google
+ * Business Profile update, the map pin, the gallery card, show exactly one
  * photo, so "whichever happened to upload first" is not good enough.
  *
  * Claude looks at the candidates and picks the one that actually sells: full
  * roof in frame, clean light, no ladder or truck or half a neighbour's house.
- * Best-effort by design — any failure falls back to the first photo, because a
+ * Best-effort by design, any failure falls back to the first photo, because a
  * post going out with a merely-fine cover beats a post not going out.
  */
 
 const MODEL = "claude-haiku-4-5-20251001";
 
-/** Never ship more than this to the picker — cost and latency, not capability. */
+/** Never ship more than this to the picker, cost and latency, not capability. */
 const MAX_CANDIDATES = 8;
 
 export interface HeroPick {
   index: number;
-  /** Why this one — surfaced on the confirm screen so the choice is arguable. */
+  /** Why this one, surfaced on the confirm screen so the choice is arguable. */
   note?: string;
 }
 
@@ -40,7 +40,7 @@ export async function pickHeroPhoto(imageUrls: string[]): Promise<HeroPick> {
     type: "text",
     text:
       `These are finished-roof photos from one roofing job. Pick the single ` +
-      `best one to be the cover image of a Google Business Profile post — the ` +
+      `best one to be the cover image of a Google Business Profile post, the ` +
       `only photo most people will ever see.\n\n` +
       `Favour: the roof filling the frame, clean even light, a flattering ` +
       `angle showing the roof planes, the whole house looking cared for.\n` +

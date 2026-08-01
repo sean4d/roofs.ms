@@ -6,7 +6,7 @@
  *   • gallery filter tags (from the chosen options + description keywords)
  *   • a ready-to-post social caption
  *
- * No AI/API key required — the dropdown selections are cleaner structured
+ * No AI/API key required. The dropdown selections are cleaner structured
  * data than freeform text, so templated output is accurate and instant. An
  * AI pass can later enrich `metaDescription`/caption without changing callers.
  */
@@ -23,7 +23,7 @@ export interface JobSubmission {
   details: Record<string, string | string[]>;
   description: string;
   featured: boolean;
-  /** Optional customer contact — if present, an automatic Google review
+  /** Optional customer contact, if present, an automatic Google review
    *  request is sent/prepared after the job posts. Never shown publicly. */
   customerName?: string;
   customerEmail?: string;
@@ -60,7 +60,7 @@ function shortOption(s: string): string {
   return s.split("/")[0].split("(")[0].trim();
 }
 
-/** Descriptive lead — the specific product line (e.g. "GAF Timberline HDZ"),
+/** Descriptive lead, the specific product line (e.g. "GAF Timberline HDZ"),
  *  falling back to brand + type for older/other job types. */
 function productLead(sub: JobSubmission): string {
   const product = str(sub.details.product);
@@ -79,13 +79,16 @@ export function jobTitle(sub: JobSubmission): string {
   let core: string;
   if (sub.jobType === "storm-damage") {
     const dmg = arr(sub.details.damage).slice(0, 2).join(" & ");
-    core = dmg ? `Storm Damage — ${dmg}` : "Storm Damage";
+    core = dmg ? `Storm Damage, ${dmg}` : "Storm Damage";
   } else {
     const lead = productLead(sub);
     core = [lead, noun].filter(Boolean).join(" ");
     if (color) core += ` in ${titleCase(color)}`;
   }
-  return sub.city ? `${core} — ${sub.city}, ${REGION}` : core;
+  // Parentheses, not a comma, for the location. The colour already sits in a
+  // "in <Colour>" phrase, so "Shingle Roof in Shakewood, McComb, MS" reads like
+  // two towns. (This used to be an em dash; those are gone site-wide.)
+  return sub.city ? `${core} (${sub.city}, ${REGION})` : core;
 }
 
 /** Short one-liner for the project card / summary field. */
@@ -96,7 +99,7 @@ export function jobSummary(sub: JobSubmission): string {
   const noun = jt?.noun ?? "roofing project";
   if (sub.jobType === "storm-damage") {
     const dmg = arr(sub.details.damage).join(", ").toLowerCase();
-    return `Storm response${where}${dmg ? ` — documented ${dmg}` : ""}.`;
+    return `Storm response${where}${dmg ? `: documented ${dmg}` : ""}.`;
   }
   const what = [lead, noun].filter(Boolean).join(" ");
   return `${titleCase(sub.channel)} ${what}${where} by ${siteConfig.name}.`;
@@ -123,7 +126,7 @@ const DESCRIPTION_KEYWORDS: Record<string, string> = {
   replacement: "Full Replacement",
 };
 
-/** Filter tags for the gallery — from filterable options, city, channel,
+/** Filter tags for the gallery: from filterable options, city, channel,
  *  job type, plus any keyword matches in the free description. */
 export function jobTags(sub: JobSubmission): string[] {
   const jt = getJobType(sub.jobType);
@@ -177,7 +180,7 @@ export function photoSeo(
   const subject = [lead, noun].filter(Boolean).join(" ") || "roofing project";
   const colorPart = color ? ` in ${titleCase(color)}` : "";
 
-  const title = `${phaseWord}: ${titleCase(subject)}${colorPart} — ${where}`;
+  const title = `${phaseWord}: ${titleCase(subject)}${colorPart}, ${where}`;
   const alt =
     `${phaseWord} photo of a ${subject}${colorPart} ` +
     `${phase === "after" ? "completed" : phase === "progress" ? "being installed" : "before work"} ` +
@@ -194,7 +197,7 @@ export function photoSeo(
 }
 
 /**
- * Deterministic, polished caption body — NEVER the owner's raw notes verbatim.
+ * Deterministic, polished caption body, NEVER the owner's raw notes verbatim.
  * Used as the fallback when AI polish (lib/ai-caption) isn't available.
  */
 export function deterministicBody(sub: JobSubmission): string {
@@ -206,7 +209,7 @@ export function deterministicBody(sub: JobSubmission): string {
   if (sub.jobType === "storm-damage") {
     const dmg = arr(sub.details.damage).join(", ").toLowerCase();
     return (
-      `Storm response in ${where}${dmg ? ` — addressing ${dmg}` : ""}. ` +
+      `Storm response in ${where}${dmg ? `, addressing ${dmg}` : ""}. ` +
       `Our crew documented the damage and got this ${sub.channel} property protected.`
     );
   }

@@ -2,7 +2,7 @@ import { defineField, defineType } from "sanity";
 
 /**
  * Singleton: the CMS-side source of truth for company data (NAP).
- * Mirrors src/config/site.ts — once Sanity is connected, config values
+ * Mirrors src/config/site.ts, once Sanity is connected, config values
  * migrate here so the owner can update NAP without a deploy.
  */
 export const companyInfo = defineType({
@@ -42,7 +42,7 @@ export const companyInfo = defineType({
       name: "license",
       title: "MS Contractor License #",
       type: "string",
-      description: "Real license number only — never a placeholder.",
+      description: "Real license number only: never a placeholder.",
     }),
     defineField({ name: "foundingYear", type: "number" }),
     defineField({

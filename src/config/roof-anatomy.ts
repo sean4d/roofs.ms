@@ -11,7 +11,7 @@
 
 export interface RoofPartPhoto {
   src: string;
-  /** SEO/accessibility alt text — describe the component honestly. */
+  /** SEO/accessibility alt text, describe the component honestly. */
   alt: string;
   /** Short visible caption (also used as the image title attribute). */
   caption: string;
@@ -29,7 +29,7 @@ export interface RoofPart {
   /**
    * Where this component's numbered pin sits on the illustration, in the
    * SVG's own 1040x620 viewBox coordinates. Produced by
-   * docs/roof-house-geometry.py alongside the artwork — regenerate both
+   * docs/roof-house-geometry.py alongside the artwork: regenerate both
    * together or the pins drift off the parts they label.
    */
   hotspot: { x: number; y: number };
@@ -69,13 +69,13 @@ export const ROOF_PARTS: RoofPart[] = [
     hotspot: { x: 573, y: 203 },
     name: "Shingles",
     short: "The surface you see",
-    what: "The main field of shingles — the visible, weather-facing layer of the roof.",
+    what: "The main field of shingles: the visible, weather-facing layer of the roof.",
     why: "This is your roof's first defense against rain, wind, hail, and sun.",
     bad: "Hand-nailing high or into the wrong zone lets wind peel shingles off in the first big storm.",
     photo: {
       src: "/images/projects/gaf-timberline-hdz-pewter-gray-hattiesburg-ms-001.webp",
       alt: "GAF Timberline HDZ shingles in Pewter Gray on a Southeast Roofing roof in Hattiesburg, Mississippi.",
-      caption: "The field of shingles — a real Southeast Roofing roof in Hattiesburg, MS.",
+      caption: "The field of shingles: a real Southeast Roofing roof in Hattiesburg, MS.",
     },
   },
   {
@@ -103,7 +103,7 @@ export const ROOF_PARTS: RoofPart[] = [
     photo: {
       src: "/images/anatomy/roof-ice-and-water-shield.webp",
       alt: "Peel-and-stick ice and water shield membrane applied to a roof deck.",
-      caption: "Ice & water shield — a self-sealing waterproof leak barrier.",
+      caption: "Ice & water shield. A self-sealing waterproof leak barrier.",
     },
   },
   {
@@ -117,7 +117,7 @@ export const ROOF_PARTS: RoofPart[] = [
     photo: {
       src: "/images/projects/roof-synthetic-felt-gulfport-ms.webp",
       alt: "Synthetic underlayment rolled over a roof deck on a Southeast Roofing job in Gulfport, Mississippi.",
-      caption: "Synthetic underlayment going down — a Southeast Roofing job in Gulfport, MS.",
+      caption: "Synthetic underlayment going down: a Southeast Roofing job in Gulfport, MS.",
     },
   },
   {
@@ -125,13 +125,13 @@ export const ROOF_PARTS: RoofPart[] = [
     hotspot: { x: 223, y: 315 },
     name: "Roof Decking",
     short: "The wood foundation",
-    what: "The plywood or OSB sheathing nailed to your rafters — the surface everything else attaches to.",
+    what: "The plywood or OSB sheathing nailed to your rafters: the surface everything else attaches to.",
     why: "Solid decking holds nails tight and gives the roof its strength and flat surface.",
-    bad: "Roofing over soft, rotted, or delaminated decking means nails don't hold — and it will fail early.",
+    bad: "Roofing over soft, rotted, or delaminated decking means nails don't hold, and it will fail early.",
     photo: {
       src: "/images/anatomy/roof-decking-sheathing.webp",
       alt: "OSB roof decking sheathing panels installed over the rafters.",
-      caption: "Roof decking — the wood foundation everything else attaches to.",
+      caption: "Roof decking: the wood foundation everything else attaches to.",
     },
   },
   {
@@ -154,7 +154,7 @@ export const ROOF_PARTS: RoofPart[] = [
     name: "Flashing",
     short: "Seals against walls & chimneys",
     what: "Metal pieces that seal where the roof meets walls, chimneys, and dormers.",
-    why: "These transitions are the #1 leak areas — flashing bridges them watertight.",
+    why: "These transitions are the #1 leak areas: flashing bridges them watertight.",
     bad: "Caulk smeared over old flashing instead of replacing it fails fast and leaks behind the wall.",
     photo: {
       src: "/images/anatomy/roof-chimney-flashing.webp",
@@ -169,7 +169,7 @@ export const ROOF_PARTS: RoofPart[] = [
     short: "Seals roof penetrations",
     what: "Rubber-and-metal collars that seal around plumbing vent pipes.",
     why: "They keep water out where pipes pass through the roof.",
-    bad: "Cheap rubber boots dry-rot and crack in a few Mississippi summers — a very common leak we find.",
+    bad: "Cheap rubber boots dry-rot and crack in a few Mississippi summers. A very common leak we find.",
     photo: {
       src: "/images/anatomy/roof-pipe-boot-flashing.webp",
       alt: "A new rubber-and-metal pipe boot sealing a plumbing vent pipe penetration on a roof.",
@@ -187,7 +187,7 @@ export const ROOF_PARTS: RoofPart[] = [
     photo: {
       src: "/images/anatomy/seamless-gutters-musket-brown-petal-ms.webp",
       alt: "Seamless 6-inch K-style gutters in Musket Brown installed by Southeast Roofing in Petal, Mississippi.",
-      caption: "Seamless gutters — a real Southeast Roofing install in Petal, MS.",
+      caption: "Seamless gutters. A real Southeast Roofing install in Petal, MS.",
     },
   },
   {
@@ -196,7 +196,7 @@ export const ROOF_PARTS: RoofPart[] = [
     name: "Soffit & Fascia",
     short: "The roof's trim & intake vents",
     what: "The boards under the eave (fascia) and the vented underside (soffit) that let fresh air into the attic.",
-    why: "Soffit vents feed the airflow that the ridge vent exhausts — together they keep the attic healthy.",
+    why: "Soffit vents feed the airflow that the ridge vent exhausts, together they keep the attic healthy.",
     bad: "Rotted fascia or painted-over soffit vents choke airflow and let pests and water in.",
     photo: {
       src: "/images/services/wood-fascia.webp",
@@ -214,7 +214,7 @@ export const ROOF_PARTS: RoofPart[] = [
  * The flashing family, broken out on its own.
  *
  * Flashing gets one entry in ROOF_PARTS because a homeowner scanning the roof
- * only needs "the metal at the transitions" — but flashing is where most roofs
+ * only needs "the metal at the transitions", but flashing is where most roofs
  * actually leak, and the individual pieces have names that show up on
  * proposals and adjuster reports. This list is what those names mean.
  *
@@ -255,7 +255,7 @@ export const FLASHING_TYPES: FlashingType[] = [
     name: "Counter Flashing",
     where: "Over step flashing on masonry",
     what: "The upper piece, let into a groove cut in the brick or stone, that laps down over the top of the step flashing.",
-    why: "It covers the step flashing's top edge so water can never get behind it — the two pieces together make the joint watertight.",
+    why: "It covers the step flashing's top edge so water can never get behind it. The two pieces together make the joint watertight.",
     bad: "Sealant smeared along the brick instead of a cut reglet. It looks fine for a season, then shrinks, cracks, and leaks inside the wall.",
   },
   {
@@ -263,7 +263,7 @@ export const FLASHING_TYPES: FlashingType[] = [
     hotspot: { x: 823, y: 235 },
     name: "Apron / Headwall Flashing",
     where: "Roof runs into a wall face",
-    what: "A single bent piece running along the top of a slope where it dead-ends into a wall — common at dormers and second-story walls.",
+    what: "A single bent piece running along the top of a slope where it dead-ends into a wall: common at dormers and second-story walls.",
     why: "It carries water coming down the wall out over the shingles below.",
     bad: "Too short a leg onto the roof, or no end dam, and water runs around the edge instead of over the shingles.",
   },
@@ -282,7 +282,7 @@ export const FLASHING_TYPES: FlashingType[] = [
     name: "Valley Flashing",
     where: "Where two slopes meet",
     what: "Metal, membrane, or a woven shingle treatment down the channel where two roof planes join.",
-    why: "Valleys carry more water than any other part of the roof — this is what keeps that volume moving without finding a seam.",
+    why: "Valleys carry more water than any other part of the roof. This is what keeps that volume moving without finding a seam.",
     bad: "Nails driven through the centre of the valley, or a valley left without ice and water shield underneath, put fasteners directly in the path of the heaviest flow.",
     photo: {
       src: "/images/anatomy/roof-closed-valley.webp",
@@ -297,7 +297,7 @@ export const FLASHING_TYPES: FlashingType[] = [
     where: "Eaves and rakes",
     what: "Bent metal along every roof edge, running under the underlayment at the rakes and over it at the eaves.",
     why: "It throws water clear of the fascia and into the gutter instead of letting it wick back along the underside of the deck.",
-    bad: "Omitted entirely on older roofs, or lapped the wrong way — either lets water curl behind the gutter and rot the edge of the deck.",
+    bad: "Omitted entirely on older roofs, or lapped the wrong way, either lets water curl behind the gutter and rot the edge of the deck.",
     photo: {
       src: "/images/anatomy/roof-drip-edge-flashing.webp",
       alt: "Metal drip edge flashing installed along a roof eave above the gutter.",

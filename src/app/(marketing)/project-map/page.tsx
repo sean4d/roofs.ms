@@ -11,14 +11,14 @@ import { CTASection } from "@/components/tools/cta-section";
 
 /**
  * Interactive Mississippi Project Map (tool #2). Local proof that Southeast
- * Roofing works across the region — pins projected from real city coordinates,
+ * Roofing works across the region, pins projected from real city coordinates,
  * opening the same job cards as the gallery. Uses the unified GalleryJob list.
  */
 
 export const metadata: Metadata = buildMetadata({
   title: "Roofing Project Map in South Mississippi | Southeast Roofing",
   description:
-    "See where Southeast Roofing has completed roofs across South Mississippi. Tap a pin to view real jobs by city, product, and color — Hattiesburg to the Coast.",
+    "See where Southeast Roofing has completed roofs across South Mississippi. Tap a pin to view real jobs by city, product, and color: Hattiesburg to the Coast.",
   path: "/project-map",
   titleAbsolute: true,
 });
@@ -44,7 +44,7 @@ export default async function ProjectMapPage() {
           </h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600">
             Every pin is a real Southeast Roofing job. Explore the map by city and
-            product, then tap any roof to see the photos up close — proof we&apos;re
+            product, then tap any roof to see the photos up close, proof we&apos;re
             working right in your community.
           </p>
         </div>

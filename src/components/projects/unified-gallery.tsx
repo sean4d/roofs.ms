@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils";
  * Unified projects gallery. Two categories (Completed / Storm Response) with
  * dynamic, never-empty filters. Every photo shows in the grid; clicking one
  * opens its job card (sibling photos + details). The job card is also what a
- * future map pin opens — see JobCard.
+ * future map pin opens, see JobCard.
  */
 
 const CATEGORY_LABEL: Record<GalleryCategory, string> = {
@@ -42,13 +42,13 @@ interface GridPhoto {
   alt: string;
   phase?: string;
   job: GalleryJob;
-  /** Total photos in this job's card — what the tile promises on tap. */
+  /** Total photos in this job's card, what the tile promises on tap. */
   photoCount: number;
 }
 
 /** Phase bubble label. Same translucent pill as the city bubble (owner rule
  *  2026-08-01: bubbles, never burned-in labels) and shown ONLY inside the job
- *  card — the grid is finished roofs, so it has nothing to label. */
+ *  card. The grid is finished roofs, so it has nothing to label. */
 const PHASE_LABEL: Record<string, string> = {
   before: "Before",
   progress: "During install",
@@ -59,7 +59,7 @@ const PHASE_LABEL: Record<string, string> = {
 const PHASE_ORDER: Record<string, number> = { before: 0, progress: 1, after: 2 };
 
 /**
- * GRID photos — finished work only (owner rule 2026-08-01: the projects page is
+ * GRID photos, finished work only (owner rule 2026-08-01: the projects page is
  * never a wall of plywood). Falls back down the timeline so a job that somehow
  * has no "after" still appears rather than vanishing, and static gallery jobs
  * (no phase data at all) keep showing everything.
@@ -72,7 +72,7 @@ function gridPhotosOf(job: GalleryJob) {
   return job.photos;
 }
 
-/** CARD photos — the whole job, in install order. This is where during-install
+/** CARD photos, the whole job, in install order. This is where during-install
  *  and before shots live: visible once someone taps in and starts swiping. */
 function cardPhotosOf(job: GalleryJob) {
   return [...job.photos].sort(
@@ -366,7 +366,7 @@ export function UnifiedGallery({ jobs }: { jobs: GalleryJob[] }) {
 }
 
 /**
- * Job card modal — the sibling photos + details for one job. Reused by the
+ * Job card modal, the sibling photos + details for one job. Reused by the
  * gallery and (later) the project map.
  */
 export function JobCard({
@@ -378,7 +378,7 @@ export function JobCard({
   startPhotoId?: string;
   onClose: () => void;
 }) {
-  // The card is the whole job — before, during install, and after, in that
+  // The card is the whole job: before, during install, and after, in that
   // order. One carousel, no side tray: tap in and swipe the story.
   const showcase = cardPhotosOf(job);
 
@@ -425,7 +425,7 @@ export function JobCard({
     if (touchStartX.current === null || touchStartY.current === null) return;
     const dx = e.changedTouches[0].clientX - touchStartX.current;
     const dy = e.changedTouches[0].clientY - touchStartY.current;
-    // Horizontal, deliberate swipe only — ignore vertical scrolls/taps.
+    // Horizontal, deliberate swipe only, ignore vertical scrolls/taps.
     if (
       Math.abs(dx) > 45 &&
       Math.abs(dx) > Math.abs(dy) * 1.5 &&
@@ -452,7 +452,7 @@ export function JobCard({
     >
       <div
         // dvh (not vh) so the card fits the *visible* mobile viewport with the
-        // URL bar showing — vh overflowed and pushed the CTAs off-screen.
+        // URL bar showing, vh overflowed and pushed the CTAs off-screen.
         className="flex max-h-[92dvh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl bg-white sm:max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >

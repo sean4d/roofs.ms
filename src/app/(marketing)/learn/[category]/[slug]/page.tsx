@@ -23,7 +23,7 @@ import { FinalCta } from "@/components/home/final-cta";
 
 /**
  * Learning Center article route (PRD §13 Phase 7): registry-driven like
- * services and cities — new article = one entry in content/learn.
+ * services and cities, new article = one entry in content/learn.
  */
 
 export const dynamicParams = false;

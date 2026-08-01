@@ -2,7 +2,7 @@
  * Social fan-out ("syndication"). After a job is saved to the website gallery,
  * this pushes the same photos + generated caption to each connected platform.
  *
- * The website is the hub — photos live in Sanity first, which gives us the
+ * The website is the hub, photos live in Sanity first, which gives us the
  * PUBLIC image URLs that Facebook and Instagram require. Each platform is
  * gated by its own env credentials; with none set it's a safe no-op and the
  * website upload still fully succeeds.
@@ -63,7 +63,7 @@ function isThrottled(err: unknown): boolean {
   );
 }
 
-/** graph() with backoff on Meta's throttle — it clears in a second or two. */
+/** graph() with backoff on Meta's throttle, it clears in a second or two. */
 async function graphRetry(
   path: string,
   params: Record<string, string>,
@@ -87,7 +87,7 @@ async function graphRetry(
  *
  * Uploading all photos at once looked like the obvious fix for the timeout, but
  * Meta answered a 7-photo burst with "Please reduce the amount of data you're
- * asking for" (2026-08-01) — its throttle counts calls, not bytes. Now that
+ * asking for" (2026-08-01). Its throttle counts calls, not bytes. Now that
  * each platform owns its own request there is budget for a gentler pace.
  */
 async function mapPool<T, R>(
@@ -274,7 +274,7 @@ export async function diagnoseMeta(): Promise<{
 
   if (!process.env.META_IG_USER_ID) {
     out.igAccountResolves = false;
-    out.note = "META_IG_USER_ID not set — Instagram is skipped every post";
+    out.note = "META_IG_USER_ID not set, Instagram is skipped every post";
     return out;
   }
 
@@ -300,7 +300,7 @@ export async function diagnoseMeta(): Promise<{
 /**
  * Post to ONE Meta network. The /upload flow calls this once per platform, in
  * its own request, so no single serverless invocation has to carry the whole
- * fan-out — that is what timed out on 2026-07-31 and silently swallowed
+ * fan-out, that is what timed out on 2026-07-31 and silently swallowed
  * Instagram, Google, and TikTok after Facebook had already posted.
  *
  * Never throws: a failure comes back as an "error" result to be logged.
@@ -333,7 +333,7 @@ export async function postToMeta(
 }
 
 /**
- * Fan out to every platform. Never throws — a platform failure is captured as
+ * Fan out to every platform. Never throws, a platform failure is captured as
  * an "error" result so the website upload is never blocked by a social hiccup.
  *
  * Retained for the weekly GBP cron and any caller that genuinely wants one
@@ -367,7 +367,7 @@ export async function syndicate(
     results.push({ platform: "instagram", status: "skipped", note: "Not connected yet" });
   }
 
-  // Google Business Profile + TikTok go through Metricool — Meta's Graph API
+  // Google Business Profile + TikTok go through Metricool, Meta's Graph API
   // can't reach them. Safe no-op until the METRICOOL_* credentials are set.
   for (const r of await postViaMetricool({
     text: input.caption,
@@ -381,7 +381,7 @@ export async function syndicate(
   results.push({
     platform: "nextdoor",
     status: "skipped",
-    note: "Manual — no posting API",
+    note: "Manual: no posting API",
   });
 
   return results;

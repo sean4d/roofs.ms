@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
  * property type, address, roof type, square footage, timeline,
  * description. Delivered through the same lead pipeline with
  * source="commercial-consultation" so the owner can triage. No
- * instant-quote framing — commercial buyers expect a consultation.
+ * instant-quote framing, commercial buyers expect a consultation.
  */
 
 const PROPERTY_TYPES = [
@@ -111,7 +111,7 @@ export function CommercialForm() {
           Request received.
         </h2>
         <p className="mx-auto mt-3 max-w-sm leading-relaxed text-slate-600">
-          We&apos;ll reach out to schedule your consultation — during business
+          We&apos;ll reach out to schedule your consultation, during business
           hours, usually the same day.
         </p>
         <p className="mt-6 text-sm text-slate-600">
@@ -251,7 +251,7 @@ export function CommercialForm() {
             name="message"
             rows={4}
             className={inputClass}
-            placeholder="Leaks, age of the roof, upcoming budget cycle — anything helpful."
+            placeholder="Leaks, age of the roof, upcoming budget cycle, anything helpful."
           />
         </Field>
       </div>

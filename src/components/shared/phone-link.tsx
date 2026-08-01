@@ -10,7 +10,7 @@ interface PhoneLinkProps {
 
 /**
  * Renders the company phone number. Until the real number is supplied
- * (siteConfig.phone.tel is null — a [NEEDS] item), this renders the visible
+ * (siteConfig.phone.tel is null. A [NEEDS] item), this renders the visible
  * placeholder as plain text instead of a fake tel: link.
  */
 export function PhoneLink({ className, showIcon = true }: PhoneLinkProps) {

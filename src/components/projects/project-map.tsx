@@ -92,7 +92,7 @@ export function ProjectMap({ jobs }: { jobs: GalleryJob[] }) {
 
       <p className="mb-4 text-sm text-slate-500">
         {totalRoofs} completed roof{totalRoofs === 1 ? "" : "s"} across {groups.length}{" "}
-        {groups.length === 1 ? "community" : "communities"} — tap a pin.
+        {groups.length === 1 ? "community" : "communities"}: tap a pin.
       </p>
 
       <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr]">
@@ -114,7 +114,7 @@ export function ProjectMap({ jobs }: { jobs: GalleryJob[] }) {
               const r = Math.min(13, 5 + g.jobs.length * 1.4);
               return (
                 <g key={g.key} className="cursor-pointer" onClick={() => pickCity(g.key, g.name)}>
-                  <title>{`${g.name} — ${g.jobs.length} roof${g.jobs.length === 1 ? "" : "s"}`}</title>
+                  <title>{`${g.name}, ${g.jobs.length} roof${g.jobs.length === 1 ? "" : "s"}`}</title>
                   <circle
                     cx={g.x}
                     cy={g.y}
@@ -193,7 +193,7 @@ export function ProjectMap({ jobs }: { jobs: GalleryJob[] }) {
             <div>
               <h3 className="text-lg font-bold text-navy-900">Communities we&apos;ve roofed</h3>
               <p className="mt-1 text-sm text-slate-600">
-                Tap a pin on the map — or a city below — to see real roofs there.
+                Tap a pin on the map, or a city below, to see real roofs there.
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {[...groups]

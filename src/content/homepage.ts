@@ -30,13 +30,13 @@ import { stockPhotos } from "@/content/stock-photos";
 /**
  * All homepage copy, curated photos, and internal-link targets in one place
  * (integrity rule, PRD §0.2: no invented reviews, stats, license numbers,
- * warranties, or certifications — every claim here is owner-confirmed).
+ * warranties, or certifications. Every claim here is owner-confirmed).
  * Section components under components/home/ render this data.
  */
 
 /**
  * Homepage imagery policy (owner directive 2026-07-04): supplied project
- * photos NEVER appear on the homepage — premium licensed stock only
+ * photos NEVER appear on the homepage, premium licensed stock only
  * (stock-photos.ts), with honest generic alt text. Real project photos
  * live in /projects and gallery contexts.
  */
@@ -51,20 +51,20 @@ export const hero = {
   headline: { lead: "Roofing done", accent: "right.", tail: "" },
   /**
    * Mobile-first copy: short sentences, no long dashes that wrap awkwardly
-   * on phones. Positioning (owner 2026-07-04): experts in EVERY roof type —
+   * on phones. Positioning (owner 2026-07-04): experts in EVERY roof type: 
    * never imply one system is the specialty and the rest are new to us.
    */
   subhead:
-    "Residential or commercial. Shingle, metal, or flat. Whatever roof your home or business needs, we're the local experts who install it right — from first inspection to final walkthrough.",
+    "Residential or commercial. Shingle, metal, or flat. Whatever roof your home or business needs, we're the local experts who install it right: from first inspection to final walkthrough.",
   /** Full-bleed hero background (2400px licensed stock, dark overlay) */
   photo: stockPhotos.heroHome,
-  /** Descriptive only — stock imagery is never presented as our project */
+  /** Descriptive only, stock imagery is never presented as our project */
   photoBadge: "Architectural asphalt shingle roofing",
 } as const;
 
 /**
  * Above-the-fold hero trust bar (Phase 4 §1). Every item is an
- * owner-confirmed fact (siteConfig.trustFacts, 2026-07-04) — wording stays
+ * owner-confirmed fact (siteConfig.trustFacts, 2026-07-04), wording stays
  * in sync with that single source.
  */
 export const heroTrustBar = [
@@ -79,7 +79,7 @@ export const heroTrustBar = [
 ] as const;
 
 /* ------------------------------------------------------------------ */
-/* 2. Trust bar — confirmed credentials only, no invented stats        */
+/* 2. Trust bar, confirmed credentials only, no invented stats        */
 /* ------------------------------------------------------------------ */
 
 export interface TrustItem {
@@ -91,7 +91,7 @@ export interface TrustItem {
 /**
  * Credential hierarchy (brand directive 2026-07-03): GAF certification gets
  * the greatest emphasis. We are NOT an Owens Corning certified/preferred
- * contractor — OC appears only as a product line we install.
+ * contractor, OC appears only as a product line we install.
  */
 export const trustItems: TrustItem[] = [
   {
@@ -119,11 +119,11 @@ export const trustItems: TrustItem[] = [
 ];
 
 /* ------------------------------------------------------------------ */
-/* 3. Residential / Commercial split — the two divisions               */
+/* 3. Residential / Commercial split: the two divisions               */
 /* ------------------------------------------------------------------ */
 
 /**
- * Owner rebalance 2026-07-04: residential and commercial presented evenly —
+ * Owner rebalance 2026-07-04: residential and commercial presented evenly, 
  * equal panels, both photo-led.
  */
 export const divisionSplit = {
@@ -131,7 +131,7 @@ export const divisionSplit = {
   residential: {
     title: "Residential Roofing",
     description:
-      "Asphalt shingle roof replacement done right — backed by repairs, storm restoration, insurance claim help, and metal options.",
+      "Asphalt shingle roof replacement done right, backed by repairs, storm restoration, insurance claim help, and metal options.",
     href: "/residential",
     cta: "Explore residential",
     photo: stockPhotos.residentialHome,
@@ -144,7 +144,7 @@ export const divisionSplit = {
   commercial: {
     title: "Commercial Roofing",
     description:
-      "Flat and low-slope systems for facilities across the region — TPO, EPDM, coatings, metal, and planned maintenance.",
+      "Flat and low-slope systems for facilities across the region: TPO, EPDM, coatings, metal, and planned maintenance.",
     href: "/commercial",
     cta: "Explore commercial",
     photo: stockPhotos.commercialAerial,
@@ -164,7 +164,7 @@ export const divisionSplit = {
 } as const;
 
 /* ------------------------------------------------------------------ */
-/* 4. Services overview — division-grouped internal linking            */
+/* 4. Services overview, division-grouped internal linking            */
 /* ------------------------------------------------------------------ */
 
 export interface ServiceLink {
@@ -177,7 +177,7 @@ export const servicesOverview = {
   eyebrow: "What we do",
   title: "Every roof, every system, both divisions",
   description:
-    "From architectural shingles on a family home to a fully maintained commercial membrane system — one local team covers it all.",
+    "From architectural shingles on a family home to a fully maintained commercial membrane system, one local team covers it all.",
   residential: {
     heading: "Residential",
     href: "/residential",
@@ -272,11 +272,11 @@ export const stormSection = {
 } as const;
 
 /* ------------------------------------------------------------------ */
-/* 6. Metal systems — a material within BOTH divisions (PRD §4.3)      */
+/* 6. Metal systems, a material within BOTH divisions (PRD §4.3)      */
 /* ------------------------------------------------------------------ */
 
 /**
- * Owner positioning (2026-07-04): we're experts in EVERY roofing system —
+ * Owner positioning (2026-07-04): we're experts in EVERY roofing system: 
  * shingle, metal, AND commercial flat/low-slope. No system is presented as
  * the specialty with the others as afterthoughts.
  */
@@ -284,12 +284,12 @@ export const systemsSection = {
   eyebrow: "Roofing systems",
   title: "Every system. One standard of installation.",
   description:
-    "Shingle, metal, or flat — we install and service them all, for homes and businesses alike. The right system for your structure and budget, never whatever we happen to sell.",
+    "Shingle, metal, or flat. We install and service them all, for homes and businesses alike. The right system for your structure and budget, never whatever we happen to sell.",
   systems: [
     {
       icon: Home,
       title: "Asphalt Shingle Roofing",
-      text: "The region's most popular roof, and for good reason. Affordable, storm-capable, and beautiful when installed to spec — GAF-certified installation.",
+      text: "The region's most popular roof, and for good reason. Affordable, storm-capable, and beautiful when installed to spec: GAF-certified installation.",
       chips: [
         "GAF certified installs",
         "Owens Corning products",
@@ -322,7 +322,7 @@ export const systemsSection = {
     {
       icon: Building2,
       title: "Flat & Low-Slope Roofing",
-      text: "Commercial membrane and coating systems for facilities across the region — installed, restored, and maintained around your operations.",
+      text: "Commercial membrane and coating systems for facilities across the region: installed, restored, and maintained around your operations.",
       chips: [
         "TPO & EPDM",
         "Modified bitumen",
@@ -342,18 +342,18 @@ export const systemsSection = {
 } as const;
 
 /* ------------------------------------------------------------------ */
-/* 7. Featured projects — real photos, real cities                     */
+/* 7. Featured projects: real photos, real cities                     */
 /* ------------------------------------------------------------------ */
 
 /**
  * Real project photography lives in /projects, not on the homepage
- * (owner directive 2026-07-04) — this section is the invitation to it.
+ * (owner directive 2026-07-04). This section is the invitation to it.
  */
 export const featuredProjects = {
   eyebrow: "Recent work",
   title: "Real roofs. Real Southeast Roofing projects.",
   description:
-    "Every photo in our project gallery is a genuine Southeast Roofing job — completed roofs from Hattiesburg to Jackson, Meridian, and the Gulf Coast. Real jobs, really ours.",
+    "Every photo in our project gallery is a genuine Southeast Roofing job: completed roofs from Hattiesburg to Jackson, Meridian, and the Gulf Coast. Real jobs, really ours.",
   cta: { label: "Browse recent projects", href: "/projects" },
   cities: [
     "Hattiesburg",
@@ -368,7 +368,7 @@ export const featuredProjects = {
 } as const;
 
 /* ------------------------------------------------------------------ */
-/* 8. Why choose Southeast Roofing — honest differentiators            */
+/* 8. Why choose Southeast Roofing: honest differentiators            */
 /* ------------------------------------------------------------------ */
 
 export const whyUs = {
@@ -386,12 +386,12 @@ export const whyUs = {
     {
       icon: ShieldCheck,
       title: "GAF Certified Contractor",
-      text: "Certified installation of GAF systems, plus Owens Corning shingle products — always to manufacturer specification.",
+      text: "Certified installation of GAF systems, plus Owens Corning shingle products: always to manufacturer specification.",
     },
     {
       icon: Medal,
       title: "Lifetime warranty",
-      text: "Manufacturer limited-lifetime warranty options are available on qualifying roofing systems — coverage depends on the products and system components selected.",
+      text: "Manufacturer limited-lifetime warranty options are available on qualifying roofing systems, coverage depends on the products and system components selected.",
     },
     {
       icon: ClipboardCheck,
@@ -412,7 +412,7 @@ export const whyUs = {
 } as const;
 
 /* ------------------------------------------------------------------ */
-/* 8b. Roofing process — from first call to final walkthrough          */
+/* 8b. Roofing process, from first call to final walkthrough          */
 /* ------------------------------------------------------------------ */
 
 export const processSection = {
@@ -450,13 +450,13 @@ export const processSection = {
 } as const;
 
 /* ------------------------------------------------------------------ */
-/* 8b². Digital proposal — the retail experience (owner 2026-07-04)    */
+/* 8b². Digital proposal, the retail experience (owner 2026-07-04)    */
 /* ------------------------------------------------------------------ */
 
 /**
  * Retail/insurance rebalance (owner directive 2026-07-04): the business is
- * 50/50 insurance/retail. This section sells the retail experience —
- * transparent, itemized digital proposals — written for a discerning,
+ * 50/50 insurance/retail. This section sells the retail experience: 
+ * transparent, itemized digital proposals: written for a discerning,
  * high-net-worth buyer: control, clarity, zero pressure.
  */
 export const proposalSection = {
@@ -467,7 +467,7 @@ export const proposalSection = {
   points: [
     {
       title: "Priced line by line",
-      text: "Each component of the roof system is priced individually — you see where every dollar goes before you commit to anything.",
+      text: "Each component of the roof system is priced individually. You see where every dollar goes before you commit to anything.",
     },
     {
       title: "Upgrades you control",
@@ -475,21 +475,21 @@ export const proposalSection = {
     },
     {
       title: "Reviewed on your time",
-      text: "It's in your inbox — study it, share it with whoever you trust, and approve it whenever you're ready.",
+      text: "It's in your inbox: study it, share it with whoever you trust, and approve it whenever you're ready.",
     },
   ],
   /**
    * Interactive EXAMPLE proposal. Line structure and unit economics mirror
    * the owner's real Roofr proposals (owner-supplied screenshot,
    * 2026-07-04), scaled to a smaller typical roof so the base lands just
-   * over $8k. EVERY line carries a price — no "included" (owner: hidden-
+   * over $8k. EVERY line carries a price, no "included" (owner: hidden-
    * cost smell). Clearly labeled example; real proposals are priced from
    * the actual roof.
    */
   example: {
     heading: "Example roofing proposal",
     subheading: "Itemized · sent to your email",
-    /** Wording mirrors the company's real Roofr proposals exactly —
+    /** Wording mirrors the company's real Roofr proposals exactly, 
      *  no quantities/measurements shown, line cost only. */
     lineItems: [
       { label: "Remove existing roof system down to the decking", price: 1360 },
@@ -503,24 +503,24 @@ export const proposalSection = {
       { label: "Install Hip/Ridge Cap", price: 370 },
       { label: "Dump Charge", price: 550 },
     ] as { label: string; price: number | null }[],
-    /** Sum of line items — $8,430.00 */
+    /** Sum of line items: $8,430.00 */
     baseTotal: 8430,
     /** All off by default: customers start at the real base and watch the
-     *  total climb as they flip upgrades themselves — that's the lesson. */
+     *  total climb as they flip upgrades themselves, that's the lesson. */
     upgrades: [
       { label: "Install Drip Edge", price: 180, defaultOn: false },
       { label: "Install Ridge Vent", price: 420, defaultOn: false },
       { label: "Gutter Replacement", price: 1850, defaultOn: false },
       { label: "Leaf Guard", price: 850, defaultOn: false },
     ],
-    totalLabel: "Your total — no hidden fees",
+    totalLabel: "Your total: no hidden fees",
     disclaimer:
-      "Example pricing for a typical project — your proposal is priced line by line from your actual roof.",
+      "Example pricing for a typical project. Your proposal is priced line by line from your actual roof.",
   },
 } as const;
 
 /* ------------------------------------------------------------------ */
-/* 8c. Manufacturer partnerships — factual wording only (Phase 4 §12)  */
+/* 8c. Manufacturer partnerships, factual wording only (Phase 4 §12)  */
 /* ------------------------------------------------------------------ */
 
 export const manufacturerSection = {
@@ -530,13 +530,13 @@ export const manufacturerSection = {
     {
       name: "GAF",
       claim: "Certified Contractor",
-      text: "North America's largest shingle manufacturer — and our primary, certified system. Verify our certification on gaf.com.",
+      text: "North America's largest shingle manufacturer, and our primary, certified system. Verify our certification on gaf.com.",
       href: siteConfig.links.gafProfile,
       cta: "Verify on gaf.com",
     },
     {
       name: "Owens Corning",
-      /** Product installer ONLY — never "Preferred/Platinum Contractor" */
+      /** Product installer ONLY: never "Preferred/Platinum Contractor" */
       claim: "Product installer",
       text: "We install Owens Corning shingle products when their style, color, or availability fits your project best.",
       href: null,
@@ -546,7 +546,7 @@ export const manufacturerSection = {
 } as const;
 
 /* ------------------------------------------------------------------ */
-/* 9. Financing — no invented rates or terms                           */
+/* 9. Financing, no invented rates or terms                           */
 /* ------------------------------------------------------------------ */
 
 export const financingSection = {
@@ -555,7 +555,7 @@ export const financingSection = {
   description:
     "A roof rarely fails at a convenient time. Financing through our partner GoodLeap keeps the project moving, with $0 down options available.",
   icon: Banknote,
-  /** Simple, trustworthy framing — no invented rates or terms */
+  /** Simple, trustworthy framing, no invented rates or terms */
   points: [
     {
       title: "Apply online in minutes",
@@ -570,7 +570,7 @@ export const financingSection = {
       text: "Get the numbers first. Decide when you're ready.",
     },
   ],
-  /** GoodLeap application (owner-supplied 2026-07-04) — external */
+  /** GoodLeap application (owner-supplied 2026-07-04), external */
   cta: {
     label: "Apply for financing",
     href: siteConfig.links.financing,
@@ -597,22 +597,22 @@ export const serviceAreaSection = {
 } as const;
 
 /* ------------------------------------------------------------------ */
-/* 11. Reviews / trust badges — real marks, no fabricated quotes       */
+/* 11. Reviews / trust badges: real marks, no fabricated quotes       */
 /* ------------------------------------------------------------------ */
 
 export const reviewsSection = {
   eyebrow: "Reputation",
   title: "Don't take our word for it",
   description:
-    "Verify us yourself. Every badge below links straight to the official record — our Google reviews, our GAF certification, our BBB accreditation.",
-  /** Live Google Business Profile (owner-supplied 2026-07-04) — external */
+    "Verify us yourself. Every badge below links straight to the official record: our Google reviews, our GAF certification, our BBB accreditation.",
+  /** Live Google Business Profile (owner-supplied 2026-07-04), external */
   googleCta: {
     label: "Read our Google reviews",
     href: siteConfig.links.googleBusiness,
     external: true,
   },
   /**
-   * Verification badges — each links to its official record. No unverified
+   * Verification badges, each links to its official record. No unverified
    * rating graphics (brandAssets.trust rules); the Google G is rendered as
    * an inline SVG, not the do-not-display star artwork.
    */
@@ -652,7 +652,7 @@ export const reviewsSection = {
 } as const;
 
 /* ------------------------------------------------------------------ */
-/* 12. FAQ — general, factual answers; no invented stats or terms      */
+/* 12. FAQ: general, factual answers; no invented stats or terms      */
 /* ------------------------------------------------------------------ */
 
 export interface HomeFaq {
@@ -664,12 +664,12 @@ export const homeFaqs: HomeFaq[] = [
   {
     question: "Do you handle both residential and commercial roofing?",
     answer:
-      "Yes — they're our two core divisions. Residential covers shingle and metal roofing, replacement, repair, gutters, and ventilation. Commercial covers TPO, EPDM, modified bitumen, coatings, metal systems, and planned maintenance programs.",
+      "Yes. They're our two core divisions. Residential covers shingle and metal roofing, replacement, repair, gutters, and ventilation. Commercial covers TPO, EPDM, modified bitumen, coatings, metal systems, and planned maintenance programs.",
   },
   {
     question: "What areas do you serve?",
     answer:
-      "We're based in Hattiesburg and serve a roughly 2-hour radius across Mississippi — including Petal, Laurel, Columbia, Picayune, the Gulf Coast, Jackson, Meridian, and the communities in between.",
+      "We're based in Hattiesburg and serve a roughly 2-hour radius across Mississippi: including Petal, Laurel, Columbia, Picayune, the Gulf Coast, Jackson, Meridian, and the communities in between.",
   },
   {
     question: "Do you help with insurance claims after storm damage?",
@@ -679,17 +679,17 @@ export const homeFaqs: HomeFaq[] = [
   {
     question: "Should I choose metal or shingle roofing?",
     answer:
-      "It depends on your structure, budget, and goals. Architectural shingles are the most cost-effective option up front; metal systems typically cost more initially but offer a longer service life and excellent wind performance. We install both, so our recommendation is based on your roof — not on what we happen to sell.",
+      "It depends on your structure, budget, and goals. Architectural shingles are the most cost-effective option up front; metal systems typically cost more initially but offer a longer service life and excellent wind performance. We install both, so our recommendation is based on your roof, not on what we happen to sell.",
   },
   {
     question: "How long does a roof replacement take?",
     answer:
-      "Most residential replacements are completed in one to two days once materials arrive, depending on the size and complexity of the roof. Commercial projects vary with the system and square footage — we provide a schedule with every estimate.",
+      "Most residential replacements are completed in one to two days once materials arrive, depending on the size and complexity of the roof. Commercial projects vary with the system and square footage. We provide a schedule with every estimate.",
   },
   {
     question: "Is the inspection really free?",
     answer:
-      "Yes. We inspect your roof, document what we find, and give you a straight answer — including when the right answer is a small repair instead of a replacement.",
+      "Yes. We inspect your roof, document what we find, and give you a straight answer, including when the right answer is a small repair instead of a replacement.",
   },
 ];
 
@@ -702,13 +702,13 @@ export const finalCta = {
   description:
     "Schedule a free inspection or get an instant estimate right now. $0 down financing available through GoodLeap.",
   primary: { label: "Schedule Free Inspection", href: "/free-inspection" },
-  /** Roofr instant estimator (owner-supplied 2026-07-04) — external */
+  /** Roofr instant estimator (owner-supplied 2026-07-04), external */
   estimate: {
     label: "Get an Instant Estimate",
     href: siteConfig.links.instantEstimate,
     external: true,
   },
-  /** GoodLeap financing application — external */
+  /** GoodLeap financing application, external */
   financing: {
     label: "Apply for Financing",
     href: siteConfig.links.financing,

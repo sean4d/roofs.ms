@@ -13,7 +13,7 @@ import { SocialLinks } from "@/components/shared/social-links";
 import { GoogleMapEmbed } from "@/components/shared/google-map";
 import { OpenStatus } from "@/components/shared/open-status";
 
-/** Contact page (PRD §2 conversion) — full form + complete NAP. */
+/** Contact page (PRD §2 conversion), full form + complete NAP. */
 
 export const metadata: Metadata = buildMetadata({
   title: "Contact Our Hattiesburg, MS Roofers | Southeast Roofing",
@@ -42,7 +42,7 @@ export default function ContactPage() {
               Talk to a roofer, not a call center
             </h1>
             <p className="mt-5 max-w-lg text-lg leading-relaxed text-slate-600">
-              Call, email, or send the form — during business hours you&apos;ll
+              Call, email, or send the form, during business hours you&apos;ll
               usually hear back the same day.
             </p>
 
@@ -131,7 +131,7 @@ export default function ContactPage() {
                 className="shadow-premium aspect-[4/3] w-full rounded-2xl border border-border object-cover"
               />
               <figcaption className="mt-2 text-sm text-slate-500">
-                Look for the Southeast Roofing sign — Suite F, right on Highway 98.
+                Look for the Southeast Roofing sign, Suite F, right on Highway 98.
               </figcaption>
             </figure>
           </Reveal>
@@ -151,7 +151,7 @@ export default function ContactPage() {
             </h2>
             <p className="mt-2 text-slate-600">
               {address.streetAddress}, {address.addressLocality},{" "}
-              {address.addressRegion} {address.postalCode} — right on Highway 98.
+              {address.addressRegion} {address.postalCode}, right on Highway 98.
             </p>
           </Reveal>
           <Reveal className="mt-6">

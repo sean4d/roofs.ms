@@ -14,7 +14,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { FinalCta } from "@/components/home/final-cta";
 
 /**
- * Project gallery (PRD §13 Phase 6 — the proof layer). One unified gallery for
+ * Project gallery (PRD §13 Phase 6, the proof layer). One unified gallery for
  * both the static proof photos and new /upload jobs. Integrity rule: every
  * photo is a real Southeast Roofing job site, never stock.
  */
@@ -29,7 +29,7 @@ const allCityCount = new Set(
 
 export const metadata: Metadata = buildMetadata({
   title: "Roofing Projects in South Mississippi | Southeast Roofing",
-  description: `Browse ${completedCount}+ completed Southeast Roofing roofs across ${cityCount} South Mississippi communities — filter by city, product line, and color — plus real storm-damage documentation. No stock photos.`,
+  description: `Browse ${completedCount}+ completed Southeast Roofing roofs across ${cityCount} South Mississippi communities: filter by city, product line, and color, plus real storm-damage documentation. No stock photos.`,
   path: "/projects",
 });
 
@@ -67,7 +67,7 @@ export default async function ProjectsPage() {
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600">
               Every photo below was taken on a real Southeast Roofing job site in
-              South Mississippi — completed roofs our crews installed and storm
+              South Mississippi, completed roofs our crews installed and storm
               damage we documented during inspections. Filter by city, product, or
               damage type, and tap any photo to open the full job.
             </p>
@@ -100,7 +100,7 @@ export default async function ProjectsPage() {
             >
               city pages
             </Link>{" "}
-            show completed local projects for many communities we serve — or ask for
+            show completed local projects for many communities we serve, or ask for
             references from your neighborhood during your{" "}
             <Link
               href="/free-inspection"

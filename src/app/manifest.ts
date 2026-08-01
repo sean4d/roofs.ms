@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 import { siteConfig } from "@/config/site";
 
 /**
- * Web app manifest (PRD §10.5). Makes the site installable and — crucially —
+ * Web app manifest (PRD §10.5). Makes the site installable and, crucially, 
  * supplies the icons Android/Chrome use for the "Add to Home Screen" / installed
  * PWA tile. iOS pulls its home-screen icon from `apple-icon.png` instead.
  *
@@ -16,7 +16,7 @@ const THEME_COLOR = "#123b63";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: `${siteConfig.name} — ${siteConfig.tagline}`,
+    name: `${siteConfig.name}: ${siteConfig.tagline}`,
     short_name: siteConfig.name,
     description: siteConfig.description,
     start_url: "/",

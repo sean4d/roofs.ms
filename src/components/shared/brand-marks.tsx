@@ -4,7 +4,7 @@ import { Landmark, Medal, ShieldCheck } from "lucide-react";
  * Shared brand/credential marks (owner request 2026-07-05: the trust
  * strip under the hero should match the Reputation section's tiles).
  * Official GAF/BBB/MSBOC artwork still can't be sourced in this build
- * environment — these brand-color wordmark tiles are the faithful
+ * environment, these brand-color wordmark tiles are the faithful
  * stand-ins used site-wide; swap here when official files arrive.
  * The Google G is the official vector, rendered unmodified.
  */

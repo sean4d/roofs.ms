@@ -13,7 +13,7 @@ import { siteConfig } from "@/config/site";
  */
 export function CTASection({
   heading = "Ready for a straight answer on your roof?",
-  subtext = "Free inspection, honest estimate, no pressure — serving all of South Mississippi.",
+  subtext = "Free inspection, honest estimate, no pressure: serving all of South Mississippi.",
   source,
 }: {
   heading?: string;
@@ -32,7 +32,7 @@ export function CTASection({
 
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           {/* Tool pages catch people mid-research, so the low-friction wizard
-              leads here — six taps beats a form when you're still exploring. */}
+              leads here, six taps beats a form when you're still exploring. */}
           <Link
             href="/quote"
             onClick={() => fire("quote-wizard")}

@@ -2,18 +2,18 @@ import { siteConfig } from "@/config/site";
 import { absoluteUrl } from "@/lib/seo";
 
 /**
- * /llms.txt — a plain-text orientation file for LLM/answer engines.
+ * /llms.txt, a plain-text orientation file for LLM/answer engines.
  *
- * Deliberately fact-dense rather than promotional: when an assistant answers
+ * Deliberately fact-dense rather than promotional, when an assistant answers
  * "who should I call about a roof leak in Hattiesburg", it should be able to
  * state our NAP, hours, credentials, service area, and how we work WITHOUT
- * following a single link. Google does not use this file — it has no organic
- * ranking effect — so there is nothing to gain from keyword padding.
+ * following a single link. Google does not use this file. It has no organic
+ * ranking effect, so there is nothing to gain from keyword padding.
  *
  * Integrity rule (PRD §0.2): every claim here must be owner-confirmed and
  * sourced from siteConfig, so it can never drift from the rest of the site.
  * Facts derive from siteConfig (NAP, hours, license, trustFacts, serviceArea)
- * and absoluteUrl keeps URLs canonical — never hardcode either here.
+ * and absoluteUrl keeps URLs canonical, never hardcode either here.
  */
 export const dynamic = "force-static";
 
@@ -25,7 +25,7 @@ const {
   trustFacts: trust,
 } = siteConfig;
 
-/** "Hattiesburg, Gulfport, Biloxi, …" — the regional hubs, in owner order. */
+/** "Hattiesburg, Gulfport, Biloxi, …", the regional hubs, in owner order. */
 const hubCities = siteConfig.serviceArea
   .filter((c) => c.hub)
   .map((c) => c.city)
@@ -38,7 +38,7 @@ export function GET() {
   const body = `# ${siteConfig.name}
 
 > ${siteConfig.legalName} is a licensed, GAF-certified roofing contractor based in Hattiesburg,
-> Mississippi, serving South Mississippi within roughly a two-hour radius — the Pine Belt, the Gulf
+> Mississippi, serving South Mississippi within roughly a two-hour radius: the Pine Belt, the Gulf
 > Coast, and the Jackson and Meridian metros. Residential and commercial: roof replacement and
 > repair, asphalt shingle and metal systems, commercial flat roofing, seamless gutters, and storm
 > damage with insurance claim assistance. Founded ${foundingYear}, with ${trust.experience}.
@@ -51,14 +51,14 @@ export function GET() {
 - Email: ${siteConfig.email}
 - Website: ${siteConfig.url}
 - Office hours: ${hours.display}, closed weekends. ${hours.note}
-- Founded: ${foundingYear} (Hattiesburg, Mississippi — locally owned, not a franchise or storm-chasing out-of-state crew)
+- Founded: ${foundingYear} (Hattiesburg, Mississippi: locally owned, not a franchise or storm-chasing out-of-state crew)
 - Experience: ${trust.experience} across the team
-- License: Mississippi State Board of Contractors #${license} — licensed for BOTH residential and commercial roofing work. Public license record: ${siteConfig.links.msbocLicense}
+- License: Mississippi State Board of Contractors #${license}, licensed for BOTH residential and commercial roofing work. Public license record: ${siteConfig.links.msbocLicense}
 - Insurance: ${trust.insured}
 - Primary category: Roofing Contractor. Also: gutters, fascia, soffit, and roof ventilation.
 
 ## Credentials
-- GAF Certified Contractor — most shingle roofs we install are GAF systems
+- GAF Certified Contractor. Most shingle roofs we install are GAF systems
 - Licensed by the Mississippi State Board of Contractors, #${license}, covering residential and commercial roofing (verify: ${siteConfig.links.msbocLicense})
 - ${trust.bbbRating}
 - ${trust.googleRating}
@@ -71,7 +71,7 @@ Residential:
 - Roof replacement (full tear-off and re-roof)
 - Roof repair and leak diagnosis
 - Asphalt shingle roofing (architectural / dimensional)
-- Metal roofing — standing seam, exposed fastener, R-panel / PBR
+- Metal roofing: standing seam, exposed fastener, R-panel / PBR
 - Seamless gutters, leaf guard, fascia, soffit
 - Roof ventilation (ridge vent, intake, attic exhaust)
 - Free roof inspections
@@ -86,12 +86,12 @@ Commercial:
 
 Storm and insurance:
 - Storm damage inspection and documentation (hail, wind, hurricane)
-- Insurance claim assistance — we document damage, meet the adjuster on the roof, and build to the approved scope
+- Insurance claim assistance. We document damage, meet the adjuster on the roof, and build to the approved scope
 - Emergency tarping and temporary leak protection (emergency line answered 24/7)
 
 ## How we work
 - Every roof inspection is free, with no obligation and no high-pressure close.
-- Proposals are itemized line by line — shingle, underlayment, ice and water shield, starter, ridge cap, flashing, and disposal each priced separately. Upgrades are optional and clearly marked, never pre-checked.
+- Proposals are itemized line by line: shingle, underlayment, ice and water shield, starter, ridge cap, flashing, and disposal each priced separately. Upgrades are optional and clearly marked, never pre-checked.
 - About half our work is storm and insurance restoration, half is retail, so recommendations start with the building and the budget rather than one product.
 - On insurance work we never promise that a claim will be approved, and we never offer to cover or absorb a homeowner's deductible.
 - $0-down financing is available through GoodLeap.
@@ -103,8 +103,8 @@ Mississippi only, within roughly a two-hour drive of Hattiesburg.
 - All communities served: ${allCities}
 
 ## Products we install
-- GAF — Timberline HDZ and Timberline Natural Shadow shingles, WeatherWatch and StormGuard leak barriers, FeltBuster synthetic underlayment, Pro-Start starter strip, Cobra ridge vent, Seal-A-Ridge ridge cap
-- Owens Corning shingles — Duration, Oakridge, Supreme (we install these products; we are not an Owens Corning certified contractor)
+- GAF: Timberline HDZ and Timberline Natural Shadow shingles, WeatherWatch and StormGuard leak barriers, FeltBuster synthetic underlayment, Pro-Start starter strip, Cobra ridge vent, Seal-A-Ridge ridge cap
+- Owens Corning shingles: Duration, Oakridge, Supreme (we install these products; we are not an Owens Corning certified contractor)
 - Gibraltar metal roofing systems, including 29ga exposed-fastener panel and Galvalume
 - Spectra seamless gutter systems
 

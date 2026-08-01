@@ -25,13 +25,13 @@ const sections: LegalSection[] = [
   {
     heading: "Using this site",
     paragraphs: [
-      "This website exists to tell you about our services and make it easy to reach us. You may browse it, share links to it, and use its forms and tools for their intended purpose — requesting information about roofing work. Please don't misuse the site: no scraping our content or photos for reuse, no submitting false or automated form entries, and no attempting to interfere with its operation.",
+      "This website exists to tell you about our services and make it easy to reach us. You may browse it, share links to it, and use its forms and tools for their intended purpose, requesting information about roofing work. Please don't misuse the site: no scraping our content or photos for reuse, no submitting false or automated form entries, and no attempting to interfere with its operation.",
     ],
   },
   {
     heading: "Estimates, proposals, and contracts",
     paragraphs: [
-      "Information on this site — including example proposals, pricing illustrations, and results from the instant estimate tool — is provided for education and is not a binding quote. Every roof is different; actual pricing and scope are set only in a written, itemized proposal we prepare for your specific property, and roofing work is governed by the signed contract for that job, not by these website terms.",
+      "Information on this site: including example proposals, pricing illustrations, and results from the instant estimate tool, is provided for education and is not a binding quote. Every roof is different; actual pricing and scope are set only in a written, itemized proposal we prepare for your specific property, and roofing work is governed by the signed contract for that job, not by these website terms.",
     ],
   },
   {
@@ -49,7 +49,7 @@ const sections: LegalSection[] = [
   {
     heading: "Third-party links and tools",
     paragraphs: [
-      "The site links to services operated by others — Roofr, GoodLeap, Google, the BBB, GAF, and social platforms. We don't control those services and aren't responsible for their content, availability, or terms; your use of them is between you and their operators.",
+      "The site links to services operated by others: Roofr, GoodLeap, Google, the BBB, GAF, and social platforms. We don't control those services and aren't responsible for their content, availability, or terms; your use of them is between you and their operators.",
     ],
   },
   {
@@ -77,7 +77,7 @@ export default function TermsOfServicePage() {
     <LegalPage
       title="Terms of Service"
       updated="July 5, 2026"
-      intro={`These terms cover your use of ${siteConfig.url.replace("https://", "")}, operated by ${siteConfig.legalName} of ${siteConfig.address.addressLocality}, Mississippi. They apply to the website only — any roofing work we perform for you is governed by its own written contract.`}
+      intro={`These terms cover your use of ${siteConfig.url.replace("https://", "")}, operated by ${siteConfig.legalName} of ${siteConfig.address.addressLocality}, Mississippi. They apply to the website only, any roofing work we perform for you is governed by its own written contract.`}
       sections={sections}
       breadcrumbs={breadcrumbs}
     />

@@ -2,7 +2,7 @@
  * Stylized service-radius map (PRD §7.2): dark panel, pins placed from
  * real coordinates via a simple equirectangular projection, and the
  * 2-hour radius ring centered on Hattiesburg. Illustrative, not
- * navigational — links live in the city list beside it.
+ * navigational: links live in the city list beside it.
  */
 
 interface MapCity {

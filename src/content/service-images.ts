@@ -3,7 +3,7 @@ import { stockPhotos } from "@/content/stock-photos";
 
 /**
  * ═══════════════════════════════════════════════════════════════════
- *  SERVICE IMAGE REGISTRY — the photo drop zone (owner directive:
+ *  SERVICE IMAGE REGISTRY. The photo drop zone (owner directive:
  *  visual-first site, modular images, effortless replacement)
  * ═══════════════════════════════════════════════════════════════════
  *
@@ -15,15 +15,15 @@ import { stockPhotos } from "@/content/stock-photos";
  *   2. Fill the slot below:  { src: "/images/services/tpo.jpg",
  *      alt: "honest description" }
  *
- * That's it — the card flips from the icon fallback to a photo card
+ * That's it, the card flips from the icon fallback to a photo card
  * everywhere it appears. No component edits, no redesign.
  *
  * `null` = no honest imagery exists yet; the card renders the clean icon
  * treatment. INTEGRITY RULE: never present sourced/stock photography as
- * Southeast Roofing project work — keep alt text descriptive and generic
+ * Southeast Roofing project work, keep alt text descriptive and generic
  * unless the photo is genuinely ours. The /images/services/ assets are
  * AI-generated illustrative images (owner's Higgsfield account, 2026-07-05
- * — see docs/higgsfield-manifest.json); they are never captioned as
+ *, see docs/higgsfield-manifest.json); they are never captioned as
  * completed Southeast Roofing work.
  */
 
@@ -85,7 +85,7 @@ export const serviceImages: Record<string, ServiceImage | null> = {
     alt: "Black shingle-over ridge vent installed at the peak of an architectural shingle roof",
   },
   // Owner-supplied roof-washing imagery (2026-07-31). Sourced photography,
-  // never captioned as completed Southeast Roofing work — alt text describes
+  // never captioned as completed Southeast Roofing work, alt text describes
   // only what the frame shows. These feed the HUB CARDS; each roof-washing
   // page sets its own distinct hero photo in content/services/roof-washing.ts.
   "/residential/roof-washing": {
@@ -136,9 +136,9 @@ export const serviceImages: Record<string, ServiceImage | null> = {
     src: "/images/services/roof-maintenance-inspection.webp",
     alt: "Technician inspecting a white commercial flat roof",
   },
-  // Owner swap 2026-07-31: replaced the rotary surface-cleaner shot — a
+  // Owner swap 2026-07-31: replaced the rotary surface-cleaner shot. A
   // high-pressure machine reads as exactly the approach these pages warn
-  // against — with a wand-and-hose photo on a commercial metal roof.
+  // against, with a wand-and-hose photo on a commercial metal roof.
   "/commercial/roof-washing": {
     src: "/images/services/commercial-roof-washing-metal-roof.webp",
     alt: "Technician washing a white commercial metal roof with a spray wand, working between rooftop HVAC units",
@@ -172,7 +172,7 @@ export const serviceImages: Record<string, ServiceImage | null> = {
     alt: "Pre-engineered steel building with a full metal roof and wall system",
   },
 
-  /* ── Industries — photos should match the building type ─────── */
+  /* ── Industries, photos should match the building type ─────── */
   "/commercial/industries/schools": {
     src: "/images/services/school-building.webp",
     alt: "Single-story brick school building with covered walkways",

@@ -5,7 +5,7 @@ import { buildMetadata } from "@/lib/seo";
 import { RequestPage } from "@/components/forms/request-page";
 
 /**
- * Storm damage inspection request — where storm/insurance CTAs land. Prefills
+ * Storm damage inspection request, where storm/insurance CTAs land. Prefills
  * the storm flag and service so the lead reaches the office already tagged as
  * an insurance-track job.
  */

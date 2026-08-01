@@ -11,7 +11,7 @@ import { Section } from "@/components/shared/section";
 import { Reveal } from "@/components/motion/reveal";
 import { FinalCta } from "@/components/home/final-cta";
 
-/** Blog post route — registry-driven, same block system as /learn. */
+/** Blog post route, registry-driven, same block system as /learn. */
 
 export const dynamicParams = false;
 

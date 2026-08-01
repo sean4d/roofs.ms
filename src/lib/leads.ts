@@ -3,16 +3,16 @@ import "server-only";
 import { siteConfig } from "@/config/site";
 
 /**
- * Lead delivery service (PRD Phase 1 — adapter pattern, no hardcoded
+ * Lead delivery service (PRD Phase 1, adapter pattern, no hardcoded
  * destinations). Every submission fans out to all configured transports:
  *
- * 1. Webhook (LEAD_WEBHOOK_URL) — point at Make.com, Zapier, or a Roofr
+ * 1. Webhook (LEAD_WEBHOOK_URL), point at Make.com, Zapier, or a Roofr
  *    endpoint; the JSON body is flat so no-code tools map fields easily.
- * 2. Email (RESEND_API_KEY + LEAD_NOTIFY_EMAIL) — notification via the
+ * 2. Email (RESEND_API_KEY + LEAD_NOTIFY_EMAIL): notification via the
  *    Resend REST API; falls back to siteConfig.email as the recipient.
  *
  * If NO transport is configured the submission fails loudly (the form
- * tells the visitor to call) — a lead must never silently vanish.
+ * tells the visitor to call). A lead must never silently vanish.
  */
 
 export interface Lead {
@@ -26,14 +26,14 @@ export interface Lead {
   service?: string;
   /** Customer indicated storm damage / insurance claim involvement */
   storm?: boolean;
-  /** How they want the estimate handled — e.g. emailed ballpark vs on-site
+  /** How they want the estimate handled, e.g. emailed ballpark vs on-site
    *  measure. Set by request pages that offer the choice. */
   preference?: string;
   preferredTime?: string;
   message?: string;
   /** Page path the lead came from, for attribution */
   page?: string;
-  /* Commercial consultation fields (PRD §4.2 — "commercial" tagging) */
+  /* Commercial consultation fields (PRD §4.2, "commercial" tagging) */
   company?: string;
   role?: string;
   propertyType?: string;
@@ -56,7 +56,7 @@ async function sendWebhook(lead: Lead): Promise<boolean> {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       ...lead,
-      // Note: keep metadata keys distinct from Lead fields — lead.company
+      // Note: keep metadata keys distinct from Lead fields, lead.company
       // is the customer's organization and must never be clobbered.
       brand: siteConfig.name,
       submittedAt: new Date().toISOString(),
@@ -84,13 +84,13 @@ async function sendEmail(lead: Lead): Promise<boolean> {
   const [firstName, ...restName] = lead.name.trim().split(/\s+/);
   const lastName = restName.join(" ") || firstName;
 
-  // Single-line summary for the CRM's "Details/notes" field — bundles the
+  // Single-line summary for the CRM's "Details/notes" field: bundles the
   // context (service, storm flag, message) so a parser can map it in one shot.
   const details = [
     `Website ${lead.source} lead`,
-    lead.service ? `— ${lead.service}` : null,
+    lead.service ? `, ${lead.service}` : null,
     lead.storm ? "(storm/insurance)" : null,
-    lead.message ? `— ${lead.message.replace(/\s+/g, " ").trim()}` : null,
+    lead.message ? `, ${lead.message.replace(/\s+/g, " ").trim()}` : null,
   ]
     .filter(Boolean)
     .join(" ");
@@ -129,7 +129,7 @@ async function sendEmail(lead: Lead): Promise<boolean> {
       from: `Website Leads <leads@${new URL(siteConfig.url).hostname}>`,
       to: recipients,
       reply_to: lead.email,
-      subject: `New lead: ${lead.name} — ${lead.service ?? lead.source}${lead.storm ? " (storm/insurance)" : ""}`,
+      subject: `New lead: ${lead.name}, ${lead.service ?? lead.source}${lead.storm ? " (storm/insurance)" : ""}`,
       text: lines.join("\n"),
     }),
   });
@@ -152,9 +152,9 @@ export async function deliverLead(lead: Lead): Promise<DeliveryResult> {
     }
   }
 
-  // Always leave a trace in server logs — the last line of defense.
+  // Always leave a trace in server logs. The last line of defense.
   console.log(
-    `[leads] ${lead.source} lead from ${lead.name} (${lead.phone}) — delivered via: ${transports.join(", ") || "NONE"}`,
+    `[leads] ${lead.source} lead from ${lead.name} (${lead.phone}), delivered via: ${transports.join(", ") || "NONE"}`,
   );
 
   return { delivered: transports.length > 0, transports };

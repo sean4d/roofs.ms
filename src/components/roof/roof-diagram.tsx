@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 import { HotspotHouse } from "./hotspot-house";
 
 /**
- * Anatomy of a Roof — interactive hotspot diagram.
+ * Anatomy of a Roof, interactive hotspot diagram.
  *
  * Two ways into the same selection: the numbered pins sitting on the
  * illustration, and the numbered list beneath it. Selecting from either lights
@@ -19,7 +19,7 @@ import { HotspotHouse } from "./hotspot-house";
  * there. Selecting from the artwork scrolls the matching row into view (and
  * vice versa) so the two never disagree about what is selected.
  *
- * Pins are real buttons layered over the SVG rather than shapes inside it —
+ * Pins are real buttons layered over the SVG rather than shapes inside it: 
  * that buys focus rings, tab order, and touch targets for free.
  */
 

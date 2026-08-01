@@ -1,14 +1,14 @@
 /**
  * Slideshow video builder for TikTok. TikTok's posting API is video-first and
  * rejects photo posts outright, so we turn a job's photos into a vertical
- * 1080×1920 MP4 (H.264 + silent AAC track — TikTok wants both) that meets its
+ * 1080×1920 MP4 (H.264 + silent AAC track, TikTok wants both) that meets its
  * spec. Each photo is centered on a blurred fill of itself so mixed
  * orientations look intentional, not letterboxed.
  *
  * sharp normalizes every frame; a static ffmpeg (bundled via
  * @ffmpeg-installer/ffmpeg, whose binary ships from npm so it installs on
  * Vercel) encodes. Runs in the Node runtime with a writable /tmp. Returns null
- * on any failure so the caller falls back gracefully — a video hiccup never
+ * on any failure so the caller falls back gracefully. A video hiccup never
  * blocks the rest of a post.
  */
 

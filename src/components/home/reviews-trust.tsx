@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
  * verification badges, each linking to its official record. Integrity
  * rules hold: no fabricated quotes/ratings, no unverified star or
  * "Google Guaranteed" artwork (brandAssets.trust), no redrawn third-party
- * logos — the Google G is the one official mark we can render faithfully
+ * logos. The Google G is the one official mark we can render faithfully
  * inline; GAF/BBB seals get sourced when official assets are supplied.
  */
 
@@ -78,7 +78,7 @@ export function ReviewsTrust() {
       </StaggerGroup>
 
       <Reveal className="mt-12 text-center">
-        {/* Live Google Business Profile — external */}
+        {/* Live Google Business Profile, external */}
         <Button
           size="xl"
           render={

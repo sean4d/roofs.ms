@@ -4,13 +4,13 @@ import type { NextRequest } from "next/server";
 /**
  * Password gate for the job-intake tool. Protects the /upload form and its
  * save API with HTTP Basic Auth so the tool is private but reachable from any
- * phone. The passphrase is `UPLOAD_PASSWORD` (default "roofroof") — entered in
+ * phone. The passphrase is `UPLOAD_PASSWORD` (default "roofroof"), entered in
  * EITHER the username or password box, so there's no "which field?" confusion.
  *
  * (Next.js 16 renamed the `middleware` convention to `proxy`.)
  */
 
-// HTTP header values must be ASCII (Latin-1) — no em-dashes / smart punctuation.
+// HTTP header values must be ASCII (Latin-1), no em-dashes / smart punctuation.
 const REALM = "Southeast Roofing Job Upload";
 
 export function proxy(request: NextRequest) {
@@ -18,7 +18,7 @@ export function proxy(request: NextRequest) {
   const header = request.headers.get("authorization");
 
   if (header?.startsWith("Basic ")) {
-    // "Basic base64(user:pass)" — accept the passphrase in either field.
+    // "Basic base64(user:pass)", accept the passphrase in either field.
     const decoded = atob(header.slice(6));
     const sep = decoded.indexOf(":");
     const user = decoded.slice(0, sep);

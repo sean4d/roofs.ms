@@ -10,7 +10,7 @@ import { JobCard } from "./unified-gallery";
 
 /**
  * Reusable job photo: shows the city/town tag (transparency + local proof) and,
- * when clicked, opens the job card for that roof — from ANY page. Resolves the
+ * when clicked, opens the job card for that roof, from ANY page. Resolves the
  * photo's job from the static gallery index, so a stray proof photo on a service
  * or city page behaves exactly like one in the main gallery.
  */
@@ -35,7 +35,7 @@ export function JobPhotoTile({
       <button
         type="button"
         onClick={() => job && setOpen(true)}
-        aria-label={job ? `${alt} — view job` : alt}
+        aria-label={job ? `${alt}, view job` : alt}
         className={cn(
           "group relative block h-full w-full overflow-hidden",
           job ? "cursor-pointer" : "cursor-default",

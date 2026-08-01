@@ -1,13 +1,13 @@
 /**
  * Typed manifest of real Southeast Roofing photography. Labels, cities,
  * manufacturers, product lines, and colors were corrected line-by-line by
- * the owner (2026-07-05 review — see docs/OWNER-FEEDBACK-2026-07-05.md).
+ * the owner (2026-07-05 review, see docs/OWNER-FEEDBACK-2026-07-05.md).
  * Filenames carry the SEO-relevant facts; alt text states only what the
  * owner confirmed. Photos the owner disowned or rejected were deleted.
  *
  * ON HOLD (kept on disk, excluded here pending an owner label):
  *   /images/projects/residential-roof-replacement-ocean-springs-ms-001.webp
- *   — "same roof as deleted #13, different angle"; needs product/city.
+ *, "same roof as deleted #13, different angle"; needs product/city.
  */
 
 export type PhotoKind = "completed" | "in-progress";
@@ -18,13 +18,13 @@ export interface ProjectPhoto {
   citySlug: string;
   alt: string;
   kind: PhotoKind;
-  /** Roof system — shingle roofs omit this (treated as "shingle"). */
+  /** Roof system, shingle roofs omit this (treated as "shingle"). */
   material?: "shingle" | "metal";
   /** Shingle facts (completed roofs; owner-confirmed) */
   manufacturer?: "GAF" | "Owens Corning";
   line?: string;
   color?: string;
-  /** Metal product/profile (e.g. "29ga Gibraltar Rib") — the gallery's product
+  /** Metal product/profile (e.g. "29ga Gibraltar Rib"): the gallery's product
    *  chip for a metal job, mirroring the shingle manufacturer+line chip. */
   product?: string;
   /** Install stage (in-progress photos) */
@@ -69,7 +69,7 @@ function completed(
     kind: "completed",
     ...brand,
     color,
-    alt: `${brand.manufacturer} ${brand.line} shingles in ${color} — roof completed by Southeast Roofing in ${city}, Mississippi.`,
+    alt: `${brand.manufacturer} ${brand.line} shingles in ${color}: roof completed by Southeast Roofing in ${city}, Mississippi.`,
   };
 }
 
@@ -248,7 +248,7 @@ export const projectPhotos: ProjectPhoto[] = [
     gafHDZ,
     "Barkwood",
   ),
-  // Saucier — owner correction 2026-07-07: this roof is Slate, not Birchwood.
+  // Saucier, owner correction 2026-07-07: this roof is Slate, not Birchwood.
   completed(
     "gaf-timberline-hdz-slate-saucier-ms-001.jpg",
     "Saucier",
@@ -559,7 +559,7 @@ export const projectPhotos: ProjectPhoto[] = [
     gafHDZ,
     "Birchwood",
   ),
-  // McComb — 29ga Gibraltar Rib exposed-fastener metal, Galvalume finish
+  // McComb: 29ga Gibraltar Rib exposed-fastener metal, Galvalume finish
   metalRoof(
     "29-gauge-galvalume-metal-roof-mccomb-ms-001.webp",
     "McComb",
@@ -881,7 +881,7 @@ export const STORM_CATEGORY_LABELS: Record<StormCategory, string> = {
   "nail-pop": "Nail pops",
 };
 
-/** Completed roofs only — what city pages may show as local proof. */
+/** Completed roofs only, what city pages may show as local proof. */
 export function completedPhotosFor(citySlug: string): ProjectPhoto[] {
   return projectPhotos.filter(
     (photo) => photo.kind === "completed" && photo.citySlug === citySlug,

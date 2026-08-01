@@ -19,7 +19,7 @@ import { SectionHeading } from "@/components/shared/section-heading";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 import { FinalCta } from "@/components/home/final-cta";
 
-/** Residential division hub (PRD §2) — the Phase 3 services hub. */
+/** Residential division hub (PRD §2), the Phase 3 services hub. */
 
 export const metadata: Metadata = buildMetadata({
   title: residentialHub.metaTitle,
@@ -53,7 +53,7 @@ export default function ResidentialHubPage() {
         <SectionHeading
           eyebrow="Residential services"
           title="Everything a home's roof needs"
-          description="Roofing, gutters, fascia, and everything where they meet — one accountable local team."
+          description="Roofing, gutters, fascia, and everything where they meet, one accountable local team."
         />
         <HubServiceGrid services={[...residentialHub.services]} />
       </Section>

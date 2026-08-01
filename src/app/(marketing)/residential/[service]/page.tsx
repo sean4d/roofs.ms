@@ -8,7 +8,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { ServicePage } from "@/components/services/service-page";
 
 /**
- * Core residential service pages (PRD §4.1) — one dynamic route, content
+ * Core residential service pages (PRD §4.1), one dynamic route, content
  * from the service registry. /residential/metal-roofing is a static
  * sibling folder (it has children) and never reaches this route.
  */

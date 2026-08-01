@@ -94,7 +94,7 @@ export function ServicePage({
       {service.signs && <ServiceSigns signs={service.signs} />}
       {service.sections && <ServiceProse sections={service.sections} />}
       <ServiceApproach approach={service.approach} />
-      {/* The interactive hotspot diagram from /anatomy-of-a-roof — one
+      {/* The interactive hotspot diagram from /anatomy-of-a-roof, one
           parts-of-a-roof illustration site-wide (owner directive 2026-07-30). */}
       {service.anatomy && (
         <Section tone="surface">

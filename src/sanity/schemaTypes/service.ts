@@ -1,6 +1,6 @@
 import { defineField, defineType } from "sanity";
 
-/** A service page (residential, commercial, or metal) — PRD §4. */
+/** A service page (residential, commercial, or metal), PRD §4. */
 export const service = defineType({
   name: "service",
   title: "Service",
@@ -22,7 +22,7 @@ export const service = defineType({
       title: "Division",
       type: "string",
       description:
-        "Residential and Commercial are the only divisions — metal services belong to one of them (PRD §4.3).",
+        "Residential and Commercial are the only divisions, metal services belong to one of them (PRD §4.3).",
       options: { list: ["residential", "commercial"] },
       initialValue: "residential",
       validation: (rule) => rule.required(),

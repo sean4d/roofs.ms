@@ -1,6 +1,6 @@
 import { defineField, defineType } from "sanity";
 
-/** Singleton: owner-togglable feature flags (storm banner etc.) — PRD §9.2. */
+/** Singleton: owner-togglable feature flags (storm banner etc.), PRD §9.2. */
 export const siteFlags = defineType({
   name: "siteFlags",
   title: "Site Flags",

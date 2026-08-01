@@ -44,7 +44,7 @@ interface ReorderControls {
 /**
  * One job on the production board. Collapsed it reads like a row in the old
  * handwritten tracker (who, where, how far along); expanded it is the full
- * job sheet — contact fields, the stage workflow, closeout items, notes, and
+ * job sheet: contact fields, the stage workflow, closeout items, notes, and
  * history. Checkboxes stay strictly independent of each other.
  */
 export function ProjectCard({
@@ -74,7 +74,7 @@ export function ProjectCard({
   const progress = progressFor(project.projectType, project.checklist);
   const status = statusFor(project);
   const complete = isComplete(project.projectType, project.checklist);
-  const displayName = project.customerName || "New project — add a name";
+  const displayName = project.customerName || "New project, add a name";
 
   return (
     <section
@@ -292,7 +292,7 @@ export function ProjectCard({
             </ol>
           </fieldset>
 
-          {/* Install closeout — subordinate to the main workflow */}
+          {/* Install closeout, subordinate to the main workflow */}
           <fieldset className="mt-4 rounded-xl bg-secondary/50 px-3 py-2.5">
             <legend className="sr-only">Install closeout</legend>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
@@ -389,7 +389,7 @@ export function ProjectCard({
             </details>
           )}
 
-          {/* Card actions — Delete deliberately far from the checkboxes */}
+          {/* Card actions, Delete deliberately far from the checkboxes */}
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
             <button
               type="button"

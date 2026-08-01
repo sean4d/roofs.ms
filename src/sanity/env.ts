@@ -1,7 +1,7 @@
 /**
  * Sanity environment. Defaults to the live Southeast Roofing project
- * (7ap5ct9c, dataset "production"). The project ID is public — it ships in
- * the browser bundle with every request — so baking it in as the default is
+ * (7ap5ct9c, dataset "production"). The project ID is public, it ships in
+ * the browser bundle with every request, so baking it in as the default is
  * safe and lets the Studio/queries work without a build-time env var. An
  * env override still wins if one is ever set (e.g. a staging project).
  */

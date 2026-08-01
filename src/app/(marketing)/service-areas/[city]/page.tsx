@@ -10,7 +10,7 @@ import { CityPage } from "@/components/cities/city-page";
 
 /**
  * City service-area pages (PRD §5, batch 1). Only cities with completed
- * unique copy generate — the rest stay reserved until their batch ships
+ * unique copy generate: the rest stay reserved until their batch ships
  * (anti-doorway rule).
  */
 

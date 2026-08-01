@@ -11,7 +11,7 @@ import type { LiveProject } from "@/sanity/lib/queries";
 /**
  * Unified gallery model. Both the existing static photos (content/photos.ts)
  * and new Sanity job uploads are normalized into GalleryJobs so the projects
- * gallery — and, later, the job map — share one shape. Every photo shows in the
+ * gallery, and, later, the job map, share one shape. Every photo shows in the
  * grid (gallery looks full); clicking one opens its job's card with sibling
  * photos. The same GalleryJob is what a map pin will open.
  */
@@ -32,7 +32,7 @@ export interface GalleryJob {
   title: string;
   city?: string;
   citySlug?: string;
-  /** "GAF Timberline HDZ", "Seamless 6\" Gutters"… — the product filter chip. */
+  /** "GAF Timberline HDZ", "Seamless 6\" Gutters"…, the product filter chip. */
   product?: string;
   color?: string;
   material: MaterialClass;
@@ -44,7 +44,7 @@ export interface GalleryJob {
   source: "static" | "sanity";
 }
 
-/** Colors are hidden (behind a toggle) for these materials — owner rule. */
+/** Colors are hidden (behind a toggle) for these materials, owner rule. */
 export function hidesColor(job: GalleryJob): boolean {
   return job.material === "metal" || job.material === "gutters";
 }
@@ -77,8 +77,8 @@ function staticCompletedJobs(): GalleryJob[] {
       id: `static-${key}`,
       category: "completed",
       title: isMetal
-        ? `${f.product ?? "Metal roof"}${f.color ? ` in ${f.color}` : ""} — ${f.city}, MS`
-        : `${f.manufacturer ?? ""} ${f.line ?? ""} in ${f.color ?? ""} — ${f.city}, MS`.trim(),
+        ? `${f.product ?? "Metal roof"}${f.color ? ` in ${f.color}` : ""}: ${f.city}, MS`
+        : `${f.manufacturer ?? ""} ${f.line ?? ""} in ${f.color ?? ""}: ${f.city}, MS`.trim(),
       city: f.city,
       citySlug: f.citySlug,
       // Metal jobs now carry their real product/profile (e.g. "29ga Gibraltar
@@ -102,7 +102,7 @@ function staticCompletedJobs(): GalleryJob[] {
     });
   }
 
-  // In-progress shots — kept in Completed (proof of work); no product/color
+  // In-progress shots, kept in Completed (proof of work); no product/color
   // so they don't clutter those filters, still filterable by city.
   projectPhotos
     .filter((p) => p.kind === "in-progress")
@@ -110,7 +110,7 @@ function staticCompletedJobs(): GalleryJob[] {
       jobs.push({
         id: `static-progress-${i}`,
         category: "completed",
-        title: `${p.stage ?? "Roof work"} — ${p.city}, MS`,
+        title: `${p.stage ?? "Roof work"}: ${p.city}, MS`,
         city: p.city,
         citySlug: p.citySlug,
         material: "other",
@@ -130,7 +130,7 @@ function staticStormJobs(): GalleryJob[] {
     jobs.push({
       id: `static-storm-${key}`,
       category: "storm",
-      title: `${label} — ${f.city}, MS`,
+      title: `${label}: ${f.city}, MS`,
       city: f.city,
       citySlug: f.citySlug,
       stormType: label,

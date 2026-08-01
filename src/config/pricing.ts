@@ -1,6 +1,6 @@
 /**
  * Centralized, owner-editable pricing for the Roof Replacement Cost Calculator.
- * EDIT THE NUMBERS HERE — nothing is hardcoded in the UI. All outputs are
+ * EDIT THE NUMBERS HERE, nothing is hardcoded in the UI. All outputs are
  * ranges and clearly labeled estimates; the tool never promises an exact price
  * (a real quote requires an inspection). Figures are typical installed ranges
  * per roofing "square" (100 sq ft of roof), owner-tunable.
@@ -71,7 +71,7 @@ function monthly(principal: number): number {
   return Math.round((principal * r) / (1 - Math.pow(1 + r, -n)));
 }
 
-/** Pure estimate — returns null if inputs are incomplete. */
+/** Pure estimate, returns null if inputs are incomplete. */
 export function estimateCost(input: CalcInput): CalcResult | null {
   const mat = pricingConfig.materials[input.material];
   if (!mat || !input.homeSize || input.homeSize <= 0) return null;
@@ -79,7 +79,7 @@ export function estimateCost(input: CalcInput): CalcResult | null {
   // Home size is treated as the roof-footprint basis. We deliberately do NOT
   // shrink it for two-story homes: a two-story job is harder and costlier to
   // access, so the two-story surcharge below must only ever ADD to the price
-  // (owner rule — a two-story selection can never lower the estimate).
+  // (owner rule. A two-story selection can never lower the estimate).
   const footprint = input.homeSize;
   const roofArea =
     footprint * pricingConfig.pitch[input.pitch].factor * pricingConfig.wasteFactor;

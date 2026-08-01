@@ -1,11 +1,11 @@
 /**
- * Official Google Business Profile (GBP) API client — Tier 1 SEO automation.
+ * Official Google Business Profile (GBP) API client, Tier 1 SEO automation.
  *
  * This is the direct, first-party path to the two highest-value local-SEO
  * surfaces on the profile, replacing the uncertain Metricool photo route:
- *   1. PHOTOS gallery — every finished job's photos land in the profile's
+ *   1. PHOTOS gallery, every finished job's photos land in the profile's
  *      Photos tab (fresh photos are a documented local-ranking signal).
- *   2. UPDATES feed  — one "What's new" post per job (photo + short caption +
+ *   2. UPDATES feed, one "What's new" post per job (photo + short caption +
  *      a "Learn more" button linking to that job's project page), which shows
  *      in the Business Profile and can surface in local search.
  *
@@ -13,17 +13,17 @@
  * GBP uses OAuth 2.0 with the `business.manage` scope. The owner authorizes
  * ONCE (the standard "Sign in with Google and allow" consent screen) and we
  * store the resulting long-lived REFRESH TOKEN as a secret env var. From then
- * on this module mints short-lived access tokens itself — no further human
+ * on this module mints short-lived access tokens itself, no further human
  * step. Nothing here runs, and no token is ever needed, until those env vars
  * are set, so with none present it's a safe no-op and the upload still fully
  * succeeds (identical to the Meta/Metricool paths).
  *
- * Required env (all secret, set in Vercel — NEVER commit):
+ * Required env (all secret, set in Vercel, NEVER commit):
  *   GBP_CLIENT_ID       OAuth client id     (Google Cloud console)
  *   GBP_CLIENT_SECRET   OAuth client secret (Google Cloud console)
  *   GBP_REFRESH_TOKEN   from the one-time owner consent (see step=gbp-auth)
- *   GBP_ACCOUNT_ID      the GBP account   — number or "accounts/123"
- *   GBP_LOCATION_ID     the GBP location  — number or "locations/456"
+ *   GBP_ACCOUNT_ID      the GBP account, number or "accounts/123"
+ *   GBP_LOCATION_ID     the GBP location, number or "locations/456"
  * Discover the account/location ids with the password-gated step=gbp
  * diagnostic once the first three are set.
  *
@@ -59,7 +59,7 @@ export function gbpConfigured(): boolean {
 /**
  * Fully wired for AUTOMATIC posting: OAuth creds AND the specific account +
  * location the job photos belong to. Once the owner sets all five env vars,
- * every upload just posts — matching the "everything works when I upload"
+ * every upload just posts, matching the "everything works when I upload"
  * directive. Until then the upload still fully succeeds; only the GBP push is
  * held back.
  */
@@ -71,7 +71,7 @@ export function gbpReady(): boolean {
 }
 
 // Access tokens live ~1h; cache the minted one in module memory and refresh a
-// minute before expiry. Serverless may cold-start between requests — that just
+// minute before expiry. Serverless may cold-start between requests, that just
 // means an occasional extra refresh, which is fine.
 let cachedToken: { value: string; expiresAt: number } | null = null;
 
@@ -182,7 +182,7 @@ export async function exchangeAuthCode(
       note:
         data.error_description ??
         data.error ??
-        "No refresh_token returned — ensure access_type=offline & prompt=consent",
+        "No refresh_token returned, ensure access_type=offline & prompt=consent",
       raw: data,
     };
   }
@@ -243,7 +243,7 @@ export async function discoverGbp(
       | Array<{ name?: string; title?: string; address?: string }>
       | undefined;
     // An explicit accountId (passed in the request) lets us list locations
-    // BEFORE GBP_ACCOUNT_ID is set in env — saves a redeploy during setup.
+    // BEFORE GBP_ACCOUNT_ID is set in env, saves a redeploy during setup.
     const accountId = bareId(accountIdOverride ?? process.env.GBP_ACCOUNT_ID);
     if (accountId) {
       const loc = await gbpFetch(
@@ -368,7 +368,7 @@ export interface GbpUpdateInput {
   summary: string;
   /** Lead photo for the Update card. */
   imageUrl?: string;
-  /** "Learn more" destination — the job's project page. */
+  /** "Learn more" destination. The job's project page. */
   learnMoreUrl?: string;
 }
 
@@ -437,7 +437,7 @@ export interface GbpReview {
   author: string;
   stars: number;
   text: string;
-  /** ISO timestamp — the caller formats it. */
+  /** ISO timestamp, the caller formats it. */
   createTime?: string;
   photo?: string;
   /** The owner's public reply, if any. */
@@ -451,7 +451,7 @@ export interface GbpReviewsResult {
 }
 
 /**
- * Read EVERY review on the profile via the GBP API (paginated) — the whole
+ * Read EVERY review on the profile via the GBP API (paginated), the whole
  * point being that Google's Places API caps at 5, while this returns them all,
  * with the owner's replies and the true average + total count. Cap the page
  * walk so a viral profile can't loop forever. Returns null on any failure so

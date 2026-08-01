@@ -28,7 +28,7 @@ import { ProjectCard, type SaveInfo } from "./project-card";
 /**
  * The production board: stacked project cards over a spreadsheet-style
  * toolbar. All data flows through the session-guarded /api/production
- * endpoints — checkbox changes save immediately, text autosaves shortly after
+ * endpoints, checkbox changes save immediately, text autosaves shortly after
  * typing stops, and a failed save keeps the typed value on screen with a
  * retry. Data refreshes when the tab regains focus (unless edits are still
  * in flight) and via the manual Refresh button.
@@ -110,7 +110,7 @@ export function ProductionDashboard() {
   }, [projects]);
   /** field-debounce timers keyed by `${id}:${field}` */
   const timersRef = useRef(new Map<string, ReturnType<typeof setTimeout>>());
-  /** pending debounces + in-flight saves — blocks focus-refetch clobbering */
+  /** pending debounces + in-flight saves, blocks focus-refetch clobbering */
   const dirtyRef = useRef(0);
   /** last failed patch per project, for the Retry button */
   const failedRef = useRef(new Map<string, ProjectPatch>());
@@ -149,7 +149,7 @@ export function ProductionDashboard() {
   );
 
   useEffect(() => {
-    // Initial data load — setState only fires after the network await, so
+    // Initial data load, setState only fires after the network await, so
     // this can't cascade renders; the rule can't see through the async hop.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     void loadProjects();
@@ -213,7 +213,7 @@ export function ProductionDashboard() {
         });
         if (res.status === 401) {
           router.refresh();
-          throw new Error("Session expired — log back in.");
+          throw new Error("Session expired, log back in.");
         }
         if (!res.ok) {
           const data = await res.json().catch(() => null);

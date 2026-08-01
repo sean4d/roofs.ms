@@ -1,7 +1,7 @@
 import { defineField, defineType } from "sanity";
 
 /**
- * A service-area city page (PRD §5). Tier controls required content depth —
+ * A service-area city page (PRD §5). Tier controls required content depth: 
  * the anti-doorway rule: every city gets genuinely local, unique copy.
  */
 export const location = defineType({
@@ -33,7 +33,7 @@ export const location = defineType({
     defineField({ name: "state", type: "string", initialValue: "MS" }),
     defineField({
       name: "intro",
-      title: "Local intro (unique copy — never templated)",
+      title: "Local intro (unique copy: never templated)",
       type: "array",
       of: [{ type: "block" }],
     }),

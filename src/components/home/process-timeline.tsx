@@ -5,7 +5,7 @@ import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 
 /**
  * Roofing process (PRD §3.9, Phase 4 §8): five clear steps from first call
- * to walkthrough — trust through predictability. Numbered timeline with a
+ * to walkthrough, trust through predictability. Numbered timeline with a
  * connecting rule on desktop, clean vertical stack on mobile.
  */
 export function ProcessTimeline() {

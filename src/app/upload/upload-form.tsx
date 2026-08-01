@@ -28,7 +28,7 @@ interface PlanPhoto {
   url: string;
 }
 
-/** What step=plan returns — the post, decided, before anything is published. */
+/** What step=plan returns: the post, decided, before anything is published. */
 interface SocialPlanView {
   shape: "showcase" | "reveal" | "hold";
   hold: boolean;
@@ -60,7 +60,7 @@ const PHASE_CHIP: Record<string, string> = {
  * Pull a usable message off a failed response. The old code assumed every error
  * body was JSON, so when a gateway returned an HTML page the JSON parse threw
  * and Safari's "The string did not match the expected pattern" replaced the
- * real error — hiding a 504 for a full day.
+ * real error, hiding a 504 for a full day.
  */
 async function errorFrom(res: Response, fallback: string): Promise<string> {
   const text = await res.text().catch(() => "");
@@ -68,7 +68,7 @@ async function errorFrom(res: Response, fallback: string): Promise<string> {
     const parsed = JSON.parse(text) as { error?: string };
     if (parsed.error) return parsed.error;
   } catch {
-    // not JSON — fall through to the status line
+    // not JSON, fall through to the status line
   }
   const snippet = text.replace(/<[^>]*>/g, " ").trim().slice(0, 120);
   return `${fallback} (HTTP ${res.status}${snippet ? `: ${snippet}` : ""})`;
@@ -203,7 +203,7 @@ export function UploadForm() {
     // no social posts and no visible sign anything was missed.
     const current = await deployedVersion();
     if (current && loadedVersion.current && current !== loadedVersion.current) {
-      setMessage("The uploader updated. Reloading — your photos are still here.");
+      setMessage("The uploader updated. Reloading, your photos are still here.");
       setTimeout(() => window.location.reload(), 1200);
       return;
     }
@@ -259,7 +259,7 @@ export function UploadForm() {
 
   /**
    * Publish the job, then post ONE platform per request. Splitting it this way
-   * is what stops a slow network from swallowing the ones queued behind it —
+   * is what stops a slow network from swallowing the ones queued behind it, 
    * and every outcome lands in `channels` so nothing fails silently again.
    */
   async function publish(skipSocial: boolean) {
@@ -370,7 +370,7 @@ export function UploadForm() {
         </p>
 
         {/* Social is never stranded. Whether the run was skipped, interrupted,
-            or a platform threw, there is always a button here to send it —
+            or a platform threw, there is always a button here to send it. 
             the job's photos and caption are still in state. */}
         {result.id && plan && !plan.hold && (
           <button
@@ -425,7 +425,7 @@ export function UploadForm() {
                       {p.label}
                     </span>
                     {c.note && (
-                      <span className="text-slate-500"> — {c.note}</span>
+                      <span className="text-slate-500">, {c.note}</span>
                     )}
                   </span>
                 </li>
@@ -593,7 +593,7 @@ export function UploadForm() {
         </div>
 
         {/* Description */}
-        <Field label="Job description" hint="Anything notable — the system reads this to add gallery filters.">
+        <Field label="Job description" hint="Anything notable. The system reads this to add gallery filters.">
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -603,7 +603,7 @@ export function UploadForm() {
           />
         </Field>
 
-        {/* Customer contact — optional, powers the auto review request */}
+        {/* Customer contact, optional, powers the auto review request */}
         <div className="flex flex-col gap-4 rounded-2xl border border-border bg-secondary/40 p-4">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-steel-500">
@@ -675,7 +675,7 @@ function cx(...parts: string[]): string {
 /**
  * Promote a photo to cover. On a showcase post the cover IS slide one, so the
  * carousel reorders too. On a reveal the "before" deliberately leads, so this
- * only changes the hero — the single photo Google and the map pin use.
+ * only changes the hero, the single photo Google and the map pin use.
  */
 function withHero(plan: SocialPlanView, assetId: string): SocialPlanView {
   const next = { ...plan, heroAssetId: assetId, heroNote: "you picked this one" };
@@ -690,7 +690,7 @@ function withHero(plan: SocialPlanView, assetId: string): SocialPlanView {
 
 /**
  * The last look before anything posts. Shows the cover photo, the carousel in
- * order, what was left off and why, and the caption — all editable. Built after
+ * order, what was left off and why, and the caption, all editable. Built after
  * a Facebook post went out with five plywood shots in front of the words
  * "another quality roof installed": the rules below are good, but the owner
  * still gets the final say.
@@ -720,14 +720,14 @@ function ReviewScreen({
       {plan.hold ? (
         <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
           Every photo still goes on the website. Nothing will be posted to
-          social, because there is no finished roof to lead with — add an
+          social, because there is no finished roof to lead with, add an
           after photo if you want this one to go out.
         </div>
       ) : (
         <>
           <section>
             <p className="text-xs font-bold tracking-wide text-slate-500 uppercase">
-              Cover photo — what people see in the feed
+              Cover photo, what people see in the feed
             </p>
             <div className="mt-2 overflow-hidden rounded-2xl border border-border bg-secondary">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -739,7 +739,7 @@ function ReviewScreen({
             </div>
             {plan.heroNote && (
               <p className="mt-1.5 text-xs text-slate-500">
-                Google gets the best finished shot — {plan.heroNote}.
+                Google gets the best finished shot, {plan.heroNote}.
               </p>
             )}
           </section>
@@ -785,7 +785,7 @@ function ReviewScreen({
           {plan.omitted.length > 0 && (
             <section>
               <p className="text-xs font-bold tracking-wide text-slate-500 uppercase">
-                Not posted — on the website only ({plan.omitted.length})
+                Not posted, on the website only ({plan.omitted.length})
               </p>
               <div className="mt-2 flex gap-2 overflow-x-auto pb-1">
                 {plan.omitted.map((p) => (
@@ -841,7 +841,7 @@ function ReviewScreen({
               : "py-2 text-sm font-medium text-slate-500 underline underline-offset-4"
           }
         >
-          {plan.hold ? "Add to the website" : "Website only — skip social"}
+          {plan.hold ? "Add to the website" : "Website only, skip social"}
         </button>
         <button
           type="button"
@@ -887,7 +887,7 @@ function Dot({ state }: { state: Health }) {
       : state === "warn"
         ? "bg-amber-500"
         : "bg-slate-300";
-  // block, not inline — an inline span ignores width/height and the dot vanishes.
+  // block, not inline, an inline span ignores width/height and the dot vanishes.
   return (
     <span
       className={`mt-[7px] block size-2.5 shrink-0 rounded-full ${cls}`}
@@ -910,7 +910,7 @@ function Row({
       <Dot state={state} />
       <span className="text-sm">
         <span className="font-semibold text-navy-900">{label}</span>
-        <span className="text-slate-500"> — {detail}</span>
+        <span className="text-slate-500">, {detail}</span>
       </span>
     </li>
   );
@@ -1006,7 +1006,7 @@ function ConnectionsPanel() {
               }
               detail={
                 !meta?.igUserIdPresent
-                  ? "account ID not set — skipped every post"
+                  ? "account ID not set, skipped every post"
                   : meta.igAccountResolves
                     ? `posting as @${meta.igUsername}`
                     : (meta.note ?? "account did not resolve")
@@ -1023,7 +1023,7 @@ function ConnectionsPanel() {
                   : data.gbp?.configured
                     ? "signed in, but account/location IDs missing"
                     : metricoolOn
-                      ? "direct API off — relying on Metricool"
+                      ? "direct API off: relying on Metricool"
                       : "not connected"
               }
             />
@@ -1042,7 +1042,7 @@ function ConnectionsPanel() {
               detail={
                 data.anthropicKeyPresent
                   ? "AI captions on"
-                  : "no key — using the plain template"
+                  : "no key: using the plain template"
               }
             />
           </ul>

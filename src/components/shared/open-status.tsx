@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 /**
  * Live "Open now / Closed" pill computed from the business hours in the CST
  * timezone (Mississippi). Client-only so it reflects the visitor's current
- * moment without a server round-trip or hydration mismatch — it renders nothing
+ * moment without a server round-trip or hydration mismatch, it renders nothing
  * until mounted. Hours are the site's source of truth (config/site.ts), which
  * matches what's published on the Google profile.
  */

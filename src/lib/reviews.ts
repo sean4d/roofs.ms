@@ -5,7 +5,7 @@ import { getGoogleReviewData } from "@/lib/google-reviews";
  * One source of truth for reviews shown on the site (reviews page + homepage
  * marquee). Live Google reviews (all of them, via the GBP API) come first and
  * freshest; the curated verbatim reviews only fill in behind them for reviewers
- * the live feed doesn't already cover — so the page is always full and always
+ * the live feed doesn't already cover, so the page is always full and always
  * current. Integrity unchanged: display only, no AggregateRating schema.
  */
 
@@ -34,7 +34,7 @@ const firstName = (n: string) => n.trim().toLowerCase().split(/\s+/)[0];
 
 /**
  * Deterministically pick `n` reviews for a given key (e.g. a city slug), so
- * each page shows a stable but varied subset — different cities surface
+ * each page shows a stable but varied subset, different cities surface
  * different reviews, which keeps the content unique page to page.
  */
 export function pickReviews(

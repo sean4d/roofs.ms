@@ -26,7 +26,7 @@ import { Button } from "@/components/ui/button";
  * Interactive quote wizard (PRD §13 Phase 8, first mini-project). Six
  * guided steps that qualify the lead, then contact details submitted
  * through the same server action + delivery pipeline as every other
- * form (source: "quote-wizard"). No pricing is computed or promised —
+ * form (source: "quote-wizard"). No pricing is computed or promised, 
  * the wizard routes to the right human process; Roofr remains the
  * instant-number tool and is offered on the success screen.
  */
@@ -51,7 +51,7 @@ const RESIDENTIAL_SERVICES: StepOption[] = [
   { value: "Storm damage / insurance", label: "Storm damage", hint: "Recent storm, possible claim" },
   { value: "Metal roofing", label: "Metal roofing", hint: "New metal roof or conversion" },
   { value: "Gutters / exterior", label: "Gutters & exterior", hint: "Gutters, leaf guard, fascia & soffit" },
-  { value: "Not sure — inspection", label: "Not sure yet", hint: "Have a pro look and tell me straight" },
+  { value: "Not sure: inspection", label: "Not sure yet", hint: "Have a pro look and tell me straight" },
 ];
 
 const COMMERCIAL_SERVICES: StepOption[] = [
@@ -59,7 +59,7 @@ const COMMERCIAL_SERVICES: StepOption[] = [
   { value: "Commercial repair / leak", label: "Repair or leak", hint: "Active leak or damage" },
   { value: "Roof coating / restoration", label: "Coating / restoration", hint: "Extend the roof you have" },
   { value: "Commercial maintenance", label: "Maintenance program", hint: "Ongoing inspections & upkeep" },
-  { value: "Not sure — assessment", label: "Not sure yet", hint: "Start with an honest assessment" },
+  { value: "Not sure: assessment", label: "Not sure yet", hint: "Start with an honest assessment" },
 ];
 
 const ROOF_TYPES: StepOption[] = [
@@ -71,10 +71,10 @@ const ROOF_TYPES: StepOption[] = [
 ];
 
 const TIMELINES: StepOption[] = [
-  { value: "Emergency — leaking now", label: "It's leaking now", hint: "Emergency response" },
+  { value: "Emergency: leaking now", label: "It's leaking now", hint: "Emergency response" },
   { value: "As soon as possible", label: "As soon as possible" },
   { value: "Within 1-3 months", label: "In the next 1–3 months" },
-  { value: "Researching", label: "Just researching", hint: "No pressure — that's smart" },
+  { value: "Researching", label: "Just researching", hint: "No pressure: that's smart" },
 ];
 
 const STORM_OPTIONS: StepOption[] = [
@@ -168,7 +168,7 @@ export function QuoteWizard() {
           aria-hidden="true"
         />
         <h2 className="mt-5 font-display text-2xl font-bold text-navy-900">
-          Done — your quote request is in.
+          Done. Your quote request is in.
         </h2>
         <p className="mx-auto mt-3 max-w-md leading-relaxed text-slate-600">
           We&apos;ll call to confirm details and schedule your free
@@ -273,7 +273,7 @@ export function QuoteWizard() {
     },
     {
       title: "What's on the roof now?",
-      subtitle: "Best guess is fine — we verify everything on site.",
+      subtitle: "Best guess is fine. We verify everything on site.",
       content: (
         <OptionGrid
           options={ROOF_TYPES}
@@ -295,7 +295,7 @@ export function QuoteWizard() {
     {
       title: "Is this storm-related?",
       subtitle:
-        "If a storm caused the damage, insurance may cover it — we assist through the entire claims process.",
+        "If a storm caused the damage, insurance may cover it: we assist through the entire claims process.",
       content: (
         <OptionGrid
           options={STORM_OPTIONS}
@@ -307,7 +307,7 @@ export function QuoteWizard() {
     {
       title: "Where do we send your quote?",
       subtitle:
-        "A real person reviews every request — no automated pricing, no spam.",
+        "A real person reviews every request: no automated pricing, no spam.",
       content: (
         <form action={formAction} noValidate>
           <input type="hidden" name="source" value="quote-wizard" />
@@ -319,7 +319,7 @@ export function QuoteWizard() {
           {(answers.storm === "yes" || answers.storm === "unsure") && (
             <input type="hidden" name="storm" value="on" />
           )}
-          {/* Honeypot — hidden from humans, tempting to bots */}
+          {/* Honeypot, hidden from humans, tempting to bots */}
           <div className="absolute -left-[9999px]" aria-hidden="true">
             <label htmlFor="website">Website</label>
             <input
@@ -492,7 +492,7 @@ export function QuoteWizard() {
       </div>
 
       {/* Active leak → call now beats any form */}
-      {answers.timeline === "Emergency — leaking now" && (
+      {answers.timeline === "Emergency, leaking now" && (
         <div className="mt-5 flex flex-wrap items-center gap-2 rounded-xl border border-border bg-white px-4 py-3 text-sm">
           <CloudLightning
             className="size-4 shrink-0 text-steel-500"

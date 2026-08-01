@@ -47,7 +47,7 @@ export function MobileNav() {
           what keeps the list reachable: expanding "Roofing Tools" adds enough
           rows to run past the bottom of the screen, and without an explicit
           overflow the items below it (Financing, Projects, About, Contact)
-          were simply unreachable. `min-h-0` is required — a flex child's
+          were simply unreachable. `min-h-0` is required, a flex child's
           default `min-height: auto` refuses to shrink below its content and
           would defeat the overflow. `pb-10` clears the phone home indicator.
         */}

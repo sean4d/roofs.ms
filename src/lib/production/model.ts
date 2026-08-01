@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 /**
- * Shared model for the production tracker at /production — checklist
+ * Shared model for the production tracker at /production: checklist
  * definitions, progress/status math, and input validation. Client-safe (no
  * secrets, no server imports): the dashboard uses it to render and the API
  * uses it to validate, so the two can never disagree about what a stage is.
@@ -36,7 +36,7 @@ export const INSURANCE_STAGES: ChecklistItemDef[] = [
   { key: "depreciationCollected", label: "Depreciation Collected" },
 ];
 
-/** Install-closeout items — subordinate to the main workflow stages. */
+/** Install-closeout items, subordinate to the main workflow stages. */
 export const CLOSEOUT_ITEMS: ChecklistItemDef[] = [
   { key: "installCoc", label: "COC", title: "Certificate of Completion" },
   { key: "installPhotos", label: "Photos" },
@@ -47,7 +47,7 @@ export function stagesFor(type: ProjectType): ChecklistItemDef[] {
   return type === "insurance" ? INSURANCE_STAGES : RETAIL_STAGES;
 }
 
-/** Every trackable item — 8 for retail, 10 for insurance. */
+/** Every trackable item: 8 for retail, 10 for insurance. */
 export function allItemsFor(type: ProjectType): ChecklistItemDef[] {
   return [...stagesFor(type), ...CLOSEOUT_ITEMS];
 }
@@ -103,7 +103,7 @@ export function closeoutDone(checklist: Checklist): boolean {
 
 /**
  * A job is only complete when its final money stage AND all three closeout
- * items are checked — matching how the owners call a job "done".
+ * items are checked, matching how the owners call a job "done".
  */
 export function isComplete(type: ProjectType, checklist: Checklist): boolean {
   const finalStage =
@@ -140,7 +140,7 @@ export function statusFor(project: {
   return "Not Started";
 }
 
-/** Buckets the toolbar filter uses. Pure — filtering never touches records. */
+/** Buckets the toolbar filter uses. Pure, filtering never touches records. */
 export function matchesFilter(p: ProductionProject, filter: string): boolean {
   const status = statusFor(p);
   switch (filter) {

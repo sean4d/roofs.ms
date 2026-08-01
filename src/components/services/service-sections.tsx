@@ -18,7 +18,7 @@ import { JobPhotoTile } from "@/components/projects/job-photo-tile";
  * Each takes its slice of ServiceContent; service-page.tsx composes them.
  */
 
-/** §4.1.2 — intro: what/who/why it matters in South Mississippi. */
+/** §4.1.2, intro: what/who/why it matters in South Mississippi. */
 export function ServiceIntro({ intro }: { intro: ServiceContent["intro"] }) {
   return (
     <Section>
@@ -34,7 +34,7 @@ export function ServiceIntro({ intro }: { intro: ServiceContent["intro"] }) {
   );
 }
 
-/** Responsive data table — horizontal scroll on narrow screens, with a
+/** Responsive data table, horizontal scroll on narrow screens, with a
  *  visible edge cue so mobile users know there's more to the right. */
 export function ServiceDataTable({ table }: { table: ServiceTable }) {
   return (
@@ -104,7 +104,7 @@ export function ServiceDataTable({ table }: { table: ServiceTable }) {
 }
 
 /**
- * Deep-dive technical sections (2026-07 expansion) — the page-specific
+ * Deep-dive technical sections (2026-07 expansion): the page-specific
  * prose, bullets, and tables that differentiate each service page.
  * Alternating tones keep long pages readable.
  */
@@ -165,7 +165,7 @@ export function ServiceProse({ sections }: { sections: ProseSection[] }) {
 
 /**
  * "What affects the cost" block (owner directive 2026-07-30): explains the
- * real proposal factors and routes to an inspection — never dollar figures.
+ * real proposal factors and routes to an inspection, never dollar figures.
  */
 export function ServiceCostFactors({
   costFactors,
@@ -215,7 +215,7 @@ export function ServiceCostFactors({
   );
 }
 
-/** §4.1.3 — "signs you need this" icon grid. */
+/** §4.1.3, "signs you need this" icon grid. */
 export function ServiceSigns({
   signs,
 }: {
@@ -246,7 +246,7 @@ export function ServiceSigns({
   );
 }
 
-/** §4.1.4 — what's included / our approach, as numbered steps. */
+/** §4.1.4. What's included / our approach, as numbered steps. */
 export function ServiceApproach({
   approach,
 }: {
@@ -281,7 +281,7 @@ export function ServiceApproach({
   );
 }
 
-/** §4.1.5 — materials & options. */
+/** §4.1.5, materials & options. */
 export function ServiceMaterials({
   materials,
 }: {
@@ -318,7 +318,7 @@ export function ServiceMaterials({
   );
 }
 
-/** Emergency/insurance additions (§4.1) — actionable checklist. */
+/** Emergency/insurance additions (§4.1), actionable checklist. */
 export function ServiceChecklist({
   checklist,
 }: {
@@ -346,7 +346,7 @@ export function ServiceChecklist({
   );
 }
 
-/** §4.1.6 — gallery strip of real project photography. */
+/** §4.1.6, gallery strip of real project photography. */
 export function ServiceGallery({
   gallery,
 }: {
@@ -362,7 +362,7 @@ export function ServiceGallery({
       <StaggerGroup className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {gallery.photos.map((photo) => (
           <StaggerItem as="div" key={photo.src}>
-            {/* JobPhotoTile shows the city/town tag and opens the job card —
+            {/* JobPhotoTile shows the city/town tag and opens the job card, 
                 every real job photo carries its location (owner rule). */}
             <JobPhotoTile
               src={photo.src}
@@ -385,7 +385,7 @@ export function ServiceGallery({
   );
 }
 
-/** §4.1.9 — related services (3 cards). */
+/** §4.1.9, related services (3 cards). */
 export function RelatedServices({
   related,
 }: {
@@ -419,7 +419,7 @@ export function RelatedServices({
   );
 }
 
-/** §4.1.10 — service-area links ("We provide {service} in: …"). */
+/** §4.1.10, service-area links ("We provide {service} in: …"). */
 export function ServiceAreaLinks({ serviceName }: { serviceName: string }) {
   const hubs = siteConfig.serviceArea.filter((area) => area.hub);
   const communities = siteConfig.serviceArea.filter((area) => !area.hub);
@@ -429,7 +429,7 @@ export function ServiceAreaLinks({ serviceName }: { serviceName: string }) {
       <SectionHeading
         eyebrow="Service area"
         title={`Where we provide ${serviceName.toLowerCase()}`}
-        description="Based in Hattiesburg and serving Mississippi within about two hours — from the Pine Belt to the Gulf Coast."
+        description="Based in Hattiesburg and serving Mississippi within about two hours, from the Pine Belt to the Gulf Coast."
       />
       <Reveal className="mt-10">
         <ul className="flex flex-wrap gap-3">

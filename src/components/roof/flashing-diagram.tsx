@@ -12,7 +12,7 @@ import { HotspotHouse } from "./hotspot-house";
  * Flashing, broken out from the main diagram.
  *
  * Flashing is one pin on the anatomy diagram but nine different pieces in
- * practice, and it is where most roofs actually leak — so it gets its own
+ * practice, and it is where most roofs actually leak, so it gets its own
  * diagram, drawn on its own dedicated house (modelled on the Gibraltar
  * flashing diagram the owner supplied): the shed dormer supplies step, apron,
  * and kickout; the chimney supplies counter flashing and the cricket; the
@@ -41,7 +41,7 @@ export function FlashingDiagram() {
           house="flashing"
         />
         <p className="mt-3 text-xs leading-relaxed text-slate-500">
-          Not every flashing detail appears on one house — roof shapes vary. The
+          Not every flashing detail appears on one house, roof shapes vary. The
           list below covers the full set we install.
         </p>
       <ol className="mt-4 flex max-h-80 flex-col gap-1.5 overflow-y-auto overscroll-contain rounded-2xl border border-border bg-secondary p-2">

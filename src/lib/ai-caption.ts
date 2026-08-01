@@ -4,10 +4,10 @@ import type { JobSubmission } from "@/lib/job-content";
 
 /**
  * AI caption polish. Turns the owner's rough job notes + the structured
- * selections into a clean, professional social caption body — instead of
+ * selections into a clean, professional social caption body, instead of
  * posting the raw notes verbatim. Uses Claude (Haiku, fast + cheap) when
  * ANTHROPIC_API_KEY is set; returns null otherwise so callers fall back to the
- * deterministic template. Never invents facts — it only polishes what's given.
+ * deterministic template. Never invents facts: it only polishes what's given.
  */
 
 const MODEL = "claude-haiku-4-5-20251001";
@@ -16,7 +16,7 @@ const MODEL = "claude-haiku-4-5-20251001";
  * @param photoBrief one line describing what the carousel actually contains
  *   (see lib/social-plan captionBrief). Without it the writer is blind to the
  *   photos and will happily write "another quality roof installed" over a stack
- *   of plywood decking — which is exactly what happened on 2026-07-31.
+ *   of plywood decking, which is exactly what happened on 2026-07-31.
  */
 export async function polishCaption(
   sub: JobSubmission,
@@ -42,12 +42,12 @@ export async function polishCaption(
   const prompt =
     `You write social captions for a Mississippi roofing company. Using ONLY the ` +
     `facts below, write a warm, professional caption body of 2-3 short sentences ` +
-    `about this completed job. Polish the owner's rough notes into clean prose — ` +
+    `about this completed job. Polish the owner's rough notes into clean prose, ` +
     `never quote them verbatim. Do NOT invent numbers, warranties, prices, or ` +
     `claims not present. No hashtags and no emojis (added separately).\n\n` +
     `CRITICAL: the caption must match the photos described below. Never describe ` +
     `something the reader cannot see. If the post ends on an in-progress photo ` +
-    `(decking, underlayment, tear-off), earn it — make the work itself the point ` +
+    `(decking, underlayment, tear-off), earn it, make the work itself the point ` +
     `rather than letting it look like a mistake. Return ONLY the caption text.` +
     `\n\n${facts}`;
 

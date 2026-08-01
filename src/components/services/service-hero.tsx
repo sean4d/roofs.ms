@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 
 /**
  * Service hero (PRD §4.1.1): breadcrumb, H1, subhead, dual CTA (free
- * inspection + call), service imagery. Light interior treatment — the dark
+ * inspection + call), service imagery. Light interior treatment: the dark
  * cinematic hero stays homepage-only.
  */
 export function ServiceHero({
@@ -23,7 +23,7 @@ export function ServiceHero({
   breadcrumbs: BreadcrumbItem[];
   /** Commercial pages swap the CTA to the consultation flow (PRD §4.2). */
   audience?: "residential" | "commercial";
-  /** Overrides the residential CTA so the page asks for what it's about —
+  /** Overrides the residential CTA so the page asks for what it's about, 
    *  a repair page requests a repair, a storm page a storm inspection. */
   ctaOverride?: { label: string; href: string };
 }) {

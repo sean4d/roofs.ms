@@ -16,7 +16,7 @@ import { RoofAssistant } from "./assistant";
 export const metadata: Metadata = buildMetadata({
   title: "AI Roof Assistant in Mississippi | Southeast Roofing",
   description:
-    "Tell our roof assistant what's going on — leak, storm damage, replacement, insurance — and get pointed to the right next step in seconds. Free, no obligation.",
+    "Tell our roof assistant what's going on, leak, storm damage, replacement, insurance, and get pointed to the right next step in seconds. Free, no obligation.",
   path: "/roof-assistant",
   titleAbsolute: true,
 });
@@ -39,7 +39,7 @@ export default function RoofAssistantPage() {
           </h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600">
             Answer one quick question and our Roof Assistant points you to exactly the
-            right next step — a free inspection, an instant estimate, insurance help, or
+            right next step: a free inspection, an instant estimate, insurance help, or
             a phone call. No pressure, no jargon.
           </p>
         </div>

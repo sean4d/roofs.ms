@@ -4,7 +4,7 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { TOOLS, type ToolDef, type ToolKey } from "@/config/tools";
 
 /**
- * Surfaces 1–3 relevant interactive tools contextually — used on service,
+ * Surfaces 1–3 relevant interactive tools contextually: used on service,
  * storm, city, and learn pages. Kept intentionally quiet (a small labelled
  * strip of cards, not a wall of CTAs) so it helps the visitor without
  * cluttering. Pick the tools that fit the page; don't force all of them.

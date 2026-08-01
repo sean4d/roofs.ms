@@ -138,7 +138,7 @@ export function RoofAssistant() {
         {phase === "input" && (
           <>
             <p className="text-navy-900">
-              Got it. Add a couple photos or a quick note if you like — both optional —
+              Got it. Add a couple photos or a quick note if you like, both optional, 
               and I&apos;ll point you to the right next step.
             </p>
 
@@ -237,7 +237,7 @@ export function RoofAssistant() {
             </div>
 
             <p className="mt-5 rounded-lg bg-secondary/60 p-3 text-xs text-slate-500">
-              This is a quick, automated guide — it does not replace a professional roof
+              This is a quick, automated guide. It does not replace a professional roof
               inspection. For anything urgent, call us any time.
             </p>
 

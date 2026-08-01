@@ -16,14 +16,14 @@ import { PhoneLink } from "@/components/shared/phone-link";
 
 /**
  * Commercial consultation flow (PRD §4.2): dedicated form with
- * "commercial" tagging so the owner can triage. Consultation framing —
+ * "commercial" tagging so the owner can triage. Consultation framing, 
  * no instant-quote language.
  */
 
 export const metadata: Metadata = buildMetadata({
   title: "Commercial Roofing Consultation in MS | Southeast Roofing",
   description:
-    "Request a commercial roofing consultation from Southeast Roofing — assessment, engineered proposal, and honest guidance for facilities across South Mississippi.",
+    "Request a commercial roofing consultation from Southeast Roofing: assessment, engineered proposal, and honest guidance for facilities across South Mississippi.",
   path: "/commercial/request-consultation",
 });
 
@@ -37,7 +37,7 @@ const expectations = [
   {
     icon: Building2,
     title: "A conversation about your building",
-    text: "Property type, operations, budget cycle — we listen before we look.",
+    text: "Property type, operations, budget cycle. We listen before we look.",
   },
   {
     icon: ClipboardCheck,
@@ -47,7 +47,7 @@ const expectations = [
   {
     icon: FileCheck,
     title: "An engineered proposal",
-    text: "System options itemized line by line — written for boards, owners, and procurement.",
+    text: "System options itemized line by line: written for boards, owners, and procurement.",
   },
 ];
 
@@ -64,7 +64,7 @@ export default function RequestConsultationPage() {
               Request a commercial consultation
             </h1>
             <p className="mt-5 max-w-lg text-lg leading-relaxed text-slate-600">
-              No instant quotes, no pressure — commercial roofs deserve a real
+              No instant quotes, no pressure, commercial roofs deserve a real
               conversation. Tell us about the building and we&apos;ll take it
               from there.
             </p>

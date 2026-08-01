@@ -24,7 +24,7 @@ import { FinalCta } from "@/components/home/final-cta";
 export const metadata: Metadata = buildMetadata({
   title: "Roofing Service Areas in South Mississippi | Southeast Roofing",
   description:
-    "Southeast Roofing serves Mississippi within about two hours of Hattiesburg — the Pine Belt, the Gulf Coast, Jackson, and Meridian. Find your community.",
+    "Southeast Roofing serves Mississippi within about two hours of Hattiesburg: the Pine Belt, the Gulf Coast, Jackson, and Meridian. Find your community.",
   path: "/service-areas",
 });
 
@@ -54,7 +54,7 @@ export default function ServiceAreasHubPage() {
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600">
               We serve Mississippi within about two hours of our Hattiesburg
-              office — the Pine Belt, the Gulf Coast, and the metros at the
+              office: the Pine Belt, the Gulf Coast, and the metros at the
               edges. Same crews, same standards, same itemized proposals,
               everywhere on this map.
             </p>
@@ -126,7 +126,7 @@ export default function ServiceAreasHubPage() {
               </ul>
               <p className="mt-5 text-sm leading-relaxed text-slate-500">
                 Don&apos;t see your town? If you&apos;re within about two hours
-                of Hattiesburg, we almost certainly serve you —{" "}
+                of Hattiesburg, we almost certainly serve you, {" "}
                 <Link
                   href="/contact"
                   className="font-medium text-navy-900 underline-offset-4 hover:underline"

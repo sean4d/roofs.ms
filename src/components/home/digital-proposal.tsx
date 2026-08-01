@@ -11,8 +11,8 @@ import { InteractiveProposal } from "@/components/home/interactive-proposal";
 
 /**
  * Digital proposal section (owner directive 2026-07-04): the retail
- * experience for a discerning buyer — itemized transparency, toggleable
- * upgrades, no hidden fees — now with a live interactive example the
+ * experience for a discerning buyer: itemized transparency, toggleable
+ * upgrades, no hidden fees, now with a live interactive example the
  * customer can play with (figures are owner-supplied example pricing).
  */
 export function DigitalProposal() {

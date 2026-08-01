@@ -8,7 +8,7 @@ import { PhoneLink } from "@/components/shared/phone-link";
 import { Button } from "@/components/ui/button";
 
 /**
- * Commercial final CTA band (PRD §4.2): consultation-first — commercial
+ * Commercial final CTA band (PRD §4.2): consultation-first, commercial
  * buyers expect a conversation, not an instant quote.
  */
 export function CommercialCta() {
@@ -31,7 +31,7 @@ export function CommercialCta() {
           </h2>
           <p className="mt-4 text-lg text-steel-100">
             A consultation, not a sales pitch: we assess your building, your
-            operations, and your budget cycle — then propose the system that
+            operations, and your budget cycle, then propose the system that
             actually fits.
           </p>
         </Reveal>

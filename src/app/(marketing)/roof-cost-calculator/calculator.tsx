@@ -123,7 +123,7 @@ export function CostCalculator() {
               </div>
             )}
             <p className="rounded-lg bg-white p-3 text-xs text-slate-500">
-              This is an estimate only. Final pricing depends on an on-site inspection —
+              This is an estimate only. Final pricing depends on an on-site inspection: 
               roof condition, access, and material details can change the number.
             </p>
             <Link
@@ -131,7 +131,7 @@ export function CostCalculator() {
               onClick={() => track("cta_click", { action: "free-inspection", source: "cost-calculator" })}
               className="inline-flex items-center justify-center gap-2 rounded-full bg-navy-900 px-6 py-3 font-semibold text-white"
             >
-              Get your exact price — free inspection
+              Get your exact price, free inspection
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </>

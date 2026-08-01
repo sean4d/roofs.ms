@@ -58,7 +58,7 @@ export default function StormDamagePage() {
               Storm Center:
             </span>{" "}
             live Mississippi weather alerts, the first-hours checklist, and real
-            damage photos — all in one place.
+            damage photos, all in one place.
           </p>
           <Button
             className="shrink-0 bg-white text-primary hover:bg-steel-100"
@@ -71,7 +71,7 @@ export default function StormDamagePage() {
         </div>
       </section>
 
-      {/* Two paths — emergency + insurance, the hub's primary job */}
+      {/* Two paths: emergency + insurance, the hub's primary job */}
       <Section>
         <SectionHeading
           eyebrow="Start here"
@@ -100,12 +100,12 @@ export default function StormDamagePage() {
         </StaggerGroup>
       </Section>
 
-      {/* Damage types — real documentation photos */}
+      {/* Damage types, real documentation photos */}
       <Section tone="surface">
         <SectionHeading
           eyebrow="What storms do here"
           title="The damage we document every season"
-          description="Real inspection photos from South Mississippi roofs — this is what we look for and what your insurer needs to see."
+          description="Real inspection photos from South Mississippi roofs. This is what we look for and what your insurer needs to see."
         />
         <StaggerGroup as="ul" className="mt-12 grid gap-6 sm:grid-cols-2">
           {stormHub.damageTypes.map((damage) => (

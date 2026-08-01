@@ -8,7 +8,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { ServicePage } from "@/components/services/service-page";
 
 /**
- * Commercial service pages (PRD §4.2) — one dynamic route, content from
+ * Commercial service pages (PRD §4.2), one dynamic route, content from
  * the registry. Static siblings (metal-roofing, industries,
  * request-consultation) never reach this route.
  */

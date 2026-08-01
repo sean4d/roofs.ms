@@ -5,7 +5,7 @@ import { buildMetadata } from "@/lib/seo";
 import { RequestPage } from "@/components/forms/request-page";
 
 /**
- * Roof repair request — where "repair" CTAs land, instead of a generic
+ * Roof repair request, where "repair" CTAs land, instead of a generic
  * inspection page. Prefills the service so the lead arrives correctly tagged.
  */
 

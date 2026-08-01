@@ -23,13 +23,13 @@ import { FinalCta } from "@/components/home/final-cta";
  * transcribed verbatim from the owner's Google profile (permission
  * granted 2026-07-05, see content/reviews.ts) and every claim links to
  * a record we cannot edit (Google, BBB, GAF). No AggregateRating
- * schema — self-collected review markup is against Google guidelines.
+ * schema: self-collected review markup is against Google guidelines.
  */
 
 export const metadata: Metadata = buildMetadata({
   title: "Roofing Reviews in Hattiesburg, MS | Southeast Roofing",
   description:
-    "Real 5-star Google reviews from Southeast Roofing customers, quoted verbatim and verifiable at the source — plus our GAF certification and BBB A+ rating.",
+    "Real 5-star Google reviews from Southeast Roofing customers, quoted verbatim and verifiable at the source, plus our GAF certification and BBB A+ rating.",
   path: "/reviews",
 });
 
@@ -38,7 +38,7 @@ const breadcrumbs = [
   { name: "Reviews", path: "/reviews" },
 ];
 
-// A quick cross-section of real completed work — one photo per city
+// A quick cross-section of real completed work, one photo per city
 const recentWork = Object.values(
   Object.fromEntries(
     projectPhotos
@@ -49,7 +49,7 @@ const recentWork = Object.values(
 
 export default async function ReviewsPage() {
   // Every live Google review (via the GBP API), freshest first, with the
-  // owner's replies — new reviews appear here on their own. Curated verbatim
+  // owner's replies, new reviews appear here on their own. Curated verbatim
   // reviews fill in behind them only for reviewers the live feed hasn't covered.
   const { live, rating, count, reviews: displayReviews } =
     await getSiteReviews();
@@ -93,7 +93,7 @@ export default async function ReviewsPage() {
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600">
               Every quote below is copied word-for-word from our live Google
-              profile — where reviews are written by real customers and we
+              profile, where reviews are written by real customers and we
               can&apos;t touch a word of them. Don&apos;t take our page&apos;s
               word for it either: the source is one tap away.
             </p>
@@ -138,12 +138,12 @@ export default async function ReviewsPage() {
       {/* Verification badges (shared with homepage) */}
       <ReviewsTrust />
 
-      {/* Real Google reviews — republished verbatim with owner permission */}
+      {/* Real Google reviews, republished verbatim with owner permission */}
       <Section>
         <SectionHeading
           eyebrow="In their words"
           title="What customers wrote on Google"
-          description="Quoted word-for-word from our public Google reviews — typos and all, because editing reviews is where trust dies. Every one is verifiable on our live profile."
+          description="Quoted word-for-word from our public Google reviews, typos and all, because editing reviews is where trust dies. Every one is verifiable on our live profile."
         />
         <StaggerGroup className="mt-12 columns-1 gap-5 md:columns-2 lg:columns-3 [&>*]:mb-5 [&>*]:break-inside-avoid">
           {displayReviews.map((review) => (
@@ -246,7 +246,7 @@ export default async function ReviewsPage() {
               Every quote above appears word-for-word as the customer wrote it
               on Google, where reviews are tied to real accounts and we
               can&apos;t edit, reword, or bury a single one. Read them at the
-              source, good and bad — that&apos;s the standard we think you
+              source, good and bad, that&apos;s the standard we think you
               should hold every roofer to.
             </p>
           </Reveal>
@@ -258,7 +258,7 @@ export default async function ReviewsPage() {
         <SectionHeading
           eyebrow="The work behind the words"
           title="Real roofs. Real Southeast Roofing projects."
-          description="Reviews tell you how the job went. The gallery shows you what we left behind — every photo from a genuine Southeast Roofing job site."
+          description="Reviews tell you how the job went. The gallery shows you what we left behind, every photo from a genuine Southeast Roofing job site."
         />
         <StaggerGroup className="mt-12 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
           {recentWork.map((photo) => (

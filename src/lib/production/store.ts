@@ -15,14 +15,14 @@ import {
 
 /**
  * Storage for the production tracker. Projects live in the site's existing
- * Sanity dataset as `productionProject` documents, but — because that dataset
- * is publicly readable — everything sensitive travels inside an encrypted
+ * Sanity dataset as `productionProject` documents, but, because that dataset
+ * is publicly readable, everything sensitive travels inside an encrypted
  * `payload` string (see ./crypto). Only non-identifying plumbing (sort order,
  * archived flag, timestamps) is stored as plaintext fields for cheap queries.
  *
  * Set PRODUCTION_TEST_MEMORY_STORE=1 to swap in an in-process store for local
  * development and end-to-end tests without a Sanity token. Never set it in
- * production — data would vanish on every deploy.
+ * production, data would vanish on every deploy.
  */
 
 const DOC_TYPE = "productionProject";
@@ -123,7 +123,7 @@ export async function listProjects(): Promise<ProductionProject[]> {
     try {
       projects.push(toProject(doc));
     } catch {
-      // A payload sealed under a rotated key is unreadable — skip rather than
+      // A payload sealed under a rotated key is unreadable, skip rather than
       // take the whole dashboard down. (Recover by restoring the old key.)
     }
   }
@@ -198,7 +198,7 @@ export async function updateProject(
   const now = new Date().toISOString();
   const events: string[] = [];
 
-  // Text/date fields — only the keys actually sent change.
+  // Text/date fields, only the keys actually sent change.
   for (const key of Object.keys(FIELD_HISTORY) as (keyof typeof FIELD_HISTORY)[]) {
     const next = patch[key as keyof ProjectPatch];
     if (typeof next === "string" && next !== payload[key as keyof Payload]) {
@@ -207,7 +207,7 @@ export async function updateProject(
     }
   }
 
-  // Checklist — only keys valid for this project type are accepted, and one
+  // Checklist, only keys valid for this project type are accepted, and one
   // checkbox never flips another.
   if (patch.checklist) {
     const validKeys = new Set(

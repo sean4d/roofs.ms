@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 /**
  * Financing (PRD §3.9, owner refinement 2026-07-04): simple, trustworthy,
  * three-step clarity with the GoodLeap application as the direct action.
- * No invented rates or terms — all copy comes from content data.
+ * No invented rates or terms, all copy comes from content data.
  */
 export function FinancingStrip() {
   const Icon = financingSection.icon;
@@ -45,7 +45,7 @@ export function FinancingStrip() {
           </Reveal>
           <Reveal delay={0.1}>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              {/* External GoodLeap application — opens in a new tab */}
+              {/* External GoodLeap application, opens in a new tab */}
               <Button
                 size="xl"
                 className="w-full bg-white text-primary hover:bg-steel-100 sm:w-auto"

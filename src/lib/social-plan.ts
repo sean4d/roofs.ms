@@ -2,18 +2,18 @@ import type { PhaseKey } from "@/config/job-taxonomy";
 
 /**
  * The marketer gate. Between the upload form and the social fan-out, this
- * decides what a post should actually look like — because "post whatever was
+ * decides what a post should actually look like, because "post whatever was
  * uploaded, in whatever order" produced a Facebook carousel that opened with
  * five plywood decking shots under the words "another quality roof installed".
  *
  * Owner rules (2026-08-01):
- *   • Finished work leads. The feed thumbnail is the whole ballgame — nobody
+ *   • Finished work leads. The feed thumbnail is the whole ballgame, nobody
  *     sees slide six.
  *   • On a genuine before/after job the BEFORE leads and photos alternate 1:1,
  *     paired by upload order.
  *   • During-install shots cap at ONE and always go last. They are context,
  *     never the pitch.
- *   • Nothing is labelled. No burned-in badges — the caption explains.
+ *   • Nothing is labelled. No burned-in badges: the caption explains.
  *   • A job with no finished-work photos does not auto-post at all.
  *
  * Single-image surfaces (Google Business Profile, the map pin, the gallery
@@ -33,7 +33,7 @@ export type PostShape =
   | "showcase"
   /** Before → after, alternating in pairs. */
   | "reveal"
-  /** Not postable as-is — no finished roof to show. */
+  /** Not postable as-is, no finished roof to show. */
   | "hold";
 
 export interface SocialPlan<T extends PlannablePhoto = PlannablePhoto> {
@@ -44,7 +44,7 @@ export interface SocialPlan<T extends PlannablePhoto = PlannablePhoto> {
   hero?: T;
   /** Photos deliberately left off the post (they still live on the site). */
   omitted: T[];
-  /** Plain-English rationale — shown on the confirm screen. */
+  /** Plain-English rationale: shown on the confirm screen. */
   reason: string;
   /** True when this must not auto-post; the website still gets everything. */
   hold: boolean;
@@ -55,7 +55,7 @@ function byPhase<T extends PlannablePhoto>(photos: T[], phase: PhaseKey): T[] {
 }
 
 /**
- * Interleave before/after 1:1, paired by upload order — first before with first
+ * Interleave before/after 1:1, paired by upload order, first before with first
  * after, and so on. Leftovers from the longer side follow the paired run.
  */
 function pairUp<T extends PlannablePhoto>(befores: T[], afters: T[]): T[] {
@@ -89,9 +89,9 @@ export function planSocialPost<T extends PlannablePhoto>(
       hold: true,
       reason:
         during.length > 0 && befores.length === 0
-          ? "Only during-install photos — there's no finished roof to show yet."
+          ? "Only during-install photos, there's no finished roof to show yet."
           : befores.length > 0 && during.length === 0
-            ? "Only before photos — nothing finished to pair them with."
+            ? "Only before photos, nothing finished to pair them with."
             : "No after photos, so there's nothing to lead the post with.",
     };
   }
@@ -99,7 +99,7 @@ export function planSocialPost<T extends PlannablePhoto>(
   const hero = afters[heroIndexInAfters] ?? afters[0];
   const shape: PostShape = befores.length > 0 ? "reveal" : "showcase";
 
-  // Reveal leads with the before (owner's call — the pairing makes it read as
+  // Reveal leads with the before (owner's call. The pairing makes it read as
   // a setup, not as our work). Showcase leads with the hero finished shot.
   let order: T[];
   if (shape === "reveal") {
@@ -113,7 +113,7 @@ export function planSocialPost<T extends PlannablePhoto>(
   const limit = CAROUSEL_MAX - roomForDuring;
   if (order.length > limit) {
     order = order.slice(0, limit);
-    // Never end a reveal on an orphan "before" — it would look like we posted
+    // Never end a reveal on an orphan "before". It would look like we posted
     // a bad roof and stopped.
     if (shape === "reveal" && order[order.length - 1]?.phase === "before") {
       order = order.slice(0, -1);
@@ -128,7 +128,7 @@ export function planSocialPost<T extends PlannablePhoto>(
   const omitted = photos.filter((p) => !kept.has(p));
   const omittedCount = (all: T[], used: T[]) => all.length - used.length;
 
-  // Count what actually ships, not what was uploaded — the carousel ceiling can
+  // Count what actually ships, not what was uploaded. The carousel ceiling can
   // trim pairs, and the confirm screen has to tell the truth about that.
   const shippedBefore = order.filter((p) => p.phase === "before").length;
   const shippedAfter = order.filter((p) => p.phase === "after").length;
@@ -168,6 +168,6 @@ export function captionBrief(plan: SocialPlan): string {
     "The post shows the finished roof" +
     (during
       ? ", ending on a single photo of the work in progress (e.g. decking or underlayment)."
-      : " only — no in-progress photos are included.")
+      : " only, no in-progress photos are included.")
   );
 }

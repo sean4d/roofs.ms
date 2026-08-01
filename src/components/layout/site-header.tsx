@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { MobileNav } from "@/components/layout/mobile-nav";
 
 /**
- * Sticky site header (PRD §6 v3 — light, premium). White surface that gains
+ * Sticky site header (PRD §6 v3, light, premium). White surface that gains
  * a soft border + shadow once the user scrolls; condenses slightly.
  */
 export function SiteHeader() {
@@ -83,13 +83,13 @@ export function SiteHeader() {
         <Link
           href="/"
           className="flex shrink-0 items-center gap-2.5"
-          aria-label="Southeast Roofing — home"
+          aria-label="Southeast Roofing, home"
         >
           <Image
             src={brandAssets.logo.mark}
             /* Descriptive alt for crawlers/image search. The anchor's
                aria-label supplies the accessible name, so screen readers
-               announce the link once — no duplicate announcement. */
+               announce the link once, no duplicate announcement. */
             alt="Southeast Roofing logo"
             width={brandAssets.logo.markAspect.width}
             height={brandAssets.logo.markAspect.height}
@@ -211,7 +211,7 @@ export function SiteHeader() {
         <div className="flex items-center gap-2.5 sm:gap-3">
           {/*
             Call-first conversion (Phase 4 §6): the number is always one tap
-            away — full Call Now button on desktop, icon button on mobile.
+            away, full Call Now button on desktop, icon button on mobile.
           */}
           {siteConfig.phone.tel && (
             <>

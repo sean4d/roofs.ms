@@ -7,7 +7,7 @@ import { RoofDiagram } from "@/components/roof/roof-diagram";
 import { Reveal } from "@/components/motion/reveal";
 
 /**
- * Block renderer for Learning Center articles — keeps guides visual and
+ * Block renderer for Learning Center articles, keeps guides visual and
  * scannable (owner directive: customers are visual learners) instead of
  * walls of prose.
  */
@@ -124,7 +124,7 @@ export function ArticleBody({ blocks }: { blocks: ArticleBlock[] }) {
             );
           case "anatomy":
             // The interactive hot-spot diagram, not the static exploded stack
-            // that service pages use — an article reader is here to explore.
+            // that service pages use. An article reader is here to explore.
             return (
               <div key={key} className="my-10">
                 <RoofDiagram />

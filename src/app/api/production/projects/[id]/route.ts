@@ -38,7 +38,7 @@ export async function PATCH(
     return NextResponse.json({ project });
   } catch {
     return NextResponse.json(
-      { error: "Save failed. Your change is still on screen — retry." },
+      { error: "Save failed. Your change is still on screen: retry." },
       { status: 500 },
     );
   }

@@ -8,10 +8,10 @@ import { siteConfig } from "@/config/site";
  * Site-wide default Open Graph / social share image (PRD §10.5). Placed at
  * the app root so every route inherits it unless a segment supplies its own
  * opengraph-image. Branded navy card, white wordmark, real credentials and
- * NAP only — no invented claims (integrity rule, PRD §0.2).
+ * NAP only, no invented claims (integrity rule, PRD §0.2).
  */
 
-export const alt = `${siteConfig.name} — Roofing Contractor in Hattiesburg, MS`;
+export const alt = `${siteConfig.name}: Roofing Contractor in Hattiesburg, MS`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -67,7 +67,7 @@ export default async function Image() {
             lineHeight: 1.35,
           }}
         >
-          Residential &amp; commercial roofing across South Mississippi —
+          Residential &amp; commercial roofing across South Mississippi: 
           replacement, repair, metal systems, and storm restoration.
         </div>
       </div>

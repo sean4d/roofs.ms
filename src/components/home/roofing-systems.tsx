@@ -8,7 +8,7 @@ import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 
 /**
  * Roofing systems (owner refinement 2026-07-04): asphalt shingle and metal
- * presented as the two systems we install — matched cards, equal
+ * presented as the two systems we install: matched cards, equal
  * prominence, each spanning both divisions. Metal is never a niche.
  */
 export function RoofingSystems() {

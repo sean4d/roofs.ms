@@ -23,7 +23,7 @@ function passphrase(): string {
 }
 
 /**
- * Signing key derived from the passphrase plus the server-only write token —
+ * Signing key derived from the passphrase plus the server-only write token, 
  * changing either invalidates all outstanding sessions, which is exactly what
  * you want after rotating a password.
  */
@@ -90,7 +90,7 @@ export function sessionCookieOptions() {
 /**
  * Best-effort in-memory throttle: 10 failed attempts per IP per 15 minutes.
  * Serverless instances each keep their own map, so this is a speed bump, not
- * a fortress — fine for a shared-passphrase internal tool.
+ * a fortress, fine for a shared-passphrase internal tool.
  */
 const WINDOW_MS = 15 * 60 * 1000;
 const MAX_FAILURES = 10;

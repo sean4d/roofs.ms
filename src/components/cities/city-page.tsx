@@ -22,8 +22,8 @@ import { Button } from "@/components/ui/button";
 import { FinalCta } from "@/components/home/final-cta";
 
 /**
- * City service-area page template (PRD §5). Local proof first: when real
- * Southeast Roofing project photos exist for the city they lead the page —
+ * City service-area page template (PRD §5). Local proof first, when real
+ * Southeast Roofing project photos exist for the city they lead the page, 
  * the strongest anti-doorway signal there is.
  */
 
@@ -114,7 +114,7 @@ export function CityPage({
         </div>
       </section>
 
-      {/* Local intro — the anti-doorway core */}
+      {/* Local intro, the anti-doorway core */}
       <Section>
         <SectionHeading title={cityContent.intro.title} />
         <Reveal className="mt-6 max-w-3xl space-y-5">
@@ -135,7 +135,7 @@ export function CityPage({
           <SectionHeading
             eyebrow="Local proof"
             title={`Roofs we've completed in ${cityContent.city}`}
-            description="Every photo below is a genuine Southeast Roofing project in this community — not stock, not staged."
+            description="Every photo below is a genuine Southeast Roofing project in this community: not stock, not staged."
           />
           <StaggerGroup className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {localPhotos.slice(0, 4).map((photo) => (
@@ -229,12 +229,12 @@ export function CityPage({
         </div>
       </Section>
 
-      {/* Local reviews + map — real proof and a pin on this community */}
+      {/* Local reviews + map, real proof and a pin on this community */}
       <Section tone="surface">
         <SectionHeading
           eyebrow="Trusted nearby"
           title={`Why ${cityContent.city}-area homeowners choose us`}
-          description="Real 5-star Google reviews from customers across South Mississippi — and where to find us."
+          description="Real 5-star Google reviews from customers across South Mississippi, and where to find us."
         />
         <div className="mt-12 grid gap-8 lg:grid-cols-[1.15fr_1fr] lg:gap-10">
           {reviews.length > 0 && (
@@ -274,7 +274,7 @@ export function CityPage({
           <Reveal>
             <GoogleMapEmbed
               query={`${cityContent.city}, Mississippi`}
-              title={`Map of ${cityContent.city}, Mississippi — Southeast Roofing service area`}
+              title={`Map of ${cityContent.city}, Mississippi, Southeast Roofing service area`}
               className="h-full min-h-[20rem] w-full rounded-2xl border border-border"
             />
           </Reveal>
@@ -290,7 +290,7 @@ export function CityPage({
         </Reveal>
       </Section>
 
-      {/* Nearby communities — weave the service-area hub together */}
+      {/* Nearby communities, weave the service-area hub together */}
       {nearby.length > 0 && (
         <Section>
           <SectionHeading

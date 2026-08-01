@@ -41,7 +41,7 @@ export const PHASES = [
 
 export type PhaseKey = (typeof PHASES)[number]["key"];
 
-// Specific product LINES — these become the gallery's "product" filter chips.
+// Specific product LINES. These become the gallery's "product" filter chips.
 const SHINGLE_LINES = [
   "GAF Timberline HDZ",
   "GAF Timberline Natural Shadow",
@@ -178,7 +178,7 @@ export const JOB_TYPES: JobType[] = [
   },
 ];
 
-/** Residential vs commercial — matches the existing `project.channel` field. */
+/** Residential vs commercial, matches the existing `project.channel` field. */
 export const CHANNELS = [
   { value: "residential", label: "Residential" },
   { value: "commercial", label: "Commercial" },

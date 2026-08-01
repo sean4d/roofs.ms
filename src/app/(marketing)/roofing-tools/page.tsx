@@ -14,7 +14,7 @@ import { FinalCta } from "@/components/home/final-cta";
 /**
  * Roofing Tools hub (owner request 2026-07-24): one page listing every
  * interactive tool as a clickable card, linked from the main nav so people can
- * actually find them. Cards come straight from the TOOLS registry — one source
+ * actually find them. Cards come straight from the TOOLS registry, one source
  * of truth, no drift.
  */
 
@@ -69,7 +69,7 @@ export default function RoofingToolsPage() {
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600">
               Ballpark a price, preview a color on a real roof, check storm
-              damage, or walk through an insurance claim — free, no email
+              damage, or walk through an insurance claim, free, no email
               required. Every tool we&apos;ve built, one tap away.
             </p>
           </Reveal>

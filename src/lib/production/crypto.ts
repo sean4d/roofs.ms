@@ -20,7 +20,7 @@ import {
  * server-only `SANITY_WRITE_TOKEN` (guaranteed present wherever writes work).
  * NOTE: rotating the write token without first setting PRODUCTION_DATA_KEY to
  * the value derived from the old token makes existing tracker data
- * unreadable — set PRODUCTION_DATA_KEY once in production and leave it alone.
+ * unreadable, set PRODUCTION_DATA_KEY once in production and leave it alone.
  */
 
 function dataKey(): Buffer {

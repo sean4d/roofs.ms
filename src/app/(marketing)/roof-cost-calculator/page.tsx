@@ -17,7 +17,7 @@ import { CostCalculator } from "./calculator";
 export const metadata: Metadata = buildMetadata({
   title: "Roof Cost Calculator in Mississippi | Southeast Roofing",
   description:
-    "Estimate a roof replacement cost range in South Mississippi by material, size, and pitch. Free and instant — no email needed. Exact price from a free inspection.",
+    "Estimate a roof replacement cost range in South Mississippi by material, size, and pitch. Free and instant, no email needed. Exact price from a free inspection.",
   path: "/roof-cost-calculator",
   titleAbsolute: true,
 });
@@ -46,7 +46,7 @@ const faqs = [
   {
     question: "Does Southeast Roofing offer financing?",
     answer:
-      "Yes — $0-down financing is available. The monthly figure shown here is illustrative only; your actual terms depend on the lender and your application.",
+      "Yes, $0-down financing is available. The monthly figure shown here is illustrative only; your actual terms depend on the lender and your application.",
   },
 ];
 
@@ -62,7 +62,7 @@ export default function RoofCostCalculatorPage() {
             Roof Replacement Cost Calculator
           </h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600">
-            Get an instant, honest estimate range for your roof — no email required.
+            Get an instant, honest estimate range for your roof, no email required.
             Pick your material and a few details to see typical South Mississippi pricing,
             then book a free inspection for your exact number.
           </p>

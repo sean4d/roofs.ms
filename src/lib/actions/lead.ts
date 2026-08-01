@@ -5,7 +5,7 @@ import { deliverLead, type Lead } from "@/lib/leads";
 /**
  * Lead form server action (invoked via useActionState). Validates, filters
  * obvious spam via a honeypot field, and fans out through the lead service.
- * No auth needed — this is a public lead-capture endpoint by design; it
+ * No auth needed. This is a public lead-capture endpoint by design; it
  * accepts nothing but contact fields and writes to no data store.
  */
 
@@ -29,7 +29,7 @@ export async function submitLead(
   formData: FormData,
 ): Promise<LeadFormState> {
   // Honeypot: real users never fill this hidden field. Pretend success so
-  // bots don't learn — no lead is delivered.
+  // bots don't learn, no lead is delivered.
   if (text(formData, "website")) {
     return { status: "success" };
   }
@@ -64,7 +64,7 @@ export async function submitLead(
 
   // The free-inspection ("short") form needs a property address + city so the
   // lead can create a proper job (with a roof to measure) in the CRM. The
-  // "full" contact form stays low-friction — general questions don't need one.
+  // "full" contact form stays low-friction, general questions don't need one.
   if (text(formData, "variant") === "short") {
     if (!lead.address) errors.address = "Please add the property address.";
     if (!lead.city) errors.city = "Please add the city or ZIP.";
@@ -84,7 +84,7 @@ export async function submitLead(
     return {
       status: "error",
       message:
-        "Something went wrong sending your request. Please call us instead — we answer.",
+        "Something went wrong sending your request. Please call us instead. We answer.",
     };
   }
 

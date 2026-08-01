@@ -4,7 +4,7 @@
  * richer Meta integration in syndicate.ts; Nextdoor has no practical posting
  * API and stays manual.)
  *
- * Gated by env credentials — with none set it's a safe no-op and the website
+ * Gated by env credentials, with none set it's a safe no-op and the website
  * upload still fully succeeds, exactly like the Meta path. Never throws.
  *
  * ── Heads-up on the API shape ──────────────────────────────────────────────
@@ -13,19 +13,19 @@
  * browser dev tools). The pieces below are the documented/known-stable ones:
  *   • endpoint: POST /api/v2/scheduler/posts?userId=..&blogId=..
  *   • auth: X-Mc-Auth header (NOT a Bearer token)
- *   • providers: array of OBJECTS — [{ network: "google" }], not strings
+ *   • providers: array of OBJECTS: [{ network: "google" }], not strings
  *   • network strings: Google Business Profile = "google", TikTok = "tiktok"
  *   • autoPublish: true  → publish (false = save as draft)
  *   • publicationDate: { dateTime: "YYYY-MM-DDTHH:mm:ss", timezone }
  * The MEDIA field is the one under-documented part. We send an array of public
  * image URLs as `media`; if a live test shows Metricool wants a pre-normalized
- * mediaId (some accounts do), that's the single spot to adjust — see MEDIA_FIELD
+ * mediaId (some accounts do), that's the single spot to adjust, see MEDIA_FIELD
  * below. Every response is logged so the first real post is easy to verify.
  */
 
 const ENDPOINT = "https://app.metricool.com/api/v2/scheduler/posts";
 
-/** Central time — Southeast Roofing is in Mississippi. */
+/** Central time, Southeast Roofing is in Mississippi. */
 const TIMEZONE = "America/Chicago";
 
 /** Body field carrying the image URLs. See media heads-up above. */
@@ -46,7 +46,7 @@ const NETWORK: Record<"google-business" | "tiktok", string> = {
  * ── Google Business Profile "Photo" content type ───────────────────────────
  * GBP accepts two DISTINCT kinds of content in Metricool's composer:
  *   • "Post"  → a text update in the profile's *Posts* feed (what publish()
- *               above already does — one image + our caption).
+ *               above already does, one image + our caption).
  *   • "Photo" → a bare photo with NO caption, filed in the profile's *Photos*
  *               gallery. This is the surface we want job photos to land in.
  * The photo content type is selected by a per-network settings object, the same
@@ -58,7 +58,7 @@ const NETWORK: Record<"google-business" | "tiktok", string> = {
  * after the first live test. Run POST /api/upload?step=gbp-photo as a DRY RUN
  * to see the exact body, then with { confirm: true } to send a single photo and
  * confirm it lands in the gallery (not the Posts feed). If it lands in the feed
- * instead, tweak GBP_DATA_FIELD / GBP_PHOTO_TYPE here — and only here.
+ * instead, tweak GBP_DATA_FIELD / GBP_PHOTO_TYPE here, and only here.
  */
 const GBP_DATA_FIELD = "googleBusinessData";
 const GBP_PHOTO_TYPE = "PHOTO";
@@ -107,7 +107,7 @@ function scheduleAt(offsetMinutes: number): string {
 /**
  * Publish one post to one network via Metricool. GBP takes a single image;
  * TikTok takes the photo set (photo-mode). Returns a per-network result and
- * never throws — the caller decides how to surface it.
+ * never throws. The caller decides how to surface it.
  */
 async function publish(
   network: "google-business" | "tiktok",
@@ -124,7 +124,7 @@ async function publish(
       return {
         network,
         status: "skipped",
-        note: "Needs video — TikTok rejects photo posts",
+        note: "Needs video: TikTok rejects photo posts",
       };
     }
     media = [post.videoUrl];
@@ -137,7 +137,7 @@ async function publish(
 
   const body = {
     autoPublish: true,
-    // Schedule a few minutes out — Metricool rejects past times; autoPublish
+    // Schedule a few minutes out, Metricool rejects past times; autoPublish
     // then releases it on schedule.
     publicationDate: { dateTime: scheduleAt(5), timezone: TIMEZONE },
     text: post.text,
@@ -182,7 +182,7 @@ async function publish(
  * Metricool's media-normalize step: hand it a public image URL and Metricool
  * re-hosts the file on its own CDN, returning the URL to use in the post. A
  * normal GBP Post accepts our Sanity URLs directly, but the Photo content type
- * is stricter about media provenance, so we normalize first. Best-effort — on
+ * is stricter about media provenance, so we normalize first. Best-effort, on
  * any failure we fall back to the original URL so a post is never blocked.
  */
 async function normalizeMedia(url: string, token: string): Promise<string> {
@@ -205,7 +205,7 @@ export interface GbpPhotoResult {
   status: "posted" | "skipped" | "error";
   imageUrl: string;
   note?: string;
-  /** The exact body sent to Metricool — surfaced so the first live post (and
+  /** The exact body sent to Metricool, surfaced so the first live post (and
    *  the flag it hinges on) is verifiable without guessing. */
   request?: unknown;
   /** Metricool's raw response, for diagnosing the content-type flag. */
@@ -216,9 +216,9 @@ export interface GbpPhotoResult {
 function gbpPhotoBody(mediaUrl: string) {
   return {
     autoPublish: true,
-    // Schedule a few minutes out — Metricool rejects past times.
+    // Schedule a few minutes out, Metricool rejects past times.
     publicationDate: { dateTime: scheduleAt(5), timezone: TIMEZONE },
-    // A Photo carries NO caption — the empty text is what makes GBP file it in
+    // A Photo carries NO caption. The empty text is what makes GBP file it in
     // the Photos gallery rather than the Posts feed.
     text: "",
     providers: [{ network: NETWORK["google-business"] }],
@@ -229,10 +229,10 @@ function gbpPhotoBody(mediaUrl: string) {
 
 /**
  * Post ONE job photo to the Google Business Profile *Photos gallery* via
- * Metricool's photo-only content type. One image per call — GBP takes a single
+ * Metricool's photo-only content type. One image per call, GBP takes a single
  * image per photo item, so a set is a loop of careful single calls. Never
  * throws. Pass `{ dryRun: true }` to get the exact request body WITHOUT sending
- * it — the safe first step for verifying the flag.
+ * it, the safe first step for verifying the flag.
  */
 export async function postGbpPhoto(
   imageUrl: string,
@@ -252,7 +252,7 @@ export async function postGbpPhoto(
     return {
       status: "skipped",
       imageUrl,
-      note: "Dry run — not sent",
+      note: "Dry run: not sent",
       request: body,
     };
   }

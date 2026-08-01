@@ -31,7 +31,7 @@ export const TOOLS = {
   "cost-calculator": {
     key: "cost-calculator",
     title: "Roof Cost Calculator",
-    blurb: "Ballpark your project in seconds — no email needed.",
+    blurb: "Ballpark your project in seconds: no email needed.",
     href: "/roof-cost-calculator",
     icon: Calculator,
   },
