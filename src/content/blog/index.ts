@@ -17,6 +17,18 @@ export interface BlogPost {
   date: string;
   readMinutes: number;
   body: ArticleBlock[];
+  /**
+   * Lead image. Rendered at the top of the post AND used for the social share
+   * card and Article schema, so it must be a real photo of what the post is
+   * about — never decoration.
+   */
+  image?: { src: string; alt: string };
+  /**
+   * Other businesses this post genuinely discusses. Emitted as schema.org
+   * `mentions` so the relationship reads as an entity association rather than
+   * only as a link.
+   */
+  mentions?: { name: string; url: string }[];
 }
 
 export const blogPosts: BlogPost[] = [
@@ -31,6 +43,16 @@ export const blogPosts: BlogPost[] = [
       "Black streaks aren\u2019t dirt \u2014 they\u2019re alive, and they feed on your shingles. Here\u2019s our new roof-washing service, how it works, and why the roof gets evaluated before anything touches it.",
     date: "2026-07-30",
     readMinutes: 4,
+    image: {
+      src: "/images/services/roof-washing-asphalt-shingle-roof.jpg",
+      alt: "Technician rinsing algae staining from an asphalt shingle roof with a low-pressure spray",
+    },
+    mentions: [
+      {
+        name: siteConfig.partners.exteriorCleaning.name,
+        url: siteConfig.partners.exteriorCleaning.url,
+      },
+    ],
     body: [
       {
         type: "p",

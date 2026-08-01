@@ -198,6 +198,10 @@ interface ArticleSchemaOptions {
   /** ISO date string */
   datePublished: string;
   dateModified?: string;
+  /** Site-relative path to the image shown on the page itself. */
+  image?: string;
+  /** Organizations the article genuinely discusses (e.g. a named partner). */
+  mentions?: { name: string; url: string }[];
 }
 
 /**
@@ -211,6 +215,8 @@ export function articleSchema({
   path,
   datePublished,
   dateModified,
+  image,
+  mentions,
 }: ArticleSchemaOptions): JsonLdObject {
   return compact({
     "@context": "https://schema.org",
@@ -219,10 +225,23 @@ export function articleSchema({
     description,
     url: absoluteUrl(path),
     mainEntityOfPage: absoluteUrl(path),
+    // Google lists image as recommended for Article and uses it for Discover
+    // and Top Stories treatments. Only ever the image actually on the page.
+    image: image ? absoluteUrl(image) : undefined,
     datePublished,
     dateModified: dateModified ?? datePublished,
     author: { "@id": absoluteUrl("/#organization") },
     publisher: { "@id": absoluteUrl("/#organization") },
+    // Organizations this article genuinely discusses. Used to make the
+    // relationship between two linked businesses legible as an entity
+    // association rather than leaving search engines to infer it from a link.
+    mentions: mentions?.length
+      ? mentions.map((m) => ({
+          "@type": "Organization",
+          name: m.name,
+          url: m.url,
+        }))
+      : undefined,
   });
 }
 
