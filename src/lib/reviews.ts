@@ -1,5 +1,6 @@
 import { googleReviews } from "@/content/reviews";
 import { getGoogleReviewData } from "@/lib/google-reviews";
+import { cleanCopy, stripEmDashes } from "@/lib/no-em-dash";
 
 /**
  * One source of truth for reviews shown on the site (reviews page + homepage
@@ -56,10 +57,13 @@ export async function getSiteReviews(): Promise<SiteReviews> {
     .filter((r) => r.text.trim().length > 0)
     .map((r) => ({
       name: r.author,
-      text: r.text,
+      // Reviewers and the owner both type into Google, where nothing enforces
+      // the site's punctuation. Fix it on the way in, once, so every surface
+      // that reads from here is clean.
+      text: stripEmDashes(r.text),
       when: r.when,
       rating: r.rating,
-      reply: r.reply,
+      reply: cleanCopy(r.reply),
     }));
 
   const seen = new Set(liveReviews.map((r) => firstName(r.name)));
