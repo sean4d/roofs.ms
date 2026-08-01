@@ -8,7 +8,7 @@ import { ServicePage } from "@/components/services/service-page";
 
 /**
  * Insurance claim assistance (PRD §4.1 insurance additions): step-by-step
- * claims walkthrough, adjuster meetings, documentation checklist — factual
+ * claims walkthrough, adjuster meetings, documentation checklist, factual
  * assistance language only, no outcome promises.
  */
 

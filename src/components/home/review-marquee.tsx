@@ -7,7 +7,7 @@ import type { DisplayReview } from "@/lib/reviews";
 /**
  * Auto-scrolling wall of real Google reviews for the homepage. The track holds
  * two copies of the list and translates -50%, so the loop is seamless. Pauses
- * on hover/focus, and — for anyone who prefers reduced motion — becomes a
+ * on hover/focus, and: for anyone who prefers reduced motion, becomes a
  * plain horizontal scroller instead of animating.
  */
 export function ReviewMarquee({ reviews }: { reviews: DisplayReview[] }) {

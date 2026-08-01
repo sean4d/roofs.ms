@@ -8,7 +8,7 @@ export const maxDuration = 30;
 const MAX_IMAGES = 4;
 
 /**
- * Damage Analyzer endpoint — thin wrapper over the provider-abstracted analysis
+ * Damage Analyzer endpoint, thin wrapper over the provider-abstracted analysis
  * layer. The provider (Claude vision or the deterministic mock) is chosen
  * inside lib/ai/damage-analyzer.
  */

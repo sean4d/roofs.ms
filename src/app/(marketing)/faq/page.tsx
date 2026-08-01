@@ -21,14 +21,14 @@ import { FinalCta } from "@/components/home/final-cta";
 /**
  * Roofing FAQ hub. Google Business Profile Q&A isn't enabled on our profile,
  * so the question-intent traffic that would have landed there is captured here
- * instead — grouped, accordion-rendered, and emitting FAQPage structured data
+ * instead: grouped, accordion-rendered, and emitting FAQPage structured data
  * so the answers are eligible for rich results and readable by AI assistants.
  */
 
 export const metadata: Metadata = buildMetadata({
-  title: "Roofing FAQ — Hattiesburg & South Mississippi | Southeast Roofing",
+  title: "Roofing FAQ: Hattiesburg & South Mississippi | Southeast Roofing",
   description:
-    "Straight answers about roof costs, insurance claims, licensing, materials, and timelines in South Mississippi — from a licensed, GAF-certified Hattiesburg roofer.",
+    "Straight answers about roof costs, insurance claims, licensing, materials, and timelines in South Mississippi: from a licensed, GAF-certified Hattiesburg roofer.",
   path: "/faq",
   titleAbsolute: true,
 });
@@ -51,13 +51,13 @@ export default function FaqPage() {
               Roofing questions, answered straight
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600">
-              The questions South Mississippi homeowners actually ask us — about
+              The questions South Mississippi homeowners actually ask us, about
               cost, insurance, licensing, materials, and how the work goes. No
               sales spin, and we&apos;ll tell you when the honest answer
               is &ldquo;you don&apos;t need us yet.&rdquo;
             </p>
 
-            {/* Jump links — helps long-page scanning and gives crawlers the
+            {/* Jump links, helps long-page scanning and gives crawlers the
                 section structure. */}
             <ul className="mt-8 flex flex-wrap gap-2">
               {faqGroups.map((group) => (
@@ -113,7 +113,7 @@ export default function FaqPage() {
               Still have a question?
             </h2>
             <p className="mt-5 text-lg leading-relaxed text-steel-100">
-              Ask us directly — the questions homeowners actually ask are where
+              Ask us directly, the questions homeowners actually ask are where
               our next guides and answers come from.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">

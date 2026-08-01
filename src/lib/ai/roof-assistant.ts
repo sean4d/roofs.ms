@@ -2,13 +2,13 @@ import { siteConfig } from "@/config/site";
 import { structuredClaude, type InlineImage } from "@/lib/ai/anthropic";
 
 /**
- * Roof Assistant analysis layer — provider-abstracted. When ANTHROPIC_API_KEY
+ * Roof Assistant analysis layer, provider-abstracted. When ANTHROPIC_API_KEY
  * is set, a Claude vision provider reads any uploaded photos + the visitor's
  * note and returns a tailored preliminary read; otherwise (or on any error) it
  * falls back to the honest, topic-based template below. The UI and API route
  * never change.
  *
- * Nothing here claims to have inspected the roof — the result is preliminary
+ * Nothing here claims to have inspected the roof. The result is preliminary
  * guidance that routes the visitor to the right next step. The Claude provider
  * is held to the same rule by its system prompt: hedge, never diagnose with
  * authority, never invent facts, always route to a free inspection.
@@ -39,13 +39,13 @@ export interface AssistantInput {
   topic: RoofTopic;
   description?: string;
   photoCount?: number;
-  /** Resized JPEG photos (base64, no prefix) — analyzed when Claude is on. */
+  /** Resized JPEG photos (base64, no prefix), analyzed when Claude is on. */
   images?: InlineImage[];
 }
 
 export interface AssistantResult {
   headline: string;
-  /** Hedged, honest — not a claim of inspection. */
+  /** Hedged, honest, not a claim of inspection. */
   read: string;
   urgency: Urgency;
   urgencyNote: string;
@@ -65,19 +65,19 @@ interface TopicSpec {
 const TOPICS: Record<RoofTopic, TopicSpec> = {
   "roof-leak": {
     headline: "Let's track down that leak",
-    read: "Active leaks in our area usually trace back to failed flashing, a dry-rotted pipe boot, or worn shingles — not always where the water shows up inside.",
+    read: "Active leaks in our area usually trace back to failed flashing, a dry-rotted pipe boot, or worn shingles: not always where the water shows up inside.",
     urgency: "high",
     urgencyNote: "Leaks spread fast into decking and drywall. The sooner it's found, the smaller the repair.",
     steps: [
       "Contain the water inside if you safely can (a bucket + move valuables).",
       "Book a free inspection so we can find the actual source, not just the stain.",
-      "Save any photos — they help if a claim is involved.",
+      "Save any photos. They help if a claim is involved.",
     ],
     ctaKinds: ["inspection", "call", "photos"],
   },
   "storm-damage": {
-    headline: "Storm damage — let's protect you",
-    read: "Wind and hail often cause damage that isn't obvious from the ground — lifted shingles, bruised mats, and cracked seals that leak later.",
+    headline: "Storm damage, let's protect you",
+    read: "Wind and hail often cause damage that isn't obvious from the ground: lifted shingles, bruised mats, and cracked seals that leak later.",
     urgency: "high",
     urgencyNote: "Insurance has timelines. Documenting damage early protects both your roof and your claim.",
     steps: [
@@ -89,7 +89,7 @@ const TOPICS: Record<RoofTopic, TopicSpec> = {
   },
   "roof-replacement": {
     headline: "Planning a new roof",
-    read: "A full replacement is the right call when repairs stop making sense — widespread wear, multiple leaks, or an aging roof past its years.",
+    read: "A full replacement is the right call when repairs stop making sense, widespread wear, multiple leaks, or an aging roof past its years.",
     urgency: "moderate",
     urgencyNote: "No rush to decide today, but a free inspection tells you exactly where you stand.",
     steps: [
@@ -101,9 +101,9 @@ const TOPICS: Record<RoofTopic, TopicSpec> = {
   },
   "metal-roof": {
     headline: "Metal roofing questions",
-    read: "Metal is a great long-term option in Mississippi's heat and storms — standing seam or exposed-fastener, in a range of gauges and finishes.",
+    read: "Metal is a great long-term option in Mississippi's heat and storms: standing seam or exposed-fastener, in a range of gauges and finishes.",
     urgency: "low",
-    urgencyNote: "This is a considered purchase — take your time and get the facts.",
+    urgencyNote: "This is a considered purchase, take your time and get the facts.",
     steps: [
       "Get a free inspection and metal-roof consultation.",
       "Try our instant estimate for a ballpark.",
@@ -124,7 +124,7 @@ const TOPICS: Record<RoofTopic, TopicSpec> = {
   },
   "insurance-claim": {
     headline: "Insurance claim help",
-    read: "Claims are confusing when you're dealing with a damaged roof — the key is accurate documentation and knowing your next step.",
+    read: "Claims are confusing when you're dealing with a damaged roof. The key is accurate documentation and knowing your next step.",
     urgency: "moderate",
     urgencyNote: "Where you are in the process changes what you should do next.",
     steps: [
@@ -135,7 +135,7 @@ const TOPICS: Record<RoofTopic, TopicSpec> = {
   },
   maintenance: {
     headline: "Keeping your roof healthy",
-    read: "A little upkeep adds years in the Pine Belt's heat, humidity, and pine straw — clearing debris, checking boots and flashing, keeping gutters flowing.",
+    read: "A little upkeep adds years in the Pine Belt's heat, humidity, and pine straw: clearing debris, checking boots and flashing, keeping gutters flowing.",
     urgency: "low",
     urgencyNote: "Preventive care is the cheapest roofing you'll ever buy.",
     steps: [
@@ -146,7 +146,7 @@ const TOPICS: Record<RoofTopic, TopicSpec> = {
   },
   gutters: {
     headline: "Gutters & drainage",
-    read: "Good gutters protect your fascia, siding, and foundation — sizing, seamless runs, and guards all matter for how well water moves away.",
+    read: "Good gutters protect your fascia, siding, and foundation: sizing, seamless runs, and guards all matter for how well water moves away.",
     urgency: "low",
     urgencyNote: "Overflowing or undersized gutters quietly rot wood and soak foundations.",
     steps: [
@@ -157,11 +157,11 @@ const TOPICS: Record<RoofTopic, TopicSpec> = {
   },
   "not-sure": {
     headline: "Let's figure it out together",
-    read: "No problem — most folks aren't sure what's going on up there. The fastest way to real answers is a free set of eyes on it.",
+    read: "No problem. Most folks aren't sure what's going on up there. The fastest way to real answers is a free set of eyes on it.",
     urgency: "moderate",
     urgencyNote: "A free inspection costs you nothing and gives you a straight answer.",
     steps: [
-      "Book a free inspection — we'll tell you honestly what (if anything) needs doing.",
+      "Book a free inspection. We'll tell you honestly what (if anything) needs doing.",
       "Or call and describe what you're seeing; we'll point you the right way.",
     ],
     ctaKinds: ["inspection", "call"],
@@ -282,8 +282,8 @@ const claudeProvider: RoofAnalysisProvider = {
       `Topic the homeowner picked: ${TOPIC_LABELS[input.topic] ?? input.topic}.`,
       input.description ? `Their note: "${input.description}"` : "They left no note.",
       input.images?.length
-        ? `${input.images.length} photo(s) attached — analyze them.`
-        : "No photos attached — base your read on the topic and note only.",
+        ? `${input.images.length} photo(s) attached: analyze them.`
+        : "No photos attached, base your read on the topic and note only.",
     ].join("\n");
 
     const out = await structuredClaude<RoofModelOutput>({

@@ -274,7 +274,7 @@ function GalleryInner() {
       {/* FLIP grid */}
       {items.length === 0 ? (
         <p className="mt-10 rounded-2xl border border-border bg-white p-6 text-slate-600">
-          No photos match that combination — clear a filter to see more.
+          No photos match that combination, clear a filter to see more.
         </p>
       ) : (
         <motion.ul

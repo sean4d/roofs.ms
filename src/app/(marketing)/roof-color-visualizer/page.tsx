@@ -19,7 +19,7 @@ import { ColorVisualizer, type VisualizerRealPhoto } from "./visualizer";
 export const metadata: Metadata = buildMetadata({
   title: "Roof Color Visualizer in Mississippi | Southeast Roofing",
   description:
-    "Preview shingle and metal roof colors — GAF Timberline HDZ, Owens Corning Duration, and more — on real Southeast Roofing roofs across South Mississippi.",
+    "Preview shingle and metal roof colors: GAF Timberline HDZ, Owens Corning Duration, and more: on real Southeast Roofing roofs across South Mississippi.",
   path: "/roof-color-visualizer",
   titleAbsolute: true,
 });
@@ -35,7 +35,7 @@ const MATERIAL_BY_JOBTYPE: Record<string, VisualizerRealPhoto["material"]> = {
 };
 
 /**
- * Real color photos from live form/Sanity uploads — so a newly-installed roof
+ * Real color photos from live form/Sanity uploads, so a newly-installed roof
  * (e.g. a burgundy metal roof shot on the job) auto-replaces the manufacturer
  * sample in the visualizer with zero code changes.
  */
@@ -82,7 +82,7 @@ export default async function RoofColorVisualizerPage() {
             Roof Color Visualizer
           </h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600">
-            Explore shingle and metal roof colors, and — where we&apos;ve installed it —
+            Explore shingle and metal roof colors, and, where we&apos;ve installed it, 
             see the real roof on a South Mississippi home. Find a color you love, then
             book a free inspection to see a physical sample.
           </p>

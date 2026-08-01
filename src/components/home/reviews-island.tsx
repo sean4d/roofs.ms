@@ -16,7 +16,7 @@ interface ReviewsPayload {
 /**
  * Client island for the homepage review wall. Paints instantly with the
  * server-rendered reviews (so there's never an empty space), then upgrades to
- * the full live set from /api/reviews — which reliably returns the GBP reviews
+ * the full live set from /api/reviews, which reliably returns the GBP reviews
  * at request time even though the homepage is statically cached.
  */
 export function ReviewsIsland({ initial }: { initial: DisplayReview[] }) {

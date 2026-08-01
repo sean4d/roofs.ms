@@ -1,9 +1,9 @@
 /**
  * Licensed stock photography for premium homepage placements (owner
  * directive 2026-07-04: supplied project photos never appear on the
- * homepage — they live in gallery/project contexts only).
+ * homepage. They live in gallery/project contexts only).
  *
- * Source: Unsplash (Unsplash License — free commercial use, no attribution
+ * Source: Unsplash (Unsplash License, free commercial use, no attribution
  * required). Source page recorded per photo for provenance.
  *
  * INTEGRITY RULE: these are NOT Southeast Roofing projects. Alt text stays
@@ -19,7 +19,7 @@ export interface StockPhoto {
 }
 
 export const stockPhotos = {
-  /** Homepage hero — premium home, prominent architectural shingle roof */
+  /** Homepage hero: premium home, prominent architectural shingle roof */
   heroHome: {
     src: "/images/stock/premium-home-architectural-shingle-roof.jpg",
     alt: "Home with a gray architectural asphalt shingle roof and wraparound porch",
@@ -34,7 +34,7 @@ export const stockPhotos = {
       "https://unsplash.com/photos/brown-wooden-house-with-green-grass-field-Bkp3gLygyeA",
     license: "Unsplash License",
   },
-  /** Why-us — craftsmanship and safety */
+  /** Why-us: craftsmanship and safety */
   rooferInstalling: {
     src: "/images/stock/roofer-installing-asphalt-shingle-roof.jpg",
     alt: "Roofer in a safety harness installing asphalt shingles on a residential roof",
@@ -42,7 +42,7 @@ export const stockPhotos = {
       "https://unsplash.com/photos/a-man-working-on-a-roof-with-a-power-drill-Scaj0T40nFI",
     license: "Unsplash License",
   },
-  /** Commercial division panel — aerial of large flat membrane roofs */
+  /** Commercial division panel, aerial of large flat membrane roofs */
   commercialAerial: {
     src: "/images/stock/commercial-flat-roof-aerial-view.jpg",
     alt: "Aerial view of large commercial buildings with white flat membrane roofs",
@@ -50,7 +50,7 @@ export const stockPhotos = {
       "https://images.unsplash.com/photo-1758304481447-fd91f8995e1e (Unsplash, photographer Alex Reynolds)",
     license: "Unsplash License",
   },
-  /** Storm/restoration — shingle tear-off in progress */
+  /** Storm/restoration: shingle tear-off in progress */
   roofTearOff: {
     src: "/images/stock/asphalt-shingle-roof-replacement-tear-off.jpg",
     alt: "Asphalt shingle tear-off in progress during a residential roof replacement",

@@ -17,7 +17,7 @@ import { FinalCta } from "@/components/home/final-cta";
 export const metadata: Metadata = buildMetadata({
   title: "Roofing Blog & Company News | Southeast Roofing",
   description:
-    "News and updates from Southeast Roofing — storm response notes, project stories, and company announcements from South Mississippi.",
+    "News and updates from Southeast Roofing: storm response notes, project stories, and company announcements from South Mississippi.",
   path: "/blog",
 });
 

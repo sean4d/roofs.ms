@@ -30,7 +30,7 @@ export const metadata: Metadata = buildMetadata({
   path: "/",
 });
 
-/** Homepage (PRD §3) — 13 sections, light navy premium design system. */
+/** Homepage (PRD §3), 13 sections, light navy premium design system. */
 export default function HomePage() {
   return (
     <>

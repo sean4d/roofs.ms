@@ -6,7 +6,7 @@ import { SocialLinks } from "@/components/shared/social-links";
 /**
  * Slim utility bar above the main header (owner request 2026-07-04):
  * social profiles on the right, phone + email on the left (desktop).
- * Scrolls away naturally — the main header below stays sticky.
+ * Scrolls away naturally. The main header below stays sticky.
  */
 export function TopBar() {
   return (

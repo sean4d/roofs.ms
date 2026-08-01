@@ -8,7 +8,7 @@ import {
 } from "@/components/shared/legal-page";
 
 /**
- * Privacy policy — written to describe what this site actually does
+ * Privacy policy, written to describe what this site actually does
  * (lead forms delivered to our CRM and office email; links out to Roofr,
  * GoodLeap, and Google tools), in plain language.
  */
@@ -29,14 +29,14 @@ const sections: LegalSection[] = [
   {
     heading: "Information we collect",
     paragraphs: [
-      "When you request an inspection, consultation, or contact us through a form on this site, we collect the information you provide — typically your name, phone number, email address, property address, and details about your roofing project. Commercial inquiries may also include your company name, role, property type, and project timeline.",
+      "When you request an inspection, consultation, or contact us through a form on this site, we collect the information you provide: typically your name, phone number, email address, property address, and details about your roofing project. Commercial inquiries may also include your company name, role, property type, and project timeline.",
       "Like most websites, our hosting and infrastructure providers automatically collect basic technical information such as IP address, browser type, and pages visited, which is used for security and to keep the site running well.",
     ],
   },
   {
     heading: "How we use your information",
     paragraphs: [
-      "We use the information you submit for one purpose: to respond to your request. That includes contacting you by phone, text message, or email about your inquiry, scheduling inspections and appointments, preparing proposals, and — where you engage us for insurance restoration work — assisting with your claim documentation.",
+      "We use the information you submit for one purpose: to respond to your request. That includes contacting you by phone, text message, or email about your inquiry, scheduling inspections and appointments, preparing proposals, and, where you engage us for insurance restoration work: assisting with your claim documentation.",
       "We do not sell your personal information, and we do not use it for third-party advertising lists.",
     ],
   },
@@ -44,7 +44,7 @@ const sections: LegalSection[] = [
     heading: "Who we share it with",
     paragraphs: [
       "Form submissions are delivered to our office email and to the customer-relationship software we use to manage jobs and appointments. These providers process your information only to provide their services to us.",
-      "If you hire us for an insurance claim, we share job documentation with your insurer or adjuster as part of assisting with your claim — always in connection with your project. We may also disclose information when required by law.",
+      "If you hire us for an insurance claim, we share job documentation with your insurer or adjuster as part of assisting with your claim, always in connection with your project. We may also disclose information when required by law.",
     ],
   },
   {
@@ -53,9 +53,9 @@ const sections: LegalSection[] = [
       "Some features on this site link to tools operated by other companies, and their privacy policies apply when you use them:",
     ],
     bullets: [
-      "Roofr — our instant roof estimate tool",
-      "GoodLeap — our financing application",
-      "Google — appointment booking, our business profile and reviews, and embedded maps",
+      "Roofr: our instant roof estimate tool",
+      "GoodLeap: our financing application",
+      "Google: appointment booking, our business profile and reviews, and embedded maps",
       "Social platforms we link to (Facebook, Instagram, TikTok, Nextdoor)",
     ],
   },

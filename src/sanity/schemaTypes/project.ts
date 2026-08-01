@@ -2,7 +2,7 @@ import { defineField, defineType } from "sanity";
 
 import { JOB_TYPES, PHASES } from "@/config/job-taxonomy";
 
-/** A gallery project (residential or commercial) — PRD §2 /projects.
+/** A gallery project (residential or commercial), PRD §2 /projects.
  *  Extended 2026-07-07 to back the /upload job-intake system: job type,
  *  conditional detail fields, before/progress/after photos with per-photo
  *  SEO, derived filter tags, and social-syndication tracking. */

@@ -1,7 +1,7 @@
 /**
  * Approximate lat/lng for the South Mississippi communities we work in, keyed
  * by city name (lowercased). Used to project pins onto the Project Map's SVG.
- * EDIT/ADD here as new cities get jobs — a city with no entry simply won't get
+ * EDIT/ADD here as new cities get jobs, a city with no entry simply won't get
  * a pin (it still appears in the gallery).
  */
 

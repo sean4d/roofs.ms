@@ -101,7 +101,7 @@ export function ColorVisualizer({
               />
               {preview.real ? (
                 <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-navy-950/75 px-3 py-1 text-xs font-semibold text-white">
-                  <BadgeCheck className="size-3.5" /> Real job — {preview.city}, MS
+                  <BadgeCheck className="size-3.5" /> Real job: {preview.city}, MS
                 </span>
               ) : (
                 <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-navy-950/75 px-3 py-1 text-xs font-semibold text-white">
@@ -205,7 +205,7 @@ export function ColorVisualizer({
         <p className="text-xs text-slate-500">
           Photos marked &ldquo;Real job&rdquo; are actual {siteConfig.name} roofs near you;
           &ldquo;Product sample&rdquo; images are manufacturer swatches shown until we log
-          that color locally. Actual color varies with light and pitch — ask us for a
+          that color locally. Actual color varies with light and pitch: ask us for a
           physical sample.
         </p>
       </div>

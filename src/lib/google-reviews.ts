@@ -2,9 +2,9 @@
  * Live Google reviews for the site, rendered natively (no third-party script).
  *
  * Source priority:
- *   1. Featurable — free, needs only a published widget id (baked in below or
+ *   1. Featurable, free, needs only a published widget id (baked in below or
  *      FEATURABLE_WIDGET_ID). This is the owner's connected source.
- *   2. Google Places API (New) — used only if GOOGLE_PLACES_API_KEY is set;
+ *   2. Google Places API (New), used only if GOOGLE_PLACES_API_KEY is set;
  *      place id is baked in / GOOGLE_PLACE_ID.
  *   3. null → the site falls back to the curated reviews in content/reviews.ts.
  *
@@ -19,7 +19,7 @@ import { unstable_cache } from "next/cache";
 
 import { getGbpReviews } from "@/lib/gbp";
 
-/** Owner-supplied identifiers (2026-07-07). Public values — safe to inline. */
+/** Owner-supplied identifiers (2026-07-07). Public values, safe to inline. */
 const FEATURABLE_WIDGET_ID =
   process.env.FEATURABLE_WIDGET_ID ?? "dd7a34c6-f6cb-4661-8edb-e9e0ab6fddfd";
 const GOOGLE_PLACE_ID =
@@ -170,7 +170,7 @@ const cachedGbpReviews = unstable_cache(
 );
 
 /**
- * Live rating, review count, and reviews — or null to use curated fallback.
+ * Live rating, review count, and reviews, or null to use curated fallback.
  * Source priority: the official GBP API (all reviews) → Featurable → Places.
  * GBP wins because it returns every review, freshest, with the owner's replies.
  */
@@ -185,7 +185,7 @@ export async function getGoogleReviewData(): Promise<GoogleReviewData | null> {
  * Owner-facing diagnostic (password-gated endpoint). Surfaces WHY live reviews
  * are or aren't showing, without ever echoing the API key. Google's error body
  * carries the actionable message (referrer restriction, billing, API disabled,
- * bad place id) — exactly what's needed to fix a misconfigured key.
+ * bad place id), exactly what's needed to fix a misconfigured key.
  */
 export interface ReviewsDiag {
   live: boolean;

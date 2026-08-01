@@ -3,8 +3,8 @@ import type { CityContent } from "@/content/cities/types";
 
 /**
  * "Nearby communities" internal linking for the city pages (PRD §5 local
- * SEO). County alone clusters poorly here — most served counties hold a
- * single city — so cities are grouped into real South Mississippi regions.
+ * SEO). County alone clusters poorly here: most served counties hold a
+ * single city, so cities are grouped into real South Mississippi regions.
  * Every served slug belongs to exactly one region; within a region we order
  * by drive-time closeness so the geographically nearest towns surface first.
  * This weaves the service-area hub together (no orphan city pages) and builds

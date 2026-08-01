@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * Live Mississippi weather alerts from the National Weather Service
- * public API (PRD Phase 8 Storm Center — "live storm resources").
+ * public API (PRD Phase 8 Storm Center, "live storm resources").
  * Server-rendered with ISR (page-level revalidate); if the API is
  * unreachable the panel degrades to a link to weather.gov rather than
  * breaking the page. Counties in our service area get a badge.
@@ -121,7 +121,7 @@ export async function StormAlerts() {
           <span className="font-semibold text-navy-900">
             No active weather alerts for Mississippi right now.
           </span>{" "}
-          Quiet skies are the right time for an inspection — storm season
+          Quiet skies are the right time for an inspection, storm season
           never waits long here.
         </p>
       </div>

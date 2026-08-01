@@ -3,7 +3,7 @@ import { ArrowLeft, Construction } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
-/** Branded 404 — many sitemap routes are planned but not yet built. */
+/** Branded 404. Many sitemap routes are planned but not yet built. */
 export default function NotFound() {
   return (
     <section className="container-site flex min-h-[60vh] flex-col items-center justify-center py-28 text-center">

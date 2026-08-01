@@ -2,7 +2,7 @@ import type { GafWidgetKey } from "@/content/learn/types";
 
 /**
  * GAF partner-portal widget embed (owner directive 2026-07-05: embed the
- * portal tools, but the customer has already chosen us — no escape
+ * portal tools, but the customer has already chosen us, no escape
  * hatches). The iframe is sandboxed WITHOUT allow-popups or
  * allow-top-navigation, so any "Visit GAF" / "Find a Contractor" link
  * inside the widget is inert: clicks cannot open new tabs or navigate

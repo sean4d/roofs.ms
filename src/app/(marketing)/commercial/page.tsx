@@ -20,7 +20,7 @@ import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/motion/reveal";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 
-/** Commercial hub — the "commercial homepage" (PRD §4.2). */
+/** Commercial hub, the "commercial homepage" (PRD §4.2). */
 
 export const metadata: Metadata = buildMetadata({
   title: commercialHub.metaTitle,
@@ -54,7 +54,7 @@ export default function CommercialHubPage() {
         audience="commercial"
       />
 
-      {/* Credibility strip — publishable proof only */}
+      {/* Credibility strip, publishable proof only */}
       <Section tone="navy" className="!py-6" ariaLabel="Commercial credentials">
         <ul className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
           {commercialHub.trustStrip.map((item) => (
@@ -76,7 +76,7 @@ export default function CommercialHubPage() {
         <SectionHeading
           eyebrow="Commercial services"
           title="Every system a facility needs"
-          description="Nine services, one accountable contractor — from emergency repairs to full capital replacements."
+          description="Nine services, one accountable contractor, from emergency repairs to full capital replacements."
         />
         <HubServiceGrid services={[...commercialHub.services]} />
       </Section>
@@ -86,7 +86,7 @@ export default function CommercialHubPage() {
         <SectionHeading
           eyebrow="Industries we serve"
           title="Roofing that speaks your industry's language"
-          description="Schedules, budgets, and constraints differ by building type — our approach follows suit."
+          description="Schedules, budgets, and constraints differ by building type. Our approach follows suit."
           align="center"
         />
         <StaggerGroup

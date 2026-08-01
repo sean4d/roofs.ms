@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/accordion";
 
 /**
- * Reusable FAQ block (PRD §4.1.8) — the page emits the matching FAQPage
+ * Reusable FAQ block (PRD §4.1.8), the page emits the matching FAQPage
  * JSON-LD via faqSchema(); this renders the visible accordion.
  */
 export function ServiceFaq({

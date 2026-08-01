@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 /**
  * Live gallery feed, powered by jobs submitted at /upload. Filter chips are
  * built dynamically from the tags each job generates (job type, brand, color,
- * city, storm-damage type, plus keywords pulled from the description) — so the
+ * city, storm-damage type, plus keywords pulled from the description), so the
  * gallery's filters grow on their own as jobs are posted. Renders nothing when
  * there are no jobs yet, leaving the curated static gallery untouched.
  */

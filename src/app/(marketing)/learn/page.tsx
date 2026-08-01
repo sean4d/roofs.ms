@@ -40,7 +40,7 @@ const breadcrumbs = [
 ];
 
 /**
- * Per-article thumbnail — a DISTINCT real Southeast Roofing photo for every
+ * Per-article thumbnail, a DISTINCT real Southeast Roofing photo for every
  * guide, chosen to fit the topic (owner request 2026-07-24: no two cards share
  * a photo). Keyed by article slug. Every image is a registered gallery photo,
  * so each card also gets its city tag. New articles without an entry fall back
@@ -149,7 +149,7 @@ export default function LearnHubPage() {
               Understand your roof before you spend a dollar on it
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600">
-              Plain-English guides written by the people who actually build roofs here —
+              Plain-English guides written by the people who actually build roofs here, 
               including interactive tools from GAF, our shingle manufacturer. Filter by
               topic or search for exactly what you need.
             </p>
@@ -169,7 +169,7 @@ export default function LearnHubPage() {
             </h2>
             <p className="mt-5 text-lg leading-relaxed text-steel-100">
               New guides publish regularly. Have a roofing question you can&apos;t find
-              answered here? Ask us directly — the questions homeowners actually ask are
+              answered here? Ask us directly: the questions homeowners actually ask are
               where our next guides come from.
             </p>
             <div className="mt-8">

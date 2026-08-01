@@ -2,7 +2,7 @@
  * Data-driven config for the Roof Color Visualizer. EDIT HERE to add products
  * or colors. Hexes are close approximations for the swatches.
  *
- * Photo priority (see visualizer.tsx) — the visualizer shows, in order:
+ * Photo priority (see visualizer.tsx). The visualizer shows, in order:
  *   1. a REAL Southeast Roofing job photo of that product + color (matched
  *      from content/photos.ts, or a live Sanity upload), badged "Real job";
  *   2. otherwise a manufacturer product `sample` photo, if one is set below,
@@ -11,7 +11,7 @@
  *
  * This makes the placeholders self-retiring: the moment we install and log a
  * roof in that color (static file or form/Sanity upload), the real roof
- * automatically replaces the product sample — no code change needed. Color
+ * automatically replaces the product sample, no code change needed. Color
  * names here must match the color names in content/photos.ts exactly.
  */
 
@@ -45,8 +45,8 @@ const VS = "/images/visualizer-samples";
 function shingleSample(product: string, color: string, file: string): ColorSample {
   return {
     src: `${VS}/${file}`,
-    alt: `${product} architectural shingles in ${color} — manufacturer color sample shown until Southeast Roofing installs this color locally.`,
-    title: `${product} — ${color} (sample)`,
+    alt: `${product} architectural shingles in ${color}, manufacturer color sample shown until Southeast Roofing installs this color locally.`,
+    title: `${product}: ${color} (sample)`,
   };
 }
 
@@ -148,8 +148,8 @@ export const ROOF_PRODUCTS: RoofProduct[] = [
         hex: "#2b2d30",
         sample: {
           src: `${VS}/metal-roof-black-panel-sample.webp`,
-          alt: "Black metal roofing panel — manufacturer color sample shown until Southeast Roofing installs this finish locally.",
-          title: "Metal Roofing — Black (sample)",
+          alt: "Black metal roofing panel, manufacturer color sample shown until Southeast Roofing installs this finish locally.",
+          title: "Metal Roofing: Black (sample)",
         },
       },
       { name: "Burgundy", hex: "#6b2a35" },
@@ -158,8 +158,8 @@ export const ROOF_PRODUCTS: RoofProduct[] = [
         hex: "#8b9095",
         sample: {
           src: `${VS}/metal-roof-gray-panel-sample.webp`,
-          alt: "Gray metal roofing panel — manufacturer color sample shown until Southeast Roofing installs this finish locally.",
-          title: "Metal Roofing — Gray (sample)",
+          alt: "Gray metal roofing panel, manufacturer color sample shown until Southeast Roofing installs this finish locally.",
+          title: "Metal Roofing: Gray (sample)",
         },
       },
     ],

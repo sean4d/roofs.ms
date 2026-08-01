@@ -1,7 +1,7 @@
 import { freshClient } from "./client";
 
 /** Cache tag for every project read, so an /upload can purge them all at once
- *  via revalidateTag("projects") — more reliable than revalidatePath for a
+ *  via revalidateTag("projects"), more reliable than revalidatePath for a
  *  Sanity fetch cache. */
 const PROJECTS_TAG = "projects";
 
@@ -50,7 +50,7 @@ export async function getLiveProjects(): Promise<LiveProject[]> {
       { next: { revalidate: 600, tags: [PROJECTS_TAG] } },
     );
   } catch {
-    // If Sanity is unreachable, the live section simply doesn't render —
+    // If Sanity is unreachable, the live section simply doesn't render, 
     // the existing static gallery below is unaffected.
     return [];
   }
@@ -95,7 +95,7 @@ export async function getProjectBySlug(
   }
 }
 
-/** All published project slugs — for generateStaticParams. */
+/** All published project slugs, for generateStaticParams. */
 export async function getProjectSlugs(): Promise<string[]> {
   try {
     return await freshClient.fetch(

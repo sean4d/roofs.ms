@@ -9,7 +9,7 @@ import { absoluteUrl } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
 
 /**
- * Auto-generated sitemap (PRD §2). Only launched routes are listed —
+ * Auto-generated sitemap (PRD §2). Only launched routes are listed, 
  * reserved routes stay out until their phase ships (full finalization
  * pass, including robots, lands in Phase 5).
  */

@@ -5,7 +5,7 @@ import { Section } from "@/components/shared/section";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 
 /**
- * Insurance, financing & warranty panel (PRD §4.1.7, Phase 4 §7/§10) —
+ * Insurance, financing & warranty panel (PRD §4.1.7, Phase 4 §7/§10), 
  * three-up trust band used across service pages. Factual language only:
  * claim decisions rest with the insurer, terms come from the lender, and
  * the lifetime workmanship warranty is owner-confirmed (2026-07-04).
@@ -22,7 +22,7 @@ const panels = [
   {
     icon: Banknote,
     title: "$0 down financing available",
-    text: "Apply through our partner GoodLeap in minutes and see the plans you qualify for — decide with real numbers in hand.",
+    text: "Apply through our partner GoodLeap in minutes and see the plans you qualify for, decide with real numbers in hand.",
     href: "/financing",
     cta: "Explore financing options",
   },
@@ -30,7 +30,7 @@ const panels = [
     icon: Medal,
     title: "Lifetime warranty",
     // Hedged per the warranty rule: manufacturer limited-lifetime options on
-    // qualifying systems — never a blanket Southeast Roofing guarantee.
+    // qualifying systems, never a blanket Southeast Roofing guarantee.
     text: "Manufacturer limited-lifetime warranty options are available on qualifying roofing systems. Ask what applies to your roof at your free inspection.",
     href: "/free-inspection",
     cta: "Start with a free inspection",

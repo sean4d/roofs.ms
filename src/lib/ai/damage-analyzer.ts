@@ -1,5 +1,5 @@
 /**
- * Roof Damage Analyzer — analysis layer, provider-abstracted like the Roof
+ * Roof Damage Analyzer: analysis layer, provider-abstracted like the Roof
  * Assistant. When ANTHROPIC_API_KEY is set, a Claude vision provider reads the
  * uploaded photos + context and returns a tailored preliminary read; otherwise
  * (or on any error) it falls back to the honest, issue-based template below.
@@ -29,7 +29,7 @@ export interface DamageInput {
   when?: string;
   insurance?: string;
   photoCount?: number;
-  /** Resized JPEG photos (base64, no prefix) — analyzed when Claude is on. */
+  /** Resized JPEG photos (base64, no prefix), analyzed when Claude is on. */
   images?: InlineImage[];
 }
 
@@ -44,7 +44,7 @@ const ISSUES: Record<DamageIssue, Omit<DamageResult, never>> = {
   "missing-shingles": {
     damageType: "Missing or lifted shingles",
     urgency: "high",
-    urgencyNote: "Exposed areas let water reach the deck — this usually can't wait.",
+    urgencyNote: "Exposed areas let water reach the deck. This usually can't wait.",
     nextStep: "Get a free inspection right away; if it's storm-related, a claim may apply.",
   },
   leak: {
@@ -69,13 +69,13 @@ const ISSUES: Record<DamageIssue, Omit<DamageResult, never>> = {
     damageType: "Tree / impact damage",
     urgency: "high",
     urgencyNote: "Impact can crack decking and structure, not just shingles.",
-    nextStep: "Call us for prompt help — we can tarp and inspect.",
+    nextStep: "Call us for prompt help. We can tarp and inspect.",
   },
   "pipe-boot-leak": {
     damageType: "Failed pipe boot",
     urgency: "moderate",
     urgencyNote: "Dry-rotted boots are a very common, fixable leak source here.",
-    nextStep: "A free inspection confirms it — usually a straightforward repair.",
+    nextStep: "A free inspection confirms it, usually a straightforward repair.",
   },
   "rusted-metal": {
     damageType: "Rust / aging metal roof",
@@ -92,7 +92,7 @@ const ISSUES: Record<DamageIssue, Omit<DamageResult, never>> = {
   "not-sure": {
     damageType: "Needs a closer look",
     urgency: "moderate",
-    urgencyNote: "Hard to say from here — a free set of eyes settles it.",
+    urgencyNote: "Hard to say from here. A free set of eyes settles it.",
     nextStep: "Book a free inspection and we'll tell you honestly what's going on.",
   },
 };
@@ -158,8 +158,8 @@ const claudeProvider: DamageProvider = {
       input.when ? `When it happened: ${input.when}.` : "",
       input.insurance ? `Insurance involved: ${input.insurance}.` : "",
       input.images?.length
-        ? `${input.images.length} photo(s) attached — analyze them.`
-        : "No photos attached — base your read on the reported issue only.",
+        ? `${input.images.length} photo(s) attached: analyze them.`
+        : "No photos attached, base your read on the reported issue only.",
     ]
       .filter(Boolean)
       .join("\n");

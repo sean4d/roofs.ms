@@ -27,7 +27,7 @@ import { Button } from "@/components/ui/button";
 import { FinalCta } from "@/components/home/final-cta";
 
 /**
- * About page (PRD §13 Phase 6). Integrity rule: only owner-confirmed facts —
+ * About page (PRD §13 Phase 6). Integrity rule: only owner-confirmed facts: 
  * no founding year, team bios, or job counts until supplied (siteConfig
  * [NEEDS] items). The story leans on what is verifiable: credentials,
  * real projects, and how we actually work.
@@ -36,7 +36,7 @@ import { FinalCta } from "@/components/home/final-cta";
 export const metadata: Metadata = buildMetadata({
   title: "About Southeast Roofing | Hattiesburg, MS Roofing Contractor",
   description:
-    "Southeast Roofing is a Hattiesburg-based, Mississippi-licensed roofing contractor serving South Mississippi — residential and commercial, insurance and retail.",
+    "Southeast Roofing is a Hattiesburg-based, Mississippi-licensed roofing contractor serving South Mississippi: residential and commercial, insurance and retail.",
   path: "/about",
 });
 
@@ -49,22 +49,22 @@ const commitments = [
   {
     icon: FileText,
     title: "Itemized, honest proposals",
-    text: "Every proposal lists each line of work with its own price — tear-off, materials, accessories, disposal. No hidden fees, no surprises, and upgrades are always your call, never pre-checked.",
+    text: "Every proposal lists each line of work with its own price: tear-off, materials, accessories, disposal. No hidden fees, no surprises, and upgrades are always your call, never pre-checked.",
   },
   {
     icon: HardHat,
     title: "Craftsmanship across every system",
-    text: "Architectural shingle, standing-seam metal, TPO, EPDM, coatings — we install and stand behind all of them. We recommend the right system for your building, not the one we happen to sell.",
+    text: "Architectural shingle, standing-seam metal, TPO, EPDM, coatings. We install and stand behind all of them. We recommend the right system for your building, not the one we happen to sell.",
   },
   {
     icon: MessageSquare,
     title: "Communication start to finish",
-    text: "You'll know when we're coming, what happens next, and who to call — from the first inspection through the final walkthrough. On insurance work, we assist through the entire claims process.",
+    text: "You'll know when we're coming, what happens next, and who to call, from the first inspection through the final walkthrough. On insurance work, we assist through the entire claims process.",
   },
   {
     icon: Sparkles,
     title: "Clean sites, respected property",
-    text: "Magnetic nail sweeps, protected landscaping, and full debris haul-off are part of the job, not an add-on. We leave your property the way we found it — minus the old roof.",
+    text: "Magnetic nail sweeps, protected landscaping, and full debris haul-off are part of the job, not an add-on. We leave your property the way we found it: minus the old roof.",
   },
 ];
 
@@ -74,22 +74,22 @@ const credentials = [
     // Residential AND commercial licensure; the public MSBOC record lives in
     // their residential index, so the label stays neutral (see
     // siteConfig.links.msbocLicense).
-    detail: `MS State Board of Contractors — License #${siteConfig.license}. Verify it on msboc.us`,
+    detail: `MS State Board of Contractors, License #${siteConfig.license}. Verify it on msboc.us`,
     href: siteConfig.links.msbocLicense,
   },
   {
     title: "GAF Certified Contractor",
-    detail: "Our primary manufacturer certification — verify it on gaf.com",
+    detail: "Our primary manufacturer certification, verify it on gaf.com",
     href: siteConfig.links.gafProfile,
   },
   {
-    title: "BBB Accredited — A+ rating",
+    title: "BBB Accredited: A+ rating",
     detail: "Check our record with the Better Business Bureau",
     href: siteConfig.links.bbbProfile,
   },
   {
     title: "Google Guaranteed",
-    detail: "5-star rated — read every review on our live profile",
+    detail: "5-star rated, read every review on our live profile",
     href: siteConfig.links.googleBusiness,
   },
   {
@@ -118,7 +118,7 @@ const officePhotos = [
   {
     src: "/images/office/southeast-roofing-office-reception-hattiesburg-ms.webp",
     alt: "The branded reception and waiting area inside Southeast Roofing's Hattiesburg office.",
-    caption: "Come on in — our lobby.",
+    caption: "Come on in: our lobby.",
   },
   {
     src: "/images/office/southeast-roofing-office-credentials-hattiesburg-ms.webp",
@@ -148,8 +148,8 @@ export default function AboutPage() {
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-600">
               Southeast Roofing is a locally owned, Mississippi-licensed
               contractor based on Highway 98 in Hattiesburg. We install and
-              repair every major roof system — residential and commercial,
-              insurance and retail — across South Mississippi.
+              repair every major roof system, residential and commercial,
+              insurance and retail, across South Mississippi.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Button
@@ -194,20 +194,20 @@ export default function AboutPage() {
       <Section>
         <SectionHeading
           eyebrow="Who we are"
-          title="Roofing done right — literally"
+          title="Roofing done right, literally"
         />
         <Reveal className="mt-6 max-w-3xl space-y-5">
           <p className="text-lg leading-relaxed text-slate-600">
             South Mississippi is hard on roofs. Gulf humidity, brutal summer
             heat, and a hurricane season that runs half the year mean a roof
-            here doesn&apos;t just need to look good on day one — it has to be
+            here doesn&apos;t just need to look good on day one. It has to be
             built for the next storm. That reality shapes everything about how
             we work: the systems we install, the way we flash and ventilate, and
             the way we document our jobs.
           </p>
           <p className="text-lg leading-relaxed text-slate-600">
             We&apos;re deliberately not a one-trick shop. About half our work is
-            storm and insurance restoration, and half is retail — families and
+            storm and insurance restoration, and half is retail, families and
             building owners who simply want the best roof for their money. We
             install architectural shingle, standing-seam and panel metal, TPO,
             EPDM, and coating systems, which means our recommendation starts
@@ -234,7 +234,7 @@ export default function AboutPage() {
         <SectionHeading
           eyebrow="How we work"
           title="Four commitments on every job"
-          description="No invented awards, no inflated numbers — just the standards we hold ourselves to on every roof we touch."
+          description="No invented awards, no inflated numbers, just the standards we hold ourselves to on every roof we touch."
         />
         <StaggerGroup className="mt-12 grid gap-5 sm:grid-cols-2">
           {commitments.map((item) => (
@@ -261,7 +261,7 @@ export default function AboutPage() {
         <SectionHeading
           eyebrow="Credentials"
           title="Verify everything we claim"
-          description="Every credential below is real, current, and checkable — most link straight to the official record."
+          description="Every credential below is real, current, and checkable, most link straight to the official record."
           onDark
         />
         <StaggerGroup
@@ -323,7 +323,7 @@ export default function AboutPage() {
               Our office is at {siteConfig.address.streetAddress},{" "}
               {siteConfig.address.addressLocality},{" "}
               {siteConfig.address.addressRegion} {siteConfig.address.postalCode}
-              . From there our crews cover roughly a two-hour radius — the Pine
+              . From there our crews cover roughly a two-hour radius: the Pine
               Belt, the Gulf Coast, and the metros at the edges.
             </p>
             <div className="mt-8">
@@ -341,12 +341,12 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      {/* Our office — real local storefront (owner photos 2026-07-07) */}
+      {/* Our office, real local storefront (owner photos 2026-07-07) */}
       <Section tone="surface">
         <SectionHeading
           eyebrow="Come see us"
           title="Our Hattiesburg office"
-          description="A real local office on Highway 98 — stop by during business hours to see shingle samples in person and put a face to the company."
+          description="A real local office on Highway 98, stop by during business hours to see shingle samples in person and put a face to the company."
         />
         <StaggerGroup className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {officePhotos.map((photo) => (

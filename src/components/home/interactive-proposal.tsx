@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * Interactive example proposal (owner directive 2026-07-04): real toggles,
- * live animated total — teaching customers how Southeast Roofing estimates
+ * live animated total, teaching customers how Southeast Roofing estimates
  * work. All figures are owner-supplied EXAMPLE pricing and the card is
  * labeled as such; actual proposals are built from the actual roof.
  */
@@ -81,7 +81,7 @@ export function InteractiveProposal() {
         </span>
       </div>
 
-      {/* Base line items — owner-supplied example figures */}
+      {/* Base line items, owner-supplied example figures */}
       <ul className="divide-y divide-border/70">
         {example.lineItems.map((item) => (
           <li
@@ -103,9 +103,9 @@ export function InteractiveProposal() {
         ))}
       </ul>
 
-      {/* Upgrade toggles — tap to watch the total move */}
+      {/* Upgrade toggles, tap to watch the total move */}
       <p className="mt-4 text-xs font-semibold tracking-wide text-steel-500 uppercase">
-        Optional upgrades — try them
+        Optional upgrades, try them
       </p>
       <ul className="mt-1 divide-y divide-border/70">
         {example.upgrades.map((upgrade) => {

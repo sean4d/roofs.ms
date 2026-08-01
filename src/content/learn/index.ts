@@ -17,7 +17,7 @@ export const learnCategories: LearnCategory[] = [
     slug: "materials",
     label: "Materials & Shingles",
     description:
-      "What goes on your roof and why it matters — shingle grades, metal panels, membranes, and the layers underneath.",
+      "What goes on your roof and why it matters: shingle grades, metal panels, membranes, and the layers underneath.",
   },
   {
     slug: "insurance-claims",
@@ -29,13 +29,13 @@ export const learnCategories: LearnCategory[] = [
     slug: "storm-prep",
     label: "Storm Preparation",
     description:
-      "Getting your roof ready for hurricane season — and what to do in the first hours after a storm.",
+      "Getting your roof ready for hurricane season, and what to do in the first hours after a storm.",
   },
   {
     slug: "metal-roofing",
     label: "Metal Roofing",
     description:
-      "Standing seam, exposed fastener, gauges, and finishes — metal explained without the sales pitch.",
+      "Standing seam, exposed fastener, gauges, and finishes: metal explained without the sales pitch.",
   },
   {
     slug: "maintenance",
@@ -59,7 +59,7 @@ export const learnCategories: LearnCategory[] = [
     slug: "cost-guides",
     label: "Cost Guides",
     description:
-      "Honest numbers, stated as ranges with the drivers explained — no bait pricing.",
+      "Honest numbers, stated as ranges with the drivers explained: no bait pricing.",
   },
 ];
 
@@ -74,9 +74,9 @@ export const learnArticles: LearnArticle[] = [
     metaTitle:
       "Architectural vs 3-Tab Shingles | Southeast Roofing Learning Center",
     metaDescription:
-      "The real differences between 3-tab and architectural shingles — wind ratings, lifespan, looks, and cost — explained by a GAF-certified Mississippi roofer, with GAF's own comparison tools.",
+      "The real differences between 3-tab and architectural shingles: wind ratings, lifespan, looks, and cost: explained by a GAF-certified Mississippi roofer, with GAF's own comparison tools.",
     excerpt:
-      "Wind ratings, lifespan, and looks — the real differences between shingle grades, with GAF's own comparison tools built in.",
+      "Wind ratings, lifespan, and looks: the real differences between shingle grades, with GAF's own comparison tools built in.",
     updated: "2026-07-05",
     readMinutes: 6,
     hero: {
@@ -87,7 +87,7 @@ export const learnArticles: LearnArticle[] = [
     body: [
       {
         type: "p",
-        text: "Walk any South Mississippi neighborhood and you'll see both: flat, single-layer 3-tab shingles on older homes, and thicker, dimensional architectural shingles on almost everything roofed in the last decade. That shift happened for good reasons — but 3-tab still has a place, and knowing the difference protects you from paying for the wrong thing in either direction.",
+        text: "Walk any South Mississippi neighborhood and you'll see both: flat, single-layer 3-tab shingles on older homes, and thicker, dimensional architectural shingles on almost everything roofed in the last decade. That shift happened for good reasons, but 3-tab still has a place, and knowing the difference protects you from paying for the wrong thing in either direction.",
       },
       { type: "h2", text: "The construction difference" },
       {
@@ -98,28 +98,28 @@ export const learnArticles: LearnArticle[] = [
         type: "list",
         title: "Where the differences show up",
         items: [
-          "Wind: 3-tab shingles are typically rated around 60 mph; architectural shingles commonly carry 110–130 mph ratings when installed to spec — a serious difference in hurricane country.",
+          "Wind: 3-tab shingles are typically rated around 60 mph; architectural shingles commonly carry 110–130 mph ratings when installed to spec: a serious difference in hurricane country.",
           "Lifespan: 3-tab warranties usually run 20–25 years; architectural lines carry limited lifetime warranties, and the shingles themselves genuinely last longer in our heat.",
           "Looks: architectural shingles add depth and shadow that flatter most rooflines; 3-tab reads flat.",
-          "Price: 3-tab costs less per square up front — but the gap has narrowed, and per year of service the architectural shingle usually wins.",
+          "Price: 3-tab costs less per square up front, but the gap has narrowed, and per year of service the architectural shingle usually wins.",
         ],
       },
       { type: "h2", text: "Compare the GAF lineup side by side" },
       {
         type: "p",
-        text: "As a GAF-certified contractor, most of the shingle roofs we install are GAF systems — usually the Timberline HDZ architectural line you'll see in our own itemized proposals. GAF publishes an interactive comparison of its shingle grades; explore it right here.",
+        text: "As a GAF-certified contractor, most of the shingle roofs we install are GAF systems, usually the Timberline HDZ architectural line you'll see in our own itemized proposals. GAF publishes an interactive comparison of its shingle grades; explore it right here.",
       },
       {
         type: "widget",
         widget: "shingle-comparison-chart",
         title: "GAF shingle comparison chart",
         caption:
-          "Interactive comparison tool provided by GAF, the manufacturer behind most shingle roofs we install. Product availability varies by region — your proposal will name the exact shingle, line by line.",
+          "Interactive comparison tool provided by GAF, the manufacturer behind most shingle roofs we install. Product availability varies by region: your proposal will name the exact shingle, line by line.",
       },
       { type: "h2", text: "A closer look at Timberline HDZ" },
       {
         type: "p",
-        text: "The shingle we install most often deserves its own tour. GAF's Timberline HDZ tool below shows the colors and construction details up close — useful for picturing a color against your brick or trim before we bring physical samples.",
+        text: "The shingle we install most often deserves its own tour. GAF's Timberline HDZ tool below shows the colors and construction details up close, useful for picturing a color against your brick or trim before we bring physical samples.",
       },
       {
         type: "widget",
@@ -131,12 +131,12 @@ export const learnArticles: LearnArticle[] = [
       { type: "h2", text: "When 3-tab still makes sense" },
       {
         type: "p",
-        text: "Honesty cuts both ways: on a rental property you plan to sell, a detached shed, or a budget that simply won't stretch, a properly installed 3-tab roof is better than a poorly installed anything. We'll tell you when the cheaper shingle is the right call — and when the wind rating alone should settle the argument.",
+        text: "Honesty cuts both ways: on a rental property you plan to sell, a detached shed, or a budget that simply won't stretch, a properly installed 3-tab roof is better than a poorly installed anything. We'll tell you when the cheaper shingle is the right call, and when the wind rating alone should settle the argument.",
       },
       {
         type: "callout",
         title: "See every line priced before you decide",
-        text: "Our proposals itemize the shingle, underlayment, ice-and-water shield, starter, ridge cap, and disposal — each with its own price. You choose upgrades; nothing comes pre-checked.",
+        text: "Our proposals itemize the shingle, underlayment, ice-and-water shield, starter, ridge cap, and disposal. Each with its own price. You choose upgrades; nothing comes pre-checked.",
         href: "/free-inspection",
         linkLabel: "Schedule a free inspection",
       },
@@ -145,17 +145,17 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "Which shingle do you install most?",
         answer:
-          "GAF Timberline HDZ architectural shingles — it's the line in our published example proposal. We install other GAF grades and 3-tab where they fit the job and budget.",
+          "GAF Timberline HDZ architectural shingles. It's the line in our published example proposal. We install other GAF grades and 3-tab where they fit the job and budget.",
       },
       {
         question: "Do architectural shingles really matter for hurricanes?",
         answer:
-          "The wind rating difference is real — roughly 60 mph versus 110–130 mph when installed to manufacturer spec. Installation quality matters as much as the shingle: nailing pattern, starter strips, and edge sealing decide whether the rating holds.",
+          "The wind rating difference is real, roughly 60 mph versus 110–130 mph when installed to manufacturer spec. Installation quality matters as much as the shingle: nailing pattern, starter strips, and edge sealing decide whether the rating holds.",
       },
       {
         question: "Can I upgrade the shingle without redoing the whole quote?",
         answer:
-          "Yes — because our proposals are itemized, swapping the shingle line changes one number, not the whole document.",
+          "Yes, because our proposals are itemized, swapping the shingle line changes one number, not the whole document.",
       },
     ],
     related: [
@@ -179,7 +179,7 @@ export const learnArticles: LearnArticle[] = [
     metaDescription:
       "What makes a GAF roof a system: Timberline HDZ shingles, WeatherWatch and StormGuard leak barriers, FeltBuster underlayment, Pro-Start starter, Cobra ventilation, and Seal-A-Ridge caps.",
     excerpt:
-      "Timberline HDZ, Pro-Start, WeatherWatch, Cobra, Seal-A-Ridge — what each GAF component is, and why the system matters more than the shingle.",
+      "Timberline HDZ, Pro-Start, WeatherWatch, Cobra, Seal-A-Ridge, what each GAF component is, and why the system matters more than the shingle.",
     updated: "2026-07-27",
     readMinutes: 6,
     hero: {
@@ -190,7 +190,7 @@ export const learnArticles: LearnArticle[] = [
     body: [
       {
         type: "p",
-        text: "Most homeowners shop roofs by shingle: a brand, a colour, a warranty length. But a shingle sitting on the wrong underlayment, without a starter course, over an unvented attic, will not deliver the life printed on the wrapper — and the warranty knows it. GAF builds its products to work as a set, and the accessories are where a roof is actually won or lost.",
+        text: "Most homeowners shop roofs by shingle: a brand, a colour, a warranty length. But a shingle sitting on the wrong underlayment, without a starter course, over an unvented attic, will not deliver the life printed on the wrapper, and the warranty knows it. GAF builds its products to work as a set, and the accessories are where a roof is actually won or lost.",
       },
       {
         type: "p",
@@ -199,7 +199,7 @@ export const learnArticles: LearnArticle[] = [
       { type: "h2", text: "The shingle: Timberline HDZ" },
       {
         type: "p",
-        text: "Timberline HDZ is the architectural shingle we install most often. Its distinguishing feature is the LayerLock bonding and a widened nailing zone — a strip roughly 600% larger than the old standard — which matters because the single most common installation error in roofing is a nail placed above or below the correct line. A wider target means more nails land where they hold. Properly installed with the required accessories, HDZ carries GAF's WindProven limited wind warranty with no maximum wind speed, which is not a small thing on the Gulf Coast.",
+        text: "Timberline HDZ is the architectural shingle we install most often. Its distinguishing feature is the LayerLock bonding and a widened nailing zone, a strip roughly 600% larger than the old standard, which matters because the single most common installation error in roofing is a nail placed above or below the correct line. A wider target means more nails land where they hold. Properly installed with the required accessories, HDZ carries GAF's WindProven limited wind warranty with no maximum wind speed, which is not a small thing on the Gulf Coast.",
       },
       { type: "h2", text: "The leak barriers: WeatherWatch and StormGuard" },
       {
@@ -214,7 +214,7 @@ export const learnArticles: LearnArticle[] = [
       { type: "h2", text: "The starter: Pro-Start" },
       {
         type: "p",
-        text: "A purpose-made first course along the eaves and rakes with a factory-applied sealant bead positioned to grab the first row of shingles. Some contractors cut up field shingles and flip them backwards to save a few dollars a square — it puts the sealant in the wrong place, and edge blow-off in the first real storm is the result.",
+        text: "A purpose-made first course along the eaves and rakes with a factory-applied sealant bead positioned to grab the first row of shingles. Some contractors cut up field shingles and flip them backwards to save a few dollars a square. It puts the sealant in the wrong place, and edge blow-off in the first real storm is the result.",
       },
       { type: "h2", text: "The ventilation: Cobra" },
       {
@@ -224,19 +224,19 @@ export const learnArticles: LearnArticle[] = [
       { type: "h2", text: "The ridge cap: Seal-A-Ridge or TimberTex" },
       {
         type: "p",
-        text: "Pre-formed, thicker caps shaped for the peak and hips. The shortcut here is cutting three-tab shingles into squares and bending them over the ridge — they aren't formulated to be folded, and they crack years early along the fold.",
+        text: "Pre-formed, thicker caps shaped for the peak and hips. The shortcut here is cutting three-tab shingles into squares and bending them over the ridge. They aren't formulated to be folded, and they crack years early along the fold.",
       },
       {
         type: "callout",
         title: "Why the accessories decide the warranty",
-        text: "GAF's enhanced system warranties are only available when enough qualifying accessories are installed by a certified contractor. That's not upselling — it's the manufacturer saying a shingle alone isn't a roof. Ask any contractor which specific warranty level their proposal qualifies for, and what it would take to reach the next one.",
+        text: "GAF's enhanced system warranties are only available when enough qualifying accessories are installed by a certified contractor. That's not upselling: it's the manufacturer saying a shingle alone isn't a roof. Ask any contractor which specific warranty level their proposal qualifies for, and what it would take to reach the next one.",
         href: "/residential/asphalt-shingle-roofing",
         linkLabel: "Our asphalt shingle roofing",
       },
       { type: "h2", text: "Explore GAF's own interactive diagram" },
       {
         type: "p",
-        text: "GAF publishes an interactive tool showing how these components stack up on a real roof. Explore it below — the names in it are the same names on your Southeast Roofing proposal.",
+        text: "GAF publishes an interactive tool showing how these components stack up on a real roof. Explore it below: the names in it are the same names on your Southeast Roofing proposal.",
       },
       {
         type: "widget",
@@ -248,7 +248,7 @@ export const learnArticles: LearnArticle[] = [
       {
         type: "callout",
         title: "Want the generic version first?",
-        text: "If you'd rather learn the parts of a roof without brand names attached, our own interactive anatomy guide covers every component — decking through gutters — plus the nine kinds of flashing.",
+        text: "If you'd rather learn the parts of a roof without brand names attached, our own interactive anatomy guide covers every component, decking through gutters, plus the nine kinds of flashing.",
         href: "/learn/materials/anatomy-of-a-roof",
         linkLabel: "Anatomy of a roof",
       },
@@ -262,12 +262,12 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "Is a GAF Certified Contractor the same as a GAF employee?",
         answer:
-          "No. GAF certifies independent contractors it has vetted and trained to install its systems to specification. We're an independent Mississippi company (MSBOC #R22245) — the certification is a manufacturer's standard we meet, and you can verify it directly on GAF's website rather than taking our word for it.",
+          "No. GAF certifies independent contractors it has vetted and trained to install its systems to specification. We're an independent Mississippi company (MSBOC #R22245). The certification is a manufacturer's standard we meet, and you can verify it directly on GAF's website rather than taking our word for it.",
       },
       {
         question: "Does using one manufacturer's full system really matter?",
         answer:
-          "For the warranty, yes — enhanced coverage requires qualifying components installed by a certified contractor. For performance, what matters most is that the accessories exist and are installed correctly: real starter at the edges, leak barrier in the valleys, adequate ventilation. A mixed-brand roof done right will outlast a single-brand roof done badly.",
+          "For the warranty, yes, enhanced coverage requires qualifying components installed by a certified contractor. For performance, what matters most is that the accessories exist and are installed correctly: real starter at the edges, leak barrier in the valleys, adequate ventilation. A mixed-brand roof done right will outlast a single-brand roof done badly.",
       },
     ],
     related: [
@@ -289,7 +289,7 @@ export const learnArticles: LearnArticle[] = [
     title: "Anatomy of a roof: every part, explained",
     metaTitle: "Anatomy of a Roof: Every Part Explained | Southeast Roofing",
     metaDescription:
-      "An interactive, brand-neutral guide to every part of a roof — decking, underlayment, ice and water shield, starter, shingles, ridge vent, flashing, valleys, gutters, soffit and fascia.",
+      "An interactive, brand-neutral guide to every part of a roof: decking, underlayment, ice and water shield, starter, shingles, ridge vent, flashing, valleys, gutters, soffit and fascia.",
     excerpt:
       "Click any part of the house and find out what it is, why it matters, and how it gets done wrong. No brand names, no jargon.",
     updated: "2026-07-27",
@@ -297,12 +297,12 @@ export const learnArticles: LearnArticle[] = [
     hero: {
       headline: "Anatomy of a roof",
       subhead:
-        "Thirteen components sit between your family and the weather, and you can see maybe three of them from the street. Here's the whole system — what each part is, why it matters, and the shortcuts that cause it to fail.",
+        "Thirteen components sit between your family and the weather, and you can see maybe three of them from the street. Here's the whole system, what each part is, why it matters, and the shortcuts that cause it to fail.",
     },
     body: [
       {
         type: "p",
-        text: "A roof is a system, not a surface. The shingles you see are the last layer of half a dozen, and the ones you can't see — decking, underlayment, leak barrier, flashing, ventilation — decide whether it actually keeps water out for twenty years. Because our proposals price each component on its own line, this guide doubles as a decoder ring for your estimate.",
+        text: "A roof is a system, not a surface. The shingles you see are the last layer of half a dozen, and the ones you can't see: decking, underlayment, leak barrier, flashing, ventilation, decide whether it actually keeps water out for twenty years. Because our proposals price each component on its own line, this guide doubles as a decoder ring for your estimate.",
       },
       {
         type: "p",
@@ -315,31 +315,31 @@ export const learnArticles: LearnArticle[] = [
         type: "list",
         title: "From the peak down to the ground",
         items: [
-          "Ridge cap and ridge vent — the peak is the most exposed line on the roof. The vent lets superheated attic air out; the cap seals and finishes it. Cut-up three-tab shingles used as cap crack years early.",
-          "Field shingles — the visible weather surface. Nail placement is everything; nails driven high or into the wrong zone let wind peel courses off in the first big storm.",
-          "Starter shingles — a purpose-made first course at the eaves and rakes whose sealant bead bonds the row above against wind uplift.",
-          "Ice and water shield — self-sealing membrane at valleys, eaves, and penetrations, where water concentrates and fasteners are densest.",
-          "Synthetic underlayment — a second water barrier across the whole deck that stays flat and intact where old felt paper tears and wrinkles.",
-          "Roof decking — the plywood or OSB the whole system nails into. Soft or delaminated decking won't hold a nail, and roofing over it guarantees early failure.",
-          "Drip edge — metal at every roof edge that throws water clear of the fascia instead of letting it wick back underneath.",
-          "Flashing — the metal at walls, chimneys, dormers, and penetrations. More leaks start here than anywhere else.",
-          "Valleys — where two slopes meet and the water volume concentrates. Fasteners in the flow path are a classic cause of leaks.",
-          "Pipe boots — the collars sealing each plumbing vent. Cheap rubber dry-rots in a few Mississippi summers; it's one of the most common leaks we find.",
-          "Gutters — carry runoff away from the fascia, siding, and foundation.",
-          "Soffit and fascia — the trim at the eave, and the vented intake that feeds the airflow the ridge vent exhausts.",
+          "Ridge cap and ridge vent. The peak is the most exposed line on the roof. The vent lets superheated attic air out; the cap seals and finishes it. Cut-up three-tab shingles used as cap crack years early.",
+          "Field shingles, the visible weather surface. Nail placement is everything; nails driven high or into the wrong zone let wind peel courses off in the first big storm.",
+          "Starter shingles, a purpose-made first course at the eaves and rakes whose sealant bead bonds the row above against wind uplift.",
+          "Ice and water shield: self-sealing membrane at valleys, eaves, and penetrations, where water concentrates and fasteners are densest.",
+          "Synthetic underlayment, a second water barrier across the whole deck that stays flat and intact where old felt paper tears and wrinkles.",
+          "Roof decking, the plywood or OSB the whole system nails into. Soft or delaminated decking won't hold a nail, and roofing over it guarantees early failure.",
+          "Drip edge, metal at every roof edge that throws water clear of the fascia instead of letting it wick back underneath.",
+          "Flashing: the metal at walls, chimneys, dormers, and penetrations. More leaks start here than anywhere else.",
+          "Valleys, where two slopes meet and the water volume concentrates. Fasteners in the flow path are a classic cause of leaks.",
+          "Pipe boots, the collars sealing each plumbing vent. Cheap rubber dry-rots in a few Mississippi summers; it's one of the most common leaks we find.",
+          "Gutters, carry runoff away from the fascia, siding, and foundation.",
+          "Soffit and fascia: the trim at the eave, and the vented intake that feeds the airflow the ridge vent exhausts.",
         ],
       },
       {
         type: "callout",
         title: "Ventilation is the layer everyone forgets",
-        text: "Intake at the soffits and exhaust at the ridge work as a pair — one without the other does almost nothing. In South Mississippi heat, a poorly vented attic cooks shingles from below and can void a manufacturer's warranty. Every inspection we do includes a ventilation check.",
+        text: "Intake at the soffits and exhaust at the ridge work as a pair, one without the other does almost nothing. In South Mississippi heat, a poorly vented attic cooks shingles from below and can void a manufacturer's warranty. Every inspection we do includes a ventilation check.",
         href: "/residential/ventilation",
         linkLabel: "How roof ventilation works",
       },
       { type: "h2", text: "Flashing deserves its own conversation" },
       {
         type: "p",
-        text: "Flashing is one pin on the diagram and nine separate pieces on a real roof — step, counter, apron, kickout, valley, drip edge, pipe, cricket, and Z-flashing. Kickout flashing in particular is the single most-skipped piece in the trade, and its absence rots wall sheathing quietly for years before anyone sees a stain. Our full interactive tool breaks each piece out with what it does and how it fails.",
+        text: "Flashing is one pin on the diagram and nine separate pieces on a real roof: step, counter, apron, kickout, valley, drip edge, pipe, cricket, and Z-flashing. Kickout flashing in particular is the single most-skipped piece in the trade, and its absence rots wall sheathing quietly for years before anyone sees a stain. Our full interactive tool breaks each piece out with what it does and how it fails.",
       },
       {
         type: "callout",
@@ -353,18 +353,18 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "Do I need every one of these parts?",
         answer:
-          "A code-compliant, warranty-eligible roof needs them all doing their jobs. What varies is the grade — how much ice and water shield, which underlayment, what vent style — and that's exactly what an itemized proposal lets you see and decide on.",
+          "A code-compliant, warranty-eligible roof needs them all doing their jobs. What varies is the grade: how much ice and water shield, which underlayment, what vent style, and that's exactly what an itemized proposal lets you see and decide on.",
       },
       {
         question: "Why do leaks usually start at flashing?",
         answer:
-          "Flashing lives where materials meet — chimney to shingles, wall to roof — and those joints move with heat and settling. Age, failed sealant, or sloppy installation leaks there long before the field of the roof wears out.",
+          "Flashing lives where materials meet, chimney to shingles, wall to roof, and those joints move with heat and settling. Age, failed sealant, or sloppy installation leaks there long before the field of the roof wears out.",
       },
       {
         question:
           "How can I tell if my decking is bad without tearing the roof off?",
         answer:
-          "Often you can't from the outside, which is why any honest proposal prices decking replacement per sheet up front as a possibility rather than pretending it won't happen. From inside the attic you can look for daylight, staining, or sagging between rafters — that's a real signal worth a call.",
+          "Often you can't from the outside, which is why any honest proposal prices decking replacement per sheet up front as a possibility rather than pretending it won't happen. From inside the attic you can look for daylight, staining, or sagging between rafters: that's a real signal worth a call.",
       },
       {
         question: "What is the most common thing you find done wrong?",
@@ -389,54 +389,54 @@ export const learnArticles: LearnArticle[] = [
     metaTitle:
       "How Roof Insurance Claims Work in Mississippi | Southeast Roofing",
     metaDescription:
-      "From storm to settled claim: documentation, adjuster meetings, wind deductibles, and where a roofing contractor legitimately helps — explained step by step.",
+      "From storm to settled claim: documentation, adjuster meetings, wind deductibles, and where a roofing contractor legitimately helps: explained step by step.",
     excerpt:
-      "From the storm to the settled claim — documentation, the adjuster meeting, and where a contractor legitimately helps.",
+      "From the storm to the settled claim: documentation, the adjuster meeting, and where a contractor legitimately helps.",
     updated: "2026-07-05",
     readMinutes: 7,
     hero: {
       headline: "How a roof insurance claim actually works here",
       subhead:
-        "About half our work is insurance restoration. Here's the process straight — what your policy does, what the adjuster does, and what we do.",
+        "About half our work is insurance restoration. Here's the process straight, what your policy does, what the adjuster does, and what we do.",
     },
     body: [
       {
         type: "p",
-        text: "After a hail run or a tropical system, South Mississippi homeowners face two problems at once: a damaged roof and an unfamiliar process. The claim itself isn't complicated once you see the moving parts — but the order of operations matters, and a few early mistakes cost people real money.",
+        text: "After a hail run or a tropical system, South Mississippi homeowners face two problems at once: a damaged roof and an unfamiliar process. The claim itself isn't complicated once you see the moving parts, but the order of operations matters, and a few early mistakes cost people real money.",
       },
       { type: "h2", text: "Step one: document before you touch anything" },
       {
         type: "p",
-        text: "Your claim lives or dies on evidence. Before repairs, before cleanup where it's safe to wait, the damage needs to be photographed thoroughly — wide shots that establish location, close-ups that show hail bruising, creased shingles, or wind-lifted tabs, and interior shots of any water intrusion. This is the heart of our free storm inspection: we document like the file will be argued over, because sometimes it is.",
+        text: "Your claim lives or dies on evidence. Before repairs, before cleanup where it's safe to wait, the damage needs to be photographed thoroughly: wide shots that establish location, close-ups that show hail bruising, creased shingles, or wind-lifted tabs, and interior shots of any water intrusion. This is the heart of our free storm inspection: we document like the file will be argued over, because sometimes it is.",
       },
       { type: "h2", text: "Step two: filing, and the deductible reality" },
       {
         type: "p",
-        text: "You file the claim — it's your policy — but you don't have to interpret it alone. Two things to find in your declarations: your deductible type and your coverage basis. Many Mississippi policies carry a separate wind/hail deductible calculated as a percentage of your dwelling coverage, not a flat number, and coastal policies often place named-storm wind under separate coverage entirely. Replacement-cost policies pay to replace the roof; actual-cash-value policies subtract depreciation. Knowing which you have sets expectations before anyone climbs a ladder.",
+        text: "You file the claim, it's your policy, but you don't have to interpret it alone. Two things to find in your declarations: your deductible type and your coverage basis. Many Mississippi policies carry a separate wind/hail deductible calculated as a percentage of your dwelling coverage, not a flat number, and coastal policies often place named-storm wind under separate coverage entirely. Replacement-cost policies pay to replace the roof; actual-cash-value policies subtract depreciation. Knowing which you have sets expectations before anyone climbs a ladder.",
       },
       { type: "h2", text: "Step three: the adjuster meeting" },
       {
         type: "p",
-        text: "Your insurer sends an adjuster to inspect. This is the single most valuable place to have your contractor present — not to argue, but to make sure nothing gets missed: every slope walked, every soft metal checked, matching damage on gutters and vents pointed out. We meet adjusters on roofs constantly and speak the same test-square language they do. When the adjuster's scope and ours differ, the difference gets documented and resubmitted with photos, not argued on vibes.",
+        text: "Your insurer sends an adjuster to inspect. This is the single most valuable place to have your contractor present: not to argue, but to make sure nothing gets missed: every slope walked, every soft metal checked, matching damage on gutters and vents pointed out. We meet adjusters on roofs constantly and speak the same test-square language they do. When the adjuster's scope and ours differ, the difference gets documented and resubmitted with photos, not argued on vibes.",
       },
       { type: "h2", text: "Step four: scope, build, and the paper trail" },
       {
         type: "p",
-        text: "The insurer issues a scope of loss and payment (often in stages — first check up front, depreciation released on completion for replacement-cost policies). We build to the approved scope with the same itemized clarity as any retail job, and we supply the completion documentation your insurer needs to release final funds.",
+        text: "The insurer issues a scope of loss and payment (often in stages, first check up front, depreciation released on completion for replacement-cost policies). We build to the approved scope with the same itemized clarity as any retail job, and we supply the completion documentation your insurer needs to release final funds.",
       },
       {
         type: "list",
         title: "What we never do",
         items: [
-          "Promise your claim will be approved — coverage decisions belong to your insurer under your policy.",
-          'Offer to "eat the deductible" — that\'s insurance fraud in plain terms, and a contractor who volunteers it is telling you how they do business.',
+          "Promise your claim will be approved, coverage decisions belong to your insurer under your policy.",
+          'Offer to "eat the deductible": that\'s insurance fraud in plain terms, and a contractor who volunteers it is telling you how they do business.',
           "Inflate scope. Our reports show what the storm did, and equally, what it didn't.",
         ],
       },
       {
         type: "callout",
         title: "Storm damage right now?",
-        text: "We assist through the entire claims process, start to finish — inspection, documentation, adjuster meeting, and the build.",
+        text: "We assist through the entire claims process, start to finish: inspection, documentation, adjuster meeting, and the build.",
         href: "/storm-damage/insurance-claims",
         linkLabel: "Our insurance claims assistance",
       },
@@ -450,12 +450,12 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "The insurer's estimate seems low. Is that final?",
         answer:
-          "No — scopes get supplemented routinely when documented damage was missed. That's paperwork and photographs, and we handle that documentation as part of the job.",
+          "No, scopes get supplemented routinely when documented damage was missed. That's paperwork and photographs, and we handle that documentation as part of the job.",
       },
       {
         question: "How long do I have to file after a storm?",
         answer:
-          "Policies set their own notice requirements and Mississippi law bounds the outside window — but practically, sooner is always stronger. Damage documented days after a named storm is easy to attribute; damage found two years later is a fight.",
+          "Policies set their own notice requirements and Mississippi law bounds the outside window, but practically, sooner is always stronger. Damage documented days after a named storm is easy to attribute; damage found two years later is a fight.",
       },
     ],
     related: [
@@ -478,7 +478,7 @@ export const learnArticles: LearnArticle[] = [
     metaTitle:
       "Hurricane Season Roof Checklist | Southeast Roofing Learning Center",
     metaDescription:
-      "What to check on your roof before June 1, what to do when a storm is named, and the first moves after it passes — a practical checklist from Mississippi roofers.",
+      "What to check on your roof before June 1, what to do when a storm is named, and the first moves after it passes: a practical checklist from Mississippi roofers.",
     excerpt:
       "What to check before June 1, when a storm gets named, and in the first hours after it passes.",
     updated: "2026-07-05",
@@ -491,24 +491,24 @@ export const learnArticles: LearnArticle[] = [
     body: [
       {
         type: "p",
-        text: "Every roof in South Mississippi lives on a hurricane calendar. The good news: most catastrophic roof failures start at small, findable weaknesses — a lifted shingle edge, a corroded flashing joint, a clogged gutter dumping water where it shouldn't. Finding them in calm weather is cheap. Finding them mid-storm is not.",
+        text: "Every roof in South Mississippi lives on a hurricane calendar. The good news: most catastrophic roof failures start at small, findable weaknesses: a lifted shingle edge, a corroded flashing joint, a clogged gutter dumping water where it shouldn't. Finding them in calm weather is cheap. Finding them mid-storm is not.",
       },
       { type: "h2", text: "Before the season (May)" },
       {
         type: "list",
         items: [
           "Walk your yard and look up: lifted or missing shingles, sagging gutter runs, exposed nail heads at ridge caps.",
-          "Check ceilings and attic after a hard rain — staining now means an active leak that a hurricane will turn into a flood.",
+          "Check ceilings and attic after a hard rain, staining now means an active leak that a hurricane will turn into a flood.",
           "Clear gutters and downspouts; overflowing gutters push water under the roof edge exactly where wind wants to start.",
           "Trim limbs over the roof line. In Pine Belt storms, trees cause as much roof damage as wind itself.",
-          "If your roof is 15+ years old or you can't remember its last professional look, schedule an inspection — it's free and it dates-stamps your roof's condition, which also helps any later claim.",
+          "If your roof is 15+ years old or you can't remember its last professional look, schedule an inspection. It's free and it dates-stamps your roof's condition, which also helps any later claim.",
         ],
       },
       { type: "h2", text: "When a storm is named and coming" },
       {
         type: "list",
         items: [
-          "Photograph your roof and each side of your home — dated 'before' photos make an after-storm claim dramatically cleaner.",
+          "Photograph your roof and each side of your home, dated 'before' photos make an after-storm claim dramatically cleaner.",
           "Secure yard items that become projectiles; more shingle punctures come from flying debris than from wind.",
           "Know where your policy documents are and what your wind deductible is.",
           "Don't put anyone on a roof for last-minute repairs in deteriorating weather. Nothing up there is worth it.",
@@ -517,7 +517,7 @@ export const learnArticles: LearnArticle[] = [
       { type: "h2", text: "The first 48 hours after" },
       {
         type: "p",
-        text: "Safety first: downed lines and weakened structures kill people after storms. From the ground, photograph everything. If water is coming in, a professional tarp job stops the damage from compounding — insurers expect reasonable mitigation and generally cover it. Then get a documented inspection before signing anything with whoever knocks on your door first: after every major storm, out-of-town crews flood the region, work fast, and leave faster. Check licenses. Ours is MSBOC #R22245, and we're still here after the trucks leave.",
+        text: "Safety first: downed lines and weakened structures kill people after storms. From the ground, photograph everything. If water is coming in, a professional tarp job stops the damage from compounding, insurers expect reasonable mitigation and generally cover it. Then get a documented inspection before signing anything with whoever knocks on your door first: after every major storm, out-of-town crews flood the region, work fast, and leave faster. Check licenses. Ours is MSBOC #R22245, and we're still here after the trucks leave.",
       },
       {
         type: "callout",
@@ -531,7 +531,7 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "Is tarping covered by insurance?",
         answer:
-          "Generally yes — policies expect reasonable steps to prevent further damage after a covered loss, and professional tarping is exactly that. Keep the invoice; it goes in the claim file.",
+          "Generally yes, policies expect reasonable steps to prevent further damage after a covered loss, and professional tarping is exactly that. Keep the invoice; it goes in the claim file.",
       },
       {
         question: "How do I vet a storm contractor?",
@@ -556,36 +556,36 @@ export const learnArticles: LearnArticle[] = [
     metaTitle:
       "Standing Seam vs Exposed Fastener Metal Roofing | Southeast Roofing",
     metaDescription:
-      "The two families of metal roofing compared honestly — cost, lifespan, maintenance, and where each one belongs, from crews that install both across South Mississippi.",
+      "The two families of metal roofing compared honestly, cost, lifespan, maintenance, and where each one belongs, from crews that install both across South Mississippi.",
     excerpt:
-      "The two families of metal roofing, compared honestly by crews that install both — including where the cheaper one is the right call.",
+      "The two families of metal roofing, compared honestly by crews that install both: including where the cheaper one is the right call.",
     updated: "2026-07-05",
     readMinutes: 6,
     hero: {
       headline: "Standing seam vs. exposed fastener",
       subhead:
-        "Metal roofing isn't one product — it's two very different families. We install both, so here's the comparison without the upsell.",
+        "Metal roofing isn't one product: it's two very different families. We install both, so here's the comparison without the upsell.",
     },
     body: [
       {
         type: "p",
-        text: "Ask three neighbors about metal roofs and you'll hear three prices, because 'metal roof' covers everything from a farm shop's ribbed panels to the concealed-fastener systems on high-end coastal homes. The families differ in how they attach — and that one difference drives cost, lifespan, and maintenance.",
+        text: "Ask three neighbors about metal roofs and you'll hear three prices, because 'metal roof' covers everything from a farm shop's ribbed panels to the concealed-fastener systems on high-end coastal homes. The families differ in how they attach, and that one difference drives cost, lifespan, and maintenance.",
       },
       { type: "h2", text: "Exposed fastener: the workhorse" },
       {
         type: "p",
-        text: "Exposed-fastener panels (R-panel, PBR, and similar profiles) screw straight through the metal into the structure, with a gasketed washer sealing each screw head. It's fast to install, economical, and genuinely durable — the honest workhorse on barns, shops, camps, and plenty of homes. The trade-off is those hundreds of gaskets: they weather, and the roof wants a fastener check roughly every decade to stay tight and dry.",
+        text: "Exposed-fastener panels (R-panel, PBR, and similar profiles) screw straight through the metal into the structure, with a gasketed washer sealing each screw head. It's fast to install, economical, and genuinely durable: the honest workhorse on barns, shops, camps, and plenty of homes. The trade-off is those hundreds of gaskets: they weather, and the roof wants a fastener check roughly every decade to stay tight and dry.",
       },
       { type: "h2", text: "Standing seam: the system" },
       {
         type: "p",
-        text: "Standing-seam panels attach with hidden clips inside raised, interlocking seams — no penetrations through the weather surface at all. The panels can expand and contract with our brutal temperature swings without working screws loose, which is why standing seam carries the longest service expectations and the premium price. On homes, it also brings the crisp architectural look most people picture when they say they want a metal roof.",
+        text: "Standing-seam panels attach with hidden clips inside raised, interlocking seams, no penetrations through the weather surface at all. The panels can expand and contract with our brutal temperature swings without working screws loose, which is why standing seam carries the longest service expectations and the premium price. On homes, it also brings the crisp architectural look most people picture when they say they want a metal roof.",
       },
       {
         type: "list",
         title: "The honest comparison",
         items: [
-          "Up-front cost: exposed fastener is meaningfully cheaper — often the difference between metal being in budget or not.",
+          "Up-front cost: exposed fastener is meaningfully cheaper, often the difference between metal being in budget or not.",
           "Service life: both outlast asphalt; standing seam typically leads because there are no gaskets to age.",
           "Maintenance: exposed fastener wants periodic fastener checks; standing seam has no exposed field fasteners, though flashings and penetrations still need inspection.",
           "Wind & coast: concealed clips and interlocked seams give standing seam the edge where hurricanes and salt air do their worst.",
@@ -594,12 +594,12 @@ export const learnArticles: LearnArticle[] = [
       },
       {
         type: "p",
-        text: "Gauge (metal thickness) and finish matter within both families — a heavier gauge with a quality painted finish outperforms bargain panels regardless of attachment style. Near the water, panel and fastener metallurgy needs to be specified for salt exposure. Those specifics belong on an itemized proposal, not a slogan.",
+        text: "Gauge (metal thickness) and finish matter within both families, a heavier gauge with a quality painted finish outperforms bargain panels regardless of attachment style. Near the water, panel and fastener metallurgy needs to be specified for salt exposure. Those specifics belong on an itemized proposal, not a slogan.",
       },
       {
         type: "callout",
         title: "Metal is a system we install everywhere",
-        text: "Homes, shops, barns, commercial buildings — explore the full metal lineup, residential and commercial.",
+        text: "Homes, shops, barns, commercial buildings: explore the full metal lineup, residential and commercial.",
         href: "/metal-roofing",
         linkLabel: "Explore metal roofing",
       },
@@ -613,12 +613,12 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "Can metal go over my existing shingles?",
         answer:
-          "Sometimes, with the right substructure — but we evaluate case by case. Trapping a failing roof under a new one can hide problems you'd rather fix once, properly.",
+          "Sometimes, with the right substructure, but we evaluate case by case. Trapping a failing roof under a new one can hide problems you'd rather fix once, properly.",
       },
       {
         question: "Which do you recommend for coastal homes?",
         answer:
-          "Standing seam with salt-appropriate metallurgy is usually the right answer near the water — the no-penetration design and wind performance earn the premium there. Further inland, exposed fastener is often the smart-money choice.",
+          "Standing seam with salt-appropriate metallurgy is usually the right answer near the water, the no-penetration design and wind performance earn the premium there. Further inland, exposed fastener is often the smart-money choice.",
       },
     ],
     related: [
@@ -643,31 +643,31 @@ export const learnArticles: LearnArticle[] = [
     title: "The 10-minute roof check every homeowner should do twice a year",
     metaTitle: "The 10-Minute Roof Check | Southeast Roofing Learning Center",
     metaDescription:
-      "A twice-a-year, feet-on-the-ground roof check that catches most problems early — what to look for outside, in the attic, and when to call a professional.",
+      "A twice-a-year, feet-on-the-ground roof check that catches most problems early, what to look for outside, in the attic, and when to call a professional.",
     excerpt:
-      "Feet stay on the ground, ten minutes on the clock — the twice-a-year habit that catches most roof problems early.",
+      "Feet stay on the ground, ten minutes on the clock: the twice-a-year habit that catches most roof problems early.",
     updated: "2026-07-05",
     readMinutes: 4,
     hero: {
       headline: "The 10-minute roof check",
       subhead:
-        "No ladder required. Twice a year — spring and fall — this walk-around catches most problems while they're still small.",
+        "No ladder required. Twice a year: spring and fall: this walk-around catches most problems while they're still small.",
     },
     body: [
       {
         type: "p",
-        text: "Roofs rarely fail suddenly. They fail slowly, visibly, and politely announce it — to anyone who looks. In the Pine Belt, where heat, humidity, and pine straw age roofs faster than the national brochure numbers, a twice-a-year look is the cheapest roof insurance there is. Your feet never leave the ground.",
+        text: "Roofs rarely fail suddenly. They fail slowly, visibly, and politely announce it, to anyone who looks. In the Pine Belt, where heat, humidity, and pine straw age roofs faster than the national brochure numbers, a twice-a-year look is the cheapest roof insurance there is. Your feet never leave the ground.",
       },
       { type: "h2", text: "Outside: the slow lap" },
       {
         type: "list",
         items: [
-          "Shingle lines: wavy courses, curling edges, or tabs that look lifted — binoculars or a phone zoom work fine.",
+          "Shingle lines: wavy courses, curling edges, or tabs that look lifted: binoculars or a phone zoom work fine.",
           "Bald spots: patches where granules have washed away read as dark blotches; check your gutter downspout splash for granule piles.",
-          "Ridge and edges: the peak and the eaves fail first in wind — look for missing ridge caps or drip edge hanging loose.",
-          "Flashing points: chimney, plumbing vents, and wall junctions — rust streaks or lifted metal mean water is next.",
-          "Gutters: sagging runs, standing water, plants growing (it happens) — overflowing gutters rot fascia and wick under the roof edge.",
-          "Green and black streaks: algae is cosmetic, moss is not — moss holds water against shingles and pries them apart.",
+          "Ridge and edges: the peak and the eaves fail first in wind, look for missing ridge caps or drip edge hanging loose.",
+          "Flashing points: chimney, plumbing vents, and wall junctions: rust streaks or lifted metal mean water is next.",
+          "Gutters: sagging runs, standing water, plants growing (it happens), overflowing gutters rot fascia and wick under the roof edge.",
+          "Green and black streaks: algae is cosmetic, moss is not, moss holds water against shingles and pries them apart.",
         ],
       },
       { type: "h2", text: "Inside: the attic minute" },
@@ -678,7 +678,7 @@ export const learnArticles: LearnArticle[] = [
       { type: "h2", text: "What's not a DIY job" },
       {
         type: "p",
-        text: "Walking the roof. Steep-slope falls hurt people every year, and foot traffic damages hot asphalt shingles besides. If your ground check finds anything on the list — or your roof is past 15 and hasn't had a professional look — that's what a free inspection is for. We'll tell you honestly if it's a repair, a watch-item, or nothing.",
+        text: "Walking the roof. Steep-slope falls hurt people every year, and foot traffic damages hot asphalt shingles besides. If your ground check finds anything on the list, or your roof is past 15 and hasn't had a professional look, that's what a free inspection is for. We'll tell you honestly if it's a repair, a watch-item, or nothing.",
       },
       {
         type: "callout",
@@ -697,7 +697,7 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "Are the black streaks on my roof hurting it?",
         answer:
-          "The streaks are algae and are mostly cosmetic. Moss is the one to act on — it holds moisture against the shingles. Either way, never pressure-wash a shingle roof; it strips the granules that protect it.",
+          "The streaks are algae and are mostly cosmetic. Moss is the one to act on. It holds moisture against the shingles. Either way, never pressure-wash a shingle roof; it strips the granules that protect it.",
       },
     ],
     related: [
@@ -717,9 +717,9 @@ export const learnArticles: LearnArticle[] = [
     metaTitle:
       "TPO vs EPDM vs Roof Coatings | Southeast Roofing Learning Center",
     metaDescription:
-      "The three moves available on an aging flat roof — TPO, EPDM, or a restorative coating — compared by cost logic, building type, and roof condition.",
+      "The three moves available on an aging flat roof: TPO, EPDM, or a restorative coating, compared by cost logic, building type, and roof condition.",
     excerpt:
-      "The three moves on an aging flat roof, compared by cost logic and building condition — including when a coating beats a replacement.",
+      "The three moves on an aging flat roof, compared by cost logic and building condition: including when a coating beats a replacement.",
     updated: "2026-07-05",
     readMinutes: 6,
     hero: {
@@ -730,7 +730,7 @@ export const learnArticles: LearnArticle[] = [
     body: [
       {
         type: "p",
-        text: "Commercial roof decisions are budget decisions with a membrane attached. Whether you manage a strip center in Hattiesburg or a warehouse near the port, the question isn't 'what's the best roof' — it's 'what does this building, this budget, and this planning horizon justify.' Here's how the three main options actually sort.",
+        text: "Commercial roof decisions are budget decisions with a membrane attached. Whether you manage a strip center in Hattiesburg or a warehouse near the port, the question isn't 'what's the best roof'. It's 'what does this building, this budget, and this planning horizon justify.' Here's how the three main options actually sort.",
       },
       { type: "h2", text: "TPO: the default for a reason" },
       {
@@ -740,12 +740,12 @@ export const learnArticles: LearnArticle[] = [
       { type: "h2", text: "EPDM: the rubber veteran" },
       {
         type: "p",
-        text: "Black synthetic rubber with a half-century track record. It shrugs off impacts and movement, and repairs are straightforward for decades. The black surface runs hot in Mississippi sun — which matters less over unconditioned space and can be offset with coatings. On the right building it remains a smart, economical system.",
+        text: "Black synthetic rubber with a half-century track record. It shrugs off impacts and movement, and repairs are straightforward for decades. The black surface runs hot in Mississippi sun, which matters less over unconditioned space and can be offset with coatings. On the right building it remains a smart, economical system.",
       },
       { type: "h2", text: "Coatings: restoration, not replacement" },
       {
         type: "p",
-        text: "A fluid-applied silicone or acrylic layer over an existing roof that's aging but fundamentally sound. The economics are the draw: commonly well below the cost of a full replacement when the roof qualifies, minimal business disruption, typically renewable, and often classifiable as maintenance rather than capital expense — worth asking your accountant. The discipline is the catch: coatings rescue tired roofs, not failed ones. Saturated insulation or widespread seam failure means the money belongs in a new roof, and we'll say so.",
+        text: "A fluid-applied silicone or acrylic layer over an existing roof that's aging but fundamentally sound. The economics are the draw: commonly well below the cost of a full replacement when the roof qualifies, minimal business disruption, typically renewable, and often classifiable as maintenance rather than capital expense, worth asking your accountant. The discipline is the catch: coatings rescue tired roofs, not failed ones. Saturated insulation or widespread seam failure means the money belongs in a new roof, and we'll say so.",
       },
       {
         type: "list",
@@ -754,7 +754,7 @@ export const learnArticles: LearnArticle[] = [
           "Roof sound but aging, budget tight → coating assessment first.",
           "Membrane at end of life over conditioned space → TPO replacement.",
           "Unconditioned or impact-prone building → EPDM earns a look.",
-          "Not sure which — that's what a documented commercial assessment is for, with core samples where warranted.",
+          "Not sure which: that's what a documented commercial assessment is for, with core samples where warranted.",
         ],
       },
       {
@@ -769,12 +769,12 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "How disruptive is a commercial reroof to operations?",
         answer:
-          "Less than most owners fear with real planning — staging, sections, and scheduling around your hours are part of the proposal, not an afterthought. Coatings are quieter still; most tenants never notice.",
+          "Less than most owners fear with real planning: staging, sections, and scheduling around your hours are part of the proposal, not an afterthought. Coatings are quieter still; most tenants never notice.",
       },
       {
         question: "Can you assess whether my roof qualifies for a coating?",
         answer:
-          "Yes — that's a moisture and adhesion question, answered with an on-roof assessment and core samples where warranted. If it doesn't qualify, we'll show you why with photos.",
+          "Yes, that's a moisture and adhesion question, answered with an on-roof assessment and core samples where warranted. If it doesn't qualify, we'll show you why with photos.",
       },
     ],
     related: [
@@ -806,23 +806,23 @@ export const learnArticles: LearnArticle[] = [
     body: [
       {
         type: "p",
-        text: "Roof pricing has a trust problem, and the industry earned it: teaser per-square rates that triple once someone's on your roof, 'free upgrades' priced in somewhere else, vague lump sums hiding what you're buying. We price the opposite way — every component on its own line — so this guide can be unusually specific about where the money goes.",
+        text: "Roof pricing has a trust problem, and the industry earned it: teaser per-square rates that triple once someone's on your roof, 'free upgrades' priced in somewhere else, vague lump sums hiding what you're buying. We price the opposite way, every component on its own line, so this guide can be unusually specific about where the money goes.",
       },
       { type: "h2", text: "The five things that set the number" },
       {
         type: "list",
         items: [
-          "Size — measured in squares (100 sq ft). More roof, more everything. Note your roof's area is larger than your home's footprint because of pitch and overhangs.",
-          "Pitch and complexity — steep roofs and cut-up rooflines with valleys, dormers, and hips take more time, more safety setup, and more waste.",
-          "Material grade — 3-tab vs architectural vs designer shingle, or the jump to metal; this is the biggest lever you control.",
-          "Decking condition — rotten decking found at tear-off gets replaced per sheet. An honest contractor prices that possibility up front instead of springing it mid-job.",
-          "Accessories and code items — drip edge, ventilation, ice-and-water coverage: individually small, meaningful together, and exactly the lines that vanish inside lump-sum quotes.",
+          "Size, measured in squares (100 sq ft). More roof, more everything. Note your roof's area is larger than your home's footprint because of pitch and overhangs.",
+          "Pitch and complexity, steep roofs and cut-up rooflines with valleys, dormers, and hips take more time, more safety setup, and more waste.",
+          "Material grade: 3-tab vs architectural vs designer shingle, or the jump to metal; this is the biggest lever you control.",
+          "Decking condition, rotten decking found at tear-off gets replaced per sheet. An honest contractor prices that possibility up front instead of springing it mid-job.",
+          "Accessories and code items: drip edge, ventilation, ice-and-water coverage: individually small, meaningful together, and exactly the lines that vanish inside lump-sum quotes.",
         ],
       },
       { type: "h2", text: "A real itemized example" },
       {
         type: "p",
-        text: "The example proposal published on our homepage is a real format with real line pricing for a modest-size architectural shingle replacement: tear-off, GAF Timberline HDZ shingles, synthetic felt, ice and water shield, starter strip, hip and ridge cap, and dump charge — totaling $8,430 before any optional upgrades like drip edge, ridge venting, or gutters. Larger homes, steeper pitches, and premium materials scale that number up from there; many full replacements in our area land in the low five figures, and complex or metal projects run higher. The honest answer for your roof is a measured, line-by-line number — which is exactly what a free inspection produces.",
+        text: "The example proposal published on our homepage is a real format with real line pricing for a modest-size architectural shingle replacement: tear-off, GAF Timberline HDZ shingles, synthetic felt, ice and water shield, starter strip, hip and ridge cap, and dump charge: totaling $8,430 before any optional upgrades like drip edge, ridge venting, or gutters. Larger homes, steeper pitches, and premium materials scale that number up from there; many full replacements in our area land in the low five figures, and complex or metal projects run higher. The honest answer for your roof is a measured, line-by-line number: which is exactly what a free inspection produces.",
       },
       { type: "h2", text: "Why per-square teaser prices mislead" },
       {
@@ -832,12 +832,12 @@ export const learnArticles: LearnArticle[] = [
       { type: "h2", text: "Ways to manage the number" },
       {
         type: "p",
-        text: "Timing (replacing on your schedule beats replacing after a failure), material selection where it genuinely fits, insurance when damage is storm-related — about half our work is exactly that — and financing: $0-down options through GoodLeap spread the cost without draining savings. What we won't do is manage the number by thinning the system where you can't see it.",
+        text: "Timing (replacing on your schedule beats replacing after a failure), material selection where it genuinely fits, insurance when damage is storm-related, about half our work is exactly that, and financing: $0-down options through GoodLeap spread the cost without draining savings. What we won't do is manage the number by thinning the system where you can't see it.",
       },
       {
         type: "callout",
         title: "Get your real number",
-        text: "A free inspection produces a measured, itemized proposal — every line priced, upgrades your choice, nothing pre-checked.",
+        text: "A free inspection produces a measured, itemized proposal: every line priced, upgrades your choice, nothing pre-checked.",
         href: "/free-inspection",
         linkLabel: "Schedule your free inspection",
       },
@@ -846,12 +846,12 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "Can I get a price without an inspection?",
         answer:
-          "You can get an instant satellite-based estimate through the Roofr tool on our site — a genuinely useful ballpark. A contract-grade number needs measurements and a decking/ventilation/flashing assessment; that's the free inspection.",
+          "You can get an instant satellite-based estimate through the Roofr tool on our site, a genuinely useful ballpark. A contract-grade number needs measurements and a decking/ventilation/flashing assessment; that's the free inspection.",
       },
       {
         question: "Is metal always more expensive than shingle?",
         answer:
-          "Up front, generally yes — exposed-fastener metal narrows the gap, standing seam widens it. Per year of service life the comparison gets much friendlier to metal; the right answer depends on how long you'll own the roof.",
+          "Up front, generally yes, exposed-fastener metal narrows the gap, standing seam widens it. Per year of service life the comparison gets much friendlier to metal; the right answer depends on how long you'll own the roof.",
       },
       {
         question: "Do you charge for the inspection or the proposal?",
@@ -876,9 +876,9 @@ export const learnArticles: LearnArticle[] = [
     metaTitle:
       "Metal vs Asphalt Shingle Roofing in Mississippi | Southeast Roofing",
     metaDescription:
-      "An honest comparison of metal and asphalt shingle roofing for South Mississippi homes — cost, lifespan, storm performance, and energy — from a GAF-certified roofer that installs both.",
+      "An honest comparison of metal and asphalt shingle roofing for South Mississippi homes, cost, lifespan, storm performance, and energy: from a GAF-certified roofer that installs both.",
     excerpt:
-      "Cost, lifespan, storm performance, and energy — the real trade-offs between metal and shingle, from a crew that installs both.",
+      "Cost, lifespan, storm performance, and energy: the real trade-offs between metal and shingle, from a crew that installs both.",
     updated: "2026-07-05",
     readMinutes: 7,
     hero: {
@@ -893,16 +893,16 @@ export const learnArticles: LearnArticle[] = [
       },
       {
         type: "h2",
-        text: "The upfront cost gap is real — but it isn't the whole story",
+        text: "The upfront cost gap is real, but it isn't the whole story",
       },
       {
         type: "p",
-        text: "Asphalt shingles cost less to buy and install, usually by a wide margin. A metal roof is a bigger check up front — more material, more labor, more specialized installation. What narrows the gap is time: a quality metal roof can outlast two shingle roofs, so measured per year of service, the two move much closer together. We quote both from the same free inspection, so you compare real numbers for your roof instead of averages off the internet.",
+        text: "Asphalt shingles cost less to buy and install, usually by a wide margin. A metal roof is a bigger check up front: more material, more labor, more specialized installation. What narrows the gap is time: a quality metal roof can outlast two shingle roofs, so measured per year of service, the two move much closer together. We quote both from the same free inspection, so you compare real numbers for your roof instead of averages off the internet.",
       },
       {
         type: "callout",
         title: "See the numbers for your roof",
-        text: "Cost depends on your roof's size, pitch, and access far more than any online average. Our free inspection turns those into an itemized proposal — and we can price both systems side by side.",
+        text: "Cost depends on your roof's size, pitch, and access far more than any online average. Our free inspection turns those into an itemized proposal, and we can price both systems side by side.",
         href: "/free-inspection",
         linkLabel: "Schedule a free inspection",
       },
@@ -912,27 +912,27 @@ export const learnArticles: LearnArticle[] = [
         title: "Metal vs. shingle in South Mississippi",
         items: [
           "Lifespan: architectural shingles typically deliver 15–25 years in our heat and humidity; a quality metal roof often lasts 40 years or more.",
-          "Wind: both can be rated for hurricane-country winds when installed to spec — architectural shingles commonly 110–130 mph, and standing-seam metal performs very well against uplift.",
+          "Wind: both can be rated for hurricane-country winds when installed to spec: architectural shingles commonly 110–130 mph, and standing-seam metal performs very well against uplift.",
           "Heat & energy: reflective metal finishes bounce solar heat back and can ease the load on your AC through a Mississippi summer; shingles absorb more.",
-          "Rain noise: over solid decking and underlayment, metal is far quieter than the old tin-roof myth — but still louder than shingle in a hard downpour.",
+          "Rain noise: over solid decking and underlayment, metal is far quieter than the old tin-roof myth, but still louder than shingle in a hard downpour.",
           "Maintenance: metal has fewer components to fail; shingles are simpler and cheaper to repair one section at a time.",
-          "Fire: metal is non-combustible — a plus on rural and wooded properties.",
+          "Fire: metal is non-combustible: a plus on rural and wooded properties.",
         ],
       },
       { type: "h2", text: "Where metal is worth the premium" },
       {
         type: "p",
-        text: "If you're staying in your home for the long haul, a metal roof can be the only roof you buy for decades — and for many homeowners, that settles it. It's also a strong fit for rural and country properties, steep showpiece homes, and low-slope sections where shingles struggle. We install standing seam, R-panel, and exposed-fastener systems across both homes and commercial buildings, matched to the structure they protect.",
+        text: "If you're staying in your home for the long haul, a metal roof can be the only roof you buy for decades, and for many homeowners, that settles it. It's also a strong fit for rural and country properties, steep showpiece homes, and low-slope sections where shingles struggle. We install standing seam, R-panel, and exposed-fastener systems across both homes and commercial buildings, matched to the structure they protect.",
       },
       { type: "h2", text: "Where asphalt shingles still make the most sense" },
       {
         type: "p",
-        text: "For most South Mississippi homes, a quality architectural shingle system is the practical answer: lower upfront cost, a huge range of colors, easy repairs, and — installed correctly with the right underlayment, ventilation, and flashing — genuinely strong storm performance. If you're on a budget, planning to move within a decade, or matching a neighborhood look, shingles are usually the smart buy. As a GAF Certified Contractor, most of the roofs we install are GAF shingle systems.",
+        text: "For most South Mississippi homes, a quality architectural shingle system is the practical answer: lower upfront cost, a huge range of colors, easy repairs, and: installed correctly with the right underlayment, ventilation, and flashing, genuinely strong storm performance. If you're on a budget, planning to move within a decade, or matching a neighborhood look, shingles are usually the smart buy. As a GAF Certified Contractor, most of the roofs we install are GAF shingle systems.",
       },
       {
         type: "callout",
-        title: "We install both — and we'll tell you which fits",
-        text: "Our recommendation is based on your roof, your budget, and how long you're staying — never on what we'd rather sell. Financing through GoodLeap is available either way.",
+        title: "We install both, and we'll tell you which fits",
+        text: "Our recommendation is based on your roof, your budget, and how long you're staying, never on what we'd rather sell. Financing through GoodLeap is available either way.",
         href: "/financing",
         linkLabel: "See financing options",
       },
@@ -946,12 +946,12 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "Does a metal roof lower my energy bills?",
         answer:
-          "Reflective metal finishes can reduce heat gain and ease your AC's load through our summers. The actual savings vary with your home's color, insulation, and ventilation, so we won't promise a specific number — but the effect is real.",
+          "Reflective metal finishes can reduce heat gain and ease your AC's load through our summers. The actual savings vary with your home's color, insulation, and ventilation, so we won't promise a specific number, but the effect is real.",
       },
       {
         question: "Is metal roofing loud when it rains?",
         answer:
-          "Much quieter than its old reputation. Installed over solid decking and underlayment, it's a soft sound, not a drumming tin roof — though it is still somewhat louder than shingle in heavy rain.",
+          "Much quieter than its old reputation. Installed over solid decking and underlayment, it's a soft sound, not a drumming tin roof, though it is still somewhat louder than shingle in heavy rain.",
       },
       {
         question: "Can you install metal over my existing shingles?",
@@ -981,7 +981,7 @@ export const learnArticles: LearnArticle[] = [
     title: "Roof repair vs. replacement: how to know which you need",
     metaTitle: "Roof Repair vs. Replacement: How to Decide | Southeast Roofing",
     metaDescription:
-      "How to tell whether your roof needs a repair or a full replacement — the signs for each, the gray areas, and the insurance timing — from a Hattiesburg roofer who'll recommend the cheaper path when it's enough.",
+      "How to tell whether your roof needs a repair or a full replacement, the signs for each, the gray areas, and the insurance timing, from a Hattiesburg roofer who'll recommend the cheaper path when it's enough.",
     excerpt:
       "The signs that point to a repair, the ones that point to replacement, and how to read the gray area in between.",
     updated: "2026-07-05",
@@ -994,47 +994,47 @@ export const learnArticles: LearnArticle[] = [
     body: [
       {
         type: "p",
-        text: "It's the question behind most calls we get: is this a repair, or is it time for a new roof? The honest answer depends on three things — how bad the damage is, how widespread it is, and how much service life the rest of the roof has left. Here's how we work through it on every inspection, so you can think it through too.",
+        text: "It's the question behind most calls we get: is this a repair, or is it time for a new roof? The honest answer depends on three things, how bad the damage is, how widespread it is, and how much service life the rest of the roof has left. Here's how we work through it on every inspection, so you can think it through too.",
       },
       { type: "h2", text: "Signs a repair is all you need" },
       {
         type: "list",
         items: [
-          "The damage is localized — a wind-torn section, a few missing shingles, or one leaky valley — on a roof that's otherwise in good shape.",
+          "The damage is localized: a wind-torn section, a few missing shingles, or one leaky valley: on a roof that's otherwise in good shape.",
           "Your roof still has years of life left (generally under 15 years old for shingles in our climate).",
-          "A single, findable leak source — flashing around a chimney or a cracked vent boot is the most common culprit we repair.",
+          "A single, findable leak source, flashing around a chimney or a cracked vent boot is the most common culprit we repair.",
           "Storm damage confined to one slope or one side of the house.",
         ],
       },
       {
         type: "p",
-        text: "When the roof underneath is sound, a proper repair is the right — and cheaper — call, and we'll say so plainly.",
+        text: "When the roof underneath is sound, a proper repair is the right, and cheaper, call, and we'll say so plainly.",
       },
       { type: "h2", text: "Signs it's replacement time" },
       {
         type: "list",
         items: [
-          "Leaks in multiple rooms or across multiple slopes — the system as a whole is failing, not one spot.",
+          "Leaks in multiple rooms or across multiple slopes: the system as a whole is failing, not one spot.",
           "The roof is 20+ years old and shingles are curling, cracking, or shedding granules across whole sections.",
           "Widespread storm damage that both your insurer and the manufacturer would favor replacing over patching.",
-          "Repairs that keep coming back — if you're calling a roofer every year, the math has already flipped.",
+          "Repairs that keep coming back, if you're calling a roofer every year, the math has already flipped.",
           "A sagging roofline, which can signal decking or structural moisture damage.",
         ],
       },
       { type: "h2", text: "The gray area: age plus damage" },
       {
         type: "p",
-        text: "The hardest cases sit in the middle — say a 15-year-old roof with real but not catastrophic damage. Here, patching can be throwing good money after bad: the repair might hold, but the surrounding shingles are close behind, and you'll be back. We weigh the cost of the repair against the roof's remaining life and lay out both options with prices, so the decision is yours, not ours.",
+        text: "The hardest cases sit in the middle, say a 15-year-old roof with real but not catastrophic damage. Here, patching can be throwing good money after bad: the repair might hold, but the surrounding shingles are close behind, and you'll be back. We weigh the cost of the repair against the roof's remaining life and lay out both options with prices, so the decision is yours, not ours.",
       },
       { type: "h2", text: "When a storm is involved, timing matters" },
       {
         type: "p",
-        text: "If wind or hail caused the damage, there's an insurance clock running. Hail bruising and wind-lifted shingles often don't leak right away — but they've shortened the roof's life, and claim windows don't stay open forever. Documenting the damage early protects your options. We inspect, photograph everything, and help you navigate the claim; the decision always rests with your insurer, but you won't do it alone.",
+        text: "If wind or hail caused the damage, there's an insurance clock running. Hail bruising and wind-lifted shingles often don't leak right away, but they've shortened the roof's life, and claim windows don't stay open forever. Documenting the damage early protects your options. We inspect, photograph everything, and help you navigate the claim; the decision always rests with your insurer, but you won't do it alone.",
       },
       {
         type: "callout",
         title: "Get an honest answer, free",
-        text: "Our inspection documents the whole system — shingles, flashing, decking, ventilation — and tells you plainly whether you need a repair, a replacement, or nothing yet, with photos to back it up.",
+        text: "Our inspection documents the whole system: shingles, flashing, decking, ventilation, and tells you plainly whether you need a repair, a replacement, or nothing yet, with photos to back it up.",
         href: "/free-inspection",
         linkLabel: "Schedule a free inspection",
       },
@@ -1043,7 +1043,7 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "How do I know if I need a repair or a full replacement?",
         answer:
-          "Localized damage on a roof with life left in it is a repair; widespread failure, chronic leaks, or major storm damage across slopes points to replacement. Our free inspection gives you the answer with photo evidence — and we recommend the cheaper path whenever it's genuinely enough.",
+          "Localized damage on a roof with life left in it is a repair; widespread failure, chronic leaks, or major storm damage across slopes points to replacement. Our free inspection gives you the answer with photo evidence, and we recommend the cheaper path whenever it's genuinely enough.",
       },
       {
         question: "Will a repair look mismatched against my old shingles?",
@@ -1053,12 +1053,12 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "Is it worth repairing a 20-year-old roof?",
         answer:
-          "Usually not, if the damage is more than trivial — the surrounding shingles are near the end of their life too. We'll show you the repair cost against the roof's remaining life so you can make the call with real numbers.",
+          "Usually not, if the damage is more than trivial. The surrounding shingles are near the end of their life too. We'll show you the repair cost against the roof's remaining life so you can make the call with real numbers.",
       },
       {
         question: "Does insurance cover a repair, or only a full replacement?",
         answer:
-          "It depends on the cause and extent of the covered damage — wind and hail are commonly covered perils, and the insurer decides the scope. We document thoroughly to support whatever the damage actually warrants, repair or replacement.",
+          "It depends on the cause and extent of the covered damage, wind and hail are commonly covered perils, and the insurer decides the scope. We document thoroughly to support whatever the damage actually warrants, repair or replacement.",
       },
     ],
     related: [
@@ -1078,9 +1078,9 @@ export const learnArticles: LearnArticle[] = [
     metaTitle:
       "How to Choose a Roofing Contractor in Mississippi | Southeast Roofing",
     metaDescription:
-      "How to vet a roofer in Mississippi and steer clear of storm-chasing scams — license, insurance, local reputation, itemized proposals, and the red flags worth walking away from.",
+      "How to vet a roofer in Mississippi and steer clear of storm-chasing scams: license, insurance, local reputation, itemized proposals, and the red flags worth walking away from.",
     excerpt:
-      "License, insurance, local reputation, and the red flags — how to hire a roofer you won't regret, and spot the storm chasers.",
+      "License, insurance, local reputation, and the red flags: how to hire a roofer you won't regret, and spot the storm chasers.",
     updated: "2026-07-05",
     readMinutes: 7,
     hero: {
@@ -1092,12 +1092,12 @@ export const learnArticles: LearnArticle[] = [
     body: [
       {
         type: "p",
-        text: "Your roof is one of the most expensive things you own, and hiring the wrong contractor to work on it can cost you twice — once for the bad job, and again to fix it. In Mississippi, the risk spikes after every hurricane and hail event, when storm-chasing crews descend on the area, knock doors, collect money, and disappear the moment the check clears. A little vetting up front protects you from all of it.",
+        text: "Your roof is one of the most expensive things you own, and hiring the wrong contractor to work on it can cost you twice, once for the bad job, and again to fix it. In Mississippi, the risk spikes after every hurricane and hail event, when storm-chasing crews descend on the area, knock doors, collect money, and disappear the moment the check clears. A little vetting up front protects you from all of it.",
       },
       { type: "h2", text: "Start with license and insurance" },
       {
         type: "p",
-        text: "Commercial roofing and larger residential jobs in Mississippi fall under the Mississippi State Board of Contractors (MSBOC). Ask for the license number and confirm it's current. Then ask for proof of both general liability insurance and workers' compensation — if an uninsured worker is hurt on your roof, or your home is damaged, you don't want that liability landing on you. A legitimate contractor hands these over without flinching.",
+        text: "Commercial roofing and larger residential jobs in Mississippi fall under the Mississippi State Board of Contractors (MSBOC). Ask for the license number and confirm it's current. Then ask for proof of both general liability insurance and workers' compensation, if an uninsured worker is hurt on your roof, or your home is damaged, you don't want that liability landing on you. A legitimate contractor hands these over without flinching.",
       },
       {
         type: "list",
@@ -1106,7 +1106,7 @@ export const learnArticles: LearnArticle[] = [
           "Their MSBOC license number (and confirm it's current)",
           "A certificate of general liability insurance",
           "Proof of workers' compensation coverage",
-          "A physical local address — not just a cell number and a magnetic sign",
+          "A physical local address: not just a cell number and a magnetic sign",
         ],
       },
       { type: "h2", text: "The storm-chaser red flags" },
@@ -1116,8 +1116,8 @@ export const learnArticles: LearnArticle[] = [
           "They knocked on your door uninvited right after a storm and pressured you to sign today.",
           "Out-of-state plates, no local office, and a phone number that isn't a Mississippi business line.",
           "They want a large payment up front, or ask for the insurance check to be signed over to them.",
-          "They offer to 'waive your deductible' — which is insurance fraud, and a preview of how they do business.",
-          "No written, itemized proposal — just a number scribbled on a business card.",
+          "They offer to 'waive your deductible': which is insurance fraud, and a preview of how they do business.",
+          "No written, itemized proposal: just a number scribbled on a business card.",
           "Reviews you can't verify, or none at all.",
         ],
       },
@@ -1126,9 +1126,9 @@ export const learnArticles: LearnArticle[] = [
         type: "list",
         items: [
           "A standing local address you can drive to, and a track record in your area.",
-          "Manufacturer certification — a GAF Certified Contractor, for example, is vetted and trained by the manufacturer.",
+          "Manufacturer certification: a GAF Certified Contractor, for example, is vetted and trained by the manufacturer.",
           "Verifiable reviews on Google and a real BBB profile you can check yourself.",
-          "A written, itemized proposal that prices each part of the job — shingle, underlayment, flashing, disposal — so you see exactly what you're paying for.",
+          "A written, itemized proposal that prices each part of the job: shingle, underlayment, flashing, disposal, so you see exactly what you're paying for.",
           "No high-pressure tactics: a good roofer is fine with you taking time to decide.",
         ],
       },
@@ -1136,7 +1136,7 @@ export const learnArticles: LearnArticle[] = [
       {
         type: "list",
         items: [
-          "Who does the work — your own crews, or subcontractors?",
+          "Who does the work: your own crews, or subcontractors?",
           "What does the manufacturer warranty cover, and what does your workmanship warranty cover?",
           "How do you handle unexpected decking damage found during tear-off?",
           "Will you meet my insurance adjuster on site if this is a storm claim?",
@@ -1146,7 +1146,7 @@ export const learnArticles: LearnArticle[] = [
       {
         type: "callout",
         title: "Vet us the same way",
-        text: "We're glad to be checked: MSBOC license #R22245, GAF Certified Contractor, BBB A+ rated, and 5-star reviewed on Google — every credential links to a record we can't edit. Our office is on US-98 in Hattiesburg.",
+        text: "We're glad to be checked: MSBOC license #R22245, GAF Certified Contractor, BBB A+ rated, and 5-star reviewed on Google, every credential links to a record we can't edit. Our office is on US-98 in Hattiesburg.",
         href: "/reviews",
         linkLabel: "Verify our credentials",
       },
@@ -1155,22 +1155,22 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "Do roofers in Mississippi have to be licensed?",
         answer:
-          "Commercial work and larger residential projects fall under the Mississippi State Board of Contractors (MSBOC). Always ask for the license number and confirm it's current — and ask for liability and workers' comp insurance too, regardless of the job size.",
+          "Commercial work and larger residential projects fall under the Mississippi State Board of Contractors (MSBOC). Always ask for the license number and confirm it's current, and ask for liability and workers' comp insurance too, regardless of the job size.",
       },
       {
         question: "What's wrong with a roofer offering to waive my deductible?",
         answer:
-          "It's a red flag. Your deductible is your share of the claim by contract with your insurer; a contractor 'eating' it usually means inflating the estimate or cutting corners elsewhere — and in many cases it crosses into insurance fraud. Walk away.",
+          "It's a red flag. Your deductible is your share of the claim by contract with your insurer; a contractor 'eating' it usually means inflating the estimate or cutting corners elsewhere, and in many cases it crosses into insurance fraud. Walk away.",
       },
       {
         question: "Why does a local address matter so much?",
         answer:
-          "Because a roof problem can surface months later. A contractor with a standing local office and reputation is still here to stand behind the work — storm-chasing crews are three states away by then.",
+          "Because a roof problem can surface months later. A contractor with a standing local office and reputation is still here to stand behind the work, storm-chasing crews are three states away by then.",
       },
       {
         question: "What is a GAF Certified Contractor?",
         answer:
-          "GAF certifies contractors it has vetted and trained to install its systems to specification. It's a manufacturer's stamp that the roofer meets a standard — and it's something you can verify directly on GAF's website.",
+          "GAF certifies contractors it has vetted and trained to install its systems to specification. It's a manufacturer's stamp that the roofer meets a standard, and it's something you can verify directly on GAF's website.",
       },
     ],
     related: [
@@ -1190,7 +1190,7 @@ export const learnArticles: LearnArticle[] = [
     metaTitle:
       "How Long Does a Roof Last in South Mississippi? | Southeast Roofing",
     metaDescription:
-      "Typical roof lifespans by material in South Mississippi — asphalt shingle, metal, and commercial systems — plus what actually shortens or extends the years you get.",
+      "Typical roof lifespans by material in South Mississippi: asphalt shingle, metal, and commercial systems, plus what actually shortens or extends the years you get.",
     excerpt:
       "Typical lifespans by material, why our climate shortens them, and what actually decides how many years you get.",
     updated: "2026-07-05",
@@ -1198,26 +1198,26 @@ export const learnArticles: LearnArticle[] = [
     hero: {
       headline: "How long does a roof last in South Mississippi?",
       subhead:
-        "The honest answer is 'it depends' — but here are the real ranges by material, and the factors that push your roof to the top or bottom of them.",
+        "The honest answer is 'it depends', but here are the real ranges by material, and the factors that push your roof to the top or bottom of them.",
     },
     body: [
       {
         type: "p",
-        text: "Roof lifespan charts online almost always quote national averages — and South Mississippi is not average. Our heat, humidity, UV, and hurricane season all age a roof faster than a mild northern climate. Here's what to realistically expect, and what separates a roof that hits the top of its range from one that fails early.",
+        text: "Roof lifespan charts online almost always quote national averages, and South Mississippi is not average. Our heat, humidity, UV, and hurricane season all age a roof faster than a mild northern climate. Here's what to realistically expect, and what separates a roof that hits the top of its range from one that fails early.",
       },
       { type: "h2", text: "Typical lifespans by material" },
       {
         type: "list",
         items: [
           "3-tab asphalt shingles: roughly 15–20 years, often less on hot southern exposures.",
-          "Architectural (dimensional) shingles: about 15–25 years here — the workhorse residential roof.",
+          "Architectural (dimensional) shingles: about 15–25 years here: the workhorse residential roof.",
           "Metal (standing seam or quality exposed-fastener): commonly 40 years or more.",
           "Commercial flat systems (TPO, EPDM, modified bitumen): roughly 20–30 years depending on the system and maintenance.",
         ],
       },
       {
         type: "p",
-        text: "Notice these are ranges, not guarantees. Two identical shingle roofs on the same street can be a decade apart in service life — and the difference is rarely the shingle itself.",
+        text: "Notice these are ranges, not guarantees. Two identical shingle roofs on the same street can be a decade apart in service life, and the difference is rarely the shingle itself.",
       },
       { type: "h2", text: "Why South Mississippi is hard on roofs" },
       {
@@ -1233,7 +1233,7 @@ export const learnArticles: LearnArticle[] = [
       {
         type: "list",
         items: [
-          "Attic ventilation: an overheated attic cooks shingles from the underside and is one of the biggest — and most overlooked — factors.",
+          "Attic ventilation: an overheated attic cooks shingles from the underside and is one of the biggest, and most overlooked: factors.",
           "Installation quality: nailing pattern, starter strips, flashing, and underlayment decide whether a roof reaches its rated life.",
           "Maintenance: catching a small leak or a lifted flashing early prevents the damage that ends roofs prematurely.",
           "Storm exposure and luck: a direct hail hit doesn't care how well the roof was built.",
@@ -1242,7 +1242,7 @@ export const learnArticles: LearnArticle[] = [
       {
         type: "callout",
         title: "Not sure where your roof stands?",
-        text: "Our free inspection tells you honestly how much life your roof has left — with photos — so you can plan instead of guess. Sometimes the answer is 'years left, do nothing yet.'",
+        text: "Our free inspection tells you honestly how much life your roof has left, with photos, so you can plan instead of guess. Sometimes the answer is 'years left, do nothing yet.'",
         href: "/free-inspection",
         linkLabel: "Schedule a free inspection",
       },
@@ -1251,22 +1251,22 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "Does ventilation really affect how long my roof lasts?",
         answer:
-          "Yes, significantly — especially in the South. Trapped attic heat ages shingles from the underside, and manufacturers require adequate ventilation as a condition of their coverage. It's one of the cheapest ways to add years to a roof.",
+          "Yes, significantly, especially in the South. Trapped attic heat ages shingles from the underside, and manufacturers require adequate ventilation as a condition of their coverage. It's one of the cheapest ways to add years to a roof.",
       },
       {
         question: "Will a metal roof really last twice as long as shingles?",
         answer:
-          "Often, yes. A quality metal roof can last 40 years or more, versus about 15–25 for architectural shingles in our climate — which is why some homeowners treat metal as the last roof they'll buy.",
+          "Often, yes. A quality metal roof can last 40 years or more, versus about 15–25 for architectural shingles in our climate, which is why some homeowners treat metal as the last roof they'll buy.",
       },
       {
         question: "Can I extend the life of my current roof?",
         answer:
-          "Usually. Keeping gutters clear, fixing small leaks and flashing promptly, correcting ventilation, and having the roof looked at after major storms all add years. A roof rarely fails all at once — it's neglected small problems that end it early.",
+          "Usually. Keeping gutters clear, fixing small leaks and flashing promptly, correcting ventilation, and having the roof looked at after major storms all add years. A roof rarely fails all at once. It's neglected small problems that end it early.",
       },
       {
         question: "How do I know how many years my roof has left?",
         answer:
-          "A proper inspection — shingle condition, granule loss, flashing, decking, and ventilation together tell the story. Ours is free, and we'll give you a straight answer, including when the honest answer is 'plenty of life left.'",
+          "A proper inspection: shingle condition, granule loss, flashing, decking, and ventilation together tell the story. Ours is free, and we'll give you a straight answer, including when the honest answer is 'plenty of life left.'",
       },
     ],
     related: [
@@ -1288,28 +1288,28 @@ export const learnArticles: LearnArticle[] = [
     title: "Signs you need a new roof",
     metaTitle: "Signs You Need a New Roof | Southeast Roofing",
     metaDescription:
-      "The warning signs your roof is failing — from the attic, the ground, and after storms — and which ones mean 'call now' versus 'keep an eye on it.'",
+      "The warning signs your roof is failing: from the attic, the ground, and after storms, and which ones mean 'call now' versus 'keep an eye on it.'",
     excerpt:
-      "What to look for from the attic, the ground, and after a storm — and which signs mean call now.",
+      "What to look for from the attic, the ground, and after a storm, and which signs mean call now.",
     updated: "2026-07-05",
     readMinutes: 6,
     hero: {
       headline: "Signs you need a new roof",
       subhead:
-        "Most roofs give plenty of warning before they fail. Here's what to watch for — and which signs mean it's time to call.",
+        "Most roofs give plenty of warning before they fail. Here's what to watch for, and which signs mean it's time to call.",
     },
     body: [
       {
         type: "p",
-        text: "A roof rarely fails overnight. It tells you it's wearing out for years, if you know what to look for. Some signs you can spot from the driveway; others hide in the attic or only show up after a storm. Here's a plain-language rundown — none of it requires climbing on the roof, which we'd rather you didn't do anyway.",
+        text: "A roof rarely fails overnight. It tells you it's wearing out for years, if you know what to look for. Some signs you can spot from the driveway; others hide in the attic or only show up after a storm. Here's a plain-language rundown, none of it requires climbing on the roof, which we'd rather you didn't do anyway.",
       },
       { type: "h2", text: "From the ground" },
       {
         type: "list",
         items: [
-          "Curling, cupping, or clawing shingle edges — the shingles have dried out and lost their seal.",
+          "Curling, cupping, or clawing shingle edges. The shingles have dried out and lost their seal.",
           "Bald patches where the protective granules have worn away, exposing the black asphalt underneath.",
-          "Shingles missing entirely, especially after wind — every gap is an open door for water.",
+          "Shingles missing entirely, especially after wind. Every gap is an open door for water.",
           "A sagging or wavy roofline, which can point to decking or structural moisture damage.",
           "Dark streaks, moss, or growth that traps moisture against the roof.",
         ],
@@ -1318,7 +1318,7 @@ export const learnArticles: LearnArticle[] = [
       {
         type: "list",
         items: [
-          "Daylight coming through the roof boards — if light gets in, so does water.",
+          "Daylight coming through the roof boards, if light gets in, so does water.",
           "Water stains, streaks, or damp insulation on the underside of the decking.",
           "A musty smell or visible mildew, which points to a moisture or ventilation problem.",
           "Rusty nail tips, a sign of condensation from poor attic ventilation.",
@@ -1336,12 +1336,12 @@ export const learnArticles: LearnArticle[] = [
       { type: "h2", text: "After a storm" },
       {
         type: "p",
-        text: "Wind and hail don't always leave obvious holes. Hail can bruise shingles and knock granules loose without leaking right away, and lifted shingles may reseal enough to hide the damage. If a significant storm has come through — and South Mississippi gets its share — it's worth having the roof looked at while the insurance window is still open, even if nothing is dripping yet.",
+        text: "Wind and hail don't always leave obvious holes. Hail can bruise shingles and knock granules loose without leaking right away, and lifted shingles may reseal enough to hide the damage. If a significant storm has come through, and South Mississippi gets its share. It's worth having the roof looked at while the insurance window is still open, even if nothing is dripping yet.",
       },
       { type: "h2", text: "One sign doesn't always mean 'replace'" },
       {
         type: "p",
-        text: "A single lifted shingle or one small stain is often a repair, not a new roof. It's the combination — age plus several of these signs across the whole roof — that points to replacement. If you're not sure which camp you're in, that's exactly what a free inspection settles.",
+        text: "A single lifted shingle or one small stain is often a repair, not a new roof. It's the combination, age plus several of these signs across the whole roof, that points to replacement. If you're not sure which camp you're in, that's exactly what a free inspection settles.",
       },
       {
         type: "callout",
@@ -1355,17 +1355,17 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "How many of these signs mean I need a new roof?",
         answer:
-          "There's no magic number — it's the pattern that matters. Several signs across the whole roof, especially on an older roof, point to replacement; one isolated issue is usually a repair. An inspection tells you which it is.",
+          "There's no magic number. It's the pattern that matters. Several signs across the whole roof, especially on an older roof, point to replacement; one isolated issue is usually a repair. An inspection tells you which it is.",
       },
       {
         question: "Should I go up on my roof to check?",
         answer:
-          "We'd rather you didn't — it's dangerous and easy to cause damage. Almost everything on this list can be spotted from the ground, the attic, or inside the house. Leave the roof itself to us.",
+          "We'd rather you didn't. It's dangerous and easy to cause damage. Almost everything on this list can be spotted from the ground, the attic, or inside the house. Leave the roof itself to us.",
       },
       {
         question: "My ceiling has a stain but no active drip. Is that urgent?",
         answer:
-          "It means water has been getting in at some point, even if it's not actively dripping now. The sooner the source is traced, the smaller the repair — a stain that's ignored through a wet season tends to become decking rot.",
+          "It means water has been getting in at some point, even if it's not actively dripping now. The sooner the source is traced, the smaller the repair, a stain that's ignored through a wet season tends to become decking rot.",
       },
       {
         question: "Do I need a new roof after every storm?",
@@ -1393,15 +1393,15 @@ export const learnArticles: LearnArticle[] = [
     metaTitle:
       "Roof Financing in Mississippi | $0-Down Options | Southeast Roofing",
     metaDescription:
-      "How to pay for a new roof in Mississippi — insurance, cash, and $0-down financing through our partner GoodLeap — plus honest ways to keep the total down.",
+      "How to pay for a new roof in Mississippi: insurance, cash, and $0-down financing through our partner GoodLeap, plus honest ways to keep the total down.",
     excerpt:
-      "Insurance, cash, or financing — the real ways to pay for a roof, including $0-down options through our partner GoodLeap.",
+      "Insurance, cash, or financing. The real ways to pay for a roof, including $0-down options through our partner GoodLeap.",
     updated: "2026-07-05",
     readMinutes: 6,
     hero: {
       headline: "How to pay for a new roof in Mississippi",
       subhead:
-        "A roof rarely fails at a convenient time. Here are the honest ways to cover it — including $0-down financing — without overpaying.",
+        "A roof rarely fails at a convenient time. Here are the honest ways to cover it: including $0-down financing: without overpaying.",
     },
     body: [
       {
@@ -1412,8 +1412,8 @@ export const learnArticles: LearnArticle[] = [
       {
         type: "list",
         items: [
-          "Insurance: if a covered storm caused the damage, your homeowner's policy may pay for most of the roof, minus your deductible.",
-          "Cash: simplest if you have it, and sometimes the strongest negotiating position — but few people keep a roof's worth of cash on hand.",
+          "Insurance, if a covered storm caused the damage, your homeowner's policy may pay for most of the roof, minus your deductible.",
+          "Cash: simplest if you have it, and sometimes the strongest negotiating position, but few people keep a roof's worth of cash on hand.",
           "Financing: spreads the cost into monthly payments, often with $0 down, so a roof that can't wait doesn't have to.",
           "Home equity (HELOC or loan): another route some homeowners use, arranged through their own bank.",
         ],
@@ -1421,7 +1421,7 @@ export const learnArticles: LearnArticle[] = [
       { type: "h2", text: "Financing through GoodLeap" },
       {
         type: "p",
-        text: "We partner with GoodLeap to offer roof financing, including $0-down options, so you can move forward on a roof that can't wait and pay over time. You apply directly through GoodLeap — a quick online application — and we'll gladly walk through it with your estimate. We don't quote rates or terms here because they depend on your application; GoodLeap presents your real options.",
+        text: "We partner with GoodLeap to offer roof financing, including $0-down options, so you can move forward on a roof that can't wait and pay over time. You apply directly through GoodLeap, a quick online application, and we'll gladly walk through it with your estimate. We don't quote rates or terms here because they depend on your application; GoodLeap presents your real options.",
       },
       {
         type: "callout",
@@ -1433,14 +1433,14 @@ export const learnArticles: LearnArticle[] = [
       { type: "h2", text: "When insurance covers it" },
       {
         type: "p",
-        text: "If wind or hail damaged your roof, the cost equation changes: you may owe only your deductible while your insurer covers the rest of a covered claim. We document the damage thoroughly, provide the reports adjusters expect, and can meet your adjuster on site. The decision always rests with your insurer — but thorough documentation gives your claim its best footing.",
+        text: "If wind or hail damaged your roof, the cost equation changes: you may owe only your deductible while your insurer covers the rest of a covered claim. We document the damage thoroughly, provide the reports adjusters expect, and can meet your adjuster on site. The decision always rests with your insurer, but thorough documentation gives your claim its best footing.",
       },
       { type: "h2", text: "How to keep the cost honest" },
       {
         type: "list",
         items: [
           "Insist on an itemized proposal: ours prices the shingle, underlayment, flashing, ventilation, and disposal separately, so you see exactly what you're paying for and can adjust.",
-          "Don't over-buy: sometimes a repair genuinely beats a replacement — we'll tell you when.",
+          "Don't over-buy: sometimes a repair genuinely beats a replacement. We'll tell you when.",
           "Beware 'we'll waive your deductible' offers: that's usually a padded estimate or outright fraud, and it costs you in the end.",
           "Time it before failure: an emergency replacement after a leak is always more expensive and stressful than a planned one.",
         ],
@@ -1448,7 +1448,7 @@ export const learnArticles: LearnArticle[] = [
       {
         type: "callout",
         title: "Start with a free inspection",
-        text: "You can't budget for a roof you haven't had measured. Our inspection and itemized proposal are free — the number you get is real, line by line.",
+        text: "You can't budget for a roof you haven't had measured. Our inspection and itemized proposal are free: the number you get is real, line by line.",
         href: "/free-inspection",
         linkLabel: "Schedule a free inspection",
       },
@@ -1457,7 +1457,7 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "Do you really offer $0-down roof financing?",
         answer:
-          "Yes — $0-down financing is available through our partner GoodLeap. You apply directly with them (a short online application), and your actual rate and term depend on your application, so we don't quote numbers up front.",
+          "Yes, $0-down financing is available through our partner GoodLeap. You apply directly with them (a short online application), and your actual rate and term depend on your application, so we don't quote numbers up front.",
       },
       {
         question: "Will insurance pay for my whole roof?",
@@ -1467,7 +1467,7 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "Is it cheaper to repair than replace?",
         answer:
-          "Often, when the damage is localized and the roof has life left — and we'll recommend the repair when it's genuinely enough. When a roof is failing across the board, repeated repairs usually cost more over time than one replacement.",
+          "Often, when the damage is localized and the roof has life left, and we'll recommend the repair when it's genuinely enough. When a roof is failing across the board, repeated repairs usually cost more over time than one replacement.",
       },
       {
         question: "How much does a new roof cost in South Mississippi?",
@@ -1492,9 +1492,9 @@ export const learnArticles: LearnArticle[] = [
     metaTitle:
       "What to Do After Roof Storm Damage in Mississippi | Southeast Roofing",
     metaDescription:
-      "A step-by-step guide to the first hours and days after roof storm damage in Mississippi — staying safe, documenting damage, the insurance clock, and choosing the right roofer.",
+      "A step-by-step guide to the first hours and days after roof storm damage in Mississippi: staying safe, documenting damage, the insurance clock, and choosing the right roofer.",
     excerpt:
-      "The first steps after wind or hail hits your roof — stay safe, document, and protect your insurance options.",
+      "The first steps after wind or hail hits your roof, stay safe, document, and protect your insurance options.",
     updated: "2026-07-05",
     readMinutes: 6,
     hero: {
@@ -1510,13 +1510,13 @@ export const learnArticles: LearnArticle[] = [
       { type: "h2", text: "1. Stay safe first" },
       {
         type: "p",
-        text: "Don't climb on the roof — wet, storm-damaged roofs are dangerous, and you can cause more damage looking for it. Watch for downed power lines. If water is coming in, contain it inside with buckets and move belongings out of the way; if you have a bulging, water-filled ceiling spot, a small drain hole at the low point relieves the pressure before it collapses.",
+        text: "Don't climb on the roof: wet, storm-damaged roofs are dangerous, and you can cause more damage looking for it. Watch for downed power lines. If water is coming in, contain it inside with buckets and move belongings out of the way; if you have a bulging, water-filled ceiling spot, a small drain hole at the low point relieves the pressure before it collapses.",
       },
       { type: "h2", text: "2. Document everything" },
       {
         type: "list",
         items: [
-          "Photograph the damage you can see safely from the ground and inside — shingles in the yard, dented gutters, interior stains.",
+          "Photograph the damage you can see safely from the ground and inside: shingles in the yard, dented gutters, interior stains.",
           "Note the date and the storm, and keep any local weather or news reports.",
           "Save damaged belongings and any pieces of roof that ended up in the yard.",
           "Keep receipts for anything you spend on emergency protection, like tarps.",
@@ -1525,24 +1525,24 @@ export const learnArticles: LearnArticle[] = [
       { type: "h2", text: "3. Get a professional inspection" },
       {
         type: "p",
-        text: "A lot of storm damage is invisible from the ground — hail bruises, lifted-and-resealed shingles, hairline decking cracks — and it can quietly shorten your roof's life without leaking right away. A thorough inspection documents what's really there, which is exactly what an insurance claim needs. Ours is free, and if the opening is active we can tarp it to stop the damage while the permanent repair is scheduled.",
+        text: "A lot of storm damage is invisible from the ground: hail bruises, lifted-and-resealed shingles, hairline decking cracks, and it can quietly shorten your roof's life without leaking right away. A thorough inspection documents what's really there, which is exactly what an insurance claim needs. Ours is free, and if the opening is active we can tarp it to stop the damage while the permanent repair is scheduled.",
       },
       {
         type: "callout",
         title: "Active leak or opening?",
-        text: "Emergency tarping and rapid response come first — we stabilize the roof, then handle the permanent repair.",
+        text: "Emergency tarping and rapid response come first: we stabilize the roof, then handle the permanent repair.",
         href: "/storm-damage/emergency-roofing",
         linkLabel: "Emergency roofing help",
       },
       { type: "h2", text: "4. Understand the insurance clock" },
       {
         type: "p",
-        text: "Most policies expect you to report damage promptly, and claim windows don't stay open forever. That doesn't mean rushing into a contract — it means getting the damage documented early so your options stay open. We provide the reports and photos your insurer needs and can meet your adjuster on site; the coverage decision is always the insurer's, but thorough documentation gives your claim its best chance.",
+        text: "Most policies expect you to report damage promptly, and claim windows don't stay open forever. That doesn't mean rushing into a contract: it means getting the damage documented early so your options stay open. We provide the reports and photos your insurer needs and can meet your adjuster on site; the coverage decision is always the insurer's, but thorough documentation gives your claim its best chance.",
       },
       { type: "h2", text: "5. Choose the right contractor" },
       {
         type: "p",
-        text: "Storms bring out-of-town crews who knock doors, pressure you to sign, and disappear after the check clears. Take a beat and vet whoever you hire — license, insurance, a local address, and verifiable reviews. A roof problem can resurface months later, and you want a contractor who's still here to stand behind the work.",
+        text: "Storms bring out-of-town crews who knock doors, pressure you to sign, and disappear after the check clears. Take a beat and vet whoever you hire: license, insurance, a local address, and verifiable reviews. A roof problem can resurface months later, and you want a contractor who's still here to stand behind the work.",
       },
       {
         type: "callout",
@@ -1556,22 +1556,22 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "Should I file an insurance claim for every storm?",
         answer:
-          "Not necessarily. Minor damage may cost less than your deductible, in which case a claim isn't worth it — and we'll tell you honestly when that's the case. But get the damage documented first, because some of it is hidden and time-sensitive.",
+          "Not necessarily. Minor damage may cost less than your deductible, in which case a claim isn't worth it, and we'll tell you honestly when that's the case. But get the damage documented first, because some of it is hidden and time-sensitive.",
       },
       {
         question: "How soon do I need to act after a storm?",
         answer:
-          "Promptly, but not frantically. Contain any active leak, document the damage, and get an inspection within a few days — before hidden damage worsens and before your claim window tightens.",
+          "Promptly, but not frantically. Contain any active leak, document the damage, and get an inspection within a few days, before hidden damage worsens and before your claim window tightens.",
       },
       {
         question: "Can you tarp my roof right after a storm?",
         answer:
-          "Yes — emergency tarping is part of our storm response. We stabilize the roof to stop water intrusion, then schedule the permanent repair once the weather clears.",
+          "Yes, emergency tarping is part of our storm response. We stabilize the roof to stop water intrusion, then schedule the permanent repair once the weather clears.",
       },
       {
         question: "Do I have to use the contractor my insurance suggests?",
         answer:
-          "No. You choose your own roofer. We work with insurers constantly — documentation, adjuster meetings, and reports in the format they expect — while representing your interests, not theirs.",
+          "No. You choose your own roofer. We work with insurers constantly: documentation, adjuster meetings, and reports in the format they expect, while representing your interests, not theirs.",
       },
     ],
     related: [
@@ -1591,20 +1591,20 @@ export const learnArticles: LearnArticle[] = [
     metaTitle:
       "Commercial Roof Replacement Guide for Building Owners | Southeast Roofing",
     metaDescription:
-      "What South Mississippi building owners should know before a commercial roof replacement — repair vs. restore vs. replace, choosing a system, minimizing disruption, and budgeting.",
+      "What South Mississippi building owners should know before a commercial roof replacement, repair vs. restore vs. replace, choosing a system, minimizing disruption, and budgeting.",
     excerpt:
-      "Repair, restore, or replace? Choosing a system, minimizing downtime, and budgeting a commercial roof — for building owners and managers.",
+      "Repair, restore, or replace? Choosing a system, minimizing downtime, and budgeting a commercial roof: for building owners and managers.",
     updated: "2026-07-05",
     readMinutes: 7,
     hero: {
       headline: "A building owner's guide to commercial roof replacement",
       subhead:
-        "A commercial roof is a business decision as much as a construction one. Here's how to weigh repair, restoration, and replacement — and keep the doors open while it happens.",
+        "A commercial roof is a business decision as much as a construction one. Here's how to weigh repair, restoration, and replacement, and keep the doors open while it happens.",
     },
     body: [
       {
         type: "p",
-        text: "A commercial roof protects everything underneath it — inventory, equipment, tenants, and the business itself. Replacing one is a bigger decision than a residential roof, with more systems to choose from and real pressure to avoid disrupting operations. Here's how we help South Mississippi building owners and property managers think it through.",
+        text: "A commercial roof protects everything underneath it: inventory, equipment, tenants, and the business itself. Replacing one is a bigger decision than a residential roof, with more systems to choose from and real pressure to avoid disrupting operations. Here's how we help South Mississippi building owners and property managers think it through.",
       },
       { type: "h2", text: "First question: repair, restore, or replace?" },
       {
@@ -1625,22 +1625,22 @@ export const learnArticles: LearnArticle[] = [
       },
       {
         type: "p",
-        text: "The right system depends on your roof's slope, deck, exposure, budget, and how long you plan to hold the building. We match the system to the structure — not to whatever we'd rather install.",
+        text: "The right system depends on your roof's slope, deck, exposure, budget, and how long you plan to hold the building. We match the system to the structure, not to whatever we'd rather install.",
       },
       { type: "h2", text: "Minimizing business disruption" },
       {
         type: "p",
-        text: "For most commercial clients, downtime is the real cost. We plan around your operations — phasing the work by section, scheduling noisy or disruptive stages for off-hours where possible, and keeping entrances and critical areas protected and accessible. A clear schedule and communication up front keep surprises out of your workday.",
+        text: "For most commercial clients, downtime is the real cost. We plan around your operations, phasing the work by section, scheduling noisy or disruptive stages for off-hours where possible, and keeping entrances and critical areas protected and accessible. A clear schedule and communication up front keep surprises out of your workday.",
       },
       { type: "h2", text: "Budgeting and planned maintenance" },
       {
         type: "p",
-        text: "Commercial roofs reward planning. A maintenance program — scheduled inspections, minor repairs, and drain clearing — catches small problems before they become five-figure ones and helps a roof reach the top of its service life. When replacement does come, an itemized proposal and an honest timeline let you budget it as a capital project instead of an emergency.",
+        text: "Commercial roofs reward planning. A maintenance program: scheduled inspections, minor repairs, and drain clearing, catches small problems before they become five-figure ones and helps a roof reach the top of its service life. When replacement does come, an itemized proposal and an honest timeline let you budget it as a capital project instead of an emergency.",
       },
       {
         type: "callout",
         title: "Commercial roof consultation",
-        text: "Commercial projects start with a consultation, not a template — we assess the building, the system, and your operations before we recommend anything.",
+        text: "Commercial projects start with a consultation, not a template: we assess the building, the system, and your operations before we recommend anything.",
         href: "/commercial/request-consultation",
         linkLabel: "Request a consultation",
       },
@@ -1661,12 +1661,12 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "Which commercial roofing system is best?",
         answer:
-          "There's no single best — it depends on your slope, deck, exposure, budget, and how long you'll hold the building. TPO, EPDM, modified bitumen, coatings, and metal each fit different situations, and we match the system to the structure.",
+          "There's no single best. It depends on your slope, deck, exposure, budget, and how long you'll hold the building. TPO, EPDM, modified bitumen, coatings, and metal each fit different situations, and we match the system to the structure.",
       },
       {
         question: "Is a maintenance program really worth it?",
         answer:
-          "For most buildings, yes. Scheduled inspections and minor repairs catch small issues before they become major ones and help the roof reach its full service life — usually far cheaper than reacting to leaks and premature failure.",
+          "For most buildings, yes. Scheduled inspections and minor repairs catch small issues before they become major ones and help the roof reach its full service life, usually far cheaper than reacting to leaks and premature failure.",
       },
     ],
     related: [
@@ -1690,7 +1690,7 @@ export const learnArticles: LearnArticle[] = [
     title: "What a metal roof really costs in Mississippi",
     metaTitle: "Metal Roof Cost in Mississippi | Southeast Roofing",
     metaDescription:
-      "What a metal roof really costs in South Mississippi — the five things that set the price, how it compares to shingle, and why per-square quotes mislead.",
+      "What a metal roof really costs in South Mississippi: the five things that set the price, how it compares to shingle, and why per-square quotes mislead.",
     excerpt:
       "The five things that set the number, how metal really compares to shingle over time, and why a per-square quote tells you almost nothing.",
     updated: "2026-07-26",
@@ -1698,7 +1698,7 @@ export const learnArticles: LearnArticle[] = [
     hero: {
       headline: "What a metal roof really costs here",
       subhead:
-        "Metal spans a huge price range — a shop roof and a standing-seam home aren't the same product. Here's what actually drives the number on your roof.",
+        "Metal spans a huge price range, a shop roof and a standing-seam home aren't the same product. Here's what actually drives the number on your roof.",
     },
     body: [
       {
@@ -1708,7 +1708,7 @@ export const learnArticles: LearnArticle[] = [
       { type: "h2", text: "The two families, and why the gap is so wide" },
       {
         type: "p",
-        text: "Exposed-fastener panels (R-panel, PBR, and similar) screw straight through the metal into the structure, with a gasketed washer sealing each screw. Fast to install, economical, genuinely durable. Standing seam attaches with hidden clips inside raised, interlocking seams, so nothing penetrates the weather surface — it costs meaningfully more to buy and to install, and it's what most people are picturing when they say they want a metal roof.",
+        text: "Exposed-fastener panels (R-panel, PBR, and similar) screw straight through the metal into the structure, with a gasketed washer sealing each screw. Fast to install, economical, genuinely durable. Standing seam attaches with hidden clips inside raised, interlocking seams, so nothing penetrates the weather surface. It costs meaningfully more to buy and to install, and it's what most people are picturing when they say they want a metal roof.",
       },
       {
         type: "p",
@@ -1718,11 +1718,11 @@ export const learnArticles: LearnArticle[] = [
       {
         type: "list",
         items: [
-          "System type — exposed fastener versus standing seam is the single biggest lever, bigger than anything else on this list.",
-          'Gauge — the metal\'s thickness. 29ga is common and perfectly good on the right building; 26ga and 24ga cost more and dent less. We spell out the gauge on every proposal, because "metal roof" without a gauge is not a specification.',
-          "Panel finish — bare Galvalume versus a quality painted finish (like a Kynar-class coating) changes both price and how the color holds up in our UV.",
-          "Roof complexity — valleys, dormers, hips, and steep pitch mean more cutting, more trim, more flashing, and more labor. A simple gable costs far less per square foot than a cut-up roofline of the same area.",
-          "What's underneath — decking condition, whether the old roof comes off, and what underlayment goes down. Rotten decking gets replaced per sheet; we price that possibility up front instead of springing it mid-job.",
+          "System type, exposed fastener versus standing seam is the single biggest lever, bigger than anything else on this list.",
+          'Gauge. The metal\'s thickness. 29ga is common and perfectly good on the right building; 26ga and 24ga cost more and dent less. We spell out the gauge on every proposal, because "metal roof" without a gauge is not a specification.',
+          "Panel finish, bare Galvalume versus a quality painted finish (like a Kynar-class coating) changes both price and how the color holds up in our UV.",
+          "Roof complexity: valleys, dormers, hips, and steep pitch mean more cutting, more trim, more flashing, and more labor. A simple gable costs far less per square foot than a cut-up roofline of the same area.",
+          "What's underneath: decking condition, whether the old roof comes off, and what underlayment goes down. Rotten decking gets replaced per sheet; we price that possibility up front instead of springing it mid-job.",
         ],
       },
       { type: "h2", text: "Coastal roofs are a different spec" },
@@ -1733,19 +1733,19 @@ export const learnArticles: LearnArticle[] = [
       { type: "h2", text: "Metal versus shingle, honestly" },
       {
         type: "p",
-        text: "Up front, shingles win — usually by a wide margin, though exposed-fastener metal narrows it. Over time the comparison shifts: a quality metal roof can outlast two shingle roofs in our climate, so measured per year of service the two move much closer together. The deciding question usually isn't which roof is better. It's how long you plan to own the house.",
+        text: "Up front, shingles win, usually by a wide margin, though exposed-fastener metal narrows it. Over time the comparison shifts: a quality metal roof can outlast two shingle roofs in our climate, so measured per year of service the two move much closer together. The deciding question usually isn't which roof is better. It's how long you plan to own the house.",
       },
       {
         type: "callout",
         title: "See both numbers for your actual roof",
-        text: "We install metal and shingle, so we'll quote them side by side from one free inspection — real measurements, itemized, no pressure either direction.",
+        text: "We install metal and shingle, so we'll quote them side by side from one free inspection: real measurements, itemized, no pressure either direction.",
         href: "/estimate",
         linkLabel: "Get my itemized estimate",
       },
       { type: "h2", text: "Why a per-square price tells you nothing" },
       {
         type: "p",
-        text: "A quoted rate per square is meaningless until you know what's inside it. Does it include tear-off and disposal? A decking allowance? Trim, closures, and ridge cap, or are those \"extras\"? Code-required ventilation? Two metal quotes several thousand dollars apart are usually two different scopes wearing the same units. This is exactly why our proposals price each component on its own line — so you can lay ours next to anyone else's and see what's actually different.",
+        text: "A quoted rate per square is meaningless until you know what's inside it. Does it include tear-off and disposal? A decking allowance? Trim, closures, and ridge cap, or are those \"extras\"? Code-required ventilation? Two metal quotes several thousand dollars apart are usually two different scopes wearing the same units. This is exactly why our proposals price each component on its own line, so you can lay ours next to anyone else's and see what's actually different.",
       },
       {
         type: "callout",
@@ -1765,17 +1765,17 @@ export const learnArticles: LearnArticle[] = [
         question:
           "How much more does standing seam cost than exposed fastener?",
         answer:
-          "Meaningfully more — it's a different system with hidden clips, more trim, and more labor, not just a different-looking panel. The right way to see the gap is both systems priced on your actual roof, since complexity affects standing seam more than it affects exposed fastener.",
+          "Meaningfully more. It's a different system with hidden clips, more trim, and more labor, not just a different-looking panel. The right way to see the gap is both systems priced on your actual roof, since complexity affects standing seam more than it affects exposed fastener.",
       },
       {
         question: "Can metal go over my existing shingles?",
         answer:
-          "Sometimes, with the right substructure, but we evaluate case by case. Trapping a failing roof under a new one can hide problems you'd rather fix once, properly — and it makes any future decking issue much more expensive to reach.",
+          "Sometimes, with the right substructure, but we evaluate case by case. Trapping a failing roof under a new one can hide problems you'd rather fix once, properly, and it makes any future decking issue much more expensive to reach.",
       },
       {
         question: "Does a metal roof lower my insurance?",
         answer:
-          "Some carriers offer credits for impact- or wind-rated roofing, but it varies by insurer and policy, so we won't promise a discount. It's worth a call to your agent before you decide — ask specifically what rating they'd need to see documented.",
+          "Some carriers offer credits for impact- or wind-rated roofing, but it varies by insurer and policy, so we won't promise a discount. It's worth a call to your agent before you decide, ask specifically what rating they'd need to see documented.",
       },
     ],
     related: [
@@ -1797,23 +1797,23 @@ export const learnArticles: LearnArticle[] = [
   {
     slug: "tree-fell-on-roof-who-pays",
     category: "insurance-claims",
-    title: "A tree fell on your roof — whose insurance pays?",
+    title: "A tree fell on your roof, whose insurance pays?",
     metaTitle: "Tree Fell on Your Roof? Who Pays | Southeast Roofing",
     metaDescription:
-      "A tree hit your roof in Mississippi — whose insurance pays? How coverage works for your tree, a neighbor's tree, and storm damage, plus what to do first.",
+      "A tree hit your roof in Mississippi, whose insurance pays? How coverage works for your tree, a neighbor's tree, and storm damage, plus what to do first.",
     excerpt:
-      "Your tree, your neighbor's tree, or an act of God — how coverage actually sorts out, and the first four things to do before anyone climbs a ladder.",
+      "Your tree, your neighbor's tree, or an act of God: how coverage actually sorts out, and the first four things to do before anyone climbs a ladder.",
     updated: "2026-07-26",
     readMinutes: 6,
     hero: {
       headline: "A tree hit your roof. Now what?",
       subhead:
-        "In the Pine Belt, trees cause as much roof damage as wind itself. Here's how the insurance question actually sorts out — and what to do in the first hour.",
+        "In the Pine Belt, trees cause as much roof damage as wind itself. Here's how the insurance question actually sorts out, and what to do in the first hour.",
     },
     body: [
       {
         type: "p",
-        text: "Pine trees and hurricane-season wind are a bad combination, and it's one of the most common calls we get after a storm. The question everyone asks first is whose insurance pays — and the answer surprises most people.",
+        text: "Pine trees and hurricane-season wind are a bad combination, and it's one of the most common calls we get after a storm. The question everyone asks first is whose insurance pays, and the answer surprises most people.",
       },
       { type: "h2", text: "The first hour matters more than the paperwork" },
       {
@@ -1821,19 +1821,19 @@ export const learnArticles: LearnArticle[] = [
         title: "Before you worry about the claim",
         items: [
           "People first. Get everyone out from under the damaged area. If the tree hit a corner of the house, treat the ceiling below it as unsafe until someone qualified looks at it.",
-          "Assume every downed line is live. Trees bring wires down with them. Do not approach the tree if lines are involved — call the power company.",
+          "Assume every downed line is live. Trees bring wires down with them. Do not approach the tree if lines are involved, call the power company.",
           "Photograph everything before anything moves. Wide shots showing the tree and the house together, then closer shots of the roof damage and any interior water. Once a tree service cuts that trunk up, the evidence of what happened is gone.",
-          "Stop the water. If it's raining into the house, a professional tarp is the priority — insurers expect reasonable mitigation, and the damage compounds fast. Keep the invoice; it goes in the claim file.",
+          "Stop the water. If it's raining into the house, a professional tarp is the priority, insurers expect reasonable mitigation, and the damage compounds fast. Keep the invoice; it goes in the claim file.",
         ],
       },
       { type: "h2", text: "Whose tree was it? (It usually doesn't matter.)" },
       {
         type: "p",
-        text: "Here's the part people find counterintuitive: in most cases, if a tree hits your house, you file on your own homeowners policy — even if the tree grew in your neighbor's yard. Property insurance generally follows the property that was damaged, not the property the tree came from. Your insurer pays to repair your roof, and if they believe someone else was legally at fault, they may pursue that themselves through subrogation.",
+        text: "Here's the part people find counterintuitive: in most cases, if a tree hits your house, you file on your own homeowners policy, even if the tree grew in your neighbor's yard. Property insurance generally follows the property that was damaged, not the property the tree came from. Your insurer pays to repair your roof, and if they believe someone else was legally at fault, they may pursue that themselves through subrogation.",
       },
       {
         type: "p",
-        text: "The exception is negligence. If the tree was visibly dead or dying, the neighbor knew about it, and it was documented that they knew — a written notice, for example — their liability coverage can come into play. That's a much harder, slower path, and it hinges on proof that existed before the tree fell.",
+        text: "The exception is negligence. If the tree was visibly dead or dying, the neighbor knew about it, and it was documented that they knew, a written notice, for example. Their liability coverage can come into play. That's a much harder, slower path, and it hinges on proof that existed before the tree fell.",
       },
       {
         type: "p",
@@ -1843,9 +1843,9 @@ export const learnArticles: LearnArticle[] = [
       {
         type: "list",
         items: [
-          "The structural repair — the roof system itself, decking, rafters or trusses, and the interior damage from water that came in through the opening.",
+          "The structural repair: the roof system itself, decking, rafters or trusses, and the interior damage from water that came in through the opening.",
           "Removal of the tree, but often only the portion that's on the structure, and typically up to a capped amount. The rest of the trunk lying in your yard is frequently your cost.",
-          "Reasonable emergency mitigation like tarping — which is why the invoice matters.",
+          "Reasonable emergency mitigation like tarping: which is why the invoice matters.",
           "Additional living expenses if the home genuinely isn't habitable, on many policies.",
         ],
       },
@@ -1856,7 +1856,7 @@ export const learnArticles: LearnArticle[] = [
       { type: "h2", text: "Where we come in" },
       {
         type: "p",
-        text: "About half our work is insurance restoration. On a tree strike we document the damage the way a claim file needs it, meet your adjuster on the roof so nothing in the scope gets missed, and build to what's approved. What we won't do is promise your claim will be approved — that decision belongs to your insurer under your policy — or offer to cover your deductible, which is fraud no matter how casually it's offered.",
+        text: "About half our work is insurance restoration. On a tree strike we document the damage the way a claim file needs it, meet your adjuster on the roof so nothing in the scope gets missed, and build to what's approved. What we won't do is promise your claim will be approved, that decision belongs to your insurer under your policy, or offer to cover your deductible, which is fraud no matter how casually it's offered.",
       },
       {
         type: "callout",
@@ -1870,12 +1870,12 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "My neighbor's tree fell on my house. Do they pay?",
         answer:
-          "Usually not directly. In most cases you file on your own homeowners policy, because property insurance generally follows the damaged property rather than the tree's origin. Your insurer may pursue the neighbor's carrier separately if negligence is involved. The exception is a tree that was visibly dead and the neighbor had been notified — that documented warning is what changes the analysis.",
+          "Usually not directly. In most cases you file on your own homeowners policy, because property insurance generally follows the damaged property rather than the tree's origin. Your insurer may pursue the neighbor's carrier separately if negligence is involved. The exception is a tree that was visibly dead and the neighbor had been notified: that documented warning is what changes the analysis.",
       },
       {
         question: "Will insurance pay to remove the whole tree?",
         answer:
-          "Often only the part on your structure, and frequently up to a capped amount. The portion lying in your yard is commonly the homeowner's cost. Check your policy language — this varies more between carriers than almost anything else in a tree claim.",
+          "Often only the part on your structure, and frequently up to a capped amount. The portion lying in your yard is commonly the homeowner's cost. Check your policy language, this varies more between carriers than almost anything else in a tree claim.",
       },
       {
         question: "Should I cut the tree up before the adjuster comes?",
@@ -1909,7 +1909,7 @@ export const learnArticles: LearnArticle[] = [
     metaDescription:
       "Whether a roof replacement needs a permit in Hattiesburg and South Mississippi, who pulls it, what inspectors check, and why skipping it costs you later.",
     excerpt:
-      "Short answer: usually yes, and your contractor should pull it. Here's what the permit actually buys you — and what skipping it costs at resale.",
+      "Short answer: usually yes, and your contractor should pull it. Here's what the permit actually buys you, and what skipping it costs at resale.",
     updated: "2026-07-26",
     readMinutes: 5,
     hero: {
@@ -1920,19 +1920,19 @@ export const learnArticles: LearnArticle[] = [
     body: [
       {
         type: "p",
-        text: "Roof replacement is permitted work in most Mississippi jurisdictions, including here in the Hattiesburg area. Requirements, fees, and inspection steps are set locally and do change, so confirm the specifics with your city or county building department for your address — but plan on a permit being part of a legitimate replacement, and be suspicious of anyone who tells you otherwise.",
+        text: "Roof replacement is permitted work in most Mississippi jurisdictions, including here in the Hattiesburg area. Requirements, fees, and inspection steps are set locally and do change, so confirm the specifics with your city or county building department for your address, but plan on a permit being part of a legitimate replacement, and be suspicious of anyone who tells you otherwise.",
       },
       { type: "h2", text: "Who is supposed to pull it" },
       {
         type: "p",
-        text: "Your contractor. A licensed roofer pulls the permit under their license, which is part of what you're paying for. When a contractor asks the homeowner to pull the permit instead, that should stop you cold — it usually means they can't, because they aren't properly licensed. It also shifts liability onto you: if the work fails inspection, the person on the hook is whoever's name is on the permit.",
+        text: "Your contractor. A licensed roofer pulls the permit under their license, which is part of what you're paying for. When a contractor asks the homeowner to pull the permit instead, that should stop you cold. It usually means they can't, because they aren't properly licensed. It also shifts liability onto you, if the work fails inspection, the person on the hook is whoever's name is on the permit.",
       },
       {
         type: "list",
         title: "Questions worth asking before you sign",
         items: [
           "Will you pull the permit under your license, and is the permit cost included in this proposal?",
-          "What's your Mississippi State Board of Contractors license number? (Ours is R22245 — check it.)",
+          "What's your Mississippi State Board of Contractors license number? (Ours is R22245, check it.)",
           "Who meets the inspector, and what happens if something needs correcting?",
           "Will you provide the final documentation once the work passes?",
         ],
@@ -1940,26 +1940,26 @@ export const learnArticles: LearnArticle[] = [
       { type: "h2", text: "What the permit actually buys you" },
       {
         type: "p",
-        text: "It's easy to read a permit as bureaucratic friction. It isn't — it's the only independent check on work you'll never see once the shingles are on.",
+        text: "It's easy to read a permit as bureaucratic friction. It isn't, it's the only independent check on work you'll never see once the shingles are on.",
       },
       {
         type: "list",
         items: [
           "An inspector who is not paid by your contractor looks at the work. That is the entire point.",
-          "Code compliance on the things that matter in hurricane country — nailing patterns, fastener counts, underlayment, drip edge, and ventilation. These are exactly the corners that get cut, and exactly what wind finds.",
+          "Code compliance on the things that matter in hurricane country: nailing patterns, fastener counts, underlayment, drip edge, and ventilation. These are exactly the corners that get cut, and exactly what wind finds.",
           "A clean record at resale. Unpermitted structural work turns up in inspections and title work, and it can stall or reprice a sale years later.",
-          "Insurance standing. If a future claim involves the roof, work done without required permits can complicate coverage — an unwelcome discovery at the worst moment.",
+          "Insurance standing. If a future claim involves the roof, work done without required permits can complicate coverage: an unwelcome discovery at the worst moment.",
         ],
       },
       { type: "h2", text: "Repairs are often different" },
       {
         type: "p",
-        text: "Small repairs frequently fall below permit thresholds, while a full tear-off and replacement generally doesn't. Thresholds vary by jurisdiction — sometimes defined by square footage, sometimes by cost of work. When we scope a job we tell you which category it falls in and why, rather than leaving you to guess.",
+        text: "Small repairs frequently fall below permit thresholds, while a full tear-off and replacement generally doesn't. Thresholds vary by jurisdiction, sometimes defined by square footage, sometimes by cost of work. When we scope a job we tell you which category it falls in and why, rather than leaving you to guess.",
       },
       { type: "h2", text: "The storm-chaser angle" },
       {
         type: "p",
-        text: "After every major storm, out-of-town crews arrive with a pitch built on speed. Permits slow them down and require a license they may not hold in Mississippi, so the permit conversation is often where the story falls apart. If someone knocked on your door uninvited, wants to start tomorrow, and waves off the permit question — that's your answer about the rest of the job too.",
+        text: "After every major storm, out-of-town crews arrive with a pitch built on speed. Permits slow them down and require a license they may not hold in Mississippi, so the permit conversation is often where the story falls apart. If someone knocked on your door uninvited, wants to start tomorrow, and waves off the permit question, that's your answer about the rest of the job too.",
       },
       {
         type: "callout",
@@ -1973,12 +1973,12 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "Do I need a permit to replace my roof in Hattiesburg?",
         answer:
-          "Plan on it — full roof replacement is permitted work in most Mississippi jurisdictions, and your licensed contractor should pull it under their license as part of the job. Requirements and fees are set locally and change, so confirm specifics with your city or county building department for your address.",
+          "Plan on it, full roof replacement is permitted work in most Mississippi jurisdictions, and your licensed contractor should pull it under their license as part of the job. Requirements and fees are set locally and change, so confirm specifics with your city or county building department for your address.",
       },
       {
         question: "What if my contractor says a permit isn't needed?",
         answer:
-          "Ask them to put that in writing along with their license number, then verify it with the building department yourself. Most of the time the real reason is that they can't pull one. A contractor asking you to pull the permit instead is an even louder warning — it moves the liability to you.",
+          "Ask them to put that in writing along with their license number, then verify it with the building department yourself. Most of the time the real reason is that they can't pull one. A contractor asking you to pull the permit instead is an even louder warning. It moves the liability to you.",
       },
       {
         question: "Does a permit slow the job down?",
@@ -2007,25 +2007,25 @@ export const learnArticles: LearnArticle[] = [
     title: "Does roof color matter in Mississippi heat?",
     metaTitle: "Best Roof Colors for Mississippi Heat | Southeast Roofing",
     metaDescription:
-      "Does roof color actually lower cooling bills in Mississippi? What shade, reflectivity, and ventilation really do — and how to pick a color you'll still like.",
+      "Does roof color actually lower cooling bills in Mississippi? What shade, reflectivity, and ventilation really do, and how to pick a color you'll still like.",
     excerpt:
-      "Yes, but less than you've been told — and far less than ventilation. What actually affects attic temperature, and how to choose a color you won't regret.",
+      "Yes, but less than you've been told, and far less than ventilation. What actually affects attic temperature, and how to choose a color you won't regret.",
     updated: "2026-07-26",
     readMinutes: 5,
     hero: {
       headline: "Does a lighter roof really cool your house?",
       subhead:
-        "It's the question we get every single summer. The honest answer has a real effect in it — just not the one most people expect.",
+        "It's the question we get every single summer. The honest answer has a real effect in it: just not the one most people expect.",
     },
     body: [
       {
         type: "p",
-        text: "Stand on a dark roof in July in South Mississippi and you'll believe color matters. The surface genuinely runs hotter. The question homeowners actually care about, though, is different: does that translate into a cooler house and a smaller power bill? Partly — and much less than what's happening underneath.",
+        text: "Stand on a dark roof in July in South Mississippi and you'll believe color matters. The surface genuinely runs hotter. The question homeowners actually care about, though, is different: does that translate into a cooler house and a smaller power bill? Partly, and much less than what's happening underneath.",
       },
       { type: "h2", text: "What color actually does" },
       {
         type: "p",
-        text: "A lighter or more reflective surface absorbs less solar energy, so it runs cooler. That's real physics, and on a metal roof with a reflective factory finish the effect is meaningful enough that it's a legitimate selling point. On asphalt shingles the difference between a light and dark shingle exists but is smaller than the color contrast suggests — asphalt is a dark, absorptive material regardless of the granule color on top of it.",
+        text: "A lighter or more reflective surface absorbs less solar energy, so it runs cooler. That's real physics, and on a metal roof with a reflective factory finish the effect is meaningful enough that it's a legitimate selling point. On asphalt shingles the difference between a light and dark shingle exists but is smaller than the color contrast suggests, asphalt is a dark, absorptive material regardless of the granule color on top of it.",
       },
       {
         type: "p",
@@ -2038,7 +2038,7 @@ export const learnArticles: LearnArticle[] = [
           "Attic ventilation. A poorly vented attic in our climate traps heat and moisture, cooks shingles from below, shortens their life, and can void warranties. Intake at the soffits and exhaust at the ridge, correctly balanced, does more for attic temperature than any color choice.",
           "Insulation. What separates the hot attic from your living space matters more than what separates the sun from the attic.",
           "Ductwork in the attic. If your ducts run through a 140-degree attic, sealing and insulating them will outperform a roof color decision by a wide margin.",
-          "Material. A reflective metal roof genuinely outperforms asphalt on heat gain — that's a material decision, not a color decision.",
+          "Material. A reflective metal roof genuinely outperforms asphalt on heat gain: that's a material decision, not a color decision.",
         ],
       },
       {
@@ -2064,14 +2064,14 @@ export const learnArticles: LearnArticle[] = [
       {
         type: "callout",
         title: "Preview colors on real local roofs",
-        text: "Our color visualizer shows GAF Timberline HDZ, Owens Corning Duration, and metal finishes on actual Southeast Roofing projects across South Mississippi — not renderings.",
+        text: "Our color visualizer shows GAF Timberline HDZ, Owens Corning Duration, and metal finishes on actual Southeast Roofing projects across South Mississippi: not renderings.",
         href: "/roof-color-visualizer",
         linkLabel: "Open the color visualizer",
       },
       { type: "h2", text: "A note on algae streaking" },
       {
         type: "p",
-        text: "Our humidity produces the dark streaking you see on roofs all over the Pine Belt. It's algae, it's cosmetic, and it shows more obviously on lighter roofs. Most quality shingle lines now include algae-resistant technology — worth asking about specifically if you're leaning light, and worth knowing that the streaks aren't damaging your roof when they do appear.",
+        text: "Our humidity produces the dark streaking you see on roofs all over the Pine Belt. It's algae, it's cosmetic, and it shows more obviously on lighter roofs. Most quality shingle lines now include algae-resistant technology: worth asking about specifically if you're leaning light, and worth knowing that the streaks aren't damaging your roof when they do appear.",
       },
     ],
     faqs: [
@@ -2093,7 +2093,7 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "Why does my roof have black streaks?",
         answer:
-          "Algae — extremely common in our humidity and cosmetic rather than damaging. Moss is the one to act on, since it holds moisture against the shingles. Either way, never pressure-wash a shingle roof; it strips the granules that protect it.",
+          "Algae, extremely common in our humidity and cosmetic rather than damaging. Moss is the one to act on, since it holds moisture against the shingles. Either way, never pressure-wash a shingle roof; it strips the granules that protect it.",
       },
     ],
     related: [

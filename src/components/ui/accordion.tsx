@@ -11,11 +11,11 @@ import { cn } from "@/lib/utils";
  *
  *  1. Answers ship in the server-rendered HTML and stay in the DOM. Our pages
  *     emit FAQPage structured data, and that markup has to mirror content that
- *     is genuinely on the page — schema whose answers exist only in JSON-LD
+ *     is genuinely on the page, schema whose answers exist only in JSON-LD
  *     reads as markup written for crawlers rather than people.
  *  2. It works with JavaScript disabled. Open/close is browser behaviour; there
  *     is no hydration step between the reader and the answer.
- *  3. Keyboard and screen-reader support are native — <summary> is focusable,
+ *  3. Keyboard and screen-reader support are native, <summary> is focusable,
  *     Enter and Space toggle it, and state is exposed without any ARIA of ours.
  *  4. Find-in-page (Ctrl+F) locates text inside a closed answer and browsers
  *     expand it automatically.

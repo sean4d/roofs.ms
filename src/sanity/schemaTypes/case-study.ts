@@ -44,7 +44,7 @@ export const caseStudy = defineType({
     defineField({
       name: "systemInstalled",
       type: "string",
-      description: "e.g. 60-mil TPO, standing seam — real spec only.",
+      description: "e.g. 60-mil TPO, standing seam: real spec only.",
     }),
     defineField({
       name: "images",

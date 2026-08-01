@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 
 /**
  * Recent-work invitation (PRD §3.7). Owner directive 2026-07-04: supplied
- * project photos never render on the homepage — authenticity is the pitch
+ * project photos never render on the homepage, authenticity is the pitch
  * here, and the photos themselves live in /projects.
  */
 export function FeaturedProjects() {

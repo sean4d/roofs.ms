@@ -5,8 +5,8 @@ import type { FaqEntry } from "@/lib/schema";
  *
  * Google Business Profile Q&A is NOT enabled on this profile, so the
  * question-intent traffic that would land there has to be captured here
- * instead. These are written the way people actually ask them out loud —
- * which is also how they get asked to AI assistants and voice search — and
+ * instead. These are written the way people actually ask them out loud, 
+ * which is also how they get asked to AI assistants and voice search, and
  * every answer sticks to facts already established elsewhere on the site
  * (license, certifications, service area, pricing posture, insurance stance).
  *
@@ -27,12 +27,12 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Do you offer free roof inspections?",
         answer:
-          "Yes. Inspections, measurements, and an itemized written proposal are completely free with no obligation, anywhere in South Mississippi. We document everything with photos so you can see exactly what we see — including when the honest answer is that your roof is fine and needs nothing.",
+          "Yes. Inspections, measurements, and an itemized written proposal are completely free with no obligation, anywhere in South Mississippi. We document everything with photos so you can see exactly what we see, including when the honest answer is that your roof is fine and needs nothing.",
       },
       {
         question: "What areas do you serve?",
         answer:
-          "We're based in Hattiesburg and serve all of South Mississippi — including Petal, Laurel, Columbia, Purvis, Sumrall, Ellisville, Wiggins, Poplarville, Picayune, Lucedale, Waynesboro, Richton, Seminary, Bay St. Louis, Diamondhead, Long Beach, Gulfport, Biloxi, D'Iberville, Ocean Springs, and the communities in between.",
+          "We're based in Hattiesburg and serve all of South Mississippi: including Petal, Laurel, Columbia, Purvis, Sumrall, Ellisville, Wiggins, Poplarville, Picayune, Lucedale, Waynesboro, Richton, Seminary, Bay St. Louis, Diamondhead, Long Beach, Gulfport, Biloxi, D'Iberville, Ocean Springs, and the communities in between.",
       },
       {
         question: "How soon can you come out after a storm?",
@@ -42,7 +42,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "How do I get a price without anyone coming out?",
         answer:
-          "Two ways. Our free roof cost calculator gives you a ballpark range in seconds from your home's size, pitch, and material. The instant estimate tool prices your actual roof from aerial measurements using just your address. For a contract-grade number we still need to look at the decking, flashing, and ventilation — that's the free inspection.",
+          "Two ways. Our free roof cost calculator gives you a ballpark range in seconds from your home's size, pitch, and material. The instant estimate tool prices your actual roof from aerial measurements using just your address. For a contract-grade number we still need to look at the decking, flashing, and ventilation: that's the free inspection.",
       },
     ],
   },
@@ -58,7 +58,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Do roofers in Mississippi have to be licensed?",
         answer:
-          "Commercial work and larger residential projects fall under the Mississippi State Board of Contractors. Always ask any roofer for their license number and confirm it's current — and ask for proof of liability and workers' compensation insurance too, regardless of job size. If an uninsured worker is hurt on your roof, you don't want that liability landing on you.",
+          "Commercial work and larger residential projects fall under the Mississippi State Board of Contractors. Always ask any roofer for their license number and confirm it's current, and ask for proof of liability and workers' compensation insurance too, regardless of job size. If an uninsured worker is hurt on your roof, you don't want that liability landing on you.",
       },
       {
         question: "What is a GAF Certified Contractor?",
@@ -68,7 +68,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "How do I avoid storm-chasing contractors?",
         answer:
-          'Ask for a Mississippi license number and check it. Ask for a physical local address you could drive to. Be wary of anyone who knocked on your door uninvited, pressures you to sign today, wants a large payment up front, asks for the insurance check signed over to them, or offers to "waive your deductible" — that last one is insurance fraud, and it tells you how they do business.',
+          'Ask for a Mississippi license number and check it. Ask for a physical local address you could drive to. Be wary of anyone who knocked on your door uninvited, pressures you to sign today, wants a large payment up front, asks for the insurance check signed over to them, or offers to "waive your deductible": that last one is insurance fraud, and it tells you how they do business.',
       },
     ],
   },
@@ -79,7 +79,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "How much does a new roof cost in Hattiesburg?",
         answer:
-          "It depends on size, pitch, material, and what we find under the old roof. Many full replacements in our area land in the low five figures, and metal or complex roofs run higher. Our proposals price every component on its own line — shingle, underlayment, ice and water shield, starter, ridge cap, disposal — so nothing is hidden inside a lump sum. The honest answer for your roof comes from a free, measured inspection.",
+          "It depends on size, pitch, material, and what we find under the old roof. Many full replacements in our area land in the low five figures, and metal or complex roofs run higher. Our proposals price every component on its own line: shingle, underlayment, ice and water shield, starter, ridge cap, disposal, so nothing is hidden inside a lump sum. The honest answer for your roof comes from a free, measured inspection.",
       },
       {
         question: "Why do roofing quotes vary so much between companies?",
@@ -89,7 +89,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Do you offer financing?",
         answer:
-          "Yes — we offer $0-down financing options through GoodLeap so a roof replacement doesn't have to drain your savings. We'll show you the financed monthly figure alongside the total, so you can decide with the whole picture in front of you.",
+          "Yes. We offer $0-down financing options through GoodLeap so a roof replacement doesn't have to drain your savings. We'll show you the financed monthly figure alongside the total, so you can decide with the whole picture in front of you.",
       },
       {
         question: "Do you charge for the inspection or the proposal?",
@@ -105,7 +105,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Do you help with storm damage insurance claims?",
         answer:
-          "Yes — roughly half our work is insurance restoration. We document the damage the way a claim file needs it, meet your adjuster on the roof, and build to the approved scope. What we never do is promise your claim will be approved (that decision belongs to your insurer under your policy) or offer to cover your deductible.",
+          "Yes, roughly half our work is insurance restoration. We document the damage the way a claim file needs it, meet your adjuster on the roof, and build to the approved scope. What we never do is promise your claim will be approved (that decision belongs to your insurer under your policy) or offer to cover your deductible.",
       },
       {
         question: "Should I file a claim for any roof damage?",
@@ -115,12 +115,12 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "The insurance estimate seems low. Is that final?",
         answer:
-          "No — scopes get supplemented routinely when documented damage was missed. That's a matter of photographs and paperwork, and handling that documentation is part of the job for us.",
+          "No, scopes get supplemented routinely when documented damage was missed. That's a matter of photographs and paperwork, and handling that documentation is part of the job for us.",
       },
       {
         question: "Is emergency tarping covered by insurance?",
         answer:
-          "Generally yes. Policies expect you to take reasonable steps to prevent further damage after a covered loss, and professional tarping is exactly that. Keep the invoice — it goes in the claim file.",
+          "Generally yes. Policies expect you to take reasonable steps to prevent further damage after a covered loss, and professional tarping is exactly that. Keep the invoice: it goes in the claim file.",
       },
     ],
   },
@@ -146,7 +146,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Do I need a full replacement or just a repair?",
         answer:
-          "Localized damage on a roof with life left in it is usually a repair — and when that's genuinely enough, that's what we'll recommend. Leaks across multiple slopes, widespread granule loss on a 20-year-old roof, or repairs that keep coming back point to replacement. Our inspection gives you the answer with photo evidence and both options priced.",
+          "Localized damage on a roof with life left in it is usually a repair, and when that's genuinely enough, that's what we'll recommend. Leaks across multiple slopes, widespread granule loss on a 20-year-old roof, or repairs that keep coming back point to replacement. Our inspection gives you the answer with photo evidence and both options priced.",
       },
       {
         question: "How long does a roof replacement take?",

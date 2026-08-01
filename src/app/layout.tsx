@@ -27,7 +27,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} — Roofing Contractor in Hattiesburg, MS`,
+    default: `${siteConfig.name}: Roofing Contractor in Hattiesburg, MS`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
    * prefers-color-scheme; the light/dark PNGs are a fallback for browsers that
    * take a favicon `media` hint but not SVG; app/favicon.ico (auto-wired) is the
    * universal legacy fallback. Installed-app icons (apple-icon.png + the
-   * manifest's public/icons/*) keep the filled navy tile — the standard there.
+   * manifest's public/icons/*) keep the filled navy tile, the standard there.
    */
   icons: {
     icon: [
@@ -48,11 +48,11 @@ export const metadata: Metadata = {
       { url: "/favicon/favicon-16.png", type: "image/png", sizes: "16x16", media: "(prefers-color-scheme: light)" },
       { url: "/favicon/favicon-white-16.png", type: "image/png", sizes: "16x16", media: "(prefers-color-scheme: dark)" },
     ],
-    // Installed-app icon (filled navy tile) — the manual `icon` list above
+    // Installed-app icon (filled navy tile). The manual `icon` list above
     // suppresses file-convention auto-detection, so declare it explicitly.
     apple: "/apple-icon.png",
   },
-  // Search-engine ownership verification — set a token in env to emit its tag.
+  // Search-engine ownership verification, set a token in env to emit its tag.
   // Google Search Console + Bing Webmaster Tools (Bing also offers a one-click
   // "import from Google Search Console" that needs no tag).
   ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ||

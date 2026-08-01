@@ -12,14 +12,14 @@ import { Reveal } from "@/components/motion/reveal";
 /**
  * Interactive quote wizard page (PRD §13 Phase 8, first mini-project).
  * The wizard qualifies the request in six taps and feeds the standard
- * lead pipeline; no computed pricing — Roofr stays the instant-number
+ * lead pipeline; no computed pricing, Roofr stays the instant-number
  * tool, offered on the success screen.
  */
 
 export const metadata: Metadata = buildMetadata({
   title: "Instant Roof Estimate in Hattiesburg, MS | Southeast Roofing",
   description:
-    "Answer six quick questions and get a real, itemized roofing quote from a Mississippi-licensed contractor — residential or commercial, no spam, no pressure.",
+    "Answer six quick questions and get a real, itemized roofing quote from a Mississippi-licensed contractor: residential or commercial, no spam, no pressure.",
   path: "/quote",
 });
 
@@ -31,7 +31,7 @@ const breadcrumbs = [
 const trustChips = [
   { icon: Star, label: siteConfig.trustFacts.googleRating },
   { icon: ShieldCheck, label: siteConfig.trustFacts.insured },
-  { icon: BadgeCheck, label: "Itemized proposals — every line priced" },
+  { icon: BadgeCheck, label: "Itemized proposals, every line priced" },
 ];
 
 export default function QuotePage() {
@@ -47,8 +47,8 @@ export default function QuotePage() {
               Six taps to your quote
             </h1>
             <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600">
-              Tell us what you&apos;re dealing with and a real person — not an
-              algorithm — puts together your itemized quote. Takes about a
+              Tell us what you&apos;re dealing with and a real person, not an
+              algorithm, puts together your itemized quote. Takes about a
               minute.
             </p>
             <ul className="mt-6 flex flex-wrap gap-2.5">

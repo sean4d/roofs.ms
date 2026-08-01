@@ -6,8 +6,8 @@ import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 
 /**
  * Credential strip under the hero (owner request 2026-07-05): the same
- * four verifiable badges as the Reputation section — Google, GAF, BBB,
- * MSBOC — each linking to its official record. Lifetime/insured tiles
+ * four verifiable badges as the Reputation section: Google, GAF, BBB,
+ * MSBOC, each linking to its official record. Lifetime/insured tiles
  * removed; these four are all externally checkable.
  */
 export function TrustBar() {
@@ -17,7 +17,7 @@ export function TrustBar() {
       className="border-y border-border bg-secondary py-12"
     >
       <div className="container-site">
-        {/* Screen-reader-only section heading — keeps the document outline
+        {/* Screen-reader-only section heading, keeps the document outline
             sequential (h1 → h2 → the h3 badge titles), no visual change. */}
         <h2 className="sr-only">Our credentials</h2>
         <StaggerGroup as="ul" className="grid grid-cols-4 gap-2 sm:gap-4">

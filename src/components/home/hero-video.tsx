@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
  * hero photograph rather than replacing it.
  *
  * CURRENT CLIP: GAF shingle-colour footage from the manufacturer's contractor
- * marketing library — we are a GAF certified contractor showing GAF products we
+ * marketing library. We are a GAF certified contractor showing GAF products we
  * install. It is decorative and unlabelled, so it never reads as a claim about
  * our own job sites; that promise ("no stock photography pretends to be our
  * work") belongs to the project gallery, which remains 100% our own photos.
@@ -21,7 +21,7 @@ import { useEffect, useRef, useState } from "react";
  *    during first render.
  *  • It loops. Every transition in this clip is already a cut between different
  *    roofs, so the seam back to the first frame reads like any other. (A clip
- *    with a narrative arc should play once and fade out instead — see git
+ *    with a narrative arc should play once and fade out instead, see git
  *    history for that variant.)
  *  • It is skipped entirely on desktop (the clip is 9:16), when the viewer
  *    prefers reduced motion, on Save-Data, and on 2G/3G. Roofing customers read
@@ -33,7 +33,7 @@ import { useEffect, useRef, useState } from "react";
 
 /**
  * H.264 FIRST, deliberately. VP9 is usually the smaller codec, but this clip is
- * half granule texture — the densest thing you can hand an encoder — and at
+ * half granule texture, the densest thing you can hand an encoder, and at
  * matched quality the WebM came out LARGER (4.9MB vs 3.9MB at 1080). So every
  * mainstream browser takes the MP4; the WebM stays only for the rare build
  * without H.264 (some Linux Firefox), where a fallback beats a blank hero.
@@ -52,7 +52,7 @@ interface NetworkInfo {
 function connectionAllows(): boolean {
   const nav = navigator as Navigator & { connection?: NetworkInfo };
   const c = nav.connection;
-  if (!c) return true; // unknown (Safari) — assume fine
+  if (!c) return true; // unknown (Safari): assume fine
   if (c.saveData) return false;
   return !["slow-2g", "2g", "3g"].includes(c.effectiveType ?? "");
 }
@@ -120,8 +120,8 @@ export function HeroVideo() {
   /**
    * Ask to play, from every angle, and never punish a refusal. A rejection can
    * mean "not ready yet", "this source will not decode, trying the next one",
-   * or a genuine policy block — and we cannot tell them apart. Swallowing it is
-   * safe: if playback never starts the video simply stays transparent over the
+   * or a genuine policy block, and we cannot tell them apart. Swallowing it is
+   * safe, if playback never starts the video simply stays transparent over the
    * photo, which is the fallback anyway. Only onError (all sources exhausted)
    * tears it down.
    */
@@ -131,7 +131,7 @@ export function HeroVideo() {
     el.play()
       .then(() => setVisible(true))
       .catch(() => {
-        /* not fatal — another event will call us back */
+        /* not fatal, another event will call us back */
       });
   }
 
@@ -163,7 +163,7 @@ export function HeroVideo() {
           el.muted = true;
           // Ask immediately. iOS ignores preload and will not buffer a single
           // byte until play() is called, so waiting for canplay there means
-          // waiting forever — that is what left the hero photo-only.
+          // waiting forever, that is what left the hero photo-only.
           tryPlay();
         }}
         // ...and ask again whenever the browser reaches a playable state. Engines
@@ -178,7 +178,7 @@ export function HeroVideo() {
         aria-hidden="true"
         tabIndex={-1}
         // A failing <source> surfaces here too, and treating that as fatal
-        // unmounted us the moment the first source could not be decoded — before
+        // unmounted us the moment the first source could not be decoded, before
         // the browser had tried the second. Only the VIDEO itself failing (every
         // source exhausted) means there is nothing left to play.
         onError={(e) => {

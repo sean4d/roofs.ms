@@ -17,7 +17,7 @@ import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/motion/reveal";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 
-/** Industry hub (PRD §2) — routes into the six industry pages. */
+/** Industry hub (PRD §2), routes into the six industry pages. */
 
 export const metadata: Metadata = buildMetadata({
   title: "Commercial Roofing by Industry in MS | Southeast Roofing",
@@ -34,14 +34,14 @@ const breadcrumbs = [
 
 /**
  * Hub prose (2026-07 expansion): why roof decisions differ by industry, plus
- * the routing table. Detail lives on the six industry pages — this page's job
+ * the routing table. Detail lives on the six industry pages. This page's job
  * is to get each owner to the right one.
  */
 const industriesSections: ProseSection[] = [
   {
     title: "Why the building type changes the roofing answer",
     paragraphs: [
-      "Two buildings with identical roof areas can need entirely different roofs — because the roof decision is never just about square footage. Occupancy drives scheduling: a school can concentrate work into summer, a church has to protect Sunday no matter what, and a manufacturer may not be able to stop the line at all. Operations drive the system: grease exhaust points toward PVC, heavy rooftop service traffic argues for multi-ply or walk-pad planning, and an open-purlin metal building narrows the field to structural systems engineered for it.",
+      "Two buildings with identical roof areas can need entirely different roofs, because the roof decision is never just about square footage. Occupancy drives scheduling: a school can concentrate work into summer, a church has to protect Sunday no matter what, and a manufacturer may not be able to stop the line at all. Operations drive the system: grease exhaust points toward PVC, heavy rooftop service traffic argues for multi-ply or walk-pad planning, and an open-purlin metal building narrows the field to structural systems engineered for it.",
       "Money moves differently too. A school board, a church committee, an apartment owner, and a city procurement office approve projects on different calendars, with different documentation, and different tolerance for phasing. The six pages below get specific about each: the buildings involved, the systems commonly considered, the scheduling realities, and what each decision-maker needs from a roofing proposal. This table is the short version.",
     ],
     table: {
@@ -97,7 +97,7 @@ const industriesSections: ProseSection[] = [
           "TPO, standing seam, maintenance programs",
         ],
       ],
-      note: "Every recommendation still starts with a building-specific assessment — this table routes the conversation, it doesn't replace it.",
+      note: "Every recommendation still starts with a building-specific assessment: this table routes the conversation, it doesn't replace it.",
     },
     links: [
       { label: "Roofing for schools", href: "/commercial/industries/schools" },
@@ -120,12 +120,12 @@ const industriesSections: ProseSection[] = [
   {
     title: "What every industry has in common",
     paragraphs: [
-      "However different these buildings are, the sequence we follow doesn't change. We establish what's actually on the roof before recommending anything — core samples to identify the assembly and layer count, moisture scanning to find wet insulation, and a deck check, because a recover installed over a saturated assembly only hides the problem until it gets expensive. Then the proposal gets written in the language the decision-maker actually uses: line-itemized for an owner, spec-graded for a bid table, phased for a board that funds work across budget cycles.",
-      "The other constant is that the building keeps operating. Nobody closes a school, empties a warehouse, or cancels a Sunday service for a roof, so staging, access routes, noise windows, and daily watertight tie-ins get planned with your people before a crew shows up. And when the work is done, the closeout paperwork — as-builts, warranty registration, photo documentation, and the manufacturer inspection if the selected warranty requires one — goes into your records, not just ours.",
+      "However different these buildings are, the sequence we follow doesn't change. We establish what's actually on the roof before recommending anything: core samples to identify the assembly and layer count, moisture scanning to find wet insulation, and a deck check, because a recover installed over a saturated assembly only hides the problem until it gets expensive. Then the proposal gets written in the language the decision-maker actually uses: line-itemized for an owner, spec-graded for a bid table, phased for a board that funds work across budget cycles.",
+      "The other constant is that the building keeps operating. Nobody closes a school, empties a warehouse, or cancels a Sunday service for a roof, so staging, access routes, noise windows, and daily watertight tie-ins get planned with your people before a crew shows up. And when the work is done, the closeout paperwork: as-builts, warranty registration, photo documentation, and the manufacturer inspection if the selected warranty requires one: goes into your records, not just ours.",
     ],
     bullets: [
       "Assessment first: cores, moisture mapping, and deck identification before any system is named.",
-      "Written scope that survives review — by an owner, a committee, a board, or a procurement office.",
+      "Written scope that survives review: by an owner, a committee, a board, or a procurement office.",
       "Recover versus tear-off decided by evidence and code, not by whichever is cheaper to sell.",
       "Scheduling built around your operating calendar, with daily dry-in so weather can't punish an open roof.",
       "Documented closeout: as-builts, warranty registration, and photo records you keep.",
@@ -162,7 +162,7 @@ export default function IndustriesHubPage() {
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600">
               A school, a sanctuary, and a distribution center don&apos;t buy
-              roofing the same way — different schedules, budgets, approvals,
+              roofing the same way: different schedules, budgets, approvals,
               and stakes. We&apos;ve built our commercial practice around those
               differences.
             </p>

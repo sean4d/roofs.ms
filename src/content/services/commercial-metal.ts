@@ -18,19 +18,19 @@ export const commercialMetalHub: ServiceContent = {
   name: "Commercial Metal Roofing",
   metaTitle: "Commercial Metal Roofing in Mississippi | Southeast Roofing",
   metaDescription:
-    "Commercial metal roofing across South Mississippi — architectural standing seam, R-panel and PBR systems, and structural metal for facilities, warehouses, and ag buildings.",
+    "Commercial metal roofing across South Mississippi: architectural standing seam, R-panel and PBR systems, and structural metal for facilities, warehouses, and ag buildings.",
   hero: {
     eyebrow: "Commercial roofing",
     headline: "Metal for buildings that work for a living",
     subhead:
-      "Warehouses, shops, ag structures, offices with a long horizon — metal delivers decades of low-maintenance service where other systems need replacing twice. We install architectural and structural systems across the region.",
+      "Warehouses, shops, ag structures, offices with a long horizon, metal delivers decades of low-maintenance service where other systems need replacing twice. We install architectural and structural systems across the region.",
     chips: ["Standing seam", "R-panel & PBR", "Structural metal"],
   },
   intro: {
     title: "Why commercial owners keep choosing metal",
     paragraphs: [
       "For an owner thinking in decades, metal's arithmetic is compelling: service life that commonly outlasts membrane systems, modest maintenance, excellent wind performance for hurricane season, and reflective finishes that cut cooling loads. On pre-engineered metal buildings it's the native system; on conventional structures, architectural standing seam brings the same longevity with a refined profile.",
-      "The commercial metal decision is mostly a slope-and-structure decision, and we install all four system families — so the recommendation follows your building. The four system pages linked below carry the specifications this page deliberately doesn't repeat.",
+      "The commercial metal decision is mostly a slope-and-structure decision, and we install all four system families, so the recommendation follows your building. The four system pages linked below carry the specifications this page deliberately doesn't repeat.",
     ],
   },
   sections: [
@@ -42,7 +42,7 @@ export const commercialMetalHub: ServiceContent = {
       table: {
         title: "Commercial metal system selector",
         description:
-          "Representative characteristics — each system's page carries the full specifications.",
+          "Representative characteristics. Each system's page carries the full specifications.",
         columns: [
           "System",
           "Typical gauge",
@@ -61,8 +61,8 @@ export const commercialMetalHub: ServiceContent = {
             "Concealed clips",
             "Continuous solid deck",
             "Mechanically seamed may be approved ~1/2:12–1:12; snap-lock commonly ~3:12",
-            "Premium — flat pans, crisp seams",
-            "No — requires a deck",
+            "Premium: flat pans, crisp seams",
+            "No, requires a deck",
             "Higher initial investment",
             "Churches, schools, offices, public-facing buildings",
           ],
@@ -73,7 +73,7 @@ export const commercialMetalHub: ServiceContent = {
             "Open purlins (~4–5 ft common in PEMBs)",
             "Certain 3-inch trapezoidal seamed systems as low as ~1/4:12",
             "Utilitarian trapezoidal rib",
-            "Yes — engineered to span",
+            "Yes: engineered to span",
             "Higher initial investment",
             "Warehouses, manufacturing, low-slope metal buildings",
           ],
@@ -92,15 +92,15 @@ export const commercialMetalHub: ServiceContent = {
             "PBR panel",
             "26 ga common; 24/22 heavier options",
             "Exposed screws at every support line",
-            "Open purlins — bearing leg supports the side lap",
+            "Open purlins, bearing leg supports the side lap",
             "Representative systems near ~1/2:12 with approved lap sealant",
             "Utilitarian ribbed profile",
-            "Yes — designed for it",
+            "Yes: designed for it",
             "Lower initial investment",
             "PEMBs, warehouses, fleet and equipment buildings",
           ],
         ],
-        note: "Representative values — gauge availability, slope approvals, and span capability come from the selected manufacturer's tested assemblies and load tables.",
+        note: "Representative values: gauge availability, slope approvals, and span capability come from the selected manufacturer's tested assemblies and load tables.",
       },
       links: [
         {
@@ -124,14 +124,14 @@ export const commercialMetalHub: ServiceContent = {
     {
       title: "Deck or purlins: why the structure decides first",
       paragraphs: [
-        "A continuous deck supports architectural panels that carry no structural load of their own. Open purlins — the horizontal framing of pre-engineered metal buildings — demand panels engineered to span between supports, a different product class with its own load tables.",
+        "A continuous deck supports architectural panels that carry no structural load of their own. Open purlins, the horizontal framing of pre-engineered metal buildings: demand panels engineered to span between supports, a different product class with its own load tables.",
         "Reroofing an existing metal building adds the purlins themselves to the question: rust at fastener lines, deflection, and prior modifications all affect what the structure can accept, so our assessment documents purlin condition before any system is proposed. Where the frame is sound, retrofit systems can go over the existing panels without tear-off.",
       ],
     },
     {
       title: "Project realities: movement, moisture, coast, and logistics",
       paragraphs: [
-        "A few physical facts shape every commercial metal project. Steel moves with temperature, and long panels move the most — the attachment either accommodates that or fights it. Conditioned buildings need the condensation question answered with insulation and vapor management. Closer to the Gulf, salt exposure makes finish systems and metallic coatings a genuine specification item.",
+        "A few physical facts shape every commercial metal project. Steel moves with temperature, and long panels move the most, the attachment either accommodates that or fights it. Conditioned buildings need the condensation question answered with insulation and vapor management. Closer to the Gulf, salt exposure makes finish systems and metallic coatings a genuine specification item.",
         "Then the practical layer: skylights, HVAC curbs, and penetrations each need engineered flashing details; panel length is limited by transport unless a system supports field roll-forming where applicable; and gauge, coverage width, and seam or rib height interact with wind-zone attachment requirements.",
       ],
     },
@@ -174,11 +174,11 @@ export const commercialMetalHub: ServiceContent = {
       },
       {
         title: "System spec and proposal",
-        text: "Panel profile, gauge, finish, and details — itemized and written for budget review.",
+        text: "Panel profile, gauge, finish, and details: itemized and written for budget review.",
       },
       {
         title: "Installation or retrofit",
-        text: "New construction, tear-off, or retrofit over existing metal — phased around your operations.",
+        text: "New construction, tear-off, or retrofit over existing metal: phased around your operations.",
       },
       {
         title: "Long-horizon documentation",
@@ -196,15 +196,15 @@ export const commercialMetalHub: ServiceContent = {
       },
       {
         title: "R-panel",
-        text: "The exposed-fastener workhorse for shops, warehouses, and light commercial — economical and fast to install.",
+        text: "The exposed-fastener workhorse for shops, warehouses, and light commercial, economical and fast to install.",
       },
       {
         title: "PBR panel",
-        text: "The purlin-bearing rib profile — a bearing leg under the side lap for open-framing service. The metal-building standard.",
+        text: "The purlin-bearing rib profile, a bearing leg under the side lap for open-framing service. The metal-building standard.",
       },
       {
         title: "Structural metal systems",
-        text: "Panels engineered to span purlins without decking — roof and structure working as one on pre-engineered buildings.",
+        text: "Panels engineered to span purlins without decking: roof and structure working as one on pre-engineered buildings.",
       },
     ],
   },
@@ -212,20 +212,20 @@ export const commercialMetalHub: ServiceContent = {
     {
       question: "How long does a commercial metal roof last?",
       answer:
-        "Several decades is a common planning range — well-installed commercial metal frequently outlasts membrane alternatives, depending on the system, finish, exposure, and upkeep. Fastener and finish choices tune the maintenance picture, and we'll walk you through both.",
+        "Several decades is a common planning range: well-installed commercial metal frequently outlasts membrane alternatives, depending on the system, finish, exposure, and upkeep. Fastener and finish choices tune the maintenance picture, and we'll walk you through both.",
     },
     {
       question: "Can you install metal over our existing metal roof?",
       answer:
-        "Often, yes — retrofit systems go over existing panels without tear-off, adding insulation opportunity in the cavity. It depends on the condition of the structure underneath, which the assessment establishes.",
+        "Often, yes, retrofit systems go over existing panels without tear-off, adding insulation opportunity in the cavity. It depends on the condition of the structure underneath, which the assessment establishes.",
     },
     {
       question: "Is metal noisy for building occupants?",
       answer:
-        "Over insulated assemblies — which is how conditioned commercial buildings are roofed — rain noise is comparable to any other roof. The tin-roof racket people remember comes from uninsulated sheds.",
+        "Over insulated assemblies, which is how conditioned commercial buildings are roofed, rain noise is comparable to any other roof. The tin-roof racket people remember comes from uninsulated sheds.",
     },
     {
-      question: "Metal versus TPO for our building — how do we choose?",
+      question: "Metal versus TPO for our building, how do we choose?",
       answer:
         "Horizon and structure. Metal costs more up front and owns the long game; TPO wins the initial budget on conventional flat roofs. On metal buildings and sloped roofs, metal is usually the native answer. We install both and will price both.",
     },
@@ -237,7 +237,7 @@ export const commercialMetalHub: ServiceContent = {
     {
       question: "Are roof panels and wall panels the same product?",
       answer:
-        "Sometimes the same profile serves both, but roof applications carry water, slope, and uplift requirements that wall use doesn't. R-panel in particular is sold for both — which is why the spec has to name the application, not just the profile.",
+        "Sometimes the same profile serves both, but roof applications carry water, slope, and uplift requirements that wall use doesn't. R-panel in particular is sold for both, which is why the spec has to name the application, not just the profile.",
     },
   ],
   related: [
@@ -266,12 +266,12 @@ export const commercialMetalChildren: ServiceContent[] = [
     name: "Commercial Standing Seam",
     metaTitle: "Standing Seam Metal Roofing in MS | Southeast Roofing",
     metaDescription:
-      "Architectural standing seam metal roofing for South Mississippi commercial buildings — concealed fasteners, low-slope capability, and decades of service.",
+      "Architectural standing seam metal roofing for South Mississippi commercial buildings: concealed fasteners, low-slope capability, and decades of service.",
     hero: {
       eyebrow: "Commercial metal roofing",
       headline: "Architectural standing seam",
       subhead:
-        "Concealed fasteners, raised mechanical locks, and thermal movement engineered in — the premium metal system for offices, schools, churches, and civic buildings that plan to be here in forty years.",
+        "Concealed fasteners, raised mechanical locks, and thermal movement engineered in: the premium metal system for offices, schools, churches, and civic buildings that plan to be here in forty years.",
       chips: [
         "Concealed fasteners",
         "Low-slope capable",
@@ -282,7 +282,7 @@ export const commercialMetalChildren: ServiceContent[] = [
       title: "The long-horizon commercial roof",
       paragraphs: [
         "Standing seam earns its reputation on two design moves. First, the fasteners come off the roof surface: panels hang on concealed clips, so no gasketed screw heads weather in the sun across the field. Second, the panel edges rise into seams that lock together well above the drainage plane, so the joints sit out of the water rather than in it.",
-        "For the owner of a church, school, office, or civic building, that means a short maintenance list and a long service outlook — flashings, penetrations, and sealants still warrant periodic inspection, but the acres of field screws that define exposed-fastener systems simply aren't there.",
+        "For the owner of a church, school, office, or civic building, that means a short maintenance list and a long service outlook: flashings, penetrations, and sealants still warrant periodic inspection, but the acres of field screws that define exposed-fastener systems simply aren't there.",
       ],
     },
     sections: [
@@ -326,24 +326,24 @@ export const commercialMetalChildren: ServiceContent[] = [
             ],
             [
               "Substrate",
-              "Continuous deck — not an unsupported spanning panel",
+              "Continuous deck: not an unsupported spanning panel",
               "Open purlins, ~4–5 ft spacing common in PEMBs, per load tables",
             ],
           ],
-          note: "Representative values only — gauge, clip schedule, and slope approvals are set by the manufacturer's tested assembly and the project's engineering.",
+          note: "Representative values only: gauge, clip schedule, and slope approvals are set by the manufacturer's tested assembly and the project's engineering.",
         },
       },
       {
         title: "Architectural or structural: which one is your building?",
         paragraphs: [
-          "Architectural standing seam is a finish system: it installs over a continuous deck that carries the loads, and the panel's job is weather and appearance. It's the version for churches, schools, banks, medical offices, and public-facing buildings — and it requires a deck, full stop.",
+          "Architectural standing seam is a finish system: it installs over a continuous deck that carries the loads, and the panel's job is weather and appearance. It's the version for churches, schools, banks, medical offices, and public-facing buildings, and it requires a deck, full stop.",
           "Structural standing seam is a different machine wearing the same name: panels engineered to span open purlins without a deck, commonly at the 4-to-5-foot spacing found in pre-engineered metal buildings, with span capability set by gauge, profile, and the tested assembly's load tables. If your building is a PEMB with a shallow roof, the structural branch is likely your lane.",
         ],
       },
       {
         title: "Clips, thermal movement, and wind-zone attachment",
         paragraphs: [
-          "Long steel panels change length noticeably with temperature. Standing seam absorbs that by attaching at the seams through concealed clips rather than pinning the panel through its field — many clip designs let the panel slide as it grows and shrinks, so expansion cycles don't fatigue the attachment.",
+          "Long steel panels change length noticeably with temperature. Standing seam absorbs that by attaching at the seams through concealed clips rather than pinning the panel through its field. Many clip designs let the panel slide as it grows and shrinks, so expansion cycles don't fatigue the attachment.",
           "How many clips, and where, is engineering rather than habit: spacing over solid deck commonly falls around 12–24 inches on center per the tested assembly, structural systems clip at every purlin, corners and perimeters can require denser attachment, and some clips take one fastener while others take two. There is no universal clip schedule.",
         ],
       },
@@ -351,13 +351,13 @@ export const commercialMetalChildren: ServiceContent[] = [
         title: "Snap-lock vs. mechanically seamed at commercial slopes",
         paragraphs: [
           "Snap-lock panels engage by hand and commonly serve at slopes around 3:12 and steeper. Mechanically seamed panels are closed by a motorized seamer that folds the edges together, frequently over factory-applied sealant, and may be approved down to roughly 1/2:12–1:12 depending on the profile.",
-          "Commercial roofs are frequently shallower than they look from the ground, so we measure slope during assessment and match the seaming method to the shallowest plane — a snap-lock profile on a 1:12 roof is a specification error, not a style choice. Where a roof drops toward flat, the 3-inch structural trapezoidal systems rated near 1/4:12 enter the conversation.",
+          "Commercial roofs are frequently shallower than they look from the ground, so we measure slope during assessment and match the seaming method to the shallowest plane, a snap-lock profile on a 1:12 roof is a specification error, not a style choice. Where a roof drops toward flat, the 3-inch structural trapezoidal systems rated near 1/4:12 enter the conversation.",
         ],
       },
       {
         title: "Panel width, oil canning, and finish",
         paragraphs: [
-          "Wider 18-to-24-inch pans cover more roof per panel and install faster. The trade-off is optical: oil canning — the visible waviness light reveals in flat steel — shows more readily in wide pans, thinner gauges, dark colors, and over substrate irregularities. It's cosmetic, not structural, and worth designing against with narrower pans, heavier gauge, striations, and disciplined deck prep. On finish, PVDF coatings are the commercial default for long color retention.",
+          "Wider 18-to-24-inch pans cover more roof per panel and install faster. The trade-off is optical: oil canning, the visible waviness light reveals in flat steel, shows more readily in wide pans, thinner gauges, dark colors, and over substrate irregularities. It's cosmetic, not structural, and worth designing against with narrower pans, heavier gauge, striations, and disciplined deck prep. On finish, PVDF coatings are the commercial default for long color retention.",
         ],
       },
       {
@@ -390,7 +390,7 @@ export const commercialMetalChildren: ServiceContent[] = [
         },
         {
           title: "Gauge and finish system",
-          text: "22 and 24 gauge carry premiums over 26, and PVDF over SMP — decisions that scale across every square of roof.",
+          text: "22 and 24 gauge carry premiums over 26, and PVDF over SMP: decisions that scale across every square of roof.",
         },
         {
           title: "Deck condition or purlin structure",
@@ -440,12 +440,12 @@ export const commercialMetalChildren: ServiceContent[] = [
       {
         question: "Why choose standing seam over R-panel for our building?",
         answer:
-          "No exposed field fasteners to maintain, stronger low-slope capability, and an architectural appearance. R-panel wins on initial cost; standing seam tends to win on lifetime upkeep and looks — building type and hold period usually make the call.",
+          "No exposed field fasteners to maintain, stronger low-slope capability, and an architectural appearance. R-panel wins on initial cost; standing seam tends to win on lifetime upkeep and looks, building type and hold period usually make the call.",
       },
       {
         question: "How does standing seam perform in hurricane winds?",
         answer:
-          "Well — interlocked seams and clip attachment give the system strong uplift performance, with corner and perimeter zones attached more densely where the engineering requires it. Specific ratings come from the tested assembly specified for your project.",
+          "Well, interlocked seams and clip attachment give the system strong uplift performance, with corner and perimeter zones attached more densely where the engineering requires it. Specific ratings come from the tested assembly specified for your project.",
       },
       {
         question: "What gauge should a commercial standing seam roof be?",
@@ -455,7 +455,7 @@ export const commercialMetalChildren: ServiceContent[] = [
       {
         question: "Can standing seam go over our existing R-panel roof?",
         answer:
-          "Retrofit systems exist for exactly that, using sub-framing over the old panels where the structure checks out — often with the chance to add insulation in the cavity. Purlin condition and load capacity decide feasibility.",
+          "Retrofit systems exist for exactly that, using sub-framing over the old panels where the structure checks out, often with the chance to add insulation in the cavity. Purlin condition and load capacity decide feasibility.",
       },
     ],
     related: [
@@ -482,12 +482,12 @@ export const commercialMetalChildren: ServiceContent[] = [
     name: "R-Panel Metal Roofing",
     metaTitle: "R-Panel Metal Roofing in Mississippi | Southeast Roofing",
     metaDescription:
-      "R-panel metal roofing for South Mississippi shops, warehouses, and ag buildings — economical exposed-fastener panels installed to spec.",
+      "R-panel metal roofing for South Mississippi shops, warehouses, and ag buildings: economical exposed-fastener panels installed to spec.",
     hero: {
       eyebrow: "Commercial metal roofing",
       headline: "R-panel: the commercial workhorse",
       subhead:
-        "The ribbed exposed-fastener panel that covers half the shops, barns, and warehouses in the South — economical, fast to install, and tough enough for buildings that earn their keep.",
+        "The ribbed exposed-fastener panel that covers half the shops, barns, and warehouses in the South: economical, fast to install, and tough enough for buildings that earn their keep.",
       chips: ["Exposed fastener", "Economical", "Fast installation"],
     },
     intro: {
@@ -501,7 +501,7 @@ export const commercialMetalChildren: ServiceContent[] = [
       {
         title: "“R-panel” is a shape, not a standard",
         paragraphs: [
-          "Manufacturers do not use the terms R-panel and PBR identically: the familiar ribbed profile is sold under both names with real differences in lap geometry, and some manufacturers prefer — or require — the PBR version with its purlin-bearing leg for open-framed roofing, reserving plain R-panel for walls and decked applications.",
+          "Manufacturers do not use the terms R-panel and PBR identically: the familiar ribbed profile is sold under both names with real differences in lap geometry, and some manufacturers prefer, or require, the PBR version with its purlin-bearing leg for open-framed roofing, reserving plain R-panel for walls and decked applications.",
           "The practical consequence: replacement and extension work has to match panels by manufacturer, rib spacing, coverage width, and lap design, not by name. Two “R-panels” from different mills may refuse to lap together cleanly. When we quote work on an existing building, we identify the actual profile in hand before ordering a sheet.",
         ],
         links: [
@@ -514,7 +514,7 @@ export const commercialMetalChildren: ServiceContent[] = [
       {
         title: "Representative R-panel specifications",
         paragraphs: [
-          "These values describe the common commercial R-panel family — representative figures, not promises. The manufacturer's panel manual and approval documents govern every number for a specific product.",
+          "These values describe the common commercial R-panel family, representative figures, not promises. The manufacturer's panel manual and approval documents govern every number for a specific product.",
         ],
         table: {
           title: "R-panel at a glance",
@@ -524,11 +524,11 @@ export const commercialMetalChildren: ServiceContent[] = [
             ["Rib profile", "~1.25-inch ribs at ~12 inches on center"],
             [
               "Common gauges",
-              "26 ga is the common commercial spec; 24/22 ga vary by manufacturer; 29 ga exists for light duty — not the default structural commercial choice",
+              "26 ga is the common commercial spec; 24/22 ga vary by manufacturer; 29 ga exists for light duty: not the default structural commercial choice",
             ],
             [
               "Minimum slope",
-              "A representative system may permit 1:12 with lap sealant and ~3:12 without; some PBR assemblies approach 1/2:12 — no one universal minimum",
+              "A representative system may permit 1:12 with lap sealant and ~3:12 without; some PBR assemblies approach 1/2:12: no one universal minimum",
             ],
             [
               "Fastening",
@@ -539,27 +539,27 @@ export const commercialMetalChildren: ServiceContent[] = [
               "No unsupported span over decking; structural versions span open framing, ~4–5 ft common in suitable 24/26-ga tested assemblies",
             ],
           ],
-          note: "Never assume every profile spans 5 feet or accepts 1:12 slope — the selected manufacturer's load tables and approvals control.",
+          note: "Never assume every profile spans 5 feet or accepts 1:12 slope. The selected manufacturer's load tables and approvals control.",
         },
       },
       {
-        title: "Roof panel, wall panel — same profile, different job",
+        title: "Roof panel, wall panel: same profile, different job",
         paragraphs: [
-          "Standard R-panel is sold for both roofing and siding, one of the profile's genuine advantages: a metal building can wear matching skin on every face. But the applications are not interchangeable specs — a roof panel manages flowing water, slope minimums, lap sealant, and wind uplift; a wall panel mostly manages wind and looks. Lap orientation, fastener patterns, and sealant requirements differ between the two installations of the identical sheet, so a project covering both gets two detail sets in the proposal.",
+          "Standard R-panel is sold for both roofing and siding, one of the profile's genuine advantages: a metal building can wear matching skin on every face. But the applications are not interchangeable specs: a roof panel manages flowing water, slope minimums, lap sealant, and wind uplift; a wall panel mostly manages wind and looks. Lap orientation, fastener patterns, and sealant requirements differ between the two installations of the identical sheet, so a project covering both gets two detail sets in the proposal.",
         ],
       },
       {
         title: "Owning an exposed-fastener commercial roof",
         paragraphs: [
-          "Every screw compresses a gasketed washer against the steel, and that washer is a wear part living in ultraviolet light. Panels also expand and contract with temperature, working the fasteners slightly through every seasonal cycle. Neither is a defect — it's how the system is designed — but both mean the fastener lines deserve scheduled inspection over the roof's life.",
+          "Every screw compresses a gasketed washer against the steel, and that washer is a wear part living in ultraviolet light. Panels also expand and contract with temperature, working the fasteners slightly through every seasonal cycle. Neither is a defect, it's how the system is designed, but both mean the fastener lines deserve scheduled inspection over the roof's life.",
           "There's no honest universal interval for that service: exposure, panel movement, washer material, and installation quality all move the timeline. Put the roof on an inspection rhythm alongside your other building systems and address backed-out or weathered fasteners as findings, not emergencies.",
         ],
       },
       {
         title: "R-panel or its siblings: two comparisons that matter",
         paragraphs: [
-          "Against PBR: the profiles look nearly identical from the ground, but PBR adds a bearing leg beneath the overlapping edge that supports the side lap where panels cross a purlin — over open framing, that leg is why many manufacturers steer roofing toward PBR, while standard R-panel serves over solid decking.",
-          "Against standing seam: R-panel is the budget answer and a good one, but its thousands of exposed screws are exactly what standing seam eliminates. If your building is public-facing, conditioned, or a long-term hold, the concealed-fastener premium is worth pricing before you default to the workhorse — the gap is usually smaller than owners guess.",
+          "Against PBR: the profiles look nearly identical from the ground, but PBR adds a bearing leg beneath the overlapping edge that supports the side lap where panels cross a purlin, over open framing, that leg is why many manufacturers steer roofing toward PBR, while standard R-panel serves over solid decking.",
+          "Against standing seam: R-panel is the budget answer and a good one, but its thousands of exposed screws are exactly what standing seam eliminates. If your building is public-facing, conditioned, or a long-term hold, the concealed-fastener premium is worth pricing before you default to the workhorse. The gap is usually smaller than owners guess.",
         ],
         links: [
           {
@@ -586,7 +586,7 @@ export const commercialMetalChildren: ServiceContent[] = [
         },
         {
           title: "Roof, walls, or both",
-          text: "Combining reroofing with wall reskinning changes scope, staging, and unit economics — usually favorably.",
+          text: "Combining reroofing with wall reskinning changes scope, staging, and unit economics: usually favorably.",
         },
         {
           title: "Deck or open framing",
@@ -594,7 +594,7 @@ export const commercialMetalChildren: ServiceContent[] = [
         },
         {
           title: "Slope and sealant requirements",
-          text: "Shallow roofs need sealed laps and sometimes different profiles — added material and careful labor.",
+          text: "Shallow roofs need sealed laps and sometimes different profiles: added material and careful labor.",
         },
         {
           title: "Existing roof condition",
@@ -611,7 +611,7 @@ export const commercialMetalChildren: ServiceContent[] = [
       steps: [
         {
           title: "Substrate and purlin check",
-          text: "Over decking or open framing — attachment spec follows the structure.",
+          text: "Over decking or open framing, attachment spec follows the structure.",
         },
         {
           title: "Gauge and finish selection",
@@ -619,7 +619,7 @@ export const commercialMetalChildren: ServiceContent[] = [
         },
         {
           title: "Fastening to spec",
-          text: "Gasketed screws at the manufacturer's pattern and depth — the detail that decides the roof's future.",
+          text: "Gasketed screws at the manufacturer's pattern and depth: the detail that decides the roof's future.",
         },
         {
           title: "Trim-out and review",
@@ -631,22 +631,22 @@ export const commercialMetalChildren: ServiceContent[] = [
       {
         question: "What's the difference between R-panel and PBR panel?",
         answer:
-          "PBR carries a purlin-bearing leg — a return beneath the overlapping edge that supports the side lap over open framing. Manufacturers don't use the two names identically, so matching existing panels means matching the actual profile, not the label.",
+          "PBR carries a purlin-bearing leg. A return beneath the overlapping edge that supports the side lap over open framing. Manufacturers don't use the two names identically, so matching existing panels means matching the actual profile, not the label.",
       },
       {
         question: "How long does an R-panel roof last?",
         answer:
-          "Commonly decades, with the fastener schedule as the main variable — periodic inspection and gasket service as findings warrant keep the system tight. Gauge, finish, and exposure set the rest of the range, so we give planning figures per project rather than one number.",
+          "Commonly decades, with the fastener schedule as the main variable, periodic inspection and gasket service as findings warrant keep the system tight. Gauge, finish, and exposure set the rest of the range, so we give planning figures per project rather than one number.",
       },
       {
         question: "Can R-panel go over an existing roof?",
         answer:
-          "Frequently — over existing metal, or over other roofing with proper sub-framing, it's a common and economical retrofit. Feasibility rides on the structure underneath, which our assessment confirms case by case.",
+          "Frequently: over existing metal, or over other roofing with proper sub-framing, it's a common and economical retrofit. Feasibility rides on the structure underneath, which our assessment confirms case by case.",
       },
       {
         question: "Is 29-gauge R-panel okay for a commercial building?",
         answer:
-          "29 gauge exists in this family for light-duty use, but it is not the default structural commercial spec — 26 gauge is the common baseline, with 24 and 22 available from some manufacturers for heavier service. We'll tell you plainly when a lighter panel is a false economy.",
+          "29 gauge exists in this family for light-duty use, but it is not the default structural commercial spec, 26 gauge is the common baseline, with 24 and 22 available from some manufacturers for heavier service. We'll tell you plainly when a lighter panel is a false economy.",
       },
       {
         question: "What slope does an R-panel roof require?",
@@ -656,7 +656,7 @@ export const commercialMetalChildren: ServiceContent[] = [
       {
         question: "What are stitch screws, and why do they matter?",
         answer:
-          "Stitch screws fasten the side lap where one panel overlaps the next — commonly spaced around 12–20 inches on center per the manufacturer, and denser at perimeter and corner zones where wind uplift concentrates. Missing or loose stitch screws are among the most common findings on underperforming R-panel roofs.",
+          "Stitch screws fasten the side lap where one panel overlaps the next, commonly spaced around 12–20 inches on center per the manufacturer, and denser at perimeter and corner zones where wind uplift concentrates. Missing or loose stitch screws are among the most common findings on underperforming R-panel roofs.",
       },
     ],
     related: [
@@ -683,33 +683,33 @@ export const commercialMetalChildren: ServiceContent[] = [
     name: "PBR Panel Metal Roofing",
     metaTitle: "PBR Panel Metal Roofing in Mississippi | Southeast Roofing",
     metaDescription:
-      "PBR panel roofing for South Mississippi metal buildings — purlin-bearing strength for pre-engineered structures, shops, and warehouses.",
+      "PBR panel roofing for South Mississippi metal buildings: purlin-bearing strength for pre-engineered structures, shops, and warehouses.",
     hero: {
       eyebrow: "Commercial metal roofing",
       headline: "PBR panel: built for the frame",
       subhead:
-        "The purlin-bearing rib panel is the standard skin of America's metal buildings — a profile designed so the side lap bears on the framing it crosses, not on hope.",
+        "The purlin-bearing rib panel is the standard skin of America's metal buildings, a profile designed so the side lap bears on the framing it crosses, not on hope.",
       chips: ["Purlin bearing", "Metal-building standard", "High coverage"],
     },
     intro: {
       title: "The metal-building default, explained properly",
       paragraphs: [
-        "If your building came from a pre-engineered metal building manufacturer, there's a strong chance PBR panel — purlin-bearing rib — is what's over your head right now. It's the profile PEMB packages have shipped with for decades — the panel we're most often asked to repair, match, extend, and replace across the region.",
-        "PBR's identity lives in one small piece of geometry at the panel edge — understanding it explains when this panel is the right spec and when its plainer R-panel sibling will do.",
+        "If your building came from a pre-engineered metal building manufacturer, there's a strong chance PBR panel, purlin-bearing rib, is what's over your head right now. It's the profile PEMB packages have shipped with for decades. The panel we're most often asked to repair, match, extend, and replace across the region.",
+        "PBR's identity lives in one small piece of geometry at the panel edge, understanding it explains when this panel is the right spec and when its plainer R-panel sibling will do.",
       ],
     },
     sections: [
       {
         title: "What the bearing leg actually does",
         paragraphs: [
-          "At the overlapping edge of a PBR panel, the profile turns down and back into a short return — the purlin-bearing leg. When two panels lap and cross a purlin, that leg sits beneath the overlapping edge and gives the side lap solid bearing on the support instead of leaving the joint suspended between ribs.",
-          "Worth stating what the leg doesn't do: it doesn't make the panel immune to oil canning — the cosmetic waviness inherent to flat areas of light-gauge steel — and it doesn't by itself guarantee structural performance. Gauge, purlin spacing, fastener pattern, and the tested assembly still have to line up. The leg improves the lap; the engineering carries the roof.",
+          "At the overlapping edge of a PBR panel, the profile turns down and back into a short return, the purlin-bearing leg. When two panels lap and cross a purlin, that leg sits beneath the overlapping edge and gives the side lap solid bearing on the support instead of leaving the joint suspended between ribs.",
+          "Worth stating what the leg doesn't do: it doesn't make the panel immune to oil canning, the cosmetic waviness inherent to flat areas of light-gauge steel, and it doesn't by itself guarantee structural performance. Gauge, purlin spacing, fastener pattern, and the tested assembly still have to line up. The leg improves the lap; the engineering carries the roof.",
         ],
       },
       {
         title: "Representative PBR specifications",
         paragraphs: [
-          "Representative numbers for the common PBR family — the selected manufacturer's load tables and approval documents govern.",
+          "Representative numbers for the common PBR family. The selected manufacturer's load tables and approval documents govern.",
         ],
         table: {
           title: "PBR panel at a glance",
@@ -724,7 +724,7 @@ export const commercialMetalChildren: ServiceContent[] = [
             ],
             [
               "Minimum slope",
-              "Representative systems near 1/2:12 with approved sealant in side and end laps — exact minimum from the selected manufacturer",
+              "Representative systems near 1/2:12 with approved sealant in side and end laps: exact minimum from the selected manufacturer",
             ],
             [
               "Fastening",
@@ -741,28 +741,28 @@ export const commercialMetalChildren: ServiceContent[] = [
       {
         title: "Fastener patterns and sealant: assembly-specific by design",
         paragraphs: [
-          "PBR is a through-fastened system: screws pass through the panel into the purlin at every support line, and the pattern is not installer preference. A tested assembly might call for three fasteners across a 36-inch panel at each purlin in one configuration and six in another, with roof zones facing higher wind uplift getting denser patterns — treating one pattern as universal is how metal-building roofs end up underperforming their own panels.",
-          "Sealant follows the same logic: tape sealant belongs in the laps the tested assembly requires — end laps and low-slope side laps most commonly. When we quote a PBR roof, the fastener and sealant schedule traces to a specific assembly — exactly the paper trail you want if a storm claim is ever scrutinized.",
+          "PBR is a through-fastened system: screws pass through the panel into the purlin at every support line, and the pattern is not installer preference. A tested assembly might call for three fasteners across a 36-inch panel at each purlin in one configuration and six in another, with roof zones facing higher wind uplift getting denser patterns, treating one pattern as universal is how metal-building roofs end up underperforming their own panels.",
+          "Sealant follows the same logic: tape sealant belongs in the laps the tested assembly requires, end laps and low-slope side laps most commonly. When we quote a PBR roof, the fastener and sealant schedule traces to a specific assembly, exactly the paper trail you want if a storm claim is ever scrutinized.",
         ],
       },
       {
         title: "Purlin spacing and what a panel can honestly span",
         paragraphs: [
           "Five-foot purlin spacing appears in many common tested assemblies with 24- and 26-gauge PBR, but it isn't a law of nature: span capability is a function of gauge, wind and live loads, the support condition at the panel's ends versus its middle, panel length, and the manufacturer's load tables. No responsible installer promises that every 26-gauge panel spans five feet regardless of circumstances.",
-          "On existing buildings the purlins are half the span question — corroded or deflected members shift the math further. Our assessment records actual spacing and condition before we propose panels, so the span claim in your proposal is your building's, not a brochure's.",
+          "On existing buildings the purlins are half the span question, corroded or deflected members shift the math further. Our assessment records actual spacing and condition before we propose panels, so the span claim in your proposal is your building's, not a brochure's.",
         ],
       },
       {
         title: "Replacing the roof on an existing metal building",
         paragraphs: [
-          "Metal-building reroofs come to us on three roads: fastener and lap service — new oversized screws, fresh washers, resealed laps — extends a fundamentally sound roof; panel-for-panel replacement swaps tired PBR for new, succeeding or failing on profile match and purlin condition; and retrofit systems build a new roof over the old one entirely, often adding insulation in the new cavity, where the frame's capacity allows the added load.",
-          "Which road fits is an inspection question, not a sales question — rust at fastener lines, lap condition, purlin health, and how the building is used all weigh in. Decide insulation deliberately: a reroof is the most economical moment a metal building will ever have to improve its thermal envelope.",
+          "Metal-building reroofs come to us on three roads. Fastener and lap service (new oversized screws, fresh washers, resealed laps) extends a fundamentally sound roof; panel-for-panel replacement swaps tired PBR for new, succeeding or failing on profile match and purlin condition; and retrofit systems build a new roof over the old one entirely, often adding insulation in the new cavity, where the frame's capacity allows the added load.",
+          "Which road fits is an inspection question, not a sales question: rust at fastener lines, lap condition, purlin health, and how the building is used all weigh in. Decide insulation deliberately: a reroof is the most economical moment a metal building will ever have to improve its thermal envelope.",
         ],
       },
       {
-        title: "PBR vs. R-panel: when the leg matters",
+        title: "PBR vs. R-panel, when the leg matters",
         paragraphs: [
-          "The two profiles are close cousins with one working difference: the bearing leg under the side lap. Over open purlins that leg is why some manufacturers prefer or require PBR for roofing, and why matching an existing PEMB roof almost always means PBR or its manufacturer-specific kin; over a solid deck it has nothing extra to do, and standard R-panel does the job. Because the names get used loosely, don't buy by label — we identify the actual panel on your building before quoting.",
+          "The two profiles are close cousins with one working difference: the bearing leg under the side lap. Over open purlins that leg is why some manufacturers prefer or require PBR for roofing, and why matching an existing PEMB roof almost always means PBR or its manufacturer-specific kin; over a solid deck it has nothing extra to do, and standard R-panel does the job. Because the names get used loosely, don't buy by label, we identify the actual panel on your building before quoting.",
         ],
         links: [
           {
@@ -801,7 +801,7 @@ export const commercialMetalChildren: ServiceContent[] = [
         },
         {
           title: "Downtime and phasing",
-          text: "Working over an operating shop or warehouse takes sequencing that a vacant building doesn't — and sequencing is labor.",
+          text: "Working over an operating shop or warehouse takes sequencing that a vacant building doesn't, and sequencing is labor.",
         },
       ],
     },
@@ -818,11 +818,11 @@ export const commercialMetalChildren: ServiceContent[] = [
         },
         {
           title: "Spec installation",
-          text: "Correct laps, bearing orientation, and the tested assembly's fastener schedule — the details metal buildings depend on.",
+          text: "Correct laps, bearing orientation, and the tested assembly's fastener schedule. The details metal buildings depend on.",
         },
         {
           title: "Weatherproofing details",
-          text: "Ridge, eave, and penetration closures done right — where metal-building leaks actually start.",
+          text: "Ridge, eave, and penetration closures done right, where metal-building leaks actually start.",
         },
       ],
     },
@@ -830,28 +830,28 @@ export const commercialMetalChildren: ServiceContent[] = [
       {
         question: "Do I need PBR or regular R-panel?",
         answer:
-          "Over open purlins — the metal-building case — PBR's bearing leg supports the side lap, and some manufacturers require that version for open-framed roofing. Over solid decking, standard R-panel serves.",
+          "Over open purlins, the metal-building case, PBR's bearing leg supports the side lap, and some manufacturers require that version for open-framed roofing. Over solid decking, standard R-panel serves.",
       },
       {
         question:
           "Our metal building roof leaks at the screws. Is that fixable?",
         answer:
-          "Yes — it's the most common metal-building service call: aged gaskets and backed-out fasteners. Re-fastening with oversized screws and new gasketed washers is routine; if the panels themselves are tired, panel replacement or an over-the-top retrofit are the next options up.",
+          "Yes. It's the most common metal-building service call: aged gaskets and backed-out fasteners. Re-fastening with oversized screws and new gasketed washers is routine; if the panels themselves are tired, panel replacement or an over-the-top retrofit are the next options up.",
       },
       {
         question: "Can you insulate while reroofing a metal building?",
         answer:
-          "A reroof is the ideal moment — new insulation goes in the cavity or over the old roof under the new panels, depending on the retrofit approach. Many older PEMBs were built with minimal insulation, so the comfort and energy difference is often dramatic.",
+          "A reroof is the ideal moment, new insulation goes in the cavity or over the old roof under the new panels, depending on the retrofit approach. Many older PEMBs were built with minimal insulation, so the comfort and energy difference is often dramatic.",
       },
       {
         question: "What slope does a PBR roof need?",
         answer:
-          "Representative PBR systems carry approvals near 1/2:12 with the required sealant in side and end laps — one reason the profile suits the shallow roofs common on PEMBs. The exact minimum belongs to the selected manufacturer's approval documents.",
+          "Representative PBR systems carry approvals near 1/2:12 with the required sealant in side and end laps, one reason the profile suits the shallow roofs common on PEMBs. The exact minimum belongs to the selected manufacturer's approval documents.",
       },
       {
         question: "How many screws does a PBR roof take?",
         answer:
-          "It's set by the tested assembly, not a rule of thumb — one assembly may place 3 panel-to-purlin fasteners across a 36-inch panel at each support line and another 6, with stitch screws in some assemblies around 20 inches on center and denser patterns where uplift demands. Our proposals cite the assembly the counts come from.",
+          "It's set by the tested assembly, not a rule of thumb, one assembly may place 3 panel-to-purlin fasteners across a 36-inch panel at each support line and another 6, with stitch screws in some assemblies around 20 inches on center and denser patterns where uplift demands. Our proposals cite the assembly the counts come from.",
       },
     ],
     related: [
@@ -878,18 +878,18 @@ export const commercialMetalChildren: ServiceContent[] = [
     name: "Structural Metal Roofing",
     metaTitle: "Structural Metal Roofing in Mississippi | Southeast Roofing",
     metaDescription:
-      "Structural metal roof systems for South Mississippi — panels engineered to span open framing on pre-engineered buildings, warehouses, and industrial structures.",
+      "Structural metal roof systems for South Mississippi, panels engineered to span open framing on pre-engineered buildings, warehouses, and industrial structures.",
     hero: {
       eyebrow: "Commercial metal roofing",
       headline: "Structural metal: roof and structure in one",
       subhead:
-        "Panels engineered to span open purlins without decking — carrying load, resisting uplift, and closing the building in a single system. The backbone approach for pre-engineered and industrial structures.",
+        "Panels engineered to span open purlins without decking, carrying load, resisting uplift, and closing the building in a single system. The backbone approach for pre-engineered and industrial structures.",
       chips: ["Spans open framing", "Engineered uplift", "Industrial-grade"],
     },
     intro: {
       title: "When the panel is the structure",
       paragraphs: [
-        "Most roofing sits on top of a structure; structural metal is part of one. These panels span from purlin to purlin with no deck beneath them, carrying live loads and wind uplift as working members of the building — which is why every meaningful number on this page traces back to load tables and tested assemblies rather than habit.",
+        "Most roofing sits on top of a structure; structural metal is part of one. These panels span from purlin to purlin with no deck beneath them, carrying live loads and wind uplift as working members of the building, which is why every meaningful number on this page traces back to load tables and tested assemblies rather than habit.",
         "Structural metal isn't a single product. It's an engineered category spanning three families: structural standing seam with mechanically closed seams, heavy-rib exposed-fastener panels, and engineered systems designed over purlins and bar joists.",
       ],
     },
@@ -897,7 +897,7 @@ export const commercialMetalChildren: ServiceContent[] = [
       {
         title: "What makes a panel “structural” in the first place",
         paragraphs: [
-          "A structural panel is one whose tested assembly qualifies it to span open supports and carry the roof's design loads without a continuous deck underneath. Rib geometry provides stiffness, gauge provides material strength, and the attachment transfers loads into the frame — all three verified together in the assembly's testing. An architectural pan over a plywood deck is an excellent roof — but the deck is doing the structural work, and the same panel over open purlin bays is a failure. The category boundary is whether the panel's own documents authorize the span.",
+          "A structural panel is one whose tested assembly qualifies it to span open supports and carry the roof's design loads without a continuous deck underneath. Rib geometry provides stiffness, gauge provides material strength, and the attachment transfers loads into the frame, all three verified together in the assembly's testing. An architectural pan over a plywood deck is an excellent roof, but the deck is doing the structural work, and the same panel over open purlin bays is a failure. The category boundary is whether the panel's own documents authorize the span.",
         ],
       },
       {
@@ -944,13 +944,13 @@ export const commercialMetalChildren: ServiceContent[] = [
               "Budget-led projects, straightforward buildings, profile matching",
             ],
           ],
-          note: "Representative systems — profiles, gauges, and slope approvals vary by manufacturer and are confirmed per tested assembly.",
+          note: "Representative systems: profiles, gauges, and slope approvals vary by manufacturer and are confirmed per tested assembly.",
         },
       },
       {
         title: "Representative structural system parameters",
         paragraphs: [
-          "Orientation numbers for the category — the specific product's load tables and the project engineering are the only figures that count.",
+          "Orientation numbers for the category. The specific product's load tables and the project engineering are the only figures that count.",
         ],
         table: {
           title: "Structural metal at a glance",
@@ -958,7 +958,7 @@ export const commercialMetalChildren: ServiceContent[] = [
           rows: [
             [
               "Support condition",
-              "Open purlins or bar joists — no continuous deck",
+              "Open purlins or bar joists: no continuous deck",
             ],
             [
               "Purlin spacing",
@@ -981,7 +981,7 @@ export const commercialMetalChildren: ServiceContent[] = [
               "At every support line, with denser patterns in corner and perimeter wind zones",
             ],
           ],
-          note: "Orientation values only — span, gauge, and attachment for your building come from the selected system's load tables and project engineering.",
+          note: "Orientation values only: span, gauge, and attachment for your building come from the selected system's load tables and project engineering.",
         },
       },
       {
@@ -993,14 +993,14 @@ export const commercialMetalChildren: ServiceContent[] = [
       {
         title: "The load path: panel to purlin to frame",
         paragraphs: [
-          "A structural roof works as a chain: loads enter the panel, pass through clips or fasteners into the purlins, and travel down into the main frames. Gauge, profile, seam type, clip or fastener choice, attachment pattern, and purlin spacing operate as one tested assembly — swapping any single element without requalifying the chain breaks it.",
-          "Wind doesn't load that chain evenly, either: corner and edge zones see substantially higher uplift than the field, which is why attachment density commonly increases there — a spec that treats the whole roof as “the field” is underbuilt at exactly the points storms attack first. When we detail a structural roof, zone-by-zone attachment is in the drawings.",
+          "A structural roof works as a chain: loads enter the panel, pass through clips or fasteners into the purlins, and travel down into the main frames. Gauge, profile, seam type, clip or fastener choice, attachment pattern, and purlin spacing operate as one tested assembly, swapping any single element without requalifying the chain breaks it.",
+          "Wind doesn't load that chain evenly, either: corner and edge zones see substantially higher uplift than the field, which is why attachment density commonly increases there, a spec that treats the whole roof as “the field” is underbuilt at exactly the points storms attack first. When we detail a structural roof, zone-by-zone attachment is in the drawings.",
         ],
       },
       {
         title: "Retrofit over the top vs. panel-for-panel replacement",
         paragraphs: [
-          "An aging structural roof has two main futures. Panel-for-panel replacement installs new panels qualified for the same purlin spacing — the cleaner path when the structure is sound and the building can tolerate open-roof phases. Retrofit systems instead build a new roof above the existing one on engineered sub-framing, keeping the building dried-in throughout and creating a cavity that takes new insulation economically — provided the frame is verified for the added load.",
+          "An aging structural roof has two main futures. Panel-for-panel replacement installs new panels qualified for the same purlin spacing, the cleaner path when the structure is sound and the building can tolerate open-roof phases. Retrofit systems instead build a new roof above the existing one on engineered sub-framing, keeping the building dried-in throughout and creating a cavity that takes new insulation economically, provided the frame is verified for the added load.",
           "Occupancy, schedule, insulation goals, and structural findings decide between the paths; when a building qualifies for both, we present both.",
         ],
         links: [
@@ -1032,7 +1032,7 @@ export const commercialMetalChildren: ServiceContent[] = [
         },
         {
           title: "Measured spans and load requirements",
-          text: "Purlin spacing and design loads set which assemblies qualify — and qualifying assemblies set the material budget.",
+          text: "Purlin spacing and design loads set which assemblies qualify, and qualifying assemblies set the material budget.",
         },
         {
           title: "Wind-zone attachment engineering",
@@ -1044,7 +1044,7 @@ export const commercialMetalChildren: ServiceContent[] = [
         },
         {
           title: "Building operations during work",
-          text: "Keeping a plant or warehouse running under an open-roof sequence takes phasing, protection, and coordination — all real labor.",
+          text: "Keeping a plant or warehouse running under an open-roof sequence takes phasing, protection, and coordination: all real labor.",
         },
       ],
     },
@@ -1061,7 +1061,7 @@ export const commercialMetalChildren: ServiceContent[] = [
         },
         {
           title: "Sequenced installation",
-          text: "Panels placed and secured in structural sequence — the building stays sound at every stage.",
+          text: "Panels placed and secured in structural sequence. The building stays sound at every stage.",
         },
         {
           title: "Uplift-critical detailing",
@@ -1073,13 +1073,13 @@ export const commercialMetalChildren: ServiceContent[] = [
       {
         question: "What buildings use structural metal roofing?",
         answer:
-          "Pre-engineered metal buildings, warehouses, manufacturing and ag structures, hangars, and equipment storage — anywhere the design spans open framing without a deck. If your roof panels attach directly to purlins, you're in structural territory.",
+          "Pre-engineered metal buildings, warehouses, manufacturing and ag structures, hangars, and equipment storage, anywhere the design spans open framing without a deck. If your roof panels attach directly to purlins, you're in structural territory.",
       },
       {
         question:
           "Can an old structural metal roof be replaced without rebuilding?",
         answer:
-          "Usually — panel-for-panel replacement or an engineered retrofit over the existing roof both preserve the frame. The structural review confirms the purlins are up to it and which path fits your building and operations.",
+          "Usually, panel-for-panel replacement or an engineered retrofit over the existing roof both preserve the frame. The structural review confirms the purlins are up to it and which path fits your building and operations.",
       },
       {
         question: "How does structural metal handle hurricane winds?",
@@ -1088,14 +1088,14 @@ export const commercialMetalChildren: ServiceContent[] = [
       },
       {
         question:
-          "Structural standing seam or exposed-fastener — which should we pick?",
+          "Structural standing seam or exposed-fastener, which should we pick?",
         answer:
-          "Standing seam earns its premium on very shallow roofs — some mechanically seamed trapezoidal systems are approved near 1/4:12 — and by removing field fasteners from the maintenance picture. Heavy-gauge exposed-fastener systems win on budget and simplicity at slopes commonly around 1:12 and up.",
+          "Standing seam earns its premium on very shallow roofs, some mechanically seamed trapezoidal systems are approved near 1/4:12, and by removing field fasteners from the maintenance picture. Heavy-gauge exposed-fastener systems win on budget and simplicity at slopes commonly around 1:12 and up.",
       },
       {
         question: "Can purlin spacing be widened when we reroof?",
         answer:
-          "Only where the new system's load tables and project engineering support the wider span — panel capability depends on gauge, profile, loads, and support conditions working together. Most reroofs keep the existing spacing and qualify the new panel to it.",
+          "Only where the new system's load tables and project engineering support the wider span, panel capability depends on gauge, profile, loads, and support conditions working together. Most reroofs keep the existing spacing and qualify the new panel to it.",
       },
     ],
     related: [

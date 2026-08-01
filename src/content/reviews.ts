@@ -2,12 +2,12 @@
  * Real Google reviews, transcribed verbatim from the owner's Google
  * Business Profile (screenshots supplied + republishing permission
  * granted 2026-07-05). Integrity rules:
- * - Text is quoted as written (typos included) — never edited or embellished
+ * - Text is quoted as written (typos included), never edited or embellished
  * - Every entry is verifiable on the live Google profile
  * - No schema.org Review/AggregateRating markup: Google treats
  *   self-collected testimonial markup as self-serving; display only
  * - EXCLUDED: one 5-star review that praises a different company name
- *   ("Roofing Society") — flagged to owner 2026-07-05
+ *   ("Roofing Society"), flagged to owner 2026-07-05
  */
 
 export interface GoogleReview {

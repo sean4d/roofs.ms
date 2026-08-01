@@ -11,7 +11,7 @@ import { RoofDiagram } from "@/components/roof/roof-diagram";
 import { FlashingDiagram } from "@/components/roof/flashing-diagram";
 
 /**
- * Anatomy of a Roof (tool #4) — interactive exploded diagram. Educational,
+ * Anatomy of a Roof (tool #4), interactive exploded diagram. Educational,
  * AI-discoverable: emits a BreadcrumbList + an ItemList/DefinedTerm glossary of
  * every roof component so assistants can quote the parts and definitions.
  */
@@ -19,7 +19,7 @@ import { FlashingDiagram } from "@/components/roof/flashing-diagram";
 export const metadata: Metadata = buildMetadata({
   title: "Anatomy of a Roof: Parts Explained | Southeast Roofing",
   description:
-    "An interactive roof diagram: click each part — decking, underlayment, ice & water shield, flashing, ridge vent — to see what it does and why it matters.",
+    "An interactive roof diagram: click each part: decking, underlayment, ice & water shield, flashing, ridge vent, to see what it does and why it matters.",
   path: "/anatomy-of-a-roof",
   titleAbsolute: true,
 });
@@ -32,7 +32,7 @@ const breadcrumbs = [
 /**
  * Glossary of every labelled component, flashing pieces included, so
  * assistants can quote the parts and their definitions. Mirrors exactly what
- * the page renders — nothing here that a reader can't also see.
+ * the page renders, nothing here that a reader can't also see.
  */
 const glossarySchema: JsonLdObject = {
   "@context": "https://schema.org",
@@ -62,7 +62,7 @@ export default function AnatomyOfARoofPage() {
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600">
             A roof is a system, not just shingles. Tap any layer to see what it is, why
             it matters, and the shortcuts bad roofers take. This is exactly what we
-            install — and inspect — on every Southeast Roofing job.
+            install, and inspect, on every Southeast Roofing job.
           </p>
         </div>
       </section>
@@ -78,7 +78,7 @@ export default function AnatomyOfARoofPage() {
           </h2>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-600">
             Flashing is one pin on the diagram above and nine separate pieces on a
-            real roof. More leaks start here than anywhere else — not in the middle
+            real roof. More leaks start here than anywhere else: not in the middle
             of the shingles, but at the edges, walls, chimneys, and penetrations
             where materials meet. These are the names you&apos;ll see on a proposal
             or an adjuster&apos;s report, and what each one actually does.
@@ -92,7 +92,7 @@ export default function AnatomyOfARoofPage() {
       <CTASection
         source="roof-diagram"
         heading="Want a roof built the right way?"
-        subtext="We'll walk your roof, show you what's really going on, and explain every layer in plain English — free."
+        subtext="We'll walk your roof, show you what's really going on, and explain every layer in plain English, free."
       />
     </>
   );

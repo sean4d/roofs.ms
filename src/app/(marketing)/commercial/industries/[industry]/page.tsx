@@ -7,7 +7,7 @@ import { breadcrumbSchema, faqSchema, serviceSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/json-ld";
 import { ServicePage } from "@/components/services/service-page";
 
-/** Industry pages (PRD §4.2) — schools, churches, apartments, industrial, warehouses, municipal. */
+/** Industry pages (PRD §4.2): schools, churches, apartments, industrial, warehouses, municipal. */
 
 export const dynamicParams = false;
 

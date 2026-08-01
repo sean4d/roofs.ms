@@ -84,7 +84,7 @@ export function DamageAnalyzer() {
     return (
       <div className="mx-auto max-w-lg rounded-2xl border border-border bg-white p-8 text-center">
         <CheckCircle2 className="mx-auto size-12 text-emerald-600" />
-        <h2 className="mt-4 text-2xl font-bold text-navy-900">Got it — we&apos;re on it</h2>
+        <h2 className="mt-4 text-2xl font-bold text-navy-900">Got it, we&apos;re on it</h2>
         <p className="mt-2 text-slate-600">
           Thanks! We&apos;ll reach out shortly to set up your free inspection. Have your
           photos handy to show our inspector. Urgent?{" "}
@@ -223,7 +223,7 @@ export function DamageAnalyzer() {
             <input type="hidden" name="page" value={pathname} />
             <input type="hidden" name="city" value={city} />
             <input type="hidden" name="address" value={address} />
-            <input type="hidden" name="message" value={`Damage analyzer — ${summary}`} />
+            <input type="hidden" name="message" value={`Damage analyzer, ${summary}`} />
             <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
 
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -266,7 +266,7 @@ export function DamageAnalyzer() {
             </div>
 
             <p className="mt-4 text-xs text-slate-500">
-              This is a preliminary, automated read — it does not replace a professional
+              This is a preliminary, automated read. It does not replace a professional
               roof inspection. Bring your photos to your inspection so we can review them
               with you.
             </p>

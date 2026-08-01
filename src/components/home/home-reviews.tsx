@@ -11,7 +11,7 @@ import { ReviewsIsland } from "@/components/home/reviews-island";
  * Homepage social proof: an auto-scrolling wall of real Google reviews with the
  * live star rating and a button to the full reviews page. The wall paints
  * instantly with server-rendered reviews and upgrades to the complete live set
- * (all reviews via the GBP API) client-side — see ReviewsIsland.
+ * (all reviews via the GBP API) client-side, see ReviewsIsland.
  */
 export async function HomeReviews() {
   const { reviews } = await getSiteReviews();
@@ -23,7 +23,7 @@ export async function HomeReviews() {
       <SectionHeading
         eyebrow="Reviews"
         title="What South Mississippi says about us"
-        description="Real Google reviews from real customers — pulled straight from our profile and always up to date."
+        description="Real Google reviews from real customers, pulled straight from our profile and always up to date."
         align="center"
       />
 

@@ -91,7 +91,7 @@ function DivisionPanel({
 
 /**
  * Residential / Commercial split (PRD §3.3). Owner rebalance 2026-07-04:
- * the two divisions are presented evenly — equal panels, both photo-led
+ * the two divisions are presented evenly: equal panels, both photo-led
  * (residential home + commercial aerial, both licensed stock per the
  * homepage imagery policy).
  */

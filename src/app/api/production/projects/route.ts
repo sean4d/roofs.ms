@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 
 /**
  * Project collection for the /production dashboard. Every verb requires a
- * valid production session — an unauthenticated caller gets a bare 401 and
+ * valid production session. An unauthenticated caller gets a bare 401 and
  * never a byte of project data.
  */
 

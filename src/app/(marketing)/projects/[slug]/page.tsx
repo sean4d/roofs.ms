@@ -15,7 +15,7 @@ import { Breadcrumbs } from "@/components/services/breadcrumbs";
 import { FinalCta } from "@/components/home/final-cta";
 
 /**
- * Individual project page — each completed job is its own indexable, schema-rich
+ * Individual project page. Each completed job is its own indexable, schema-rich
  * URL (AI-discoverability priority). Photos carry per-image alt/SEO from upload;
  * emits BreadcrumbList + ImageObject structured data. New jobs render on demand
  * (dynamicParams stays on) so uploads don't require a rebuild.
@@ -42,7 +42,7 @@ export async function generateMetadata(
     title: project.title,
     description:
       project.summary ??
-      `${project.title} — a completed project by ${siteConfig.name}.`,
+      `${project.title}: a completed project by ${siteConfig.name}.`,
     path: `/projects/${slug}`,
     titleAbsolute: true,
   });
@@ -122,7 +122,7 @@ export default async function ProjectDetailPage(
           )}
 
           {/* Finished work leads. This is the page Google Business Profile's
-              "Learn more" button lands on, so it opens on the completed roof —
+              "Learn more" button lands on, so it opens on the completed roof, 
               never on decking (owner rule 2026-08-01). */}
           {finished.length > 0 && (
             <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2">
@@ -145,7 +145,7 @@ export default async function ProjectDetailPage(
             </div>
           )}
 
-          {/* The work behind it — before and during-install shots, clearly
+          {/* The work behind it, before and during-install shots, clearly
               sectioned so nothing here can be mistaken for the finished roof. */}
           {process.length > 0 && (
             <section className="mt-12 rounded-2xl border border-border bg-secondary/40 p-5 sm:p-7">
@@ -153,7 +153,7 @@ export default async function ProjectDetailPage(
                 What it took to get there
               </h2>
               <p className="mt-1.5 text-sm text-slate-600">
-                The starting condition and the work in progress — the part most
+                The starting condition and the work in progress, the part most
                 roofing photos leave out.
               </p>
               <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
@@ -202,7 +202,7 @@ export default async function ProjectDetailPage(
               href="/free-inspection"
               className="inline-flex items-center gap-2 rounded-full bg-navy-900 px-6 py-3 font-semibold text-white"
             >
-              Get a roof like this — free inspection
+              Get a roof like this, free inspection
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
             {siteConfig.phone.tel && (

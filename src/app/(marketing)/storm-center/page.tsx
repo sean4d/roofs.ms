@@ -42,7 +42,7 @@ export const revalidate = 1800;
 export const metadata: Metadata = buildMetadata({
   title: "Storm Center: Alerts & Roof Help in MS | Southeast Roofing",
   description:
-    "Live Mississippi weather alerts, a first-hours storm damage checklist, real damage photos, and how insurance claims work — from South Mississippi roofers.",
+    "Live Mississippi weather alerts, a first-hours storm damage checklist, real damage photos, and how insurance claims work: from South Mississippi roofers.",
   path: "/storm-center",
 });
 
@@ -60,12 +60,12 @@ const CHECKLIST = [
   {
     icon: Camera,
     title: "2. Document everything",
-    text: "From the ground, photograph every side of the house, visible roof damage, and any interior water — dated photos are the backbone of your claim.",
+    text: "From the ground, photograph every side of the house, visible roof damage, and any interior water, dated photos are the backbone of your claim.",
   },
   {
     icon: Umbrella,
     title: "3. Stop the bleeding",
-    text: "If water is coming in, professional tarping prevents compounding damage — and insurers expect reasonable mitigation. Keep the invoice for the claim.",
+    text: "If water is coming in, professional tarping prevents compounding damage, and insurers expect reasonable mitigation. Keep the invoice for the claim.",
   },
   {
     icon: PhoneCall,
@@ -100,7 +100,7 @@ const RESOURCES = [
     href: "https://www.weather.gov/lix/",
   },
   {
-    label: "MEMA — Mississippi Emergency Management",
+    label: "MEMA: Mississippi Emergency Management",
     detail: "State emergency declarations and recovery resources",
     href: "https://www.msema.org",
   },
@@ -131,7 +131,7 @@ export default function StormCenterPage() {
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-steel-100">
               Live Mississippi alerts, what to do in the first hours after
               damage, what storm damage actually looks like, and how the
-              insurance process works — all in one place.
+              insurance process works, all in one place.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               {siteConfig.phone.tel && (
@@ -209,12 +209,12 @@ export default function StormCenterPage() {
         </Reveal>
       </Section>
 
-      {/* Damage identification — real photos */}
+      {/* Damage identification, real photos */}
       <Section tone="surface">
         <SectionHeading
           eyebrow="Know what you're looking at"
           title="What storm damage actually looks like"
-          description="Every photo below is real damage we documented on South Mississippi roofs — not stock imagery. If your roof looks like any of these, it's worth a free, documented inspection."
+          description="Every photo below is real damage we documented on South Mississippi roofs, not stock imagery. If your roof looks like any of these, it's worth a free, documented inspection."
         />
         <StaggerGroup className="mt-12 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
           {damageCards.map((card) => (
@@ -257,7 +257,7 @@ export default function StormCenterPage() {
             <p className="mt-5 text-lg leading-relaxed text-steel-100">
               About half our work is insurance restoration. We document like
               the file will be argued over, meet your adjuster on the roof,
-              and assist through the entire claims process — start to finish,
+              and assist through the entire claims process, start to finish,
               with no outcome promises and no deductible games.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
@@ -320,7 +320,7 @@ export default function StormCenterPage() {
         <Reveal className="mt-8">
           <p className="text-sm leading-relaxed text-slate-500">
             And one number that isn&apos;t a website:{" "}
-            <PhoneLink className="font-semibold text-navy-900" /> — when a
+            <PhoneLink className="font-semibold text-navy-900" />, when a
             storm has just moved through, our crews and claims assistance are
             already rolling.
           </p>

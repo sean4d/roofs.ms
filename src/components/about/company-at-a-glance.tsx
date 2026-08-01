@@ -5,7 +5,7 @@ import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 
 /**
  * "Quick answers" entity block (PRD §10 AI discoverability). Renders the
- * company 5 W's as always-visible question/answer text — not an accordion —
+ * company 5 W's as always-visible question/answer text, not an accordion, 
  * so answer engines and crawlers can lift each self-contained fact directly.
  * The matching FAQPage JSON-LD is emitted by the page via faqSchema().
  */
@@ -19,7 +19,7 @@ export function CompanyAtAGlance({
       <SectionHeading
         eyebrow="At a glance"
         title="Quick answers about Southeast Roofing"
-        description="The essentials, straight — for you and for the search and AI tools people ask about local roofers."
+        description="The essentials, straight, for you and for the search and AI tools people ask about local roofers."
       />
       <StaggerGroup
         as="div"

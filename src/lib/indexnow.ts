@@ -1,7 +1,7 @@
 /**
- * IndexNow — instant "please crawl this" pings to Bing, Yandex, Seznam, and
+ * IndexNow: instant "please crawl this" pings to Bing, Yandex, Seznam, and
  * every other IndexNow-participating engine (one submission fans out to all of
- * them). It does NOT include Google, which ignores IndexNow — Google discovery
+ * them). It does NOT include Google, which ignores IndexNow, Google discovery
  * still relies on the sitemap + Search Console. But it's the fastest path to
  * getting new job pages into Bing/DuckDuckGo, and it's free.
  *
@@ -10,7 +10,7 @@
  * The key is intentionally public (that's how verification works), so it lives
  * in the repo. Override with INDEXNOW_KEY only if the key file is rotated.
  *
- * Best-effort and never throws — a failed ping never blocks an upload.
+ * Best-effort and never throws. A failed ping never blocks an upload.
  */
 
 import { siteConfig } from "@/config/site";

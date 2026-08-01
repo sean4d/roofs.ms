@@ -6,7 +6,7 @@ import { siteConfig } from "@/config/site";
 /**
  * Toggleable storm-event banner (PRD §3 persistent elements). Off by
  * default; enabled via siteConfig.flags (later mirrored by the Sanity
- * siteFlags singleton). Deep navy per the v3 palette — red is never a
+ * siteFlags singleton). Deep navy per the v3 palette: red is never a
  * UI color (PRD §6.1).
  */
 export function EmergencyBanner() {

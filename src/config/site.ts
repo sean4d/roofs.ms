@@ -4,7 +4,7 @@
  * and contact surfaces so name/address/phone never drift (PRD §1, §9.2).
  *
  * Values that are `null` are outstanding [NEEDS] items from docs/PRD.md §12.
- * Components must render honest placeholders when a value is null — never
+ * Components must render honest placeholders when a value is null: never
  * invent phone numbers, license numbers, stats, or credentials.
  */
 
@@ -16,13 +16,13 @@ export const siteConfig = {
   /**
    * Canonical host. southeastroofing.llc is the primary production domain;
    * roofs.ms 301-redirects to it (PRD §1). Never hardcode a domain anywhere
-   * else — flip NEXT_PUBLIC_SITE_URL if the owner ever changes strategy.
+   * else: flip NEXT_PUBLIC_SITE_URL if the owner ever changes strategy.
    */
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://southeastroofing.llc",
 
   tagline: "Premium residential & commercial roofing in South Mississippi",
   description:
-    "Southeast Roofing is a Hattiesburg, Mississippi roofing contractor serving residential and commercial customers across South Mississippi — roof replacement, repair, metal roofing, storm damage, and insurance claim assistance.",
+    "Southeast Roofing is a Hattiesburg, Mississippi roofing contractor serving residential and commercial customers across South Mississippi: roof replacement, repair, metal roofing, storm damage, and insurance claim assistance.",
 
   phone: {
     /** Office number (owner-supplied 2026-07-04) */
@@ -48,7 +48,7 @@ export const siteConfig = {
   links: {
     googleBusiness: "https://share.google/8jfoy7nN9HyddPKDb",
     /**
-     * Direct "write a review" deep link (owner-supplied 2026-07-05) — opens
+     * Direct "write a review" deep link (owner-supplied 2026-07-05), opens
      * the Google review dialog straight away, no extra taps.
      */
     googleReview: "https://g.page/r/CZ5YiwvqNReNEBM/review",
@@ -58,14 +58,14 @@ export const siteConfig = {
       "https://www.bbb.org/us/ms/hattiesburg/profile/roofing-contractors/southeast-roofing-llc-0523-235902892",
     /**
      * Public Mississippi State Board of Contractors license record for
-     * #R22245 — third-party proof of licensure (owner-supplied 2026-07-30).
+     * #R22245, third-party proof of licensure (owner-supplied 2026-07-30).
      *
      * IMPORTANT: the URL carries MSBOC's own `ContractorType=Residential`
      * query because that is the only search index MSBOC has published so
      * far. Southeast Roofing holds BOTH residential and commercial
      * licensure; MSBOC has not yet built the commercial-side record page.
      * So NEVER label this link, its anchor text, or any schema/alt text as
-     * a "residential license" — describe it only as the MSBOC license
+     * a "residential license", describe it only as the MSBOC license
      * record. Anything narrower would tell search engines and AI
      * assistants we are residential-only, which is false.
      */
@@ -93,7 +93,7 @@ export const siteConfig = {
      *
      * PLACEMENT RULE (owner directive 2026-07-31): this partner is credited
      * in the roof-washing BLOG POST ONLY. Service pages are for services,
-     * FAQs, and knowledge — they do not name or promote this company. Do
+     * FAQs, and knowledge. They do not name or promote this company. Do
      * not reintroduce a "who does the work" section on any service page.
      */
     exteriorCleaning: {
@@ -103,7 +103,7 @@ export const siteConfig = {
   },
 
   /**
-   * Social profiles (owner-supplied 2026-07-04) — shown in the header top
+   * Social profiles (owner-supplied 2026-07-04), shown in the header top
    * bar and included in schema sameAs. Nextdoor URL stripped of share
    * tracking params.
    */
@@ -119,7 +119,7 @@ export const siteConfig = {
 
   /**
    * Business hours (owner-confirmed 2026-07-07): office staffed Monday–Friday
-   * 8 AM–5 PM, closed weekends — matching the storefront door and every
+   * 8 AM–5 PM, closed weekends, matching the storefront door and every
    * directory listing (Yelp, Angi, etc.). After-hours storm/emergency calls
    * are still taken via the emergency line, so `note` keeps that promise
    * without claiming the office is staffed round the clock. `spec` feeds
@@ -143,33 +143,33 @@ export const siteConfig = {
 
   /**
    * Trust facts (owner-confirmed 2026-07-04, Phase 4 directive). These are
-   * the owner's stated, factual credentials — keep wording exact and update
+   * the owner's stated, factual credentials, keep wording exact and update
    * here first if any changes.
    */
   trustFacts: {
     googleRating: "5-star Google rating",
     googleGuaranteed: "Google Guaranteed",
-    bbbRating: "BBB Accredited — A+ rating",
+    bbbRating: "BBB Accredited: A+ rating",
     licensed: "Mississippi licensed",
     insured: "Fully insured & bonded",
     financing: "$0 down financing available",
     /**
      * Owner correction 2026-07-04: manufacturer warranty, NOT workmanship.
-     * Always word as just "lifetime warranty" — intentionally unspecific.
+     * Always word as just "lifetime warranty", intentionally unspecific.
      */
     warranty: "Lifetime warranty",
     /**
-     * Owner-supplied 2026-07-30. COMBINED across the team — deliberately not
+     * Owner-supplied 2026-07-30. COMBINED across the team: deliberately not
      * "in business 10 years" (the company was founded 2023). Keep the word
      * "combined" in every rendering so the claim stays accurate.
      */
     experience: "10+ years of combined roofing experience",
   },
   /**
-   * Schema sameAs — every verified profile for THIS business, so search
+   * Schema sameAs, every verified profile for THIS business, so search
    * engines can consolidate them into one entity ("all of these are us").
    * Only listings confirmed to be the Hattiesburg roofing company belong
-   * here — never Southeast Lights, never a same-named company in another
+   * here, never Southeast Lights, never a same-named company in another
    * state. URLs are kept canonical (tracking/query junk stripped) so they
    * stay stable. Verified inventory as of 2026-07-26.
    */
@@ -178,7 +178,7 @@ export const siteConfig = {
     "https://share.google/8jfoy7nN9HyddPKDb",
     "https://www.bbb.org/us/ms/hattiesburg/profile/roofing-contractors/southeast-roofing-llc-0523-235902892",
     "https://www.gaf.com/en-us/roofing-contractors/residential/usa/ms/hattiesburg/southeast-roofing-1147340",
-    // State licensing authority record for #R22245 — the strongest
+    // State licensing authority record for #R22245, the strongest
     // third-party credential we can point at. Declared as a bare URL with
     // no "residential" framing anywhere (see links.msbocLicense).
     "https://search.msboc.us/Detail.cfm?ContractorID=53298&ContractorType=Residential&varDataSource=BOCRes&Advanced=1",
@@ -205,14 +205,14 @@ export const siteConfig = {
     // NOTE: auto-generated scraper directories (roofingquotes, usaroofers,
     // smallbiztrackers, nears.me, tydl.io, roofs.fyi, prosgrade, findglocal,
     // whosmypro, realreviews, etc.) are deliberately EXCLUDED. sameAs should
-    // declare authoritative profiles we actually own or were verified on —
+    // declare authoritative profiles we actually own or were verified on, 
     // padding it with scraped listings adds noise, not authority. Those links
     // are harmless where they are and need no disavow; they just don't belong
     // in our identity graph.
   ] as string[],
 
   /**
-   * Launch service area (PRD §5) — Mississippi only, within roughly a
+   * Launch service area (PRD §5), Mississippi only, within roughly a
    * 2-hour radius of Hattiesburg (owner-confirmed 2026-07-03).
    *
    * Ordering + hub flags follow the owner's 2026-07-04 refinement
@@ -261,7 +261,7 @@ export const siteConfig = {
     { city: "Meridian", slug: "meridian", tier: 2, hub: false },
   ],
 
-  /** Site-wide feature flags (storm banner etc. — later mirrored in Sanity siteFlags) */
+  /** Site-wide feature flags (storm banner etc., later mirrored in Sanity siteFlags) */
   flags: {
     emergencyBanner: false,
     emergencyBannerMessage:

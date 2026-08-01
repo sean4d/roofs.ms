@@ -24,7 +24,7 @@ export function reviewRequestMessage(name?: string): string {
   );
 }
 
-/** Prefilled sms: and mailto: links for one-tap sending by the owner. */
+/** Prefilled sms, and mailto: links for one-tap sending by the owner. */
 export function reviewRequestLinks(opts: { name?: string; email?: string; phone?: string }) {
   const body = reviewRequestMessage(opts.name);
   const phone = (opts.phone ?? "").replace(/[^\d+]/g, "");
@@ -57,7 +57,7 @@ export async function sendReviewRequestEmail(opts: {
         from: `${siteConfig.name} <reviews@${hostname}>`,
         to: [opts.email],
         reply_to: siteConfig.email,
-        subject: `Thanks from ${siteConfig.name} — mind leaving a review?`,
+        subject: `Thanks from ${siteConfig.name}: mind leaving a review?`,
         text: reviewRequestMessage(opts.name),
       }),
     });

@@ -27,7 +27,7 @@ export interface HubCategory {
 
 /**
  * Interactive Learning Center: filter by category, search by keyword, and
- * browse visual cards. Data comes from the real learn articles — the hub only
+ * browse visual cards. Data comes from the real learn articles. The hub only
  * changes how they're found, never invents content.
  */
 export function LearningHub({

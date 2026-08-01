@@ -9,7 +9,7 @@ const MAX_IMAGES = 4;
 
 /**
  * Roof Assistant endpoint. Thin wrapper over the provider-abstracted analysis
- * layer — the provider (Claude vision or the deterministic mock) is chosen
+ * layer: the provider (Claude vision or the deterministic mock) is chosen
  * inside lib/ai/roof-assistant; this route and the UI stay the same either way.
  */
 export async function POST(request: Request) {

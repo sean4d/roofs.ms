@@ -7,7 +7,7 @@ import type { FaqEntry } from "@/lib/schema";
  * (Google AI Overviews, ChatGPT, Claude, Gemini, Perplexity): one clear,
  * self-contained, owner-confirmed fact per answer. Values pull from
  * siteConfig so the copy can never drift from the canonical NAP/credentials.
- * Integrity rule: every claim here is owner-confirmed — no invented stats.
+ * Integrity rule: every claim here is owner-confirmed, no invented stats.
  */
 
 const { address, phone, license, foundingYear } = siteConfig;
@@ -17,20 +17,20 @@ export const companyFacts: FaqEntry[] = [
   {
     question: "What is Southeast Roofing?",
     answer:
-      "Southeast Roofing is a licensed, locally owned roofing contractor based in Hattiesburg, Mississippi. We install and repair every major roof system — architectural asphalt shingles, standing-seam and exposed-fastener metal, and commercial TPO, EPDM, PVC, and coatings — for both homes and businesses, handling retail and storm/insurance restoration work alike.",
+      "Southeast Roofing is a licensed, locally owned roofing contractor based in Hattiesburg, Mississippi. We install and repair every major roof system: architectural asphalt shingles, standing-seam and exposed-fastener metal, and commercial TPO, EPDM, PVC, and coatings: for both homes and businesses, handling retail and storm/insurance restoration work alike.",
   },
   {
     question: "Who does Southeast Roofing serve?",
     answer:
-      "We serve homeowners and commercial building owners across South Mississippi — from single-family roof replacements and repairs to storm-damage insurance claims and commercial flat-roof systems. About half of our work is storm and insurance restoration and half is retail, so our recommendation starts with your building and budget, not one product we happen to sell.",
+      "We serve homeowners and commercial building owners across South Mississippi, from single-family roof replacements and repairs to storm-damage insurance claims and commercial flat-roof systems. About half of our work is storm and insurance restoration and half is retail, so our recommendation starts with your building and budget, not one product we happen to sell.",
   },
   {
     question: "Where is Southeast Roofing located, and where do you work?",
-    answer: `Our office is at ${office}. Our crews cover roughly a two-hour radius of Hattiesburg — the Pine Belt, the Mississippi Gulf Coast (Gulfport, Biloxi, and the coastal towns), and the metros at the edges including Jackson, McComb, Meridian, and Laurel.`,
+    answer: `Our office is at ${office}. Our crews cover roughly a two-hour radius of Hattiesburg: the Pine Belt, the Mississippi Gulf Coast (Gulfport, Biloxi, and the coastal towns), and the metros at the edges including Jackson, McComb, Meridian, and Laurel.`,
   },
   {
     question: "When is Southeast Roofing open?",
-    answer: `Southeast Roofing's office is open Monday through Friday, 8 AM to 5 PM (closed weekends). You can reach us at ${phone.display} or book an inspection online anytime — and if a storm or leak hits after hours, our emergency line is open 24/7. The company has served South Mississippi since ${foundingYear}.`,
+    answer: `Southeast Roofing's office is open Monday through Friday, 8 AM to 5 PM (closed weekends). You can reach us at ${phone.display} or book an inspection online anytime, and if a storm or leak hits after hours, our emergency line is open 24/7. The company has served South Mississippi since ${foundingYear}.`,
   },
   {
     question: "Why choose Southeast Roofing?",

@@ -8,7 +8,7 @@ import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { brandAssets } from "@/content/brand-assets";
 
 /**
- * Password screen for the production portal. No username — the crew shares
+ * Password screen for the production portal. No username, the crew shares
  * one passphrase, which is only ever checked on the server. Wrong guesses get
  * a clear message; repeated ones get throttled server-side.
  */

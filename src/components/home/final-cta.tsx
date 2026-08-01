@@ -40,7 +40,7 @@ export function FinalCta() {
           >
             {finalCta.primary.label}
           </Button>
-          {/* External Roofr instant estimator — opens in a new tab */}
+          {/* External Roofr instant estimator, opens in a new tab */}
           <Button
             size="xl"
             variant="outline"
@@ -56,7 +56,7 @@ export function FinalCta() {
           >
             {finalCta.estimate.label}
           </Button>
-          {/* External GoodLeap financing application — opens in a new tab */}
+          {/* External GoodLeap financing application, opens in a new tab */}
           <Button
             size="xl"
             variant="outline"

@@ -13,7 +13,7 @@ import { HeroVideo } from "@/components/home/hero-video";
 /**
  * Homepage hero (PRD §3.1, owner refinement 2026-07-04): full-bleed
  * cinematic photography with a dark navy overlay, near full-screen on
- * mobile. Four conversion paths — Free Instant Estimate (Roofr) and Free
+ * mobile. Four conversion paths: Free Instant Estimate (Roofr) and Free
  * Inspection lead; the two division links ride quieter. Text renders
  * server-side immediately; the background image carries priority loading.
  */
@@ -26,7 +26,7 @@ export function Hero() {
         alt={hero.photo.alt}
         fill
         priority
-        // Heavy navy overlay hides compression detail — lower quality trims the
+        // Heavy navy overlay hides compression detail, lower quality trims the
         // mobile LCP transfer with no perceptible loss (PageSpeed image-delivery).
         quality={65}
         sizes="100vw"
@@ -34,7 +34,7 @@ export function Hero() {
       />
       {/* Mobile only: real roof footage fades in over the photo, plays once,
           fades back. Renders nothing on desktop, on reduced-motion, on
-          Save-Data, or on a slow connection — see hero-video.tsx. */}
+          Save-Data, or on a slow connection, see hero-video.tsx. */}
       <HeroVideo />
       {/* Dark overlay: readable text, premium depth (stronger at the left/bottom where text sits) */}
       <div
@@ -42,7 +42,7 @@ export function Hero() {
         className="absolute inset-0 bg-gradient-to-t from-navy-950/95 via-navy-950/70 to-navy-900/35 lg:bg-gradient-to-r lg:from-navy-950/90 lg:via-navy-950/65 lg:to-navy-900/20"
       />
 
-      {/* Mobile: content rides high under the header (owner request 2026-07-24 —
+      {/* Mobile: content rides high under the header (owner request 2026-07-24, 
           no big blank gap at the top). Desktop spacing unchanged. */}
       <div className="container-site relative w-full pt-6 pb-14 sm:py-28 lg:py-32">
         <div className="max-w-2xl">
@@ -63,7 +63,7 @@ export function Hero() {
 
           <Reveal delay={0.15}>
             <div className="mt-6 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center">
-              {/* Primary conversion: Roofr instant estimate — external */}
+              {/* Primary conversion: Roofr instant estimate, external */}
               <Button
                 size="xl"
                 className="w-full bg-white text-primary shadow-lg shadow-navy-950/30 hover:bg-steel-100 sm:w-auto"

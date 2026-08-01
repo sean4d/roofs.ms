@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
  * - "full": the contact form (adds address, preferred time, message)
  *
  * Success replaces the form with confirmation + optional booking link
- * (NEXT_PUBLIC_BOOKING_URL — e.g. a free Google Calendar appointment
+ * (NEXT_PUBLIC_BOOKING_URL, e.g. a free Google Calendar appointment
  * schedule). A `lead_submitted` dataLayer event fires for future GA4/GTM.
  */
 
@@ -97,7 +97,7 @@ export function LeadForm({
   defaultService?: string;
   /** Pre-checks the storm/insurance box (storm request pages). */
   defaultStorm?: boolean;
-  /** Offer the "pick a time" booking button on success — only makes sense
+  /** Offer the "pick a time" booking button on success, only makes sense
    *  for requests that involve us coming out. */
   showBooking?: boolean;
 }) {
@@ -124,7 +124,7 @@ export function LeadForm({
           aria-hidden="true"
         />
         <h2 className="mt-5 font-display text-2xl font-bold">
-          {successTitle ?? "Got it — we'll call you shortly."}
+          {successTitle ?? "Got it, we'll call you shortly."}
         </h2>
         <p className="mx-auto mt-3 max-w-sm leading-relaxed text-slate-600">
           {successBody ??
@@ -164,7 +164,7 @@ export function LeadForm({
       <input type="hidden" name="source" value={source} />
       <input type="hidden" name="page" value={pathname} />
       <input type="hidden" name="variant" value={variant} />
-      {/* Honeypot — hidden from humans, tempting to bots */}
+      {/* Honeypot, hidden from humans, tempting to bots */}
       <div className="absolute -left-[9999px]" aria-hidden="true">
         <label htmlFor="website">Website</label>
         <input

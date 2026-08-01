@@ -7,7 +7,7 @@ import type { Variants } from "framer-motion";
  * (framer-motion's reducedMotion config is set in the providers).
  */
 
-/** Signature ease — "expensive and controlled" (PRD §7.1). */
+/** Signature ease, "expensive and controlled" (PRD §7.1). */
 export const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
 export const DURATION = {
@@ -41,5 +41,5 @@ export const staggerContainer: Variants = {
   visible: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
 };
 
-/** whileInView viewport config — animate once, slightly before fully visible. */
+/** whileInView viewport config, animate once, slightly before fully visible. */
 export const viewportOnce = { once: true, margin: "-80px" } as const;

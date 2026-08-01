@@ -19,7 +19,7 @@ import { FinalCta } from "@/components/home/final-cta";
 
 /**
  * Financing page (PRD §2 conversion; Phase 3). Info + GoodLeap application
- * only — no rates or terms stated (they're the lender's, PRD §0.2). The
+ * only, no rates or terms stated (they're the lender's, PRD §0.2). The
  * financing calculator is Phase 8 and ships only with real terms.
  */
 
@@ -46,7 +46,7 @@ export default function FinancingPage() {
 
       <ServiceHero hero={financingHub.hero} breadcrumbs={breadcrumbs} />
 
-      {/* Payment estimator — real GoodLeap terms only (owner-supplied 2026-07-05) */}
+      {/* Payment estimator, real GoodLeap terms only (owner-supplied 2026-07-05) */}
       <Section tone="surface">
         <div className="mx-auto max-w-3xl">
           <FinancingCalculator />
@@ -67,12 +67,12 @@ export default function FinancingPage() {
               Ready to see your options?
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-steel-100">
-              The application runs through GoodLeap, our financing partner —
+              The application runs through GoodLeap, our financing partner: 
               online, in minutes, with your plans and terms shown to you
               directly.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              {/* External GoodLeap application — opens in a new tab */}
+              {/* External GoodLeap application, opens in a new tab */}
               <Button
                 size="lg"
                 className="bg-white text-base text-primary hover:bg-steel-100"

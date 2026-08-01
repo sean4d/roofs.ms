@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 /**
- * Financing payment estimator (PRD §13 Phase 8 — "real terms only").
+ * Financing payment estimator (PRD §13 Phase 8, "real terms only").
  * Terms below are the actual GoodLeap offers from the owner's partner
  * portal (screenshot supplied 2026-07-05): 5/10/15-year standard
  * installment at 12.99% APR with Autopay. Standard amortization math;
@@ -49,7 +49,7 @@ export function FinancingCalculator() {
       </h3>
       <p className="mt-2 leading-relaxed text-slate-600">
         Current GoodLeap offer: <strong>12.99% APR with Autopay</strong>,
-        standard installment, $0 down. Slide to your project amount — your
+        standard installment, $0 down. Slide to your project amount: your
         itemized proposal gives you the exact number to use.
       </p>
 
@@ -143,7 +143,7 @@ export function FinancingCalculator() {
       </div>
 
       <p className="mt-6 text-xs leading-relaxed text-slate-400">
-        Estimates only, for planning purposes — not an offer or approval of
+        Estimates only, for planning purposes, not an offer or approval of
         credit. Financing is provided by GoodLeap, LLC, subject to credit
         approval; your actual rate, term, and payment are determined by
         GoodLeap at application. Figures shown use the standard-installment

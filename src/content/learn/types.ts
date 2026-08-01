@@ -2,7 +2,7 @@ import type { FaqEntry } from "@/lib/schema";
 
 /**
  * Learning Center content model (PRD §13 Phase 7). Articles are composed
- * from typed blocks so guides stay visual and structured — prose, lists,
+ * from typed blocks so guides stay visual and structured: prose, lists,
  * callouts, embedded GAF partner tools, and our own roof-anatomy diagram.
  * Integrity rules apply to every block: no invented stats, prices stated
  * as honest hedged ranges, manufacturer claims limited to what we hold

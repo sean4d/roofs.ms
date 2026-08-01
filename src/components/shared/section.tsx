@@ -10,7 +10,7 @@ const toneClasses: Record<SectionTone, string> = {
 
 interface SectionProps {
   children: React.ReactNode;
-  /** Surface tone — alternate white/surface for rhythm; navy sparingly. */
+  /** Surface tone, alternate white/surface for rhythm; navy sparingly. */
   tone?: SectionTone;
   className?: string;
   /** Anchor id for in-page links. */
@@ -20,7 +20,7 @@ interface SectionProps {
 }
 
 /**
- * Standard homepage/page section: generous vertical rhythm (PRD §6.4 —
+ * Standard homepage/page section: generous vertical rhythm (PRD §6.4, 
  * breathing room) with a consistent content container.
  */
 export function Section({

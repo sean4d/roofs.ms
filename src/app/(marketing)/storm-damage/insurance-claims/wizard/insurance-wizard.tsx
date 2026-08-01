@@ -54,7 +54,7 @@ const STEPS: Step[] = [
     key: "activeLeak",
     question: "Is there an active leak right now?",
     options: [
-      { value: "Yes", label: "Yes — water coming in" },
+      { value: "Yes", label: "Yes: water coming in" },
       { value: "No", label: "No active leak" },
     ],
   },
@@ -111,7 +111,7 @@ function computeResult(a: Answers): Result {
       heading: "Let's stop the water first",
       body: [
         "With an active leak, the priority is protecting your home before anything else. Call us now and we can get an emergency tarp on to stop further damage.",
-        "Document everything with photos as you go — it all helps your claim. We'll handle the roof; you focus on staying dry.",
+        "Document everything with photos as you go. It all helps your claim. We'll handle the roof; you focus on staying dry.",
       ],
     };
   }
@@ -120,7 +120,7 @@ function computeResult(a: Answers): Result {
       key: "inspect-before-filing",
       heading: "Get a free inspection before you file",
       body: [
-        "Smart move to look before you leap. A free Southeast Roofing inspection documents the real damage so you file an accurate, well-supported claim — not a guess.",
+        "Smart move to look before you leap. A free Southeast Roofing inspection documents the real damage so you file an accurate, well-supported claim: not a guess.",
         "In Mississippi you generally have time after a storm to file, but don't wait too long. We'll give you honest photos and findings either way.",
       ],
     };
@@ -131,7 +131,7 @@ function computeResult(a: Answers): Result {
         key: "denied-second-opinion",
         heading: "A denial isn't always the end",
         body: [
-          "Claims get denied or underpaid all the time — sometimes because the damage wasn't fully documented. A second, thorough inspection can surface what was missed.",
+          "Claims get denied or underpaid all the time, sometimes because the damage wasn't fully documented. A second, thorough inspection can surface what was missed.",
           "We'll walk your roof, document everything honestly, and help you understand your options for reopening or supplementing the claim.",
         ],
       };
@@ -139,7 +139,7 @@ function computeResult(a: Answers): Result {
     if (a.status === "Approved") {
       return {
         key: "approved-ready",
-        heading: "Approved — let's build your roof",
+        heading: "Approved, let's build your roof",
         body: [
           "Great news. With an approved claim you're ready for the fun part. We'll schedule your inspection and estimate and get your new roof on the calendar.",
           "We work directly with your scope of work so the job matches what your insurance approved.",
@@ -148,7 +148,7 @@ function computeResult(a: Answers): Result {
     }
     return {
       key: "already-filed",
-      heading: "Claim's in — we'll meet the adjuster",
+      heading: "Claim's in. We'll meet the adjuster",
       body: [
         "With a claim pending, timing matters. We can inspect your roof and, when it helps, meet your adjuster on-site so nothing gets overlooked.",
         "Keep every document and photo. We'll make sure the damage is fully represented.",
@@ -159,7 +159,7 @@ function computeResult(a: Answers): Result {
     key: "guidance",
     heading: "Let's figure it out together",
     body: [
-      "No worries if the insurance side is confusing — most homeowners only do this once. Start with a free inspection so you know exactly what you're dealing with.",
+      "No worries if the insurance side is confusing. Most homeowners only do this once. Start with a free inspection so you know exactly what you're dealing with.",
       "We'll explain your options in plain English and, if a claim makes sense, help you through it.",
     ],
   };
@@ -208,7 +208,7 @@ export function InsuranceWizard() {
         <CheckCircle2 className="mx-auto size-12 text-emerald-600" />
         <h2 className="mt-4 text-2xl font-bold text-navy-900">We&apos;ve got it</h2>
         <p className="mt-2 text-slate-600">
-          Thanks — we&apos;ll reach out shortly to help with your storm damage and claim.
+          Thanks. We&apos;ll reach out shortly to help with your storm damage and claim.
           If it&apos;s urgent, call us anytime at{" "}
           <a href={`tel:${siteConfig.phone.tel}`} className="font-semibold text-navy-900">
             {siteConfig.phone.display}
@@ -247,7 +247,7 @@ export function InsuranceWizard() {
               onClick={() => track("cta_click", { action: "call-now", source: "insurance-wizard" })}
               className="mt-5 inline-flex items-center gap-2 rounded-full bg-red-600 px-6 py-3 font-semibold text-white"
             >
-              <PhoneCall className="size-4" /> Call now — {siteConfig.phone.display}
+              <PhoneCall className="size-4" /> Call now, {siteConfig.phone.display}
             </a>
           )}
         </div>
@@ -266,7 +266,7 @@ export function InsuranceWizard() {
           <input type="hidden" name="storm" value="on" />
           <input type="hidden" name="service" value="Storm damage / insurance claim" />
           <input type="hidden" name="page" value={pathname} />
-          <input type="hidden" name="message" value={`Insurance claim wizard — ${summary}`} />
+          <input type="hidden" name="message" value={`Insurance claim wizard, ${summary}`} />
           <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
 
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -294,7 +294,7 @@ export function InsuranceWizard() {
           </button>
 
           <p className="mt-4 text-xs text-slate-500">
-            Southeast Roofing documents damage and gives honest guidance — we do not
+            Southeast Roofing documents damage and gives honest guidance. We do not
             determine coverage or act as your insurance adjuster. Your insurer decides
             your claim.
           </p>

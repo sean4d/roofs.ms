@@ -41,7 +41,7 @@ export function SocialLinks({ className }: { className?: string }) {
             }
           >
             {key === "nextdoor" ? (
-              /* Nextdoor's mark is a wordmark — crop tight so it stays legible */
+              /* Nextdoor's mark is a wordmark, crop tight so it stays legible */
               <svg
                 viewBox="0 9.9 24 4.2"
                 className="h-[0.8rem] w-auto"

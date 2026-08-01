@@ -9,7 +9,7 @@ import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 /**
  * Service-card grid used by hub pages (visual-first directive 2026-07-04):
  * when the image registry has honest photography for a route, the card
- * renders as a photo card — image-led with a navy gradient for text
+ * renders as a photo card, image-led with a navy gradient for text
  * legibility. Otherwise it falls back to the clean icon treatment. Swapping
  * a card to photo = one entry in content/service-images.ts.
  */

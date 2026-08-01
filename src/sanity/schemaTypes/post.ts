@@ -1,6 +1,6 @@
 import { defineField, defineType } from "sanity";
 
-/** Blog post: timely content — news, storm updates, project stories (PRD §2). */
+/** Blog post: timely content: news, storm updates, project stories (PRD §2). */
 export const post = defineType({
   name: "post",
   title: "Blog Post",

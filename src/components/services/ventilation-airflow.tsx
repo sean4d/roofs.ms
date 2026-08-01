@@ -5,7 +5,7 @@ import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 
 /**
  * Attic-airflow diagram (owner request 2026-07-06): a house cross-section
- * that shows the whole ventilation system at a glance — cool air drawn in
+ * that shows the whole ventilation system at a glance: cool air drawn in
  * low at the soffits, rising as it heats, and pushed out high at the ridge
  * vent. Balanced intake + exhaust is the point the copy keeps making; this
  * lets a homeowner see it.
@@ -15,7 +15,7 @@ const STEPS = [
   {
     n: 1,
     title: "Cool air enters at the soffits",
-    text: "Intake vents low under the eaves pull fresh outside air into the attic — the half of the system most homes are missing or have painted shut.",
+    text: "Intake vents low under the eaves pull fresh outside air into the attic, the half of the system most homes are missing or have painted shut.",
   },
   {
     n: 2,
@@ -25,7 +25,7 @@ const STEPS = [
   {
     n: 3,
     title: "Hot air exhausts out the ridge",
-    text: "The ridge vent lets that heat and humidity escape at the very top — continuously, with no moving parts — so the whole roof runs cooler and drier.",
+    text: "The ridge vent lets that heat and humidity escape at the very top: continuously, with no moving parts, so the whole roof runs cooler and drier.",
   },
 ];
 
@@ -193,7 +193,7 @@ export function VentilationAirflow() {
       <SectionHeading
         eyebrow="How a balanced attic breathes"
         title="Where the air actually goes"
-        description="A working attic is a chimney: cool air in low, hot air out high. Miss either half and the whole system stalls — which is exactly what we check for."
+        description="A working attic is a chimney: cool air in low, hot air out high. Miss either half and the whole system stalls, which is exactly what we check for."
         align="center"
       />
 

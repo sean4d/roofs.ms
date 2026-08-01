@@ -9,7 +9,7 @@ import { PhoneLink } from "@/components/shared/phone-link";
 import { SocialLinks } from "@/components/shared/social-links";
 
 /**
- * 5-column footer on a deep navy surface — the one intentionally dark
+ * 5-column footer on a deep navy surface, the one intentionally dark
  * region of the light theme (PRD §6.3). White knockout logo per §6.6.
  * NAP renders from siteConfig only; the license line appears only once a
  * real license number is supplied (integrity rule).

@@ -60,7 +60,7 @@ export const maxDuration = 60;
 
 /**
  * Build the TikTok slideshow MP4 from the job's social photos and upload it to
- * Sanity as a public file, returning its CDN URL (or undefined on any failure —
+ * Sanity as a public file, returning its CDN URL (or undefined on any failure, 
  * TikTok then simply skips). Kept here (not in metricool.ts) because it needs
  * the Sanity client to host the video.
  */
@@ -96,7 +96,7 @@ function jpgUrl(assetId: string): string {
 
 /*
  * Photos go to social EXACTLY as shot. The old code burned BEFORE/DURING/AFTER
- * badges into before/after posts; the owner killed that on 2026-08-01 — it
+ * badges into before/after posts; the owner killed that on 2026-08-01. It
  * looks tacky, customers can tell a before photo without being told, and the
  * caption is where the explaining belongs. The re-encode pass it required
  * (download → sharp → re-upload, per photo) was also pure latency in a request
@@ -105,24 +105,24 @@ function jpgUrl(assetId: string): string {
 
 /**
  * Upload steps, each its own request so none of them can starve the others:
- *   ?step=asset   — one photo → Sanity, returns its SEO
- *   ?step=plan    — decide the post + write the caption, publishing nothing
- *   ?step=create  — publish the job to the website, return immediately
- *   ?step=social  — post ONE platform, log the outcome
+ *   ?step=asset: one photo → Sanity, returns its SEO
+ *   ?step=plan, decide the post + write the caption, publishing nothing
+ *   ?step=create: publish the job to the website, return immediately
+ *   ?step=social, post ONE platform, log the outcome
  * The whole route sits behind the password gate in proxy.ts.
  */
 /**
  * Read-only diagnostics. GET so it can be opened straight from a phone browser
- * (behind the same passphrase as the rest of /api/upload) — every other step
+ * (behind the same passphrase as the rest of /api/upload), every other step
  * mutates something and stays POST-only.
  */
 /**
  * Which deployment is serving right now. The /upload page compares this at
- * submit time against what it saw on load: if they differ, the tab is running
+ * submit time against what it saw on load, if they differ, the tab is running
  * JavaScript from an older build and must reload before posting.
  *
  * This is not theoretical. On 2026-08-01 a tab left open from before a deploy
- * submitted a job using the previous bundle — which posts straight to
+ * submitted a job using the previous bundle, which posts straight to
  * step=create and knows nothing about the confirm screen or step=social. The
  * server published the job correctly, so it looked like a success, but no
  * platform was ever contacted and the owner never saw the checklist.
@@ -165,6 +165,7 @@ export async function POST(request: Request) {
     if (step === "create") return await handleCreate(request);
     if (step === "social") return await handleSocial(request);
     if (step === "delete") return await handleDelete(request);
+    if (step === "dedash") return await handleDedash(request);
     if (step === "metricool") return await handleMetricool(request);
     if (step === "metricool-clean") return await handleMetricoolClean(request);
     if (step === "gbp-photo") return await handleGbpPhoto(request);
@@ -179,6 +180,65 @@ export async function POST(request: Request) {
     const message = err instanceof Error ? err.message : "Upload failed";
     return Response.json({ error: message }, { status: 500 });
   }
+}
+
+/**
+ * One-off maintenance: strip em dashes from project documents already stored in
+ * Sanity (owner directive 2026-08-01, no em dashes anywhere on the site). The
+ * source code was swept in the same change, but titles and captions written by
+ * earlier uploads live in the CMS and render on /projects regardless.
+ *
+ * Titles get ": City, MS" turned into " (City, MS)", matching what jobTitle
+ * now generates; everything else takes a comma. DRY RUN unless { confirm: true }.
+ */
+async function handleDedash(request: Request) {
+  const { confirm } = (await request.json().catch(() => ({}))) as {
+    confirm?: boolean;
+  };
+  const client = getWriteClient();
+  const docs = (await client.fetch(
+    `*[_type == "project" && (title match "*, *" || summary match "*: *" || description match "*: *" || socialCaption match "*: *")]{_id,title,summary,description,socialCaption}`,
+  )) as Array<Record<string, string>>;
+
+  const fix = (s: string | undefined, isTitle: boolean) => {
+    if (!s || !s.includes(", ")) return s;
+    if (isTitle) {
+      const m = s.match(/^(.*?)\s, \s(.+)$/);
+      if (m) return `${m[1]} (${m[2]})`;
+    }
+    return s.replace(/\s*: \s*/g, ", ");
+  };
+
+  const changes = docs.map((d) => ({
+    _id: d._id,
+    before: d.title,
+    after: fix(d.title, true),
+  }));
+
+  if (confirm) {
+    for (const d of docs) {
+      const patch: Record<string, string> = {};
+      for (const [k, isTitle] of [
+        ["title", true],
+        ["summary", false],
+        ["description", false],
+        ["socialCaption", false],
+      ] as const) {
+        const next = fix(d[k], isTitle);
+        if (next && next !== d[k]) patch[k] = next;
+      }
+      if (Object.keys(patch).length) await client.patch(d._id).set(patch).commit();
+    }
+    revalidateTag("projects", "max");
+    revalidatePath("/projects");
+    revalidatePath("/project-map");
+  }
+
+  return Response.json({
+    dryRun: !confirm,
+    documents: docs.length,
+    changes,
+  });
 }
 
 /** Delete a project by id (password-gated via proxy). For removing a bad or
@@ -212,7 +272,7 @@ async function handleDelete(request: Request) {
 /**
  * Diagnostic (password-gated): reports whether live Google reviews and the
  * Metricool credentials are actually working in THIS environment. Never leaks
- * secret values — only presence booleans + upstream status/messages.
+ * secret values, only presence booleans + upstream status/messages.
  */
 async function handleCheck() {
   const reviews = await diagnoseReviews();
@@ -226,7 +286,7 @@ async function handleCheck() {
   };
   const anthropicKeyPresent = Boolean(process.env.ANTHROPIC_API_KEY);
   const metricoolPosts = await inspectMetricool();
-  // Official Google Business Profile API — Tier 1. Presence booleans only,
+  // Official Google Business Profile API, Tier 1. Presence booleans only,
   // never the secret values. `ready` means uploads auto-post to GBP.
   const gbp = {
     clientIdPresent: Boolean(process.env.GBP_CLIENT_ID),
@@ -236,7 +296,7 @@ async function handleCheck() {
     locationIdPresent: Boolean(process.env.GBP_LOCATION_ID),
     // OAuth creds set (can discover ids / do the one-time auth):
     configured: gbpConfigured(),
-    // Fully wired — every upload now auto-posts to GBP:
+    // Fully wired, every upload now auto-posts to GBP:
     autoPost: gbpReady(),
   };
   // Facebook + Instagram. Presence booleans plus live read-only probes, because
@@ -308,12 +368,12 @@ async function handleMetricoolClean(request: Request) {
  * "figure out the flag + test one call at a time" step). Password-gated.
  *
  * Body (all optional):
- *   { imageUrl }        — post this exact public image
- *   { id, index }       — post one photo (default the first) from an existing
+ *   { imageUrl }: post this exact public image
+ *   { id, index }, post one photo (default the first) from an existing
  *                         project, preferring an "after" photo
- *   { confirm: true }   — actually send. WITHOUT it this is a DRY RUN that
+ *   { confirm: true }, actually send. WITHOUT it this is a DRY RUN that
  *                         returns the exact body that WOULD be sent, no network
- *                         call — so the flag is inspectable before anything goes
+ *                         call, so the flag is inspectable before anything goes
  *                         live. After a confirmed send, use step=check to read
  *                         the post back and verify it landed in the gallery.
  */
@@ -338,7 +398,7 @@ async function handleGbpPhoto(request: Request) {
       return Response.json({ error: "Project not found" }, { status: 404 });
     const assetIds = (doc.media ?? [])
       .slice()
-      // Prefer "after" photos — that's the finished-work shot for the gallery.
+      // Prefer "after" photos: that's the finished-work shot for the gallery.
       .sort(
         (a, b) =>
           (a.phase === "after" ? -1 : 0) - (b.phase === "after" ? -1 : 0),
@@ -368,12 +428,12 @@ async function handleGbpPhoto(request: Request) {
  * Official Google Business Profile API control panel (password-gated).
  *
  * Body (all optional):
- *   {}                     — discover: list authorized accounts, and (if
+ *   {}, discover: list authorized accounts, and (if
  *                            GBP_ACCOUNT_ID is set) that account's locations,
  *                            so the owner can read off the ids for env.
- *   { test: true, id }     — post a real Update + gallery photo for an existing
+ *   { test: true, id }, post a real Update + gallery photo for an existing
  *                            project, to confirm the connection end-to-end.
- *   { test: true, imageUrl, summary } — post an ad-hoc test Update/photo.
+ *   { test: true, imageUrl, summary }, post an ad-hoc test Update/photo.
  *
  * Nothing posts unless `test: true` is passed AND all five GBP env vars are set.
  */
@@ -402,7 +462,7 @@ async function handleGbp(request: Request) {
     return Response.json(
       {
         ok: false,
-        note: "GBP not fully connected — set GBP_CLIENT_ID/SECRET/REFRESH_TOKEN/ACCOUNT_ID/LOCATION_ID",
+        note: "GBP not fully connected, set GBP_CLIENT_ID/SECRET/REFRESH_TOKEN/ACCOUNT_ID/LOCATION_ID",
         discovery: await discoverGbp(),
       },
       { status: 400 },
@@ -439,7 +499,7 @@ async function handleGbp(request: Request) {
 
   if (imageUrl) {
     const update = await createGbpUpdate({
-      summary: summary ?? "Southeast Roofing — quality roofing across South Mississippi.",
+      summary: summary ?? "Southeast Roofing: quality roofing across South Mississippi.",
       imageUrl,
       learnMoreUrl: `${siteConfig.url}/projects`,
     });
@@ -455,15 +515,15 @@ async function handleGbp(request: Request) {
 
 /**
  * Backfill the GBP *Photos gallery* for jobs uploaded before the GBP API was
- * connected (password-gated). PHOTOS ONLY — no "Update" post, since those jobs
+ * connected (password-gated). PHOTOS ONLY, no "Update" post, since those jobs
  * already went to the Posts feed + socials; this just gets their finished-work
  * photos into the profile's Photos tab. Prefers "after" photos.
  *
  * Body (all optional):
- *   { limit }            — how many most-recent projects to include (default 5)
- *   { ids: [...] }       — specific project ids instead of "most recent"
- *   { perProject }       — max photos per job (default 3, to respect quota)
- *   { confirm: true }    — actually post. WITHOUT it, a DRY RUN lists what would
+ *   { limit }, how many most-recent projects to include (default 5)
+ *   { ids: [...] }, specific project ids instead of "most recent"
+ *   { perProject }, max photos per job (default 3, to respect quota)
+ *   { confirm: true }, actually post. WITHOUT it, a DRY RUN lists what would
  *                          be posted (project titles + photo counts), no calls.
  */
 async function handleGbpBackfill(request: Request) {
@@ -535,10 +595,10 @@ async function handleGbpBackfill(request: Request) {
 
 /**
  * One-time OAuth helper (password-gated). Two modes:
- *   { redirectUri }        — returns the Google consent URL to open once. The
+ *   { redirectUri }: returns the Google consent URL to open once. The
  *                            owner approves, and Google redirects to redirectUri
- *                            with a `?code=...` — copy that code.
- *   { code, redirectUri }  — exchanges the code for a REFRESH TOKEN, returned
+ *                            with a `?code=...`, copy that code.
+ *   { code, redirectUri }, exchanges the code for a REFRESH TOKEN, returned
  *                            once so the owner can paste it into Vercel env as
  *                            GBP_REFRESH_TOKEN. We never store it ourselves.
  * Use "urn:ietf:wg:oauth:2.0:oob" or an authorized redirect URI configured on
@@ -590,7 +650,7 @@ interface ProjectDoc {
 
 /**
  * Repost an EXISTING project to Google Business Profile + TikTok via Metricool
- * ONLY — deliberately skips the Meta (Facebook/Instagram) path so a job that
+ * ONLY, deliberately skips the Meta (Facebook/Instagram) path so a job that
  * already went to FB/IG isn't double-posted there. Reuses the job's stored
  * caption and photos (re-badging before/after just like the original post).
  */
@@ -625,7 +685,7 @@ async function handleMetricool(request: Request) {
     (a, b) => (PHASE_RANK[a.phase] ?? 1) - (PHASE_RANK[b.phase] ?? 1),
   );
 
-  // A repost obeys the same marketer rules as a fresh post — finished work
+  // A repost obeys the same marketer rules as a fresh post, finished work
   // leads, before/after alternates, at most one during-install shot. Reposting
   // in raw install order is how plywood ends up in front of a caption.
   const plan = planSocialPost(media);
@@ -678,7 +738,7 @@ async function handleMetricool(request: Request) {
 }
 
 /**
- * Submit every sitemap URL to IndexNow (Bing/Yandex/DuckDuckGo instant crawl —
+ * Submit every sitemap URL to IndexNow (Bing/Yandex/DuckDuckGo instant crawl, 
  * NOT Google). Password-gated; run once now to seed the engines, and any time a
  * batch of pages changes. Returns how many URLs were sent + the engines' ack.
  */
@@ -690,7 +750,7 @@ async function handleIndexNow() {
 }
 
 /** Force-refresh cached content on demand (password-gated). Covers live Google
- *  reviews (cached ~24h) AND the project gallery — so a just-uploaded job can be
+ *  reviews (cached ~24h) AND the project gallery, so a just-uploaded job can be
  *  pushed live instantly instead of waiting out the gallery's cache window. */
 function handleRevalidate() {
   // Purge the cached fetches (they survive revalidatePath), then the pages.
@@ -811,7 +871,7 @@ async function handlePlan(request: Request) {
 }
 
 /** Assemble + publish the project from already-uploaded assets. Returns as soon
- *  as the website is updated — social goes out one platform per request after
+ *  as the website is updated, social goes out one platform per request after
  *  this, so no single invocation carries the whole fan-out. */
 async function handleCreate(request: Request) {
   const body = (await request.json()) as {
@@ -825,7 +885,7 @@ async function handleCreate(request: Request) {
   const jt = getJobType(submission.jobType);
 
   // Order photos before -> during -> after in the Sanity doc. The SOCIAL order
-  // is a separate decision made by planSocialPost (step=plan) — install order
+  // is a separate decision made by planSocialPost (step=plan), install order
   // is right for the website and wrong for a feed.
   const media = [...rawMedia].sort(
     (a, b) => (PHASE_RANK[a.phase] ?? 1) - (PHASE_RANK[b.phase] ?? 1),
@@ -899,7 +959,7 @@ async function handleCreate(request: Request) {
 
   // Post-job Google review request: auto-email the customer (if an email was
   // provided) and always return tap-to-send sms/mailto links so the owner can
-  // fire one off from their phone. Opt-in per upload — nothing without contact.
+  // fire one off from their phone. Opt-in per upload, nothing without contact.
   let reviewRequest:
     | { emailSent: boolean; smsHref?: string; mailtoHref?: string }
     | undefined;
@@ -981,8 +1041,8 @@ async function handleSocial(request: Request) {
       projectUrl,
     });
   } else if (platform === "google") {
-    // Google shows ONE photo with no swipe, so it gets the hero — the finished
-    // roof Claude picked — never a "before".
+    // Google shows ONE photo with no swipe, so it gets the hero, the finished
+    // roof Claude picked, never a "before".
     const heroUrl = heroAssetId ? jpgUrl(heroAssetId) : imageUrls[0];
     if (!gbpReady()) {
       result = { platform: "google-business", status: "skipped", note: "Not connected" };
@@ -1045,7 +1105,7 @@ async function handleSocial(request: Request) {
         .set({ syndication: [...kept, entry] })
         .commit();
     } catch {
-      // Logging is best-effort — the post itself already went out (or didn't),
+      // Logging is best-effort, the post itself already went out (or didn't),
       // and the client is told either way.
     }
     return { platform: entry.platform, status, note, url };

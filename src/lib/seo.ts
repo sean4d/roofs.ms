@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 
 import { siteConfig } from "@/config/site";
 
-/** Resolve a path against the canonical host (PRD §1 — never hardcode domains). */
+/** Resolve a path against the canonical host (PRD §1, never hardcode domains). */
 export function absoluteUrl(path = "/"): string {
   return new URL(path, siteConfig.url).toString();
 }
 
 interface BuildMetadataOptions {
-  /** Page title without the site suffix — the layout template appends it. */
+  /** Page title without the site suffix, the layout template appends it. */
   title: string;
   /** Unique meta description, ~150 chars, written per page (PRD §10.5). */
   description: string;
-  /** Route path beginning with "/" — used for the canonical URL. */
+  /** Route path beginning with "/", used for the canonical URL. */
   path: string;
   /** Override OG image; defaults to the site-wide OG image. */
   ogImage?: string;
@@ -51,7 +51,7 @@ export function buildMetadata({
       url: ogImage ?? absoluteUrl("/opengraph-image"),
       width: 1200,
       height: 630,
-      alt: `${siteConfig.name} — ${siteConfig.tagline}`,
+      alt: `${siteConfig.name}: ${siteConfig.tagline}`,
     },
   ];
 

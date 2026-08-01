@@ -1,14 +1,14 @@
 /**
  * Minimal Anthropic (Claude) client for the site's analysis tools. Kept tiny
  * and dependency-free (raw fetch) to match ai-caption.ts. Everything fails
- * soft: if ANTHROPIC_API_KEY is missing or anything goes wrong, callers get
- * null and fall back to their deterministic templates — the tools never break.
+ * soft, if ANTHROPIC_API_KEY is missing or anything goes wrong, callers get
+ * null and fall back to their deterministic templates. The tools never break.
  *
  * Structured output is guaranteed via a single forced tool call: we hand Claude
  * one tool whose input_schema is the exact JSON shape we want back, force it
  * with tool_choice, and read the tool_use block. No brittle prose parsing.
  *
- * Model is env-overridable (ANTHROPIC_MODEL). Default is Haiku 4.5 — it has
+ * Model is env-overridable (ANTHROPIC_MODEL). Default is Haiku 4.5. It has
  * vision, is fast, and is cheap enough to run on public traffic (fractions of a
  * cent per call). Bump to a Sonnet/Opus id in Vercel env for richer reads with
  * zero code changes.

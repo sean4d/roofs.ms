@@ -9,9 +9,9 @@ import { FlashingHouseSvg, FLASHING_SVG_VIEWBOX } from "./flashing-house-svg";
  *
  * Two generated houses share this shell: the anatomy house (cutaway layers,
  * gutter, ridge assembly) and the flashing house (modelled on the Gibraltar
- * diagram the owner supplied — centre gable, chimney with cricket, shed
+ * diagram the owner supplied: centre gable, chimney with cricket, shed
  * dormer, door head). Pins are real buttons layered over the SVG rather than
- * shapes inside it — that buys focus rings, tab order, and touch targets.
+ * shapes inside it: that buys focus rings, tab order, and touch targets.
  */
 
 export interface HotspotItem {
@@ -55,7 +55,7 @@ export function HotspotHouse({
             type="button"
             onClick={() => onSelect(item.key, item.name)}
             aria-pressed={isActive}
-            aria-label={`${item.name} — ${item.short}`}
+            aria-label={`${item.name}: ${item.short}`}
             title={item.name}
             style={{
               left: `${(item.hotspot.x / viewBox.width) * 100}%`,
@@ -63,7 +63,7 @@ export function HotspotHouse({
             }}
             className="group absolute grid size-7 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full outline-none sm:size-8"
           >
-            {/* Pulsing halo — the "this is clickable" cue. Stops once chosen. */}
+            {/* Pulsing halo. The "this is clickable" cue. Stops once chosen. */}
             <span
               aria-hidden="true"
               className={cn(
