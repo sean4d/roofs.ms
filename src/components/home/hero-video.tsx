@@ -79,10 +79,18 @@ export function HeroVideo() {
       // dead end: canplay never fires, so nothing ever starts.)
       ref={(el) => {
         ref.current = el;
+        if (!el) return;
+        // React sets `muted` as a DOM PROPERTY and never emits the HTML
+        // attribute. Chromium checks the property and plays anyway; iOS Safari
+        // checks the ATTRIBUTE, refuses autoplay without it, and the catch
+        // below then unmounts us — which is why this showed the plain photo on
+        // the owner's iPhone (2026-08-01). Set both, before play().
+        el.setAttribute("muted", "");
+        el.muted = true;
         // Kick playback ourselves — this is what triggers the load.
-        el?.play()
+        el.play()
           .then(() => setVisible(true))
-          // Refused (low-power mode, browser policy) — stay on the photo.
+          // Refused (iOS Low Power Mode, browser policy) — stay on the photo.
           .catch(() => setShow(false));
       }}
       muted
