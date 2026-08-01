@@ -162,11 +162,26 @@ async function handleDelete(request: Request) {
   const { id } = (await request.json()) as { id?: string };
   if (!id) return Response.json({ error: "No id provided" }, { status: 400 });
   const client = getWriteClient();
+
+  // Read the slug BEFORE deleting: the project's own page was pre-rendered by
+  // generateStaticParams, so without revalidating that exact path it keeps
+  // serving a 200 for a job that no longer exists (seen 2026-08-01 after
+  // removing a duplicate).
+  let slug: string | undefined;
+  try {
+    const doc = (await client.getDocument(id)) as ProjectDoc | undefined;
+    slug = doc?.slug?.current;
+  } catch {
+    // Deleting matters more than tidying its page; carry on.
+  }
+
   await client.delete(id);
   revalidateTag("projects", "max");
   revalidatePath("/projects");
   revalidatePath("/project-map");
-  return Response.json({ ok: true, deleted: id });
+  if (slug) revalidatePath(`/projects/${slug}`);
+  revalidatePath("/sitemap.xml");
+  return Response.json({ ok: true, deleted: id, slug });
 }
 
 /**
@@ -535,6 +550,7 @@ async function handleGbpAuth(request: Request) {
 interface ProjectDoc {
   _id: string;
   title?: string;
+  slug?: { current?: string };
   socialCaption?: string;
   media?: Array<{
     image?: { asset?: { _ref?: string } };
