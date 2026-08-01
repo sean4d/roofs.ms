@@ -12,7 +12,16 @@ import type { JobSubmission } from "@/lib/job-content";
 
 const MODEL = "claude-haiku-4-5-20251001";
 
-export async function polishCaption(sub: JobSubmission): Promise<string | null> {
+/**
+ * @param photoBrief one line describing what the carousel actually contains
+ *   (see lib/social-plan captionBrief). Without it the writer is blind to the
+ *   photos and will happily write "another quality roof installed" over a stack
+ *   of plywood decking — which is exactly what happened on 2026-07-31.
+ */
+export async function polishCaption(
+  sub: JobSubmission,
+  photoBrief?: string,
+): Promise<string | null> {
   const key = process.env.ANTHROPIC_API_KEY;
   if (!key) return null;
 
@@ -25,6 +34,7 @@ export async function polishCaption(sub: JobSubmission): Promise<string | null> 
       ([k, v]) => `${k}: ${Array.isArray(v) ? v.join(", ") : v}`,
     ),
     sub.description ? `Owner's rough notes: "${sub.description}"` : "",
+    photoBrief ? `What the photos in this post show: ${photoBrief}` : "",
   ]
     .filter(Boolean)
     .join("\n");
@@ -34,8 +44,12 @@ export async function polishCaption(sub: JobSubmission): Promise<string | null> 
     `facts below, write a warm, professional caption body of 2-3 short sentences ` +
     `about this completed job. Polish the owner's rough notes into clean prose — ` +
     `never quote them verbatim. Do NOT invent numbers, warranties, prices, or ` +
-    `claims not present. No hashtags and no emojis (added separately). Return ONLY ` +
-    `the caption text.\n\n${facts}`;
+    `claims not present. No hashtags and no emojis (added separately).\n\n` +
+    `CRITICAL: the caption must match the photos described below. Never describe ` +
+    `something the reader cannot see. If the post ends on an in-progress photo ` +
+    `(decking, underlayment, tear-off), earn it — make the work itself the point ` +
+    `rather than letting it look like a mistake. Return ONLY the caption text.` +
+    `\n\n${facts}`;
 
   try {
     const res = await fetch("https://api.anthropic.com/v1/messages", {

@@ -17,6 +17,63 @@ type Files = Record<PhaseKey, File[]>;
 
 const OTHER_CITY = "Other (type below)";
 
+interface MediaEntry {
+  assetId: string;
+  phase: PhaseKey;
+}
+
+interface PlanPhoto {
+  assetId: string;
+  phase: PhaseKey;
+  url: string;
+}
+
+/** What step=plan returns — the post, decided, before anything is published. */
+interface SocialPlanView {
+  shape: "showcase" | "reveal" | "hold";
+  hold: boolean;
+  reason: string;
+  caption: string;
+  heroNote?: string;
+  heroAssetId?: string;
+  order: PlanPhoto[];
+  omitted: PlanPhoto[];
+}
+
+/** Posted one request each, in this order. */
+const SOCIAL_PLATFORMS = [
+  { key: "facebook", label: "Facebook" },
+  { key: "instagram", label: "Instagram" },
+  { key: "google", label: "Google Business Profile" },
+  { key: "tiktok", label: "TikTok" },
+] as const;
+
+type ChannelState = "idle" | "working" | "done" | "error" | "skipped";
+
+const PHASE_CHIP: Record<string, string> = {
+  before: "Before",
+  progress: "During install",
+  after: "After",
+};
+
+/**
+ * Pull a usable message off a failed response. The old code assumed every error
+ * body was JSON, so when a gateway returned an HTML page the JSON parse threw
+ * and Safari's "The string did not match the expected pattern" replaced the
+ * real error — hiding a 504 for a full day.
+ */
+async function errorFrom(res: Response, fallback: string): Promise<string> {
+  const text = await res.text().catch(() => "");
+  try {
+    const parsed = JSON.parse(text) as { error?: string };
+    if (parsed.error) return parsed.error;
+  } catch {
+    // not JSON — fall through to the status line
+  }
+  const snippet = text.replace(/<[^>]*>/g, " ").trim().slice(0, 120);
+  return `${fallback} (HTTP ${res.status}${snippet ? `: ${snippet}` : ""})`;
+}
+
 /** Downscale + re-encode a phone photo so uploads stay small and reliable. */
 async function compressImage(file: File): Promise<File> {
   if (!file.type.startsWith("image/")) return file;
@@ -60,9 +117,19 @@ export function UploadForm() {
   const [details, setDetails] = useState<Record<string, DetailValue>>({});
   const [files, setFiles] = useState<Files>({ before: [], progress: [], after: [] });
 
-  const [status, setStatus] = useState<"idle" | "working" | "done" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "working" | "review" | "done" | "error"
+  >("idle");
   const [progress, setProgress] = useState("");
   const [message, setMessage] = useState("");
+  const [plan, setPlan] = useState<SocialPlanView | null>(null);
+  const [pending, setPending] = useState<{
+    submission: Record<string, unknown>;
+    media: MediaEntry[];
+  } | null>(null);
+  const [channels, setChannels] = useState<
+    Record<string, { state: ChannelState; note?: string }>
+  >({});
   const [result, setResult] = useState<{
     title: string;
     url: string;
@@ -95,6 +162,7 @@ export function UploadForm() {
     setFiles((prev) => ({ ...prev, [phase]: list ? Array.from(list) : [] }));
   }
 
+  /** Upload the photos, then ask the server what the post should look like. */
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setMessage("");
@@ -118,7 +186,7 @@ export function UploadForm() {
     };
 
     try {
-      const media: unknown[] = [];
+      const media: MediaEntry[] = [];
       let done = 0;
       for (const phase of PHASES) {
         const list = files[phase.key];
@@ -131,31 +199,112 @@ export function UploadForm() {
           fd.append("index", String(i));
           fd.append("ctx", JSON.stringify(submission));
           const res = await fetch("/api/upload?step=asset", { method: "POST", body: fd });
-          if (!res.ok) throw new Error((await res.json()).error ?? "Photo upload failed");
-          media.push(await res.json());
+          if (!res.ok) throw new Error(await errorFrom(res, "Photo upload failed"));
+          media.push((await res.json()) as MediaEntry);
           done++;
         }
       }
 
-      setProgress("Publishing to your gallery…");
-      const res = await fetch("/api/upload?step=create", {
+      setProgress("Working out the best post…");
+      const res = await fetch("/api/upload?step=plan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ submission, media }),
       });
-      if (!res.ok) throw new Error((await res.json()).error ?? "Publish failed");
-      const data = await res.json();
-      setResult({
-        title: data.title,
-        url: data.url,
-        caption: data.caption,
-        reviewRequest: data.reviewRequest,
-      });
-      setStatus("done");
+      if (!res.ok) throw new Error(await errorFrom(res, "Could not plan the post"));
+      setPlan((await res.json()) as SocialPlanView);
+      setPending({ submission, media });
+      setStatus("review");
     } catch (err) {
       setMessage(err instanceof Error ? err.message : "Something went wrong.");
       setStatus("error");
     }
+  }
+
+  /**
+   * Publish the job, then post ONE platform per request. Splitting it this way
+   * is what stops a slow network from swallowing the ones queued behind it —
+   * and every outcome lands in `channels` so nothing fails silently again.
+   */
+  async function publish(skipSocial: boolean) {
+    if (!pending || !plan) return;
+    setStatus("working");
+    setMessage("");
+    try {
+      setProgress("Publishing to your gallery…");
+      const res = await fetch("/api/upload?step=create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          submission: pending.submission,
+          media: pending.media,
+          caption: plan.caption,
+        }),
+      });
+      if (!res.ok) throw new Error(await errorFrom(res, "Publish failed"));
+      const data = await res.json();
+
+      setResult({
+        title: data.title,
+        url: data.url,
+        reviewRequest: data.reviewRequest,
+      });
+      setStatus("done");
+
+      if (skipSocial || plan.hold || plan.order.length === 0) return;
+
+      // Sequential on purpose: each call is one platform, well inside its
+      // budget, and the checklist fills in as each one lands.
+      for (const p of SOCIAL_PLATFORMS) {
+        setChannels((c) => ({ ...c, [p.key]: { state: "working" } }));
+        try {
+          const r = await fetch("/api/upload?step=social", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              id: data.id,
+              slug: data.slug,
+              platform: p.key,
+              caption: plan.caption,
+              order: plan.order.map((o) => ({ assetId: o.assetId })),
+              heroAssetId: plan.heroAssetId,
+            }),
+          });
+          if (!r.ok) throw new Error(await errorFrom(r, "Post failed"));
+          const out = (await r.json()) as { status: string; note?: string };
+          setChannels((c) => ({
+            ...c,
+            [p.key]: {
+              state: out.status === "posted" ? "done" : out.status === "error" ? "error" : "skipped",
+              note: out.note,
+            },
+          }));
+        } catch (err) {
+          setChannels((c) => ({
+            ...c,
+            [p.key]: {
+              state: "error",
+              note: err instanceof Error ? err.message : "Failed",
+            },
+          }));
+        }
+      }
+    } catch (err) {
+      setMessage(err instanceof Error ? err.message : "Something went wrong.");
+      setStatus("error");
+    }
+  }
+
+  if (status === "review" && plan) {
+    return (
+      <ReviewScreen
+        plan={plan}
+        onPlanChange={setPlan}
+        onPost={() => publish(false)}
+        onSiteOnly={() => publish(true)}
+        onBack={() => setStatus("idle")}
+      />
+    );
   }
 
   if (status === "done" && result) {
@@ -166,6 +315,45 @@ export function UploadForm() {
         <p className="text-slate-600">
           <strong>{result.title}</strong> is now on your project gallery.
         </p>
+
+        {/* Per-platform outcome, live. The website succeeding used to be the
+            only thing reported, so three silent social failures looked exactly
+            like a clean run (2026-07-31). */}
+        {Object.keys(channels).length > 0 && (
+          <ul className="divide-y divide-border rounded-2xl border border-border text-left">
+            {SOCIAL_PLATFORMS.map((p) => {
+              const c = channels[p.key];
+              if (!c) return null;
+              const mark =
+                c.state === "done"
+                  ? "✓"
+                  : c.state === "error"
+                    ? "✕"
+                    : c.state === "working"
+                      ? "…"
+                      : "–";
+              const tone =
+                c.state === "done"
+                  ? "text-emerald-600"
+                  : c.state === "error"
+                    ? "text-red-600"
+                    : "text-slate-400";
+              return (
+                <li key={p.key} className="flex items-start gap-2.5 px-4 py-2.5">
+                  <span className={`font-bold ${tone}`}>{mark}</span>
+                  <span className="text-sm">
+                    <span className="font-semibold text-navy-900">
+                      {p.label}
+                    </span>
+                    {c.note && (
+                      <span className="text-slate-500"> — {c.note}</span>
+                    )}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        )}
 
         {result.reviewRequest && (
           <div className="rounded-2xl border border-border bg-secondary/50 p-5 text-left">
@@ -395,6 +583,188 @@ export function UploadForm() {
       </form>
 
       <ConnectionsPanel />
+    </main>
+  );
+}
+
+/* ---------- review screen ---------- */
+
+function cx(...parts: string[]): string {
+  return parts.filter(Boolean).join(" ");
+}
+
+/**
+ * Promote a photo to cover. On a showcase post the cover IS slide one, so the
+ * carousel reorders too. On a reveal the "before" deliberately leads, so this
+ * only changes the hero — the single photo Google and the map pin use.
+ */
+function withHero(plan: SocialPlanView, assetId: string): SocialPlanView {
+  const next = { ...plan, heroAssetId: assetId, heroNote: "you picked this one" };
+  if (plan.shape !== "showcase") return next;
+  const chosen = plan.order.find((p) => p.assetId === assetId);
+  if (!chosen) return next;
+  return {
+    ...next,
+    order: [chosen, ...plan.order.filter((p) => p.assetId !== assetId)],
+  };
+}
+
+/**
+ * The last look before anything posts. Shows the cover photo, the carousel in
+ * order, what was left off and why, and the caption — all editable. Built after
+ * a Facebook post went out with five plywood shots in front of the words
+ * "another quality roof installed": the rules below are good, but the owner
+ * still gets the final say.
+ */
+function ReviewScreen({
+  plan,
+  onPlanChange,
+  onPost,
+  onSiteOnly,
+  onBack,
+}: {
+  plan: SocialPlanView;
+  onPlanChange: (p: SocialPlanView) => void;
+  onPost: () => void;
+  onSiteOnly: () => void;
+  onBack: () => void;
+}) {
+  return (
+    <main className="mx-auto flex min-h-screen max-w-xl flex-col gap-5 px-5 py-10">
+      <div>
+        <h1 className="text-2xl font-bold text-navy-900">
+          {plan.hold ? "Website only" : "Check the post"}
+        </h1>
+        <p className="mt-1.5 text-sm text-slate-600">{plan.reason}</p>
+      </div>
+
+      {plan.hold ? (
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+          Every photo still goes on the website. Nothing will be posted to
+          social, because there is no finished roof to lead with — add an
+          after photo if you want this one to go out.
+        </div>
+      ) : (
+        <>
+          <section>
+            <p className="text-xs font-bold tracking-wide text-slate-500 uppercase">
+              Cover photo — what people see in the feed
+            </p>
+            <div className="mt-2 overflow-hidden rounded-2xl border border-border bg-secondary">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={plan.order[0]?.url}
+                alt="Cover"
+                className="max-h-64 w-full object-cover"
+              />
+            </div>
+            {plan.heroNote && (
+              <p className="mt-1.5 text-xs text-slate-500">
+                Google gets the best finished shot — {plan.heroNote}.
+              </p>
+            )}
+          </section>
+
+          <section>
+            <p className="text-xs font-bold tracking-wide text-slate-500 uppercase">
+              Carousel order ({plan.order.length})
+            </p>
+            <div className="mt-2 flex gap-2 overflow-x-auto pb-1">
+              {plan.order.map((p, i) => (
+                <button
+                  key={p.assetId}
+                  type="button"
+                  disabled={p.phase !== "after"}
+                  onClick={() => onPlanChange(withHero(plan, p.assetId))}
+                  className={cx(
+                    "relative flex-none rounded-lg",
+                    p.assetId === plan.heroAssetId
+                      ? "ring-2 ring-navy-900 ring-offset-2"
+                      : "",
+                  )}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={p.url}
+                    alt={`Slide ${i + 1}`}
+                    className="size-20 rounded-lg object-cover"
+                  />
+                  <span className="absolute top-1 left-1 rounded-full bg-navy-950/75 px-1.5 text-[10px] font-bold text-white">
+                    {i + 1}
+                  </span>
+                  <span className="absolute right-1 bottom-1 rounded-full bg-navy-950/75 px-1.5 text-[10px] font-semibold text-white">
+                    {PHASE_CHIP[p.phase]}
+                  </span>
+                </button>
+              ))}
+            </div>
+            <p className="mt-1.5 text-xs text-slate-500">
+              Tap any finished photo to make it the cover.
+            </p>
+          </section>
+
+          {plan.omitted.length > 0 && (
+            <section>
+              <p className="text-xs font-bold tracking-wide text-slate-500 uppercase">
+                Not posted — on the website only ({plan.omitted.length})
+              </p>
+              <div className="mt-2 flex gap-2 overflow-x-auto pb-1">
+                {plan.omitted.map((p) => (
+                  <div key={p.assetId} className="relative flex-none">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={p.url}
+                      alt="Not posted"
+                      className="size-14 rounded-lg object-cover opacity-50"
+                    />
+                    <span className="absolute right-0.5 bottom-0.5 rounded-full bg-navy-950/75 px-1 text-[9px] font-semibold text-white">
+                      {PHASE_CHIP[p.phase]}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+        </>
+      )}
+
+      <section>
+        <p className="text-xs font-bold tracking-wide text-slate-500 uppercase">
+          Caption
+        </p>
+        <textarea
+          value={plan.caption}
+          onChange={(e) => onPlanChange({ ...plan, caption: e.target.value })}
+          rows={9}
+          className={`${inputClass} mt-2 leading-relaxed`}
+        />
+      </section>
+
+      <div className="flex flex-col gap-2.5">
+        {!plan.hold && (
+          <button
+            type="button"
+            onClick={onPost}
+            className="rounded-full bg-navy-900 px-6 py-4 text-base font-semibold text-white"
+          >
+            Post it
+          </button>
+        )}
+        <button
+          type="button"
+          onClick={onSiteOnly}
+          className="rounded-full border border-border px-6 py-3.5 text-sm font-semibold text-navy-900"
+        >
+          {plan.hold ? "Add to the website" : "Website only — skip social"}
+        </button>
+        <button
+          type="button"
+          onClick={onBack}
+          className="py-2 text-sm font-semibold text-slate-500"
+        >
+          Back to the form
+        </button>
+      </div>
     </main>
   );
 }

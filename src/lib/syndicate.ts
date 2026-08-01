@@ -77,15 +77,19 @@ async function postToFacebook(
     return { platform: "facebook", status: "skipped", note: "No photos" };
   }
 
-  const mediaIds: string[] = [];
-  for (const url of input.imageUrls) {
-    const d = await graph(`${pageId}/photos`, {
-      url,
-      published: "false",
-      access_token: pageToken,
-    });
-    mediaIds.push(String(d.id));
-  }
+  // In parallel, not one at a time. Meta downloads each image before it
+  // responds, so eight serial uploads used to eat most of the request budget
+  // and starve everything queued behind Facebook (2026-07-31 incident).
+  const mediaIds = await Promise.all(
+    input.imageUrls.map(async (url) => {
+      const d = await graph(`${pageId}/photos`, {
+        url,
+        published: "false",
+        access_token: pageToken,
+      });
+      return String(d.id);
+    }),
+  );
 
   const params: Record<string, string> = { message: input.caption, access_token: pageToken };
   mediaIds.forEach((id, i) => {
@@ -122,15 +126,19 @@ async function postToInstagram(
     });
     creationId = String(d.id);
   } else {
-    const children: string[] = [];
-    for (const url of urls) {
-      const d = await graph(`${ig}/media`, {
-        image_url: url,
-        is_carousel_item: "true",
-        access_token: token,
-      });
-      children.push(String(d.id));
-    }
+    // Parallel container creation — same reason as Facebook above. Order is
+    // preserved because Promise.all resolves positionally, and carousel order
+    // is the whole point of a before/after post.
+    const children = await Promise.all(
+      urls.map(async (url) => {
+        const d = await graph(`${ig}/media`, {
+          image_url: url,
+          is_carousel_item: "true",
+          access_token: token,
+        });
+        return String(d.id);
+      }),
+    );
     const d = await graph(`${ig}/media`, {
       media_type: "CAROUSEL",
       caption: input.caption,
@@ -239,8 +247,46 @@ export async function diagnoseMeta(): Promise<{
 }
 
 /**
+ * Post to ONE Meta network. The /upload flow calls this once per platform, in
+ * its own request, so no single serverless invocation has to carry the whole
+ * fan-out — that is what timed out on 2026-07-31 and silently swallowed
+ * Instagram, Google, and TikTok after Facebook had already posted.
+ *
+ * Never throws: a failure comes back as an "error" result to be logged.
+ */
+export async function postToMeta(
+  platform: "facebook" | "instagram",
+  input: SyndicationInput,
+): Promise<SyndicationResult> {
+  if (!metaConfigured()) {
+    return { platform, status: "skipped", note: "Not connected yet" };
+  }
+  if (platform === "instagram" && !process.env.META_IG_USER_ID) {
+    return { platform, status: "skipped", note: "IG not linked" };
+  }
+  let pageToken: string;
+  try {
+    pageToken = await getPageToken();
+  } catch (err) {
+    return {
+      platform,
+      status: "error",
+      note: err instanceof Error ? err.message : "Token error",
+    };
+  }
+  return safe(platform, () =>
+    platform === "facebook"
+      ? postToFacebook(input, pageToken)
+      : postToInstagram(input, pageToken),
+  );
+}
+
+/**
  * Fan out to every platform. Never throws — a platform failure is captured as
  * an "error" result so the website upload is never blocked by a social hiccup.
+ *
+ * Retained for the weekly GBP cron and any caller that genuinely wants one
+ * blocking call; the /upload flow uses postToMeta per platform instead.
  */
 export async function syndicate(
   input: SyndicationInput,
