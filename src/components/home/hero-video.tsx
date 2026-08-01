@@ -31,10 +31,16 @@ import { useEffect, useRef, useState } from "react";
  * If any of that fails, nothing renders and the hero is exactly the hero.
  */
 
-/** WebM first (smaller on Chrome/Android), H.264 for Safari and iOS. */
+/**
+ * H.264 FIRST, deliberately. VP9 is usually the smaller codec, but this clip is
+ * half granule texture — the densest thing you can hand an encoder — and at
+ * matched quality the WebM came out LARGER (4.9MB vs 3.9MB at 1080). So every
+ * mainstream browser takes the MP4; the WebM stays only for the rare build
+ * without H.264 (some Linux Firefox), where a fallback beats a blank hero.
+ */
 const SOURCES = [
-  { src: "/videos/hero-background.webm", type: "video/webm" },
   { src: "/videos/hero-background.mp4", type: "video/mp4" },
+  { src: "/videos/hero-background.webm", type: "video/webm" },
 ];
 
 interface NetworkInfo {
@@ -82,13 +88,19 @@ export function HeroVideo() {
         if (!el) return;
         // React sets `muted` as a DOM PROPERTY and never emits the HTML
         // attribute. Chromium checks the property and plays anyway; iOS Safari
-        // checks the ATTRIBUTE, refuses autoplay without it, and the catch
-        // below then unmounts us — which is why this showed the plain photo on
-        // the owner's iPhone (2026-08-01). Set both, before play().
+        // checks the ATTRIBUTE, refuses autoplay without it, and we fall back
+        // to the photo — which is what the owner saw on his iPhone
+        // (2026-08-01). Set both, and set them before the element loads.
         el.setAttribute("muted", "");
         el.muted = true;
-        // Kick playback ourselves — this is what triggers the load.
-        el.play()
+      }}
+      // Wait for a source to be READY before playing. Calling play() straight
+      // from the ref raced source selection: if the first source could not be
+      // decoded, the rejection unmounted us before the browser ever tried the
+      // second one.
+      onCanPlay={() => {
+        ref.current
+          ?.play()
           .then(() => setVisible(true))
           // Refused (iOS Low Power Mode, browser policy) — stay on the photo.
           .catch(() => setShow(false));
@@ -99,7 +111,14 @@ export function HeroVideo() {
       preload="auto"
       aria-hidden="true"
       tabIndex={-1}
-      onError={() => setShow(false)}
+      // A failing <source> surfaces here too, and treating that as fatal
+      // unmounted us the moment the first source could not be decoded — before
+      // the browser had tried the second. Only the VIDEO itself failing (every
+      // source exhausted) means there is nothing left to play.
+      onError={(e) => {
+        if (e.target !== e.currentTarget) return;
+        setShow(false);
+      }}
       className={`absolute inset-0 size-full object-cover transition-opacity duration-[1200ms] ease-out lg:hidden ${
         visible ? "opacity-100" : "opacity-0"
       }`}
