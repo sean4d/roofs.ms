@@ -29,6 +29,8 @@ export async function generateMetadata({
     title: post.metaTitle,
     description: post.metaDescription,
     path: `/blog/${post.slug}`,
+    // A post with its own photo shares better than the generic branded card.
+    ogImage: post.image?.src,
   });
 }
 
@@ -53,6 +55,8 @@ export default async function BlogPostPage({
           description: post.metaDescription,
           path: `/blog/${post.slug}`,
           datePublished: post.date,
+          image: post.image?.src,
+          mentions: post.mentions,
         })}
       />
 
@@ -81,6 +85,16 @@ export default async function BlogPostPage({
       </section>
 
       <Section>
+        {post.image && (
+          <figure className="mb-10 max-w-3xl overflow-hidden rounded-2xl border border-border bg-secondary">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={post.image.src}
+              alt={post.image.alt}
+              className="w-full object-cover"
+            />
+          </figure>
+        )}
         <ArticleBody blocks={post.body} />
       </Section>
 
