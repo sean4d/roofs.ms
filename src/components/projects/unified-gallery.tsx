@@ -8,7 +8,6 @@ import {
   hidesColor,
   type GalleryCategory,
   type GalleryJob,
-  type GalleryPhoto,
 } from "@/lib/gallery";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
@@ -37,25 +36,43 @@ interface GridPhoto {
   alt: string;
   phase?: string;
   job: GalleryJob;
-  /** How many showcase (non-before) photos this job has. */
-  showcaseCount: number;
+  /** Total photos in this job's card — what the tile promises on tap. */
+  photoCount: number;
 }
 
-/** Phase badge styling — only "before/after" jobs show these (owner rule:
- *  old "before" roofs must never read as fresh work). */
-const PHASE_BADGE: Record<string, { label: string; cls: string }> = {
-  before: { label: "Before", cls: "bg-amber-500 text-white" },
-  progress: { label: "During", cls: "bg-steel-500 text-white" },
-  after: { label: "After", cls: "bg-emerald-600 text-white" },
+/** Phase bubble label. Same translucent pill as the city bubble (owner rule
+ *  2026-08-01: bubbles, never burned-in labels) and shown ONLY inside the job
+ *  card — the grid is finished roofs, so it has nothing to label. */
+const PHASE_LABEL: Record<string, string> = {
+  before: "Before",
+  progress: "During install",
+  after: "After",
 };
 
-/** Photos shown in the grid + carousel — everything except "before" shots. */
-function showcaseOf(job: GalleryJob) {
-  const showcase = job.photos.filter((p) => p.phase !== "before");
-  return showcase.length > 0 ? showcase : job.photos;
+/** Install-timeline order, so a card reads before → during → after. */
+const PHASE_ORDER: Record<string, number> = { before: 0, progress: 1, after: 2 };
+
+/**
+ * GRID photos — finished work only (owner rule 2026-08-01: the projects page is
+ * never a wall of plywood). Falls back down the timeline so a job that somehow
+ * has no "after" still appears rather than vanishing, and static gallery jobs
+ * (no phase data at all) keep showing everything.
+ */
+function gridPhotosOf(job: GalleryJob) {
+  const after = job.photos.filter((p) => p.phase === "after");
+  if (after.length > 0) return after;
+  const progress = job.photos.filter((p) => p.phase === "progress");
+  if (progress.length > 0) return progress;
+  return job.photos;
 }
-function beforeOf(job: GalleryJob) {
-  return job.photos.filter((p) => p.phase === "before");
+
+/** CARD photos — the whole job, in install order. This is where during-install
+ *  and before shots live: visible once someone taps in and starts swiping. */
+function cardPhotosOf(job: GalleryJob) {
+  return [...job.photos].sort(
+    (a, b) =>
+      (PHASE_ORDER[a.phase ?? ""] ?? 1) - (PHASE_ORDER[b.phase ?? ""] ?? 1),
+  );
 }
 
 export function UnifiedGallery({ jobs }: { jobs: GalleryJob[] }) {
@@ -123,18 +140,17 @@ export function UnifiedGallery({ jobs }: { jobs: GalleryJob[] }) {
     [inCategory, city, product, color, storm],
   );
 
-  // Grid shows only showcase (after / during) photos — "before" shots are
-  // hidden here and surface only inside the job card, clearly labelled.
+  // Grid is finished work only. Before and during-install shots surface inside
+  // the job card, where the phase bubble labels them.
   const photos: GridPhoto[] = useMemo(
     () =>
-      filtered.flatMap((j) => {
-        const showcase = showcaseOf(j);
-        return showcase.map((p) => ({
+      filtered.flatMap((j) =>
+        gridPhotosOf(j).map((p) => ({
           ...p,
           job: j,
-          showcaseCount: showcase.length,
-        }));
-      }),
+          photoCount: j.photos.length,
+        })),
+      ),
     [filtered],
   );
 
@@ -278,9 +294,9 @@ export function UnifiedGallery({ jobs }: { jobs: GalleryJob[] }) {
                 loading="lazy"
                 className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
-              {p.showcaseCount > 1 && (
+              {p.photoCount > 1 && (
                 <span className="absolute top-2 right-2 rounded-full bg-navy-950/70 px-2 py-0.5 text-xs font-semibold text-white">
-                  {p.showcaseCount} photos
+                  {p.photoCount} photos
                 </span>
               )}
               {p.job.city && (
@@ -318,30 +334,19 @@ export function JobCard({
   startPhotoId?: string;
   onClose: () => void;
 }) {
-  const showcase = showcaseOf(job);
-  const before = beforeOf(job);
-  // Phase badges only appear on genuine before/after jobs, so an "After" tag
-  // always has a "Before" to pair with.
-  const showPhase = before.length > 0;
+  // The card is the whole job — before, during install, and after, in that
+  // order. One carousel, no side tray: tap in and swipe the story.
+  const showcase = cardPhotosOf(job);
 
   const startIndex = Math.max(
     0,
     showcase.findIndex((p) => p.id === startPhotoId),
   );
   const [index, setIndex] = useState(startIndex);
-  // Lets a "before" thumbnail take over the main viewer without joining the
-  // showcase carousel.
-  const [beforeView, setBeforeView] = useState<GalleryPhoto | null>(null);
-  const photo = beforeView ?? showcase[index] ?? job.photos[0];
+  const photo = showcase[index] ?? job.photos[0];
 
-  const next = () => {
-    setBeforeView(null);
-    setIndex((i) => (i + 1) % showcase.length);
-  };
-  const prev = () => {
-    setBeforeView(null);
-    setIndex((i) => (i - 1 + showcase.length) % showcase.length);
-  };
+  const next = () => setIndex((i) => (i + 1) % showcase.length);
+  const prev = () => setIndex((i) => (i - 1 + showcase.length) % showcase.length);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -380,8 +385,7 @@ export function JobCard({
     if (
       Math.abs(dx) > 45 &&
       Math.abs(dx) > Math.abs(dy) * 1.5 &&
-      showcase.length > 1 &&
-      !beforeView
+      showcase.length > 1
     ) {
       if (dx < 0) next();
       else prev();
@@ -393,7 +397,7 @@ export function JobCard({
   const chips = [job.product, job.color, job.stormType].filter(
     Boolean,
   ) as string[];
-  const badge = photo.phase ? PHASE_BADGE[photo.phase] : undefined;
+  const phaseLabel = photo.phase ? PHASE_LABEL[photo.phase] : undefined;
 
   return (
     <div
@@ -420,14 +424,9 @@ export function JobCard({
             draggable={false}
             className="max-h-[46dvh] w-full object-contain sm:max-h-[60vh]"
           />
-          {showPhase && badge && (
-            <span
-              className={cn(
-                "absolute top-3 left-3 rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase",
-                badge.cls,
-              )}
-            >
-              {badge.label}
+          {phaseLabel && (
+            <span className="absolute top-3 left-3 rounded-full bg-navy-950/70 px-3 py-1 text-xs font-semibold text-white">
+              {phaseLabel}
             </span>
           )}
           <button
@@ -438,7 +437,7 @@ export function JobCard({
           >
             <X className="size-5" />
           </button>
-          {showcase.length > 1 && !beforeView && (
+          {showcase.length > 1 && (
             <>
               {/* Arrows on ≥sm; on touch the image also swipes left/right. */}
               <div className="hidden sm:block">
@@ -476,15 +475,10 @@ export function JobCard({
                 <button
                   key={p.id}
                   type="button"
-                  onClick={() => {
-                    setBeforeView(null);
-                    setIndex(i);
-                  }}
+                  onClick={() => setIndex(i)}
                   className={cn(
-                    "size-16 flex-none overflow-hidden rounded-lg border-2",
-                    !beforeView && i === index
-                      ? "border-navy-900"
-                      : "border-transparent",
+                    "relative size-16 flex-none overflow-hidden rounded-lg border-2",
+                    i === index ? "border-navy-900" : "border-transparent",
                   )}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -493,41 +487,13 @@ export function JobCard({
                     alt={p.alt}
                     className="h-full w-full object-cover"
                   />
+                  {/* Thumbnails are tiny, so non-finished shots get a corner
+                      dot rather than text the eye can't read at 64px. */}
+                  {p.phase && p.phase !== "after" && (
+                    <span className="absolute top-1 left-1 block size-2 rounded-full bg-white/90 ring-1 ring-navy-950/40" />
+                  )}
                 </button>
               ))}
-            </div>
-          )}
-
-          {before.length > 0 && (
-            <div className="rounded-xl border border-amber-200 bg-amber-50 p-3">
-              <p className="flex items-center gap-1.5 text-xs font-bold tracking-wide text-amber-700 uppercase">
-                <span className="rounded-full bg-amber-500 px-2 py-0.5 text-white">
-                  Before
-                </span>
-                What this roof looked like before we started
-              </p>
-              <div className="mt-2.5 flex gap-2 overflow-x-auto pb-1">
-                {before.map((p) => (
-                  <button
-                    key={p.id}
-                    type="button"
-                    onClick={() => setBeforeView(p)}
-                    className={cn(
-                      "relative size-16 flex-none overflow-hidden rounded-lg border-2",
-                      beforeView?.id === p.id
-                        ? "border-amber-500"
-                        : "border-transparent",
-                    )}
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={p.src}
-                      alt={p.alt}
-                      className="h-full w-full object-cover"
-                    />
-                  </button>
-                ))}
-              </div>
             </div>
           )}
 

@@ -56,6 +56,12 @@ export default async function ProjectDetailPage(
   if (!project) notFound();
 
   const media = (project.media ?? []).filter((m) => m.ref);
+  // Finished work leads the page; before/during-install sit in their own
+  // labelled section below. A job with no "after" photos falls back to showing
+  // everything up top rather than rendering an empty hero.
+  const afters = media.filter((m) => m.phase === "after");
+  const finished = afters.length > 0 ? afters : media;
+  const process = afters.length > 0 ? media.filter((m) => m.phase !== "after") : [];
   const citySlug = project.city ? slugify(project.city) : null;
   const cityIsServiceArea = siteConfig.serviceArea.some((c) => c.slug === citySlug);
 
@@ -115,12 +121,14 @@ export default async function ProjectDetailPage(
             </p>
           )}
 
-          {/* Photos, grouped by install phase */}
-          {media.length > 0 && (
+          {/* Finished work leads. This is the page Google Business Profile's
+              "Learn more" button lands on, so it opens on the completed roof —
+              never on decking (owner rule 2026-08-01). */}
+          {finished.length > 0 && (
             <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2">
-              {media.map((m, i) => (
+              {finished.map((m, i) => (
                 <figure
-                  key={i}
+                  key={`finished-${i}`}
                   className="overflow-hidden rounded-2xl border border-border bg-secondary"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -132,14 +140,46 @@ export default async function ProjectDetailPage(
                     loading={i === 0 ? "eager" : "lazy"}
                     className="w-full object-cover"
                   />
-                  {m.phase && PHASE_LABEL[m.phase] && (
-                    <figcaption className="px-4 py-2 text-xs font-semibold uppercase tracking-wide text-steel-500">
-                      {PHASE_LABEL[m.phase]}
-                    </figcaption>
-                  )}
                 </figure>
               ))}
             </div>
+          )}
+
+          {/* The work behind it — before and during-install shots, clearly
+              sectioned so nothing here can be mistaken for the finished roof. */}
+          {process.length > 0 && (
+            <section className="mt-12 rounded-2xl border border-border bg-secondary/40 p-5 sm:p-7">
+              <h2 className="font-display text-xl font-bold text-navy-900">
+                What it took to get there
+              </h2>
+              <p className="mt-1.5 text-sm text-slate-600">
+                The starting condition and the work in progress — the part most
+                roofing photos leave out.
+              </p>
+              <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                {process.map((m, i) => (
+                  <figure
+                    key={`process-${i}`}
+                    className="overflow-hidden rounded-2xl border border-border bg-white"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={urlFor({ _type: "image", asset: { _ref: m.ref! } })
+                        .width(1200)
+                        .url()}
+                      alt={m.alt ?? project.title}
+                      loading="lazy"
+                      className="w-full object-cover"
+                    />
+                    {m.phase && PHASE_LABEL[m.phase] && (
+                      <figcaption className="px-4 py-2 text-xs font-semibold tracking-wide text-steel-500 uppercase">
+                        {PHASE_LABEL[m.phase]}
+                      </figcaption>
+                    )}
+                  </figure>
+                ))}
+              </div>
+            </section>
           )}
 
           {/* Job details */}
