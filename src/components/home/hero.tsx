@@ -8,6 +8,7 @@ import { hero, heroTrustBar } from "@/content/homepage";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
 import { PhoneLink } from "@/components/shared/phone-link";
+import { HeroVideo } from "@/components/home/hero-video";
 
 /**
  * Homepage hero (PRD §3.1, owner refinement 2026-07-04): full-bleed
@@ -31,6 +32,10 @@ export function Hero() {
         sizes="100vw"
         className="object-cover object-[center_38%]"
       />
+      {/* Mobile only: real roof footage fades in over the photo, plays once,
+          fades back. Renders nothing on desktop, on reduced-motion, on
+          Save-Data, or on a slow connection — see hero-video.tsx. */}
+      <HeroVideo />
       {/* Dark overlay: readable text, premium depth (stronger at the left/bottom where text sits) */}
       <div
         aria-hidden="true"
