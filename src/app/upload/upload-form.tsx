@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import {
   CHANNELS,
@@ -74,6 +74,16 @@ async function errorFrom(res: Response, fallback: string): Promise<string> {
   return `${fallback} (HTTP ${res.status}${snippet ? `: ${snippet}` : ""})`;
 }
 
+async function deployedVersion(): Promise<string | null> {
+  try {
+    const res = await fetch("/api/upload?step=version", { cache: "no-store" });
+    if (!res.ok) return null;
+    return ((await res.json()) as { id?: string }).id ?? null;
+  } catch {
+    return null;
+  }
+}
+
 /** Downscale + re-encode a phone photo so uploads stay small and reliable. */
 async function compressImage(file: File): Promise<File> {
   if (!file.type.startsWith("image/")) return file;
@@ -144,6 +154,19 @@ export function UploadForm() {
     };
   } | null>(null);
 
+  // Which build this tab loaded with. Compared again at submit; see
+  // deployedVersion + the note on ?step=version in the API route.
+  const loadedVersion = useRef<string | null>(null);
+  useEffect(() => {
+    let alive = true;
+    deployedVersion().then((v) => {
+      if (alive && loadedVersion.current === null) loadedVersion.current = v;
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
+
   const activeJob = getJobType(jobType);
   const totalPhotos = files.before.length + files.progress.length + files.after.length;
 
@@ -174,6 +197,16 @@ export function UploadForm() {
     if (!jobType) return setMessage("Pick a job type.");
     if (!resolvedCity) return setMessage("Choose or type the city.");
     if (totalPhotos === 0) return setMessage("Add at least one photo.");
+
+    // Refuse to publish from a tab running an older build. A stale bundle skips
+    // the confirm screen and never calls step=social, so the job goes up with
+    // no social posts and no visible sign anything was missed.
+    const current = await deployedVersion();
+    if (current && loadedVersion.current && current !== loadedVersion.current) {
+      setMessage("The uploader updated. Reloading — your photos are still here.");
+      setTimeout(() => window.location.reload(), 1200);
+      return;
+    }
 
     setStatus("working");
     const submission = {
