@@ -17,7 +17,7 @@ import {
   type JobSubmission,
 } from "@/lib/job-content";
 import { polishCaption } from "@/lib/ai-caption";
-import { syndicate } from "@/lib/syndicate";
+import { syndicate, diagnoseMeta } from "@/lib/syndicate";
 import {
   postViaMetricool,
   inspectMetricool,
@@ -132,6 +132,27 @@ async function socialImageUrls(
  *   ?step=create — assembles + publishes the project, then syndicates
  * The whole route sits behind the password gate in proxy.ts.
  */
+/**
+ * Read-only diagnostics. GET so it can be opened straight from a phone browser
+ * (behind the same passphrase as the rest of /api/upload) — every other step
+ * mutates something and stays POST-only.
+ */
+export async function GET(request: Request) {
+  const step = new URL(request.url).searchParams.get("step");
+  if (step === "check") {
+    try {
+      return await handleCheck();
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Check failed";
+      return Response.json({ error: message }, { status: 500 });
+    }
+  }
+  return Response.json(
+    { error: "GET supports ?step=check only" },
+    { status: 400 },
+  );
+}
+
 export async function POST(request: Request) {
   const step = new URL(request.url).searchParams.get("step");
   try {
@@ -197,8 +218,12 @@ async function handleCheck() {
     // Fully wired — every upload now auto-posts to GBP:
     autoPost: gbpReady(),
   };
+  // Facebook + Instagram. Presence booleans plus live read-only probes, because
+  // "token expired" and "variable never set" produce the same silent skip.
+  const meta = await diagnoseMeta();
   return Response.json({
     reviews,
+    meta,
     metricool,
     anthropicKeyPresent,
     metricoolPosts,

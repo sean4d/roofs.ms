@@ -159,8 +159,83 @@ async function postToInstagram(
   throw lastError instanceof Error ? lastError : new Error("Instagram publish failed");
 }
 
-function metaConfigured(): boolean {
+export function metaConfigured(): boolean {
   return Boolean(process.env.META_PAGE_ACCESS_TOKEN && process.env.META_PAGE_ID);
+}
+
+/**
+ * Read-only Meta health check for the /upload Connections panel. Presence
+ * booleans plus two live GET probes (never posts anything): does the system
+ * token still resolve a Page token, and does the linked Instagram account
+ * answer? An expired token and an unset variable look identical otherwise.
+ */
+export async function diagnoseMeta(): Promise<{
+  pageTokenPresent: boolean;
+  pageIdPresent: boolean;
+  igUserIdPresent: boolean;
+  configured: boolean;
+  pageTokenResolves?: boolean;
+  pageName?: string;
+  igAccountResolves?: boolean;
+  igUsername?: string;
+  note?: string;
+}> {
+  const base = {
+    pageTokenPresent: Boolean(process.env.META_PAGE_ACCESS_TOKEN),
+    pageIdPresent: Boolean(process.env.META_PAGE_ID),
+    igUserIdPresent: Boolean(process.env.META_IG_USER_ID),
+    configured: metaConfigured(),
+  };
+  if (!base.configured) return { ...base, note: "Meta credentials not set" };
+
+  let pageToken: string;
+  try {
+    pageToken = await getPageToken();
+  } catch (err) {
+    return {
+      ...base,
+      pageTokenResolves: false,
+      note: err instanceof Error ? err.message : "Page token error",
+    };
+  }
+
+  const out = { ...base, pageTokenResolves: true } as Awaited<
+    ReturnType<typeof diagnoseMeta>
+  >;
+
+  try {
+    const res = await fetch(
+      `${GRAPH}/${process.env.META_PAGE_ID}?fields=name&access_token=${encodeURIComponent(pageToken)}`,
+    );
+    const data = (await res.json()) as { name?: string };
+    out.pageName = data.name;
+  } catch {
+    // name is a nicety, not a health signal
+  }
+
+  if (!process.env.META_IG_USER_ID) {
+    out.igAccountResolves = false;
+    out.note = "META_IG_USER_ID not set — Instagram is skipped every post";
+    return out;
+  }
+
+  try {
+    const res = await fetch(
+      `${GRAPH}/${process.env.META_IG_USER_ID}?fields=username&access_token=${encodeURIComponent(pageToken)}`,
+    );
+    const data = (await res.json()) as {
+      username?: string;
+      error?: { message?: string };
+    };
+    out.igAccountResolves = Boolean(data.username);
+    out.igUsername = data.username;
+    if (!data.username) out.note = data.error?.message ?? "Instagram did not resolve";
+  } catch (err) {
+    out.igAccountResolves = false;
+    out.note = err instanceof Error ? err.message : "Instagram probe failed";
+  }
+
+  return out;
 }
 
 /**

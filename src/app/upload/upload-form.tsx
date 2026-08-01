@@ -393,7 +393,219 @@ export function UploadForm() {
           {status === "working" ? progress || "Working…" : "Post job to gallery"}
         </button>
       </form>
+
+      <ConnectionsPanel />
     </main>
+  );
+}
+
+/* ---------- connections panel ---------- */
+
+interface CheckResult {
+  meta?: {
+    configured: boolean;
+    igUserIdPresent: boolean;
+    pageTokenResolves?: boolean;
+    pageName?: string;
+    igAccountResolves?: boolean;
+    igUsername?: string;
+    note?: string;
+  };
+  metricool?: {
+    tokenPresent: boolean;
+    userIdPresent: boolean;
+    blogIdPresent: boolean;
+    galleryAutoPost: boolean;
+  };
+  gbp?: { configured: boolean; autoPost: boolean };
+  anthropicKeyPresent?: boolean;
+  error?: string;
+}
+
+type Health = "ok" | "warn" | "off";
+
+function Dot({ state }: { state: Health }) {
+  const cls =
+    state === "ok"
+      ? "bg-emerald-500"
+      : state === "warn"
+        ? "bg-amber-500"
+        : "bg-slate-300";
+  // block, not inline — an inline span ignores width/height and the dot vanishes.
+  return (
+    <span
+      className={`mt-[7px] block size-2.5 shrink-0 rounded-full ${cls}`}
+      aria-hidden="true"
+    />
+  );
+}
+
+function Row({
+  label,
+  state,
+  detail,
+}: {
+  label: string;
+  state: Health;
+  detail: string;
+}) {
+  return (
+    <li className="flex items-start gap-2.5 py-1.5">
+      <Dot state={state} />
+      <span className="text-sm">
+        <span className="font-semibold text-navy-900">{label}</span>
+        <span className="text-slate-500"> — {detail}</span>
+      </span>
+    </li>
+  );
+}
+
+/**
+ * Where each social connection actually stands, on the phone, behind the same
+ * passphrase as the form. Built after a job posted to Facebook but silently
+ * missed Instagram, Google, and TikTok: a failed post and a never-configured
+ * one looked identical from the outside.
+ */
+function ConnectionsPanel() {
+  const [data, setData] = useState<CheckResult | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [raw, setRaw] = useState(false);
+
+  async function load() {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/upload?step=check");
+      const text = await res.text();
+      try {
+        setData(JSON.parse(text));
+      } catch {
+        setData({ error: `HTTP ${res.status}: ${text.slice(0, 200)}` });
+      }
+    } catch (err) {
+      setData({ error: err instanceof Error ? err.message : "Check failed" });
+    }
+    setLoading(false);
+  }
+
+  const meta = data?.meta;
+  const mc = data?.metricool;
+  const metricoolOn = Boolean(
+    mc?.tokenPresent && mc?.userIdPresent && mc?.blogIdPresent,
+  );
+
+  return (
+    <section className="mt-10 rounded-2xl border border-border bg-white p-5">
+      <div className="flex items-center justify-between gap-3">
+        <h2 className="text-sm font-bold text-navy-900">Connections</h2>
+        <button
+          type="button"
+          onClick={load}
+          disabled={loading}
+          className="rounded-full border border-border px-4 py-2 text-xs font-semibold text-navy-900 disabled:opacity-60"
+        >
+          {loading ? "Checking…" : data ? "Re-check" : "Check now"}
+        </button>
+      </div>
+
+      {!data && !loading && (
+        <p className="mt-2 text-xs text-slate-500">
+          Tap to see which platforms a new job will actually reach.
+        </p>
+      )}
+
+      {data?.error && (
+        <p className="mt-3 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
+          {data.error}
+        </p>
+      )}
+
+      {data && !data.error && (
+        <>
+          <ul className="mt-3 divide-y divide-border">
+            <Row
+              label="Facebook"
+              state={
+                !meta?.configured
+                  ? "off"
+                  : meta.pageTokenResolves
+                    ? "ok"
+                    : "warn"
+              }
+              detail={
+                !meta?.configured
+                  ? "not connected"
+                  : meta.pageTokenResolves
+                    ? `posting as ${meta.pageName ?? "your Page"}`
+                    : (meta.note ?? "token did not resolve")
+              }
+            />
+            <Row
+              label="Instagram"
+              state={
+                !meta?.igUserIdPresent
+                  ? "off"
+                  : meta.igAccountResolves
+                    ? "ok"
+                    : "warn"
+              }
+              detail={
+                !meta?.igUserIdPresent
+                  ? "account ID not set — skipped every post"
+                  : meta.igAccountResolves
+                    ? `posting as @${meta.igUsername}`
+                    : (meta.note ?? "account did not resolve")
+              }
+            />
+            <Row
+              label="Google Business Profile"
+              state={
+                data.gbp?.autoPost ? "ok" : data.gbp?.configured ? "warn" : "off"
+              }
+              detail={
+                data.gbp?.autoPost
+                  ? "direct posting live"
+                  : data.gbp?.configured
+                    ? "signed in, but account/location IDs missing"
+                    : metricoolOn
+                      ? "direct API off — relying on Metricool"
+                      : "not connected"
+              }
+            />
+            <Row
+              label="TikTok"
+              state={metricoolOn ? "ok" : "off"}
+              detail={
+                metricoolOn
+                  ? "via Metricool (slideshow video)"
+                  : "Metricool not connected"
+              }
+            />
+            <Row
+              label="Caption writer"
+              state={data.anthropicKeyPresent ? "ok" : "warn"}
+              detail={
+                data.anthropicKeyPresent
+                  ? "AI captions on"
+                  : "no key — using the plain template"
+              }
+            />
+          </ul>
+
+          <button
+            type="button"
+            onClick={() => setRaw((r) => !r)}
+            className="mt-3 text-xs font-semibold text-steel-500 underline-offset-4 hover:underline"
+          >
+            {raw ? "Hide" : "Show"} raw details
+          </button>
+          {raw && (
+            <pre className="mt-2 max-h-72 overflow-auto rounded-lg bg-slate-50 p-3 text-[11px] leading-relaxed text-slate-700">
+              {JSON.stringify(data, null, 2)}
+            </pre>
+          )}
+        </>
+      )}
+    </section>
   );
 }
 
