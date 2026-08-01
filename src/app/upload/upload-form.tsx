@@ -130,9 +130,12 @@ export function UploadForm() {
   const [channels, setChannels] = useState<
     Record<string, { state: ChannelState; note?: string }>
   >({});
+  const [socialBusy, setSocialBusy] = useState(false);
   const [result, setResult] = useState<{
     title: string;
     url: string;
+    id?: string;
+    slug?: string;
     caption?: string;
     reviewRequest?: {
       emailSent: boolean;
@@ -247,52 +250,69 @@ export function UploadForm() {
       setResult({
         title: data.title,
         url: data.url,
+        id: data.id,
+        slug: data.slug,
         reviewRequest: data.reviewRequest,
       });
       setStatus("done");
 
       if (skipSocial || plan.hold || plan.order.length === 0) return;
-
-      // Sequential on purpose: each call is one platform, well inside its
-      // budget, and the checklist fills in as each one lands.
-      for (const p of SOCIAL_PLATFORMS) {
-        setChannels((c) => ({ ...c, [p.key]: { state: "working" } }));
-        try {
-          const r = await fetch("/api/upload?step=social", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              id: data.id,
-              slug: data.slug,
-              platform: p.key,
-              caption: plan.caption,
-              order: plan.order.map((o) => ({ assetId: o.assetId })),
-              heroAssetId: plan.heroAssetId,
-            }),
-          });
-          if (!r.ok) throw new Error(await errorFrom(r, "Post failed"));
-          const out = (await r.json()) as { status: string; note?: string };
-          setChannels((c) => ({
-            ...c,
-            [p.key]: {
-              state: out.status === "posted" ? "done" : out.status === "error" ? "error" : "skipped",
-              note: out.note,
-            },
-          }));
-        } catch (err) {
-          setChannels((c) => ({
-            ...c,
-            [p.key]: {
-              state: "error",
-              note: err instanceof Error ? err.message : "Failed",
-            },
-          }));
-        }
-      }
+      await runSocial(data.id, data.slug, SOCIAL_PLATFORMS.map((p) => p.key));
     } catch (err) {
       setMessage(err instanceof Error ? err.message : "Something went wrong.");
       setStatus("error");
     }
+  }
+
+  /**
+   * Post the given platforms, one request each, updating the checklist as they
+   * land. Callable again from the success screen: before this existed, a job
+   * that published without its social run had no route back except a developer
+   * hitting the API by hand.
+   */
+  async function runSocial(id: string, slug: string, platforms: readonly string[]) {
+    if (!plan) return;
+    setSocialBusy(true);
+    for (const key of platforms) {
+      setChannels((c) => ({ ...c, [key]: { state: "working" } }));
+      try {
+        const r = await fetch("/api/upload?step=social", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id,
+            slug,
+            platform: key,
+            caption: plan.caption,
+            order: plan.order.map((o) => ({ assetId: o.assetId })),
+            heroAssetId: plan.heroAssetId,
+          }),
+        });
+        if (!r.ok) throw new Error(await errorFrom(r, "Post failed"));
+        const out = (await r.json()) as { status: string; note?: string };
+        setChannels((c) => ({
+          ...c,
+          [key]: {
+            state:
+              out.status === "posted"
+                ? "done"
+                : out.status === "error"
+                  ? "error"
+                  : "skipped",
+            note: out.note,
+          },
+        }));
+      } catch (err) {
+        setChannels((c) => ({
+          ...c,
+          [key]: {
+            state: "error",
+            note: err instanceof Error ? err.message : "Failed",
+          },
+        }));
+      }
+    }
+    setSocialBusy(false);
   }
 
   if (status === "review" && plan) {
@@ -315,6 +335,32 @@ export function UploadForm() {
         <p className="text-slate-600">
           <strong>{result.title}</strong> is now on your project gallery.
         </p>
+
+        {/* Social is never stranded. Whether the run was skipped, interrupted,
+            or a platform threw, there is always a button here to send it —
+            the job's photos and caption are still in state. */}
+        {result.id && plan && !plan.hold && (
+          <button
+            type="button"
+            disabled={socialBusy}
+            onClick={() =>
+              runSocial(
+                result.id!,
+                result.slug ?? "",
+                SOCIAL_PLATFORMS.map((p) => p.key).filter(
+                  (k) => channels[k]?.state !== "done",
+                ),
+              )
+            }
+            className="rounded-full bg-navy-900 px-6 py-3.5 text-sm font-semibold text-white disabled:opacity-60"
+          >
+            {socialBusy
+              ? "Posting…"
+              : Object.keys(channels).length === 0
+                ? "Post to social"
+                : "Retry the ones that didn't post"}
+          </button>
+        )}
 
         {/* Per-platform outcome, live. The website succeeding used to be the
             only thing reported, so three silent social failures looked exactly
@@ -750,10 +796,17 @@ function ReviewScreen({
             Post it
           </button>
         )}
+        {/* Deliberately a plain link, not a second button. When both were
+            bordered buttons stacked together, the skip was one mis-tap away
+            from the thing you actually meant to do. */}
         <button
           type="button"
           onClick={onSiteOnly}
-          className="rounded-full border border-border px-6 py-3.5 text-sm font-semibold text-navy-900"
+          className={
+            plan.hold
+              ? "rounded-full bg-navy-900 px-6 py-4 text-base font-semibold text-white"
+              : "py-2 text-sm font-medium text-slate-500 underline underline-offset-4"
+          }
         >
           {plan.hold ? "Add to the website" : "Website only — skip social"}
         </button>

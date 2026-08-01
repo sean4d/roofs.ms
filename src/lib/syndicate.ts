@@ -52,6 +52,61 @@ async function graph(
   return data;
 }
 
+/** Meta's throttle, which arrives as a message rather than a clean status. */
+function isThrottled(err: unknown): boolean {
+  const m = err instanceof Error ? err.message.toLowerCase() : "";
+  return (
+    m.includes("reduce the amount of data") ||
+    m.includes("rate limit") ||
+    m.includes("too many calls") ||
+    m.includes("request limit")
+  );
+}
+
+/** graph() with backoff on Meta's throttle — it clears in a second or two. */
+async function graphRetry(
+  path: string,
+  params: Record<string, string>,
+  attempts = 3,
+): Promise<Record<string, unknown>> {
+  let last: unknown;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      return await graph(path, params);
+    } catch (err) {
+      last = err;
+      if (!isThrottled(err)) throw err;
+      await new Promise((r) => setTimeout(r, 1500 * (i + 1)));
+    }
+  }
+  throw last instanceof Error ? last : new Error("Graph API error");
+}
+
+/**
+ * Run `fn` over `items` with at most `limit` in flight, preserving order.
+ *
+ * Uploading all photos at once looked like the obvious fix for the timeout, but
+ * Meta answered a 7-photo burst with "Please reduce the amount of data you're
+ * asking for" (2026-08-01) — its throttle counts calls, not bytes. Now that
+ * each platform owns its own request there is budget for a gentler pace.
+ */
+async function mapPool<T, R>(
+  items: T[],
+  limit: number,
+  fn: (item: T, index: number) => Promise<R>,
+): Promise<R[]> {
+  const out = new Array<R>(items.length);
+  let next = 0;
+  const workers = Array.from({ length: Math.min(limit, items.length) }, async () => {
+    while (next < items.length) {
+      const i = next++;
+      out[i] = await fn(items[i], i);
+    }
+  });
+  await Promise.all(workers);
+  return out;
+}
+
 /** Page access token derived from the never-expiring system-user token. */
 async function getPageToken(): Promise<string> {
   const sys = process.env.META_PAGE_ACCESS_TOKEN!;
@@ -77,25 +132,24 @@ async function postToFacebook(
     return { platform: "facebook", status: "skipped", note: "No photos" };
   }
 
-  // In parallel, not one at a time. Meta downloads each image before it
-  // responds, so eight serial uploads used to eat most of the request budget
-  // and starve everything queued behind Facebook (2026-07-31 incident).
-  const mediaIds = await Promise.all(
-    input.imageUrls.map(async (url) => {
-      const d = await graph(`${pageId}/photos`, {
-        url,
-        published: "false",
-        access_token: pageToken,
-      });
-      return String(d.id);
-    }),
-  );
+  // Two at a time, with backoff. All-at-once was rejected outright by Meta's
+  // throttle; one-at-a-time was what starved the rest of the fan-out back when
+  // a single request carried every platform. Two is fast enough now that
+  // Facebook owns its own request.
+  const mediaIds = await mapPool(input.imageUrls, 2, async (url) => {
+    const d = await graphRetry(`${pageId}/photos`, {
+      url,
+      published: "false",
+      access_token: pageToken,
+    });
+    return String(d.id);
+  });
 
   const params: Record<string, string> = { message: input.caption, access_token: pageToken };
   mediaIds.forEach((id, i) => {
     params[`attached_media[${i}]`] = JSON.stringify({ media_fbid: id });
   });
-  const post = await graph(`${pageId}/feed`, params);
+  const post = await graphRetry(`${pageId}/feed`, params);
   const postId = String(post.id);
   return {
     platform: "facebook",
@@ -126,20 +180,17 @@ async function postToInstagram(
     });
     creationId = String(d.id);
   } else {
-    // Parallel container creation — same reason as Facebook above. Order is
-    // preserved because Promise.all resolves positionally, and carousel order
-    // is the whole point of a before/after post.
-    const children = await Promise.all(
-      urls.map(async (url) => {
-        const d = await graph(`${ig}/media`, {
-          image_url: url,
-          is_carousel_item: "true",
-          access_token: token,
-        });
-        return String(d.id);
-      }),
-    );
-    const d = await graph(`${ig}/media`, {
+    // Same bounded pace as Facebook. mapPool preserves order, and carousel
+    // order is the whole point of a before/after post.
+    const children = await mapPool(urls, 2, async (url) => {
+      const d = await graphRetry(`${ig}/media`, {
+        image_url: url,
+        is_carousel_item: "true",
+        access_token: token,
+      });
+      return String(d.id);
+    });
+    const d = await graphRetry(`${ig}/media`, {
       media_type: "CAROUSEL",
       caption: input.caption,
       children: children.join(","),
