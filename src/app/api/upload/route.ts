@@ -188,25 +188,37 @@ export async function POST(request: Request) {
  * source code was swept in the same change, but titles and captions written by
  * earlier uploads live in the CMS and render on /projects regardless.
  *
- * Titles get ": City, MS" turned into " (City, MS)", matching what jobTitle
- * now generates; everything else takes a comma. DRY RUN unless { confirm: true }.
+ * Titles get " (City, MS)" in place of the dash, matching what jobTitle now
+ * generates; everything else takes a comma. DRY RUN unless { confirm: true }.
+ *
+ * The dash is built from its code point on purpose. A literal one here would be
+ * caught by the very site-wide sweep this function exists to finish, which is
+ * exactly what happened the first time: the patterns below were rewritten into
+ * commas and colons, and the endpoint reported "0 changes" while doing nothing.
  */
+const EM_DASH = String.fromCharCode(0x2014);
+
 async function handleDedash(request: Request) {
   const { confirm } = (await request.json().catch(() => ({}))) as {
     confirm?: boolean;
   };
   const client = getWriteClient();
+  const glob = `*${EM_DASH}*`;
   const docs = (await client.fetch(
-    `*[_type == "project" && (title match "*, *" || summary match "*: *" || description match "*: *" || socialCaption match "*: *")]{_id,title,summary,description,socialCaption}`,
+    `*[_type == "project" && (title match $glob || summary match $glob || description match $glob || socialCaption match $glob)]{_id,title,summary,description,socialCaption}`,
+    { glob },
   )) as Array<Record<string, string>>;
 
+  const spaced = new RegExp(`\\s*${EM_DASH}\\s*`, "g");
+  const trailing = new RegExp(`^(.*?)\\s*${EM_DASH}\\s*(.+)$`);
+
   const fix = (s: string | undefined, isTitle: boolean) => {
-    if (!s || !s.includes(", ")) return s;
+    if (!s || !s.includes(EM_DASH)) return s;
     if (isTitle) {
-      const m = s.match(/^(.*?)\s, \s(.+)$/);
+      const m = s.match(trailing);
       if (m) return `${m[1]} (${m[2]})`;
     }
-    return s.replace(/\s*: \s*/g, ", ");
+    return s.replace(spaced, ", ");
   };
 
   const changes = docs.map((d) => ({

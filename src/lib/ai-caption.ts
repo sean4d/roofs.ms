@@ -1,6 +1,7 @@
 import { getJobType } from "@/config/job-taxonomy";
 import { siteConfig } from "@/config/site";
 import type { JobSubmission } from "@/lib/job-content";
+import { stripEmDashes } from "@/lib/no-em-dash";
 
 /**
  * AI caption polish. Turns the owner's rough job notes + the structured
@@ -48,7 +49,8 @@ export async function polishCaption(
     `CRITICAL: the caption must match the photos described below. Never describe ` +
     `something the reader cannot see. If the post ends on an in-progress photo ` +
     `(decking, underlayment, tear-off), earn it, make the work itself the point ` +
-    `rather than letting it look like a mistake. Return ONLY the caption text.` +
+    `rather than letting it look like a mistake. Never use an em dash; use a ` +
+    `comma, a full stop, or a colon instead. Return ONLY the caption text.` +
     `\n\n${facts}`;
 
   try {
@@ -68,7 +70,10 @@ export async function polishCaption(
     if (!res.ok) return null;
     const data = (await res.json()) as { content?: Array<{ text?: string }> };
     const text = data.content?.[0]?.text?.trim();
-    return text && text.length > 0 ? text : null;
+    // The prompt asks for no em dashes, but a caption is written once and then
+    // lives on /projects and every social platform forever, so don't leave it
+    // to the model's word. Belt and braces.
+    return text && text.length > 0 ? stripEmDashes(text) : null;
   } catch {
     return null;
   }
