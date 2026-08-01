@@ -17,19 +17,23 @@ import {
   type JobSubmission,
 } from "@/lib/job-content";
 import { polishCaption } from "@/lib/ai-caption";
-import { syndicate, diagnoseMeta } from "@/lib/syndicate";
+import { diagnoseMeta, postToMeta } from "@/lib/syndicate";
+import {
+  planSocialPost,
+  captionBrief,
+  type SocialPlan,
+} from "@/lib/social-plan";
+import { pickHeroPhoto } from "@/lib/photo-pick";
 import {
   postViaMetricool,
   inspectMetricool,
   listMetricoolPosts,
   deleteMetricoolPosts,
   postGbpPhoto,
-  postGbpPhotos,
   metricoolGalleryEnabled,
   type GbpPhotoResult,
 } from "@/lib/metricool";
 import { diagnoseReviews } from "@/lib/google-reviews";
-import { badgeImage } from "@/lib/social-badge";
 import { buildSlideshow } from "@/lib/slideshow";
 import { submitToIndexNow } from "@/lib/indexnow";
 import {
@@ -46,7 +50,6 @@ import {
   postJobToGbp,
   uploadGbpPhotos,
   createGbpUpdate,
-  type GbpPostResult,
 } from "@/lib/gbp";
 
 export const runtime = "nodejs";
@@ -91,45 +94,21 @@ function jpgUrl(assetId: string): string {
     .url();
 }
 
-/**
- * Public JPEG URLs for the social fan-out. On a genuine before/after job every
- * photo gets a burned-in BEFORE/DURING/AFTER badge so a single image can't be
- * mistaken for fresh work. Best-effort per photo — any failure (or a non
- * before/after job) falls back to the plain, unbadged photo so a social post is
- * never blocked.
+/*
+ * Photos go to social EXACTLY as shot. The old code burned BEFORE/DURING/AFTER
+ * badges into before/after posts; the owner killed that on 2026-08-01 — it
+ * looks tacky, customers can tell a before photo without being told, and the
+ * caption is where the explaining belongs. The re-encode pass it required
+ * (download → sharp → re-upload, per photo) was also pure latency in a request
+ * that was already timing out.
  */
-async function socialImageUrls(
-  media: MediaEntry[],
-  client: ReturnType<typeof getWriteClient>,
-  labelPhotos: boolean,
-): Promise<string[]> {
-  if (!labelPhotos) return media.map((m) => jpgUrl(m.assetId)).filter(Boolean);
-  const urls: string[] = [];
-  for (const m of media) {
-    const plain = jpgUrl(m.assetId);
-    try {
-      const res = await fetch(plain);
-      if (!res.ok) throw new Error(`fetch ${res.status}`);
-      const badged = await badgeImage(
-        Buffer.from(await res.arrayBuffer()),
-        m.phase,
-      );
-      const asset = await client.assets.upload("image", badged, {
-        filename: `social-${m.phase}-${m.filename}`,
-        contentType: "image/jpeg",
-      });
-      urls.push(jpgUrl(asset._id));
-    } catch {
-      urls.push(plain); // fall back to the unbadged photo
-    }
-  }
-  return urls.filter(Boolean);
-}
 
 /**
- * Two-step upload to stay under the per-request body limit:
- *   ?step=asset  — one photo at a time → uploads to Sanity, returns its SEO
- *   ?step=create — assembles + publishes the project, then syndicates
+ * Upload steps, each its own request so none of them can starve the others:
+ *   ?step=asset   — one photo → Sanity, returns its SEO
+ *   ?step=plan    — decide the post + write the caption, publishing nothing
+ *   ?step=create  — publish the job to the website, return immediately
+ *   ?step=social  — post ONE platform, log the outcome
  * The whole route sits behind the password gate in proxy.ts.
  */
 /**
@@ -157,7 +136,9 @@ export async function POST(request: Request) {
   const step = new URL(request.url).searchParams.get("step");
   try {
     if (step === "asset") return await handleAsset(request);
+    if (step === "plan") return await handlePlan(request);
     if (step === "create") return await handleCreate(request);
+    if (step === "social") return await handleSocial(request);
     if (step === "delete") return await handleDelete(request);
     if (step === "metricool") return await handleMetricool(request);
     if (step === "metricool-clean") return await handleMetricoolClean(request);
@@ -602,11 +583,15 @@ async function handleMetricool(request: Request) {
   const media = [...rawMedia].sort(
     (a, b) => (PHASE_RANK[a.phase] ?? 1) - (PHASE_RANK[b.phase] ?? 1),
   );
-  const labelPhotos =
-    media.some((m) => m.phase === "before") &&
-    media.some((m) => m.phase === "after");
 
-  const imageUrls = await socialImageUrls(media, client, labelPhotos);
+  // A repost obeys the same marketer rules as a fresh post — finished work
+  // leads, before/after alternates, at most one during-install shot. Reposting
+  // in raw install order is how plywood ends up in front of a caption.
+  const plan = planSocialPost(media);
+  if (plan.hold) {
+    return Response.json({ error: `Not postable: ${plan.reason}` }, { status: 400 });
+  }
+  const imageUrls = plan.order.map((m) => jpgUrl(m.assetId)).filter(Boolean);
   const caption = doc.socialCaption ?? doc.title ?? "";
 
   // Repost default targets BOTH networks; build the TikTok slideshow whenever
@@ -718,23 +703,92 @@ interface MediaEntry {
   filename: string;
 }
 
-/** Assemble + publish the project from already-uploaded assets, then syndicate. */
+/**
+ * Build the caption for a given photo plan. The writer is told what the
+ * carousel actually contains, so the words can never describe photos that
+ * aren't in the post.
+ */
+async function buildCaption(
+  submission: JobSubmission,
+  media: MediaEntry[],
+  plan?: SocialPlan<MediaEntry>,
+): Promise<{ caption: string; plan: SocialPlan<MediaEntry> }> {
+  const resolved = plan ?? planSocialPost(media);
+  const brief = captionBrief(resolved);
+  const body =
+    (await polishCaption(submission, brief)) ?? deterministicBody(submission);
+  // A reveal gets an explicit swipe cue: slide one is the OLD roof, and with no
+  // burned-in labels (owner rule 2026-08-01) the caption is what says so.
+  const lead =
+    resolved.shape === "reveal"
+      ? `📸 Swipe to see the before and after 👉\n\n${body}`
+      : body;
+  return { caption: assembleCaption(submission, lead), plan: resolved };
+}
+
+/**
+ * Dry run: decide the post and write the caption WITHOUT publishing anything.
+ * Feeds the confirm screen so the owner sees the cover photo, the carousel
+ * order, and the words before a single platform is touched.
+ */
+async function handlePlan(request: Request) {
+  const { submission, media: rawMedia } = (await request.json()) as {
+    submission: JobSubmission;
+    media: MediaEntry[];
+  };
+  const media = [...rawMedia].sort(
+    (a, b) => (PHASE_RANK[a.phase] ?? 1) - (PHASE_RANK[b.phase] ?? 1),
+  );
+
+  // Let Claude look at the finished photos and pick the one that leads.
+  const afters = media.filter((m) => m.phase === "after");
+  const hero = afters.length
+    ? await pickHeroPhoto(afters.map((m) => jpgUrl(m.assetId)))
+    : { index: 0, note: undefined };
+
+  const plan = planSocialPost(media, hero.index);
+  const { caption } = await buildCaption(submission, media, plan);
+
+  return Response.json({
+    shape: plan.shape,
+    hold: plan.hold,
+    reason: plan.reason,
+    caption,
+    heroNote: hero.note,
+    heroAssetId: plan.hero?.assetId,
+    order: plan.order.map((m) => ({
+      assetId: m.assetId,
+      phase: m.phase,
+      url: jpgUrl(m.assetId),
+    })),
+    omitted: plan.omitted.map((m) => ({
+      assetId: m.assetId,
+      phase: m.phase,
+      url: jpgUrl(m.assetId),
+    })),
+  });
+}
+
+/** Assemble + publish the project from already-uploaded assets. Returns as soon
+ *  as the website is updated — social goes out one platform per request after
+ *  this, so no single invocation carries the whole fan-out. */
 async function handleCreate(request: Request) {
   const body = (await request.json()) as {
     submission: JobSubmission;
     media: MediaEntry[];
+    /** Approved on the confirm screen. */
+    caption?: string;
   };
   const { submission, media: rawMedia } = body;
   const client = getWriteClient();
   const jt = getJobType(submission.jobType);
 
-  // Order photos before -> during -> after everywhere (Sanity doc + social).
+  // Order photos before -> during -> after in the Sanity doc. The SOCIAL order
+  // is a separate decision made by planSocialPost (step=plan) — install order
+  // is right for the website and wrong for a feed.
   const media = [...rawMedia].sort(
     (a, b) => (PHASE_RANK[a.phase] ?? 1) - (PHASE_RANK[b.phase] ?? 1),
   );
-  const hasBefore = media.some((m) => m.phase === "before");
-  const hasAfter = media.some((m) => m.phase === "after");
-  const labelPhotos = hasBefore && hasAfter;
 
   const title = jobTitle(submission);
   const slug = `${slugify(title)}-${Date.now().toString(36).slice(-4)}`;
@@ -765,15 +819,9 @@ async function handleCreate(request: Request) {
     filename: m.filename,
   }));
 
-  // Polished caption: AI when a key is set, deterministic template otherwise.
-  // Never the owner's raw notes verbatim. Before/after jobs get an explicit
-  // "before & after" lead so viewers know the old roof isn't fresh work.
-  const aiBody =
-    (await polishCaption(submission)) ?? deterministicBody(submission);
-  const captionBody = labelPhotos
-    ? `📸 Swipe to see the BEFORE & AFTER 👉\n\n${aiBody}`
-    : aiBody;
-  const caption = assembleCaption(submission, captionBody);
+  // The caption was approved on the confirm screen; fall back to generating one
+  // only if this was called without going through step=plan.
+  const caption = body.caption ?? (await buildCaption(submission, media)).caption;
   const tags = jobTags(submission);
 
   const doc = await client.create({
@@ -791,106 +839,6 @@ async function handleCreate(request: Request) {
     featured: Boolean(submission.featured),
     socialCaption: caption,
   });
-
-  // Public CDN URLs for social fan-out (photos are hosted by Sanity now).
-  // Force JPEG — Instagram's publishing API rejects WebP/PNG. Before/after
-  // jobs get per-photo BEFORE/AFTER badges burned in.
-  const imageUrls = await socialImageUrls(media, client, labelPhotos);
-  const projectUrl = `${siteConfig.url}/projects`;
-
-  const results = await syndicate({ caption, imageUrls, title, projectUrl });
-
-  // TikTok rejects photo posts, so syndicate() skips it. Build the slideshow
-  // MP4 and post it to TikTok via Metricool as a video — best-effort and AFTER
-  // the other networks, so a slow or failed encode never blocks FB/IG/GBP or
-  // the upload itself. tiktokVideoUrl returns undefined on any failure.
-  const videoUrl = await tiktokVideoUrl(imageUrls, client);
-  if (videoUrl) {
-    for (const r of await postViaMetricool(
-      { text: caption, imageUrls, videoUrl },
-      ["tiktok"],
-    )) {
-      results.push({ platform: r.network, status: r.status, note: r.note });
-    }
-  } else {
-    results.push({
-      platform: "tiktok",
-      status: "skipped",
-      note: "Slideshow video could not be built",
-    });
-  }
-
-  // Record what happened on each platform (no-op targets show as "skipped").
-  await client
-    .patch(doc._id)
-    .set({
-      syndication: results.map((r) => ({
-        _key: randomUUID(),
-        _type: "syndicationTarget",
-        platform: r.platform,
-        status: r.status,
-        url: r.url,
-        postedAt: r.postedAt,
-        note: r.note,
-      })),
-    })
-    .commit();
-
-  // Also push the finished-work photos to the GBP *Photos gallery* (a separate
-  // surface from the Posts feed the syndicate() call above already hit). Env-
-  // gated OFF until the flag is confirmed live via step=gbp-photo, so this is a
-  // no-op for now and never blocks the upload. Prefer "after" photos; fall back
-  // to whatever we have.
-  let gallery: GbpPhotoResult[] | undefined;
-  if (metricoolGalleryEnabled()) {
-    const afterUrls = imageUrls.filter((_, i) => media[i]?.phase === "after");
-    gallery = await postGbpPhotos(afterUrls.length ? afterUrls : imageUrls);
-  }
-
-  // Tier 1: the OFFICIAL Google Business Profile API push — the finished-work
-  // photos to the Photos gallery AND one "Update" (photo + caption + Learn-more
-  // button to this job's project page). Prefers "after" photos. No-op until all
-  // five GBP env vars are set (gbpReady), so it never blocks the upload. Runs
-  // after the Sanity write so the project page the button links to already
-  // exists.
-  let gbp: GbpPostResult[] | undefined;
-  if (gbpReady()) {
-    const afterUrls = imageUrls.filter((_, i) => media[i]?.phase === "after");
-    gbp = await postJobToGbp({
-      summary: caption,
-      imageUrls: afterUrls.length ? afterUrls : imageUrls,
-      learnMoreUrl: `${siteConfig.url}/projects/${slug}`,
-    });
-    // Fold the GBP outcome into the syndication log under "google-business".
-    const now = new Date().toISOString();
-    const posted = gbp.some((r) => r.status === "posted");
-    const errored = gbp.find((r) => r.status === "error");
-    try {
-      const existing = ((await client.getDocument(doc._id)) as ProjectDoc)
-        ?.syndication as Array<Record<string, unknown>> | undefined;
-      const kept = (existing ?? []).filter(
-        (s) => s.platform !== "google-business",
-      );
-      await client
-        .patch(doc._id)
-        .set({
-          syndication: [
-            ...kept,
-            {
-              _key: randomUUID(),
-              _type: "syndicationTarget",
-              platform: "google-business",
-              status: posted ? "posted" : errored ? "error" : "skipped",
-              note: errored?.note,
-              postedAt: posted ? now : undefined,
-            },
-          ],
-        })
-        .commit();
-    } catch {
-      // Logging the outcome is best-effort — the posts already went out.
-    }
-  }
 
   // Regenerate the gallery now so the new job (and its filter) appear
   // immediately. revalidateTag purges the (fresh, non-CDN) project fetch cache
@@ -936,10 +884,129 @@ async function handleCreate(request: Request) {
     id: doc._id,
     title,
     slug,
-    url: projectUrl,
-    gallery,
-    gbp,
+    url: `${siteConfig.url}/projects`,
     indexnow,
     reviewRequest,
   });
+}
+
+/** Networks the /upload flow posts to, one request each, in this order. */
+const SOCIAL_STEPS = ["facebook", "instagram", "google", "tiktok"] as const;
+export type SocialStep = (typeof SOCIAL_STEPS)[number];
+
+/**
+ * Post ONE platform for an already-published job, then log the outcome on the
+ * document. Splitting the fan-out this way is the fix for 2026-07-31, when a
+ * single request tried to carry Facebook, Instagram, Google, and a TikTok video
+ * encode, blew its 60-second budget partway through Instagram, and left no
+ * record that the other three had never run.
+ */
+async function handleSocial(request: Request) {
+  const {
+    id,
+    platform,
+    caption,
+    slug,
+    order,
+    heroAssetId,
+  } = (await request.json()) as {
+    id: string;
+    platform: SocialStep;
+    caption: string;
+    slug: string;
+    order: { assetId: string }[];
+    heroAssetId?: string;
+  };
+
+  if (!id || !platform || !SOCIAL_STEPS.includes(platform)) {
+    return Response.json({ error: "Bad platform request" }, { status: 400 });
+  }
+
+  const client = getWriteClient();
+  const imageUrls = (order ?? []).map((m) => jpgUrl(m.assetId)).filter(Boolean);
+  if (imageUrls.length === 0) {
+    return Response.json(await log("skipped", "No photos in the plan"));
+  }
+
+  const title = "";
+  const projectUrl = `${siteConfig.url}/projects/${slug}`;
+  let result: { platform: string; status: string; url?: string; note?: string };
+
+  if (platform === "facebook" || platform === "instagram") {
+    result = await postToMeta(platform, {
+      caption,
+      imageUrls,
+      title,
+      projectUrl,
+    });
+  } else if (platform === "google") {
+    // Google shows ONE photo with no swipe, so it gets the hero — the finished
+    // roof Claude picked — never a "before".
+    const heroUrl = heroAssetId ? jpgUrl(heroAssetId) : imageUrls[0];
+    if (!gbpReady()) {
+      result = { platform: "google-business", status: "skipped", note: "Not connected" };
+    } else {
+      const gbp = await postJobToGbp({
+        summary: caption,
+        imageUrls: [heroUrl],
+        learnMoreUrl: projectUrl,
+      });
+      const errored = gbp.find((r) => r.status === "error");
+      result = {
+        platform: "google-business",
+        status: gbp.some((r) => r.status === "posted")
+          ? "posted"
+          : errored
+            ? "error"
+            : "skipped",
+        note: errored?.note,
+      };
+    }
+  } else {
+    // TikTok rejects photo posts, so the carousel becomes a slideshow MP4. This
+    // is the single most expensive step in the pipeline, which is exactly why
+    // it now owns its own request instead of running behind everything else.
+    const videoUrl = await tiktokVideoUrl(imageUrls, client);
+    if (!videoUrl) {
+      result = {
+        platform: "tiktok",
+        status: "skipped",
+        note: "Slideshow video could not be built",
+      };
+    } else {
+      const [r] = await postViaMetricool(
+        { text: caption, imageUrls, videoUrl },
+        ["tiktok"],
+      );
+      result = { platform: "tiktok", status: r.status, note: r.note };
+    }
+  }
+
+  return Response.json(await log(result.status, result.note, result.url));
+
+  /** Replace this platform's row in the syndication log, keeping the others. */
+  async function log(status: string, note?: string, url?: string) {
+    const entry = {
+      _key: randomUUID(),
+      _type: "syndicationTarget",
+      platform: platform === "google" ? "google-business" : platform,
+      status,
+      url,
+      note,
+      postedAt: status === "posted" ? new Date().toISOString() : undefined,
+    };
+    try {
+      const existing = ((await client.getDocument(id)) as ProjectDoc)
+        ?.syndication as Array<Record<string, unknown>> | undefined;
+      const kept = (existing ?? []).filter((s) => s.platform !== entry.platform);
+      await client
+        .patch(id)
+        .set({ syndication: [...kept, entry] })
+        .commit();
+    } catch {
+      // Logging is best-effort — the post itself already went out (or didn't),
+      // and the client is told either way.
+    }
+    return { platform: entry.platform, status, note, url };
+  }
 }
