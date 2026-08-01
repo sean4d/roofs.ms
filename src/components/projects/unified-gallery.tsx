@@ -2,7 +2,13 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, MapPin, X } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  MapPin,
+  SlidersHorizontal,
+  X,
+} from "lucide-react";
 
 import {
   hidesColor,
@@ -87,6 +93,7 @@ export function UnifiedGallery({ jobs }: { jobs: GalleryJob[] }) {
   const [color, setColor] = useState<string | null>(null);
   const [storm, setStorm] = useState<string | null>(null);
   const [showHiddenColors, setShowHiddenColors] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const [openJob, setOpenJob] = useState<{
     job: GalleryJob;
     photoId: string;
@@ -154,7 +161,15 @@ export function UnifiedGallery({ jobs }: { jobs: GalleryJob[] }) {
     [filtered],
   );
 
-  const hasFilters = Boolean(city || product || color || storm);
+  const activeCount = [city, product, color, storm].filter(Boolean).length;
+  const hasFilters = activeCount > 0;
+
+  function clearFilters() {
+    setCity(null);
+    setProduct(null);
+    setColor(null);
+    setStorm(null);
+  }
 
   return (
     <div>
@@ -179,8 +194,42 @@ export function UnifiedGallery({ jobs }: { jobs: GalleryJob[] }) {
         </div>
       )}
 
+      {/* Filter toggle. The chip lists run to ~50 entries across city, product
+          and color, which on a phone is roughly two and a half screens of
+          scrolling before a single roof appears (owner report 2026-08-01).
+          Collapsed by default: the gallery is the point, filters are the tool.
+          Any active filter keeps the panel open so a filtered view never looks
+          unexplained. */}
+      <div className="flex flex-wrap items-center gap-3">
+        <button
+          type="button"
+          onClick={() => setFiltersOpen((o) => !o)}
+          aria-expanded={filtersOpen}
+          className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-2 text-sm font-semibold text-navy-900"
+        >
+          <SlidersHorizontal className="size-4 text-steel-500" aria-hidden="true" />
+          {filtersOpen ? "Hide filters" : "Filter photos"}
+          {activeCount > 0 && (
+            <span className="rounded-full bg-navy-900 px-2 py-0.5 text-xs font-bold text-white">
+              {activeCount}
+            </span>
+          )}
+        </button>
+        {hasFilters && (
+          <button
+            type="button"
+            onClick={clearFilters}
+            className="text-sm font-medium text-steel-500 underline underline-offset-4"
+          >
+            Clear
+          </button>
+        )}
+      </div>
+
       {/* Filters */}
-      <div className="flex flex-col gap-4">
+      <div
+        className={cn("mt-4 flex-col gap-4", filtersOpen ? "flex" : "hidden")}
+      >
         {cities.length > 1 && (
           <FilterRow label="City">
             {cities.map((c) => (
@@ -261,12 +310,7 @@ export function UnifiedGallery({ jobs }: { jobs: GalleryJob[] }) {
         {hasFilters && (
           <button
             type="button"
-            onClick={() => {
-              setCity(null);
-              setProduct(null);
-              setColor(null);
-              setStorm(null);
-            }}
+            onClick={clearFilters}
             className="self-start text-sm font-medium text-steel-500 underline underline-offset-4"
           >
             Clear filters
