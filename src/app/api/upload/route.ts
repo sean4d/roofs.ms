@@ -116,8 +116,33 @@ function jpgUrl(assetId: string): string {
  * (behind the same passphrase as the rest of /api/upload) — every other step
  * mutates something and stays POST-only.
  */
+/**
+ * Which deployment is serving right now. The /upload page compares this at
+ * submit time against what it saw on load: if they differ, the tab is running
+ * JavaScript from an older build and must reload before posting.
+ *
+ * This is not theoretical. On 2026-08-01 a tab left open from before a deploy
+ * submitted a job using the previous bundle — which posts straight to
+ * step=create and knows nothing about the confirm screen or step=social. The
+ * server published the job correctly, so it looked like a success, but no
+ * platform was ever contacted and the owner never saw the checklist.
+ */
+function deploymentId(): string {
+  return (
+    process.env.VERCEL_DEPLOYMENT_ID ??
+    process.env.VERCEL_GIT_COMMIT_SHA ??
+    "dev"
+  );
+}
+
 export async function GET(request: Request) {
   const step = new URL(request.url).searchParams.get("step");
+  if (step === "version") {
+    return Response.json(
+      { id: deploymentId() },
+      { headers: { "cache-control": "no-store" } },
+    );
+  }
   if (step === "check") {
     try {
       return await handleCheck();
@@ -127,7 +152,7 @@ export async function GET(request: Request) {
     }
   }
   return Response.json(
-    { error: "GET supports ?step=check only" },
+    { error: "GET supports ?step=check and ?step=version only" },
     { status: 400 },
   );
 }
