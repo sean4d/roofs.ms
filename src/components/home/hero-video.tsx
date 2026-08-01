@@ -3,21 +3,29 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Mobile hero background video (owner request 2026-08-01). Real footage of
- * completed roofs, layered OVER the hero photograph rather than replacing it.
+ * Mobile hero background video (owner request 2026-08-01), layered OVER the
+ * hero photograph rather than replacing it.
  *
- * Everything here is designed so the hero is never worse than it is today:
+ * CURRENT CLIP: GAF shingle-colour footage from the manufacturer's contractor
+ * marketing library — we are a GAF certified contractor showing GAF products we
+ * install. It is decorative and unlabelled, so it never reads as a claim about
+ * our own job sites; that promise ("no stock photography pretends to be our
+ * work") belongs to the project gallery, which remains 100% our own photos.
+ * TO REPLACE (owner plans to, once his drone arrives): drop new files at
+ * public/videos/hero-background.{webm,mp4}. Nothing else needs touching.
+ *
+ * Everything here is designed so the hero is never worse than it is without it:
  *
  *  • The photo underneath stays the LCP element and keeps its priority load.
- *    The video carries preload="none" and gets its src only after mount, so it
- *    cannot compete for bandwidth during first paint.
- *  • It plays ONCE and fades back to the photo. The clip opens on a grey roof
- *    over green lawn and ends on a tan roof under cloud — looping would hard-cut
- *    between the two. One pass also stops burning battery on a page someone may
- *    sit on while they read.
+ *    The video mounts 400ms after paint, so it cannot compete for bandwidth
+ *    during first render.
+ *  • It loops. Every transition in this clip is already a cut between different
+ *    roofs, so the seam back to the first frame reads like any other. (A clip
+ *    with a narrative arc should play once and fade out instead — see git
+ *    history for that variant.)
  *  • It is skipped entirely on desktop (the clip is 9:16), when the viewer
  *    prefers reduced motion, on Save-Data, and on 2G/3G. Roofing customers read
- *    this page on cellular in rural Mississippi; 1.3MB is not worth forcing on
+ *    this page on cellular in rural Mississippi; ~1.5MB is not worth forcing on
  *    a slow connection.
  *
  * If any of that fails, nothing renders and the hero is exactly the hero.
@@ -25,8 +33,8 @@ import { useEffect, useRef, useState } from "react";
 
 /** WebM first (smaller on Chrome/Android), H.264 for Safari and iOS. */
 const SOURCES = [
-  { src: "/videos/hero-roof-recap.webm", type: "video/webm" },
-  { src: "/videos/hero-roof-recap.mp4", type: "video/mp4" },
+  { src: "/videos/hero-background.webm", type: "video/webm" },
+  { src: "/videos/hero-background.mp4", type: "video/mp4" },
 ];
 
 interface NetworkInfo {
@@ -78,11 +86,11 @@ export function HeroVideo() {
           .catch(() => setShow(false));
       }}
       muted
+      loop
       playsInline
       preload="auto"
       aria-hidden="true"
       tabIndex={-1}
-      onEnded={() => setVisible(false)}
       onError={() => setShow(false)}
       className={`absolute inset-0 size-full object-cover transition-opacity duration-[1200ms] ease-out lg:hidden ${
         visible ? "opacity-100" : "opacity-0"
