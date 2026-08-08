@@ -107,3 +107,25 @@ export async function getProjectSlugs(): Promise<string[]> {
     return [];
   }
 }
+
+/**
+ * Slug + last-edit timestamp for every published project, for the sitemap's
+ * <lastmod>. Separate from getProjectSlugs because generateStaticParams wants
+ * bare slugs and shouldn't pay for a field it ignores.
+ */
+export async function getProjectSitemapEntries(): Promise<
+  Array<{ slug: string; updatedAt: string }>
+> {
+  try {
+    return await freshClient.fetch(
+      `*[_type == "project" && defined(slug.current) && !(_id in path("drafts.**"))]{
+        "slug": slug.current,
+        "updatedAt": _updatedAt
+      }`,
+      {},
+      { next: { revalidate: 600, tags: [PROJECTS_TAG] } },
+    );
+  } catch {
+    return [];
+  }
+}
