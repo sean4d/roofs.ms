@@ -40,6 +40,34 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/api/upload": ["./node_modules/@ffmpeg-installer/**/*"],
   },
+  /**
+   * Google was crawling the generated Open Graph image and the favicon as if
+   * they were pages, then filing both under "Crawled, currently not indexed"
+   * (Search Console, 2026-08-07). They are assets: nothing to index, and every
+   * fetch is crawl budget spent on a URL that can never rank. noindex tells
+   * Google to stop treating them as candidates. Social scrapers ignore
+   * X-Robots-Tag, so link previews are unaffected.
+   */
+  async headers() {
+    return [
+      {
+        source: "/opengraph-image",
+        headers: [{ key: "X-Robots-Tag", value: "noindex" }],
+      },
+      {
+        source: "/favicon.ico",
+        headers: [{ key: "X-Robots-Tag", value: "noindex" }],
+      },
+      {
+        source: "/apple-icon.png",
+        headers: [{ key: "X-Robots-Tag", value: "noindex" }],
+      },
+      {
+        source: "/icon.svg",
+        headers: [{ key: "X-Robots-Tag", value: "noindex" }],
+      },
+    ];
+  },
   // Permanent (301/308) redirects from legacy Wix URLs Google still has
   // indexed to the closest equivalent page — preserves SEO equity and keeps
   // old search-result clicks off the 404 page. Add more here as Search
