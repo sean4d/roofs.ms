@@ -238,6 +238,7 @@ export const siteConfig = {
     { city: "Ellisville", slug: "ellisville", tier: 2, hub: false },
     { city: "Richton", slug: "richton", tier: 2, hub: false },
     { city: "Waynesboro", slug: "waynesboro", tier: 2, hub: false },
+    { city: "Leakesville", slug: "leakesville", tier: 2, hub: false },
     { city: "Columbia", slug: "columbia", tier: 2, hub: false },
     // South toward the Coast
     { city: "Poplarville", slug: "poplarville", tier: 2, hub: false },
