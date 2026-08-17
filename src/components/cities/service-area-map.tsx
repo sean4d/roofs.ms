@@ -29,6 +29,7 @@ const CITIES: MapCity[] = [
   { name: "Collins", lat: 31.65, lon: -89.56 },
   { name: "Ellisville", lat: 31.6, lon: -89.2 },
   { name: "Richton", lat: 31.35, lon: -88.94 },
+  { name: "Leakesville", lat: 31.15, lon: -88.56 },
   { name: "Columbia", lat: 31.25, lon: -89.84 },
   { name: "Poplarville", lat: 30.84, lon: -89.53 },
   { name: "Wiggins", lat: 30.86, lon: -89.14 },

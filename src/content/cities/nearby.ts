@@ -44,7 +44,7 @@ const REGIONS: string[][] = [
   // I-55 southwest corridor
   ["columbia", "mccomb", "brookhaven", "crystal-springs", "jackson"],
   // East Mississippi
-  ["lucedale", "waynesboro", "meridian"],
+  ["lucedale", "leakesville", "waynesboro", "meridian"],
 ];
 
 /** Approximate the drive-time strings to minutes for proximity ordering. */
