@@ -9,6 +9,7 @@
  */
 
 import { postViaMetricool } from "@/lib/metricool";
+import { facebookMessage } from "@/lib/facebook-caption";
 
 const GRAPH = "https://graph.facebook.com/v21.0";
 
@@ -37,6 +38,18 @@ export interface SyndicationResult {
 
 function form(fields: Record<string, string>): URLSearchParams {
   return new URLSearchParams(fields);
+}
+
+/**
+ * Scrub any access token out of text before it becomes a stored note.
+ *
+ * Graph error messages don't carry tokens, but the health probes build GET
+ * URLs that do, and a transport-level failure can surface the URL it was
+ * fetching. Syndication notes are written to Sanity and rendered in the
+ * /upload panel, so nothing that ever held a token gets logged unfiltered.
+ */
+export function redact(text: string): string {
+  return text.replace(/access_token=[^&\s]+/gi, "access_token=REDACTED");
 }
 
 async function graph(
@@ -121,22 +134,66 @@ async function getPageToken(): Promise<string> {
   return data.access_token;
 }
 
-/** Facebook Page: upload photos unpublished, then one feed post with the caption. */
+/**
+ * Facebook Page publisher.
+ *
+ * ONE photo takes the native path: POST /{page-id}/photos with the caption and
+ * published=true, which is what Meta documents for a single photo and what the
+ * Page composer does by hand. It creates a Photo object (returning both `id`
+ * and `post_id`), so the post lands in the Page's Photos tab and Timeline
+ * Photos album like any manually uploaded shot.
+ *
+ * Until 2026-08-08 a single photo went the multi-photo route instead: upload
+ * unpublished, then reference it from /feed via attached_media. That publishes,
+ * but it builds a feed story with an attachment rather than a photo upload, so
+ * a one-photo job post was never the same object a human post produces.
+ *
+ * MORE than one photo still uses attached_media, because that is the only
+ * method Meta supports for a multi-photo Page post.
+ *
+ * The caption is adapted for Facebook first (see facebookMessage): the
+ * auto-appended booking URL comes off and the hashtag block is trimmed. Link
+ * posts get materially less organic reach than native photo posts, and a
+ * roofing job photo was never trying to earn a click.
+ */
 async function postToFacebook(
   input: SyndicationInput,
   pageToken: string,
 ): Promise<SyndicationResult> {
   const pageId = process.env.META_PAGE_ID!;
   const now = new Date().toISOString();
-  if (input.imageUrls.length === 0) {
+  const urls = input.imageUrls;
+  if (urls.length === 0) {
     return { platform: "facebook", status: "skipped", note: "No photos" };
+  }
+
+  const message = facebookMessage(input.caption);
+
+  if (urls.length === 1) {
+    const d = await graphRetry(`${pageId}/photos`, {
+      url: urls[0],
+      caption: message,
+      published: "true",
+      access_token: pageToken,
+    });
+    // /photos returns the photo id AND the id of the post it created. The
+    // post_id is the one that resolves to a viewable permalink.
+    const photoId = String(d.id ?? "");
+    const postId = String(d.post_id ?? d.id ?? "");
+    return {
+      platform: "facebook",
+      status: "posted",
+      url: `https://facebook.com/${postId}`,
+      note: `Native photo post. post_id=${postId} photo_id=${photoId}`,
+      postedAt: now,
+    };
   }
 
   // Two at a time, with backoff. All-at-once was rejected outright by Meta's
   // throttle; one-at-a-time was what starved the rest of the fan-out back when
   // a single request carried every platform. Two is fast enough now that
   // Facebook owns its own request.
-  const mediaIds = await mapPool(input.imageUrls, 2, async (url) => {
+  const mediaIds = await mapPool(urls, 2, async (url) => {
     const d = await graphRetry(`${pageId}/photos`, {
       url,
       published: "false",
@@ -145,7 +202,7 @@ async function postToFacebook(
     return String(d.id);
   });
 
-  const params: Record<string, string> = { message: input.caption, access_token: pageToken };
+  const params: Record<string, string> = { message, access_token: pageToken };
   mediaIds.forEach((id, i) => {
     params[`attached_media[${i}]`] = JSON.stringify({ media_fbid: id });
   });
@@ -155,6 +212,7 @@ async function postToFacebook(
     platform: "facebook",
     status: "posted",
     url: `https://facebook.com/${postId}`,
+    note: `Multi-photo post, ${mediaIds.length} photos. post_id=${postId}`,
     postedAt: now,
   };
 }
@@ -254,7 +312,7 @@ export async function diagnoseMeta(): Promise<{
     return {
       ...base,
       pageTokenResolves: false,
-      note: err instanceof Error ? err.message : "Page token error",
+      note: redact(err instanceof Error ? err.message : "Page token error"),
     };
   }
 
@@ -291,7 +349,7 @@ export async function diagnoseMeta(): Promise<{
     if (!data.username) out.note = data.error?.message ?? "Instagram did not resolve";
   } catch (err) {
     out.igAccountResolves = false;
-    out.note = err instanceof Error ? err.message : "Instagram probe failed";
+    out.note = redact(err instanceof Error ? err.message : "Instagram probe failed");
   }
 
   return out;
@@ -322,7 +380,7 @@ export async function postToMeta(
     return {
       platform,
       status: "error",
-      note: err instanceof Error ? err.message : "Token error",
+      note: redact(err instanceof Error ? err.message : "Token error"),
     };
   }
   return safe(platform, () =>
@@ -350,7 +408,7 @@ export async function syndicate(
     try {
       pageToken = await getPageToken();
     } catch (err) {
-      const note = err instanceof Error ? err.message : "Token error";
+      const note = redact(err instanceof Error ? err.message : "Token error");
       results.push({ platform: "facebook", status: "error", note });
       results.push({ platform: "instagram", status: "error", note });
     }
@@ -397,7 +455,7 @@ async function safe(
     return {
       platform,
       status: "error",
-      note: err instanceof Error ? err.message : "Unknown error",
+      note: redact(err instanceof Error ? err.message : "Unknown error"),
     };
   }
 }
