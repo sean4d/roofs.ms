@@ -2,32 +2,40 @@ import { getWriteClient } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { siteConfig } from "@/config/site";
 import { gbpReady, createGbpUpdate } from "@/lib/gbp";
+import {
+  EVERGREEN,
+  TOPICS,
+  generateUpdate,
+  loadState,
+  nextUnused,
+  saveState,
+} from "@/lib/gbp-content";
 
 /**
- * Weekly Google Business Profile "Update", keeps the profile active between
- * job uploads (an active profile ranks better and reads as a real, working
- * business). Triggered by Vercel Cron (see vercel.json). Posts one rotating
- * evergreen message with the latest finished-job photo and a "Learn more"
- * button to the free-inspection page.
+ * Weekly Google Business Profile Update. An active profile ranks better and
+ * reads as a real, working business, so this keeps something going out between
+ * job uploads. Triggered by Vercel Cron (see vercel.json).
  *
- * Auth, when CRON_SECRET is set, Vercel Cron sends it as a Bearer token and we
- * require it; with no secret set it runs unauthenticated (fine to start, but
- * set CRON_SECRET in Vercel to lock it down). No-op until GBP is connected.
+ * Rewritten 2026-08-21. The first version always took the newest project and
+ * its first finished photo, so any week without a new upload reposted the same
+ * image: three consecutive Updates on the profile looked identical. Now the
+ * photo rotates across every project we have and does not repeat until the
+ * whole library has been used, and the copy runs the evergreen set first then
+ * switches to AI-written industry updates so it never runs dry.
+ *
+ * Auth: when CRON_SECRET is set, Vercel Cron sends it as a Bearer token and we
+ * require it. No-op until GBP is connected.
  */
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-export const maxDuration = 30;
+export const maxDuration = 60;
 
-/** Rotating, evergreen messages (no dated claims) suited to South Mississippi. */
-const MESSAGES = [
-  "Roof been through a few Mississippi summers? A free inspection tells you honestly whether you need a repair, a replacement, or nothing yet, with photos to back it up. No pressure, no obligation.",
-  "Storm season is a fact of life here. The best time to check your roof is before the next system. We document everything so you're covered if a claim ever comes. Book a free inspection anytime.",
-  "Thinking about metal vs. shingle? We install both across South Mississippi and will quote them side by side from one free inspection, so you decide with real numbers, not averages off the internet.",
-  "Every roof we build is priced line by line: shingle, underlayment, flashing, disposal, so you see exactly what you're paying for. Nothing pre-checked, no surprises. Ask us for an itemized proposal.",
-  "Licensed (MSBOC #R22245), GAF-certified, BBB A+ rated, and 5-star reviewed on Google, and still here after the storm-chasers leave. Get a free, no-obligation roof inspection from a local crew.",
-  "Missing shingles, a ceiling stain, or granules in the gutter? Those small signs are cheapest to fix early. Send us a photo or book a free inspection and we'll tell you straight what's going on.",
-];
+interface PhotoRow {
+  assetId: string;
+  slug?: string;
+  phase?: string;
+}
 
 export async function GET(request: Request) {
   const secret = process.env.CRON_SECRET;
@@ -38,32 +46,98 @@ export async function GET(request: Request) {
     }
   }
 
-  if (!gbpReady()) {
+  const url = new URL(request.url);
+  const dryRun = url.searchParams.get("dry") === "1";
+
+  if (!gbpReady() && !dryRun) {
     return Response.json({ ok: false, note: "GBP not connected, skipped" });
   }
 
-  // Rotate the message by ISO week so consecutive weeks differ.
-  const week = Math.floor(Date.now() / (7 * 86_400_000));
-  const summary = MESSAGES[week % MESSAGES.length];
+  const client = getWriteClient();
+  const state = await loadState(client);
 
-  // Pair it with the most recent finished-job photo, if we have one.
-  let imageUrl: string | undefined;
+  // ── Photo: every finished shot we have, oldest project first ──────────────
+  // Finished work only. A "before" or a mid-tear-off photo is the wrong thing
+  // to lead a business profile with.
+  let photos: PhotoRow[] = [];
   try {
-    const doc = (await getWriteClient().fetch(
-      `*[_type == "project"] | order(_createdAt desc)[0]{ media }`,
-    )) as { media?: Array<{ phase?: string; image?: { asset?: { _ref?: string } } }> } | null;
-    const media = doc?.media ?? [];
-    const ref =
-      media.find((m) => m.phase === "after")?.image?.asset?._ref ??
-      media[0]?.image?.asset?._ref;
-    if (ref) {
-      imageUrl = urlFor({ _type: "image", asset: { _type: "reference", _ref: ref } })
-        .width(1200)
-        .format("jpg")
-        .url();
-    }
+    photos = (await client.fetch(
+      `*[_type == "project" && defined(media)] | order(_createdAt asc){
+         "slug": slug.current,
+         "media": media[]{ phase, "assetId": image.asset._ref }
+       }[].media[]{ ..., "slug": ^.slug }`,
+    )) as PhotoRow[];
   } catch {
-    // Photo is optional, post text-only if the fetch fails.
+    photos = [];
+  }
+  const finished = photos.filter((p) => p?.assetId && p.phase === "after");
+  const pool = finished.length ? finished : photos.filter((p) => p?.assetId);
+
+  let imageUrl: string | undefined;
+  let photoId: string | undefined;
+  let photoCycled = false;
+  if (pool.length) {
+    const picked = nextUnused(pool, state.usedPhotoIds ?? [], (p) => p.assetId);
+    photoCycled = picked.exhausted;
+    photoId = picked.item.assetId;
+    imageUrl = urlFor({
+      _type: "image",
+      asset: { _type: "reference", _ref: photoId },
+    })
+      .width(1200)
+      .format("jpg")
+      .url();
+  }
+
+  // ── Copy: evergreen set first, then AI industry updates ───────────────────
+  const usedTopics = state.usedTopics ?? [];
+  const evergreenKeys = EVERGREEN.map((_, i) => `evergreen:${i}`);
+  const unusedEvergreen = evergreenKeys.filter((k) => !usedTopics.includes(k));
+
+  let summary: string;
+  let topicKey: string;
+  let source: "evergreen" | "ai";
+
+  if (unusedEvergreen.length) {
+    topicKey = unusedEvergreen[0];
+    summary = EVERGREEN[Number(topicKey.split(":")[1])];
+    source = "evergreen";
+  } else {
+    const picked = nextUnused(
+      TOPICS.map((t) => ({ t })),
+      usedTopics.map((k) => k.replace(/^ai:/, "")),
+      (x) => x.t,
+    );
+    const topic = picked.item.t;
+    topicKey = `ai:${topic}`;
+    const written = await generateUpdate(topic);
+    if (written) {
+      summary = written;
+      source = "ai";
+    } else {
+      // No API key or the model failed: fall back to the evergreen message
+      // used longest ago rather than skipping the week entirely.
+      const idx = (state.postCount ?? 0) % EVERGREEN.length;
+      summary = EVERGREEN[idx];
+      topicKey = `evergreen:${idx}`;
+      source = "evergreen";
+    }
+  }
+
+  if (dryRun) {
+    return Response.json({
+      ok: true,
+      dryRun: true,
+      source,
+      topicKey,
+      summary,
+      photoId,
+      imageUrl,
+      photoCycled,
+      poolSize: pool.length,
+      alreadyUsedPhotos: (state.usedPhotoIds ?? []).length,
+      postCount: state.postCount ?? 0,
+    });
   }
 
   const result = await createGbpUpdate({
@@ -72,5 +146,19 @@ export async function GET(request: Request) {
     learnMoreUrl: `${siteConfig.url}/free-inspection`,
   });
 
-  return Response.json({ ok: result.status !== "error", result });
+  // Only burn the photo and topic if the post actually landed, so a failed
+  // week does not silently consume the next item in the rotation.
+  if (result.status === "posted") {
+    await saveState(client, state, photoId, topicKey);
+  }
+
+  return Response.json({
+    ok: result.status !== "error",
+    source,
+    topicKey,
+    photoId,
+    photoCycled,
+    poolSize: pool.length,
+    result,
+  });
 }

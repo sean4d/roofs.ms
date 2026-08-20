@@ -50,6 +50,8 @@ import {
   postJobToGbp,
   uploadGbpPhotos,
   createGbpUpdate,
+  listGbpPosts,
+  deleteGbpPost,
 } from "@/lib/gbp";
 
 export const runtime = "nodejs";
@@ -169,6 +171,8 @@ export async function POST(request: Request) {
     if (step === "metricool") return await handleMetricool(request);
     if (step === "metricool-clean") return await handleMetricoolClean(request);
     if (step === "gbp-photo") return await handleGbpPhoto(request);
+    if (step === "gbp-posts") return await handleGbpPosts();
+    if (step === "gbp-delete") return await handleGbpDelete(request);
     if (step === "gbp") return await handleGbp(request);
     if (step === "gbp-auth") return await handleGbpAuth(request);
     if (step === "gbp-backfill") return await handleGbpBackfill(request);
@@ -251,6 +255,36 @@ async function handleDedash(request: Request) {
     documents: docs.length,
     changes,
   });
+}
+
+/**
+ * List the profile's Updates so a bad or repeated post can be found and
+ * removed. Read-only.
+ */
+async function handleGbpPosts() {
+  const posts = await listGbpPosts(30);
+  return Response.json({
+    count: posts.length,
+    posts: posts.map((p) => ({
+      name: p.name,
+      createTime: p.createTime,
+      summary: (p.summary ?? "").slice(0, 90),
+      photos: p.mediaUrls.length,
+    })),
+  });
+}
+
+/**
+ * Delete one Update by resource name.
+ *
+ * Google does not allow the photo on a live post to be changed: localPosts
+ * accepts media only at create time. Replacing an image therefore means
+ * deleting the post and publishing a new one.
+ */
+async function handleGbpDelete(request: Request) {
+  const { name } = (await request.json()) as { name?: string };
+  if (!name) return Response.json({ error: "name required" }, { status: 400 });
+  return Response.json(await deleteGbpPost(name));
 }
 
 /** Delete a project by id (password-gated via proxy). For removing a bad or

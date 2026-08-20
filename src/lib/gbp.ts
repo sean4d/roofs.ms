@@ -529,3 +529,69 @@ export async function postJobToGbp(input: {
   for (const r of await uploadGbpPhotos(input.imageUrls)) results.push(r);
   return results;
 }
+
+// ── Managing existing Updates ───────────────────────────────────────────────
+
+export interface GbpLocalPost {
+  /** Full resource name, e.g. accounts/1/locations/2/localPosts/3. Needed to delete. */
+  name: string;
+  summary?: string;
+  createTime?: string;
+  /** Google-hosted URLs, NOT the Sanity URLs we submitted. */
+  mediaUrls: string[];
+}
+
+/**
+ * List the profile's Updates, newest first.
+ *
+ * Note the media URLs come back rehosted by Google, so they cannot be matched
+ * against the Sanity asset we uploaded. Anything that needs to know which of
+ * OUR photos has been used has to track that itself.
+ */
+export async function listGbpPosts(limit = 20): Promise<GbpLocalPost[]> {
+  if (!gbpReady()) return [];
+  try {
+    const res = await gbpFetch(
+      `${V4}/${locationParent()}/localPosts?pageSize=${Math.min(limit, 100)}`,
+    );
+    if (!res.ok) return [];
+    const body = res.body as {
+      localPosts?: Array<{
+        name?: string;
+        summary?: string;
+        createTime?: string;
+        media?: Array<{ googleUrl?: string; sourceUrl?: string }>;
+      }>;
+    };
+    return (body.localPosts ?? []).map((p) => ({
+      name: p.name ?? "",
+      summary: p.summary,
+      createTime: p.createTime,
+      mediaUrls: (p.media ?? [])
+        .map((m) => m.googleUrl ?? m.sourceUrl ?? "")
+        .filter(Boolean),
+    }));
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Delete one Update by resource name.
+ *
+ * Deleting is the only way to change the photo on a post that is already live:
+ * localPosts.patch does not accept media edits, so a wrong or repeated image
+ * has to be removed and replaced with a new post.
+ */
+export async function deleteGbpPost(
+  name: string,
+): Promise<{ ok: boolean; note?: string }> {
+  if (!gbpReady()) return { ok: false, note: "Not connected" };
+  try {
+    const res = await gbpFetch(`${V4}/${name}`, { method: "DELETE" });
+    if (!res.ok) return { ok: false, note: `HTTP ${res.status}` };
+    return { ok: true };
+  } catch (err) {
+    return { ok: false, note: err instanceof Error ? err.message : "failed" };
+  }
+}
