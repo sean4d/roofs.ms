@@ -23,6 +23,14 @@ import type { PhaseKey } from "@/config/job-taxonomy";
  * So this sweeper runs server side and finishes the job. It only ever fills in
  * a platform with NO existing row, which means it cannot double-post: a job
  * already on Facebook keeps exactly one Facebook post.
+ *
+ * SCHEDULE: daily, NOT hourly. Vercel's Hobby plan caps cron jobs at once per
+ * day and rejects the whole deployment when a schedule breaks that rule, so an
+ * hourly entry here silently kills every deploy (it did, 2026-08-20). If the
+ * account moves to Pro this can go back to hourly for faster recovery.
+ *
+ * It can also be run by hand from a phone with the /upload passphrase, for when
+ * a checklist visibly stalls and waiting until tomorrow is not good enough.
  */
 
 export const runtime = "nodejs";
@@ -56,13 +64,32 @@ interface ProjectRow {
   syndication?: Array<{ platform?: string; status?: string }>;
 }
 
-export async function GET(request: Request) {
+/**
+ * Two callers, two credentials: Vercel Cron sends CRON_SECRET as a Bearer
+ * token, and the owner can trigger a run by hand with the same Basic auth
+ * passphrase the /upload page uses.
+ */
+function authorized(request: Request): boolean {
+  const auth = request.headers.get("authorization") ?? "";
   const secret = process.env.CRON_SECRET;
-  if (secret) {
-    const auth = request.headers.get("authorization");
-    if (auth !== `Bearer ${secret}`) {
-      return new Response("Unauthorized", { status: 401 });
+  if (secret && auth === `Bearer ${secret}`) return true;
+  if (auth.startsWith("Basic ")) {
+    try {
+      const decoded = atob(auth.slice(6));
+      const pass = process.env.UPLOAD_PASSWORD || "roofroof";
+      const [user, given] = decoded.split(":");
+      if (given === pass || user === pass) return true;
+    } catch {
+      // fall through to unauthorized
     }
+  }
+  // With no secret configured at all, Vercel Cron still has to get in.
+  return !secret;
+}
+
+export async function GET(request: Request) {
+  if (!authorized(request)) {
+    return new Response("Unauthorized", { status: 401 });
   }
 
   const url = new URL(request.url);
