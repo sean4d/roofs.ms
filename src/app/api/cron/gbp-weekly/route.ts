@@ -23,8 +23,10 @@ import {
  * whole library has been used, and the copy runs the evergreen set first then
  * switches to AI-written industry updates so it never runs dry.
  *
- * Auth: when CRON_SECRET is set, Vercel Cron sends it as a Bearer token and we
- * require it. No-op until GBP is connected.
+ * Auth: Vercel Cron sends CRON_SECRET as a Bearer token. The /upload passphrase
+ * is also accepted over Basic auth, so the rotation can be inspected by hand
+ * with ?dry=1 before a week's post actually goes out. No-op until GBP is
+ * connected.
  */
 
 export const runtime = "nodejs";
@@ -37,13 +39,26 @@ interface PhotoRow {
   phase?: string;
 }
 
-export async function GET(request: Request) {
+/** Vercel Cron's Bearer token, or the same passphrase the /upload page uses. */
+function authorized(request: Request): boolean {
+  const auth = request.headers.get("authorization") ?? "";
   const secret = process.env.CRON_SECRET;
-  if (secret) {
-    const auth = request.headers.get("authorization");
-    if (auth !== `Bearer ${secret}`) {
-      return new Response("Unauthorized", { status: 401 });
+  if (secret && auth === `Bearer ${secret}`) return true;
+  if (auth.startsWith("Basic ")) {
+    try {
+      const [user, given] = atob(auth.slice(6)).split(":");
+      const pass = process.env.UPLOAD_PASSWORD || "roofroof";
+      if (given === pass || user === pass) return true;
+    } catch {
+      // fall through
     }
+  }
+  return !secret;
+}
+
+export async function GET(request: Request) {
+  if (!authorized(request)) {
+    return new Response("Unauthorized", { status: 401 });
   }
 
   const url = new URL(request.url);
