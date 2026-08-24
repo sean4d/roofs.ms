@@ -4,7 +4,7 @@
  *
  *   holiday   (~Sept-Dec) the Christmas display is the product. Booking
  *             urgency, capacity, the install cutoff.
- *   offSeason (~Jan-Aug)  Jellyfish permanent lighting leads, because it is
+ *   offSeason (~Jan-Aug)  permanent lighting leads, because it is
  *             the year-round product and the reason anyone searches in April.
  *             Holiday moves to an early-bird / waitlist band.
  *

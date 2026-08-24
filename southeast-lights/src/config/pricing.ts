@@ -53,11 +53,22 @@ export const TREE_TIERS = [
 ] as const;
 
 /**
- * Jellyfish permanent architectural lighting. One-time, and the customer
- * owns the system outright. Difficult rooflines, two-story sections, steep
- * access and peak-season installs push toward the top of each range.
+ * Permanent architectural lighting. One-time, and the customer owns the
+ * system outright. Difficult rooflines, two-story sections, steep access and
+ * peak-season installs push toward the top of each range.
+ *
+ * DELIBERATELY UNBRANDED. Southeast Lights is not an authorised dealer for
+ * any permanent-lighting manufacturer, so no manufacturer name, logo or
+ * warranty language may appear anywhere on this site. Putting a protected
+ * trademark on a commercial page you are not licensed to represent is a
+ * legal exposure, not a marketing risk.
+ *
+ * The page sells what we can actually stand behind: the installation, the
+ * workmanship warranty, and the fact that the roofing company doing it is
+ * the one who would have to fix the roof. If a dealership is secured later,
+ * add the brand HERE first and let it flow outward.
  */
-export const JELLYFISH = {
+export const PERMANENT = {
   perFt: { low: 25, high: 35 },
   controller: { low: 650, high: 850 },
 } as const;
@@ -134,17 +145,17 @@ export function quoteHoliday(input: HolidayInput): HolidayQuote {
   };
 }
 
-/** Jellyfish installed range for a given roofline length. */
-export function quoteJellyfish(linearFt: number): { low: number; high: number } {
+/** Permanent lighting installed range for a given roofline length. */
+export function quotePermanent(linearFt: number): { low: number; high: number } {
   if (linearFt <= 0) return { low: 0, high: 0 };
   return {
-    low: linearFt * JELLYFISH.perFt.low + JELLYFISH.controller.low,
-    high: linearFt * JELLYFISH.perFt.high + JELLYFISH.controller.high,
+    low: linearFt * PERMANENT.perFt.low + PERMANENT.controller.low,
+    high: linearFt * PERMANENT.perFt.high + PERMANENT.controller.high,
   };
 }
 
 /**
- * Seasons of holiday rental before Jellyfish pays for itself. This is the
+ * Seasons of holiday rental before permanent lighting pays for itself. This is the
  * strongest conversion tool on the site: the holiday product bills the same
  * amount forever, so every loyal renter is accumulating a reason to buy.
  * Better they hit that math here than on a competitor's page.
@@ -154,6 +165,6 @@ export function seasonsToBreakEven(
   linearFt: number,
 ): number | null {
   if (annualHolidayCost <= 0 || linearFt <= 0) return null;
-  const { low, high } = quoteJellyfish(linearFt);
+  const { low, high } = quotePermanent(linearFt);
   return (low + high) / 2 / annualHolidayCost;
 }

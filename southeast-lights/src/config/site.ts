@@ -31,7 +31,7 @@ export const siteConfig = {
 
   tagline: "Year-round lighting for South Mississippi",
   description:
-    "Southeast Lights is a Hattiesburg, Mississippi lighting company: custom-cut C9 holiday lighting on a full-service rental plan, and Jellyfish permanent architectural lighting. A division of Southeast Roofing LLC.",
+    "Southeast Lights is a Hattiesburg, Mississippi lighting company: custom-cut C9 holiday lighting on a full-service rental plan, and permanent architectural lighting installed year-round. A division of Southeast Roofing LLC.",
 
   /** Owner-supplied 2026-08-24. Distinct from the roofing line by necessity. */
   phone: {
@@ -116,13 +116,17 @@ export const siteConfig = {
 
   /**
    * [NEEDS] from the owner, tracked here so nothing ships as an invention:
-   *   - jellyfishAuthorizedDealer: gates the dealer badge and their assets
-   *   - workmanshipWarranty: our install warranty, distinct from Jellyfish's
-   *     product warranty
+   *   - permanentLightingBrand: null until a dealership is actually secured.
+   *     Owner confirmed 2026-08-24 they are NOT an authorised dealer for any
+   *     permanent-lighting manufacturer, so the permanent pages stay
+   *     unbranded. See the note in config/pricing.ts.
+   *   - workmanshipWarranty: our install warranty. With no manufacturer
+   *     warranty to lean on, this is the whole guarantee — it matters more
+   *     here than it would for a dealer.
    *   - season dates: install window, booking cutoff, takedown window
    *   - foundingYear for Southeast Lights specifically
    */
-  jellyfishAuthorizedDealer: null as boolean | null,
+  permanentLightingBrand: null as string | null,
   workmanshipWarranty: null as string | null,
   foundingYear: null as number | null,
 } as const;
