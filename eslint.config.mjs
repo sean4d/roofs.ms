@@ -14,6 +14,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // The Southeast Lights app is a separate Next.js project with its own
+    // toolchain; it must never be linted or typechecked by the roofing build.
+    "southeast-lights/**",
   ]),
 ]);
 
