@@ -191,6 +191,18 @@ export const IMAGES = {
     "church",
     "Red brick church with a white steeple outlined in warm white Christmas lights, oak trees on the lawn wrapped in lights",
   ),
+  /**
+   * Tree Lighting & Wrapping, on the card and the service hero.
+   *
+   * Not in OWNER_SUPPLIED and not in CONFIRMED_OWN_WORK: nobody has said this
+   * is our work, and the setting reads as a large public display rather than
+   * a Pine Belt property. It illustrates the service, which is what a service
+   * card does. It must not move to the gallery.
+   */
+  treeWrappingHero: img(
+    "tree-wrapping-hero",
+    "A mature tree wrapped from the trunk out to the branch tips in warm white lights, with a second wrapped tree and a row of blue lit cone trees behind it",
+  ),
   liveOakWrap: img(
     "live-oak-wrap",
     "Enormous Southern live oak with every major limb wrapped in warm white lights glowing against a night sky",

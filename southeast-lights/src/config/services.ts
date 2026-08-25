@@ -89,7 +89,7 @@ export const SERVICES: Service[] = [
       "Professional tree wrapping and tree lighting in South Mississippi, from ornamental trees to enormous live oaks. Trunk and limb wrapping, canopy lighting and uplighting.",
     summary:
       "Trunk and limb wrapping on everything from ornamental trees to century-old live oaks. The single most dramatic thing you can light on a property.",
-    image: IMAGES.liveOakWrap,
+    image: IMAGES.treeWrappingHero,
     enabled: true,
     audience: "both",
   },

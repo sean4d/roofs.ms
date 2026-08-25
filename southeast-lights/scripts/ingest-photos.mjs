@@ -28,6 +28,10 @@ const SLOTS = {
   "installer-roof": { width: 1600, use: "Why a roofing company section" },
   "crew-boom-lift": { width: 1600, use: "About hero, commercial proof" },
   "live-oak-wrap": { width: 1600, use: "Tree wrapping service" },
+  "tree-wrapping-hero": {
+    width: 2400,
+    use: "Tree Lighting & Wrapping card and service hero",
+  },
   church: { width: 1600, use: "Churches vertical" },
   "country-club": { width: 1600, use: "Country clubs vertical" },
   "golf-club": { width: 1600, use: "Golf clubs" },
