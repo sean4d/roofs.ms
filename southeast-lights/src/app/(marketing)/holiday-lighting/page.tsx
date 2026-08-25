@@ -16,7 +16,7 @@ import { breadcrumbSchema, faqSchema, pageMetadata, serviceSchema } from "@/lib/
 import { cn, formatUsd } from "@/lib/utils";
 
 export const metadata = pageMetadata({
-  title: "Christmas Light Installation in Hattiesburg, MS | Southeast Lights",
+  title: "Professional Christmas Light Installation | South Mississippi",
   description:
     "All-inclusive Christmas light installation across South Mississippi. Design, commercial-grade lighting, installation, maintenance, takedown and storage for one seasonal price.",
   path: "/holiday-lighting",

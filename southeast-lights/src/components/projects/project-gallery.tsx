@@ -33,6 +33,7 @@ export function ProjectGallery({ projects }: { projects: Project[] }) {
 
   return (
     <div className="container-site py-14">
+      <h2 className="sr-only">Project gallery</h2>
       <div className="flex flex-wrap gap-2" role="group" aria-label="Filter projects">
         {available.map((option) => (
           <button
