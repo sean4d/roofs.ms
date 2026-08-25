@@ -62,6 +62,29 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    slug: "hattiesburg-clean-line",
+    title: "One Clean Line Across the Front",
+    city: "Hattiesburg",
+    propertyType: "Residential",
+    serviceSlugs: [
+      "residential-holiday-lighting",
+      "christmas-light-installation",
+    ],
+    tags: ["holiday", "rooflines", "warm-white"],
+    summary:
+      "Warm white on the front eave and the entry gable. Nothing else, and nothing missing.",
+    scope:
+      "This is the display most people picture when they call: one line of warm white along the front eave, carried up over the entry gable and back down, and that is the job. It is also the least forgiving one to install. There is nothing else on the house to pull the eye away from a line that sags between clips, a gap where the spacing drifted, or a run that stops a foot short of the corner. Cut on site so the spacing holds from one end of the roof to the other and the line finishes where the roof does.",
+    highlights: [
+      "Front eave and the entry gable, cut to length on site",
+      "Even spacing corner to corner, with the run finishing at the edge",
+      "The simplest display, and the one with nowhere to hide",
+    ],
+    hero: IMAGES.projectHattiesburgCleanLine,
+    gallery: [],
+    isDemo: false,
+  },
+  {
     slug: "poplarville-continuous-run",
     title: "One Continuous Run, House to Garage",
     city: "Poplarville",

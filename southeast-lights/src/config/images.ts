@@ -64,6 +64,7 @@ const OWNER_SUPPLIED = new Set([
   "project-pearsons-front",
   "project-pearsons-block",
   "project-poplarville-continuous-run",
+  "project-hattiesburg-clean-line",
   "estate-wide",
 ]);
 
@@ -91,6 +92,7 @@ const CONFIRMED_OWN_WORK = new Set([
   "project-pearsons-front",
   "project-pearsons-block",
   "project-poplarville-continuous-run",
+  "project-hattiesburg-clean-line",
   "estate-wide",
   "colonial-columns",
 ]);
@@ -230,6 +232,11 @@ export const IMAGES = {
   colonialColumns: img(
     "colonial-columns",
     "Two-story colonial home at dusk with warm white C9 bulbs along every roof edge and both entry columns wrapped base to capital",
+  ),
+  projectHattiesburgCleanLine: img(
+    "project-hattiesburg-clean-line",
+    "Southeast Lights display in Hattiesburg: a brick ranch with warm white C9 running the length of the front eave and up over the entry gable, evenly spaced from corner to corner",
+    "center 52%",
   ),
   projectPoplarvilleContinuousRun: img(
     "project-poplarville-continuous-run",

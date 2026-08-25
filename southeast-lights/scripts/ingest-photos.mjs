@@ -119,6 +119,10 @@ const SLOTS = {
     width: 1600,
     use: "Gallery project: Poplarville continuous run",
   },
+  "project-hattiesburg-clean-line": {
+    width: 1600,
+    use: "Gallery project: Hattiesburg clean line",
+  },
 };
 
 const IN = "incoming";

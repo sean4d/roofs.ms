@@ -248,6 +248,12 @@ export const SLOTS: Slot[] = [
     where: "Gallery project, Poplarville",
     group: "Projects",
   },
+  {
+    key: "project-hattiesburg-clean-line",
+    label: "Hattiesburg clean line",
+    where: "Gallery project, Hattiesburg",
+    group: "Projects",
+  },
 
   {
     key: "installer-roof",
