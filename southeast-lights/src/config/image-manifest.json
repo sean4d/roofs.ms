@@ -20,8 +20,8 @@
     "blurDataURL": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADwAQCdASoQAAoABABsJYgCdADdlpLPEEAA/vDoPlhzivopBIkemJpZ2UXP2EW9K7Nmlzy+oSsep/37YtEgBStaTcjBdPDEAAA="
   },
   "colonial-columns": {
-    "width": 960,
-    "height": 610,
+    "width": 2400,
+    "height": 1525,
     "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoQAAoABABsJQBOgBhwZY07AAD+9EUd79T+YWLuRhGrfmpUp9FW1YSy/9Bt8dprMWnzReHxTwYjS8wOEmAAAA=="
   },
   "country-club": {
@@ -40,8 +40,8 @@
     "blurDataURL": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAAAQAgCdASoQAAoABABsJbACdH8ADT3tVeQAAP7AdLoiLkwF6RyQ46Ztg77HGGJzcdpaaIcn/kVro6PX7fqsffOYeR4rBwbuVLOdk7wmk9QBNS/MjNxLQAAA"
   },
   "estate-wide": {
-    "width": 1440,
-    "height": 1083,
+    "width": 2400,
+    "height": 1805,
     "blurDataURL": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAAAwAgCdASoQAAwABABsJZgCw7EfnTOoRvIQAAD+0KSh5nQTyDOsPTWmoEAklujFS3SOWbAQ094EdgcJJcJEBdlnmuCm4hA5S4AAAA=="
   },
   "golf-club": {
@@ -120,98 +120,98 @@
     "blurDataURL": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAQAgCdASoQAAoABABsJQBOgjgAqCfazHQAAP7O+OyrV9XspUXtBI/vTEi3s++7ourZATuQTLmhhfxLhss0AKpSHt46DwznbQNI7Bn8yAAAAA=="
   },
   "project-poplarville-colonial": {
-    "width": 960,
-    "height": 610,
+    "width": 2400,
+    "height": 1525,
     "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoQAAoABABsJQBOgBhwZY07AAD+9EUd79T+YWLuRhGrfmpUp9FW1YSy/9Bt8dprMWnzReHxTwYjS8wOEmAAAA=="
   },
   "project-hattiesburg-palms": {
-    "width": 900,
-    "height": 903,
+    "width": 2400,
+    "height": 2408,
     "blurDataURL": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAAAQAgCdASoQABAABABsJZgCdAD0a2tQMuXAAP7pWKe3qvfEQqMrVAVw3+GbUh5QqBC+kOcM3KnLpJkhILootXsTDJHJPM4YAAA="
   },
   "project-hattiesburg-ridges-hips": {
-    "width": 1200,
-    "height": 900,
+    "width": 2400,
+    "height": 1800,
     "blurDataURL": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAAAQAgCdASoQAAwABABsJQBOgCG0QSA7UIVwAP7xpjpKg31K4jT5hXwlM77MHEvACQ7sGpZGogXAVuc+U1CAAA=="
   },
   "project-poplarville-blue-white": {
-    "width": 1440,
-    "height": 1100,
+    "width": 2400,
+    "height": 1833,
     "blurDataURL": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAABwAQCdASoQAAwABABsJZAC7AFAAAD+8WdkllXXhqHmgZ7+uM1L8GmGA6lPTDJ5ByxupLLyF8YAAA=="
   },
   "project-poplarville-red-green-white": {
-    "width": 1440,
-    "height": 1083,
+    "width": 2400,
+    "height": 1805,
     "blurDataURL": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAACQAQCdASoQAAwABABsJaQAAtRZuwAA/vaJ2GnQJWHV2xiN5b4uRPUJX01X0QYdLtAAAA=="
   },
   "project-poplarville-outbuildings": {
-    "width": 1440,
-    "height": 1083,
+    "width": 2400,
+    "height": 1805,
     "blurDataURL": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADwAQCdASoQAAwABABsJZwAAudfNos7WAAA/vaC+Wha5U6122bHS8nKk2QsgUAA"
   },
   "project-poplarville-apples": {
-    "width": 1440,
-    "height": 998,
+    "width": 2400,
+    "height": 1663,
     "blurDataURL": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADwAQCdASoQAAsABABsJZQC/ODp+/66GYAA/vaT1vPKX4dotsyfme8tDalqq8OqKsnRpZZmdRAAAA=="
   },
   "project-poplarville-halloween": {
-    "width": 1440,
-    "height": 1080,
+    "width": 2400,
+    "height": 1800,
     "blurDataURL": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAABwAQCdASoQAAwABABsJagCdAGIQAD+8Q0nH+jFBf6mN9Vf9nbT/kxQOqz0i6KfkTgWwJnTIgAAAA=="
   },
   "project-hattiesburg-two-story": {
-    "width": 1440,
-    "height": 1080,
+    "width": 2400,
+    "height": 1800,
     "blurDataURL": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADQAQCdASoQAAwABABsJZQAAucSLhDAAAD+9oYL9F8fMSlM02M3T3ph38OszeZlQOXSXQtiZwIAAA=="
   },
   "project-hattiesburg-canopy": {
-    "width": 1440,
-    "height": 1207,
+    "width": 2400,
+    "height": 2012,
     "blurDataURL": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAQAgCdASoQAA0ABABsJYgCdAEN/iJeHnAAAP7s2nyNfXBTNmZ9FD/wXlMQ4UN2ZB5eaT6Vf3dbSk3paVLnnavk86Rcze/gEW88wAAA"
   },
   "project-gcs-front": {
-    "width": 1440,
-    "height": 1080,
+    "width": 2400,
+    "height": 1800,
     "blurDataURL": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADwAQCdASoQAAwABABsJZgC7AEO4b+gC4AA/vVwX5IuBW9/9n0VHlCnfPOJO7FiLNiA/7/rxwZDlA30gMz3QAAA"
   },
   "project-gcs-mural": {
-    "width": 1200,
-    "height": 900,
+    "width": 2400,
+    "height": 1800,
     "blurDataURL": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAACwAQCdASoQAAwABABsJaAAAuc/r9QAAP72hgvGcmmVMi+ov0N12GyISPYJHnGrPgointIfc8P+eKAAAAA="
   },
   "project-gcs-walkway": {
-    "width": 1440,
-    "height": 1080,
+    "width": 2400,
+    "height": 1800,
     "blurDataURL": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAQCdASoQAAwABABsJQBOgCHOE+c4XAD+9oN3OL2fNvTnzVxrK1HvpM0CzDW9avCN27VYAj4xTrwAuUAAAA=="
   },
   "project-hattiesburg-low-wide-angle": {
-    "width": 1440,
-    "height": 1080,
+    "width": 2400,
+    "height": 1800,
     "blurDataURL": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADwAQCdASoQAAwABABsJYgCdAEO4Vjat4AA/vRTdn2WnM0lSoK89KyCr3i+fWcL3Tef8YV3FBzc9TVnWAAAAA=="
   },
   "project-hattiesburg-low-wide": {
-    "width": 1440,
-    "height": 1080,
+    "width": 2400,
+    "height": 1800,
     "blurDataURL": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAAAQAgCdASoQAAwABABsJYgCdAEPDwk4vNQAAP7zMYgqX7r2JEPCL2ZjKcOPwlOzEeNNM+AA"
   },
   "project-pearsons-block": {
-    "width": 1440,
-    "height": 1083,
+    "width": 2400,
+    "height": 1805,
     "blurDataURL": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADQAQCdASoQAAwABABsJZACsAED7BpX4AD+G87BhBOogMrNsd0Kwaq7MSrxnKrYe4wzAFBoStvPzGgCAAA="
   },
   "project-pearsons-front": {
-    "width": 1200,
-    "height": 900,
+    "width": 2400,
+    "height": 1800,
     "blurDataURL": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADwAQCdASoQAAwABABsJZgC7AEK/LjU6IAA/vDUciW9UyEaWpDvs5JaYcu9V/89wg6rdG/FMJhIwRAAAAA="
   },
   "project-poplarville-continuous-run": {
-    "width": 1440,
-    "height": 1082,
+    "width": 2400,
+    "height": 1803,
     "blurDataURL": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADQAQCdASoQAAwABABsJZAC7AEPfoWWAAD+74kk3EmOBMa8iYNipuz/exQ0wFUV0I5ja0eHik7tuddBazosmbY79antcAAA"
   },
   "project-hattiesburg-clean-line": {
-    "width": 1440,
-    "height": 1080,
+    "width": 2400,
+    "height": 1800,
     "blurDataURL": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADQAQCdASoQAAwABABsJZQAAubf82MVQAD+9WzK/hFxcjotfShxz50qd1sF1dGNmhe6uhge8XAAAA=="
   }
 }

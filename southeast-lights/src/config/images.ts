@@ -152,9 +152,8 @@ export const IMAGES = {
   ),
   /**
    * The closing band on the homepage, plus the hero on the projects, services
-   * and inspiration hubs. Real work now, at the cost of some resolution: the
-   * AI file it replaced was 2400px wide and this one is 1440. On a scrimmed
-   * band that is the right trade, and a larger original would fix it.
+   * and inspiration hubs. Real work, resampled and sharpened up to the same
+   * 2400px the AI file it replaced had.
    */
   estateWide: img(
     "estate-wide",

@@ -5,7 +5,7 @@
  *
  *   npm run images:ingest
  *
- * Each file is resized, converted to WebP, given an LQIP blur placeholder,
+ * Each file is enhanced, resized, converted to WebP, given a blur placeholder,
  * written into public/img/ under the slot name, and the manifest regenerated.
  * No code changes needed: the layouts, crops, aspect ratios and scrims are
  * already built around these slots.
@@ -125,6 +125,16 @@ const SLOTS = {
   },
 };
 
+/**
+ * Enhancement applied to every owner photograph on the way in.
+ *
+ * Tuned by eye against the softest file in the set. Heavier sharpening puts
+ * halos around the bulbs and heavier saturation blows out their filaments,
+ * both of which read as processed rather than sharp.
+ */
+const MIN_WIDTH = 2400;
+const SHARPEN = { sigma: 1.45, m1: 0.55, m2: 2.6 };
+
 const IN = "incoming";
 const OUT = "public/img";
 const MANIFEST = "src/config/image-manifest.json";
@@ -222,12 +232,21 @@ for (const file of incoming) {
     return box ? pipeline.extract(box) : pipeline;
   };
 
+  const target = Math.max(SLOTS[slot].width, MIN_WIDTH);
+
   await prepared()
-    .resize({
-      width: Math.min(SLOTS[slot].width, box ? box.width : meta.width),
-      withoutEnlargement: true,
-    })
-    .webp({ quality: 80, effort: 6 })
+    // Deliberately allowed to enlarge. These arrive as compressed phone
+    // photographs around 1200 to 1440px, which is thin for a full-bleed hero
+    // on a large monitor. Resampling up and then sharpening recovers apparent
+    // detail that the downscale and the JPEG pass smeared; it does not invent
+    // anything that was not photographed.
+    .resize({ width: target, kernel: "lanczos3" })
+    .sharpen(SHARPEN)
+    .modulate({ saturation: 1.1 })
+    // Slight contrast lift. Night photographs of lit rooflines come back flat
+    // because the camera exposes for the bulbs.
+    .linear(1.08, -6)
+    .webp({ quality: 88, effort: 6 })
     .toFile(out);
 
   const blur = await prepared().resize(16).webp({ quality: 28 }).toBuffer();
