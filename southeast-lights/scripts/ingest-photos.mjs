@@ -51,6 +51,14 @@ const SLOTS = {
     width: 1600,
     use: "Gallery project: Poplarville colonial",
   },
+  "project-hattiesburg-ridges-hips": {
+    width: 1600,
+    use: "Gallery project: Hattiesburg ridges and hips",
+  },
+  "project-hattiesburg-palms": {
+    width: 1600,
+    use: "Gallery project: Hattiesburg wrapped palms",
+  },
 };
 
 const IN = "incoming";
@@ -73,6 +81,62 @@ if (incoming.length === 0) {
   process.exit(0);
 }
 
+/**
+ * Find white padding bars and return the box that excludes them.
+ *
+ * Photos that arrive by way of a social export or a phone screenshot are
+ * often padded out to a fixed aspect ratio with solid white. Inside a card
+ * that is already the right shape those bars render as white stripes down the
+ * sides of the picture, which looks like a bug and is one.
+ *
+ * Only near-white padding is trimmed. Trimming dark edges too would be a
+ * trap here, because a night sky legitimately averages close to black and we
+ * would quietly crop the top off every roofline shot.
+ */
+async function contentBox(src) {
+  const { data, info } = await sharp(src)
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  const { width, height, channels } = info;
+  const WHITE = 245;
+
+  const mean = (pixels) => {
+    let sum = 0;
+    for (const i of pixels) sum += (data[i] + data[i + 1] + data[i + 2]) / 3;
+    return sum / pixels.length;
+  };
+  const column = (x) => {
+    const out = [];
+    for (let y = 0; y < height; y += 7) out.push((y * width + x) * channels);
+    return out;
+  };
+  const row = (y) => {
+    const out = [];
+    for (let x = 0; x < width; x += 7) out.push((y * width + x) * channels);
+    return out;
+  };
+
+  let left = 0;
+  while (left < width - 1 && mean(column(left)) >= WHITE) left++;
+  let right = width - 1;
+  while (right > left && mean(column(right)) >= WHITE) right--;
+  let top = 0;
+  while (top < height - 1 && mean(row(top)) >= WHITE) top++;
+  let bottom = height - 1;
+  while (bottom > top && mean(row(bottom)) >= WHITE) bottom--;
+
+  const box = {
+    left,
+    top,
+    width: right - left + 1,
+    height: bottom - top + 1,
+  };
+  if (box.width === width && box.height === height) return null;
+  // Refuse to act on anything that looks like a real crop rather than padding.
+  if (box.width < width / 2 || box.height < height / 2) return null;
+  return box;
+}
+
 const manifest = JSON.parse(fs.readFileSync(MANIFEST, "utf8"));
 let done = 0;
 const skipped = [];
@@ -87,21 +151,22 @@ for (const file of incoming) {
   const src = path.join(IN, file);
   const out = path.join(OUT, `${slot}.webp`);
   const meta = await sharp(src).metadata();
+  const box = await contentBox(src);
 
-  await sharp(src)
-    .rotate() // honor EXIF orientation from phone photos
+  const prepared = () => {
+    const pipeline = sharp(src).rotate(); // honor EXIF orientation
+    return box ? pipeline.extract(box) : pipeline;
+  };
+
+  await prepared()
     .resize({
-      width: Math.min(SLOTS[slot].width, meta.width),
+      width: Math.min(SLOTS[slot].width, box ? box.width : meta.width),
       withoutEnlargement: true,
     })
     .webp({ quality: 80, effort: 6 })
     .toFile(out);
 
-  const blur = await sharp(src)
-    .rotate()
-    .resize(16)
-    .webp({ quality: 28 })
-    .toBuffer();
+  const blur = await prepared().resize(16).webp({ quality: 28 }).toBuffer();
   const final = await sharp(out).metadata();
 
   manifest[slot] = {
@@ -112,7 +177,8 @@ for (const file of incoming) {
 
   console.log(
     `${slot.padEnd(24)} ${meta.width}x${meta.height} -> ${final.width}x${final.height}  ` +
-      `${(fs.statSync(out).size / 1024).toFixed(0)}KB`,
+      `${(fs.statSync(out).size / 1024).toFixed(0)}KB` +
+      (box ? `  (trimmed white padding)` : ""),
   );
   done++;
 }

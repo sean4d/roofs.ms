@@ -51,6 +51,35 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    slug: "hattiesburg-ridges-and-hips",
+    title: "Full Roofline, Ridges and Hips",
+    city: "Hattiesburg",
+    propertyType: "Residential",
+    serviceSlugs: [
+      "residential-holiday-lighting",
+      "christmas-light-installation",
+      "tree-wrapping",
+    ],
+    tags: ["holiday", "rooflines", "color", "trees"],
+    summary:
+      "Alternating red and white C9 taken past the roof edge and up every ridge and hip, with the palm trunks wrapped to match.",
+    scope:
+      "Most roofline work stops at the front edge. Here the C9 continues up every ridge and every hip, so the roof reads as a complete outline from the street rather than one line across the front. Alternating red and white through the entire run, with the palm trunks on the property wrapped in the same two colors so the yard and the house read as one display instead of two.",
+    highlights: [
+      "Every ridge and hip lit, not only the roof edge",
+      "Alternating red and white C9 across the full run",
+      "Palm trunks wrapped to match the roofline",
+    ],
+    hero: IMAGES.projectHattiesburgRidgesHips,
+    gallery: [
+      {
+        image: IMAGES.projectHattiesburgPalms,
+        caption: "Palm trunks wrapped in the same red and white",
+      },
+    ],
+    isDemo: false,
+  },
+  {
     slug: "poplarville-colonial-columns",
     title: "Colonial Roofline and Twenty-Foot Columns",
     city: "Poplarville",
@@ -74,37 +103,6 @@ export const PROJECTS: Project[] = [
     // repeating the hero under a heading that promises more.
     gallery: [],
     isDemo: false,
-  },
-  {
-    slug: "estate-roofline-and-oaks",
-    title: "Estate Roofline and Oak Canopy",
-    city: "Hattiesburg",
-    propertyType: "Residential",
-    serviceSlugs: ["residential-holiday-lighting", "tree-wrapping"],
-    tags: ["holiday", "trees", "rooflines", "warm-white"],
-    summary:
-      "Full roofline in warm white C9 with the driveway oaks wrapped trunk to limb.",
-    scope:
-      "Every roofline, gable and dormer outlined in custom-cut warm white C9, with the mature oaks flanking the drive wrapped through the trunk and major limbs. Columns wrapped and the entry walk lined with pathway stakes.",
-    highlights: [
-      "Custom-cut C9 to every roofline and dormer",
-      "Full trunk and limb wrapping on mature live oaks",
-      "Wrapped columns and lit entry walk",
-    ],
-    hero: IMAGES.holidayHero,
-    gallery: [
-      { image: IMAGES.holidayHero, caption: "The full elevation at blue hour" },
-      {
-        image: IMAGES.estateWide,
-        caption: "Driveway oaks approaching the house",
-      },
-      {
-        image: IMAGES.c9Detail,
-        caption: "Custom-cut C9 clipped to the roof edge",
-      },
-    ],
-    isDemo: true,
-    year: 2025,
   },
   {
     slug: "community-entrance-monument",

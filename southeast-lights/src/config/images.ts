@@ -40,6 +40,8 @@ const OWNER_SUPPLIED = new Set([
   "colonial-columns",
   "installer-roof",
   "project-poplarville-colonial",
+  "project-hattiesburg-ridges-hips",
+  "project-hattiesburg-palms",
 ]);
 
 /**
@@ -49,6 +51,8 @@ const OWNER_SUPPLIED = new Set([
  */
 const CONFIRMED_OWN_WORK = new Set([
   "project-poplarville-colonial",
+  "project-hattiesburg-ridges-hips",
+  "project-hattiesburg-palms",
   "colonial-columns",
 ]);
 
@@ -179,6 +183,14 @@ export const IMAGES = {
   colonialColumns: img(
     "colonial-columns",
     "Two-story colonial home at dusk with warm white C9 bulbs along every roof edge and both entry columns wrapped base to capital",
+  ),
+  projectHattiesburgRidgesHips: img(
+    "project-hattiesburg-ridges-hips",
+    "Southeast Lights display in Hattiesburg: a brick home at night with alternating red and warm white C9 bulbs running the full roofline and continuing up every ridge and hip, and a lit Christmas tree visible through the front window",
+  ),
+  projectHattiesburgPalms: img(
+    "project-hattiesburg-palms",
+    "Four palm trunks wrapped in alternating bands of red and white lights against a clipped hedge at night",
   ),
   projectPoplarvilleColonial: img(
     "project-poplarville-colonial",

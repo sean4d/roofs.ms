@@ -7,6 +7,7 @@ import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { CtaBand } from "@/components/shared/cta-band";
 import { Section } from "@/components/shared/section";
 import { JsonLd } from "@/components/seo/json-ld";
+import { cn } from "@/lib/utils";
 import { PROJECTS, projectBySlug, publishedProjects } from "@/config/projects";
 import { serviceBySlug } from "@/config/services";
 import { breadcrumbSchema, pageMetadata } from "@/lib/seo";
@@ -139,23 +140,49 @@ export default async function ProjectPage({
 
       {project.gallery.length > 0 ? (
         <Section tone="raised" eyebrow="Gallery" title="More from this project">
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div
+            className={cn(
+              "grid gap-4",
+              // A lone photo in a three-column grid reads as two missing
+              // photos. Let the track count follow what we actually have.
+              project.gallery.length === 1
+                ? "max-w-2xl"
+                : project.gallery.length === 2
+                  ? "sm:grid-cols-2"
+                  : "sm:grid-cols-2 lg:grid-cols-3",
+            )}
+          >
             {project.gallery.map((item, index) => (
               <figure
                 key={`${item.image.src}-${index}`}
                 className="card-lit overflow-hidden"
               >
-                <div className="relative aspect-[3/2]">
+                {project.gallery.length === 1 ? (
+                  // Nothing to align against, so show the photograph whole
+                  // rather than cropping it to a shape it was not shot in.
                   <Image
                     src={item.image.src}
                     alt={item.image.alt}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    width={item.image.width}
+                    height={item.image.height}
+                    sizes="(max-width: 768px) 100vw, 42rem"
                     placeholder="blur"
                     blurDataURL={item.image.blurDataURL}
-                    className="object-cover"
+                    className="h-auto w-full"
                   />
-                </div>
+                ) : (
+                  <div className="relative aspect-[3/2]">
+                    <Image
+                      src={item.image.src}
+                      alt={item.image.alt}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      placeholder="blur"
+                      blurDataURL={item.image.blurDataURL}
+                      className="object-cover"
+                    />
+                  </div>
+                )}
                 <figcaption className="text-bone-400 px-5 py-4 text-sm">
                   {item.caption}
                 </figcaption>
@@ -184,6 +211,13 @@ export default async function ProjectPage({
                   className="-z-10 object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="scrim-soft absolute inset-0 -z-10" />
+                {/* Same rule as the gallery card: a demo never appears
+                    unbadged, including in a related-work rail. */}
+                {other.isDemo ? (
+                  <span className="mb-auto w-fit rounded-md border border-amber-300/40 bg-amber-300/15 px-2.5 py-1 text-[0.65rem] font-semibold tracking-wide text-amber-100 uppercase">
+                    Demo content
+                  </span>
+                ) : null}
                 <h3 className="text-lg font-semibold">{other.title}</h3>
                 <p className="mt-1 text-xs text-champagne-300">
                   {other.city}, MS

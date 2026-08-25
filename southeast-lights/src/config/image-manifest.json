@@ -123,5 +123,15 @@
     "width": 960,
     "height": 610,
     "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoQAAoABABsJQBOgBhwZY07AAD+9EUd79T+YWLuRhGrfmpUp9FW1YSy/9Bt8dprMWnzReHxTwYjS8wOEmAAAA=="
+  },
+  "project-hattiesburg-palms": {
+    "width": 900,
+    "height": 903,
+    "blurDataURL": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAAAQAgCdASoQABAABABsJZgCdAD0a2tQMuXAAP7pWKe3qvfEQqMrVAVw3+GbUh5QqBC+kOcM3KnLpJkhILootXsTDJHJPM4YAAA="
+  },
+  "project-hattiesburg-ridges-hips": {
+    "width": 1200,
+    "height": 900,
+    "blurDataURL": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAAAQAgCdASoQAAwABABsJQBOgCG0QSA7UIVwAP7xpjpKg31K4jT5hXwlM77MHEvACQ7sGpZGogXAVuc+U1CAAA=="
   }
 }
