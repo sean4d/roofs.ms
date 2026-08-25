@@ -1,27 +1,32 @@
+import { Plus } from "lucide-react";
+
+import type { Faq } from "@/config/faqs";
+
 /**
- * FAQ list. Uses native <details> so answers are in the DOM for crawlers and
- * work with JavaScript disabled.
+ * FAQ list.
  *
- * Worth remembering why this exists: the old Wix site's FAQ page rendered
- * four questions and only ONE answer. Three questions sat there with nothing
- * underneath them.
+ * Native <details> so every answer is in the DOM for crawlers and AI
+ * assistants and works with JavaScript disabled. That matters more here than
+ * anywhere else on the site: these answers are written to be quoted.
+ *
+ * Worth remembering why: the old Wix FAQ rendered four questions and exactly
+ * one answer. Three questions sat there with nothing underneath them.
  */
-export function FaqList({
-  items,
-}: {
-  items: { question: string; answer: string }[];
-}) {
+export function FaqList({ items }: { items: Faq[] }) {
   return (
     <div className="flex flex-col gap-3">
       {items.map((item) => (
-        <details
-          key={item.question}
-          className="card-day group px-6 py-5 [&[open]]:border-steel-300"
-        >
-          <summary className="cursor-pointer list-none font-display font-semibold text-navy-900 marker:hidden">
+        <details key={item.question} className="card-lit group px-6 py-5">
+          <summary className="flex cursor-pointer list-none items-start justify-between gap-4 font-display text-lg font-semibold text-bone-100 marker:hidden [&::-webkit-details-marker]:hidden">
             {item.question}
+            <Plus
+              className="mt-1 size-4 shrink-0 text-champagne-400 transition-transform duration-300 group-open:rotate-45"
+              strokeWidth={2}
+            />
           </summary>
-          <p className="mt-3 text-slate-600">{item.answer}</p>
+          <p className="mt-4 max-w-3xl leading-relaxed text-bone-300">
+            {item.answer}
+          </p>
         </details>
       ))}
     </div>

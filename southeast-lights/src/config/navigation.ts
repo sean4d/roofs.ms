@@ -1,107 +1,90 @@
+import { SERVICES, enabledServices } from "./services";
+import { verticalsByPriority } from "./verticals";
+
 /**
- * Header and footer navigation.
+ * Navigation.
  *
- * Information architecture: Southeast Lights is a year-round lighting company
- * with four divisions, not a Christmas company. Holiday Lighting and
- * Permanent Lighting are LIVE. Landscape and Event are built but flagged off
- * until crews and equipment are genuinely ready, because we do not publish
- * pages promising work we cannot perform today.
+ * Kept deliberately shallow. The site has a lot of pages but a bloated
+ * mega-menu would hurt both mobile usability and the conversion path, so the
+ * header carries the shortest set that still reaches everything, and the
+ * footer does the deep linking.
+ *
+ * Get a Quote is always the visually dominant action, above Call.
  */
 
 export interface NavLink {
   label: string;
   href: string;
+  description?: string;
   children?: NavLink[];
-  /** When false the link is hidden everywhere. Used for unbuilt divisions. */
-  enabled?: boolean;
 }
 
-/** Flip to true only when the division can actually be delivered. */
-export const DIVISION_FLAGS = {
-  holiday: true,
-  permanent: true,
-  landscape: false,
-  event: false,
-} as const;
-
-export const divisionsNav: NavLink[] = [
-  {
-    label: "Holiday Lighting",
-    href: "/holiday-lighting",
-    enabled: DIVISION_FLAGS.holiday,
-    children: [
-      { label: "Residential", href: "/holiday-lighting/residential" },
-      { label: "Commercial", href: "/holiday-lighting/commercial" },
-      { label: "Add-Ons", href: "/holiday-lighting/additions" },
-      {
-        label: "Takedown & Storage",
-        href: "/holiday-lighting/takedown-and-storage",
-      },
-    ],
-  },
-  {
-    label: "Permanent Lighting",
-    href: "/permanent-lighting",
-    enabled: DIVISION_FLAGS.permanent,
-    children: [
-      { label: "How It Works", href: "/permanent-lighting/how-it-works" },
-      { label: "Residential", href: "/permanent-lighting/residential" },
-      { label: "Commercial", href: "/permanent-lighting/commercial" },
-    ],
-  },
-  {
-    label: "Landscape Lighting",
-    href: "/landscape-lighting",
-    enabled: DIVISION_FLAGS.landscape,
-  },
-  {
-    label: "Event Lighting",
-    href: "/event-lighting",
-    enabled: DIVISION_FLAGS.event,
-  },
-];
-
-/**
- * The commercial side is its own hub, not a tab inside a service page: the
- * buyer, the sales cycle and the paperwork are all different.
- */
-export const commercialNav: NavLink[] = [
-  { label: "Churches", href: "/commercial/churches" },
-  { label: "Schools & Universities", href: "/commercial/schools-and-universities" },
-  { label: "Municipal & Government", href: "/commercial/municipal-and-government" },
-  { label: "Parks & Public Spaces", href: "/commercial/parks-and-public-spaces" },
-  { label: "Retail & Shopping Centers", href: "/commercial/retail-and-shopping-centers" },
-  { label: "HOAs & Neighborhoods", href: "/commercial/hoa-and-neighborhoods" },
-  { label: "Hotels & Hospitality", href: "/commercial/hotels-and-hospitality" },
-  { label: "Large Tree Installations", href: "/commercial/large-tree-installations" },
-];
-
-export const mainNav: NavLink[] = [
-  ...divisionsNav,
-  { label: "Commercial", href: "/commercial", children: commercialNav },
-  { label: "Estimator", href: "/estimator" },
-  { label: "Projects", href: "/projects" },
-  { label: "Service Areas", href: "/service-areas" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-];
-
-export const primaryCta: NavLink = {
-  label: "Free Estimate",
-  href: "/free-estimate",
+const serviceLink = (slug: string): NavLink | null => {
+  const service = SERVICES.find((s) => s.slug === slug && s.enabled);
+  return service
+    ? { label: service.label, href: `/services/${service.slug}`, description: service.summary }
+    : null;
 };
 
+const compact = (links: (NavLink | null)[]): NavLink[] =>
+  links.filter((link): link is NavLink => link !== null);
+
+export const holidayNav = compact([
+  serviceLink("christmas-light-installation"),
+  serviceLink("residential-holiday-lighting"),
+  serviceLink("commercial-holiday-lighting"),
+  serviceLink("hoa-community-lighting"),
+  serviceLink("tree-wrapping"),
+]);
+
+export const otherServicesNav = compact([
+  serviceLink("landscape-lighting"),
+  serviceLink("bistro-patio-lighting"),
+  serviceLink("mardi-gras-lighting"),
+  serviceLink("wedding-event-lighting"),
+]);
+
+export const commercialNav: NavLink[] = verticalsByPriority().map((v) => ({
+  label: v.label,
+  href: `/commercial/${v.slug}`,
+  description: v.summary,
+}));
+
+export const mainNav: NavLink[] = [
+  { label: "Holiday Lighting", href: "/holiday-lighting", children: holidayNav },
+  { label: "Permanent Lighting", href: "/services/permanent-architectural-lighting" },
+  { label: "Commercial", href: "/commercial", children: commercialNav },
+  { label: "HOA & Communities", href: "/commercial/hoa-communities" },
+  { label: "Other Services", href: "/services", children: otherServicesNav },
+  { label: "Projects", href: "/projects" },
+  { label: "Areas", href: "/service-areas" },
+  { label: "About", href: "/about" },
+];
+
+/** The dominant action. Never demoted below Call. */
+export const primaryCta: NavLink = { label: "Get a Quote", href: "/quote" };
 export const commercialCta: NavLink = {
-  label: "Request a Proposal",
+  label: "Request a Commercial Proposal",
   href: "/commercial/request-proposal",
 };
 
-/** Strip flagged-off entries. Always render nav through this. */
-export function visibleNav(links: NavLink[]): NavLink[] {
-  return links
-    .filter((link) => link.enabled !== false)
-    .map((link) => ({
-      ...link,
-      children: link.children ? visibleNav(link.children) : undefined,
-    }));
-}
+export const footerNav = {
+  services: enabledServices().map((s) => ({
+    label: s.label,
+    href: `/services/${s.slug}`,
+  })),
+  commercial: commercialNav,
+  company: [
+    { label: "About", href: "/about" },
+    { label: "Projects", href: "/projects" },
+    { label: "Design Inspiration", href: "/inspiration" },
+    { label: "Reviews", href: "/reviews" },
+    { label: "FAQ", href: "/faq" },
+    { label: "Contact", href: "/contact" },
+  ],
+  legal: [
+    { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Terms of Service", href: "/terms" },
+    { label: "Accessibility", href: "/accessibility" },
+  ],
+} as const;

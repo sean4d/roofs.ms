@@ -3,62 +3,82 @@
 /*
  * Southeast Lights design system.
  *
- * Deliberately the SAME brand DNA as Southeast Roofing — identical navy,
- * identical steel, identical Archivo/Inter typography — because a visitor
- * who has seen one site must recognise the other instantly. What changes is
- * the ground: every product this company sells can only be photographed at
- * night, so the hero and feature bands are dark. A white, airy site (exactly
- * right for roofing) would spend its life fighting its own imagery here.
+ * Anchored to the real logo: its mark is a deep crimson (#B00000 sampled from
+ * the artwork), so red is the brand colour, not a seasonal decoration. The
+ * job of this system is to make that red read as expensive rather than as a
+ * generic red-and-green Christmas template.
  *
- * The accent is the colour of a lit C9 filament. It carries emphasis
- * everywhere; nothing else competes with it.
+ * How that is achieved:
+ *   - The ground is near-black with a warm bias, not navy and not pure black.
+ *     Lighting photography sits on it without a colour cast.
+ *   - Red is used at low frequency and high value: primary buttons, the
+ *     wordmark, a single accent rule. Never large red fills.
+ *   - Champagne carries warmth and "lit" everywhere red is not. It is the
+ *     colour of an incandescent C9 filament and does most of the emotional
+ *     work.
+ *   - Evergreen exists but is rationed to holiday-mode surfaces only.
  */
 
 @theme {
-  /* ---- Shared with Southeast Roofing. Do not drift. ---- */
-  --color-navy-950: #0a2036;
-  --color-navy-900: #0d2c4b;
-  --color-navy-800: #123b63;
-  --color-navy-700: #1b4a7a;
-  --color-steel-500: #4f7ea8;
-  --color-steel-300: #8faecb;
-  --color-steel-100: #e8eff6;
-  --color-slate-600: #5c6670;
+  /* ---- Brand, sampled from the logo artwork ---- */
+  --color-brand-700: #8a0000;
+  --color-brand-600: #a00000;
+  --color-brand-500: #b00000; /* the logo red */
+  --color-brand-400: #cc2222;
+  --color-brand-300: #e05555;
 
-  /* ---- Night grounds. The Lights-only half of the system. ---- */
-  --color-night-950: #060d18;
-  --color-night-900: #0a1626;
-  --color-night-800: #0f2135;
-  --color-night-700: #16304a;
+  /* ---- Night grounds. Warm-biased charcoal, never pure black. ---- */
+  --color-ink-950: #0a0908;
+  --color-ink-900: #121010;
+  --color-ink-850: #1a1717;
+  --color-ink-800: #221e1d;
+  --color-ink-700: #322c2b;
+  --color-ink-600: #4a4241;
 
-  /* ---- Glow: a lit C9 filament. The single accent. ---- */
-  --color-glow-300: #f7d5a0;
-  --color-glow-400: #f5c77e;
-  --color-glow-500: #f0b860;
-  --color-glow-600: #d99a3c;
+  /* ---- Champagne. Warm filament light: the workhorse accent. ---- */
+  --color-champagne-200: #f6e7c8;
+  --color-champagne-300: #efd9ab;
+  --color-champagne-400: #e5c589;
+  --color-champagne-500: #d4ae6a;
+  --color-champagne-600: #b08f4f;
 
-  /* Holiday-mode surfaces only. Never a general-purpose accent. */
-  --color-evergreen-600: #2e7d5a;
-  --color-success-600: #2e7d32;
+  /* ---- Warm neutrals for text on dark ---- */
+  --color-bone-100: #f5f1ea;
+  --color-bone-300: #d9d2c7;
+  --color-bone-500: #a89f93;
+
+  /* ---- Day surfaces for reading-heavy pages ---- */
+  --color-paper-50: #fbfaf8;
+  --color-paper-100: #f4f1ec;
+  --color-paper-200: #e7e2d9;
+  --color-graphite-900: #1d1a19;
+  --color-graphite-600: #5c5551;
+
+  /* Rationed to holiday-mode surfaces. Never a general accent. */
+  --color-evergreen-700: #17392a;
+  --color-evergreen-500: #2c6c4f;
 
   --font-sans: var(--font-inter);
-  --font-display: var(--font-archivo);
+  --font-display: var(--font-fraunces);
 
-  --radius-card: 1rem;
+  --radius-card: 0.875rem;
 
-  /*
-   * A bulb warming up. Used on the roofline motif and on card hover, never
-   * as ambient decoration — always wrapped in motion-safe: at the call site.
-   */
-  --animate-bulb: bulb 3.4s ease-in-out infinite;
+  --animate-twinkle: twinkle 4s ease-in-out infinite;
+  --animate-drift: drift 1s linear infinite;
 
-  @keyframes bulb {
+  @keyframes twinkle {
     0%,
     100% {
-      opacity: 0.9;
+      opacity: 1;
     }
     50% {
-      opacity: 0.4;
+      opacity: 0.45;
+    }
+  }
+
+  @keyframes drift {
+    to {
+      transform: translateY(100vh);
     }
   }
 }
@@ -67,10 +87,12 @@
   html {
     @apply font-sans;
     scroll-behavior: smooth;
+    /* Dark by default: this site lives at night. */
+    background-color: var(--color-ink-950);
   }
 
   body {
-    @apply bg-white text-[#2b2f33] antialiased;
+    @apply bg-ink-950 text-bone-300 antialiased;
   }
 
   h1,
@@ -79,85 +101,147 @@
   h4,
   h5,
   h6 {
-    @apply font-display tracking-tight text-navy-900;
+    @apply font-display font-semibold tracking-[-0.015em] text-bone-100;
   }
 
-  /* On night surfaces the whole type stack inverts. Written as a plain
-     descendant selector, not an @apply-able utility: `.surface-night` is a
-     component class, and @apply only resolves real utilities. */
-  .surface-night :is(h1, h2, h3, h4, h5, h6) {
-    @apply text-white;
+  /* Light bands invert the type stack. */
+  .surface-day :is(h1, h2, h3, h4, h5, h6) {
+    @apply text-graphite-900;
+  }
+
+  ::selection {
+    background-color: var(--color-champagne-400);
+    color: var(--color-ink-950);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-champagne-400);
+    outline-offset: 3px;
+    border-radius: 4px;
   }
 
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
     }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
 @layer components {
   .container-site {
-    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+    @apply mx-auto w-full max-w-[86rem] px-5 sm:px-8 lg:px-10;
   }
 
-  /* A dark band. The site's signature surface. */
-  .surface-night {
-    @apply bg-night-900 text-steel-100;
+  .surface-day {
+    @apply bg-paper-50 text-graphite-600;
+  }
+
+  /* Eyebrow label. Small, tracked, champagne. */
+  .eyebrow {
+    @apply font-sans text-[0.7rem] font-semibold tracking-[0.2em] uppercase;
   }
 
   /*
-   * The signature interaction: cards light up. Border warms to glow, a soft
-   * bloom rises behind, the card lifts ~4px. Used on service cards, project
-   * tiles, city tiles and estimator options so it reads as one fingerprint
-   * rather than scattered effects.
+   * The signature card. Translucent over photography, with a hairline that
+   * warms and a bloom that rises on hover. One interaction, used everywhere,
+   * so the site has a fingerprint instead of scattered effects.
    */
   .card-lit {
-    @apply relative rounded-card border border-night-700 bg-night-800 transition-all duration-300;
+    @apply relative rounded-card border border-white/10 bg-white/[0.035] backdrop-blur-sm transition-all duration-500;
   }
 
   .card-lit:hover,
   .card-lit:focus-within {
-    @apply border-glow-500/45 -translate-y-1;
+    @apply -translate-y-1 border-champagne-400/40 bg-white/[0.06];
     box-shadow:
-      0 0 0 1px --alpha(var(--color-glow-500) / 8%),
-      0 18px 40px -12px --alpha(var(--color-glow-500) / 22%),
-      0 8px 20px -8px rgb(0 0 0 / 0.5);
+      0 0 0 1px --alpha(var(--color-champagne-400) / 10%),
+      0 24px 60px -20px --alpha(var(--color-champagne-500) / 30%),
+      0 10px 24px -12px rgb(0 0 0 / 0.6);
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .card-lit:hover,
-    .card-lit:focus-within {
-      @apply translate-y-0;
-    }
-  }
-
-  /* Cards on light sections keep the same geometry, softer treatment. */
   .card-day {
-    @apply rounded-card border border-[#d8dee6] bg-white transition-all duration-300;
+    @apply rounded-card border border-paper-200 bg-white transition-all duration-300;
   }
 
   .card-day:hover,
   .card-day:focus-within {
-    @apply border-steel-300 -translate-y-1;
-    box-shadow:
-      0 1px 2px rgb(18 59 99 / 0.04),
-      0 12px 28px rgb(18 59 99 / 0.09);
+    @apply -translate-y-1 border-champagne-500/50;
+    box-shadow: 0 18px 40px -18px rgb(29 26 25 / 0.22);
   }
 
-  /* A single headline word at most. */
-  .text-gradient-glow {
+  /* Primary action. Brand red, used sparingly so it keeps its authority. */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-brand-500 px-6 py-3.5 font-semibold text-white transition-all duration-200 hover:bg-brand-400;
+    box-shadow: 0 8px 24px -10px --alpha(var(--color-brand-500) / 70%);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-white/20 px-6 py-3.5 font-semibold text-bone-100 transition-colors duration-200 hover:border-champagne-400/60 hover:text-champagne-300;
+  }
+
+  .btn-ghost-day {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-paper-200 px-6 py-3.5 font-semibold text-graphite-900 transition-colors duration-200 hover:border-champagne-500;
+  }
+
+  /* Champagne wash behind a hero: a roofline just out of frame. */
+  .glow-top {
+    background: radial-gradient(
+      60% 100% at 50% 0%,
+      --alpha(var(--color-champagne-400) / 18%) 0%,
+      transparent 70%
+    );
+  }
+
+  /* Legibility scrim over photography. Two stops, never a flat overlay. */
+  .scrim {
+    background: linear-gradient(
+      to top,
+      var(--color-ink-950) 0%,
+      --alpha(var(--color-ink-950) / 82%) 28%,
+      --alpha(var(--color-ink-950) / 45%) 60%,
+      --alpha(var(--color-ink-950) / 25%) 100%
+    );
+  }
+
+  .scrim-soft {
+    background: linear-gradient(
+      to top,
+      --alpha(var(--color-ink-950) / 92%) 0%,
+      --alpha(var(--color-ink-950) / 55%) 45%,
+      --alpha(var(--color-ink-950) / 20%) 100%
+    );
+  }
+
+  .text-champagne-gradient {
     background-image: linear-gradient(
       100deg,
-      var(--color-glow-400) 0%,
-      var(--color-glow-600) 100%
+      var(--color-champagne-200) 0%,
+      var(--color-champagne-500) 100%
     );
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
   }
 
+  /* Hairline rule with a lit centre. Used as a section divider. */
+  .rule-lit {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      --alpha(var(--color-champagne-400) / 45%),
+      transparent
+    );
+  }
+
   .skip-link {
-    @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-100 focus:rounded-md focus:bg-navy-800 focus:px-4 focus:py-2 focus:text-white;
+    @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-100 focus:rounded-md focus:bg-brand-500 focus:px-4 focus:py-2 focus:text-white;
   }
 }

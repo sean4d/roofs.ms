@@ -1,70 +1,91 @@
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 
-import type { SeasonMode } from "@/config/season";
-import { PhoneLink } from "@/components/shared/phone-link";
+import { Snowfall } from "@/components/effects/snowfall";
+import { CallLink } from "@/components/shared/contact-actions";
+import { QuoteButton } from "@/components/shared/quote-button";
+import { IMAGES } from "@/config/images";
+import { messagingFor, type SeasonMode } from "@/config/season";
+import { COVERAGE } from "@/config/service-areas";
 
 /**
- * The hero states the business differently depending on the season, because
- * the business genuinely behaves differently. In holiday mode the display is
- * the product and the deadline is real. Off-season, permanent lighting leads,
- * because that is what someone is searching for in April.
+ * The hero states the business differently by season, because the business
+ * genuinely behaves differently. Holiday leads with the display and an honest
+ * deadline; off-season leads with permanent lighting, which is what someone
+ * is actually searching for in April.
  *
- * [NEEDS: real night photography for the background.] Until it lands, the
- * gradient below is a deliberate placeholder that still looks composed.
+ * The image is a real element rather than a CSS background so next/image can
+ * serve responsive formats and carry the LQIP blur. `priority` is set because
+ * this is always the LCP element.
  */
-export function Hero({ mode }: { mode: SeasonMode }) {
+export function Hero({ mode, now }: { mode: SeasonMode; now: Date }) {
   const holiday = mode === "holiday";
+  const image = holiday ? IMAGES.holidayHero : IMAGES.permanentHero;
+  const messaging = messagingFor(mode, now);
 
   return (
-    <section className="surface-night relative overflow-hidden">
-      {/* Ambient glow: a roofline just out of frame. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 -top-40 h-80 bg-[radial-gradient(60%_100%_at_50%_100%,var(--color-glow-500)_0%,transparent_70%)] opacity-[0.14]"
-      />
+    <section className="relative isolate overflow-hidden">
+      <div className="absolute inset-0 -z-10">
+        <Image
+          src={image.src}
+          alt={image.alt}
+          fill
+          priority
+          sizes="100vw"
+          placeholder="blur"
+          blurDataURL={image.blurDataURL}
+          className="object-cover"
+        />
+        <div className="scrim absolute inset-0" />
+      </div>
 
-      <div className="container-site relative py-24 lg:py-32">
-        <p className="font-display text-xs tracking-[0.18em] text-glow-500 uppercase">
-          Hattiesburg &middot; South Mississippi
+      {holiday ? <Snowfall /> : null}
+
+      <div className="container-site relative z-20 flex min-h-[86svh] flex-col justify-end pt-28 pb-16 lg:min-h-[90svh] lg:pb-24">
+        <p className="eyebrow inline-flex w-fit items-center gap-2 rounded-full border border-champagne-400/30 bg-ink-950/50 px-4 py-2 text-champagne-300 backdrop-blur-sm">
+          <span className="size-1.5 rounded-full bg-champagne-400 motion-safe:animate-twinkle" />
+          {messaging.badge}
         </p>
 
-        <h1 className="mt-5 max-w-3xl text-4xl font-bold text-balance sm:text-5xl lg:text-6xl">
+        <h1 className="mt-6 max-w-4xl text-[2.6rem] leading-[1.04] font-semibold text-balance sm:text-6xl lg:text-7xl">
           {holiday ? (
             <>
-              Your best Christmas display,{" "}
-              <span className="text-gradient-glow">handled</span>.
+              Christmas lighting,{" "}
+              <span className="text-champagne-gradient">done properly</span>.
             </>
           ) : (
             <>
-              Lighting that stays up{" "}
-              <span className="text-gradient-glow">all year</span>.
+              Exterior lighting that{" "}
+              <span className="text-champagne-gradient">stays all year</span>.
             </>
           )}
         </h1>
 
-        <p className="mt-6 max-w-xl text-lg text-steel-300">
+        <p className="mt-6 max-w-xl text-lg leading-relaxed text-bone-300">
           {holiday
-            ? "Custom-cut commercial-grade C9, designed for your rooflines. We install it, maintain it, take it down, and store it until next year. You never touch a ladder or a storage bin."
-            : "Permanent architectural lighting installed into your trim: warm white every evening, full colour for every holiday, and it disappears in daylight. Installed by the roofing company that knows how not to hurt your roof."}
+            ? "All-inclusive holiday lighting for premium homes, HOAs, communities and commercial properties. We design it, install it, maintain it, take it down and store it. You never touch a ladder."
+            : "Permanent architectural, landscape and exterior lighting installed by a licensed roofing contractor. Warm white every evening, full colour for every holiday, and nothing to put up or take down."}
         </p>
 
         <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <QuoteButton location="hero" className="px-7 py-4 text-base" />
           <Link
-            href="/free-estimate"
-            className="inline-flex items-center justify-center gap-2 rounded-lg bg-glow-500 px-6 py-3.5 font-semibold text-night-950 transition-colors hover:bg-glow-400"
+            href={
+              holiday
+                ? "/holiday-lighting"
+                : "/services/permanent-architectural-lighting"
+            }
+            className="btn-secondary px-7 py-4 text-base"
           >
-            Get a free estimate
-            <ArrowRight className="size-4" strokeWidth={2} />
+            {holiday ? "See what's included" : "How permanent lighting works"}
           </Link>
-          <Link
-            href={holiday ? "/estimator" : "/permanent-lighting"}
-            className="inline-flex items-center justify-center rounded-lg border border-night-700 px-6 py-3.5 font-semibold text-steel-100 transition-colors hover:border-glow-500/50 hover:text-glow-400"
-          >
-            {holiday ? "See what it costs" : "How permanent lighting works"}
-          </Link>
-          <PhoneLink className="justify-center px-2 py-3.5 text-steel-300 transition-colors hover:text-glow-400 sm:ml-2" />
+          <CallLink className="justify-center px-2 py-4 text-bone-300 transition-colors hover:text-champagne-300 sm:ml-2" />
         </div>
+
+        <p className="mt-7 max-w-lg text-sm text-bone-500">{messaging.urgency}</p>
+        <p className="mt-2 max-w-lg text-sm text-bone-500">
+          {COVERAGE.residential}
+        </p>
       </div>
     </section>
   );

@@ -33,10 +33,17 @@ export const siteConfig = {
   description:
     "Southeast Lights is a Hattiesburg, Mississippi lighting company: custom-cut C9 holiday lighting on a full-service rental plan, and permanent architectural lighting installed year-round. A division of Southeast Roofing LLC.",
 
-  /** Owner-supplied 2026-08-24. Distinct from the roofing line by necessity. */
+  /**
+   * Owner-supplied 2026-08-24. Distinct from the roofing line by necessity:
+   * Google will not verify a second Business Profile on an existing number.
+   * This line accepts SMS, which is why Text is a first-class action in the
+   * mobile bar alongside Quote and Call.
+   */
   phone: {
     display: "(601) 795-7973",
     tel: "+16017957973" as string | null,
+    sms: "+16017957973" as string | null,
+    acceptsText: true,
   },
   email: "office@southeastlights.llc" as string | null,
 
@@ -83,9 +90,12 @@ export const siteConfig = {
     knowledgeGraphId: "/g/11y0033xkf",
     placeId: "ChIJI9TLaQ7mYOARsNCBDLhzt8E",
     placeIdVerified: false,
-    /** Owner-reported 2026-08-24. */
-    reviewCount: 12,
-    rating: 5.0,
+    profileUrl: "https://share.google/ZwdOsO2HSmt8I2ugc",
+    /**
+     * Rating and review COUNT deliberately do not live here. They are owned
+     * by config/reviews.ts (GOOGLE_AGGREGATE) so there is exactly one place
+     * to update them and exactly one source for rating schema.
+     */
   },
 
   /**
@@ -127,6 +137,21 @@ export const siteConfig = {
    *   - foundingYear for Southeast Lights specifically
    */
   permanentLightingBrand: null as string | null,
+
+  /**
+   * Response expectation shown on forms and thank-you screens. Deliberately
+   * "next business day" rather than a same-day promise we cannot always keep.
+   */
+  responseTime: "We typically respond by the next business day.",
+
+  /** Payment terms, shown on commercial pages. Online payment is not live. */
+  payment: {
+    accepted: ["Credit card", "ACH", "Check"],
+    deposit: "50% deposit to reserve your installation date",
+    balance: "Balance due on completion of installation",
+    /** No provider connected. Do not enable without owner approval. */
+    onlinePaymentsEnabled: false,
+  },
   workmanshipWarranty: null as string | null,
   foundingYear: null as number | null,
 } as const;

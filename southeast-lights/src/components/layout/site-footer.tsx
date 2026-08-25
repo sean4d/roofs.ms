@@ -1,143 +1,120 @@
+import Image from "next/image";
 import Link from "next/link";
-import { Mail, MapPin } from "lucide-react";
 
-import { PhoneLink } from "@/components/shared/phone-link";
+import { CallLink, EmailLink, TextLink } from "@/components/shared/contact-actions";
 import { SocialLinks } from "@/components/shared/social-links";
-import { commercialNav, divisionsNav, visibleNav } from "@/config/navigation";
+import { footerNav } from "@/config/navigation";
+import { SERVICE_AREAS } from "@/config/service-areas";
 import { siteConfig } from "@/config/site";
-
-const legalNav = [
-  { label: "Privacy Policy", href: "/privacy-policy" },
-  { label: "Terms of Service", href: "/terms" },
-  { label: "Accessibility", href: "/accessibility" },
-];
 
 export function SiteFooter() {
   const { address, parent } = siteConfig;
-  const divisions = visibleNav(divisionsNav);
 
   return (
-    <footer className="surface-night border-t border-night-700">
-      <div className="container-site grid gap-10 py-16 md:grid-cols-2 lg:grid-cols-4">
-        <div className="flex flex-col gap-4">
-          <p className="font-display text-lg font-bold text-white">
-            Southeast<span className="text-glow-500">&nbsp;Lights</span>
-          </p>
-          <p className="max-w-xs text-sm text-steel-300">
-            Year-round lighting for South Mississippi. Holiday displays on a
-            full-service rental plan, and permanent architectural lighting.
+    <footer className="border-t border-white/10 bg-ink-950">
+      <div className="container-site grid gap-12 py-16 lg:grid-cols-12 lg:gap-8">
+        <div className="flex flex-col gap-5 lg:col-span-4">
+          <Image
+            src="/brand/southeast-lights-logo.png"
+            alt="Southeast Lights"
+            width={2048}
+            height={2048}
+            className="h-16 w-auto"
+          />
+          <p className="max-w-sm text-sm leading-relaxed text-bone-500">
+            Professional holiday, permanent and architectural lighting for
+            homes, communities and commercial properties across South
+            Mississippi and the Gulf Coast.
           </p>
 
-          {/*
-            The parent-company line is a trust signal, not boilerplate.
-            Southeast Lights is a d/b/a of Southeast Roofing LLC — one legal
-            entity — which is why the licence and insurance genuinely carry
-            over. Never write "subsidiary" here.
-          */}
-          <p className="text-sm text-steel-300">
-            A division of{" "}
-            <a
-              href={parent.url}
-              className="text-glow-400 underline-offset-4 hover:underline"
-            >
-              {parent.name}
-            </a>
-            {parent.license ? (
-              <>
-                {" "}
-                &middot; Licensed &amp; insured under MS #{parent.license}
-              </>
+          <div className="flex flex-col gap-2.5 text-sm text-bone-300">
+            <CallLink className="transition-colors hover:text-champagne-300" />
+            <TextLink className="transition-colors hover:text-champagne-300" />
+            <EmailLink className="transition-colors hover:text-champagne-300" />
+            {address.streetAddress ? (
+              <address className="mt-1 not-italic text-bone-500">
+                {address.streetAddress}
+                <br />
+                {address.addressLocality}, {address.addressRegion}{" "}
+                {address.postalCode}
+              </address>
             ) : null}
-          </p>
+          </div>
 
-          <SocialLinks className="mt-1 -ml-2 flex items-center gap-1" />
+          <SocialLinks className="-ml-2 flex items-center gap-1" />
         </div>
 
-        <div>
-          <h2 className="text-sm font-semibold text-white">What we do</h2>
+        <FooterColumn title="Services" links={footerNav.services} className="lg:col-span-2" />
+        <FooterColumn title="Commercial" links={footerNav.commercial} className="lg:col-span-2" />
+        <FooterColumn title="Company" links={footerNav.company} className="lg:col-span-2" />
+
+        <div className="lg:col-span-2">
+          <h2 className="text-sm font-semibold text-bone-100">Service Areas</h2>
           <ul className="mt-4 flex flex-col gap-2.5">
-            {divisions.map((division) => (
-              <li key={division.href}>
+            {SERVICE_AREAS.slice(0, 8).map((area) => (
+              <li key={area.slug}>
                 <Link
-                  href={division.href}
-                  className="text-sm text-steel-300 transition-colors hover:text-glow-400"
+                  href={`/service-areas/${area.slug}`}
+                  className="text-sm text-bone-500 transition-colors hover:text-champagne-300"
                 >
-                  {division.label}
+                  {area.city}, MS
                 </Link>
               </li>
             ))}
             <li>
               <Link
-                href="/estimator"
-                className="text-sm text-steel-300 transition-colors hover:text-glow-400"
+                href="/service-areas"
+                className="text-sm font-medium text-champagne-400 transition-colors hover:text-champagne-300"
               >
-                Pricing Estimator
+                All areas
               </Link>
             </li>
           </ul>
         </div>
+      </div>
 
-        <div>
-          <h2 className="text-sm font-semibold text-white">Commercial</h2>
-          <ul className="mt-4 flex flex-col gap-2.5">
-            {commercialNav.slice(0, 6).map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="text-sm text-steel-300 transition-colors hover:text-glow-400"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <h2 className="text-sm font-semibold text-white">Get in touch</h2>
-          <ul className="mt-4 flex flex-col gap-3 text-sm text-steel-300">
-            <li>
-              <PhoneLink className="transition-colors hover:text-glow-400" />
-            </li>
-            {siteConfig.email ? (
-              <li>
-                <a
-                  href={`mailto:${siteConfig.email}`}
-                  className="inline-flex items-center gap-2 transition-colors hover:text-glow-400"
-                >
-                  <Mail className="size-4" strokeWidth={1.5} />
-                  {siteConfig.email}
-                </a>
-              </li>
-            ) : null}
-            {address.streetAddress ? (
-              <li className="flex items-start gap-2">
-                <MapPin className="mt-0.5 size-4 shrink-0" strokeWidth={1.5} />
-                <span>
-                  {address.streetAddress}
-                  <br />
-                  {address.addressLocality}, {address.addressRegion}{" "}
-                  {address.postalCode}
-                </span>
-              </li>
-            ) : null}
-          </ul>
+      {/*
+        The roofing relationship. Present and credible, but deliberately at
+        the bottom of the page so it never competes with lighting conversion.
+        Lighting customers are future roofing customers, not the reverse.
+      */}
+      <div className="border-t border-white/[0.07]">
+        <div className="container-site flex flex-col gap-4 py-8 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-4">
+            <Image
+              src="/brand/southeast-roofing-logo.png"
+              alt=""
+              width={500}
+              height={500}
+              className="h-11 w-auto opacity-70 invert"
+            />
+            <p className="max-w-md text-sm leading-relaxed text-bone-500">
+              Southeast Lights is the lighting division of{" "}
+              <span className="text-bone-300">{parent.name}</span>, a licensed
+              Mississippi roofing contractor.{" "}
+              <a
+                href={parent.url}
+                className="text-champagne-400 underline-offset-4 hover:underline"
+              >
+                Need roofing?
+              </a>
+            </p>
+          </div>
         </div>
       </div>
 
-      <div className="border-t border-night-800">
-        <div className="container-site flex flex-col gap-3 py-6 text-xs text-steel-300 sm:flex-row sm:items-center sm:justify-between">
+      <div className="border-t border-white/[0.07]">
+        <div className="container-site flex flex-col gap-3 py-6 pb-24 text-xs text-bone-500 sm:flex-row sm:items-center sm:justify-between lg:pb-6">
           <p>
             &copy; {new Date().getFullYear()} {siteConfig.legalName} d/b/a{" "}
-            {siteConfig.name}. All rights reserved.
+            {siteConfig.name}.
+            {parent.license ? ` MS Contractor #${parent.license}.` : ""} All
+            rights reserved.
           </p>
           <ul className="flex flex-wrap gap-x-5 gap-y-2">
-            {legalNav.map((item) => (
+            {footerNav.legal.map((item) => (
               <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="transition-colors hover:text-glow-400"
-                >
+                <Link href={item.href} className="transition-colors hover:text-champagne-300">
                   {item.label}
                 </Link>
               </li>
@@ -146,5 +123,33 @@ export function SiteFooter() {
         </div>
       </div>
     </footer>
+  );
+}
+
+function FooterColumn({
+  title,
+  links,
+  className,
+}: {
+  title: string;
+  links: readonly { label: string; href: string }[];
+  className?: string;
+}) {
+  return (
+    <div className={className}>
+      <h2 className="text-sm font-semibold text-bone-100">{title}</h2>
+      <ul className="mt-4 flex flex-col gap-2.5">
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link
+              href={link.href}
+              className="text-sm text-bone-500 transition-colors hover:text-champagne-300"
+            >
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

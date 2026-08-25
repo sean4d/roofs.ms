@@ -12,10 +12,9 @@ const nextConfig: NextConfig = {
      * they are the whole reason the DNS cutover keeps its rankings.
      */
     return [
-      { source: "/residential-lights", destination: "/holiday-lighting/residential", permanent: true },
-      { source: "/commercial-lights", destination: "/holiday-lighting/commercial", permanent: true },
-      { source: "/christmas-additions", destination: "/holiday-lighting/additions", permanent: true },
-      { source: "/services", destination: "/holiday-lighting", permanent: true },
+      { source: "/residential-lights", destination: "/services/residential-holiday-lighting", permanent: true },
+      { source: "/commercial-lights", destination: "/services/commercial-holiday-lighting", permanent: true },
+      { source: "/christmas-additions", destination: "/services/tree-wrapping", permanent: true },
       { source: "/areas", destination: "/service-areas", permanent: true },
       { source: "/gallery", destination: "/projects", permanent: true },
       { source: "/accessibility-statement", destination: "/accessibility", permanent: true },

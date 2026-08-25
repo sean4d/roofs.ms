@@ -1,0 +1,122 @@
+{
+  "apartments": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADQAQCdASoQAAoABABsJbACdAD1RDS6AAD+pluRFRIAHxSL4Z2q43Pqr2r7wlMCcM2LAg5U3Jm0OGaPNFs1Je8+TDformh0hsAAAA=="
+  },
+  "bistro-patio": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAABQAgCdASoQAAoABABsJbACdH8AF8hLvhIlbyAA/nVMhnW802Rjbe/gcypajSYW7uinxGM7085eV/q91HiqGDTjWk2p9CINhz+pck36U4Uh3mHHeH2zsZqmT2x6Fy03+4AAAA=="
+  },
+  "c9-detail": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAwAgCdASoQAAoABABsJbACdAYrxmsOQS9QAAD+wfrDlH+nRjgTKGQt669Wo2RT0U8odwtSEyDO+4RuCePrMNjT0SKFLkY1baRSaWK4W1Nv4Oxp0IAAAA=="
+  },
+  "church": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADwAQCdASoQAAoABABsJYgCdADdlpLPEEAA/vDoPlhzivopBIkemJpZ2UXP2EW9K7Nmlzy+oSsep/37YtEgBStaTcjBdPDEAAA="
+  },
+  "colonial-columns": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADQAQCdASoQAAoABABsJagCdACzIRzRAAD+26CKsJoKhR5ED/GeZ++WR2TrRoRhcR4Y0ciVtJuez0JL+vcP2FsTH8SICb3PeYCCi2t0jZDwsugA"
+  },
+  "country-club": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAAAwAgCdASoQAAoABABsJaACdEf/ggVEQH6lAAD+29GfJQ3E9N7z/1bErtc+fPl8KHtteJiDFh2b/ieMM7GDNERv/acHZUAA"
+  },
+  "crew-boom-lift": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAAAwAgCdASoQAAoABABsJZACdIDZFYAc6vaCAAD+38FDM3i8LS8k+clL1cNQ0hNw32uWwkN6RW/ShSOF5dvmcpUfxbtulZ/jbVjn0Cp5iDiaMa+/itsJia7rXx96AAAA"
+  },
+  "downtown-municipal": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAAAQAgCdASoQAAoABABsJbACdH8ADT3tVeQAAP7AdLoiLkwF6RyQ46Ztg77HGGJzcdpaaIcn/kVro6PX7fqsffOYeR4rBwbuVLOdk7wmk9QBNS/MjNxLQAAA"
+  },
+  "estate-wide": {
+    "width": 2400,
+    "height": 1371,
+    "blurDataURL": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADwAQCdASoQAAkABABsJagCdAEDfq0X1AAA/s3pB04N6huj+S3GanlbBOJ/9hTMlV/o+KLn4C31KjP+1CsM7XDcgVIpKnh+BT4bkYs1BhUTfspV3AA="
+  },
+  "golf-club": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAQCdASoQAAoABABsJbACdADHau2AAAD7g71zmNLB1VMbd7rgwos3q0iM0faIrCJYjLAbk5kmxThmu7awAaP6wX4LKI6Lq7dhkzzAAAA="
+  },
+  "hoa-entrance": {
+    "width": 2400,
+    "height": 1371,
+    "blurDataURL": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADQAQCdASoQAAkABABsJbACdAD6PWKi4AD+J1+C+gOCKbn/TDJVPlrMtl9Y1H2LP9kS3IVdayW1HJ4YbQMaJ11LQqugzgAA"
+  },
+  "holiday-hero-estate": {
+    "width": 2400,
+    "height": 1371,
+    "blurDataURL": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAQCdASoQAAkABABsJZQCdADxH0q0AAD+6ZJyFXjn5d3VBjoAoSJcvzDPFmF4vJMzpdwv+EvM+vUdHYIAAA=="
+  },
+  "hotel-resort": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADwAQCdASoQAAoABABsJbACdAEeX4XbkTAA/qaRdPVMgPVSzu3mhzjlkjYEAcsRXdtI6BU2HhoONDJZTg4C2LUioEG1wxvGyNc1HF9groZOIAAA"
+  },
+  "installer-roof": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADwAQCdASoQAAoABABsJQBOkBLi4+1S9ZAA/vHeBNlid85qlvlSATj3IOZ2OPvKa6XdHUiKQa52ZX6zXGI/7jYxM2YjxGWegf391VeehDPff1AAAAA="
+  },
+  "landscape-lighting": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAwAgCdASoQAAoABABsJYwCdAEfgNE1D8/YAAD+24PK/22TgKfYgxTpENC9swc3JFLNix7o25S+4hhIe2EhUyoHom4BQg6n7iUyCsgtAAA="
+  },
+  "live-oak-wrap": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAAAQAgCdASoQAAoABABsJYwCdAEeknp4CgwAAP7ckhPD8cFyg7ywY30G2oN/uHWHvZz1uN0QbqQEwm/nWJpN3hxiuwKAAA=="
+  },
+  "mardi-gras": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAwAgCdASoQAAoABABsJaACdAEflj6estoVAAD+26Ry2wTf3MyKSGz7MIHUmNKRCPAdV/UFBlg1RPxp4PXGQwzQF4aPz+kSOi+KdDgAAAA="
+  },
+  "office-building": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAAAQAgCdASoQAAoABABsJagCdGuAAgWzpTwAAP7QNiFabhf7cgpBqOAeRunJr3aYCBMX1tUZ6fekh2F+1eAacK9/1xAAAA=="
+  },
+  "permanent-color": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAQAgCdASoQAAoABABsJZACdIExFjR3TBrwAP7u7SRVXYi4NNFCp/R6c8q3E+3iucvcywGZkVrZP12y11QEjs0pnc4LaiQZ2RNWS4jXUsAAAA=="
+  },
+  "permanent-hero": {
+    "width": 2400,
+    "height": 1371,
+    "blurDataURL": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADwAQCdASoQAAkABABsJZACdACzW7gfQgAA9gl8+Gbe2tJAl2cxnf3brKkHAeaAvfPvj41uLjp8sRRrphjYWoPA1CLTkkqdnfyYE6jhPEW3jIAE0JAAAA=="
+  },
+  "retail-center": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADwAQCdASoQAAoABABsJbACdAEMWXA+3wAA/s3fUyPGFoB5j0GUmQOfO0wI7ciy9J4K4hWWlQKijf4zSfLN+QuN9cs0I88NlFYMIAAA"
+  },
+  "storage-warehouse": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAwAgCdASoQAAoABABsJZwAAxS1MPlrSZaAAAD+fhMg3A2Rrm9F5D1gW7ehHPcHZkuyMmAipQg/bfz1tvlJJof9Mn9VKe8oLryKg02V4AA="
+  },
+  "tree-shrub": {
+    "width": 1600,
+    "height": 1179,
+    "blurDataURL": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAwAgCdASoQAAwABABsJbACdGuAAvlv1yv3AAD+5GQSwS400o/ccejhLF5Te4mH99ECnr7VV8xpSdTvnjBQqelUV6zkoSscCphJLKIoUJsBTCgA"
+  },
+  "wedding-event": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAQAgCdASoQAAoABABsJQBOgjgAqCfazHQAAP7O+OyrV9XspUXtBI/vTEi3s++7ourZATuQTLmhhfxLhss0AKpSHt46DwznbQNI7Bn8yAAAAA=="
+  }
+}

@@ -32,6 +32,75 @@ export const HOLIDAY = {
   minimum: 1000,
 } as const;
 
+/**
+ * Presentation packages. A sales aid, not a product catalogue: every project
+ * is still custom. Their job is to let a customer self-select a budget and to
+ * make a $2,000-$5,000 display feel like the normal middle option rather than
+ * an upsell.
+ */
+export const PACKAGES = [
+  {
+    key: "classic",
+    name: "Classic",
+    from: 1000,
+    positioning: "The clean, correct version of the look everyone pictures.",
+    includes: [
+      "Primary roofline in custom-cut C9",
+      "Warm white or your colour choice",
+      "Timers, cords and connections",
+      "Full season of maintenance",
+      "Takedown and storage",
+    ],
+  },
+  {
+    key: "signature",
+    name: "Signature",
+    from: 2500,
+    positioning:
+      "Where most of our residential work lands, and where a house starts to look designed rather than decorated.",
+    includes: [
+      "Everything in Classic",
+      "Secondary rooflines, peaks and dormers",
+      "Wrapped columns and window outlines",
+      "One wrapped tree",
+      "Pathway lighting to the entry",
+    ],
+    featured: true,
+  },
+  {
+    key: "estate",
+    name: "Estate",
+    from: 5000,
+    positioning:
+      "Full-property design for homes where the grounds matter as much as the house.",
+    includes: [
+      "Everything in Signature",
+      "Multiple wrapped trees including mature hardwoods",
+      "Driveway and landscape lighting",
+      "Entrance and monument features",
+      "Priority scheduling and in-season inspections",
+    ],
+  },
+] as const;
+
+/** Residential budget bands. Used to qualify, not to price. */
+export const RESIDENTIAL_BUDGETS = [
+  "$1,000 - $2,000",
+  "$2,000 - $5,000",
+  "$5,000 - $10,000",
+  "$10,000+",
+] as const;
+
+/** Commercial budget bands. Deliberately open-ended at the top. */
+export const COMMERCIAL_BUDGETS = [
+  "Under $5,000",
+  "$5,000 - $10,000",
+  "$10,000 - $25,000",
+  "$25,000 - $50,000",
+  "$50,000+",
+  "Not sure yet",
+] as const;
+
 /** Window outlines, by size. */
 export const WINDOW_TIERS = [
   { key: "small", label: "Small", price: 100 },
@@ -46,10 +115,30 @@ export const WINDOW_TIERS = [
  * either loses money or scares off a job worth having.
  */
 export const TREE_TIERS = [
-  { key: "small", label: "Small", price: 1000 },
-  { key: "medium", label: "Medium", price: 2500 },
-  { key: "large", label: "Large", price: 4000 },
-  { key: "specimen", label: "Live oak / specimen", price: null },
+  {
+    key: "small",
+    label: "Small",
+    detail: "Ornamental, up to about 15 ft",
+    price: 1500,
+  },
+  {
+    key: "medium",
+    label: "Medium",
+    detail: "Established shade tree",
+    price: 2500,
+  },
+  {
+    key: "large",
+    label: "Large",
+    detail: "Mature hardwood, full canopy",
+    price: 3500,
+  },
+  {
+    key: "estate",
+    label: "Estate / Specimen",
+    detail: "Century live oak or signature tree",
+    price: null,
+  },
 ] as const;
 
 /**
