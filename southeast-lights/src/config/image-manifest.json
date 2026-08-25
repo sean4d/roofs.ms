@@ -20,9 +20,9 @@
     "blurDataURL": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADwAQCdASoQAAoABABsJYgCdADdlpLPEEAA/vDoPlhzivopBIkemJpZ2UXP2EW9K7Nmlzy+oSsep/37YtEgBStaTcjBdPDEAAA="
   },
   "colonial-columns": {
-    "width": 555,
-    "height": 555,
-    "blurDataURL": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADwAQCdASoQABAABABsJbACdADL0UsJwfAAyW+3wdkWn2K6Saa6H/TerFql0tzzwJMQmhTFt02u6NXcTC5KYGsTR1eoieW8087Ewu5uQ5QHycg/2YmQAA=="
+    "width": 960,
+    "height": 610,
+    "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoQAAoABABsJQBOgBhwZY07AAD+9EUd79T+YWLuRhGrfmpUp9FW1YSy/9Bt8dprMWnzReHxTwYjS8wOEmAAAA=="
   },
   "country-club": {
     "width": 1600,
@@ -118,5 +118,10 @@
     "width": 1600,
     "height": 1040,
     "blurDataURL": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAQAgCdASoQAAoABABsJQBOgjgAqCfazHQAAP7O+OyrV9XspUXtBI/vTEi3s++7ourZATuQTLmhhfxLhss0AKpSHt46DwznbQNI7Bn8yAAAAA=="
+  },
+  "project-poplarville-colonial": {
+    "width": 960,
+    "height": 610,
+    "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoQAAoABABsJQBOgBhwZY07AAD+9EUd79T+YWLuRhGrfmpUp9FW1YSy/9Bt8dprMWnzReHxTwYjS8wOEmAAAA=="
   }
 }

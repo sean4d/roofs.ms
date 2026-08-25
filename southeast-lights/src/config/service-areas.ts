@@ -20,9 +20,9 @@ export interface ServiceArea {
   intro: string;
   /** What actually distinguishes lighting work in this market. */
   localContext: string;
-  /** Services worth emphasising here. Slugs from services.ts. */
+  /** Services worth emphasizing here. Slugs from services.ts. */
   emphasis: string[];
-  /** Neighbouring slugs for internal linking. */
+  /** Neighboring slugs for internal linking. */
   nearby: string[];
 }
 
@@ -74,7 +74,7 @@ export const SERVICE_AREAS: ServiceArea[] = [
       "residential-holiday-lighting",
       "landscape-lighting",
     ],
-    nearby: ["hattiesburg", "petal", "sumrall", "columbia"],
+    nearby: ["hattiesburg", "petal", "sumrall", "poplarville"],
   },
   {
     slug: "sumrall",
@@ -137,6 +137,22 @@ export const SERVICE_AREAS: ServiceArea[] = [
     nearby: ["purvis", "sumrall", "hattiesburg"],
   },
   {
+    slug: "poplarville",
+    city: "Poplarville",
+    county: "Pearl River County",
+    tier: "core",
+    intro:
+      "Poplarville is a market we can point to rather than claim: there is finished Southeast Lights work on the ground here, and the drive down Highway 11 puts us in Pearl River County inside an hour from the warehouse.",
+    localContext:
+      "Homes around Poplarville tend to sit back from the road on open lots, which changes what a display has to do. There is no neighboring house to borrow light from and nothing competing after dark, so the elevation has to carry itself: a continuous roof edge with no gaps, and vertical elements like entry columns lit their full height so the center of the house holds up at a distance. The pine and hardwood cover common through Pearl River County matters too, because a display absorbed by a tree line does nothing for the road.",
+    emphasis: [
+      "residential-holiday-lighting",
+      "christmas-light-installation",
+      "tree-wrapping",
+    ],
+    nearby: ["purvis", "hattiesburg", "wiggins"],
+  },
+  {
     slug: "wiggins",
     city: "Wiggins",
     county: "Stone County",
@@ -150,7 +166,7 @@ export const SERVICE_AREAS: ServiceArea[] = [
       "tree-wrapping",
       "commercial-holiday-lighting",
     ],
-    nearby: ["hattiesburg", "gulfport", "purvis"],
+    nearby: ["hattiesburg", "gulfport", "poplarville"],
   },
   {
     slug: "gulfport",

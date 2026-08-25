@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
+import { ProjectCard } from "@/components/projects/project-card";
 import { CtaBand } from "@/components/shared/cta-band";
 import { FaqList } from "@/components/shared/faq-list";
 import { PageHero } from "@/components/shared/page-hero";
@@ -10,6 +11,7 @@ import { Section } from "@/components/shared/section";
 import { JsonLd } from "@/components/seo/json-ld";
 import { faqsFor } from "@/config/faqs";
 import { IMAGES } from "@/config/images";
+import { publishedProjects } from "@/config/projects";
 import { SERVICE_AREAS, areaBySlug } from "@/config/service-areas";
 import { serviceBySlug } from "@/config/services";
 import {
@@ -66,6 +68,11 @@ export default async function CityPage({
     .map((slug) => areaBySlug(slug))
     .filter((a) => a !== undefined);
   const faqs = faqsFor(["coverage", "pricing", "scheduling"]).slice(0, 6);
+  // Real completed work in this market, when there is any. Nothing is
+  // templated here: a city with no finished job simply does not get the band.
+  const local = publishedProjects().filter(
+    (project) => project.city === area.city && !project.isDemo,
+  );
 
   return (
     <>
@@ -127,6 +134,42 @@ export default async function CityPage({
           ))}
         </div>
       </Section>
+
+      {local.length > 0 ? (
+        <Section
+          eyebrow="Work here"
+          title={`Displays we have installed in ${area.city}`}
+        >
+          {local.length === 1 ? (
+            // One job in a three-column grid reads as an empty shelf. Pair it
+            // with the point it is there to make instead.
+            <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16">
+              <ProjectCard project={local[0]} />
+              <div className="min-w-0">
+                <p className="text-lg leading-relaxed text-bone-300">
+                  Finished work, not a sample. This is what covering {area.city}{" "}
+                  actually means: a truck out of the Hattiesburg warehouse,
+                  lighting cut on site to that specific house, and the same crew
+                  back in January to take it down and store it.
+                </p>
+                <Link
+                  href="/projects"
+                  className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-champagne-300"
+                >
+                  See the full gallery
+                  <ArrowUpRight className="size-3.5" strokeWidth={2} />
+                </Link>
+              </div>
+            </div>
+          ) : (
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {local.map((project) => (
+                <ProjectCard key={project.slug} project={project} />
+              ))}
+            </div>
+          )}
+        </Section>
+      ) : null}
 
       <Section eyebrow="Questions" title={`Working with us in ${area.city}`}>
         <FaqList items={faqs} />

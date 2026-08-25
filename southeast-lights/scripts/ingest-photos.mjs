@@ -47,6 +47,10 @@ const SLOTS = {
     width: 2000,
     use: "What's included section, holiday lighting page",
   },
+  "project-poplarville-colonial": {
+    width: 1600,
+    use: "Gallery project: Poplarville colonial",
+  },
 };
 
 const IN = "incoming";

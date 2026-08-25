@@ -51,6 +51,31 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    slug: "poplarville-colonial-columns",
+    title: "Colonial Roofline and Twenty-Foot Columns",
+    city: "Poplarville",
+    propertyType: "Residential",
+    serviceSlugs: [
+      "residential-holiday-lighting",
+      "christmas-light-installation",
+    ],
+    tags: ["holiday", "rooflines", "warm-white"],
+    summary:
+      "Warm white C9 across the full front elevation, with both twenty-foot entry columns wrapped base to capital.",
+    scope:
+      "Warm white C9 custom cut on site to the full front elevation: the main roofline, both lower wings and the center gable over the entry. The portico columns stand twenty feet, wrapped continuously from base to capital so the entry carries the display at the center rather than the roofline doing all the work.",
+    highlights: [
+      "Full front elevation in warm white C9, cut to length on site",
+      "Both twenty-foot entry columns wrapped base to capital",
+      "Continuous roof edge across the main span and both wings",
+    ],
+    hero: IMAGES.projectPoplarvilleColonial,
+    // One photo so far. The detail page hides the gallery band rather than
+    // repeating the hero under a heading that promises more.
+    gallery: [],
+    isDemo: false,
+  },
+  {
     slug: "estate-roofline-and-oaks",
     title: "Estate Roofline and Oak Canopy",
     city: "Hattiesburg",

@@ -39,7 +39,21 @@ const OWNER_SUPPLIED = new Set([
   "retail-center",
   "colonial-columns",
   "installer-roof",
+  "project-poplarville-colonial",
 ]);
+
+/**
+ * Photography the owner confirmed is a Southeast Lights job, with the property
+ * and the scope named. Only these may appear in the gallery: see the
+ * authenticity rule in config/projects.ts.
+ */
+const CONFIRMED_OWN_WORK = new Set([
+  "project-poplarville-colonial",
+  "colonial-columns",
+]);
+
+export const isConfirmedOwnWork = (name: string) =>
+  CONFIRMED_OWN_WORK.has(name);
 
 function img(name: string, alt: string): SiteImage {
   const entry = meta[name];
@@ -52,10 +66,10 @@ function img(name: string, alt: string): SiteImage {
     blurDataURL: entry.blurDataURL,
     /*
      * NOTE: false here means "no longer an AI placeholder", not "verified
-     * Southeast Lights work". Four of the five owner-supplied files carry
-     * filenames from third-party sources, so they remain temporary imagery on
-     * service and segment surfaces and must not be moved into the gallery
-     * without confirming rights and authorship.
+     * Southeast Lights work". Several owner-supplied files carry filenames
+     * from third-party sources, so they remain temporary imagery on service
+     * and segment surfaces. CONFIRMED_OWN_WORK above is the narrower set that
+     * may populate the gallery.
      */
     isPlaceholder: !OWNER_SUPPLIED.has(name),
   };
@@ -164,7 +178,11 @@ export const IMAGES = {
   ),
   colonialColumns: img(
     "colonial-columns",
-    "A two-story home with every roofline and gable outlined in warm white C9 bulbs and lit shrubs across the front",
+    "Two-story colonial home at dusk with warm white C9 bulbs along every roof edge and both entry columns wrapped base to capital",
+  ),
+  projectPoplarvilleColonial: img(
+    "project-poplarville-colonial",
+    "Southeast Lights display in Poplarville: a two-story colonial at dusk with warm white C9 along the main roofline, both wings and the center gable, and twenty-foot entry columns wrapped from base to capital",
   ),
   c9Detail: img(
     "c9-detail",

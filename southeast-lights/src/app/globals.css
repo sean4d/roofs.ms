@@ -295,6 +295,23 @@
       );
   }
 
+  /*
+   * Scrim for a photograph whose subject is centered rather than off to one
+   * side. Weighted hard at the very bottom where the title sits and clearing
+   * fast above it, so a house in the middle of the frame keeps its contrast.
+   * The flat .scrim is fine over a bright image and murders a dusk one.
+   */
+  .scrim-subject {
+    background: linear-gradient(
+      to top,
+      var(--color-ink-950) 0%,
+      --alpha(var(--color-ink-950) / 78%) 22%,
+      --alpha(var(--color-ink-950) / 42%) 44%,
+      --alpha(var(--color-ink-950) / 14%) 70%,
+      transparent 100%
+    );
+  }
+
   .scrim-soft {
     background: linear-gradient(
       to top,

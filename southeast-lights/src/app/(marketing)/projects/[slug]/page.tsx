@@ -68,7 +68,7 @@ export default async function ProjectPage({
           blurDataURL={project.hero.blurDataURL}
           className="-z-10 object-cover"
         />
-        <div className="scrim absolute inset-0 -z-10" />
+        <div className="scrim-subject absolute inset-0 -z-10" />
         <div className="container-site relative flex min-h-[56svh] flex-col justify-end pt-32 pb-14">
           {project.isDemo ? (
             <span className="mb-4 w-fit rounded-md border border-amber-300/40 bg-amber-300/15 px-3 py-1.5 text-xs font-semibold tracking-wide text-amber-100 uppercase">
