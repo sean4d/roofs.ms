@@ -67,6 +67,10 @@ const SLOTS = {
     width: 1600,
     use: "Gallery project: Poplarville red, green and white",
   },
+  "project-poplarville-outbuildings": {
+    width: 1600,
+    use: "Gallery project: Poplarville outbuildings",
+  },
 };
 
 const IN = "incoming";

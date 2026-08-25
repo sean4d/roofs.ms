@@ -43,6 +43,16 @@ export interface Project {
   scope: string;
   highlights: string[];
   hero: SiteImage;
+  /**
+   * object-position for the detail hero, when the default is wrong.
+   *
+   * The hero is a wide band and most of these photographs are 4:3, so a lot
+   * of the frame is cropped away. The default sits high because a straight-on
+   * elevation puts the roofline in the upper half and lawn in the lower. A
+   * photograph taken at an angle, or from further back, puts its subject
+   * somewhere else and needs to say so.
+   */
+  heroFocus?: string;
   gallery: ProjectImage[];
   /** MUST be true for anything that is not genuine Southeast Lights work. */
   isDemo: boolean;
@@ -50,6 +60,32 @@ export interface Project {
 }
 
 export const PROJECTS: Project[] = [
+  {
+    slug: "poplarville-outbuildings",
+    title: "Roofline, Ridges and Every Outbuilding",
+    city: "Poplarville",
+    propertyType: "Residential",
+    serviceSlugs: [
+      "residential-holiday-lighting",
+      "christmas-light-installation",
+    ],
+    tags: ["holiday", "rooflines", "color"],
+    summary:
+      "Red, green and white carried around the house, up the ridges and gable rakes, and onto the carport and the side building.",
+    scope:
+      "Red, green and white run around the roofline rather than across the front of it, so the display holds together from the driveway as well as from the road. Ridges and gable rakes are lit along with the eaves, which is what gives a roof its shape after dark instead of a flat outline. The carport and the small building beside the house carry the same pattern. A property reads as finished when the smaller structures are lit too, and half done when the house is lit and everything around it stays dark.",
+    highlights: [
+      "Roofline carried around the house, not only across the front",
+      "Ridges and gable rakes lit along with the eaves",
+      "Carport and side building in the same pattern",
+    ],
+    hero: IMAGES.projectPoplarvilleOutbuildings,
+    // Shot from the driveway rather than the street, so the house sits low in
+    // the frame with treeline above it.
+    heroFocus: "center 62%",
+    gallery: [],
+    isDemo: false,
+  },
   {
     slug: "poplarville-red-green-white",
     title: "Red, Green and White with Wrapped Columns",
