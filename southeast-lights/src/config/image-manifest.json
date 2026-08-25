@@ -223,5 +223,10 @@
     "width": 2400,
     "height": 1600,
     "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoQAAsABABsJZgCdADHoIjkngD+8XRjQHPO3ZMtw1sjMUtVkQNhyQCaXvP9HHwT+FWhTYeHfHWcm6JAtcAAAA=="
+  },
+  "landscape-lighting-hero": {
+    "width": 1800,
+    "height": 2400,
+    "blurDataURL": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADQAwCdASoQABUAPxl0sVCspqSisAgBkCMJYwC06CHfjf0X2O6MlAAA/ujZwm9XJJMu4cCY4BAKhaCx/LOdMQoJ5foHSgXCbRV8YPfHzw/1h5n8rtpfFEbEAAA="
   }
 }

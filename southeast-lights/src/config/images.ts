@@ -215,6 +215,23 @@ export const IMAGES = {
     "installer-roof",
     "An installer on a steep roof using yellow roof pads and a ladder hook to run a line of C9 bulbs along the gable",
   ),
+  /**
+   * Landscape Lighting, on the card and the service hero. Portrait, so both
+   * surfaces crop it hard; the focus keeps the trunk fork and the fixture at
+   * the base in frame, which is what makes it read as landscape lighting
+   * rather than a photograph of a tree.
+   *
+   * Illustrative, like the rest of the service photography. Not in
+   * OWNER_SUPPLIED and not gallery-eligible.
+   *
+   * landscapeLighting below still fronts the off-season closing band, where a
+   * portrait file would crop to a strip.
+   */
+  landscapeLightingHero: img(
+    "landscape-lighting-hero",
+    "A mature hardwood uplit from the ground at night, trunk and lower canopy picked out in warm light with the fixture visible at the base",
+    "center 76%",
+  ),
   landscapeLighting: img(
     "landscape-lighting",
     "Warm white path lights along a flagstone walkway with dramatic uplighting on mature oak trunks",

@@ -115,7 +115,7 @@ export const SERVICES: Service[] = [
       "Landscape lighting design and installation in South Mississippi: path lighting, tree uplighting, hardscape washing and facade accent lighting.",
     summary:
       "Path lighting, tree uplighting and facade washing that make a property look considered after dark, all year.",
-    image: IMAGES.landscapeLighting,
+    image: IMAGES.landscapeLightingHero,
     enabled: true,
     audience: "both",
   },

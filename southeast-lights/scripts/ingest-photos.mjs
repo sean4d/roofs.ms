@@ -43,6 +43,10 @@ const SLOTS = {
   "mardi-gras": { width: 1600, use: "Mardi Gras service" },
   "wedding-event": { width: 1600, use: "Wedding and event service" },
   "landscape-lighting": { width: 1600, use: "Landscape lighting service" },
+  "landscape-lighting-hero": {
+    width: 2400,
+    use: "Landscape Lighting card and service hero",
+  },
   "tree-shrub": { width: 1600, use: "Tree and shrub lighting" },
   "permanent-color": { width: 1600, use: "Permanent lighting in color" },
   "c9-detail": { width: 1600, use: "FAQ hero, C9 close-up" },

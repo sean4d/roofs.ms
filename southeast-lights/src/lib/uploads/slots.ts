@@ -119,6 +119,12 @@ export const SLOTS: Slot[] = [
     group: "Services",
   },
   {
+    key: "landscape-lighting-hero",
+    label: "Landscape lighting, uplit tree",
+    where: "Landscape Lighting card and service hero",
+    group: "Services",
+  },
+  {
     key: "bistro-patio",
     label: "Bistro & patio",
     where: "Patio string lighting",
