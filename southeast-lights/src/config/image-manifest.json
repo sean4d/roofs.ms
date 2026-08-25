@@ -168,5 +168,20 @@
     "width": 1440,
     "height": 1207,
     "blurDataURL": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAQAgCdASoQAA0ABABsJYgCdAEN/iJeHnAAAP7s2nyNfXBTNmZ9FD/wXlMQ4UN2ZB5eaT6Vf3dbSk3paVLnnavk86Rcze/gEW88wAAA"
+  },
+  "project-gcs-front": {
+    "width": 1440,
+    "height": 1080,
+    "blurDataURL": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADwAQCdASoQAAwABABsJZgC7AEO4b+gC4AA/vVwX5IuBW9/9n0VHlCnfPOJO7FiLNiA/7/rxwZDlA30gMz3QAAA"
+  },
+  "project-gcs-mural": {
+    "width": 1200,
+    "height": 900,
+    "blurDataURL": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAACwAQCdASoQAAwABABsJaAAAuc/r9QAAP72hgvGcmmVMi+ov0N12GyISPYJHnGrPgointIfc8P+eKAAAAA="
+  },
+  "project-gcs-walkway": {
+    "width": 1440,
+    "height": 1080,
+    "blurDataURL": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAQCdASoQAAwABABsJQBOgCHOE+c4XAD+9oN3OL2fNvTnzVxrK1HvpM0CzDW9avCN27VYAj4xTrwAuUAAAA=="
   }
 }

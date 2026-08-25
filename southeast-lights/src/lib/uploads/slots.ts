@@ -200,6 +200,24 @@ export const SLOTS: Slot[] = [
     where: "Gallery project and Christmas installation service page",
     group: "Projects",
   },
+  {
+    key: "project-gcs-front",
+    label: "Grace Community School, front",
+    where: "Gallery project hero and Schools vertical",
+    group: "Projects",
+  },
+  {
+    key: "project-gcs-walkway",
+    label: "Grace Community School, walkway",
+    where: "Gallery project photo",
+    group: "Projects",
+  },
+  {
+    key: "project-gcs-mural",
+    label: "Grace Community School, mural",
+    where: "Gallery project photo",
+    group: "Projects",
+  },
 
   {
     key: "installer-roof",

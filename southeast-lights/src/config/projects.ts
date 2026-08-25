@@ -30,6 +30,7 @@ export interface Project {
     | "Residential"
     | "HOA"
     | "Commercial"
+    | "School"
     | "Church"
     | "Municipal"
     | "Hospitality";
@@ -60,6 +61,38 @@ export interface Project {
 }
 
 export const PROJECTS: Project[] = [
+  {
+    slug: "grace-community-school",
+    title: "Grace Community School",
+    city: "Hattiesburg",
+    propertyType: "School",
+    serviceSlugs: [
+      "commercial-holiday-lighting",
+      "christmas-light-installation",
+    ],
+    tags: ["holiday", "rooflines", "color"],
+    summary:
+      "Red, green and warm white on three gables and the full length of the covered entry walkway.",
+    scope:
+      "Every gable rake outlined and the covered walkway run end to end, so the campus reads as one building from the road instead of three roofs with a gap between them. Red, green and warm white in a repeating sequence, custom cut to each run. The walkway is the piece that matters most here: it is the height families actually see at drop-off and pickup, close enough to look at rather than glance at, and it is the part of the campus a car passes under twice a day.",
+    highlights: [
+      "All three gable rakes plus the full covered walkway",
+      "Read from the road and from the drop-off line, not just the parking lot",
+      "One fixed seasonal price, installed and removed by insured crews",
+    ],
+    hero: IMAGES.projectGcsFront,
+    gallery: [
+      {
+        image: IMAGES.projectGcsWalkway,
+        caption: "The covered walkway run, seen from the lot",
+      },
+      {
+        image: IMAGES.projectGcsMural,
+        caption: "The gable above the school mural",
+      },
+    ],
+    isDemo: false,
+  },
   {
     slug: "hattiesburg-wooded-lot",
     title: "A Complete Outline on a Wooded Lot",
@@ -429,6 +462,7 @@ export const PROJECT_FILTERS = [
   { key: "all", label: "All Projects" },
   { key: "Residential", label: "Residential" },
   { key: "Commercial", label: "Commercial" },
+  { key: "School", label: "Schools" },
   { key: "HOA", label: "HOA" },
   { key: "Church", label: "Churches" },
   { key: "Municipal", label: "Municipal" },

@@ -56,6 +56,9 @@ const OWNER_SUPPLIED = new Set([
   "project-poplarville-halloween",
   "project-hattiesburg-two-story",
   "project-hattiesburg-canopy",
+  "project-gcs-front",
+  "project-gcs-walkway",
+  "project-gcs-mural",
 ]);
 
 /**
@@ -74,6 +77,9 @@ const CONFIRMED_OWN_WORK = new Set([
   "project-poplarville-halloween",
   "project-hattiesburg-two-story",
   "project-hattiesburg-canopy",
+  "project-gcs-front",
+  "project-gcs-walkway",
+  "project-gcs-mural",
   "colonial-columns",
 ]);
 
@@ -205,6 +211,21 @@ export const IMAGES = {
   colonialColumns: img(
     "colonial-columns",
     "Two-story colonial home at dusk with warm white C9 bulbs along every roof edge and both entry columns wrapped base to capital",
+  ),
+  projectGcsFront: img(
+    "project-gcs-front",
+    "Southeast Lights display at Grace Community School in Hattiesburg: three gables and the covered entry walkway outlined in alternating red, green and warm white C9 bulbs",
+    "center 62%",
+  ),
+  projectGcsWalkway: img(
+    "project-gcs-walkway",
+    "Grace Community School at night from the parking lot, red, green and warm white C9 running the full length of the covered walkway fascia and up each gable rake",
+    "center 58%",
+  ),
+  projectGcsMural: img(
+    "project-gcs-mural",
+    "The Grace Community School mural elevation at night with red, green and warm white C9 along the gable rake and the walkway roof beyond it",
+    "center 55%",
   ),
   projectHattiesburgCanopy: img(
     "project-hattiesburg-canopy",

@@ -61,6 +61,37 @@ export const VERTICALS: Vertical[] = [
     ],
   },
   {
+    slug: "schools",
+    label: "Schools",
+    title: "School Christmas Lighting",
+    metaDescription:
+      "Christmas lighting for schools across South Mississippi: gable rooflines, covered walkways, drop-off loops and campus entrances. Insured crews, one fixed seasonal price, scheduled around your calendar.",
+    summary:
+      "We light school campuses for the Christmas season, from gable rooflines and covered walkways to the drop-off loop and the campus entrance, on one fixed seasonal price scheduled around your calendar.",
+    image: IMAGES.projectGcsFront,
+    // Second only to HOAs, and the one vertical on this site with a finished
+    // campus behind it rather than illustrative photography.
+    priority: 2,
+    concerns: [
+      {
+        heading: "Designed for the car line",
+        body: "Most of a school display is seen twice a day from a slow-moving car in the drop-off loop. Covered walkways and entry canopies read better at that distance than a roofline three stories up, so that is where the design starts.",
+      },
+      {
+        heading: "Scheduled around your calendar",
+        body: "Installation is planned around the school calendar, including outside school hours where a campus prefers it, and around the dates that matter: the Christmas program, the tree lighting, anything the community is invited to.",
+      },
+      {
+        heading: "Licensed and insured crews",
+        body: "The work runs under Southeast Roofing LLC, a licensed Mississippi contractor, with the insurance and the lift equipment that comes with it. No volunteers on extension ladders.",
+      },
+      {
+        heading: "A number you can take to the board",
+        body: "One fixed seasonal price with a written scope covering design, installation, in-season maintenance, takedown and storage, so an administrator or a board sees the whole cost before approving anything.",
+      },
+    ],
+  },
+  {
     slug: "churches",
     label: "Churches",
     title: "Church Christmas Lighting",

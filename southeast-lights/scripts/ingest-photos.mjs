@@ -87,6 +87,18 @@ const SLOTS = {
     width: 1600,
     use: "Gallery project and Christmas installation hero, Hattiesburg",
   },
+  "project-gcs-front": {
+    width: 1600,
+    use: "Gallery hero and Schools vertical: Grace Community School",
+  },
+  "project-gcs-walkway": {
+    width: 1600,
+    use: "Gallery photo: Grace Community School covered walkway",
+  },
+  "project-gcs-mural": {
+    width: 1600,
+    use: "Gallery photo: Grace Community School mural elevation",
+  },
 };
 
 const IN = "incoming";
