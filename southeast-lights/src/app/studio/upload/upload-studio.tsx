@@ -5,6 +5,7 @@ import { Check, ImageIcon, Loader2, Upload, X } from "lucide-react";
 
 import { GROUPS, SLOTS } from "@/lib/uploads/slots";
 import { humanSize } from "@/lib/uploads/config";
+import { prepareForUpload } from "@/lib/uploads/prepare";
 import { cn } from "@/lib/utils";
 
 /**
@@ -68,17 +69,36 @@ export function UploadStudio() {
       if (!item.slot || item.status === "done") continue;
       update(i, { status: "sending", message: undefined });
 
-      const body = new FormData();
-      body.append("password", password);
-      body.append("slot", item.slot);
-      body.append("file", item.file);
-
       try {
+        // Resize before sending: a raw phone photo is larger than a function
+        // request body is allowed to be.
+        const prepared = await prepareForUpload(item.file);
+
+        const body = new FormData();
+        body.append("password", password);
+        body.append("slot", item.slot);
+        body.append("file", prepared.file);
+
         const res = await fetch("/api/studio/upload", { method: "POST", body });
-        const data = await res.json();
+
+        // A body rejected by the platform comes back as HTML, not our JSON.
+        const data = await res.json().catch(() => null);
+        if (!data) {
+          update(i, {
+            status: "error",
+            message:
+              res.status === 413
+                ? "That photo is too large to send. Try a smaller file."
+                : `Upload failed (${res.status}).`,
+          });
+          continue;
+        }
+
         update(i, {
           status: res.ok ? "done" : "error",
-          message: res.ok ? data.path : data.error,
+          message: res.ok
+            ? [prepared.note, data.path].filter(Boolean).join(" ")
+            : data.error,
         });
       } catch (error) {
         update(i, {
@@ -163,7 +183,7 @@ export function UploadStudio() {
                     <optgroup key={group} label={group}>
                       {slots.map((s) => (
                         <option key={s.key} value={s.key}>
-                          {s.label} &mdash; {s.where}
+                          {s.label}: {s.where}
                           {taken.has(s.key) ? " (uploaded)" : ""}
                         </option>
                       ))}

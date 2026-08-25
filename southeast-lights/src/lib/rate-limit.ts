@@ -17,14 +17,23 @@ const hits = new Map<string, number[]>();
 const WINDOW_MS = 60_000;
 const MAX_PER_WINDOW = 5;
 
-export function rateLimit(key: string): {
+/**
+ * @param max requests allowed per minute. Five suits a lead form, where a
+ *   sixth submission in a minute is abuse. Endpoints that legitimately fire
+ *   in bursts pass their own ceiling: the upload studio sends one request per
+ *   photo, so a normal batch would trip the form limit on the sixth file.
+ */
+export function rateLimit(
+  key: string,
+  max: number = MAX_PER_WINDOW,
+): {
   allowed: boolean;
   retryAfter: number;
 } {
   const now = Date.now();
   const recent = (hits.get(key) ?? []).filter((t) => now - t < WINDOW_MS);
 
-  if (recent.length >= MAX_PER_WINDOW) {
+  if (recent.length >= max) {
     const retryAfter = Math.ceil((WINDOW_MS - (now - recent[0])) / 1000);
     return { allowed: false, retryAfter };
   }

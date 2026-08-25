@@ -32,10 +32,14 @@ const EXT_BY_TYPE: Record<string, string> = {
 };
 
 export async function POST(request: Request) {
-  const limit = rateLimit(`studio:${clientKey(request.headers)}`);
+  // One request per photo, so the ceiling is a batch size, not a form limit.
+  const limit = rateLimit(`studio:${clientKey(request.headers)}`, 60);
   if (!limit.allowed) {
     return NextResponse.json(
-      { ok: false, error: "Too many attempts. Wait a moment." },
+      {
+        ok: false,
+        error: "Too many uploads at once. Wait a minute and send the rest.",
+      },
       { status: 429 },
     );
   }
