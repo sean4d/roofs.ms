@@ -27,7 +27,10 @@ export default function ProjectsPage() {
       <PageHero
         eyebrow="Our work"
         title="Properties we've lit."
-        intro="Estates, community entrances, churches, hospitality properties and downtown districts across South Mississippi and the Gulf Coast."
+        // Describes the work that is actually in this gallery. The previous
+        // line listed estates, churches, hospitality and downtown districts,
+        // which was written to match the placeholder set.
+        intro="Rooflines, ridges, gable rakes and wrapped columns on homes, storefronts and school campuses across the Pine Belt."
         image={IMAGES.estateWide}
         quoteLocation="projects_hub"
       />

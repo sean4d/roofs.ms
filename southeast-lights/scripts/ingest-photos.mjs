@@ -115,6 +115,10 @@ const SLOTS = {
     width: 1600,
     use: "Gallery photo: Pearson's Barber Shop from across the street",
   },
+  "project-poplarville-continuous-run": {
+    width: 1600,
+    use: "Gallery project: Poplarville continuous run",
+  },
 };
 
 const IN = "incoming";

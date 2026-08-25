@@ -40,9 +40,9 @@
     "blurDataURL": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAAAQAgCdASoQAAoABABsJbACdH8ADT3tVeQAAP7AdLoiLkwF6RyQ46Ztg77HGGJzcdpaaIcn/kVro6PX7fqsffOYeR4rBwbuVLOdk7wmk9QBNS/MjNxLQAAA"
   },
   "estate-wide": {
-    "width": 2400,
-    "height": 1371,
-    "blurDataURL": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADwAQCdASoQAAkABABsJagCdAEDfq0X1AAA/s3pB04N6huj+S3GanlbBOJ/9hTMlV/o+KLn4C31KjP+1CsM7XDcgVIpKnh+BT4bkYs1BhUTfspV3AA="
+    "width": 1440,
+    "height": 1083,
+    "blurDataURL": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAAAwAgCdASoQAAwABABsJZgCw7EfnTOoRvIQAAD+0KSh5nQTyDOsPTWmoEAklujFS3SOWbAQ094EdgcJJcJEBdlnmuCm4hA5S4AAAA=="
   },
   "golf-club": {
     "width": 1600,
@@ -203,5 +203,10 @@
     "width": 1200,
     "height": 900,
     "blurDataURL": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADwAQCdASoQAAwABABsJZgC7AEK/LjU6IAA/vDUciW9UyEaWpDvs5JaYcu9V/89wg6rdG/FMJhIwRAAAAA="
+  },
+  "project-poplarville-continuous-run": {
+    "width": 1440,
+    "height": 1082,
+    "blurDataURL": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADQAQCdASoQAAwABABsJZAC7AEPfoWWAAD+74kk3EmOBMa8iYNipuz/exQ0wFUV0I5ja0eHik7tuddBazosmbY79antcAAA"
   }
 }

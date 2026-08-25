@@ -63,6 +63,8 @@ const OWNER_SUPPLIED = new Set([
   "project-hattiesburg-low-wide-angle",
   "project-pearsons-front",
   "project-pearsons-block",
+  "project-poplarville-continuous-run",
+  "estate-wide",
 ]);
 
 /**
@@ -88,6 +90,8 @@ const CONFIRMED_OWN_WORK = new Set([
   "project-hattiesburg-low-wide-angle",
   "project-pearsons-front",
   "project-pearsons-block",
+  "project-poplarville-continuous-run",
+  "estate-wide",
   "colonial-columns",
 ]);
 
@@ -144,9 +148,16 @@ export const IMAGES = {
     "holiday-hero-estate",
     "A large evergreen wrapped in multicolor Christmas lights at the center of a lit campus courtyard, with warm white bistro strings overhead and surrounding trees wrapped in white lights",
   ),
+  /**
+   * The closing band on the homepage, plus the hero on the projects, services
+   * and inspiration hubs. Real work now, at the cost of some resolution: the
+   * AI file it replaced was 2400px wide and this one is 1440. On a scrimmed
+   * band that is the right trade, and a larger original would fix it.
+   */
   estateWide: img(
     "estate-wide",
-    "Luxury estate at night with the full roofline, dormers and a row of live oaks along the driveway wrapped in warm white lights",
+    "Southeast Lights display in Poplarville: warm white C9 carried in one unbroken line across a long low frontage, over the porch gable and out onto the detached garage",
+    "center 52%",
   ),
   permanentHero: img(
     "permanent-hero",
@@ -219,6 +230,11 @@ export const IMAGES = {
   colonialColumns: img(
     "colonial-columns",
     "Two-story colonial home at dusk with warm white C9 bulbs along every roof edge and both entry columns wrapped base to capital",
+  ),
+  projectPoplarvilleContinuousRun: img(
+    "project-poplarville-continuous-run",
+    "Southeast Lights display in Poplarville: warm white C9 running unbroken along the main eave, up over the porch gable rake and on past the far corner of the house",
+    "center 55%",
   ),
   projectPearsonsFront: img(
     "project-pearsons-front",

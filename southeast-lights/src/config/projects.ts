@@ -62,6 +62,29 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    slug: "poplarville-continuous-run",
+    title: "One Continuous Run, House to Garage",
+    city: "Poplarville",
+    propertyType: "Residential",
+    serviceSlugs: [
+      "residential-holiday-lighting",
+      "christmas-light-installation",
+    ],
+    tags: ["holiday", "rooflines", "warm-white"],
+    summary:
+      "Warm white carried in one unbroken line from the far corner of the house, over the porch gable and out onto the detached garage.",
+    scope:
+      "The run starts at the far corner of the house and does not stop until it reaches the end of the detached garage: along the main eave, up and over the porch gable, back down, and straight on to the outbuilding. Holding the line unbroken is the whole idea on a frontage like this. Break it at each structure and you get three small displays sitting near each other. Keep it continuous and the property reads as one place from the road.",
+    highlights: [
+      "One unbroken run from the house through to the detached garage",
+      "Porch gable rake carried to the peak rather than skipped",
+      "Warm white throughout, cut to each run",
+    ],
+    hero: IMAGES.projectPoplarvilleContinuousRun,
+    gallery: [],
+    isDemo: false,
+  },
+  {
     slug: "poplarville-pearsons-barber-shop",
     title: "Pearson's Barber Shop",
     city: "Poplarville",
