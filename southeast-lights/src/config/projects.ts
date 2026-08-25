@@ -51,6 +51,29 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    slug: "poplarville-red-green-white",
+    title: "Red, Green and White with Wrapped Columns",
+    city: "Poplarville",
+    propertyType: "Residential",
+    serviceSlugs: [
+      "residential-holiday-lighting",
+      "christmas-light-installation",
+    ],
+    tags: ["holiday", "rooflines", "color"],
+    summary:
+      "The traditional three colors run as a repeating pattern across the roofline and gable rakes, with every porch column wrapped to match.",
+    scope:
+      "Red, green and white in a repeating sequence, carried across the porch roof, both wing rooflines and up the gable rakes to the peak, so the pattern reads as one continuous run rather than restarting at every break. Every porch column is wrapped in the same sequence. That is what makes a deep front porch work after dark: leave the verticals unlit and the porch roof becomes a dark band across the middle of the house.",
+    highlights: [
+      "Repeating red, green and white through every run",
+      "Gable rakes carried to the peak",
+      "Every porch column wrapped in the same sequence",
+    ],
+    hero: IMAGES.projectPoplarvilleRedGreenWhite,
+    gallery: [],
+    isDemo: false,
+  },
+  {
     slug: "poplarville-blue-and-white",
     title: "Blue and Bright White Roofline",
     city: "Poplarville",

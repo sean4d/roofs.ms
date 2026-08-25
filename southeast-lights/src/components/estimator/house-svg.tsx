@@ -33,6 +33,10 @@ export const COLOR_SCHEMES = {
   "red-white": { label: "Red & White", colors: ["#E03A34", "#FFFFFF"] },
   "red-green": { label: "Red & Green", colors: ["#E03A34", "#3FA463"] },
   // A scheme we actually install: see the Poplarville project in the gallery.
+  "red-green-white": {
+    label: "Red, Green & White",
+    colors: ["#E03A34", "#3FA463", "#FFFFFF"],
+  },
   "blue-white": {
     label: "Blue & Bright White",
     colors: ["#3B6FE0", "#FFFFFF"],

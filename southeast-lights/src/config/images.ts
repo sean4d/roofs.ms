@@ -43,6 +43,7 @@ const OWNER_SUPPLIED = new Set([
   "project-hattiesburg-ridges-hips",
   "project-hattiesburg-palms",
   "project-poplarville-blue-white",
+  "project-poplarville-red-green-white",
 ]);
 
 /**
@@ -55,6 +56,7 @@ const CONFIRMED_OWN_WORK = new Set([
   "project-hattiesburg-ridges-hips",
   "project-hattiesburg-palms",
   "project-poplarville-blue-white",
+  "project-poplarville-red-green-white",
   "colonial-columns",
 ]);
 
@@ -185,6 +187,10 @@ export const IMAGES = {
   colonialColumns: img(
     "colonial-columns",
     "Two-story colonial home at dusk with warm white C9 bulbs along every roof edge and both entry columns wrapped base to capital",
+  ),
+  projectPoplarvilleRedGreenWhite: img(
+    "project-poplarville-red-green-white",
+    "Southeast Lights display in Poplarville: a brick farmhouse at night with a repeating red, green and white C9 pattern across the porch roof, both wing rooflines and the gable rakes, and every porch column wrapped in the same sequence",
   ),
   projectPoplarvilleBlueWhite: img(
     "project-poplarville-blue-white",
