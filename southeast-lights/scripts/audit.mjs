@@ -1,3 +1,14 @@
+/**
+ * SEO and accessibility audit across representative routes.
+ *
+ * Checks each page for exactly one h1, a meta description, a canonical, valid
+ * JSON-LD, alt text on every image, labelled buttons, correct html lang, no
+ * heading-level jumps, and unique titles and descriptions across the set.
+ *
+ *   BASE=http://localhost:3000 node scripts/audit.mjs
+ *
+ * Exits with a printed problem list. Development tooling only.
+ */
 import { chromium } from "playwright";
 
 const BASE = process.env.BASE ?? "http://localhost:3213";

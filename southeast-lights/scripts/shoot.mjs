@@ -1,3 +1,11 @@
+/**
+ * Screenshot arbitrary routes at arbitrary viewports.
+ *
+ *   node scripts/shoot.mjs '[{"name":"home","path":"/","w":390,"h":844}]'
+ *
+ * Writes PNGs to /tmp/shots. Pass "full": true for a full-page capture.
+ * Development tooling only.
+ */
 import { chromium } from "playwright";
 import fs from "node:fs";
 
