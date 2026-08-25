@@ -33,7 +33,7 @@ export const HOLIDAY = {
 } as const;
 
 /**
- * Presentation packages. A sales aid, not a product catalogue: every project
+ * Presentation packages. A sales aid, not a product catalog: every project
  * is still custom. Their job is to let a customer self-select a budget and to
  * make a $2,000-$5,000 display feel like the normal middle option rather than
  * an upsell.

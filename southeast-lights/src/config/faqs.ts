@@ -114,7 +114,7 @@ export const FAQS: Faq[] = [
     category: "scheduling",
     question: "Do you store the lights?",
     answer:
-      "Yes, storage is included. After takedown your display is labeled, organised and stored in our warehouse under your property's name. That is also why reinstallation the following year is faster and why the display looks identical season to season: it is the same lighting, cut to the same house.",
+      "Yes, storage is included. After takedown your display is labeled, organized and stored in our warehouse under your property's name. That is also why reinstallation the following year is faster and why the display looks identical season to season: it is the same lighting, cut to the same house.",
   },
   {
     category: "scheduling",
