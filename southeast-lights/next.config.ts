@@ -4,6 +4,20 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  async headers() {
+    // Hard noindex on every pre-launch deployment. Removed automatically the
+    // moment NEXT_PUBLIC_VERCEL_ENV is "production" on the real domain.
+    if (process.env.NEXT_PUBLIC_VERCEL_ENV === "production") return [];
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" },
+        ],
+      },
+    ];
+  },
+
   async redirects() {
     /**
      * The previous site was on Wix and used a different URL scheme. Every
