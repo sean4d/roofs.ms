@@ -61,6 +61,31 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    slug: "poplarville-apples-storefront",
+    title: "Apples Ltd. Storefront",
+    city: "Poplarville",
+    propertyType: "Commercial",
+    serviceSlugs: [
+      "commercial-holiday-lighting",
+      "christmas-light-installation",
+    ],
+    tags: ["holiday", "rooflines", "color"],
+    summary:
+      "Two colors on two roof planes: purple along the upper roofline, warm white down the porch fascia at window height.",
+    scope:
+      "A storefront has a different job than a house. It has to separate itself from the buildings either side of it and read from a car moving down the street, not from a driveway. Two colors on two planes does that: purple along the upper roofline lifts the whole building off a dark block, and warm white along the porch fascia holds the eye at the height where the windows and the door are. Custom cut to both runs, maintained through the season, then removed and stored.",
+    highlights: [
+      "Two colors on two roof planes, so the building separates from the block",
+      "Warm white held at window height, where the merchandise is",
+      "Cut, installed, maintained and removed as one seasonal service",
+    ],
+    hero: IMAGES.projectPoplarvilleApples,
+    // The building sits in the middle band, street below and night sky above.
+    heroFocus: "center 50%",
+    gallery: [],
+    isDemo: false,
+  },
+  {
     slug: "poplarville-outbuildings",
     title: "Roofline, Ridges and Every Outbuilding",
     city: "Poplarville",

@@ -45,6 +45,7 @@ const OWNER_SUPPLIED = new Set([
   "project-poplarville-blue-white",
   "project-poplarville-red-green-white",
   "project-poplarville-outbuildings",
+  "project-poplarville-apples",
 ]);
 
 /**
@@ -59,6 +60,7 @@ const CONFIRMED_OWN_WORK = new Set([
   "project-poplarville-blue-white",
   "project-poplarville-red-green-white",
   "project-poplarville-outbuildings",
+  "project-poplarville-apples",
   "colonial-columns",
 ]);
 
@@ -189,6 +191,10 @@ export const IMAGES = {
   colonialColumns: img(
     "colonial-columns",
     "Two-story colonial home at dusk with warm white C9 bulbs along every roof edge and both entry columns wrapped base to capital",
+  ),
+  projectPoplarvilleApples: img(
+    "project-poplarville-apples",
+    "Southeast Lights display in Poplarville: the Apples Ltd. storefront at night with purple C9 bulbs along the upper roofline and warm white C9 along the porch fascia below, lit shop windows between them",
   ),
   projectPoplarvilleOutbuildings: img(
     "project-poplarville-outbuildings",
