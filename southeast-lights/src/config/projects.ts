@@ -61,6 +61,30 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    slug: "hattiesburg-two-story-gallery",
+    title: "A Roofline Twenty Feet Up",
+    city: "Hattiesburg",
+    propertyType: "Residential",
+    serviceSlugs: [
+      "residential-holiday-lighting",
+      "christmas-light-installation",
+    ],
+    tags: ["holiday", "rooflines", "warm-white"],
+    summary:
+      "Warm white along a front roofline twenty feet up, above a second-story gallery, carried down onto the lower wing.",
+    scope:
+      "The front roofline here sits twenty feet up, above a second-story gallery, and the work happens over a porch roof rather than over lawn. That is the height where hanging your own lights stops being a Saturday and starts being the reason people call a roofing company. Warm white C9 cut to the front run and carried onto the lower wing so the two planes read as one line stepping down, and nothing else lit. A house with this much architecture does not need the display to compete with it.",
+    highlights: [
+      "Front roofline at twenty feet, above a second-story gallery",
+      "Carried onto the lower wing so the two planes read as one",
+      "Roofline only, on a house that does not need more",
+    ],
+    hero: IMAGES.projectHattiesburgTwoStory,
+    heroFocus: "center 50%",
+    gallery: [],
+    isDemo: false,
+  },
+  {
     slug: "poplarville-halloween-roofline",
     title: "Halloween in Purple and Orange",
     city: "Poplarville",

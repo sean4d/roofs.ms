@@ -79,6 +79,10 @@ const SLOTS = {
     width: 1600,
     use: "Gallery project and Halloween service hero, Poplarville",
   },
+  "project-hattiesburg-two-story": {
+    width: 1600,
+    use: "Gallery project: Hattiesburg two-story gallery",
+  },
 };
 
 const IN = "incoming";

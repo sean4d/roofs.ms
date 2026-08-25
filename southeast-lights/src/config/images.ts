@@ -47,6 +47,7 @@ const OWNER_SUPPLIED = new Set([
   "project-poplarville-outbuildings",
   "project-poplarville-apples",
   "project-poplarville-halloween",
+  "project-hattiesburg-two-story",
 ]);
 
 /**
@@ -63,6 +64,7 @@ const CONFIRMED_OWN_WORK = new Set([
   "project-poplarville-outbuildings",
   "project-poplarville-apples",
   "project-poplarville-halloween",
+  "project-hattiesburg-two-story",
   "colonial-columns",
 ]);
 
@@ -193,6 +195,10 @@ export const IMAGES = {
   colonialColumns: img(
     "colonial-columns",
     "Two-story colonial home at dusk with warm white C9 bulbs along every roof edge and both entry columns wrapped base to capital",
+  ),
+  projectHattiesburgTwoStory: img(
+    "project-hattiesburg-two-story",
+    "Southeast Lights display in Hattiesburg: a two-story house with double galleries at night, warm white C9 running along the front roofline twenty feet up and continuing along the lower wing roof",
   ),
   projectPoplarvilleHalloween: img(
     "project-poplarville-halloween",
