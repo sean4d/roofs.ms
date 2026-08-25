@@ -87,6 +87,9 @@
   html {
     @apply font-sans;
     scroll-behavior: smooth;
+    /* No page should ever scroll sideways. A stray wide child is a bug, and
+       this makes it show up as a clipped element rather than a broken page. */
+    overflow-x: hidden;
     /* Dark by default: this site lives at night. */
     background-color: var(--color-ink-950);
   }

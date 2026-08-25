@@ -149,14 +149,16 @@ export function Estimator() {
 
   return (
     <div className="container-site grid gap-8 py-10 lg:grid-cols-[1.15fr_1fr] lg:gap-14 lg:py-16">
+      {/* min-w-0 on both columns: without it a wide child forces the auto
+          grid track wider than the viewport and everything overflows. */}
       {/* ---------- illustration + total ---------- */}
-      <div className="lg:sticky lg:top-28 lg:self-start">
+      <div className="min-w-0 lg:sticky lg:top-28 lg:self-start">
         {/*
           Sticky on mobile too, just under the header, so the drawing stays
           visible while the controls below it scroll. Full-bleed on small
           screens: the illustration needs every pixel of width it can get.
         */}
-        <div className="sticky top-16 z-20 -mx-5 border-y border-white/[0.08] bg-ink-950/95 px-2 py-2 backdrop-blur sm:mx-0 sm:rounded-card sm:border sm:px-4 sm:py-4 lg:static lg:backdrop-blur-none">
+        <div className="sticky top-16 z-20 rounded-card border border-white/[0.08] bg-ink-950/95 p-2 backdrop-blur sm:p-4 lg:static lg:backdrop-blur-none">
           <HouseSvg active={active} scheme={scheme} className="w-full" />
         </div>
 
@@ -267,7 +269,7 @@ export function Estimator() {
       </div>
 
       {/* ---------- controls ---------- */}
-      <div className="flex flex-col gap-10">
+      <div className="flex min-w-0 flex-col gap-10">
         {OPTION_GROUPS.map((group) => (
           <fieldset key={group.key} className="flex flex-col gap-3">
             <legend className="eyebrow mb-1 text-champagne-500">
