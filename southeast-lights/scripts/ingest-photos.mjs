@@ -83,6 +83,10 @@ const SLOTS = {
     width: 1600,
     use: "Gallery project: Hattiesburg two-story gallery",
   },
+  "project-hattiesburg-canopy": {
+    width: 1600,
+    use: "Gallery project and Christmas installation hero, Hattiesburg",
+  },
 };
 
 const IN = "incoming";

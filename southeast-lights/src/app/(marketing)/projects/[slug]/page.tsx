@@ -71,7 +71,10 @@ export default async function ProjectPage({
           // bottom third is lawn, so a centered crop spends its budget on
           // grass and clips the gable peaks that are the whole subject. A
           // project can override when its photograph is framed differently.
-          style={{ objectPosition: project.heroFocus ?? "center 35%" }}
+          style={{
+            objectPosition:
+              project.heroFocus ?? project.hero.focus ?? "center 35%",
+          }}
           className="-z-10 object-cover"
         />
         <div className="scrim-subject absolute inset-0 -z-10" />

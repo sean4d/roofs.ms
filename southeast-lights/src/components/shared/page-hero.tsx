@@ -35,6 +35,7 @@ export function PageHero({
         sizes="100vw"
         placeholder="blur"
         blurDataURL={image.blurDataURL}
+        style={{ objectPosition: image.focus ?? "center" }}
         className="-z-10 object-cover"
       />
       <div className="scrim-hero absolute inset-0 -z-10" />

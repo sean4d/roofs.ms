@@ -27,6 +27,13 @@ export interface SiteImage {
   blurDataURL: string;
   /** False once genuine Southeast Lights photography replaces the file. */
   isPlaceholder: boolean;
+  /**
+   * object-position for wide crops, when the middle of the frame is not the
+   * subject. A phone photograph of a house under a tree canopy puts the roof
+   * in the bottom quarter and leaves two thirds of the file to branches; a
+   * centered crop of that is a picture of a tree.
+   */
+  focus?: string;
 }
 
 type ManifestEntry = { width: number; height: number; blurDataURL: string };
@@ -48,6 +55,7 @@ const OWNER_SUPPLIED = new Set([
   "project-poplarville-apples",
   "project-poplarville-halloween",
   "project-hattiesburg-two-story",
+  "project-hattiesburg-canopy",
 ]);
 
 /**
@@ -65,13 +73,14 @@ const CONFIRMED_OWN_WORK = new Set([
   "project-poplarville-apples",
   "project-poplarville-halloween",
   "project-hattiesburg-two-story",
+  "project-hattiesburg-canopy",
   "colonial-columns",
 ]);
 
 export const isConfirmedOwnWork = (name: string) =>
   CONFIRMED_OWN_WORK.has(name);
 
-function img(name: string, alt: string): SiteImage {
+function img(name: string, alt: string, focus?: string): SiteImage {
   const entry = meta[name];
   if (!entry) throw new Error(`Missing image in manifest: ${name}`);
   return {
@@ -88,6 +97,7 @@ function img(name: string, alt: string): SiteImage {
      * may populate the gallery.
      */
     isPlaceholder: !OWNER_SUPPLIED.has(name),
+    focus,
   };
 }
 
@@ -195,6 +205,12 @@ export const IMAGES = {
   colonialColumns: img(
     "colonial-columns",
     "Two-story colonial home at dusk with warm white C9 bulbs along every roof edge and both entry columns wrapped base to capital",
+  ),
+  projectHattiesburgCanopy: img(
+    "project-hattiesburg-canopy",
+    "Southeast Lights display in Hattiesburg: a brick home on a wooded lot at night, warm white C9 along every eave, hip and ridge, framed by the tree canopy overhead",
+    // The house sits in the bottom quarter under a full canopy.
+    "center 88%",
   ),
   projectHattiesburgTwoStory: img(
     "project-hattiesburg-two-story",

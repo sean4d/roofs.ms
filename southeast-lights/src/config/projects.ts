@@ -61,6 +61,29 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    slug: "hattiesburg-wooded-lot",
+    title: "A Complete Outline on a Wooded Lot",
+    city: "Hattiesburg",
+    propertyType: "Residential",
+    serviceSlugs: [
+      "christmas-light-installation",
+      "residential-holiday-lighting",
+    ],
+    tags: ["holiday", "rooflines", "warm-white"],
+    summary:
+      "Warm white on every eave, hip and ridge, so the roof keeps its shape under heavy tree cover.",
+    scope:
+      "On an open lot, one line across the front will read from the road. Under this much canopy it will not. The trees break the sightline, and a partial outline arrives as a handful of disconnected bright spots rather than a house. So every edge is lit here: eaves, both hip runs and the ridge. The roof holds its shape from whatever angle the drive gives you, which on a lot like this is the only angle anyone gets.",
+    highlights: [
+      "Every eave, hip and ridge lit, not a front line",
+      "Designed for a lot where the tree line breaks up sightlines",
+      "Warm white throughout, cut to each run",
+    ],
+    hero: IMAGES.projectHattiesburgCanopy,
+    gallery: [],
+    isDemo: false,
+  },
+  {
     slug: "hattiesburg-two-story-gallery",
     title: "A Roofline Twenty Feet Up",
     city: "Hattiesburg",

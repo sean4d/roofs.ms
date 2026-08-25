@@ -37,7 +37,7 @@ export const SERVICES: Service[] = [
       "All-inclusive Christmas light installation in Hattiesburg and South Mississippi. Design, commercial-grade LEDs, installation, in-season maintenance, takedown and storage for one price.",
     summary:
       "One price covers design, commercial-grade lighting, installation, in-season maintenance, takedown and storage. You never handle a strand or climb a ladder.",
-    image: IMAGES.holidayHero,
+    image: IMAGES.projectHattiesburgCanopy,
     enabled: true,
     audience: "both",
   },
