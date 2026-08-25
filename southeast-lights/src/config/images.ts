@@ -30,6 +30,15 @@ export interface SiteImage {
 type ManifestEntry = { width: number; height: number; blurDataURL: string };
 const meta = manifest as Record<string, ManifestEntry>;
 
+/** Slots filled with owner-supplied photography rather than AI placeholders. */
+const OWNER_SUPPLIED = new Set([
+  "holiday-hero-estate",
+  "hoa-entrance",
+  "retail-center",
+  "colonial-columns",
+  "installer-roof",
+]);
+
 function img(name: string, alt: string): SiteImage {
   const entry = meta[name];
   if (!entry) throw new Error(`Missing image in manifest: ${name}`);
@@ -39,14 +48,45 @@ function img(name: string, alt: string): SiteImage {
     width: entry.width,
     height: entry.height,
     blurDataURL: entry.blurDataURL,
-    isPlaceholder: true,
+    /*
+     * NOTE: false here means "no longer an AI placeholder", not "verified
+     * Southeast Lights work". Four of the five owner-supplied files carry
+     * filenames from third-party sources, so they remain temporary imagery on
+     * service and segment surfaces and must not be moved into the gallery
+     * without confirming rights and authorship.
+     */
+    isPlaceholder: !OWNER_SUPPLIED.has(name),
   };
 }
+
+/**
+ * A slot that may not be filled yet. Returns null until the photo is
+ * ingested, so a section can be written now and light up the moment the file
+ * lands, with no code change and no broken build in between.
+ */
+export function optionalImage(name: string, alt: string): SiteImage | null {
+  const entry = meta[name];
+  if (!entry) return null;
+  return {
+    src: `/img/${name}.webp`,
+    alt,
+    width: entry.width,
+    height: entry.height,
+    blurDataURL: entry.blurDataURL,
+    isPlaceholder: false,
+  };
+}
+
+/** Photo of the actual hardware that goes into a display. Owner-supplied. */
+export const COMPONENTS_FLATLAY = optionalImage(
+  "components-flatlay",
+  "Christmas light installation components laid out on pavers: roof and gutter clips, vampire plugs, sockets, adapters, zip ties, snips and a light-hanging pole",
+);
 
 export const IMAGES = {
   holidayHero: img(
     "holiday-hero-estate",
-    "Large brick and stone estate home at dusk with every roofline outlined in warm white C9 Christmas lights and mature oak trees wrapped in lights",
+    "A large evergreen wrapped in multicolor Christmas lights at the center of a lit campus courtyard, with warm white bistro strings overhead and surrounding trees wrapped in white lights",
   ),
   estateWide: img(
     "estate-wide",
@@ -58,11 +98,11 @@ export const IMAGES = {
   ),
   hoaEntrance: img(
     "hoa-entrance",
-    "Neighborhood entrance monument and boulevard trees outlined and wrapped in warm white holiday lighting",
+    "Two mature trees with trunks and limbs fully wrapped in warm white lights beside a lit modern home at dusk",
   ),
   retailCenter: img(
     "retail-center",
-    "Upscale open-air shopping center with warm white commercial Christmas lighting along every parapet and wrapped parking-island trees",
+    "A historic stone building covered in a curtain of warm white lights with an illuminated pink bow on the balcony",
   ),
   church: img(
     "church",
@@ -78,7 +118,7 @@ export const IMAGES = {
   ),
   installerRoof: img(
     "installer-roof",
-    "Installer in roofing traction boots clipping C9 lights along the edge of a steep shingle roof with a properly secured ladder",
+    "An installer on a steep roof using yellow roof pads and a ladder hook to run a line of C9 bulbs along the gable",
   ),
   landscapeLighting: img(
     "landscape-lighting",
@@ -122,7 +162,7 @@ export const IMAGES = {
   ),
   colonialColumns: img(
     "colonial-columns",
-    "Southern colonial home with spiral-wrapped porch columns, lit garland and warm white pathway stake lights",
+    "A two-story home with every roofline and gable outlined in warm white C9 bulbs and lit shrubs across the front",
   ),
   c9Detail: img(
     "c9-detail",

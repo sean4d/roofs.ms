@@ -43,6 +43,10 @@ const SLOTS = {
   "permanent-color": { width: 1600, use: "Permanent lighting in color" },
   "c9-detail": { width: 1600, use: "FAQ hero, C9 close-up" },
   "storage-warehouse": { width: 1600, use: "Storage and organization" },
+  "components-flatlay": {
+    width: 2000,
+    use: "What's included section, holiday lighting page",
+  },
 };
 
 const IN = "incoming";
@@ -59,7 +63,9 @@ if (incoming.length === 0) {
   for (const [slot, meta] of Object.entries(SLOTS)) {
     console.log(`  ${slot.padEnd(24)} ${meta.use}`);
   }
-  console.log("\nName each file after its slot, e.g. incoming/holiday-hero-estate.jpg");
+  console.log(
+    "\nName each file after its slot, e.g. incoming/holiday-hero-estate.jpg",
+  );
   process.exit(0);
 }
 
@@ -80,11 +86,18 @@ for (const file of incoming) {
 
   await sharp(src)
     .rotate() // honor EXIF orientation from phone photos
-    .resize({ width: Math.min(SLOTS[slot].width, meta.width), withoutEnlargement: true })
+    .resize({
+      width: Math.min(SLOTS[slot].width, meta.width),
+      withoutEnlargement: true,
+    })
     .webp({ quality: 80, effort: 6 })
     .toFile(out);
 
-  const blur = await sharp(src).rotate().resize(16).webp({ quality: 28 }).toBuffer();
+  const blur = await sharp(src)
+    .rotate()
+    .resize(16)
+    .webp({ quality: 28 })
+    .toBuffer();
   const final = await sharp(out).metadata();
 
   manifest[slot] = {
@@ -105,4 +118,6 @@ console.log(`\n${done} photo(s) ingested.`);
 if (skipped.length) {
   console.log(`Skipped (name does not match a slot): ${skipped.join(", ")}`);
 }
-console.log("\nNow set isPlaceholder: false for these slots in src/config/images.ts.");
+console.log(
+  "\nNow set isPlaceholder: false for these slots in src/config/images.ts.",
+);

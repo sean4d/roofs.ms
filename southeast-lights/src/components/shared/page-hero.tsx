@@ -37,7 +37,7 @@ export function PageHero({
         blurDataURL={image.blurDataURL}
         className="-z-10 object-cover"
       />
-      <div className="scrim absolute inset-0 -z-10" />
+      <div className="scrim-hero absolute inset-0 -z-10" />
 
       <div className="container-site relative flex min-h-[52svh] flex-col justify-end pt-32 pb-14 sm:min-h-[56svh] lg:min-h-[64svh] lg:pb-20">
         <p className="eyebrow text-champagne-400">{eyebrow}</p>

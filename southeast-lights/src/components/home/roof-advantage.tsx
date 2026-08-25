@@ -34,7 +34,7 @@ export function RoofAdvantage() {
   return (
     <section className="band relative isolate overflow-hidden">
       <div className="container-site grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-        <div className="relative aspect-[4/3] overflow-hidden rounded-card lg:order-2">
+        <div className="relative aspect-[4/5] overflow-hidden rounded-card sm:aspect-[3/2] lg:order-2 lg:aspect-[4/5]">
           <Image
             src={IMAGES.installerRoof.src}
             alt={IMAGES.installerRoof.alt}
@@ -42,7 +42,7 @@ export function RoofAdvantage() {
             sizes="(max-width: 1024px) 100vw, 50vw"
             placeholder="blur"
             blurDataURL={IMAGES.installerRoof.blurDataURL}
-            className="object-cover"
+            className="object-cover object-top"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-ink-950/55 to-transparent" />
         </div>

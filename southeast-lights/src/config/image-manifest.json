@@ -20,9 +20,9 @@
     "blurDataURL": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADwAQCdASoQAAoABABsJYgCdADdlpLPEEAA/vDoPlhzivopBIkemJpZ2UXP2EW9K7Nmlzy+oSsep/37YtEgBStaTcjBdPDEAAA="
   },
   "colonial-columns": {
-    "width": 1600,
-    "height": 1040,
-    "blurDataURL": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADQAQCdASoQAAoABABsJagCdACzIRzRAAD+26CKsJoKhR5ED/GeZ++WR2TrRoRhcR4Y0ciVtJuez0JL+vcP2FsTH8SICb3PeYCCi2t0jZDwsugA"
+    "width": 555,
+    "height": 555,
+    "blurDataURL": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADwAQCdASoQABAABABsJbACdADL0UsJwfAAyW+3wdkWn2K6Saa6H/TerFql0tzzwJMQmhTFt02u6NXcTC5KYGsTR1eoieW8087Ewu5uQ5QHycg/2YmQAA=="
   },
   "country-club": {
     "width": 1600,
@@ -50,14 +50,14 @@
     "blurDataURL": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAQCdASoQAAoABABsJbACdADHau2AAAD7g71zmNLB1VMbd7rgwos3q0iM0faIrCJYjLAbk5kmxThmu7awAaP6wX4LKI6Lq7dhkzzAAAA="
   },
   "hoa-entrance": {
-    "width": 2400,
-    "height": 1371,
-    "blurDataURL": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADQAQCdASoQAAkABABsJbACdAD6PWKi4AD+J1+C+gOCKbn/TDJVPlrMtl9Y1H2LP9kS3IVdayW1HJ4YbQMaJ11LQqugzgAA"
+    "width": 600,
+    "height": 400,
+    "blurDataURL": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADQAQCdASoQAAsABABsJbACdAEGqvAxAAD+7on59DRwGFqdj9iXU6zN512AQeyTpsH+Y7s6BmyyW1I9dJ2q2at7RWgoLiUNMdt6wptUhgHacwFG1EAAAA=="
   },
   "holiday-hero-estate": {
-    "width": 2400,
-    "height": 1371,
-    "blurDataURL": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAQCdASoQAAkABABsJZQCdADxH0q0AAD+6ZJyFXjn5d3VBjoAoSJcvzDPFmF4vJMzpdwv+EvM+vUdHYIAAA=="
+    "width": 1500,
+    "height": 650,
+    "blurDataURL": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAACwAQCdASoQAAcABABsJQBOgBrdHMBAAP7prXfACttIlxDL8+gO1xQawcTKVbXHXrYCgASsa2AlNBTXPAoyfNAA"
   },
   "hotel-resort": {
     "width": 1600,
@@ -65,9 +65,9 @@
     "blurDataURL": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADwAQCdASoQAAoABABsJbACdAEeX4XbkTAA/qaRdPVMgPVSzu3mhzjlkjYEAcsRXdtI6BU2HhoONDJZTg4C2LUioEG1wxvGyNc1HF9groZOIAAA"
   },
   "installer-roof": {
-    "width": 1600,
-    "height": 1040,
-    "blurDataURL": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADwAQCdASoQAAoABABsJQBOkBLi4+1S9ZAA/vHeBNlid85qlvlSATj3IOZ2OPvKa6XdHUiKQa52ZX6zXGI/7jYxM2YjxGWegf391VeehDPff1AAAAA="
+    "width": 1536,
+    "height": 2048,
+    "blurDataURL": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAAAwBACdASoQABUAPxl0slCspqSisAgBkCMJbACdMoAlkxfq2Z1rtYqoU4AA/g5xuKzSuQ3WRKeRNMVLiXs8XX79Kq69cSF1wmxDp0BMPEpkpdrleFKtxz9YvxktlEhwXQ56kh8Pkl1d2AH3cFYz/oSpiwArWxqgPNRWyFCLOAA="
   },
   "landscape-lighting": {
     "width": 1600,
@@ -101,8 +101,8 @@
   },
   "retail-center": {
     "width": 1600,
-    "height": 1040,
-    "blurDataURL": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADwAQCdASoQAAoABABsJbACdAEMWXA+3wAA/s3fUyPGFoB5j0GUmQOfO0wI7ciy9J4K4hWWlQKijf4zSfLN+QuN9cs0I88NlFYMIAAA"
+    "height": 1064,
+    "blurDataURL": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAQAgCdASoQAAsABABsJbACdAEPdvT2qk4AAP7mC9Ei4V01Qt7rXZ9CH2iQxxzODyccgeioFf6MeSO9FPtXROjoVeDu7hx+5bVciyzBEC9C16d+F4AAAA=="
   },
   "storage-warehouse": {
     "width": 1600,

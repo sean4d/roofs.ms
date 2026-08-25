@@ -35,7 +35,7 @@ export function Hero({ mode, now }: { mode: SeasonMode; now: Date }) {
           blurDataURL={image.blurDataURL}
           className="object-cover"
         />
-        <div className="scrim absolute inset-0" />
+        <div className="scrim-hero absolute inset-0" />
       </div>
 
       {holiday ? <Snowfall /> : null}

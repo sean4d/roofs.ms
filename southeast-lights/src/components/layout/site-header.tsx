@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ChevronDown, Menu, X } from "lucide-react";
 
-import { CallLink } from "@/components/shared/contact-actions";
 import { Logo } from "@/components/shared/logo";
 import { QuoteButton } from "@/components/shared/quote-button";
 import { mainNav, type NavLink } from "@/config/navigation";
@@ -48,7 +47,7 @@ export function SiteHeader() {
     >
       <div
         className={cn(
-          "container-site flex items-center justify-between gap-4 transition-all duration-300",
+          "mx-auto flex w-full max-w-[100rem] items-center justify-between gap-6 px-5 transition-all duration-300 sm:px-8 lg:px-10",
           scrolled ? "h-16" : "h-20 lg:h-24",
         )}
       >
@@ -70,7 +69,6 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-          <CallLink className="hidden text-sm whitespace-nowrap text-bone-300 transition-colors hover:text-champagne-300 2xl:inline-flex" />
           <QuoteButton
             location="header"
             className="hidden px-5 py-2.5 text-sm whitespace-nowrap sm:inline-flex"

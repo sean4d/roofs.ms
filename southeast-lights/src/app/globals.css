@@ -272,6 +272,29 @@
     );
   }
 
+  /*
+   * Hero scrim. Directional rather than a flat wash: heavy at the lower left
+   * where the headline sits, and clearing toward the upper right so the
+   * photograph stays vivid. A uniform overlay protects the type but flattens
+   * the image, which defeats the point of shooting lighting at night.
+   */
+  .scrim-hero {
+    background:
+      linear-gradient(
+        to right,
+        var(--color-ink-950) 0%,
+        --alpha(var(--color-ink-950) / 80%) 32%,
+        --alpha(var(--color-ink-950) / 30%) 62%,
+        --alpha(var(--color-ink-950) / 12%) 100%
+      ),
+      linear-gradient(
+        to top,
+        --alpha(var(--color-ink-950) / 88%) 0%,
+        --alpha(var(--color-ink-950) / 35%) 38%,
+        transparent 72%
+      );
+  }
+
   .scrim-soft {
     background: linear-gradient(
       to top,
