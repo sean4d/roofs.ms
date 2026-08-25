@@ -61,6 +61,8 @@ const OWNER_SUPPLIED = new Set([
   "project-gcs-mural",
   "project-hattiesburg-low-wide",
   "project-hattiesburg-low-wide-angle",
+  "project-pearsons-front",
+  "project-pearsons-block",
 ]);
 
 /**
@@ -84,6 +86,8 @@ const CONFIRMED_OWN_WORK = new Set([
   "project-gcs-mural",
   "project-hattiesburg-low-wide",
   "project-hattiesburg-low-wide-angle",
+  "project-pearsons-front",
+  "project-pearsons-block",
   "colonial-columns",
 ]);
 
@@ -215,6 +219,16 @@ export const IMAGES = {
   colonialColumns: img(
     "colonial-columns",
     "Two-story colonial home at dusk with warm white C9 bulbs along every roof edge and both entry columns wrapped base to capital",
+  ),
+  projectPearsonsFront: img(
+    "project-pearsons-front",
+    "Southeast Lights display in Poplarville: Pearson's Barber Shop at dusk, a two-story Main Street building with red, green and white C9 along the upper gable rake, the full length of the porch awning and the roofline of the attached wing",
+    "center 58%",
+  ),
+  projectPearsonsBlock: img(
+    "project-pearsons-block",
+    "Pearson's Barber Shop from across the street, all three roof planes of the building outlined in the same red, green and white sequence",
+    "center 48%",
   ),
   projectHattiesburgLowWide: img(
     "project-hattiesburg-low-wide",

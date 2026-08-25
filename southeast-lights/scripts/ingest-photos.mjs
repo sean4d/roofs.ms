@@ -107,6 +107,14 @@ const SLOTS = {
     width: 1600,
     use: "Gallery photo: Hattiesburg low wide roof from the drive",
   },
+  "project-pearsons-front": {
+    width: 1600,
+    use: "Gallery project: Pearson's Barber Shop, Poplarville",
+  },
+  "project-pearsons-block": {
+    width: 1600,
+    use: "Gallery photo: Pearson's Barber Shop from across the street",
+  },
 };
 
 const IN = "incoming";

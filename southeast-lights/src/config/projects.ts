@@ -62,6 +62,34 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    slug: "poplarville-pearsons-barber-shop",
+    title: "Pearson's Barber Shop",
+    city: "Poplarville",
+    propertyType: "Commercial",
+    serviceSlugs: [
+      "commercial-holiday-lighting",
+      "christmas-light-installation",
+    ],
+    tags: ["holiday", "rooflines", "color"],
+    summary:
+      "Red, green and white on all three roof planes of a two-story Main Street building, so the whole frontage reads as one property.",
+    scope:
+      "Buildings on a street like this one grew in pieces: a two-story front, a porch awning run across it, and a one-story wing added on the end. Light only the top and the additions drop into the dark. Light only the awning and the building loses its height. All three planes are lit here in the same repeating red, green and white, so the frontage reads as one property from the street instead of three buildings that happen to touch. The upper run sits two stories up and directly over a public sidewalk.",
+    highlights: [
+      "All three roof planes lit, upper gable to the wing",
+      "One repeating pattern so the frontage reads as a single building",
+      "Two-story work directly above a public sidewalk",
+    ],
+    hero: IMAGES.projectPearsonsFront,
+    gallery: [
+      {
+        image: IMAGES.projectPearsonsBlock,
+        caption: "From across the street, where the customers see it",
+      },
+    ],
+    isDemo: false,
+  },
+  {
     slug: "hattiesburg-low-wide-roof",
     title: "Ridges on a Low, Wide Roof",
     city: "Hattiesburg",

@@ -193,5 +193,15 @@
     "width": 1440,
     "height": 1080,
     "blurDataURL": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAAAQAgCdASoQAAwABABsJYgCdAEPDwk4vNQAAP7zMYgqX7r2JEPCL2ZjKcOPwlOzEeNNM+AA"
+  },
+  "project-pearsons-block": {
+    "width": 1440,
+    "height": 1083,
+    "blurDataURL": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADQAQCdASoQAAwABABsJZACsAED7BpX4AD+G87BhBOogMrNsd0Kwaq7MSrxnKrYe4wzAFBoStvPzGgCAAA="
+  },
+  "project-pearsons-front": {
+    "width": 1200,
+    "height": 900,
+    "blurDataURL": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADwAQCdASoQAAwABABsJZgC7AEK/LjU6IAA/vDUciW9UyEaWpDvs5JaYcu9V/89wg6rdG/FMJhIwRAAAAA="
   }
 }
