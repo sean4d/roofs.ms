@@ -22,7 +22,7 @@ export function Section({
     <section
       id={id}
       className={cn(
-        "py-20 lg:py-24",
+        "band",
         tone === "raised" && "border-y border-white/10 bg-ink-900",
         tone === "day" && "surface-day",
         className,
@@ -40,7 +40,7 @@ export function Section({
           </p>
         ) : null}
         {title ? (
-          <h2 className="mt-4 max-w-3xl text-3xl font-semibold text-balance sm:text-4xl">
+          <h2 className="mt-5 max-w-3xl text-3xl font-semibold text-balance sm:text-4xl">
             {title}
           </h2>
         ) : null}
@@ -54,7 +54,7 @@ export function Section({
             {intro}
           </p>
         ) : null}
-        {children ? <div className="mt-10">{children}</div> : null}
+        {children ? <div className="mt-12">{children}</div> : null}
       </div>
     </section>
   );

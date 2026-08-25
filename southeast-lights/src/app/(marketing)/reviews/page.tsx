@@ -10,7 +10,7 @@ import { GOOGLE_AGGREGATE, REVIEWS, hasReviewText } from "@/config/reviews";
 import { breadcrumbSchema, pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Reviews | Southeast Lights",
+  title: "Reviews",
   description:
     "Southeast Lights holds a 5.0 rating on Google. Read what customers say about our holiday and permanent lighting work across South Mississippi.",
   path: "/reviews",
@@ -41,7 +41,10 @@ export default function ReviewsPage() {
               {GOOGLE_AGGREGATE.ratingValue.toFixed(1)}
             </span>
             <div>
-              <div className="flex gap-0.5" aria-label={`${GOOGLE_AGGREGATE.ratingValue} out of 5 stars`}>
+              <div
+                className="flex gap-0.5"
+                aria-label={`${GOOGLE_AGGREGATE.ratingValue} out of 5 stars`}
+              >
                 {Array.from({ length: 5 }).map((_, index) => (
                   <Star
                     key={index}
@@ -50,7 +53,7 @@ export default function ReviewsPage() {
                   />
                 ))}
               </div>
-              <p className="mt-1.5 text-sm text-bone-400">
+              <p className="text-bone-400 mt-1.5 text-sm">
                 {GOOGLE_AGGREGATE.ratingCount} Google reviews
               </p>
             </div>
@@ -86,7 +89,10 @@ export default function ReviewsPage() {
         <Section tone="raised" eyebrow="What customers say" title="">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {REVIEWS.map((review, index) => (
-              <blockquote key={index} className="card-lit flex flex-col gap-4 p-6">
+              <blockquote
+                key={index}
+                className="card-lit flex flex-col gap-4 p-6"
+              >
                 <div className="flex gap-0.5">
                   {Array.from({ length: review.rating }).map((_, star) => (
                     <Star
@@ -98,7 +104,7 @@ export default function ReviewsPage() {
                 </div>
                 <p className="leading-relaxed text-bone-300">{review.text}</p>
                 <footer className="mt-auto text-sm">
-                  <cite className="not-italic font-medium text-bone-100">
+                  <cite className="font-medium text-bone-100 not-italic">
                     {review.author}
                   </cite>
                   {review.city ? (
@@ -137,7 +143,7 @@ export default function ReviewsPage() {
 
       <CtaBand
         title="Ready to get a price?"
-        body="Send the address and roughly what you have in mind."
+        body="Most quotes take one short conversation and an address. No site visit, no sales appointment."
         location="reviews_cta"
       />
     </>

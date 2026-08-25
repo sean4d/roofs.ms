@@ -3,8 +3,9 @@ import { pageMetadata } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
 
 export const metadata = pageMetadata({
-  title: "Terms of Service | Southeast Lights",
-  description: "Terms governing use of the Southeast Lights website and our estimates.",
+  title: "Terms of Service",
+  description:
+    "Terms governing use of the Southeast Lights website and our estimates.",
   path: "/terms",
 });
 

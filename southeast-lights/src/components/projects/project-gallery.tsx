@@ -34,7 +34,11 @@ export function ProjectGallery({ projects }: { projects: Project[] }) {
   return (
     <div className="container-site py-14">
       <h2 className="sr-only">Project gallery</h2>
-      <div className="flex flex-wrap gap-2" role="group" aria-label="Filter projects">
+      <div
+        className="flex flex-wrap gap-2"
+        role="group"
+        aria-label="Filter projects"
+      >
         {available.map((option) => (
           <button
             key={option.key}
@@ -48,7 +52,7 @@ export function ProjectGallery({ projects }: { projects: Project[] }) {
               "rounded-lg border px-4 py-2.5 text-sm font-medium transition-colors",
               filter === option.key
                 ? "border-champagne-400/50 bg-champagne-400/10 text-champagne-200"
-                : "border-white/12 text-bone-400 hover:text-bone-200",
+                : "text-bone-400 hover:text-bone-200 border-white/12",
             )}
           >
             {option.label}

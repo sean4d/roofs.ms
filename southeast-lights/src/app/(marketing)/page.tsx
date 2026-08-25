@@ -5,6 +5,7 @@ import { FeaturedProjects } from "@/components/home/featured-projects";
 import { FinalCta } from "@/components/home/final-cta";
 import { Hero } from "@/components/home/hero";
 import { Process } from "@/components/home/process";
+import { ReviewsBand } from "@/components/home/reviews-band";
 import { RoofAdvantage } from "@/components/home/roof-advantage";
 import { SegmentPicker } from "@/components/home/segment-picker";
 import { ServiceAreasBand } from "@/components/home/service-areas-band";
@@ -14,8 +15,9 @@ import { resolveSeasonMode } from "@/config/season";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title:
-    "Southeast Lights | Christmas & Permanent Lighting in Hattiesburg, MS",
+  // The root layout appends "| Southeast Lights" to every title, so this one
+  // carries only the descriptive half.
+  title: "Christmas & Permanent Lighting in Hattiesburg, MS",
   description:
     "Professional Christmas light installation and permanent architectural lighting across South Mississippi. All-inclusive service: design, installation, maintenance, takedown and storage. Installed by a licensed roofing contractor.",
   path: "/",
@@ -47,6 +49,7 @@ export default async function HomePage({
       <CommercialBand />
       <AllInclusive />
       <RoofAdvantage />
+      <ReviewsBand />
       <FeaturedProjects />
       <Process />
       <ServiceGrid mode={mode} />

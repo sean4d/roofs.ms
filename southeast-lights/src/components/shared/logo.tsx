@@ -27,15 +27,15 @@ export function Logo({
       aria-label={`${siteConfig.name} home`}
     >
       <Image
-        src="/brand/southeast-lights-logo.png"
+        src="/brand/southeast-lights-mark.png"
         alt=""
-        width={2048}
-        height={2048}
+        width={1751}
+        height={1034}
         priority
-        className="h-11 w-auto shrink-0 sm:h-12"
+        className="h-9 w-auto shrink-0 object-contain sm:h-10"
       />
       <span className="flex flex-col leading-none">
-        <span className="font-display text-base font-semibold whitespace-nowrap tracking-tight text-bone-100 sm:text-lg">
+        <span className="font-display text-base font-semibold tracking-tight whitespace-nowrap text-bone-100 sm:text-lg">
           Southeast Lights
         </span>
         {showDivisionLine ? (

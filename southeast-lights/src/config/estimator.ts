@@ -158,8 +158,18 @@ export const ESTIMATOR_OPTIONS: EstimatorOption[] = [
 
 /** Tree sizes are their own control: they dominate a large display. */
 export const TREE_OPTIONS = [
-  { key: "small", label: "Small", detail: "Ornamental, up to ~15 ft", price: 1500 },
-  { key: "medium", label: "Medium", detail: "Established shade tree", price: 2500 },
+  {
+    key: "small",
+    label: "Small",
+    detail: "Ornamental, up to ~15 ft",
+    price: 1500,
+  },
+  {
+    key: "medium",
+    label: "Medium",
+    detail: "Established shade tree",
+    price: 2500,
+  },
   { key: "large", label: "Large", detail: "Mature hardwood", price: 3500 },
   {
     key: "estate",

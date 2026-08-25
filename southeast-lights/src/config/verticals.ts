@@ -44,7 +44,7 @@ export const VERTICALS: Vertical[] = [
       },
       {
         heading: "One vendor for the whole community",
-        body: "Entrance monuments, boulevard trees, common areas, the clubhouse and the amenity center handled as one coherent design instead of four contractors with four different bulb colours.",
+        body: "Entrance monuments, boulevard trees, common areas, the clubhouse and the amenity center handled as one coherent design instead of four contractors with four different bulb colors.",
       },
       {
         heading: "Nobody on your board climbing anything",
@@ -239,7 +239,7 @@ export const VERTICALS: Vertical[] = [
       },
       {
         heading: "Insured work on your property",
-        body: "Certificates of insurance provided before we mobilise, naming the ownership entity as required by your management agreement.",
+        body: "Certificates of insurance provided before we mobilize, naming the ownership entity as required by your management agreement.",
       },
       {
         heading: "One scope across a portfolio",
@@ -254,7 +254,7 @@ export const VERTICALS: Vertical[] = [
     metaDescription:
       "Christmas and architectural lighting for office buildings, corporate campuses and commercial properties in Mississippi. Insured, lift-equipped crews.",
     summary:
-      "We light office buildings and corporate properties where the brief is restraint: clean lines, one colour temperature and nothing that reads as novelty.",
+      "We light office buildings and corporate properties where the brief is restraint: clean lines, one color temperature and nothing that reads as novelty.",
     image: IMAGES.officeBuilding,
     priority: 10,
     concerns: [

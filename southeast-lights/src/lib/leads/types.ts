@@ -66,6 +66,17 @@ export const leadSchema = z.discriminatedUnion("kind", [
   commercialLeadSchema,
 ]);
 
+/** Files that came in with the submission, resolved by the storage adapter. */
+export interface LeadAttachment {
+  name: string;
+  size: number;
+  type: string;
+  url?: string;
+  pending?: boolean;
+}
+
 export type ResidentialLead = z.infer<typeof residentialLeadSchema>;
 export type CommercialLead = z.infer<typeof commercialLeadSchema>;
-export type Lead = z.infer<typeof leadSchema>;
+export type Lead = z.infer<typeof leadSchema> & {
+  attachments?: LeadAttachment[];
+};

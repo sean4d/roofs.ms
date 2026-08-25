@@ -3,8 +3,9 @@ import { pageMetadata } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
 
 export const metadata = pageMetadata({
-  title: "Accessibility | Southeast Lights",
-  description: "Our commitment to keeping the Southeast Lights website usable for everyone.",
+  title: "Accessibility",
+  description:
+    "Our commitment to keeping the Southeast Lights website usable for everyone.",
   path: "/accessibility",
 });
 
@@ -20,7 +21,7 @@ export default function AccessibilityPage() {
         },
         {
           heading: "What we have done",
-          body: `Semantic HTML throughout, visible keyboard focus on every interactive element, labelled form fields with errors announced to assistive technology, alternative text on meaningful images, and colour contrast checked against the dark palette this site uses. Decorative motion, including the snow effect on the home page, is disabled entirely when your device requests reduced motion, and is not shown on mobile at all.`,
+          body: `Semantic HTML throughout, visible keyboard focus on every interactive element, labeled form fields with errors announced to assistive technology, alternative text on meaningful images, and color contrast checked against the dark palette this site uses. Decorative motion, including the snow effect on the home page, is disabled entirely when your device requests reduced motion, and is not shown on mobile at all.`,
         },
         {
           heading: "Known limitations",

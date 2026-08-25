@@ -43,7 +43,8 @@ export async function deliverLead(lead: Lead): Promise<DeliverySummary> {
 
 async function sendGenericWebhook(lead: Lead): Promise<DeliveryResult> {
   const url = process.env.LEAD_WEBHOOK_URL;
-  if (!url) return { ok: false, skipped: true, detail: "LEAD_WEBHOOK_URL not set" };
+  if (!url)
+    return { ok: false, skipped: true, detail: "LEAD_WEBHOOK_URL not set" };
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -51,18 +52,25 @@ async function sendGenericWebhook(lead: Lead): Promise<DeliveryResult> {
       body: JSON.stringify(lead),
       signal: AbortSignal.timeout(10_000),
     });
-    return response.ok ? { ok: true } : { ok: false, detail: `HTTP ${response.status}` };
+    return response.ok
+      ? { ok: true }
+      : { ok: false, detail: `HTTP ${response.status}` };
   } catch (error) {
-    return { ok: false, detail: error instanceof Error ? error.message : "Webhook error" };
+    return {
+      ok: false,
+      detail: error instanceof Error ? error.message : "Webhook error",
+    };
   }
 }
 
 async function sendLeadEmail(lead: Lead): Promise<DeliveryResult> {
   const key = process.env.RESEND_API_KEY;
-  if (!key) return { ok: false, skipped: true, detail: "RESEND_API_KEY not set" };
+  if (!key)
+    return { ok: false, skipped: true, detail: "RESEND_API_KEY not set" };
 
   const to = process.env.LEAD_NOTIFY_EMAIL ?? siteConfig.email;
-  if (!to) return { ok: false, skipped: true, detail: "No notification address" };
+  if (!to)
+    return { ok: false, skipped: true, detail: "No notification address" };
 
   try {
     const response = await fetch("https://api.resend.com/emails", {
@@ -72,7 +80,9 @@ async function sendLeadEmail(lead: Lead): Promise<DeliveryResult> {
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        from: process.env.LEAD_FROM_EMAIL ?? "Southeast Lights <leads@southeastlights.llc>",
+        from:
+          process.env.LEAD_FROM_EMAIL ??
+          "Southeast Lights <leads@southeastlights.llc>",
         to: [to],
         reply_to: lead.email,
         subject: subjectFor(lead),
@@ -80,9 +90,14 @@ async function sendLeadEmail(lead: Lead): Promise<DeliveryResult> {
       }),
       signal: AbortSignal.timeout(10_000),
     });
-    return response.ok ? { ok: true } : { ok: false, detail: `Resend ${response.status}` };
+    return response.ok
+      ? { ok: true }
+      : { ok: false, detail: `Resend ${response.status}` };
   } catch (error) {
-    return { ok: false, detail: error instanceof Error ? error.message : "Email error" };
+    return {
+      ok: false,
+      detail: error instanceof Error ? error.message : "Email error",
+    };
   }
 }
 
@@ -90,7 +105,9 @@ function subjectFor(lead: Lead): string {
   if (lead.kind === "commercial") {
     return `Commercial proposal request: ${lead.organization} (${lead.propertyType})`;
   }
-  const value = lead.estimate?.total ? ` ~$${Math.round(lead.estimate.total).toLocaleString("en-US")}` : "";
+  const value = lead.estimate?.total
+    ? ` ~$${Math.round(lead.estimate.total).toLocaleString("en-US")}`
+    : "";
   return `New quote request: ${lead.name}${value}`;
 }
 
@@ -123,10 +140,18 @@ function plainTextBody(lead: Lead): string {
     add("Services", lead.services.join(", "));
     if (lead.estimate?.total) {
       lines.push("", "ESTIMATOR", "");
-      add("Estimated total", `$${Math.round(lead.estimate.total).toLocaleString("en-US")}`);
-      add("Roofline", lead.estimate.roofFt ? `${lead.estimate.roofFt} ft` : undefined);
-      add("Colour", lead.estimate.colorScheme);
-      for (const [key, value] of Object.entries(lead.estimate.selections ?? {})) {
+      add(
+        "Estimated total",
+        `$${Math.round(lead.estimate.total).toLocaleString("en-US")}`,
+      );
+      add(
+        "Roofline",
+        lead.estimate.roofFt ? `${lead.estimate.roofFt} ft` : undefined,
+      );
+      add("Color", lead.estimate.colorScheme);
+      for (const [key, value] of Object.entries(
+        lead.estimate.selections ?? {},
+      )) {
         add(`  ${key}`, String(value));
       }
     }
@@ -138,6 +163,17 @@ function plainTextBody(lead: Lead): string {
   }
 
   if (lead.notes) lines.push("", "NOTES", lead.notes);
+
+  if (lead.attachments?.length) {
+    lines.push("", `ATTACHMENTS (${lead.attachments.length})`, "");
+    for (const file of lead.attachments) {
+      lines.push(
+        file.url
+          ? `${file.name} - ${file.url}`
+          : `${file.name} (upload storage not configured; ask the customer to resend)`,
+      );
+    }
+  }
 
   const a = lead.attribution;
   if (a && Object.values(a).some(Boolean)) {

@@ -9,9 +9,9 @@ import { IMAGES, type SiteImage } from "@/config/images";
 import { breadcrumbSchema, pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Design Inspiration | Southeast Lights",
+  title: "Design Inspiration",
   description:
-    "Holiday and architectural lighting design ideas: classic warm white, full-property estate displays, wrapped trees, commercial installations and colour schemes.",
+    "Holiday and architectural lighting design ideas: classic warm white, full-property estate displays, wrapped trees, commercial installations and color schemes.",
   path: "/inspiration",
 });
 
@@ -32,7 +32,8 @@ const STYLES: {
     name: "Classic Warm White",
     image: IMAGES.colonialColumns,
     body: "Warm white C9 on every roofline, nothing else competing. The look that reads as expensive from the road and never dates. About three quarters of what we install.",
-    suits: "Traditional and colonial architecture, brick, anything with good trim.",
+    suits:
+      "Traditional and colonial architecture, brick, anything with good trim.",
   },
   {
     name: "Full Property",
@@ -49,14 +50,15 @@ const STYLES: {
   {
     name: "Architectural",
     image: IMAGES.permanentHero,
-    body: "Permanent LED washing the facade in warm white, on every evening rather than six weeks a year. Colour available when you want it.",
+    body: "Permanent LED washing the facade in warm white, on every evening rather than six weeks a year. Color available when you want it.",
     suits: "Contemporary architecture, and anyone tired of a seasonal cycle.",
   },
   {
-    name: "Colour",
+    name: "Color",
     image: IMAGES.permanentColor,
-    body: "Red and green, red and white, or full multicolour. Colour costs the same as warm white, and we will tell you honestly which suits your elevation.",
-    suits: "Family homes, properties with children, anywhere with a playful brief.",
+    body: "Red and green, red and white, or full multicolor. Color costs the same as warm white, and we will tell you honestly which suits your elevation.",
+    suits:
+      "Family homes, properties with children, anywhere with a playful brief.",
   },
   {
     name: "Commercial Scale",
@@ -106,7 +108,10 @@ export default function InspirationPage() {
       <Section eyebrow="Styles" title="">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {STYLES.map((style) => (
-            <article key={style.name} className="card-lit flex flex-col overflow-hidden">
+            <article
+              key={style.name}
+              className="card-lit flex flex-col overflow-hidden"
+            >
               <div className="relative aspect-[3/2]">
                 <Image
                   src={style.image.src}
@@ -120,7 +125,9 @@ export default function InspirationPage() {
               </div>
               <div className="flex flex-1 flex-col gap-3 p-6">
                 <h2 className="text-lg font-semibold">{style.name}</h2>
-                <p className="text-sm leading-relaxed text-bone-400">{style.body}</p>
+                <p className="text-bone-400 text-sm leading-relaxed">
+                  {style.body}
+                </p>
                 <p className="mt-auto pt-2 text-xs leading-relaxed text-champagne-300">
                   Suits: {style.suits}
                 </p>

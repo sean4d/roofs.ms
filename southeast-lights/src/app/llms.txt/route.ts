@@ -30,7 +30,7 @@ export function GET() {
 - Phone (call or text): ${siteConfig.phone.display}
 - Email: ${siteConfig.email}
 - Address: ${siteConfig.address.streetAddress}, ${siteConfig.address.addressLocality}, ${siteConfig.address.addressRegion} ${siteConfig.address.postalCode}
-- Licensed and insured through ${siteConfig.parent.name}${siteConfig.parent.license ? `, MS contractor licence #${siteConfig.parent.license}` : ""}
+- Licensed and insured through ${siteConfig.parent.name}${siteConfig.parent.license ? `, MS contractor license #${siteConfig.parent.license}` : ""}
 - Website: ${siteConfig.url}
 
 ## Coverage
@@ -57,7 +57,7 @@ export function GET() {
 - $${PERMANENT.perFt.low}-$${PERMANENT.perFt.high} per linear foot installed
 - Controller: $${PERMANENT.controller.low}-$${PERMANENT.controller.high}
 - A typical 150 ft home: $${(PERMANENT.perFt.low * 150 + PERMANENT.controller.low).toLocaleString("en-US")}-$${(PERMANENT.perFt.high * 150 + PERMANENT.controller.high).toLocaleString("en-US")}
-- Note: Southeast Lights is not an authorised dealer for any permanent lighting manufacturer.
+- Note: Southeast Lights is not an authorized dealer for any permanent lighting manufacturer.
 
 ## Service model (important)
 

@@ -35,7 +35,9 @@ export interface Project {
     | "Hospitality";
   serviceSlugs: string[];
   /** Filter facets used by the gallery. */
-  tags: ("holiday" | "permanent" | "trees" | "rooflines" | "warm-white" | "color")[];
+  tags: (
+    "holiday" | "permanent" | "trees" | "rooflines" | "warm-white" | "color"
+  )[];
   summary: string;
   /** Longer narrative for the project detail page. */
   scope: string;
@@ -67,8 +69,14 @@ export const PROJECTS: Project[] = [
     hero: IMAGES.holidayHero,
     gallery: [
       { image: IMAGES.holidayHero, caption: "The full elevation at blue hour" },
-      { image: IMAGES.estateWide, caption: "Driveway oaks approaching the house" },
-      { image: IMAGES.c9Detail, caption: "Custom-cut C9 clipped to the roof edge" },
+      {
+        image: IMAGES.estateWide,
+        caption: "Driveway oaks approaching the house",
+      },
+      {
+        image: IMAGES.c9Detail,
+        caption: "Custom-cut C9 clipped to the roof edge",
+      },
     ],
     isDemo: true,
     year: 2025,
@@ -116,7 +124,10 @@ export const PROJECTS: Project[] = [
     hero: IMAGES.church,
     gallery: [
       { image: IMAGES.church, caption: "The campus from the road" },
-      { image: IMAGES.crewBoomLift, caption: "Lift work along the high roofline" },
+      {
+        image: IMAGES.crewBoomLift,
+        caption: "Lift work along the high roofline",
+      },
     ],
     isDemo: true,
     year: 2025,
@@ -140,7 +151,10 @@ export const PROJECTS: Project[] = [
     hero: IMAGES.hotelResort,
     gallery: [
       { image: IMAGES.hotelResort, caption: "The arrival drive after dark" },
-      { image: IMAGES.mardiGras, caption: "The same property in Mardi Gras colours" },
+      {
+        image: IMAGES.mardiGras,
+        caption: "The same property in Mardi Gras colors",
+      },
     ],
     isDemo: true,
     year: 2025,
@@ -176,18 +190,21 @@ export const PROJECTS: Project[] = [
     serviceSlugs: ["permanent-architectural-lighting"],
     tags: ["permanent", "rooflines", "warm-white", "color"],
     summary:
-      "Permanent LED track installed into the trim: warm white nightly, colour on demand.",
+      "Permanent LED track installed into the trim: warm white nightly, color on demand.",
     scope:
-      "Permanent LED channel installed into the fascia and trim with no penetration of the roof surface. Warm white for everyday use, with full colour available for holidays and game days from the app.",
+      "Permanent LED channel installed into the fascia and trim with no penetration of the roof surface. Warm white for everyday use, with full color available for holidays and game days from the app.",
     highlights: [
       "Channel mounted to trim and fascia, not through the roof surface",
-      "Colour-matched to the existing trim, unobtrusive by day",
+      "Color-matched to the existing trim, unobtrusive by day",
       "App-controlled scenes for holidays and game days",
     ],
     hero: IMAGES.permanentHero,
     gallery: [
       { image: IMAGES.permanentHero, caption: "Everyday warm white" },
-      { image: IMAGES.permanentColor, caption: "The same system in holiday colour" },
+      {
+        image: IMAGES.permanentColor,
+        caption: "The same system in holiday color",
+      },
     ],
     isDemo: true,
     year: 2025,

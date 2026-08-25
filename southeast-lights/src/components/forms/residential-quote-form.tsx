@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
+import { FileUpload } from "@/components/forms/file-upload";
 import {
   ChipGroup,
   Field,
@@ -22,9 +23,12 @@ type Errors = Record<string, string>;
 export function ResidentialQuoteForm() {
   const [services, setServices] = useState<string[]>([]);
   const [budget, setBudget] = useState("");
+  const [files, setFiles] = useState<File[]>([]);
   const [honeypot, setHoneypot] = useState("");
   const [errors, setErrors] = useState<Errors>({});
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
+    "idle",
+  );
   const [message, setMessage] = useState("");
 
   const serviceOptions = enabledServices().map((service) => service.label);
@@ -49,11 +53,7 @@ export function ResidentialQuoteForm() {
     };
 
     try {
-      const response = await fetch("/api/leads", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const response = await postLead(payload, files);
       const data = await response.json();
 
       if (!response.ok) {
@@ -72,6 +72,11 @@ export function ResidentialQuoteForm() {
         return;
       }
 
+      if (files.length)
+        track("upload_completed", {
+          context: "residential",
+          count: files.length,
+        });
       track("residential_lead_submit", { budget: budget || "unspecified" });
       setStatus("sent");
     } catch {
@@ -97,20 +102,44 @@ export function ResidentialQuoteForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="relative flex flex-col gap-6">
+    <form
+      onSubmit={onSubmit}
+      noValidate
+      className="relative flex flex-col gap-6"
+    >
       <Honeypot value={honeypot} onChange={setHoneypot} />
 
       <div className="grid gap-6 sm:grid-cols-2">
         <Field id="name" label="Your name" required error={errors.name}>
-          <TextInput id="name" name="name" autoComplete="name" required error={errors.name} />
+          <TextInput
+            id="name"
+            name="name"
+            autoComplete="name"
+            required
+            error={errors.name}
+          />
         </Field>
         <Field id="phone" label="Phone" required error={errors.phone}>
-          <TextInput id="phone" name="phone" type="tel" autoComplete="tel" required error={errors.phone} />
+          <TextInput
+            id="phone"
+            name="phone"
+            type="tel"
+            autoComplete="tel"
+            required
+            error={errors.phone}
+          />
         </Field>
       </div>
 
       <Field id="email" label="Email" required error={errors.email}>
-        <TextInput id="email" name="email" type="email" autoComplete="email" required error={errors.email} />
+        <TextInput
+          id="email"
+          name="email"
+          type="email"
+          autoComplete="email"
+          required
+          error={errors.email}
+        />
       </Field>
 
       <Field
@@ -120,7 +149,13 @@ export function ResidentialQuoteForm() {
         error={errors.address}
         hint="We measure from aerial imagery, so the address is how we price accurately without a site visit."
       >
-        <TextInput id="address" name="address" autoComplete="street-address" required error={errors.address} />
+        <TextInput
+          id="address"
+          name="address"
+          autoComplete="street-address"
+          required
+          error={errors.address}
+        />
       </Field>
 
       <ChipGroup
@@ -129,7 +164,9 @@ export function ResidentialQuoteForm() {
         selected={services}
         onToggle={(value) =>
           setServices((prev) =>
-            prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value],
+            prev.includes(value)
+              ? prev.filter((v) => v !== value)
+              : [...prev, value],
           )
         }
       />
@@ -159,21 +196,36 @@ export function ResidentialQuoteForm() {
         </Select>
       </Field>
 
+      <FileUpload
+        files={files}
+        onChange={setFiles}
+        label="Photos of your property"
+        hint="A few pictures of the front of the house help us price accurately without coming out. Not required."
+        context="residential"
+      />
+
       <Field id="notes" label="Anything else?" error={errors.notes}>
         <TextArea
           id="notes"
           name="notes"
-          placeholder="Trees you want wrapped, colour preferences, a date you need it finished by..."
+          placeholder="Trees you want wrapped, color preferences, a date you need it finished by..."
         />
       </Field>
 
       {status === "error" ? (
-        <p role="alert" className="rounded-lg border border-brand-400/40 bg-brand-500/10 px-4 py-3 text-sm text-brand-300">
+        <p
+          role="alert"
+          className="rounded-lg border border-brand-400/40 bg-brand-500/10 px-4 py-3 text-sm text-brand-300"
+        >
           {message}
         </p>
       ) : null}
 
-      <button type="submit" disabled={status === "sending"} className="btn-primary self-start disabled:opacity-60">
+      <button
+        type="submit"
+        disabled={status === "sending"}
+        className="btn-primary self-start disabled:opacity-60"
+      >
         {status === "sending" ? "Sending..." : "Request my quote"}
         <ArrowRight className="size-4" strokeWidth={2} />
       </button>
@@ -181,4 +233,19 @@ export function ResidentialQuoteForm() {
       <p className="text-xs text-bone-500">{siteConfig.responseTime}</p>
     </form>
   );
+}
+
+/** Submit as multipart when files are attached, JSON otherwise. */
+async function postLead(payload: unknown, files: File[]) {
+  if (files.length === 0) {
+    return fetch("/api/leads", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+  }
+  const form = new FormData();
+  form.append("lead", JSON.stringify(payload));
+  for (const file of files) form.append("files", file);
+  return fetch("/api/leads", { method: "POST", body: form });
 }

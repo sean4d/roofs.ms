@@ -5,7 +5,7 @@ import { COVERAGE } from "@/config/service-areas";
 import { breadcrumbSchema, pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Request a Commercial Lighting Proposal | Southeast Lights",
+  title: "Request a Commercial Lighting Proposal",
   description:
     "Request a commercial or HOA lighting design and proposal. Written scope, design concept, proof of insurance and a fixed seasonal price for properties across Mississippi.",
   path: "/commercial/request-proposal",
@@ -30,9 +30,9 @@ export default function RequestProposalPage() {
             Request a design and proposal.
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-relaxed text-bone-300">
-            Tell us about the property and we will come back with a written
-            scope, a design concept you can show a board, proof of insurance and
-            a fixed price for the season.
+            Attach what you have and we will do the measuring. You get a scope,
+            a visual concept you can put in front of a board, insurance
+            documentation, and a price for the season.
           </p>
         </div>
       </section>
@@ -44,7 +44,7 @@ export default function RequestProposalPage() {
         <aside className="flex flex-col gap-6 lg:sticky lg:top-28 lg:self-start">
           <div className="card-lit p-6">
             <h2 className="text-lg font-semibold">What you get back</h2>
-            <ul className="mt-4 flex flex-col gap-3 text-sm leading-relaxed text-bone-400">
+            <ul className="text-bone-400 mt-4 flex flex-col gap-3 text-sm leading-relaxed">
               <li>A written scope stating exactly what is included.</li>
               <li>A visual design concept for the property.</li>
               <li>Certificates of insurance, W-9 and references on request.</li>
@@ -54,10 +54,10 @@ export default function RequestProposalPage() {
 
           <div className="card-lit p-6">
             <h2 className="text-lg font-semibold">How far we travel</h2>
-            <p className="mt-3 text-sm leading-relaxed text-bone-400">
+            <p className="text-bone-400 mt-3 text-sm leading-relaxed">
               {COVERAGE.commercial}
             </p>
-            <p className="mt-3 text-sm leading-relaxed text-bone-400">
+            <p className="text-bone-400 mt-3 text-sm leading-relaxed">
               {COVERAGE.large}
             </p>
           </div>

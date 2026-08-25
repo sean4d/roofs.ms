@@ -12,7 +12,12 @@ import { faqsFor } from "@/config/faqs";
 import { IMAGES } from "@/config/images";
 import { SERVICE_AREAS, areaBySlug } from "@/config/service-areas";
 import { serviceBySlug } from "@/config/services";
-import { breadcrumbSchema, faqSchema, pageMetadata, serviceSchema } from "@/lib/seo";
+import {
+  breadcrumbSchema,
+  faqSchema,
+  pageMetadata,
+  serviceSchema,
+} from "@/lib/seo";
 
 export function generateStaticParams() {
   return SERVICE_AREAS.map((area) => ({ city: area.slug }));
@@ -34,7 +39,7 @@ export async function generateMetadata({
   const area = areaBySlug((await params).city);
   if (!area) return {};
   return pageMetadata({
-    title: `Christmas Light Installation in ${area.city}, MS | Southeast Lights`,
+    title: `Christmas Light Installation in ${area.city}, MS`,
     description: `Professional Christmas light installation and permanent exterior lighting in ${area.city}, Mississippi. All-inclusive service: design, installation, maintenance, takedown and storage.`,
     path: `/service-areas/${area.slug}`,
   });
@@ -86,7 +91,10 @@ export default async function CityPage({
       />
       <Breadcrumbs trail={trail} />
 
-      <Section eyebrow={`Lighting in ${area.city}`} title={`What we see in ${area.city}.`}>
+      <Section
+        eyebrow={`Lighting in ${area.city}`}
+        title={`What we see in ${area.city}.`}
+      >
         <p className="max-w-3xl text-lg leading-relaxed text-bone-300">
           {area.localContext}
         </p>
@@ -144,7 +152,7 @@ export default async function CityPage({
 
       <CtaBand
         title={`Get a price for your ${area.city} property.`}
-        body="Send the address and roughly what you have in mind. Most quotes never need a site visit first."
+        body={`We work in ${area.city} regularly, so scheduling is straightforward. Send the address and we will take it from there.`}
         location={`city_${area.slug}_cta`}
       />
     </>

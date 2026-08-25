@@ -54,7 +54,10 @@ export function SiteHeader() {
       >
         <Logo showDivisionLine={!scrolled} />
 
-        <nav aria-label="Main" className="hidden min-w-0 flex-1 items-center justify-center gap-0 xl:flex">
+        <nav
+          aria-label="Main"
+          className="hidden min-w-0 flex-1 items-center justify-center gap-0 xl:flex"
+        >
           {mainNav.map((item) => (
             <NavItem
               key={item.href}
@@ -122,7 +125,7 @@ function NavItem({
         <ChevronDown className="size-3.5 opacity-60" strokeWidth={2} />
       </Link>
       {isOpen ? (
-        <div className="absolute left-0 top-full w-80 pt-2">
+        <div className="absolute top-full left-0 w-80 pt-2">
           <div className="rounded-card border border-white/10 bg-ink-900/97 p-2 shadow-2xl backdrop-blur-lg">
             {item.children.map((child) => (
               <Link
@@ -152,7 +155,10 @@ function NavItem({
 function MobilePanel({ onNavigate }: { onNavigate: () => void }) {
   return (
     <div className="max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-t border-white/10 bg-ink-950 xl:hidden">
-      <nav aria-label="Mobile" className="container-site flex flex-col py-4 pb-28">
+      <nav
+        aria-label="Mobile"
+        className="container-site flex flex-col py-4 pb-28"
+      >
         {mainNav.map((item) => (
           <div key={item.href} className="border-b border-white/[0.07] py-1">
             <Link

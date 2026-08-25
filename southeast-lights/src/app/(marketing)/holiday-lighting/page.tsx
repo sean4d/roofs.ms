@@ -12,7 +12,12 @@ import { faqsFor } from "@/config/faqs";
 import { IMAGES } from "@/config/images";
 import { HOLIDAY, INCLUDED, PACKAGES } from "@/config/pricing";
 import { servicesByDivision } from "@/config/services";
-import { breadcrumbSchema, faqSchema, pageMetadata, serviceSchema } from "@/lib/seo";
+import {
+  breadcrumbSchema,
+  faqSchema,
+  pageMetadata,
+  serviceSchema,
+} from "@/lib/seo";
 import { cn, formatUsd } from "@/lib/utils";
 
 export const metadata = pageMetadata({
@@ -28,7 +33,10 @@ export default function HolidayLightingPage() {
     { name: "Holiday Lighting", path: "/holiday-lighting" },
   ];
   const services = servicesByDivision("holiday");
-  const faqs = faqsFor(["pricing", "service", "roof", "scheduling"]).slice(0, 10);
+  const faqs = faqsFor(["pricing", "service", "roof", "scheduling"]).slice(
+    0,
+    10,
+  );
 
   return (
     <>
@@ -63,9 +71,15 @@ export default function HolidayLightingPage() {
       >
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {INCLUDED.map((item) => (
-            <li key={item} className="card-lit flex items-start gap-3 px-5 py-4">
-              <Check className="mt-0.5 size-4 shrink-0 text-champagne-400" strokeWidth={2.5} />
-              <span className="text-sm text-bone-200">{item}</span>
+            <li
+              key={item}
+              className="card-lit flex items-start gap-3 px-5 py-4"
+            >
+              <Check
+                className="mt-0.5 size-4 shrink-0 text-champagne-400"
+                strokeWidth={2.5}
+              />
+              <span className="text-bone-200 text-sm">{item}</span>
             </li>
           ))}
         </ul>
@@ -94,19 +108,29 @@ export default function HolidayLightingPage() {
               )}
             >
               {"featured" in pkg && pkg.featured ? (
-                <span className="eyebrow mb-3 text-champagne-400">Most chosen</span>
+                <span className="eyebrow mb-3 text-champagne-400">
+                  Most chosen
+                </span>
               ) : null}
-              <h3 className="font-display text-2xl font-semibold">{pkg.name}</h3>
+              <h3 className="font-display text-2xl font-semibold">
+                {pkg.name}
+              </h3>
               <p className="mt-2 font-display text-lg text-champagne-300">
                 From {formatUsd(pkg.from)}
               </p>
-              <p className="mt-3 text-sm leading-relaxed text-bone-400">
+              <p className="text-bone-400 mt-3 text-sm leading-relaxed">
                 {pkg.positioning}
               </p>
               <ul className="mt-5 flex flex-col gap-2.5 border-t border-white/10 pt-5">
                 {pkg.includes.map((item) => (
-                  <li key={item} className="flex items-start gap-2.5 text-sm text-bone-300">
-                    <Check className="mt-0.5 size-3.5 shrink-0 text-champagne-400" strokeWidth={2.5} />
+                  <li
+                    key={item}
+                    className="flex items-start gap-2.5 text-sm text-bone-300"
+                  >
+                    <Check
+                      className="mt-0.5 size-3.5 shrink-0 text-champagne-400"
+                      strokeWidth={2.5}
+                    />
                     {item}
                   </li>
                 ))}
@@ -116,14 +140,21 @@ export default function HolidayLightingPage() {
         </div>
         <p className="mt-6 text-sm text-bone-500">
           Want something entirely your own?{" "}
-          <Link href="/estimator" className="text-champagne-300 hover:text-champagne-200">
+          <Link
+            href="/estimator"
+            className="text-champagne-300 hover:text-champagne-200"
+          >
             Build it in the estimator
           </Link>
           .
         </p>
       </Section>
 
-      <Section tone="raised" eyebrow="Who we light" title="Homes, communities and commercial property.">
+      <Section
+        tone="raised"
+        eyebrow="Who we light"
+        title="Homes, communities and commercial property."
+      >
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service) => (
             <Link
@@ -142,10 +173,15 @@ export default function HolidayLightingPage() {
               />
               <div className="scrim-soft absolute inset-0 -z-10" />
               <h3 className="text-lg font-semibold">{service.label}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-bone-300">{service.summary}</p>
+              <p className="mt-2 text-sm leading-relaxed text-bone-300">
+                {service.summary}
+              </p>
               <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-champagne-300">
                 Learn more
-                <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={2} />
+                <ArrowUpRight
+                  className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  strokeWidth={2}
+                />
               </span>
             </Link>
           ))}
@@ -158,7 +194,7 @@ export default function HolidayLightingPage() {
 
       <CtaBand
         title="Get on this season's schedule."
-        body="Send the address and roughly what you have in mind. We will design it, price it, and give you one number for the whole season."
+        body="Install weeks go in the order they are booked. The earlier you are on the calendar, the more say you have in your date."
         location="holiday_hub_cta"
       />
     </>

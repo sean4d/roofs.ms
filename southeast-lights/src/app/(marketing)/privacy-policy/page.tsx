@@ -3,8 +3,9 @@ import { pageMetadata } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
 
 export const metadata = pageMetadata({
-  title: "Privacy Policy | Southeast Lights",
-  description: "How Southeast Lights collects, uses and protects your information.",
+  title: "Privacy Policy",
+  description:
+    "How Southeast Lights collects, uses and protects your information.",
   path: "/privacy-policy",
 });
 

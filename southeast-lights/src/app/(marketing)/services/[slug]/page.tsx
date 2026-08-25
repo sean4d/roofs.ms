@@ -13,7 +13,12 @@ import { faqsFor, type FaqCategory } from "@/config/faqs";
 import { HOLIDAY, INCLUDED, PERMANENT } from "@/config/pricing";
 import { SERVICES, enabledServices, serviceBySlug } from "@/config/services";
 import { SERVICE_AREAS } from "@/config/service-areas";
-import { breadcrumbSchema, faqSchema, pageMetadata, serviceSchema } from "@/lib/seo";
+import {
+  breadcrumbSchema,
+  faqSchema,
+  pageMetadata,
+  serviceSchema,
+} from "@/lib/seo";
 import { formatUsd } from "@/lib/utils";
 
 export function generateStaticParams() {
@@ -28,7 +33,7 @@ export async function generateMetadata({
   const service = serviceBySlug((await params).slug);
   if (!service) return {};
   return pageMetadata({
-    title: `${service.title} | Southeast Lights`,
+    title: `${service.title}`,
     description: service.metaDescription,
     path: `/services/${service.slug}`,
     image: service.image.src,
@@ -38,7 +43,7 @@ export async function generateMetadata({
 /** Which FAQ groups are genuinely relevant to each division. */
 const FAQ_CATEGORIES: Record<string, FaqCategory[]> = {
   holiday: ["pricing", "service", "roof", "scheduling"],
-  permanent: ["permanent", "roof", "pricing"],
+  permanent: ["permanent"],
   landscape: ["service", "coverage", "pricing"],
   event: ["coverage", "service", "scheduling"],
 };
@@ -57,9 +62,13 @@ export default async function ServicePage({
     { name: service.label, path: `/services/${service.slug}` },
   ];
 
-  const faqs = faqsFor(FAQ_CATEGORIES[service.division] ?? ["service"]).slice(0, 8);
+  const faqs = faqsFor(FAQ_CATEGORIES[service.division] ?? ["service"]).slice(
+    0,
+    8,
+  );
   const related = SERVICES.filter(
-    (s) => s.enabled && s.division === service.division && s.slug !== service.slug,
+    (s) =>
+      s.enabled && s.division === service.division && s.slug !== service.slug,
   ).slice(0, 3);
 
   const isHoliday = service.division === "holiday";
@@ -98,12 +107,15 @@ export default async function ServicePage({
         >
           <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {INCLUDED.map((item) => (
-              <li key={item} className="card-lit flex items-start gap-3 px-5 py-4">
+              <li
+                key={item}
+                className="card-lit flex items-start gap-3 px-5 py-4"
+              >
                 <Check
                   className="mt-0.5 size-4 shrink-0 text-champagne-400"
                   strokeWidth={2.5}
                 />
-                <span className="text-sm text-bone-200">{item}</span>
+                <span className="text-bone-200 text-sm">{item}</span>
               </li>
             ))}
           </ul>
@@ -122,9 +134,13 @@ export default async function ServicePage({
               <div key={ft} className="card-lit flex flex-col gap-2 p-6">
                 <span className="text-sm text-bone-500">{ft} linear feet</span>
                 <span className="font-display text-xl font-semibold text-champagne-300 tabular-nums">
-                  {formatUsd(PERMANENT.perFt.low * ft + PERMANENT.controller.low)}
+                  {formatUsd(
+                    PERMANENT.perFt.low * ft + PERMANENT.controller.low,
+                  )}
                   {" - "}
-                  {formatUsd(PERMANENT.perFt.high * ft + PERMANENT.controller.high)}
+                  {formatUsd(
+                    PERMANENT.perFt.high * ft + PERMANENT.controller.high,
+                  )}
                 </span>
               </div>
             ))}
@@ -132,7 +148,7 @@ export default async function ServicePage({
           <p className="mt-6 max-w-2xl text-sm leading-relaxed text-bone-500">
             Ranges include the controller. Difficult rooflines, two-story
             sections, steep access and peak-season installs move toward the
-            upper end. We are not an authorised dealer for any permanent
+            upper end. We are not an authorized dealer for any permanent
             lighting manufacturer; we install and warrant the work itself, and
             will walk you through system options during design.
           </p>
@@ -193,7 +209,7 @@ export default async function ServicePage({
 
       <CtaBand
         title={`Get a price for ${service.label.toLowerCase()}.`}
-        body="Send the address and roughly what you have in mind. We will design it, price it, and give you one number."
+        body="Tell us the property and what you are picturing. You get a layout and a fixed price, not an hourly guess."
         location={`service_${service.slug}_cta`}
       />
     </>

@@ -11,17 +11,33 @@ import { COVERAGE, SERVICE_AREAS, areasByTier } from "@/config/service-areas";
 import { breadcrumbSchema, pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Service Areas | Southeast Lights",
+  title: "Service Areas",
   description:
     "Southeast Lights serves Hattiesburg, the Pine Belt, the Mississippi Gulf Coast and beyond. Residential within about an hour, commercial within two, and statewide for larger projects.",
   path: "/service-areas",
 });
 
 const GROUPS = [
-  { tier: "home" as const, label: "Home base", note: "Our office, warehouse and storage." },
-  { tier: "core" as const, label: "Pine Belt", note: "Full residential and commercial coverage." },
-  { tier: "coast" as const, label: "Gulf Coast", note: "Commercial, hospitality and Mardi Gras." },
-  { tier: "regional" as const, label: "Regional", note: "Commercial, HOA and municipal projects." },
+  {
+    tier: "home" as const,
+    label: "Home base",
+    note: "Our office, warehouse and storage.",
+  },
+  {
+    tier: "core" as const,
+    label: "Pine Belt",
+    note: "Full residential and commercial coverage.",
+  },
+  {
+    tier: "coast" as const,
+    label: "Gulf Coast",
+    note: "Commercial, hospitality and Mardi Gras.",
+  },
+  {
+    tier: "regional" as const,
+    label: "Regional",
+    note: "Commercial, HOA and municipal projects.",
+  },
 ];
 
 export default function ServiceAreasPage() {
@@ -36,13 +52,16 @@ export default function ServiceAreasPage() {
       <PageHero
         eyebrow="Coverage"
         title="Where we work."
-        intro="Hattiesburg and the Pine Belt are home. We cover the Gulf Coast for commercial and hospitality work, and we travel further for projects worth travelling for."
+        intro="Hattiesburg and the Pine Belt are home. We cover the Gulf Coast for commercial and hospitality work, and we travel further for projects worth traveling for."
         image={IMAGES.hoaEntrance}
         quoteLocation="areas_hub"
       />
       <Breadcrumbs trail={trail} />
 
-      <Section eyebrow="How far we go" title="Honest coverage, not a map with the whole state shaded in.">
+      <Section
+        eyebrow="How far we go"
+        title="Honest coverage, not a map with the whole state shaded in."
+      >
         <div className="grid max-w-4xl gap-8 sm:grid-cols-3">
           {[
             ["Residential", COVERAGE.residential],
@@ -50,7 +69,9 @@ export default function ServiceAreasPage() {
             ["Large projects", COVERAGE.large],
           ].map(([label, body]) => (
             <div key={label}>
-              <h3 className="text-sm font-semibold text-champagne-300">{label}</h3>
+              <h3 className="text-sm font-semibold text-champagne-300">
+                {label}
+              </h3>
               <div className="rule-lit my-3" />
               <p className="text-sm leading-relaxed text-bone-500">{body}</p>
             </div>
@@ -77,16 +98,21 @@ export default function ServiceAreasPage() {
                 >
                   <div>
                     <h3 className="text-lg font-semibold">{area.city}, MS</h3>
-                    <p className="mt-0.5 text-xs text-bone-500">{area.county}</p>
+                    <p className="mt-0.5 text-xs text-bone-500">
+                      {area.county}
+                    </p>
                   </div>
-                  <p className="text-sm leading-relaxed text-bone-400">
+                  <p className="text-bone-400 text-sm leading-relaxed">
                     {area.intro.length > 150
                       ? `${area.intro.slice(0, 150).trimEnd()}...`
                       : area.intro}
                   </p>
                   <span className="mt-auto inline-flex items-center gap-1.5 pt-2 text-xs font-medium text-champagne-300">
                     Lighting in {area.city}
-                    <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={2} />
+                    <ArrowUpRight
+                      className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      strokeWidth={2}
+                    />
                   </span>
                 </Link>
               ))}

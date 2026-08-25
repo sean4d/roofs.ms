@@ -23,7 +23,7 @@ export async function generateMetadata({
   const project = projectBySlug((await params).slug);
   if (!project) return {};
   return pageMetadata({
-    title: `${project.title}, ${project.city} MS | Southeast Lights`,
+    title: `${project.title}, ${project.city} MS`,
     description: project.summary,
     path: `/projects/${project.slug}`,
     image: project.hero.src,
@@ -81,7 +81,9 @@ export default async function ProjectPage({
               {project.city}, MS
             </span>
             <span className="text-bone-500">{project.propertyType}</span>
-            {project.year ? <span className="text-bone-500">{project.year}</span> : null}
+            {project.year ? (
+              <span className="text-bone-500">{project.year}</span>
+            ) : null}
           </div>
           <h1 className="mt-3 max-w-3xl text-[2.2rem] leading-[1.08] font-semibold text-balance sm:text-5xl">
             {project.title}
@@ -99,7 +101,10 @@ export default async function ProjectPage({
             <ul className="mt-7 flex flex-col gap-3">
               {project.highlights.map((item) => (
                 <li key={item} className="flex items-start gap-3 text-bone-300">
-                  <Check className="mt-1 size-4 shrink-0 text-champagne-400" strokeWidth={2.5} />
+                  <Check
+                    className="mt-1 size-4 shrink-0 text-champagne-400"
+                    strokeWidth={2.5}
+                  />
                   {item}
                 </li>
               ))}
@@ -107,7 +112,9 @@ export default async function ProjectPage({
           </div>
 
           <div className="card-lit h-fit p-6">
-            <h2 className="text-sm font-semibold text-bone-100">Services used</h2>
+            <h2 className="text-sm font-semibold text-bone-100">
+              Services used
+            </h2>
             <ul className="mt-4 flex flex-col gap-2.5">
               {services.map((service) => (
                 <li key={service.slug}>
@@ -120,8 +127,12 @@ export default async function ProjectPage({
                 </li>
               ))}
             </ul>
-            <h2 className="mt-6 text-sm font-semibold text-bone-100">Location</h2>
-            <p className="mt-2 text-sm text-bone-400">{project.city}, Mississippi</p>
+            <h2 className="mt-6 text-sm font-semibold text-bone-100">
+              Location
+            </h2>
+            <p className="text-bone-400 mt-2 text-sm">
+              {project.city}, Mississippi
+            </p>
           </div>
         </div>
       </Section>
@@ -130,7 +141,10 @@ export default async function ProjectPage({
         <Section tone="raised" eyebrow="Gallery" title="More from this project">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {project.gallery.map((item, index) => (
-              <figure key={`${item.image.src}-${index}`} className="card-lit overflow-hidden">
+              <figure
+                key={`${item.image.src}-${index}`}
+                className="card-lit overflow-hidden"
+              >
                 <div className="relative aspect-[3/2]">
                   <Image
                     src={item.image.src}
@@ -142,7 +156,7 @@ export default async function ProjectPage({
                     className="object-cover"
                   />
                 </div>
-                <figcaption className="px-5 py-4 text-sm text-bone-400">
+                <figcaption className="text-bone-400 px-5 py-4 text-sm">
                   {item.caption}
                 </figcaption>
               </figure>
@@ -171,7 +185,9 @@ export default async function ProjectPage({
                 />
                 <div className="scrim-soft absolute inset-0 -z-10" />
                 <h3 className="text-lg font-semibold">{other.title}</h3>
-                <p className="mt-1 text-xs text-champagne-300">{other.city}, MS</p>
+                <p className="mt-1 text-xs text-champagne-300">
+                  {other.city}, MS
+                </p>
               </Link>
             ))}
           </div>

@@ -9,7 +9,7 @@ import { IMAGES } from "@/config/images";
 import { breadcrumbSchema, faqSchema, pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Frequently Asked Questions | Southeast Lights",
+  title: "Frequently Asked Questions",
   description:
     "Answers about professional Christmas light installation: what it costs, what is included, who owns the lights, roof safety, scheduling, takedown, storage and permanent lighting.",
   path: "/faq",

@@ -28,7 +28,7 @@ export default function AboutPage() {
       <PageHero
         eyebrow="About"
         title="A contracting company that happens to hang lights."
-        intro="Southeast Lights is the lighting division of Southeast Roofing LLC. Same owner, same licence, same insurance, same crews."
+        intro="Southeast Lights is the lighting division of Southeast Roofing LLC. Same owner, same license, same insurance, same crews."
         image={IMAGES.crewBoomLift}
         quoteLocation="about"
       />
@@ -45,10 +45,10 @@ export default function AboutPage() {
               for the lighting side of the business.
             </p>
             <p>
-              That distinction matters more than it sounds. When you ask
-              whether we are insured, the answer is not that someone else is.
-              It is the same policy that covers our roofing crews. The same
-              licence. The same people.
+              That distinction matters more than it sounds. When you ask whether
+              we are insured, the answer is not that someone else is. It is the
+              same policy that covers our roofing crews. The same license. The
+              same people.
             </p>
             <p>
               Holiday lighting turned out to be a natural extension of roofing
@@ -85,7 +85,9 @@ export default function AboutPage() {
               />
             </div>
             <div className="card-lit p-6">
-              <h2 className="text-sm font-semibold text-bone-100">The details</h2>
+              <h2 className="text-sm font-semibold text-bone-100">
+                The details
+              </h2>
               <dl className="mt-4 flex flex-col gap-3 text-sm">
                 <div>
                   <dt className="text-bone-500">Legal entity</dt>
@@ -95,8 +97,10 @@ export default function AboutPage() {
                 </div>
                 {siteConfig.parent.license ? (
                   <div>
-                    <dt className="text-bone-500">MS contractor licence</dt>
-                    <dd className="text-bone-200">#{siteConfig.parent.license}</dd>
+                    <dt className="text-bone-500">MS contractor license</dt>
+                    <dd className="text-bone-200">
+                      #{siteConfig.parent.license}
+                    </dd>
                   </div>
                 ) : null}
                 <div>
@@ -132,7 +136,7 @@ export default function AboutPage() {
 
       <CtaBand
         title="Let's talk about your property."
-        body="Send the address and roughly what you have in mind."
+        body="Call, text, or send the address. If we are not the right fit for the job, we will tell you that too."
         location="about_cta"
       />
     </>

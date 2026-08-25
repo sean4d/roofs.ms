@@ -8,7 +8,7 @@ import { breadcrumbSchema, pageMetadata } from "@/lib/seo";
 import { formatUsd } from "@/lib/utils";
 
 export const metadata = pageMetadata({
-  title: "Get a Lighting Quote | Southeast Lights",
+  title: "Get a Lighting Quote",
   description:
     "Request a quote for holiday, permanent or landscape lighting in South Mississippi. Most quotes need only your address and a short conversation.",
   path: "/quote",
@@ -46,20 +46,28 @@ export default function QuotePage() {
         <aside className="flex flex-col gap-6 lg:sticky lg:top-28 lg:self-start">
           <div className="card-lit p-6">
             <h2 className="text-lg font-semibold">What to expect</h2>
-            <ul className="mt-4 flex flex-col gap-3 text-sm leading-relaxed text-bone-400">
-              <li>We review the property from your address and aerial imagery.</li>
-              <li>You get a design and one fixed price for the whole season.</li>
+            <ul className="text-bone-400 mt-4 flex flex-col gap-3 text-sm leading-relaxed">
+              <li>
+                We review the property from your address and aerial imagery.
+              </li>
+              <li>
+                You get a design and one fixed price for the whole season.
+              </li>
               <li>
                 Residential displays begin at {formatUsd(HOLIDAY.minimum)}. Most
                 custom projects land between $1,500 and $5,000.
               </li>
-              <li>No obligation, and no pressure if the numbers do not work.</li>
+              <li>
+                No obligation, and no pressure if the numbers do not work.
+              </li>
             </ul>
           </div>
 
           <div className="card-lit p-6">
-            <h2 className="text-lg font-semibold">Running a commercial property?</h2>
-            <p className="mt-3 text-sm leading-relaxed text-bone-400">
+            <h2 className="text-lg font-semibold">
+              Running a commercial property?
+            </h2>
+            <p className="text-bone-400 mt-3 text-sm leading-relaxed">
               HOAs, churches, municipalities, hotels and retail properties get a
               different process, with a written scope and a design concept for
               your board.

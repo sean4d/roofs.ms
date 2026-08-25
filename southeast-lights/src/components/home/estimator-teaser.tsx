@@ -1,49 +1,45 @@
 import Link from "next/link";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import { HOLIDAY } from "@/config/pricing";
 import { formatUsd } from "@/lib/utils";
 
 /**
- * Drives traffic into the estimator, and does qualification work on the way.
+ * Route into the estimator.
  *
- * Stating the $1,000 floor here is deliberate: the estimator exists partly
- * because people assumed a full professional display costs $200-$300. Better
- * that expectation is corrected on the homepage than on a phone call.
+ * Previously a glass card containing a glow layer containing the content.
+ * Now it is just a band: large type, a rule, and a button. The point of the
+ * section is one sentence and one link, so that is what it is.
  */
 export function EstimatorTeaser() {
   return (
-    <section className="py-20 lg:py-24">
+    <section className="band-tight">
       <div className="container-site">
-        <div className="card-lit relative isolate overflow-hidden px-7 py-12 sm:px-12 lg:px-16 lg:py-16">
-          <div className="glow-top absolute inset-x-0 -top-24 -z-10 h-48" />
+        <div className="rule-lit" />
+        <div className="max-w-3xl pt-12">
+          <div>
+            <p className="eyebrow text-champagne-500">Price it yourself</p>
+            <h2 className="mt-5 text-3xl font-semibold text-balance sm:text-4xl lg:text-[2.6rem] lg:leading-[1.1]">
+              Light up a house on screen and watch the number move.
+            </h2>
+            <p className="text-bone-400 mt-5 text-lg leading-relaxed">
+              Turn on rooflines, columns, windows, trees and pathways. Pick a
+              color. You get a real range in about a minute, and you can send us
+              the exact design you built.
+            </p>
+          </div>
 
-          <div className="flex flex-col items-start gap-8 lg:flex-row lg:items-center lg:justify-between">
-            <div className="max-w-xl">
-              <p className="eyebrow inline-flex items-center gap-2 text-champagne-400">
-                <Sparkles className="size-3.5" strokeWidth={2} />
-                Design it yourself
-              </p>
-              <h2 className="mt-4 text-3xl font-semibold text-balance sm:text-4xl">
-                Light up your house on screen and see the price.
-              </h2>
-              <p className="mt-5 text-lg leading-relaxed text-bone-300">
-                Pick your rooflines, columns, windows, trees and pathways and
-                watch them illuminate. Choose a colour scheme. Get a real
-                estimate range in about a minute, then send us the exact design
-                you built.
-              </p>
-              <p className="mt-4 text-sm text-bone-500">
-                Professional residential displays begin at{" "}
-                {formatUsd(HOLIDAY.minimum)}. The estimator will never quote
-                you less.
-              </p>
-            </div>
-
-            <Link href="/estimator" className="btn-primary shrink-0 px-8 py-4 text-base">
+          <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+            <Link
+              href="/estimator"
+              className="btn-primary w-full px-8 py-4 text-base sm:w-auto"
+            >
               Build my display
               <ArrowRight className="size-4" strokeWidth={2} />
             </Link>
+            <p className="text-sm text-bone-500">
+              Displays start at {formatUsd(HOLIDAY.minimum)}.
+            </p>
           </div>
         </div>
       </div>

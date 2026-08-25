@@ -24,10 +24,16 @@ export function CtaBand({
             {title}
           </h2>
           <p className="mt-4 leading-relaxed text-bone-300">{body}</p>
-          <p className="mt-3 text-sm text-bone-500">{siteConfig.responseTime}</p>
+          <p className="mt-3 text-sm text-bone-500">
+            {siteConfig.responseTime}
+          </p>
         </div>
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-          <QuoteButton location={location} label={quoteLabel} href={quoteHref} />
+          <QuoteButton
+            location={location}
+            label={quoteLabel}
+            href={quoteHref}
+          />
           <TextLink className="btn-secondary" />
           <CallLink className="justify-center px-2 py-3.5 text-bone-300 transition-colors hover:text-champagne-300" />
         </div>

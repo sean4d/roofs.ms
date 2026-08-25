@@ -19,7 +19,7 @@ import { track } from "@/lib/analytics";
  */
 export function MobileActionBar() {
   return (
-    <div className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-ink-950/95 backdrop-blur-lg pb-[env(safe-area-inset-bottom)] lg:hidden">
+    <div className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-ink-950/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-lg lg:hidden">
       <div className="grid grid-cols-[1.6fr_1fr_1fr] gap-2 px-3 py-2.5">
         <Link
           href={primaryCta.href}
@@ -34,7 +34,7 @@ export function MobileActionBar() {
           <a
             href={`sms:${siteConfig.phone.sms}`}
             onClick={() => track("text_click", { location: "mobile_bar" })}
-            className="flex flex-col items-center justify-center gap-0.5 rounded-lg border border-white/15 py-2 text-bone-200 active:bg-white/5"
+            className="text-bone-200 flex flex-col items-center justify-center gap-0.5 rounded-lg border border-white/15 py-2 active:bg-white/5"
           >
             <MessageSquare className="size-4" strokeWidth={1.5} />
             <span className="text-[0.7rem] font-medium">Text</span>
@@ -45,7 +45,7 @@ export function MobileActionBar() {
           <a
             href={`tel:${siteConfig.phone.tel}`}
             onClick={() => track("call_click", { location: "mobile_bar" })}
-            className="flex flex-col items-center justify-center gap-0.5 rounded-lg border border-white/15 py-2 text-bone-200 active:bg-white/5"
+            className="text-bone-200 flex flex-col items-center justify-center gap-0.5 rounded-lg border border-white/15 py-2 active:bg-white/5"
           >
             <Phone className="size-4" strokeWidth={1.5} />
             <span className="text-[0.7rem] font-medium">Call</span>

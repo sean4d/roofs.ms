@@ -9,7 +9,7 @@ export function FeaturedProjects() {
   if (projects.length === 0) return null;
 
   return (
-    <section className="border-y border-white/10 bg-ink-900 py-20 lg:py-24">
+    <section className="band border-y border-white/[0.08] bg-ink-900">
       <div className="container-site">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>

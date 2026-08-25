@@ -1,120 +1,175 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronDown } from "lucide-react";
 
-import { CallLink, EmailLink, TextLink } from "@/components/shared/contact-actions";
+import {
+  CallLink,
+  EmailLink,
+  TextLink,
+} from "@/components/shared/contact-actions";
 import { SocialLinks } from "@/components/shared/social-links";
 import { footerNav } from "@/config/navigation";
 import { SERVICE_AREAS } from "@/config/service-areas";
 import { siteConfig } from "@/config/site";
 
+/**
+ * Footer.
+ *
+ * Two rules shaped this. First, the logo uses its trimmed artwork so the
+ * intrinsic aspect ratio is real (1.69:1, not the 1:1 of the padded source)
+ * and it can never appear stretched. Second, it is a footer, not a link
+ * warehouse: four restrained columns on desktop, and on mobile the link
+ * groups collapse into <details> so nobody scrolls through four screens of
+ * raw lists. The links stay in the DOM either way, so they remain crawlable.
+ */
+
+const COLUMNS = [
+  { title: "Services", links: footerNav.services.slice(0, 7) },
+  { title: "Commercial", links: footerNav.commercial.slice(0, 7) },
+  { title: "Company", links: footerNav.company },
+  {
+    title: "Service Areas",
+    links: [
+      ...SERVICE_AREAS.slice(0, 6).map((a) => ({
+        label: `${a.city}, MS`,
+        href: `/service-areas/${a.slug}`,
+      })),
+      { label: "All areas", href: "/service-areas" },
+    ],
+  },
+] as const;
+
 export function SiteFooter() {
-  const { address, parent } = siteConfig;
+  const { parent, address } = siteConfig;
 
   return (
     <footer className="border-t border-white/10 bg-ink-950">
-      <div className="container-site grid gap-12 py-16 lg:grid-cols-12 lg:gap-8">
-        <div className="flex flex-col gap-5 lg:col-span-4">
-          <Image
-            src="/brand/southeast-lights-logo.png"
-            alt="Southeast Lights"
-            width={2048}
-            height={2048}
-            className="h-16 w-auto"
-          />
-          <p className="max-w-sm text-sm leading-relaxed text-bone-500">
-            Professional holiday, permanent and architectural lighting for
-            homes, communities and commercial properties across South
-            Mississippi and the Gulf Coast.
-          </p>
+      <div className="container-site py-16 lg:py-20">
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
+          {/* Identity and direct contact */}
+          <div className="lg:col-span-4">
+            <Image
+              src="/brand/southeast-lights-mark.png"
+              alt="Southeast Lights"
+              width={1751}
+              height={1034}
+              className="h-14 w-auto object-contain"
+            />
+            <p className="mt-6 max-w-xs leading-relaxed text-bone-500">
+              Holiday, permanent and architectural lighting for homes,
+              communities and commercial property across South Mississippi.
+            </p>
 
-          <div className="flex flex-col gap-2.5 text-sm text-bone-300">
-            <CallLink className="transition-colors hover:text-champagne-300" />
-            <TextLink className="transition-colors hover:text-champagne-300" />
-            <EmailLink className="transition-colors hover:text-champagne-300" />
+            <div className="mt-7 flex flex-col gap-3 text-bone-300">
+              <CallLink className="w-fit transition-colors hover:text-champagne-300" />
+              <TextLink className="w-fit transition-colors hover:text-champagne-300" />
+              <EmailLink className="w-fit transition-colors hover:text-champagne-300" />
+            </div>
+
             {address.streetAddress ? (
-              <address className="mt-1 not-italic text-bone-500">
+              <address className="mt-5 text-sm leading-relaxed text-bone-500 not-italic">
                 {address.streetAddress}
                 <br />
                 {address.addressLocality}, {address.addressRegion}{" "}
                 {address.postalCode}
               </address>
             ) : null}
+
+            <SocialLinks className="mt-6 -ml-2 flex items-center gap-1" />
           </div>
 
-          <SocialLinks className="-ml-2 flex items-center gap-1" />
-        </div>
+          {/* Link columns. Plain lists on desktop, collapsible on mobile. */}
+          <div className="grid gap-x-8 gap-y-2 sm:grid-cols-2 lg:col-span-8 lg:grid-cols-4 lg:gap-y-0">
+            {COLUMNS.map((column) => (
+              <nav key={column.title} aria-label={column.title}>
+                {/* Mobile: collapsible */}
+                <details className="group border-b border-white/[0.07] lg:hidden">
+                  <summary className="flex cursor-pointer list-none items-center justify-between py-4 text-sm font-semibold text-bone-100 [&::-webkit-details-marker]:hidden">
+                    {column.title}
+                    <ChevronDown
+                      className="size-4 text-bone-500 transition-transform duration-200 group-open:rotate-180"
+                      strokeWidth={2}
+                    />
+                  </summary>
+                  <ul className="flex flex-col gap-3 pb-5">
+                    {column.links.map((link) => (
+                      <li key={link.href}>
+                        <Link
+                          href={link.href}
+                          className="text-sm text-bone-500 transition-colors hover:text-champagne-300"
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
 
-        <FooterColumn title="Services" links={footerNav.services} className="lg:col-span-2" />
-        <FooterColumn title="Commercial" links={footerNav.commercial} className="lg:col-span-2" />
-        <FooterColumn title="Company" links={footerNav.company} className="lg:col-span-2" />
-
-        <div className="lg:col-span-2">
-          <h2 className="text-sm font-semibold text-bone-100">Service Areas</h2>
-          <ul className="mt-4 flex flex-col gap-2.5">
-            {SERVICE_AREAS.slice(0, 8).map((area) => (
-              <li key={area.slug}>
-                <Link
-                  href={`/service-areas/${area.slug}`}
-                  className="text-sm text-bone-500 transition-colors hover:text-champagne-300"
-                >
-                  {area.city}, MS
-                </Link>
-              </li>
+                {/* Desktop: always open */}
+                <div className="hidden lg:block">
+                  <h2 className="text-sm font-semibold text-bone-100">
+                    {column.title}
+                  </h2>
+                  <ul className="mt-5 flex flex-col gap-3">
+                    {column.links.map((link) => (
+                      <li key={link.href}>
+                        <Link
+                          href={link.href}
+                          className="text-sm text-bone-500 transition-colors hover:text-champagne-300"
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </nav>
             ))}
-            <li>
-              <Link
-                href="/service-areas"
-                className="text-sm font-medium text-champagne-400 transition-colors hover:text-champagne-300"
-              >
-                All areas
-              </Link>
-            </li>
-          </ul>
+          </div>
         </div>
       </div>
 
       {/*
-        The roofing relationship. Present and credible, but deliberately at
-        the bottom of the page so it never competes with lighting conversion.
-        Lighting customers are future roofing customers, not the reverse.
+        The roofing relationship. Visible and credible, deliberately secondary:
+        lighting customers become roofing customers, not the other way round.
       */}
       <div className="border-t border-white/[0.07]">
-        <div className="container-site flex flex-col gap-4 py-8 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-4">
-            <Image
-              src="/brand/southeast-roofing-logo.png"
-              alt=""
-              width={500}
-              height={500}
-              className="h-11 w-auto opacity-70 invert"
-            />
-            <p className="max-w-md text-sm leading-relaxed text-bone-500">
-              Southeast Lights is the lighting division of{" "}
-              <span className="text-bone-300">{parent.name}</span>, a licensed
-              Mississippi roofing contractor.{" "}
-              <a
-                href={parent.url}
-                className="text-champagne-400 underline-offset-4 hover:underline"
-              >
-                Need roofing?
-              </a>
-            </p>
-          </div>
+        <div className="container-site flex flex-col gap-5 py-8 sm:flex-row sm:items-center sm:gap-7">
+          <Image
+            src="/brand/southeast-roofing-mark.png"
+            alt=""
+            width={479}
+            height={278}
+            className="h-9 w-auto shrink-0 object-contain opacity-60 invert"
+          />
+          <p className="max-w-xl text-sm leading-relaxed text-bone-500">
+            Southeast Lights is the lighting division of{" "}
+            <span className="text-bone-300">{parent.name}</span>, a licensed
+            Mississippi roofing contractor.{" "}
+            <a
+              href={parent.url}
+              className="text-champagne-400 underline-offset-4 hover:underline"
+            >
+              Need a roof?
+            </a>
+          </p>
         </div>
       </div>
 
       <div className="border-t border-white/[0.07]">
-        <div className="container-site flex flex-col gap-3 py-6 pb-24 text-xs text-bone-500 sm:flex-row sm:items-center sm:justify-between lg:pb-6">
+        <div className="container-site flex flex-col gap-3 py-6 text-xs text-bone-500 sm:flex-row sm:items-center sm:justify-between">
           <p>
             &copy; {new Date().getFullYear()} {siteConfig.legalName} d/b/a{" "}
             {siteConfig.name}.
-            {parent.license ? ` MS Contractor #${parent.license}.` : ""} All
-            rights reserved.
+            {parent.license ? ` MS Contractor #${parent.license}.` : ""}
           </p>
-          <ul className="flex flex-wrap gap-x-5 gap-y-2">
+          <ul className="flex flex-wrap gap-x-6 gap-y-2">
             {footerNav.legal.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="transition-colors hover:text-champagne-300">
+                <Link
+                  href={item.href}
+                  className="transition-colors hover:text-champagne-300"
+                >
                   {item.label}
                 </Link>
               </li>
@@ -123,33 +178,5 @@ export function SiteFooter() {
         </div>
       </div>
     </footer>
-  );
-}
-
-function FooterColumn({
-  title,
-  links,
-  className,
-}: {
-  title: string;
-  links: readonly { label: string; href: string }[];
-  className?: string;
-}) {
-  return (
-    <div className={className}>
-      <h2 className="text-sm font-semibold text-bone-100">{title}</h2>
-      <ul className="mt-4 flex flex-col gap-2.5">
-        {links.map((link) => (
-          <li key={link.href}>
-            <Link
-              href={link.href}
-              className="text-sm text-bone-500 transition-colors hover:text-champagne-300"
-            >
-              {link.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
   );
 }

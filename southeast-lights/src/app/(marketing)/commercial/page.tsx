@@ -1,6 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, FileCheck2, HardHat, Ruler, ShieldCheck } from "lucide-react";
+import {
+  ArrowUpRight,
+  FileCheck2,
+  HardHat,
+  Ruler,
+  ShieldCheck,
+} from "lucide-react";
 
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { CtaBand } from "@/components/shared/cta-band";
@@ -16,7 +22,7 @@ import { verticalsByPriority } from "@/config/verticals";
 import { breadcrumbSchema, faqSchema, pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Commercial & HOA Lighting in Mississippi | Southeast Lights",
+  title: "Commercial & HOA Lighting in Mississippi",
   description:
     "Commercial, HOA and institutional lighting across Mississippi. Insured crews, lift equipment, written scopes, design concepts and board-ready proposals for projects of any scale.",
   path: "/commercial",
@@ -31,7 +37,7 @@ const CAPABILITIES = [
   {
     icon: ShieldCheck,
     title: "Insurance documentation on request",
-    body: "Certificates of insurance naming the ownership entity, W-9 and references, provided before we mobilise rather than chased afterwards.",
+    body: "Certificates of insurance naming the ownership entity, W-9 and references, provided before we mobilize rather than chased afterwards.",
   },
   {
     icon: HardHat,
@@ -62,7 +68,10 @@ export default function CommercialPage() {
         intro="HOAs, communities, churches, municipalities, hotels, clubs, retail centers and corporate properties across Mississippi and the Gulf Coast."
         image={IMAGES.retailCenter}
         quoteLocation="commercial_hub"
-        secondary={{ label: "Request a proposal", href: "/commercial/request-proposal" }}
+        secondary={{
+          label: "Request a proposal",
+          href: "/commercial/request-proposal",
+        }}
       />
       <Breadcrumbs trail={trail} />
 
@@ -80,7 +89,9 @@ export default function CommercialPage() {
                 </span>
                 <div>
                   <h3 className="text-lg font-semibold">{item.title}</h3>
-                  <p className="mt-2 leading-relaxed text-bone-400">{item.body}</p>
+                  <p className="text-bone-400 mt-2 leading-relaxed">
+                    {item.body}
+                  </p>
                 </div>
               </div>
             );
@@ -131,18 +142,22 @@ export default function CommercialPage() {
             </h3>
             <div className="rule-lit my-3" />
             <ul className="flex flex-wrap gap-2">
-              {COMMERCIAL_BUDGETS.filter((b) => b !== "Not sure yet").map((band) => (
-                <li
-                  key={band}
-                  className="rounded-lg border border-white/10 px-4 py-2.5 text-sm text-bone-300"
-                >
-                  {band}
-                </li>
-              ))}
+              {COMMERCIAL_BUDGETS.filter((b) => b !== "Not sure yet").map(
+                (band) => (
+                  <li
+                    key={band}
+                    className="rounded-lg border border-white/10 px-4 py-2.5 text-sm text-bone-300"
+                  >
+                    {band}
+                  </li>
+                ),
+              )}
             </ul>
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-champagne-300">Coverage</h3>
+            <h3 className="text-sm font-semibold text-champagne-300">
+              Coverage
+            </h3>
             <div className="rule-lit my-3" />
             <p className="text-sm leading-relaxed text-bone-500">
               {COVERAGE.commercial}
@@ -154,7 +169,11 @@ export default function CommercialPage() {
         </div>
       </Section>
 
-      <Section tone="raised" eyebrow="Questions" title="What organisations ask us">
+      <Section
+        tone="raised"
+        eyebrow="Questions"
+        title="What organizations ask us"
+      >
         <FaqList items={faqs} />
       </Section>
 

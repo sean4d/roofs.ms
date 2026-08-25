@@ -46,7 +46,7 @@ export const PACKAGES = [
     positioning: "The clean, correct version of the look everyone pictures.",
     includes: [
       "Primary roofline in custom-cut C9",
-      "Warm white or your colour choice",
+      "Warm white or your color choice",
       "Timers, cords and connections",
       "Full season of maintenance",
       "Takedown and storage",
@@ -146,7 +146,7 @@ export const TREE_TIERS = [
  * system outright. Difficult rooflines, two-story sections, steep access and
  * peak-season installs push toward the top of each range.
  *
- * DELIBERATELY UNBRANDED. Southeast Lights is not an authorised dealer for
+ * DELIBERATELY UNBRANDED. Southeast Lights is not an authorized dealer for
  * any permanent-lighting manufacturer, so no manufacturer name, logo or
  * warranty language may appear anywhere on this site. Putting a protected
  * trademark on a commercial page you are not licensed to represent is a
@@ -160,6 +160,22 @@ export const TREE_TIERS = [
 export const PERMANENT = {
   perFt: { low: 25, high: 35 },
   controller: { low: 650, high: 850 },
+} as const;
+
+/**
+ * Returning-customer price lock.
+ *
+ * PUBLIC and safe to state anywhere: stay with us season to season and your
+ * established rate does not get raised on you.
+ *
+ * NOT to be confused with the private, selective arrangement under which some
+ * returning commercial properties receive reduced pricing. That is negotiated
+ * case by case, is not universal, and must never appear on the website.
+ */
+export const PRICE_LOCK = {
+  headline: "Your rate stays where it started",
+  body: "Come back next season and you keep the price you were quoted. We do not raise established customers' rates year over year, and returning customers get first pick of install dates before we open the calendar.",
+  short: "Stay with us and your rate stays locked.",
 } as const;
 
 /** What the holiday per-foot rate actually covers. Used verbatim in copy. */
@@ -235,7 +251,10 @@ export function quoteHoliday(input: HolidayInput): HolidayQuote {
 }
 
 /** Permanent lighting installed range for a given roofline length. */
-export function quotePermanent(linearFt: number): { low: number; high: number } {
+export function quotePermanent(linearFt: number): {
+  low: number;
+  high: number;
+} {
   if (linearFt <= 0) return { low: 0, high: 0 };
   return {
     low: linearFt * PERMANENT.perFt.low + PERMANENT.controller.low,

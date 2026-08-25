@@ -21,7 +21,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     path: string,
     priority: number,
     changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] = "monthly",
-  ) => ({ url: `${base}${path}`, lastModified: now, changeFrequency, priority });
+  ) => ({
+    url: `${base}${path}`,
+    lastModified: now,
+    changeFrequency,
+    priority,
+  });
 
   return [
     entry("/", 1, "weekly"),

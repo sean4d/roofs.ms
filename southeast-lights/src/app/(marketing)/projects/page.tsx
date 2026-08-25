@@ -8,7 +8,7 @@ import { publishedProjects } from "@/config/projects";
 import { breadcrumbSchema, pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Lighting Projects | Southeast Lights",
+  title: "Lighting Projects",
   description:
     "Holiday and permanent lighting projects across South Mississippi: estates, HOA entrances, churches, hospitality properties and downtown districts.",
   path: "/projects",
@@ -37,7 +37,7 @@ export default function ProjectsPage() {
         <ProjectGallery projects={projects} />
       ) : (
         <div className="container-site py-24">
-          <p className="max-w-xl text-lg text-bone-400">
+          <p className="text-bone-400 max-w-xl text-lg">
             Project photography is being added. In the meantime, tell us about
             your property and we will show you comparable work directly.
           </p>
@@ -46,7 +46,7 @@ export default function ProjectsPage() {
 
       <CtaBand
         title="Want your property in here?"
-        body="Send the address and roughly what you have in mind. We will design it and price it."
+        body="Tell us the address and what caught your eye. We will show you what the same treatment looks like on your elevation."
         location="projects_hub_cta"
       />
     </>

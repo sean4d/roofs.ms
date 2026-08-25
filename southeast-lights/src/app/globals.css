@@ -4,17 +4,17 @@
  * Southeast Lights design system.
  *
  * Anchored to the real logo: its mark is a deep crimson (#B00000 sampled from
- * the artwork), so red is the brand colour, not a seasonal decoration. The
+ * the artwork), so red is the brand color, not a seasonal decoration. The
  * job of this system is to make that red read as expensive rather than as a
  * generic red-and-green Christmas template.
  *
  * How that is achieved:
  *   - The ground is near-black with a warm bias, not navy and not pure black.
- *     Lighting photography sits on it without a colour cast.
+ *     Lighting photography sits on it without a color cast.
  *   - Red is used at low frequency and high value: primary buttons, the
  *     wordmark, a single accent rule. Never large red fills.
  *   - Champagne carries warmth and "lit" everywhere red is not. It is the
- *     colour of an incandescent C9 filament and does most of the emotional
+ *     color of an incandescent C9 filament and does most of the emotional
  *     work.
  *   - Evergreen exists but is rationed to holiday-mode surfaces only.
  */
@@ -93,6 +93,19 @@
 
   body {
     @apply bg-ink-950 text-bone-300 antialiased;
+    /*
+     * Reserve space for the sticky mobile action bar site-wide, plus the iOS
+     * home indicator. Done once here rather than per-page, so nothing can
+     * ever end up underneath it: form submit buttons, estimator controls,
+     * footer links and modal close buttons all stay reachable.
+     */
+    padding-bottom: calc(5.25rem + env(safe-area-inset-bottom));
+  }
+
+  @media (min-width: 1024px) {
+    body {
+      padding-bottom: 0;
+    }
   }
 
   h1,
@@ -139,6 +152,19 @@
     @apply mx-auto w-full max-w-[86rem] px-5 sm:px-8 lg:px-10;
   }
 
+  /*
+   * One vertical rhythm for every band on the site. Sections were drifting
+   * between py-20 and py-28 by hand, which is what made the spacing feel
+   * uneven. Everything uses this now.
+   */
+  .band {
+    @apply py-16 sm:py-20 lg:py-28;
+  }
+
+  .band-tight {
+    @apply py-12 sm:py-16 lg:py-20;
+  }
+
   .surface-day {
     @apply bg-paper-50 text-graphite-600;
   }
@@ -149,9 +175,13 @@
   }
 
   /*
-   * The signature card. Translucent over photography, with a hairline that
-   * warms and a bloom that rises on hover. One interaction, used everywhere,
-   * so the site has a fingerprint instead of scattered effects.
+   * The signature card. Translucent, with a hairline that warms and a bloom
+   * that rises on hover.
+   *
+   * USE SPARINGLY. This is an accent, not the default container. Glass inside
+   * glass inside glass is what makes a site read as a component showcase
+   * rather than a designed page. Reach for `.panel`, a plain border, or
+   * nothing at all before reaching for this.
    */
   .card-lit {
     @apply relative rounded-card border border-white/10 bg-white/[0.035] backdrop-blur-sm transition-all duration-500;
@@ -164,6 +194,35 @@
       0 0 0 1px --alpha(var(--color-champagne-400) / 10%),
       0 24px 60px -20px --alpha(var(--color-champagne-500) / 30%),
       0 10px 24px -12px rgb(0 0 0 / 0.6);
+  }
+
+  /*
+   * The workhorse container: a hairline and a whisper of lift, no glass, no
+   * blur, no bloom. Most grids should use this.
+   */
+  .panel {
+    @apply rounded-card border border-white/[0.09] bg-white/[0.02] transition-colors duration-300;
+  }
+
+  .panel:hover,
+  .panel:focus-within {
+    @apply border-white/20;
+  }
+
+  /*
+   * Grid children that must line up. Applied to the <a> or <div> inside a
+   * grid cell: full height, column flow, so `mt-auto` on the last element
+   * pins every card's footer to the same baseline regardless of how long the
+   * paragraph above it runs.
+   */
+  .cell {
+    @apply flex h-full flex-col;
+  }
+
+  /* Consistent media block inside a card. Never let images set their own height. */
+  .cell-media {
+    @apply relative w-full overflow-hidden;
+    aspect-ratio: 3 / 2;
   }
 
   .card-day {
@@ -230,7 +289,7 @@
     color: transparent;
   }
 
-  /* Hairline rule with a lit centre. Used as a section divider. */
+  /* Hairline rule with a lit center. Used as a section divider. */
   .rule-lit {
     height: 1px;
     background: linear-gradient(

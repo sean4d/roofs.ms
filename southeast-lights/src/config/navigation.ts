@@ -22,7 +22,11 @@ export interface NavLink {
 const serviceLink = (slug: string): NavLink | null => {
   const service = SERVICES.find((s) => s.slug === slug && s.enabled);
   return service
-    ? { label: service.label, href: `/services/${service.slug}`, description: service.summary }
+    ? {
+        label: service.label,
+        href: `/services/${service.slug}`,
+        description: service.summary,
+      }
     : null;
 };
 
@@ -51,8 +55,15 @@ export const commercialNav: NavLink[] = verticalsByPriority().map((v) => ({
 }));
 
 export const mainNav: NavLink[] = [
-  { label: "Holiday Lighting", href: "/holiday-lighting", children: holidayNav },
-  { label: "Permanent Lighting", href: "/services/permanent-architectural-lighting" },
+  {
+    label: "Holiday Lighting",
+    href: "/holiday-lighting",
+    children: holidayNav,
+  },
+  {
+    label: "Permanent Lighting",
+    href: "/services/permanent-architectural-lighting",
+  },
   { label: "Commercial", href: "/commercial", children: commercialNav },
   { label: "HOA & Communities", href: "/commercial/hoa-communities" },
   { label: "Other Services", href: "/services", children: otherServicesNav },

@@ -8,11 +8,15 @@ import { PageHero } from "@/components/shared/page-hero";
 import { Section } from "@/components/shared/section";
 import { JsonLd } from "@/components/seo/json-ld";
 import { IMAGES } from "@/config/images";
-import { DIVISION_LABELS, enabledServices, type Division } from "@/config/services";
+import {
+  DIVISION_LABELS,
+  enabledServices,
+  type Division,
+} from "@/config/services";
 import { breadcrumbSchema, pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Lighting Services | Southeast Lights",
+  title: "Lighting Services",
   description:
     "Holiday, permanent architectural, landscape and event lighting across South Mississippi and the Gulf Coast. Professionally designed, installed and maintained.",
   path: "/services",

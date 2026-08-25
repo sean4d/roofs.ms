@@ -69,7 +69,11 @@ export const SERVICE_AREAS: ServiceArea[] = [
       "Purvis and the surrounding Lamar County communities sit well inside our residential service radius, including the larger properties and acreage homes south and west of town.",
     localContext:
       "Lamar County properties often sit on more land, which changes the design: driveways get longer, trees matter more than rooflines, and entrance features start to carry the display. Tree wrapping and pathway lighting frequently do more here than adding another run of roofline.",
-    emphasis: ["tree-wrapping", "residential-holiday-lighting", "landscape-lighting"],
+    emphasis: [
+      "tree-wrapping",
+      "residential-holiday-lighting",
+      "landscape-lighting",
+    ],
     nearby: ["hattiesburg", "petal", "sumrall", "columbia"],
   },
   {
@@ -81,7 +85,11 @@ export const SERVICE_AREAS: ServiceArea[] = [
       "Sumrall is comfortably within our normal residential radius, and the rural properties around it are some of the most rewarding to light because there is nothing competing with the display after dark.",
     localContext:
       "Properties around Sumrall tend to be set back from the road on larger lots with mature hardwoods. A wrapped oak at the head of a long driveway does more for these homes than any amount of roofline, and pathway and driveway lighting carries visitors in from the road.",
-    emphasis: ["tree-wrapping", "landscape-lighting", "residential-holiday-lighting"],
+    emphasis: [
+      "tree-wrapping",
+      "landscape-lighting",
+      "residential-holiday-lighting",
+    ],
     nearby: ["hattiesburg", "purvis", "columbia"],
   },
   {
@@ -137,7 +145,11 @@ export const SERVICE_AREAS: ServiceArea[] = [
       "Wiggins sits between the Pine Belt and the Coast, and we serve it for both residential displays and commercial work on the way to and from Gulf Coast projects.",
     localContext:
       "Stone County properties often have significant pine and hardwood cover, which affects design more than people expect: a display has to be positioned where it is actually visible from the road rather than absorbed by the tree line. Commercial work along the highway corridor is straightforward and highly visible.",
-    emphasis: ["residential-holiday-lighting", "tree-wrapping", "commercial-holiday-lighting"],
+    emphasis: [
+      "residential-holiday-lighting",
+      "tree-wrapping",
+      "commercial-holiday-lighting",
+    ],
     nearby: ["hattiesburg", "gulfport", "purvis"],
   },
   {
@@ -199,7 +211,7 @@ export const SERVICE_AREAS: ServiceArea[] = [
     intro:
       "Jackson is outside our normal residential radius, but it is well inside the range we will travel for larger commercial, HOA and municipal projects.",
     localContext:
-      "Metro Jackson has the state's largest concentration of master-planned communities, corporate campuses and commercial properties, which is exactly the work worth a two-hour drive. For projects at this scale, crews mobilise and stay rather than commuting daily, so distance affects scheduling far less than people assume. Residential enquiries here are generally best served by a local installer unless the property is substantial.",
+      "Metro Jackson has the state's largest concentration of master-planned communities, corporate campuses and commercial properties, which is exactly the work worth a two-hour drive. For projects at this scale, crews mobilize and stay rather than commuting daily, so distance affects scheduling far less than people assume. Residential enquiries here are generally best served by a local installer unless the property is substantial.",
     emphasis: [
       "hoa-community-lighting",
       "commercial-holiday-lighting",

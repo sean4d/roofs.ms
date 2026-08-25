@@ -20,7 +20,7 @@ export const siteConfig = {
    * or in schema. The correct phrasings are "a division of Southeast Roofing
    * LLC" or "Southeast Roofing LLC d/b/a Southeast Lights".
    *
-   * This matters commercially, not just legally: the licence, the insurance,
+   * This matters commercially, not just legally: the license, the insurance,
    * and the crews are literally the same ones. That is a stronger claim than
    * borrowed credibility, so say it plainly.
    */
@@ -114,7 +114,7 @@ export const siteConfig = {
   parent: {
     name: "Southeast Roofing LLC",
     url: "https://southeastroofing.llc",
-    /** MS State Board of Contractors licence, held by the parent name. */
+    /** MS State Board of Contractors license, held by the parent name. */
     license: "R22245" as string | null,
     bbb: {
       rating: "A+",
@@ -127,11 +127,11 @@ export const siteConfig = {
   /**
    * [NEEDS] from the owner, tracked here so nothing ships as an invention:
    *   - permanentLightingBrand: null until a dealership is actually secured.
-   *     Owner confirmed 2026-08-24 they are NOT an authorised dealer for any
+   *     Owner confirmed 2026-08-24 they are NOT an authorized dealer for any
    *     permanent-lighting manufacturer, so the permanent pages stay
    *     unbranded. See the note in config/pricing.ts.
    *   - workmanshipWarranty: our install warranty. With no manufacturer
-   *     warranty to lean on, this is the whole guarantee — it matters more
+   *     warranty to lean on, this is the whole guarantee. It matters more
    *     here than it would for a dealer.
    *   - season dates: install window, booking cutoff, takedown window
    *   - foundingYear for Southeast Lights specifically

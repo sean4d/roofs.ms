@@ -7,9 +7,9 @@ import { breadcrumbSchema, pageMetadata } from "@/lib/seo";
 import { formatUsd } from "@/lib/utils";
 
 export const metadata = pageMetadata({
-  title: "Christmas Light Estimator | Southeast Lights",
+  title: "Christmas Light Estimator",
   description:
-    "Build your holiday lighting display and see an estimated price. Choose rooflines, columns, windows, trees and pathways, pick a colour scheme, and get a real range in about a minute.",
+    "Build your holiday lighting display and see an estimated price. Choose rooflines, columns, windows, trees and pathways, pick a color scheme, and get a real range in about a minute.",
   path: "/estimator",
 });
 
@@ -32,7 +32,7 @@ export default function EstimatorPage() {
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-relaxed text-bone-300">
             Turn on what you would like lit and the illustration shows you.
-            Choose a colour scheme, add trees, and get an estimated range. Then
+            Choose a color scheme, add trees, and get an estimated range. Then
             send us the exact design you built.
           </p>
           <p className="mt-4 max-w-2xl text-sm text-bone-500">

@@ -148,14 +148,19 @@ export function Estimator() {
   const high = Math.round((quote.total * 1.15) / 50) * 50;
 
   return (
-    <div className="container-site grid gap-8 py-12 lg:grid-cols-[1.15fr_1fr] lg:gap-12 lg:py-16">
+    <div className="container-site grid gap-8 py-10 lg:grid-cols-[1.15fr_1fr] lg:gap-14 lg:py-16">
       {/* ---------- illustration + total ---------- */}
       <div className="lg:sticky lg:top-28 lg:self-start">
-        <div className="card-lit overflow-hidden p-3 sm:p-5">
+        {/*
+          Sticky on mobile too, just under the header, so the drawing stays
+          visible while the controls below it scroll. Full-bleed on small
+          screens: the illustration needs every pixel of width it can get.
+        */}
+        <div className="sticky top-16 z-20 -mx-5 border-y border-white/[0.08] bg-ink-950/95 px-2 py-2 backdrop-blur sm:mx-0 sm:rounded-card sm:border sm:px-4 sm:py-4 lg:static lg:backdrop-blur-none">
           <HouseSvg active={active} scheme={scheme} className="w-full" />
         </div>
 
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="-mx-5 mt-4 flex gap-2 overflow-x-auto px-5 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
           {(Object.keys(COLOR_SCHEMES) as SchemeKey[]).map((key) => (
             <button
               key={key}
@@ -166,10 +171,10 @@ export function Estimator() {
               }}
               aria-pressed={scheme === key}
               className={cn(
-                "inline-flex items-center gap-2 rounded-lg border px-3.5 py-2 text-xs font-medium transition-colors",
+                "inline-flex shrink-0 items-center gap-2 rounded-lg border px-3.5 py-2.5 text-xs font-medium transition-colors",
                 scheme === key
                   ? "border-champagne-400/50 bg-champagne-400/10 text-champagne-200"
-                  : "border-white/10 text-bone-400 hover:text-bone-200",
+                  : "text-bone-400 hover:text-bone-200 border-white/10",
               )}
             >
               <span className="flex gap-0.5">
@@ -186,7 +191,7 @@ export function Estimator() {
           ))}
         </div>
 
-        <div className="mt-5 card-lit p-6">
+        <div className="panel mt-5 p-6">
           <div className="flex items-baseline justify-between gap-4">
             <span className="eyebrow text-champagne-500">Estimated range</span>
             <button
@@ -199,8 +204,10 @@ export function Estimator() {
             </button>
           </div>
 
-          <p className="mt-2 font-display text-3xl font-semibold text-champagne-300 tabular-nums sm:text-4xl">
-            {quote.total > 0 ? `${formatUsd(low)} - ${formatUsd(high)}` : "—"}
+          <p className="mt-2 font-display text-[1.75rem] leading-tight font-semibold text-champagne-300 tabular-nums sm:text-4xl">
+            {quote.total > 0
+              ? `${formatUsd(low)} to ${formatUsd(high)}`
+              : "Nothing selected yet"}
           </p>
 
           {quote.needsReview ? (
@@ -211,7 +218,7 @@ export function Estimator() {
           ) : null}
 
           {quote.minimumApplied ? (
-            <p className="mt-3 text-sm text-bone-400">
+            <p className="text-bone-400 mt-3 text-sm">
               Professional residential installations begin at{" "}
               {formatUsd(HOLIDAY.minimum)}.
             </p>
@@ -222,10 +229,10 @@ export function Estimator() {
               {quote.lines.map((line) => (
                 <li
                   key={line.label}
-                  className="flex justify-between gap-4 text-bone-400"
+                  className="text-bone-400 flex justify-between gap-4"
                 >
                   <span>{line.label}</span>
-                  <span className="tabular-nums text-bone-200">
+                  <span className="text-bone-200 tabular-nums">
                     {line.amount === null ? "Quoted" : formatUsd(line.amount)}
                   </span>
                 </li>
@@ -260,87 +267,87 @@ export function Estimator() {
       </div>
 
       {/* ---------- controls ---------- */}
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-10">
         {OPTION_GROUPS.map((group) => (
           <fieldset key={group.key} className="flex flex-col gap-3">
             <legend className="eyebrow mb-1 text-champagne-500">
               {group.label}
             </legend>
-            {ESTIMATOR_OPTIONS.filter((option) => option.group === group.key).map(
-              (option) => {
-                const quantity = quantities[option.key] ?? 0;
-                const isOn = quantity > 0;
-                return (
-                  <div
-                    key={option.key}
-                    className={cn(
-                      "rounded-card border p-5 transition-colors",
-                      isOn
-                        ? "border-champagne-400/35 bg-champagne-400/[0.05]"
-                        : "border-white/10 bg-white/[0.02]",
-                    )}
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <label
-                          htmlFor={`opt-${option.key}`}
-                          className="font-medium text-bone-100"
-                        >
-                          {option.label}
-                        </label>
-                        <p className="mt-1 text-sm text-bone-500">
-                          {option.detail}
-                        </p>
-                      </div>
-                      <button
-                        id={`opt-${option.key}`}
-                        type="button"
-                        role="switch"
-                        aria-checked={isOn}
-                        aria-label={`${isOn ? "Remove" : "Add"} ${option.label}`}
-                        onClick={() => toggle(option.key)}
-                        className={cn(
-                          "relative h-6 w-11 shrink-0 rounded-full transition-colors",
-                          isOn ? "bg-champagne-500" : "bg-white/15",
-                        )}
+            {ESTIMATOR_OPTIONS.filter(
+              (option) => option.group === group.key,
+            ).map((option) => {
+              const quantity = quantities[option.key] ?? 0;
+              const isOn = quantity > 0;
+              return (
+                <div
+                  key={option.key}
+                  className={cn(
+                    "rounded-card border p-5 transition-colors",
+                    isOn
+                      ? "border-champagne-400/40 bg-champagne-400/[0.04]"
+                      : "border-white/[0.09] bg-transparent",
+                  )}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <label
+                        htmlFor={`opt-${option.key}`}
+                        className="font-medium text-bone-100"
                       >
-                        <span
-                          className={cn(
-                            "absolute top-0.5 size-5 rounded-full bg-white transition-transform",
-                            isOn ? "translate-x-[1.4rem]" : "translate-x-0.5",
-                          )}
-                        />
-                      </button>
+                        {option.label}
+                      </label>
+                      <p className="mt-1 text-sm text-bone-500">
+                        {option.detail}
+                      </p>
                     </div>
-
-                    {isOn && option.mode !== "fixed" ? (
-                      <div className="mt-4">
-                        <div className="flex items-baseline justify-between text-sm">
-                          <span className="text-bone-500">
-                            {option.mode === "perFoot" ? "Length" : "How many"}
-                          </span>
-                          <span className="tabular-nums text-champagne-300">
-                            {quantity} {option.unit}
-                          </span>
-                        </div>
-                        <input
-                          type="range"
-                          min={option.min ?? 0}
-                          max={option.max ?? 100}
-                          step={option.step ?? 1}
-                          value={quantity}
-                          aria-label={`${option.label} ${option.unit ?? "amount"}`}
-                          onChange={(event) =>
-                            setQuantity(option.key, Number(event.target.value))
-                          }
-                          className="mt-2 h-6 w-full accent-champagne-400"
-                        />
-                      </div>
-                    ) : null}
+                    <button
+                      id={`opt-${option.key}`}
+                      type="button"
+                      role="switch"
+                      aria-checked={isOn}
+                      aria-label={`${isOn ? "Remove" : "Add"} ${option.label}`}
+                      onClick={() => toggle(option.key)}
+                      className={cn(
+                        "relative h-6 w-11 shrink-0 rounded-full transition-colors",
+                        isOn ? "bg-champagne-500" : "bg-white/15",
+                      )}
+                    >
+                      <span
+                        className={cn(
+                          "absolute top-0.5 size-5 rounded-full bg-white transition-transform",
+                          isOn ? "translate-x-[1.4rem]" : "translate-x-0.5",
+                        )}
+                      />
+                    </button>
                   </div>
-                );
-              },
-            )}
+
+                  {isOn && option.mode !== "fixed" ? (
+                    <div className="mt-4">
+                      <div className="flex items-baseline justify-between text-sm">
+                        <span className="text-bone-500">
+                          {option.mode === "perFoot" ? "Length" : "How many"}
+                        </span>
+                        <span className="text-champagne-300 tabular-nums">
+                          {quantity} {option.unit}
+                        </span>
+                      </div>
+                      <input
+                        type="range"
+                        min={option.min ?? 0}
+                        max={option.max ?? 100}
+                        step={option.step ?? 1}
+                        value={quantity}
+                        aria-label={`${option.label} ${option.unit ?? "amount"}`}
+                        onChange={(event) =>
+                          setQuantity(option.key, Number(event.target.value))
+                        }
+                        className="mt-2 h-6 w-full accent-champagne-400"
+                      />
+                    </div>
+                  ) : null}
+                </div>
+              );
+            })}
           </fieldset>
         ))}
 
@@ -360,8 +367,8 @@ export function Estimator() {
                 className={cn(
                   "flex items-center justify-between gap-4 rounded-card border p-5 transition-colors",
                   count > 0
-                    ? "border-champagne-400/35 bg-champagne-400/[0.05]"
-                    : "border-white/10 bg-white/[0.02]",
+                    ? "border-champagne-400/40 bg-champagne-400/[0.04]"
+                    : "border-white/[0.09] bg-transparent",
                 )}
               >
                 <div>
@@ -379,18 +386,18 @@ export function Estimator() {
                     onClick={() => setTree(tree.key, count - 1)}
                     disabled={count === 0}
                     aria-label={`Remove one ${tree.label} tree`}
-                    className="size-9 rounded-lg border border-white/15 text-bone-300 disabled:opacity-30"
+                    className="size-11 rounded-lg border border-white/15 text-lg text-bone-300 disabled:opacity-30"
                   >
-                    –
+                    &minus;
                   </button>
-                  <span className="w-8 text-center tabular-nums text-bone-100">
+                  <span className="w-8 text-center text-bone-100 tabular-nums">
                     {count}
                   </span>
                   <button
                     type="button"
                     onClick={() => setTree(tree.key, count + 1)}
                     aria-label={`Add one ${tree.label} tree`}
-                    className="size-9 rounded-lg border border-white/15 text-bone-300"
+                    className="size-11 rounded-lg border border-white/15 text-lg text-bone-300"
                   >
                     +
                   </button>

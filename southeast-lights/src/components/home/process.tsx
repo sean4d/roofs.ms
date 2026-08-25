@@ -30,7 +30,7 @@ const STEPS = [
 
 export function Process() {
   return (
-    <section className="border-y border-white/10 bg-ink-900 py-20 lg:py-24">
+    <section className="band border-y border-white/[0.08] bg-ink-900">
       <div className="container-site">
         <p className="eyebrow text-champagne-500">How it works</p>
         <h2 className="mt-4 max-w-2xl text-3xl font-semibold text-balance sm:text-4xl">

@@ -5,7 +5,7 @@ import { COVERAGE, SERVICE_AREAS } from "@/config/service-areas";
 
 export function ServiceAreasBand() {
   return (
-    <section className="py-20 lg:py-24">
+    <section className="band">
       <div className="container-site">
         <p className="eyebrow text-champagne-500">Where we work</p>
         <h2 className="mt-4 max-w-2xl text-3xl font-semibold text-balance sm:text-4xl">

@@ -39,18 +39,21 @@ export function PageHero({
       />
       <div className="scrim absolute inset-0 -z-10" />
 
-      <div className="container-site relative flex min-h-[58svh] flex-col justify-end pt-32 pb-16 lg:min-h-[64svh] lg:pb-20">
+      <div className="container-site relative flex min-h-[52svh] flex-col justify-end pt-32 pb-14 sm:min-h-[56svh] lg:min-h-[64svh] lg:pb-20">
         <p className="eyebrow text-champagne-400">{eyebrow}</p>
-        <h1 className="mt-4 max-w-3xl text-[2.2rem] leading-[1.08] font-semibold text-balance sm:text-5xl lg:text-6xl">
+        <h1 className="mt-5 max-w-3xl text-[1.95rem] leading-[1.1] font-semibold text-balance sm:text-4xl lg:text-6xl lg:leading-[1.05]">
           {title}
         </h1>
-        <p className="mt-6 max-w-xl text-lg leading-relaxed text-bone-300">
+        <p className="mt-5 max-w-xl leading-relaxed text-bone-300 sm:text-lg">
           {intro}
         </p>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <QuoteButton location={quoteLocation} />
+          <QuoteButton location={quoteLocation} className="w-full sm:w-auto" />
           {secondary ? (
-            <Link href={secondary.href} className="btn-secondary">
+            <Link
+              href={secondary.href}
+              className="btn-secondary w-full sm:w-auto"
+            >
               {secondary.label}
             </Link>
           ) : null}

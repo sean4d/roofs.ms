@@ -1,6 +1,10 @@
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { ResidentialQuoteForm } from "@/components/forms/residential-quote-form";
-import { CallLink, EmailLink, TextLink } from "@/components/shared/contact-actions";
+import {
+  CallLink,
+  EmailLink,
+  TextLink,
+} from "@/components/shared/contact-actions";
 import { JsonLd } from "@/components/seo/json-ld";
 import { COVERAGE } from "@/config/service-areas";
 import { siteConfig } from "@/config/site";
@@ -49,7 +53,7 @@ export default function ContactPage() {
             <TextLink className="text-bone-300 transition-colors hover:text-champagne-300" />
             <EmailLink className="text-bone-300 transition-colors hover:text-champagne-300" />
             {address.streetAddress ? (
-              <address className="mt-2 text-sm not-italic leading-relaxed text-bone-500">
+              <address className="mt-2 text-sm leading-relaxed text-bone-500 not-italic">
                 {address.streetAddress}
                 <br />
                 {address.addressLocality}, {address.addressRegion}{" "}
@@ -60,17 +64,17 @@ export default function ContactPage() {
 
           <div className="card-lit p-6">
             <h2 className="text-lg font-semibold">Coverage</h2>
-            <p className="mt-3 text-sm leading-relaxed text-bone-400">
+            <p className="text-bone-400 mt-3 text-sm leading-relaxed">
               {COVERAGE.residential}
             </p>
-            <p className="mt-3 text-sm leading-relaxed text-bone-400">
+            <p className="text-bone-400 mt-3 text-sm leading-relaxed">
               {COVERAGE.commercial}
             </p>
           </div>
 
           <div className="card-lit p-6">
             <h2 className="text-lg font-semibold">Payment</h2>
-            <ul className="mt-3 flex flex-col gap-2 text-sm text-bone-400">
+            <ul className="text-bone-400 mt-3 flex flex-col gap-2 text-sm">
               <li>{siteConfig.payment.accepted.join(", ")}</li>
               <li>{siteConfig.payment.deposit}</li>
               <li>{siteConfig.payment.balance}</li>

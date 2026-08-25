@@ -32,7 +32,7 @@ const POINTS = [
 
 export function RoofAdvantage() {
   return (
-    <section className="relative isolate overflow-hidden py-20 lg:py-28">
+    <section className="band relative isolate overflow-hidden">
       <div className="container-site grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
         <div className="relative aspect-[4/3] overflow-hidden rounded-card lg:order-2">
           <Image

@@ -33,7 +33,9 @@ export function pageMetadata({
     title,
     description,
     alternates: { canonical: url },
-    robots: noIndex ? { index: false, follow: false } : { index: true, follow: true },
+    robots: noIndex
+      ? { index: false, follow: false }
+      : { index: true, follow: true },
     openGraph: {
       type: "website",
       url,

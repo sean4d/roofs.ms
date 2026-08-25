@@ -32,7 +32,9 @@ export function LegalPage({
           {sections.map((section) => (
             <section key={section.heading}>
               <h2 className="text-xl font-semibold">{section.heading}</h2>
-              <p className="mt-3 leading-relaxed text-bone-400">{section.body}</p>
+              <p className="text-bone-400 mt-3 leading-relaxed">
+                {section.body}
+              </p>
             </section>
           ))}
         </div>

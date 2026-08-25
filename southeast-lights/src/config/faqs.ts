@@ -126,25 +126,122 @@ export const FAQS: Faq[] = [
     category: "permanent",
     question: "What is permanent architectural lighting?",
     answer:
-      "It is a track of individually controlled LEDs installed permanently into the trim and eaves of your home, controlled from an app. It produces warm white light on an ordinary evening, any colour combination for a holiday or a game day, and it is designed to be effectively invisible from the street during daylight. Unlike seasonal lighting, the system belongs to you once installed.",
+      "It is a track of individually addressable LEDs installed permanently into the eave, soffit or trim of a building, controlled from an app. It produces warm white light on an ordinary evening, any color combination for a holiday or a game day, and it is designed to be effectively invisible from the street in daylight. Unlike seasonal lighting, the system belongs to you once installed.",
   },
   {
     category: "permanent",
-    question: "How does permanent lighting compare to seasonal Christmas lights?",
+    question: "How much does permanent exterior lighting cost?",
     answer:
-      "Seasonal lighting is a service you pay for every year; permanent lighting is a one-time installation you own. For a typical 150-foot home, seasonal roofline lighting runs about $1,500 a season while permanent lighting is a single installed cost, which works out to roughly three to four seasons of renting. The difference is that permanent lighting works all 365 days instead of six weeks.",
+      "Installation runs $25 to $35 per linear foot, plus $650 to $850 for the controller. A typical 150 foot home lands between $4,400 and $6,100 all in. Longer rooflines cost more in total but often less per foot. Difficult access, multi-story sections and peak-season installs push toward the upper end of the range.",
+  },
+  {
+    category: "permanent",
+    question: "Why is the price quoted per foot?",
+    answer:
+      "Because the track runs continuously along the roofline, so linear footage is the honest driver of both material and labor. We measure your actual eave and trim runs from aerial imagery and photos, then quote the exact footage rather than guessing from square footage or bedroom count.",
+  },
+  {
+    category: "permanent",
+    question: "What does the controller do, and do I need one?",
+    answer:
+      "Yes, one controller runs the system. It is the piece that stores your scenes, runs your schedules, drives the individual zones and connects the system to your phone. It is a one-time cost of $650 to $850 and it covers the whole property on most homes.",
+  },
+  {
+    category: "permanent",
+    question: "Can it do color, or only white?",
+    answer:
+      "Both. The LEDs are full RGB, so you get any color you want, plus a dedicated warm white that looks like normal architectural lighting rather than a colored bulb dimmed down. Most customers run warm white the majority of the year and save color for holidays and game days.",
+  },
+  {
+    category: "permanent",
+    question: "How do I control it?",
+    answer:
+      "From an app on your phone. You pick colors, patterns and brightness, save scenes you like, and set schedules so the system turns itself on at dusk and off at whatever hour you choose. Once it is set up most people rarely open the app except to change a scene.",
+  },
+  {
+    category: "permanent",
+    question: "Can I light different sections separately?",
+    answer:
+      "Yes. The LEDs are individually addressable, so the system can be divided into zones. You can light the garage differently from the main house, run a pattern along one gable only, or alternate colors along a single run. That zoning is set up during installation and can be adjusted later in the app.",
+  },
+  {
+    category: "permanent",
+    question: "Will I be able to see it during the day?",
+    answer:
+      "Barely, and that is the point. The channel is color matched to your trim and tucks under the edge of the roofline, so from the street in daylight it reads as part of the fascia. It is a fair question to ask any installer, and we will show you exactly where the track will sit before you commit.",
+  },
+  {
+    category: "permanent",
+    question: "Where does the track actually mount?",
+    answer:
+      "Into the fascia, soffit or trim, depending on your roofline. It does not penetrate the water-shedding surface of your roof. We are a licensed roofing contractor, which is the main reason customers choose us for permanent installations over a general electrician: we are the ones who would have to fix a leak, so we are careful about where hardware goes.",
+  },
+  {
+    category: "permanent",
+    question: "How much electricity does it use?",
+    answer:
+      "Very little. These are low-voltage LEDs, and a typical residential run draws roughly the same as a couple of household light bulbs when running warm white at normal brightness. Running full-brightness color across the whole house uses more, but it is still a small line on a power bill.",
+  },
+  {
+    category: "permanent",
+    question: "How long does the system last?",
+    answer:
+      "The LEDs themselves are rated in the tens of thousands of hours, which for evening-only use is many years of normal operation. The realistic lifespan question is about the controller and the weather sealing rather than the diodes. We install with that in mind and we service what we install.",
+  },
+  {
+    category: "permanent",
+    question: "Does it need maintenance?",
+    answer:
+      "Almost none. There is nothing to put up or take down, and no bulbs to replace each season. If a section fails or the controller has a problem, call us and we will come out. We installed it, so we service it.",
+  },
+  {
+    category: "permanent",
+    question: "How long does installation take?",
+    answer:
+      "Most residential installations are finished in one to two days depending on roofline complexity and access. Commercial and multi-building properties are scheduled across a longer window. We walk the property and confirm the timeline before we start.",
+  },
+  {
+    category: "permanent",
+    question: "Do I own the system?",
+    answer:
+      "Yes. Permanent lighting is installed on your property and becomes yours once it is paid for. This is the opposite of our seasonal Christmas service, where the lights remain ours and come down in January.",
+  },
+  {
+    category: "permanent",
+    question:
+      "How does permanent lighting compare to seasonal Christmas lights?",
+    answer:
+      "Seasonal lighting is a service you pay for every year; permanent lighting is a one-time installation you own. For a typical 150 foot home, seasonal roofline lighting runs about $1,500 a season while permanent lighting is a single cost that works out to roughly three to four seasons of renting. The difference is that permanent lighting works all 365 days rather than six weeks.",
+  },
+  {
+    category: "permanent",
+    question: "Can I still use it for Christmas?",
+    answer:
+      "Yes, and most people do. Red and green, alternating patterns, warm white icicle effects, all from the app with no ladder involved. Plenty of customers add wrapped trees or garland from our seasonal service alongside a permanent roofline system.",
+  },
+  {
+    category: "permanent",
+    question: "Can I do team colors and game days?",
+    answer:
+      "Yes. Save a scene for your team and turn it on from your phone on game day. Southern Miss black and gold, State maroon, Ole Miss navy and red, or whatever you support. Same for Mardi Gras purple, green and gold, Halloween orange, and Fourth of July.",
+  },
+  {
+    category: "permanent",
+    question: "Do you install permanent lighting on commercial buildings?",
+    answer:
+      "Yes, and it often makes more financial sense there than at home. A commercial property that pays for seasonal installation and removal every year stops paying that annually, and gains architectural lighting the rest of the time. We handle multi-story parapets with lift equipment.",
+  },
+  {
+    category: "permanent",
+    question: "Can an HOA or community use permanent lighting?",
+    answer:
+      "Yes. Entrance monuments, clubhouses and amenity buildings are strong candidates, because they are lit every year anyway and the board stops re-approving a seasonal install every fall. We provide a written scope and a design concept the board can vote on.",
   },
   {
     category: "permanent",
     question: "Do you install JellyFish Lighting?",
     answer:
-      "We install permanent architectural lighting systems and can discuss JellyFish and comparable systems with you during design. We are not an authorised dealer for any permanent lighting manufacturer, so we position this work as permanent architectural lighting and are happy to walk you through the options and what we can source for your project.",
-  },
-  {
-    category: "permanent",
-    question: "Will permanent lighting damage my roof?",
-    answer:
-      "The mounting channel attaches to trim and fascia rather than penetrating the roof surface, so the water-shedding part of your roof stays intact. This is the exact question a roofing contractor is best placed to answer, and it is the main reason customers choose us for permanent installations over a general electrical or lighting contractor.",
+      "We install permanent architectural lighting systems and are happy to discuss JellyFish and comparable systems with you during design. We are not an authorized dealer for any permanent lighting manufacturer, so we do not make dealer claims. What we sell is the design, the installation and the workmanship behind it, and we will be straight with you about what we can source for your project.",
   },
   {
     category: "commercial",
@@ -168,7 +265,7 @@ export const FAQS: Faq[] = [
     category: "commercial",
     question: "Are you licensed and insured?",
     answer:
-      "Yes. Southeast Lights operates as the lighting division of Southeast Roofing LLC, a licensed Mississippi roofing contractor, and this work is covered by the same licence and the same insurance. Certificates of insurance are available on request for commercial, HOA and municipal projects.",
+      "Yes. Southeast Lights operates as the lighting division of Southeast Roofing LLC, a licensed Mississippi roofing contractor, and this work is covered by the same license and the same insurance. Certificates of insurance are available on request for commercial, HOA and municipal projects.",
   },
   {
     category: "coverage",
@@ -202,9 +299,9 @@ export const FAQS: Faq[] = [
   },
   {
     category: "service",
-    question: "Can I choose the colours?",
+    question: "Can I choose the colors?",
     answer:
-      "Yes. Most of our work is warm white C9, which is the classic look and the one that reads as expensive from the road, but we install pure white, red and white, red and green, and multicolour. Colour choice does not change the price. We will tell you honestly which choices suit your architecture.",
+      "Yes. Most of our work is warm white C9, which is the classic look and the one that reads as expensive from the road, but we install pure white, red and white, red and green, and multicolor. Color choice does not change the price. We will tell you honestly which choices suit your architecture.",
   },
   {
     category: "service",

@@ -99,9 +99,9 @@ export const SERVICES: Service[] = [
     label: "Permanent Architectural Lighting",
     title: "Permanent Architectural Lighting",
     metaDescription:
-      "Permanent exterior LED lighting installed into your trim in Hattiesburg and South Mississippi. Warm white nightly, full colour for every holiday, invisible by day.",
+      "Permanent exterior LED lighting installed into your trim in Hattiesburg and South Mississippi. Warm white nightly, full color for every holiday, invisible by day.",
     summary:
-      "Track LED installed once into your trim: warm white on an ordinary evening, any colour for any holiday, and invisible from the street in daylight.",
+      "Track LED installed once into your trim: warm white on an ordinary evening, any color for any holiday, and invisible from the street in daylight.",
     image: IMAGES.permanentHero,
     enabled: true,
     audience: "both",

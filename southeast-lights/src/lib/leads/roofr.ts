@@ -33,7 +33,8 @@ export function roofrConfigured(): boolean {
 
 export async function sendToRoofr(lead: Lead): Promise<DeliveryResult> {
   const url = process.env.ROOFR_WEBHOOK_URL;
-  if (!url) return { ok: false, skipped: true, detail: "ROOFR_WEBHOOK_URL not set" };
+  if (!url)
+    return { ok: false, skipped: true, detail: "ROOFR_WEBHOOK_URL not set" };
 
   try {
     const response = await fetch(url, {
@@ -70,6 +71,7 @@ function toRoofrPayload(lead: Lead) {
     phone: lead.phone,
     address: lead.address,
     attribution: lead.attribution ?? {},
+    attachments: lead.attachments ?? [],
   };
 
   return lead.kind === "residential"

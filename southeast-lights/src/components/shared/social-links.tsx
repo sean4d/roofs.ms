@@ -6,7 +6,7 @@ import { siteConfig } from "@/config/site";
  * two sites stay visually consistent.
  *
  * lucide-react v1 removed its brand icons, so these must stay as inline
- * paths — do not "simplify" this back to lucide imports.
+ * paths. Do not "simplify" this back to lucide imports.
  *
  * Profile URLs are owner-confirmed (2026-08-24) and live in siteConfig.socials.
  */
@@ -36,7 +36,7 @@ export function SocialLinks({ className }: { className?: string }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Southeast Lights on ${LABELS[key]}`}
-            className="flex size-9 items-center justify-center rounded-full text-steel-300 transition-colors hover:bg-white/10 hover:text-glow-400"
+            className="text-steel-300 hover:text-glow-400 flex size-9 items-center justify-center rounded-full transition-colors hover:bg-white/10"
           >
             <svg
               viewBox="0 0 24 24"

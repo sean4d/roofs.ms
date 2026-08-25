@@ -29,14 +29,16 @@ export function Field({
 }) {
   return (
     <div className={cn("flex flex-col gap-2", className)}>
-      <label htmlFor={id} className="text-sm font-medium text-bone-200">
+      <label htmlFor={id} className="text-bone-200 text-sm font-medium">
         {label}
         {required ? (
           <span className="ml-1 text-champagne-400" aria-hidden>
             *
           </span>
         ) : (
-          <span className="ml-2 text-xs font-normal text-bone-500">Optional</span>
+          <span className="ml-2 text-xs font-normal text-bone-500">
+            Optional
+          </span>
         )}
       </label>
       {hint ? <p className="-mt-1 text-xs text-bone-500">{hint}</p> : null}
@@ -63,7 +65,11 @@ export function TextInput({
       {...props}
       aria-invalid={error ? true : undefined}
       aria-describedby={error ? `${props.id}-error` : undefined}
-      className={cn(base, error ? "border-brand-400/70" : "border-white/12", className)}
+      className={cn(
+        base,
+        error ? "border-brand-400/70" : "border-white/12",
+        className,
+      )}
     />
   );
 }
@@ -78,7 +84,12 @@ export function TextArea({
       {...props}
       aria-invalid={error ? true : undefined}
       aria-describedby={error ? `${props.id}-error` : undefined}
-      className={cn(base, "min-h-32 resize-y", error ? "border-brand-400/70" : "border-white/12", className)}
+      className={cn(
+        base,
+        "min-h-32 resize-y",
+        error ? "border-brand-400/70" : "border-white/12",
+        className,
+      )}
     />
   );
 }
@@ -94,7 +105,12 @@ export function Select({
       {...props}
       aria-invalid={error ? true : undefined}
       aria-describedby={error ? `${props.id}-error` : undefined}
-      className={cn(base, "appearance-none", error ? "border-brand-400/70" : "border-white/12", className)}
+      className={cn(
+        base,
+        "appearance-none",
+        error ? "border-brand-400/70" : "border-white/12",
+        className,
+      )}
     >
       {children}
     </select>
@@ -115,7 +131,9 @@ export function ChipGroup({
 }) {
   return (
     <fieldset className="flex flex-col gap-2">
-      <legend className="mb-1 text-sm font-medium text-bone-200">{legend}</legend>
+      <legend className="text-bone-200 mb-1 text-sm font-medium">
+        {legend}
+      </legend>
       <div className="flex flex-wrap gap-2">
         {options.map((option) => {
           const on = selected.includes(option);
@@ -129,7 +147,7 @@ export function ChipGroup({
                 "rounded-lg border px-4 py-2.5 text-sm transition-colors",
                 on
                   ? "border-champagne-400/50 bg-champagne-400/10 text-champagne-200"
-                  : "border-white/12 text-bone-400 hover:text-bone-200",
+                  : "text-bone-400 hover:text-bone-200 border-white/12",
               )}
             >
               {option}
@@ -154,7 +172,14 @@ export function Honeypot({
   onChange: (value: string) => void;
 }) {
   return (
-    <div aria-hidden className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+    <div
+      aria-hidden
+      // inert removes the subtree from the a11y tree AND from focus entirely,
+      // so the field can never be reached by tab, click or script. tabIndex
+      // alone only stops tabbing.
+      inert
+      className="absolute -left-[9999px] h-0 w-0 overflow-hidden"
+    >
       <label htmlFor="company-website">Company website</label>
       <input
         id="company-website"
