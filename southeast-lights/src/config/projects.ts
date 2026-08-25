@@ -51,6 +51,29 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    slug: "poplarville-blue-and-white",
+    title: "Blue and Bright White Roofline",
+    city: "Poplarville",
+    propertyType: "Residential",
+    serviceSlugs: [
+      "residential-holiday-lighting",
+      "christmas-light-installation",
+    ],
+    tags: ["holiday", "rooflines", "color"],
+    summary:
+      "Alternating blue and bright white C9 across the roofline, hips and ridges, with the porch columns wrapped to match.",
+    scope:
+      "Alternating blue and bright white C9, run across the roofline and carried down every hip and ridge rather than stopping at the front edge. The porch columns are wrapped in the same alternating pattern so the entry reads as part of the roof instead of a separate idea. Cool colors do something warm white cannot on a white house: they hold their edge against the siding at night instead of washing into it.",
+    highlights: [
+      "Alternating blue and bright white through the entire run",
+      "Roofline carried across the hips and ridges",
+      "Porch columns wrapped in the same alternating pattern",
+    ],
+    hero: IMAGES.projectPoplarvilleBlueWhite,
+    gallery: [],
+    isDemo: false,
+  },
+  {
     slug: "hattiesburg-ridges-and-hips",
     title: "Full Roofline, Ridges and Hips",
     city: "Hattiesburg",

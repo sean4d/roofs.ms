@@ -67,7 +67,10 @@ export default async function ProjectPage({
           sizes="100vw"
           placeholder="blur"
           blurDataURL={project.hero.blurDataURL}
-          className="-z-10 object-cover"
+          // Biased up: these are roofline photographs and the bottom third is
+          // lawn, so a centered crop spends its budget on grass and clips the
+          // gable peaks that are the whole subject.
+          className="-z-10 object-cover object-[center_35%]"
         />
         <div className="scrim-subject absolute inset-0 -z-10" />
         <div className="container-site relative flex min-h-[56svh] flex-col justify-end pt-32 pb-14">
