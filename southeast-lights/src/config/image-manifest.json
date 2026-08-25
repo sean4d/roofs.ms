@@ -183,5 +183,15 @@
     "width": 1440,
     "height": 1080,
     "blurDataURL": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAQCdASoQAAwABABsJQBOgCHOE+c4XAD+9oN3OL2fNvTnzVxrK1HvpM0CzDW9avCN27VYAj4xTrwAuUAAAA=="
+  },
+  "project-hattiesburg-low-wide-angle": {
+    "width": 1440,
+    "height": 1080,
+    "blurDataURL": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADwAQCdASoQAAwABABsJYgCdAEO4Vjat4AA/vRTdn2WnM0lSoK89KyCr3i+fWcL3Tef8YV3FBzc9TVnWAAAAA=="
+  },
+  "project-hattiesburg-low-wide": {
+    "width": 1440,
+    "height": 1080,
+    "blurDataURL": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAAAQAgCdASoQAAwABABsJYgCdAEPDwk4vNQAAP7zMYgqX7r2JEPCL2ZjKcOPwlOzEeNNM+AA"
   }
 }

@@ -59,6 +59,8 @@ const OWNER_SUPPLIED = new Set([
   "project-gcs-front",
   "project-gcs-walkway",
   "project-gcs-mural",
+  "project-hattiesburg-low-wide",
+  "project-hattiesburg-low-wide-angle",
 ]);
 
 /**
@@ -80,6 +82,8 @@ const CONFIRMED_OWN_WORK = new Set([
   "project-gcs-front",
   "project-gcs-walkway",
   "project-gcs-mural",
+  "project-hattiesburg-low-wide",
+  "project-hattiesburg-low-wide-angle",
   "colonial-columns",
 ]);
 
@@ -211,6 +215,16 @@ export const IMAGES = {
   colonialColumns: img(
     "colonial-columns",
     "Two-story colonial home at dusk with warm white C9 bulbs along every roof edge and both entry columns wrapped base to capital",
+  ),
+  projectHattiesburgLowWide: img(
+    "project-hattiesburg-low-wide",
+    "Southeast Lights display in Hattiesburg: a wide single-story brick home seen across a deep front lawn, warm white C9 along the eaves and along every ridge of the hip roof",
+    "center 55%",
+  ),
+  projectHattiesburgLowWideAngle: img(
+    "project-hattiesburg-low-wide-angle",
+    "The same Hattiesburg house from the drive, warm white C9 picking out the eave line and the stepped ridges of the hip roof",
+    "center 52%",
   ),
   projectGcsFront: img(
     "project-gcs-front",

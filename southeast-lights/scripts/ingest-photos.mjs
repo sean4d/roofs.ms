@@ -99,6 +99,14 @@ const SLOTS = {
     width: 1600,
     use: "Gallery photo: Grace Community School mural elevation",
   },
+  "project-hattiesburg-low-wide": {
+    width: 1600,
+    use: "Gallery project: Hattiesburg low wide roof",
+  },
+  "project-hattiesburg-low-wide-angle": {
+    width: 1600,
+    use: "Gallery photo: Hattiesburg low wide roof from the drive",
+  },
 };
 
 const IN = "incoming";

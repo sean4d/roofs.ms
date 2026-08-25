@@ -62,6 +62,34 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    slug: "hattiesburg-low-wide-roof",
+    title: "Ridges on a Low, Wide Roof",
+    city: "Hattiesburg",
+    propertyType: "Residential",
+    serviceSlugs: [
+      "residential-holiday-lighting",
+      "christmas-light-installation",
+    ],
+    tags: ["holiday", "rooflines", "warm-white"],
+    summary:
+      "Warm white on the eaves and on every ridge of a hip roof, so a single-story house keeps its dimension from across a deep lawn.",
+    scope:
+      "A house like this is seen from a long way back, across an open lawn, and it has no height to give it presence. Light only the eaves and you get one flat horizontal line at that distance, which is the most common way a wide single-story house ends up looking smaller lit than it does dark. Every ridge of the hip roof is lit here as well as the eave line, so the roof steps back in layers and the house keeps its depth from the road. Warm white throughout.",
+    highlights: [
+      "Eave line plus every ridge of the hip roof",
+      "Designed to hold up from across a deep front lawn",
+      "Warm white throughout, cut to each run",
+    ],
+    hero: IMAGES.projectHattiesburgLowWide,
+    gallery: [
+      {
+        image: IMAGES.projectHattiesburgLowWideAngle,
+        caption: "From the drive, where the ridges step back",
+      },
+    ],
+    isDemo: false,
+  },
+  {
     slug: "grace-community-school",
     title: "Grace Community School",
     city: "Hattiesburg",
