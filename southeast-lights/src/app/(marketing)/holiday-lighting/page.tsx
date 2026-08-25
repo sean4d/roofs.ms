@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ArrowUpRight, Check } from "lucide-react";
 
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
+import { ComponentsFlatlay } from "@/components/shared/components-flatlay";
 import { CtaBand } from "@/components/shared/cta-band";
 import { FaqList } from "@/components/shared/faq-list";
 import { PageHero } from "@/components/shared/page-hero";
@@ -90,6 +91,8 @@ export default function HolidayLightingPage() {
           customer-supplied Christmas lights.
         </p>
       </Section>
+
+      <ComponentsFlatlay tone="ink" />
 
       <Section
         eyebrow="Packages"

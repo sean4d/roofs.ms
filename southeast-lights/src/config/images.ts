@@ -3,10 +3,12 @@ import manifest from "./image-manifest.json";
 /**
  * Every image on the site, in one place.
  *
- * TEMPORARY DEVELOPMENT IMAGERY. Everything here is AI-generated placeholder
- * photography chosen to match its page subject so the site reads as finished
- * during development. It is NOT Southeast Lights work and must never be
- * presented as such.
+ * MIXED SOURCES. Read this before using any file here in marketing claims.
+ *
+ * Slots listed in OWNER_SUPPLIED below are photographs the owner sent us.
+ * Everything else is AI-generated placeholder photography chosen to match its
+ * page subject so the site reads as finished during development. Placeholders
+ * are NOT Southeast Lights work and must never be presented as such.
  *
  * To swap in real photography: drop a file into public/img with the SAME
  * base name, run `node scripts/optimize-images.mjs`, and set
