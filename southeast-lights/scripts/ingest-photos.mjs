@@ -75,6 +75,10 @@ const SLOTS = {
     width: 1600,
     use: "Gallery project: Apples Ltd. storefront, Poplarville",
   },
+  "project-poplarville-halloween": {
+    width: 1600,
+    use: "Gallery project and Halloween service hero, Poplarville",
+  },
 };
 
 const IN = "incoming";

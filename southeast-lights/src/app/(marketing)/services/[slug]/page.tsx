@@ -94,7 +94,14 @@ export default async function ServicePage({
         intro={service.summary}
         image={service.image}
         quoteLocation={`service_${service.slug}`}
-        secondary={{ label: "See pricing", href: "/estimator" }}
+        // The estimator prices holiday C9 by the foot. Sending an event or
+        // landscape visitor there offers them a number that does not apply to
+        // what they came to read about, so those pages point at the work.
+        secondary={
+          isHoliday || isPermanent
+            ? { label: "See pricing", href: "/estimator" }
+            : { label: "See our work", href: "/projects" }
+        }
       />
       <Breadcrumbs trail={trail} />
 

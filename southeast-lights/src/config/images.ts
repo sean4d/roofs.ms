@@ -46,6 +46,7 @@ const OWNER_SUPPLIED = new Set([
   "project-poplarville-red-green-white",
   "project-poplarville-outbuildings",
   "project-poplarville-apples",
+  "project-poplarville-halloween",
 ]);
 
 /**
@@ -61,6 +62,7 @@ const CONFIRMED_OWN_WORK = new Set([
   "project-poplarville-red-green-white",
   "project-poplarville-outbuildings",
   "project-poplarville-apples",
+  "project-poplarville-halloween",
   "colonial-columns",
 ]);
 
@@ -191,6 +193,10 @@ export const IMAGES = {
   colonialColumns: img(
     "colonial-columns",
     "Two-story colonial home at dusk with warm white C9 bulbs along every roof edge and both entry columns wrapped base to capital",
+  ),
+  projectPoplarvilleHalloween: img(
+    "project-poplarville-halloween",
+    "Southeast Lights Halloween display in Poplarville: a bungalow at night with orange and purple C9 bulbs along the roofline, ridges and gable rakes, above a porch decorated for Halloween",
   ),
   projectPoplarvilleApples: img(
     "project-poplarville-apples",

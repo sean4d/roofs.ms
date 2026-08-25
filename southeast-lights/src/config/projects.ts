@@ -61,6 +61,27 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    slug: "poplarville-halloween-roofline",
+    title: "Halloween in Purple and Orange",
+    city: "Poplarville",
+    propertyType: "Residential",
+    serviceSlugs: ["halloween-lighting", "residential-holiday-lighting"],
+    tags: ["holiday", "rooflines", "color"],
+    summary:
+      "Orange and purple across the roofline, ridges and gable rakes, weeks before the Christmas display went up.",
+    scope:
+      "Orange and purple cut to the roofline, then carried up the ridges and both gable rakes so the whole roof holds its shape rather than reading as one line across the front. Same commercial-grade bulbs and the same roof-trained crew as a Christmas install. What changes is the color and the month.",
+    highlights: [
+      "Orange and purple across the full roofline",
+      "Ridges and gable rakes lit, not only the eaves",
+      "Same crews and equipment as the Christmas work",
+    ],
+    hero: IMAGES.projectPoplarvilleHalloween,
+    heroFocus: "center 45%",
+    gallery: [],
+    isDemo: false,
+  },
+  {
     slug: "poplarville-apples-storefront",
     title: "Apples Ltd. Storefront",
     city: "Poplarville",

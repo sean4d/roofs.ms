@@ -146,6 +146,19 @@ export const SERVICES: Service[] = [
     audience: "both",
   },
   {
+    slug: "halloween-lighting",
+    division: "event",
+    label: "Halloween Lighting",
+    title: "Halloween Lighting in South Mississippi",
+    metaDescription:
+      "Professional Halloween lighting across South Mississippi. Orange and purple commercial-grade bulbs cut to your rooflines, ridges and gable rakes, installed and removed by roof-trained crews.",
+    summary:
+      "Orange and purple cut to your rooflines, ridges and gable rakes, installed and removed by the same roof-trained crews that handle the Christmas work.",
+    image: IMAGES.projectPoplarvilleHalloween,
+    enabled: true,
+    audience: "both",
+  },
+  {
     slug: "wedding-event-lighting",
     division: "event",
     label: "Wedding & Event Lighting",

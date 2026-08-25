@@ -44,6 +44,7 @@ export const holidayNav = compact([
 export const otherServicesNav = compact([
   serviceLink("landscape-lighting"),
   serviceLink("bistro-patio-lighting"),
+  serviceLink("halloween-lighting"),
   serviceLink("mardi-gras-lighting"),
   serviceLink("wedding-event-lighting"),
 ]);
