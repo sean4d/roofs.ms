@@ -81,7 +81,18 @@ export function Hero({ mode, now }: { mode: SeasonMode; now: Date }) {
 
       {holiday ? <Snowfall /> : null}
 
-      <div className="container-site relative z-20 flex min-h-[72svh] flex-col justify-end pt-32 pb-14 sm:min-h-[78svh] lg:min-h-[88svh] lg:pb-24">
+      <div
+        /*
+         * pt-32 was clearing a header that does not need clearing. The header
+         * is sticky, not fixed, so it occupies layout and the hero already
+         * starts below it: that padding was 128px of nothing on top of an
+         * 80px header, and justify-end on a 72svh box pushed the rest down
+         * again. On a phone that spent a third of the first viewport before
+         * the badge. Content now starts just under the header and the box is
+         * sized so the photograph still gets room beneath the CTA.
+         */
+        className="container-site relative z-20 flex min-h-[66svh] flex-col justify-start pt-8 pb-14 sm:min-h-[78svh] sm:justify-end sm:pt-28 lg:min-h-[88svh] lg:pt-32 lg:pb-24"
+      >
         <p className="eyebrow inline-flex w-fit items-center gap-2 rounded-full border border-champagne-400/30 bg-ink-950/50 px-4 py-2 text-champagne-300 backdrop-blur-sm">
           <span className="size-1.5 rounded-full bg-champagne-400 motion-safe:animate-twinkle" />
           {messaging.badge}

@@ -16,7 +16,7 @@ const POINTS = [
   {
     icon: HardHat,
     title: "Roof-trained crews, not seasonal help",
-    body: "The people on your roof in November are on roofs in July. They read pitch, set ladders properly, move on shingles without scuffing them, and know which attachment points are safe. Falls from ladders and roofs injure thousands of people every holiday season, and most of them are homeowners.",
+    body: "The people on your roof in November are on roofs in July. They read pitch, set ladders properly, move on shingles without scuffing them, and know which attachment points are safe. A steep pitch two stories up is a working environment, not a Saturday errand, and it is the height that hurts people rather than the lights.",
   },
   {
     icon: Ban,

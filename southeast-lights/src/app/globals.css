@@ -313,22 +313,75 @@
   }
 
   /*
-   * Phone hero. The headline and the subject of the photograph end up at the
-   * same height on a narrow screen, so this has to protect type through the
-   * middle of the frame while still clearing the top quarter. Weaker than
-   * this and the headline sits on top of a lit roofline; stronger and the
-   * person on the ladder disappears, which is the reason the photograph is
-   * there at all.
+   * The estimator dock. Sticky under the header on every width, so the house
+   * and the running price travel with whoever is configuring.
+   *
+   * The offset is the SCROLLED header height (4rem), because by the time the
+   * dock is pinned the header has already shrunk. env() is added rather than
+   * assumed: on a notched phone in landscape the header sits below the inset,
+   * so the dock has to as well.
+   *
+   * z-30 puts it under the header (z-50) and under the bottom action bar
+   * (z-50) while staying above page content. It never shares space with
+   * either, but the order still has to be right when a card animates.
+   *
+   * Containment comes from the wrapper this sits in, not from anything here.
+   */
+  .estimator-dock {
+    position: sticky;
+    top: calc(4rem + env(safe-area-inset-top, 0px));
+    z-index: 30;
+  }
+
+  @media (min-width: 64rem) {
+    .estimator-dock {
+      top: calc(6.5rem + env(safe-area-inset-top, 0px));
+      align-self: start;
+    }
+  }
+
+  /* Restrained: a fade and two pixels. Not a performance. */
+  @keyframes estimator-price-in {
+    from {
+      opacity: 0;
+      transform: translateY(2px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .estimator-price {
+    animation: estimator-price-in 180ms ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .estimator-price {
+      animation: none;
+    }
+  }
+
+  /*
+   * Phone hero.
+   *
+   * Top weighted, because on a phone the copy starts just under the header
+   * and runs down the frame: badge, headline, paragraph, buttons. It clears
+   * toward the bottom so the lower part of the photograph, the ladder and the
+   * lit rooflines under it, stays visible below the CTA.
+   *
+   * The desktop scrim is left weighted instead, which is right there and
+   * wrong here: on a narrow screen the text spans the full width, so a
+   * left-weighted wash dims the whole picture and protects nothing.
    */
   .scrim-hero-phone {
     background: linear-gradient(
-      to top,
-      var(--color-ink-950) 0%,
-      --alpha(var(--color-ink-950) / 88%) 26%,
-      --alpha(var(--color-ink-950) / 68%) 50%,
-      --alpha(var(--color-ink-950) / 44%) 68%,
-      --alpha(var(--color-ink-950) / 16%) 84%,
-      --alpha(var(--color-ink-950) / 6%) 100%
+      to bottom,
+      --alpha(var(--color-ink-950) / 92%) 0%,
+      --alpha(var(--color-ink-950) / 84%) 30%,
+      --alpha(var(--color-ink-950) / 66%) 52%,
+      --alpha(var(--color-ink-950) / 48%) 72%,
+      --alpha(var(--color-ink-950) / 40%) 100%
     );
   }
 

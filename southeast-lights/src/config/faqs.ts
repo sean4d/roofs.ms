@@ -96,7 +96,7 @@ export const FAQS: Faq[] = [
     category: "roof",
     question: "Why hire a roofing contractor to hang Christmas lights?",
     answer:
-      "Because the hazard in this job is not the lights, it is the height. Falls from ladders and roofs cause serious injuries every holiday season, and most of them happen to homeowners. Our crews work on roofs professionally year-round: they know how to read a pitch, where to set a ladder, how to move on shingles without damaging them, and where a light clip can and cannot go.",
+      "Because the hazard in this job is not the lights, it is the height. A ladder on wet ground, a steep pitch, a second story and a roof edge in December are the dangerous parts, and they are the parts we do year-round with the right equipment. Our crews know how to read a pitch, where to set a ladder, how to move on shingles without damaging them, and where a light clip can and cannot go.",
   },
   {
     category: "scheduling",

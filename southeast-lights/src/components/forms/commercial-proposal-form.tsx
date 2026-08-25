@@ -316,7 +316,7 @@ export function CommercialProposalForm() {
         files={files}
         onChange={setFiles}
         label="Site plans, photos or documents"
-        hint="Property photos, aerial screenshots, site plans, building maps or an existing proposal. Attach them here rather than emailing them separately."
+        hint="Optional. Property photos, aerials, site plans, maps, drawings or a PDF of an existing proposal. Attach them here and the concept gets built around them."
         context="commercial"
       />
 
@@ -327,12 +327,6 @@ export function CommercialProposalForm() {
           placeholder="What you have in mind, what you did last year, what you want to change..."
         />
       </Field>
-
-      <p className="text-bone-400 rounded-lg border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
-        Have photographs, a site plan or a property map? Submit this form and
-        reply to the confirmation email with the files attached. We will build
-        the concept around them.
-      </p>
 
       {status === "error" ? (
         <p
