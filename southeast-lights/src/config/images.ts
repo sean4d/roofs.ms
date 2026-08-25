@@ -66,6 +66,7 @@ const OWNER_SUPPLIED = new Set([
   "project-poplarville-continuous-run",
   "project-hattiesburg-clean-line",
   "estate-wide",
+  "hero-mobile-install",
 ]);
 
 /**
@@ -146,6 +147,20 @@ export const COMPONENTS_FLATLAY = optionalImage(
 );
 
 export const IMAGES = {
+  /**
+   * Homepage hero on phones, holiday mode only. Portrait, which is why it is
+   * a phone image and not a desktop one: on a wide band it would crop to a
+   * strip of siding.
+   *
+   * Deliberately NOT in CONFIRMED_OWN_WORK. A hero illustrates; it does not
+   * claim a completed job at an address the way a gallery entry does, and
+   * nobody has told me whose crew this is.
+   */
+  heroMobileInstall: img(
+    "hero-mobile-install",
+    "An installer near the top of an extension ladder clipping warm white C9 bulbs along a gable rake two stories up, with the neighboring rooflines already lit",
+    "60% center",
+  ),
   holidayHero: img(
     "holiday-hero-estate",
     "A large evergreen wrapped in multicolor Christmas lights at the center of a lit campus courtyard, with warm white bistro strings overhead and surrounding trees wrapped in white lights",

@@ -123,6 +123,10 @@ const SLOTS = {
     width: 1600,
     use: "Gallery project: Hattiesburg clean line",
   },
+  "hero-mobile-install": {
+    width: 1800,
+    use: "Homepage hero on phones, holiday mode",
+  },
 };
 
 /**
@@ -240,7 +244,14 @@ for (const file of incoming) {
     // on a large monitor. Resampling up and then sharpening recovers apparent
     // detail that the downscale and the JPEG pass smeared; it does not invent
     // anything that was not photographed.
-    .resize({ width: target, kernel: "lanczos3" })
+    // Long edge, not width: a portrait photograph resized to 2400 wide comes
+    // out 3500 tall, which is a lot of bytes for a phone hero.
+    .resize({
+      width: target,
+      height: target,
+      fit: "inside",
+      kernel: "lanczos3",
+    })
     .sharpen(SHARPEN)
     .modulate({ saturation: 1.1 })
     // Slight contrast lift. Night photographs of lit rooflines come back flat

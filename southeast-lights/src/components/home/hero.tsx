@@ -20,22 +20,63 @@ import { messagingFor, type SeasonMode } from "@/config/season";
 export function Hero({ mode, now }: { mode: SeasonMode; now: Date }) {
   const holiday = mode === "holiday";
   const image = holiday ? IMAGES.holidayHero : IMAGES.permanentHero;
+  /*
+   * Phones get a portrait photograph of an install in progress. A wide hero
+   * crops to a strip on a phone, and the vertical frame is the only shape
+   * that can show how far up the work happens.
+   *
+   * Holiday mode only. In the off season the hero sells permanent lighting,
+   * and a photograph of someone clipping C9 to a rake argues against it.
+   */
+  const phoneImage = holiday ? IMAGES.heroMobileInstall : null;
   const messaging = messagingFor(mode, now);
 
   return (
     <section className="relative isolate overflow-hidden">
       <div className="absolute inset-0 -z-10">
+        {/*
+         * Art direction without paying for it twice. Both elements render,
+         * but each one's `sizes` collapses to 1px at the breakpoint where it
+         * is hidden, so the browser picks the smallest candidate in the
+         * srcSet for the one it is not showing. This is the LCP element, so
+         * downloading two full heroes would be a real cost.
+         */}
+        {phoneImage ? (
+          <Image
+            src={phoneImage.src}
+            alt={phoneImage.alt}
+            fill
+            priority
+            sizes="(min-width: 768px) 1px, 100vw"
+            placeholder="blur"
+            blurDataURL={phoneImage.blurDataURL}
+            style={{ objectPosition: phoneImage.focus ?? "center" }}
+            className="object-cover md:hidden"
+          />
+        ) : null}
         <Image
           src={image.src}
           alt={image.alt}
           fill
           priority
-          sizes="100vw"
+          sizes={phoneImage ? "(min-width: 768px) 100vw, 1px" : "100vw"}
           placeholder="blur"
           blurDataURL={image.blurDataURL}
-          className="object-cover"
+          style={{ objectPosition: image.focus ?? "center" }}
+          className={
+            phoneImage ? "hidden object-cover md:block" : "object-cover"
+          }
         />
-        <div className="scrim-hero absolute inset-0" />
+        {/*
+         * The hero scrim is directional: heavy at the left where a wide
+         * headline sits, clearing to the right so the photograph survives.
+         * On a phone there is no right to clear to, the text spans the full
+         * width, so a left-weighted wash just dims the whole picture. Phones
+         * get a bottom-weighted scrim instead, which keeps the top of the
+         * frame, and the person working in it, legible.
+         */}
+        <div className="scrim-hero-phone absolute inset-0 md:hidden" />
+        <div className="scrim-hero absolute inset-0 hidden md:block" />
       </div>
 
       {holiday ? <Snowfall /> : null}

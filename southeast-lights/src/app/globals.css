@@ -312,6 +312,26 @@
     );
   }
 
+  /*
+   * Phone hero. The headline and the subject of the photograph end up at the
+   * same height on a narrow screen, so this has to protect type through the
+   * middle of the frame while still clearing the top quarter. Weaker than
+   * this and the headline sits on top of a lit roofline; stronger and the
+   * person on the ladder disappears, which is the reason the photograph is
+   * there at all.
+   */
+  .scrim-hero-phone {
+    background: linear-gradient(
+      to top,
+      var(--color-ink-950) 0%,
+      --alpha(var(--color-ink-950) / 88%) 26%,
+      --alpha(var(--color-ink-950) / 68%) 50%,
+      --alpha(var(--color-ink-950) / 44%) 68%,
+      --alpha(var(--color-ink-950) / 16%) 84%,
+      --alpha(var(--color-ink-950) / 6%) 100%
+    );
+  }
+
   .scrim-soft {
     background: linear-gradient(
       to top,

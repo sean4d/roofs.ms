@@ -213,5 +213,10 @@
     "width": 2400,
     "height": 1800,
     "blurDataURL": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADQAQCdASoQAAwABABsJZQAAubf82MVQAD+9WzK/hFxcjotfShxz50qd1sF1dGNmhe6uhge8XAAAA=="
+  },
+  "hero-mobile-install": {
+    "width": 1658,
+    "height": 2400,
+    "blurDataURL": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAAAQBACdASoQABcAPxl0slCspqSisAgBkCMJQBZwBDwCA/dDjWdqtL9qAAD+7ndfwXrAJsMUDKmzHcnv7mt33+eqBg0BkPX5bqa2lpKfkUv3vK65wltOHl5X5mBOMf6OZtFY/LOCu6wYd4ehZ+nCcChM14l8Rg+SeMvdNlmQAAA="
   }
 }

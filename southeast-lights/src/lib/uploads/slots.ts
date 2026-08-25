@@ -254,6 +254,12 @@ export const SLOTS: Slot[] = [
     where: "Gallery project, Hattiesburg",
     group: "Projects",
   },
+  {
+    key: "hero-mobile-install",
+    label: "Mobile hero, install in progress",
+    where: "Homepage hero on phones",
+    group: "Hero",
+  },
 
   {
     key: "installer-roof",
