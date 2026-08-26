@@ -232,9 +232,15 @@ export function HouseSvg({
         <rect x="494" y="288" width="26" height="34" />
       </g>
 
-      {/* ---- pathway ---- */}
+      {/*
+        Pathway. Two parallel edges running straight out from the entry, not
+        a splay. The earlier version fanned outward from a single stem, which
+        drew a chevron rather than a walk: pathway stakes go down both sides
+        of a path in parallel, and that is what customers are buying by the
+        foot.
+      */}
       <path
-        d="M455 430 L455 452 L392 496 M455 452 L518 496"
+        d="M429 432 L429 500 M481 432 L481 500"
         stroke={S}
         strokeWidth="2"
         fill="none"
@@ -394,14 +400,14 @@ export function HouseSvg({
         ]}
       />
 
-      {/* pathway stakes */}
+      {/* pathway stakes: one run down each edge, evenly spaced and parallel */}
       <Run
         on={on("pathway")}
         colors={colors}
         spacing={16}
         points={[
-          [452, 456],
-          [392, 496],
+          [429, 436],
+          [429, 496],
         ]}
       />
       <Run
@@ -410,8 +416,8 @@ export function HouseSvg({
         spacing={16}
         offset={1}
         points={[
-          [458, 456],
-          [518, 496],
+          [481, 436],
+          [481, 496],
         ]}
       />
 

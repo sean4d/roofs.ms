@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Info, RotateCcw } from "lucide-react";
 
@@ -61,6 +61,45 @@ export function Estimator() {
   const [started, setStarted] = useState(false);
   const [compact, setCompact] = useState(false);
   const sentinel = useRef<HTMLDivElement>(null);
+  const dock = useRef<HTMLDivElement>(null);
+  const expandedHeight = useRef(0);
+
+  /*
+   * The dock is in flow, so shrinking it pulls every control up by the
+   * difference. Measured at 135px: a lurch under the thumb at exactly the
+   * moment someone starts configuring, which is the jitter this layout exists
+   * to prevent.
+   *
+   * Correcting the scroll position instead was worse. scrollBy inside the
+   * layout effect fought the user's own scroll, and moving the viewport put
+   * the sentinel back across its own threshold, so the dock oscillated
+   * between sizes.
+   *
+   * So the space is reserved rather than the scroll moved: the dock keeps the
+   * footprint it had when expanded and only its visible card gets smaller.
+   * Flow height never changes, nothing below it moves, and the sentinel
+   * cannot be pushed back over the line by its own effect.
+   *
+   * Written straight to the node rather than held in state: this is a
+   * measurement that has to land in the same frame as the layout it
+   * describes, and routing it through a render would cost a second pass for
+   * a value React does not otherwise need. Desktop needs no reserve, and gets
+   * none, because the dock is one size there and the delta measures zero.
+   */
+  useLayoutEffect(() => {
+    const node = dock.current;
+    if (!node) return;
+    node.style.marginBottom = "";
+    const height = node.getBoundingClientRect().height;
+
+    if (!compact) {
+      expandedHeight.current = height;
+      return;
+    }
+    if (!expandedHeight.current) return;
+    const reserve = Math.max(0, expandedHeight.current - height);
+    if (reserve > 0.5) node.style.marginBottom = `${reserve}px`;
+  }, [compact]);
 
   /*
    * The dock shrinks once the top of the configurator has passed under the
@@ -186,12 +225,18 @@ export function Estimator() {
         Sticky containing block. The dock can travel through the controls and
         no further, which is the whole of the containment story.
       */}
-      <div className="lg:grid lg:grid-cols-[1.05fr_1fr] lg:items-start lg:gap-14">
+      {/*
+        flex-col below lg, not plain block: adjacent margins collapse in a
+        block container, so the dock's reserved bottom margin swallowed the
+        controls' own top margin and the page still moved 32px. Flex items do
+        not collapse, so the reserve lands exactly.
+      */}
+      <div className="flex flex-col lg:grid lg:grid-cols-[1.05fr_1fr] lg:items-start lg:gap-14">
         {/* ---------- the dock: house + live price ---------- */}
-        <div className="estimator-dock">
+        <div ref={dock} className="estimator-dock">
           <div
             className={cn(
-              "rounded-card border border-white/[0.08] bg-ink-950/95 backdrop-blur transition-[padding] duration-300 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-none",
+              "rounded-card border border-white/[0.08] bg-ink-950/95 backdrop-blur transition-[box-shadow] duration-300 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-none",
               // A shadow only once it is pinned, so the boundary between the
               // dock and the cards sliding under it is legible.
               compact
@@ -201,13 +246,13 @@ export function Estimator() {
           >
             <div
               className={cn(
-                "transition-all duration-300 lg:block",
+                "lg:block",
                 compact ? "flex items-center gap-3" : "block",
               )}
             >
               <div
                 className={cn(
-                  "min-w-0 transition-all duration-300 lg:w-full",
+                  "min-w-0 lg:w-full",
                   compact ? "w-[70%]" : "w-full",
                 )}
               >
@@ -335,8 +380,15 @@ export function Estimator() {
                       >
                         <span
                           className={cn(
-                            "absolute top-0.5 size-5 rounded-full bg-white transition-transform",
-                            isOn ? "translate-x-[1.4rem]" : "translate-x-0.5",
+                            // left-0.5 is load-bearing. With no horizontal
+                            // anchor the knob falls back to its static
+                            // position, which inside a centred 44px button
+                            // resolves to 22px, and the translate is applied
+                            // on top of that: the on state put the knob
+                            // 20px clear of the track entirely, and the off
+                            // state pinned it to the right edge.
+                            "absolute top-0.5 left-0.5 size-5 rounded-full bg-white transition-transform",
+                            isOn ? "translate-x-5" : "translate-x-0",
                           )}
                         />
                       </button>
