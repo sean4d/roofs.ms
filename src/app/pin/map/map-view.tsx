@@ -3,6 +3,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import type { Measurement } from "@/lib/quotes/measure";
+import {
+  MATERIALS,
+  STORIES,
+  monthlyPayment,
+  priceFor,
+  type MaterialKey,
+  type StoriesKey,
+} from "@/config/quote-rates";
 
 /**
  * The map a rep works from.
@@ -231,12 +239,24 @@ export function MapView({ apiKey }: { apiKey: string }) {
 }
 
 /**
- * The answer, as a sheet over the map.
+ * The answer, as a sheet over the map, and a form the rep can correct.
  *
- * A rejected measurement is shown as prominently as a good one, with the
- * reason in plain words and the aerial photo to look at. The whole point of
- * the confidence rules is that the rep finds out here, on the driveway, rather
- * than the homeowner finding out when the real number arrives.
+ * WHY THIS IS EDITABLE. The owner tapped six identical apartment buildings on
+ * one street and got 18.1 to 39.4 squares, which at the book rate is $8,960
+ * against $19,521 for the same building. Four of the six measured sensibly and
+ * two did not, and nothing in Google's response distinguishes them: the same
+ * plane counts, the same quality flag, the same everything. Attached buildings
+ * are simply where the segmenter guesses, and no threshold I can write
+ * separates a good guess from a bad one.
+ *
+ * So the rep corrects it. They are standing in front of the house, they can
+ * see it is two storeys and that the number looks light, and thirty seconds of
+ * their judgement beats any amount of my tuning. Squares, pitch, storeys and
+ * material are all adjustable and the price follows immediately.
+ *
+ * That is also what lets every quote be ONE NUMBER again rather than a range.
+ * The range existed because a wrong measurement could not be corrected. It can
+ * be now, so it is gone.
  */
 function ResultSheet({
   result,
@@ -245,7 +265,7 @@ function ResultSheet({
   result: Result;
   onClose: () => void;
 }) {
-  const { measurement: m, price, storms } = result;
+  const { measurement: m, storms } = result;
   const rejected = m.confidence === "reject";
 
   return (
@@ -272,34 +292,9 @@ function ResultSheet({
 
       <div className="px-5 py-4">
         {rejected ? (
-          <div className="rounded-lg bg-amber-50 p-4">
-            <p className="text-sm font-bold text-amber-900">
-              Measure this one by hand
-            </p>
-            <p className="mt-1 text-sm leading-relaxed text-amber-900">
-              {m.reason}
-            </p>
-          </div>
+          <RejectedBox reason={m.reason} />
         ) : (
-          <>
-            <div className="flex items-baseline gap-3">
-              <p className="font-[family-name:var(--font-archivo)] text-3xl font-extrabold text-[#123b63]">
-                {price?.shown !== null && price
-                  ? `$${price.shown.toLocaleString()}`
-                  : price
-                    ? `$${price.low.toLocaleString()} to $${price.high.toLocaleString()}`
-                    : "--"}
-              </p>
-              {price && (
-                <span className="text-sm text-slate-500">
-                  about ${price.monthlyLow.toLocaleString()}/mo
-                </span>
-              )}
-            </div>
-            <p className="mt-1 text-sm text-slate-600">
-              {m.squares} squares at {m.pitchOver12}:12, {m.planes} planes
-            </p>
-          </>
+          <Estimator measurement={m} />
         )}
 
         {m.warnings.map((w) => (
@@ -319,24 +314,8 @@ function ResultSheet({
             <p className="mt-1 text-sm leading-relaxed text-slate-800">
               {storms.sentence}
             </p>
-            {storms.recent.length > 1 && (
-              <ul className="mt-2 space-y-0.5">
-                {storms.recent.slice(1).map((e) => (
-                  <li
-                    key={`${e.date}${e.label}`}
-                    className="text-xs text-slate-600"
-                  >
-                    {e.date} &middot; {e.label} &middot; {e.distanceMi} mi
-                  </li>
-                ))}
-              </ul>
-            )}
           </div>
         )}
-
-        {/* Save and make a proposal. Only offered when there is a price to put
-            on it: a rejected measurement has nothing to send. */}
-        {!rejected && <SaveBar result={result} />}
 
         {/* The rep's own eyes are the last check, and the one the data cannot
             do: a room added after the photo was taken is invisible to it. */}
@@ -359,42 +338,65 @@ function ResultSheet({
   );
 }
 
+function RejectedBox({ reason }: { reason: string | null }) {
+  return (
+    <div className="rounded-lg bg-amber-50 p-4">
+      <p className="text-sm font-bold text-amber-900">
+        Measure this one by hand
+      </p>
+      <p className="mt-1 text-sm leading-relaxed text-amber-900">{reason}</p>
+    </div>
+  );
+}
+
 /**
- * Capture what the rep learned at the door, then make the proposal.
+ * The estimate the rep can steer, and the actions that come off it.
  *
- * Name, email and phone are all optional. A rep who knocked and got nothing
- * but a look through the blinds still wants the measurement saved and a piece
- * to print, and a form that demanded contact details would simply not get
- * used. Anything they did get makes the follow-up better, so it is offered,
- * never required.
+ * Squares start at whatever the imagery measured and move in half-square steps,
+ * which is the granularity a roofer actually thinks in. Pitch and storeys are
+ * two taps each. The price recalculates as they go, so the rep can see what a
+ * second storey or a metal roof does to the number while the homeowner is
+ * standing there, which is worth more than any report.
  */
-function SaveBar({ result }: { result: Result }) {
-  const { measurement: m } = result;
-  const [open, setOpen] = useState(false);
+function Estimator({ measurement }: { measurement: Measurement }) {
+  const [squares, setSquares] = useState(measurement.squares ?? 20);
+  const [pitch, setPitch] = useState(measurement.pitchOver12 ?? 5);
+  const [stories, setStories] = useState<StoriesKey>(1);
+  const [material, setMaterial] = useState<MaterialKey>("architectural");
+  const [saving, setSaving] = useState(false);
+  const [failed, setFailed] = useState<string | null>(null);
+  const [contactOpen, setContactOpen] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [saving, setSaving] = useState(false);
-  const [failed, setFailed] = useState(false);
 
-  async function save() {
-    if (saving || !m.squares) return;
+  const price = priceFor(squares, { material, stories });
+  const monthly = monthlyPayment(price.shown);
+  const nudge = (delta: number) =>
+    setSquares((s) => Math.max(1, Math.round((s + delta) * 10) / 10));
+
+  async function save(then: "view" | "send") {
+    if (saving) return;
     setSaving(true);
-    setFailed(false);
+    setFailed(null);
     try {
       const res = await fetch("/api/pin/customers", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          address: m.formattedAddress ?? `${m.lat}, ${m.lon}`,
-          lat: m.lat,
-          lon: m.lon,
-          squares: m.squares,
-          pitchDegrees: m.pitchDegrees,
-          planes: m.planes,
+          address:
+            measurement.formattedAddress ??
+            `${measurement.lat.toFixed(5)}, ${measurement.lon.toFixed(5)}`,
+          lat: measurement.lat,
+          lon: measurement.lon,
+          squares,
+          pitchDegrees: (Math.atan(pitch / 12) * 180) / Math.PI,
+          planes: measurement.planes,
           measureSource: "solar",
-          measureQuality: m.confidence,
-          imageryDate: m.imageryDate,
+          measureQuality: measurement.confidence,
+          imageryDate: measurement.imageryDate,
+          material,
+          stories,
           name: name.trim() || null,
           email: email.trim() || null,
           phone: phone.trim() || null,
@@ -402,69 +404,190 @@ function SaveBar({ result }: { result: Result }) {
       });
       const data = await res.json();
       if (!res.ok || !data.ok) {
-        setFailed(true);
+        setFailed(data.error ?? "Could not save that.");
         setSaving(false);
         return;
       }
-      window.location.href = `/pin/proposal/${data.quoteId}`;
+      window.location.href =
+        then === "send"
+          ? `/pin/proposal/${data.quoteId}?send=1`
+          : `/pin/proposal/${data.quoteId}`;
     } catch {
-      setFailed(true);
+      setFailed("Lost the connection. Try again.");
       setSaving(false);
     }
   }
 
   return (
-    <div className="mt-5 border-t border-slate-200 pt-4">
-      {open && (
-        <div className="mb-3 space-y-2">
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Homeowner name (optional)"
-            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-base outline-none focus:border-[#123b63]"
-          />
-          <input
+    <>
+      <div className="flex items-baseline gap-3">
+        <p className="font-[family-name:var(--font-archivo)] text-4xl leading-none font-extrabold text-[#123b63]">
+          ${price.shown.toLocaleString()}
+        </p>
+        <span className="text-sm text-slate-500">
+          about ${monthly.toLocaleString()}/mo
+        </span>
+      </div>
+
+      {/* Squares, the one number worth correcting on the spot. */}
+      <div className="mt-4 flex items-center gap-3">
+        <Step label="&minus;" onClick={() => nudge(-0.5)} />
+        <div className="flex-1 text-center">
+          <p className="font-[family-name:var(--font-archivo)] text-2xl font-bold text-slate-900">
+            {squares.toFixed(1)}
+          </p>
+          <p className="text-[11px] tracking-wide text-slate-500 uppercase">
+            squares
+          </p>
+        </div>
+        <Step label="+" onClick={() => nudge(0.5)} />
+      </div>
+      {measurement.squares !== null && squares !== measurement.squares && (
+        <button
+          onClick={() => setSquares(measurement.squares!)}
+          className="mt-1 w-full text-center text-[11px] text-slate-400 underline underline-offset-2"
+        >
+          measured {measurement.squares}, tap to reset
+        </button>
+      )}
+
+      <div className="mt-4 space-y-3">
+        <Choice
+          label="Stories"
+          value={stories}
+          options={[1, 2] as StoriesKey[]}
+          render={(v) => STORIES[v].label}
+          onChange={setStories}
+        />
+        <Choice
+          label="Pitch"
+          value={pitch}
+          options={[3, 4, 5, 6, 7, 8, 10, 12]}
+          render={(v) => `${v}:12`}
+          onChange={setPitch}
+        />
+        <Choice
+          label="Material"
+          value={material}
+          options={Object.keys(MATERIALS) as MaterialKey[]}
+          render={(v) => MATERIALS[v].label.replace(" shingle", "")}
+          onChange={setMaterial}
+        />
+      </div>
+
+      {contactOpen && (
+        <div className="mt-4 space-y-2">
+          <Field value={name} onChange={setName} placeholder="Homeowner name" />
+          <Field
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={setEmail}
+            placeholder="Email"
             type="email"
-            inputMode="email"
-            placeholder="Email (optional)"
-            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-base outline-none focus:border-[#123b63]"
           />
-          <input
+          <Field
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={setPhone}
+            placeholder="Phone"
             type="tel"
-            inputMode="tel"
-            placeholder="Phone (optional)"
-            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-base outline-none focus:border-[#123b63]"
           />
         </div>
       )}
 
-      {failed && (
-        <p className="mb-2 text-sm text-red-700">
-          Could not save that. Try again.
-        </p>
-      )}
+      {failed && <p className="mt-3 text-sm text-red-700">{failed}</p>}
 
-      <div className="flex gap-2">
-        {!open && (
-          <button
-            onClick={() => setOpen(true)}
-            className="rounded-lg border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700"
-          >
-            Add contact
-          </button>
-        )}
+      <div className="mt-4 grid grid-cols-2 gap-2">
         <button
-          onClick={save}
-          disabled={saving}
-          className="flex-1 rounded-lg bg-[#123b63] px-4 py-3 text-base font-semibold text-white disabled:opacity-60"
+          onClick={() => setContactOpen((v) => !v)}
+          className="rounded-lg border border-slate-300 px-3 py-3 text-sm font-semibold text-slate-700"
         >
-          {saving ? "Saving..." : "Save and make proposal"}
+          {contactOpen ? "Hide contact" : "Add contact"}
+        </button>
+        <button
+          onClick={() => save("send")}
+          disabled={saving || !email.trim()}
+          title={email.trim() ? "" : "Add an email first"}
+          className="rounded-lg border border-slate-300 px-3 py-3 text-sm font-semibold text-slate-700 disabled:opacity-40"
+        >
+          Email it
         </button>
       </div>
+      <button
+        onClick={() => save("view")}
+        disabled={saving}
+        className="mt-2 w-full rounded-lg bg-[#123b63] px-4 py-3.5 text-base font-semibold text-white disabled:opacity-60"
+      >
+        {saving ? "Saving..." : "View PDF"}
+      </button>
+    </>
+  );
+}
+
+function Step({ label, onClick }: { label: string; onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      className="h-12 w-12 shrink-0 rounded-full border border-slate-300 text-xl font-bold text-[#123b63] active:bg-slate-100"
+      dangerouslySetInnerHTML={{ __html: label }}
+    />
+  );
+}
+
+function Choice<T extends string | number>({
+  label,
+  value,
+  options,
+  render,
+  onChange,
+}: {
+  label: string;
+  value: T;
+  options: readonly T[];
+  render: (v: T) => string;
+  onChange: (v: T) => void;
+}) {
+  return (
+    <div>
+      <p className="mb-1 text-[11px] font-bold tracking-wide text-slate-500 uppercase">
+        {label}
+      </p>
+      <div className="flex flex-wrap gap-1.5">
+        {options.map((o) => (
+          <button
+            key={String(o)}
+            onClick={() => onChange(o)}
+            className={`rounded-lg px-3 py-2 text-sm font-medium ${
+              o === value
+                ? "bg-[#123b63] text-white"
+                : "border border-slate-300 text-slate-700"
+            }`}
+          >
+            {render(o)}
+          </button>
+        ))}
+      </div>
     </div>
+  );
+}
+
+function Field({
+  value,
+  onChange,
+  placeholder,
+  type = "text",
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  placeholder: string;
+  type?: string;
+}) {
+  return (
+    <input
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      placeholder={placeholder}
+      type={type}
+      inputMode={type === "email" ? "email" : type === "tel" ? "tel" : "text"}
+      className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-base outline-none focus:border-[#123b63]"
+    />
   );
 }

@@ -69,11 +69,12 @@ export async function POST(request: Request) {
     const lon = measurement.lon || ("lon" in input ? input.lon : 0);
     const storms = lat && lon ? summarizeStorms(lat, lon) : null;
 
-    // Price only when the measurement earned it. A rejected read gets the
-    // aerial photo and the reason, so the rep can trace it instead.
+    // A starting number on the default options. The rep adjusts squares,
+    // storeys and material on the sheet and it reprices there, so this is an
+    // opening figure rather than the final word.
     const price =
       measurement.confidence !== "reject" && measurement.squares
-        ? priceFor(measurement.squares, measurement.confidence)
+        ? priceFor(measurement.squares)
         : null;
 
     return NextResponse.json(

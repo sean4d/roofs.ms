@@ -1,5 +1,5 @@
 import { siteConfig } from "@/config/site";
-import { rateCard } from "@/config/quote-rates";
+import { rateCard, MATERIALS, type MaterialKey } from "@/config/quote-rates";
 import { summarizeStorms, longDate } from "@/lib/quotes/storms";
 import type { ProposalData } from "@/lib/quotes/save";
 
@@ -42,6 +42,11 @@ export function ProposalDoc({
         10;
 
   const money = (n: number) => `$${n.toLocaleString()}`;
+  // The material the rep actually chose. Falling back to architectural keeps
+  // older quotes, written before the choice existed, readable.
+  const materialLabel = (
+    MATERIALS[data.material as MaterialKey]?.label ?? "Architectural shingle"
+  ).replace(/ shingle$/, " shingles");
 
   return (
     <article className="proposal mx-auto w-full max-w-[8.5in] bg-white text-slate-900">
@@ -138,7 +143,10 @@ export function ProposalDoc({
               label="Pitch"
               value={pitchOver12 ? `${pitchOver12}:12` : "See inspection"}
             />
-            <Fact label="Roof planes" value={String(data.planes)} />
+            <Fact
+              label="Stories"
+              value={data.stories ? `${data.stories}` : String(data.planes)}
+            />
           </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -164,7 +172,7 @@ export function ProposalDoc({
         <div className="mt-3 grid grid-cols-2 gap-x-8 gap-y-1.5 text-[12px] leading-relaxed">
           <ul className="space-y-1.5">
             <Line>Tear off the existing roof and haul it away</Line>
-            <Line>Architectural shingles, installed to manufacturer spec</Line>
+            <Line>{materialLabel}, installed to manufacturer spec</Line>
             <Line>Synthetic underlayment, starter strip and ridge cap</Line>
             <Line>New pipe boots, drip edge and valley flashing</Line>
             <Line>Magnetic sweep of the property when we finish</Line>

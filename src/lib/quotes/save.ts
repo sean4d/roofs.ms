@@ -28,6 +28,8 @@ export interface SaveInput {
   measureSource: "solar" | "manual";
   measureQuality: string | null;
   imageryDate: string | null;
+  material: string;
+  stories: number;
   priceLow: number;
   priceHigh: number;
   priceShown: number | null;
@@ -94,12 +96,13 @@ export async function saveQuote(
   const quote = (await sql`
     INSERT INTO quotes (
       customer_id, created_by, roof_sqft, squares, pitch_degrees, planes,
-      measure_source, measure_quality, imagery_date, rate_card,
+      measure_source, measure_quality, imagery_date, material, stories, rate_card,
       price_low, price_high, price_shown, monthly_low, monthly_high, public_token
     ) VALUES (
       ${customerId}::uuid, ${user.id}::uuid, ${Math.round(input.squares * 100)},
       ${input.squares}, ${input.pitchDegrees}, ${input.planes},
       ${input.measureSource}, ${input.measureQuality}, ${input.imageryDate},
+      ${input.material}, ${String(input.stories)},
       ${JSON.stringify(rateCard)}::jsonb,
       ${input.priceLow}, ${input.priceHigh}, ${input.priceShown},
       ${input.monthlyLow}, ${input.monthlyHigh}, ${publicToken}
@@ -129,6 +132,8 @@ export interface ProposalData {
   monthlyHigh: number;
   createdAt: string;
   imageryDate: string | null;
+  material: string | null;
+  stories: number | null;
   repName: string;
 }
 
@@ -153,6 +158,8 @@ interface Row {
   /** timestamptz comes back as a Date, NOT a string. See toIsoDate. */
   created_at: string | Date;
   imagery_date: string | Date | null;
+  material: string | null;
+  stories: string | number | null;
   rep_email: string;
 }
 
@@ -207,13 +214,15 @@ const toProposal = (r: Row): ProposalData => ({
   monthlyHigh: r.monthly_high ?? 0,
   createdAt: toIsoDate(r.created_at),
   imageryDate: r.imagery_date ? toIsoDate(r.imagery_date) : null,
+  material: r.material,
+  stories: r.stories === null ? null : Number(r.stories),
   repName: repDisplayName(r.rep_email),
 });
 
 const SELECT = `
   SELECT q.id, q.public_token, q.squares, q.pitch_degrees, q.planes,
          q.price_low, q.price_high, q.price_shown, q.monthly_low, q.monthly_high,
-         q.created_at, q.imagery_date,
+         q.created_at, q.imagery_date, q.material, q.stories,
          c.address, c.name, c.email, c.phone, c.lat, c.lon,
          u.email AS rep_email
     FROM quotes q

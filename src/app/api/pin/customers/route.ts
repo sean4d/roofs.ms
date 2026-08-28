@@ -31,6 +31,10 @@ const schema = z.object({
   measureSource: z.enum(["solar", "manual"]),
   measureQuality: z.string().max(40).nullable(),
   imageryDate: z.string().max(20).nullable().optional(),
+  material: z
+    .enum(["architectural", "premium", "metal-29", "metal-26"])
+    .optional(),
+  stories: z.union([z.literal(1), z.literal(2)]).optional(),
   name: z.string().max(120).nullable().optional(),
   email: z.string().max(200).nullable().optional(),
   phone: z.string().max(40).nullable().optional(),
@@ -59,9 +63,13 @@ export async function POST(request: Request) {
   try {
     // Price on the server from the rate card, never from what the browser
     // claims the price was.
-    const { priceFor, monthlyPayment } = await import("@/config/quote-rates");
-    const confidence = input.measureQuality === "medium" ? "medium" : "high";
-    const price = priceFor(input.squares, confidence);
+    const { priceFor, monthlyPayment, DEFAULT_OPTIONS } =
+      await import("@/config/quote-rates");
+    const options = {
+      material: input.material ?? DEFAULT_OPTIONS.material,
+      stories: input.stories ?? DEFAULT_OPTIONS.stories,
+    };
+    const price = priceFor(input.squares, options);
 
     const saved = await saveQuote(user, {
       address: input.address,
@@ -76,6 +84,8 @@ export async function POST(request: Request) {
       measureSource: input.measureSource,
       measureQuality: input.measureQuality,
       imageryDate: input.imageryDate ?? null,
+      material: options.material,
+      stories: options.stories,
       priceLow: price.low,
       priceHigh: price.high,
       priceShown: price.shown,

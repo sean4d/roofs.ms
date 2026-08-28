@@ -47,27 +47,82 @@ export const rateCard: RateCard = {
 };
 
 /**
- * What a quote should say, given squares and how much we trust the measurement.
+ * Material choices, as multipliers on the base rate.
  *
- * A confident measurement gets a single number, because a single number is what
- * makes somebody pick up the phone. A shakier one gets a range, because a
- * number we cannot stand behind is worse than no number: the homeowner either
- * feels lied to later or we eat the difference.
+ * The base rate came out of five architectural shingle contracts, so
+ * architectural is 1.0 by definition and everything else is expressed against
+ * it, using the ratios already in src/config/pricing.ts for the public
+ * calculator. Keeping one source of truth for the base means a rate change
+ * does not have to be made in six places.
+ */
+export const MATERIALS = {
+  architectural: { label: "Architectural shingle", factor: 1.0 },
+  premium: { label: "Premium / designer shingle", factor: 1.4 },
+  "metal-29": { label: "29-gauge metal", factor: 2.15 },
+  "metal-26": { label: "26-gauge metal", factor: 2.6 },
+} as const;
+
+export type MaterialKey = keyof typeof MATERIALS;
+
+/**
+ * Second-storey surcharge.
+ *
+ * Owner-flagged 2026-08-28: the tool priced a two storey building the same as
+ * a ranch, which it never should. Higher work is slower, needs more staging
+ * and taller ladders, and carries more risk. The 8% figure matches the
+ * existing public calculator so a homeowner comparing the two does not see
+ * them disagree.
+ *
+ * It can only ever ADD. That is a deliberate rule carried over from
+ * pricing.ts: a two storey selection must never reduce a price.
+ */
+export const STORIES = {
+  1: { label: "1 story", factor: 1.0 },
+  2: { label: "2 story", factor: 1.08 },
+} as const;
+
+export type StoriesKey = keyof typeof STORIES;
+
+export interface QuoteOptions {
+  material: MaterialKey;
+  stories: StoriesKey;
+}
+
+export const DEFAULT_OPTIONS: QuoteOptions = {
+  material: "architectural",
+  stories: 1,
+};
+
+/** The rate for a given material and storey count. */
+export function rateFor(options: QuoteOptions): number {
+  return (
+    rateCard.perSquare *
+    MATERIALS[options.material].factor *
+    STORIES[options.stories].factor
+  );
+}
+
+/**
+ * What a quote says, given squares and the options the rep chose.
+ *
+ * ALWAYS A SINGLE NUMBER NOW. It used to return a range whenever the automatic
+ * measurement was less than confident, and that was the wrong answer to the
+ * right worry. The owner's complaint is exact: a rep cannot stand on a porch
+ * and say "somewhere between nine and nineteen thousand". A range does not
+ * read as honesty to a homeowner, it reads as not knowing.
+ *
+ * What made the range feel necessary was that the measurement could be wrong
+ * and nobody could correct it. That is fixed at the source instead: the rep
+ * can now adjust the squares, the pitch, the storeys and the material, and the
+ * price follows. So there is always one number, and a human is accountable for
+ * it, which is a better guarantee than a wide band ever was.
  */
 export function priceFor(
   squares: number,
-  confidence: "high" | "medium",
-): { low: number; high: number; shown: number | null } {
-  const round = (n: number) => Math.round(n / 50) * 50;
-  if (confidence === "high") {
-    const shown = round(squares * rateCard.perSquare);
-    return { low: shown, high: shown, shown };
-  }
-  return {
-    low: round(squares * rateCard.perSquareLow),
-    high: round(squares * rateCard.perSquareHigh),
-    shown: null,
-  };
+  options: QuoteOptions = DEFAULT_OPTIONS,
+): { low: number; high: number; shown: number } {
+  const shown = Math.round((squares * rateFor(options)) / 50) * 50;
+  return { low: shown, high: shown, shown };
 }
 
 /** Illustrative monthly payment on a financed roof. */
