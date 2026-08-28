@@ -51,7 +51,10 @@ export function ReviewsIsland({ initial }: { initial: DisplayReview[] }) {
           <span className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-2 text-sm font-semibold text-navy-900 shadow-sm">
             <span className="flex" aria-hidden="true">
               {Array.from({ length: 5 }, (_, i) => (
-                <Star key={i} className="size-4 fill-amber-400 text-amber-400" />
+                <Star
+                  key={i}
+                  className="size-4 fill-amber-400 text-amber-400"
+                />
               ))}
             </span>
             {rating.toFixed(1)} from {count} Google reviews

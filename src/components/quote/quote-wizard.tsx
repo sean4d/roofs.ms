@@ -26,7 +26,7 @@ import { Button } from "@/components/ui/button";
  * Interactive quote wizard (PRD §13 Phase 8, first mini-project). Six
  * guided steps that qualify the lead, then contact details submitted
  * through the same server action + delivery pipeline as every other
- * form (source: "quote-wizard"). No pricing is computed or promised, 
+ * form (source: "quote-wizard"). No pricing is computed or promised,
  * the wizard routes to the right human process; Roofr remains the
  * instant-number tool and is offered on the success screen.
  */
@@ -46,20 +46,64 @@ type Answers = {
 };
 
 const RESIDENTIAL_SERVICES: StepOption[] = [
-  { value: "Roof replacement", label: "Roof replacement", hint: "Full new roof system" },
-  { value: "Roof repair", label: "Roof repair", hint: "Leak, damage, or wear in one area" },
-  { value: "Storm damage / insurance", label: "Storm damage", hint: "Recent storm, possible claim" },
-  { value: "Metal roofing", label: "Metal roofing", hint: "New metal roof or conversion" },
-  { value: "Gutters / exterior", label: "Gutters & exterior", hint: "Gutters, leaf guard, fascia & soffit" },
-  { value: "Not sure: inspection", label: "Not sure yet", hint: "Have a pro look and tell me straight" },
+  {
+    value: "Roof replacement",
+    label: "Roof replacement",
+    hint: "Full new roof system",
+  },
+  {
+    value: "Roof repair",
+    label: "Roof repair",
+    hint: "Leak, damage, or wear in one area",
+  },
+  {
+    value: "Storm damage / insurance",
+    label: "Storm damage",
+    hint: "Recent storm, possible claim",
+  },
+  {
+    value: "Metal roofing",
+    label: "Metal roofing",
+    hint: "New metal roof or conversion",
+  },
+  {
+    value: "Gutters / exterior",
+    label: "Gutters & exterior",
+    hint: "Gutters, leaf guard, fascia & soffit",
+  },
+  {
+    value: "Not sure: inspection",
+    label: "Not sure yet",
+    hint: "Have a pro look and tell me straight",
+  },
 ];
 
 const COMMERCIAL_SERVICES: StepOption[] = [
-  { value: "Commercial roof replacement", label: "Roof replacement", hint: "Full system replacement" },
-  { value: "Commercial repair / leak", label: "Repair or leak", hint: "Active leak or damage" },
-  { value: "Roof coating / restoration", label: "Coating / restoration", hint: "Extend the roof you have" },
-  { value: "Commercial maintenance", label: "Maintenance program", hint: "Ongoing inspections & upkeep" },
-  { value: "Not sure: assessment", label: "Not sure yet", hint: "Start with an honest assessment" },
+  {
+    value: "Commercial roof replacement",
+    label: "Roof replacement",
+    hint: "Full system replacement",
+  },
+  {
+    value: "Commercial repair / leak",
+    label: "Repair or leak",
+    hint: "Active leak or damage",
+  },
+  {
+    value: "Roof coating / restoration",
+    label: "Coating / restoration",
+    hint: "Extend the roof you have",
+  },
+  {
+    value: "Commercial maintenance",
+    label: "Maintenance program",
+    hint: "Ongoing inspections & upkeep",
+  },
+  {
+    value: "Not sure: assessment",
+    label: "Not sure yet",
+    hint: "Start with an honest assessment",
+  },
 ];
 
 const ROOF_TYPES: StepOption[] = [
@@ -71,10 +115,18 @@ const ROOF_TYPES: StepOption[] = [
 ];
 
 const TIMELINES: StepOption[] = [
-  { value: "Emergency: leaking now", label: "It's leaking now", hint: "Emergency response" },
+  {
+    value: "Emergency: leaking now",
+    label: "It's leaking now",
+    hint: "Emergency response",
+  },
   { value: "As soon as possible", label: "As soon as possible" },
   { value: "Within 1-3 months", label: "In the next 1–3 months" },
-  { value: "Researching", label: "Just researching", hint: "No pressure: that's smart" },
+  {
+    value: "Researching",
+    label: "Just researching",
+    hint: "No pressure: that's smart",
+  },
 ];
 
 const STORM_OPTIONS: StepOption[] = [
@@ -149,16 +201,17 @@ export function QuoteWizard() {
     if (state.status === "success") {
       (
         window as Window & { dataLayer?: Record<string, unknown>[] }
-      ).dataLayer?.push({ event: "lead_submitted", lead_source: "quote-wizard" });
+      ).dataLayer?.push({
+        event: "lead_submitted",
+        lead_source: "quote-wizard",
+      });
     }
   }, [state.status]);
 
-  const pick =
-    (key: keyof Answers) =>
-    (value: string) => {
-      setAnswers((prev) => ({ ...prev, [key]: value }));
-      setStep((current) => Math.min(current + 1, TOTAL_STEPS - 1));
-    };
+  const pick = (key: keyof Answers) => (value: string) => {
+    setAnswers((prev) => ({ ...prev, [key]: value }));
+    setStep((current) => Math.min(current + 1, TOTAL_STEPS - 1));
+  };
 
   if (state.status === "success") {
     return (
@@ -171,16 +224,19 @@ export function QuoteWizard() {
           Done. Your quote request is in.
         </h2>
         <p className="mx-auto mt-3 max-w-md leading-relaxed text-slate-600">
-          We&apos;ll call to confirm details and schedule your free
-          inspection. During business hours you&apos;ll usually hear from us
-          the same day.
+          We&apos;ll call to confirm details and schedule your free inspection.
+          During business hours you&apos;ll usually hear from us the same day.
         </p>
         <div className="mt-8 flex flex-col items-center gap-4">
           {bookingUrl && (
             <Button
               size="xl"
               render={
-                <a href={bookingUrl} target="_blank" rel="noopener noreferrer" />
+                <a
+                  href={bookingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                />
               }
               nativeButton={false}
             >
@@ -190,8 +246,6 @@ export function QuoteWizard() {
           )}
           <a
             href={siteConfig.links.instantEstimate}
-            target="_blank"
-            rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 font-semibold text-navy-900 underline-offset-4 hover:underline"
           >
             Want a ballpark right now? Try the instant estimate
@@ -215,8 +269,18 @@ export function QuoteWizard() {
       content: (
         <div className="grid gap-3 sm:grid-cols-2">
           {[
-            { value: "Residential", label: "My home", icon: Home, hint: "Houses, camps, rentals" },
-            { value: "Commercial", label: "A commercial building", icon: Building2, hint: "Offices, retail, churches, industrial" },
+            {
+              value: "Residential",
+              label: "My home",
+              icon: Home,
+              hint: "Houses, camps, rentals",
+            },
+            {
+              value: "Commercial",
+              label: "A commercial building",
+              icon: Building2,
+              hint: "Offices, retail, churches, industrial",
+            },
           ].map((option) => (
             <button
               key={option.value}
@@ -312,7 +376,11 @@ export function QuoteWizard() {
         <form action={formAction} noValidate>
           <input type="hidden" name="source" value="quote-wizard" />
           <input type="hidden" name="page" value={pathname} />
-          <input type="hidden" name="propertyType" value={answers.propertyType} />
+          <input
+            type="hidden"
+            name="propertyType"
+            value={answers.propertyType}
+          />
           <input type="hidden" name="service" value={answers.service} />
           <input type="hidden" name="roofType" value={answers.roofType} />
           <input type="hidden" name="timeline" value={answers.timeline} />
@@ -445,7 +513,12 @@ export function QuoteWizard() {
             </p>
           )}
 
-          <Button type="submit" size="xl" disabled={pending} className="mt-6 w-full">
+          <Button
+            type="submit"
+            size="xl"
+            disabled={pending}
+            className="mt-6 w-full"
+          >
             {pending ? (
               <>
                 <Loader2 className="size-5 animate-spin" aria-hidden="true" />
@@ -459,8 +532,8 @@ export function QuoteWizard() {
             )}
           </Button>
           <p className="mt-4 text-center text-xs leading-relaxed text-slate-400">
-            No spam, no obligation. We&apos;ll only use this to reach you
-            about your roof.
+            No spam, no obligation. We&apos;ll only use this to reach you about
+            your roof.
           </p>
         </form>
       ),

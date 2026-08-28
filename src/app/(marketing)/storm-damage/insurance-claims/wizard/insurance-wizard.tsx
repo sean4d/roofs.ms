@@ -192,7 +192,10 @@ export function InsuranceWizard() {
     const nextApplicable = STEPS.filter((s) => !s.when || s.when(next));
     if (stepIndex + 1 >= nextApplicable.length) {
       setShowResult(true);
-      track("insurance_path_completed", { tool: "insurance-wizard", path: computeResult(next).key });
+      track("insurance_path_completed", {
+        tool: "insurance-wizard",
+        path: computeResult(next).key,
+      });
     } else {
       setStepIndex(stepIndex + 1);
     }
@@ -206,11 +209,16 @@ export function InsuranceWizard() {
     return (
       <div className="mx-auto max-w-lg rounded-2xl border border-border bg-white p-8 text-center">
         <CheckCircle2 className="mx-auto size-12 text-emerald-600" />
-        <h2 className="mt-4 text-2xl font-bold text-navy-900">We&apos;ve got it</h2>
+        <h2 className="mt-4 text-2xl font-bold text-navy-900">
+          We&apos;ve got it
+        </h2>
         <p className="mt-2 text-slate-600">
-          Thanks. We&apos;ll reach out shortly to help with your storm damage and claim.
-          If it&apos;s urgent, call us anytime at{" "}
-          <a href={`tel:${siteConfig.phone.tel}`} className="font-semibold text-navy-900">
+          Thanks. We&apos;ll reach out shortly to help with your storm damage
+          and claim. If it&apos;s urgent, call us anytime at{" "}
+          <a
+            href={`tel:${siteConfig.phone.tel}`}
+            className="font-semibold text-navy-900"
+          >
             {siteConfig.phone.display}
           </a>
           .
@@ -225,7 +233,9 @@ export function InsuranceWizard() {
         <div
           className={cn(
             "rounded-2xl border p-6 sm:p-8",
-            result.urgent ? "border-red-200 bg-red-50" : "border-border bg-secondary/50",
+            result.urgent
+              ? "border-red-200 bg-red-50"
+              : "border-border bg-secondary/50",
           )}
         >
           <div className="flex items-center gap-2">
@@ -234,7 +244,9 @@ export function InsuranceWizard() {
             ) : (
               <CheckCircle2 className="size-5 text-navy-900" />
             )}
-            <h2 className="text-xl font-bold text-navy-900">{result.heading}</h2>
+            <h2 className="text-xl font-bold text-navy-900">
+              {result.heading}
+            </h2>
           </div>
           {result.body.map((p) => (
             <p key={p} className="mt-3 text-slate-700">
@@ -244,16 +256,25 @@ export function InsuranceWizard() {
           {result.urgent && siteConfig.phone.tel && (
             <a
               href={`tel:${siteConfig.phone.tel}`}
-              onClick={() => track("cta_click", { action: "call-now", source: "insurance-wizard" })}
+              onClick={() =>
+                track("cta_click", {
+                  action: "call-now",
+                  source: "insurance-wizard",
+                })
+              }
               className="mt-5 inline-flex items-center gap-2 rounded-full bg-red-600 px-6 py-3 font-semibold text-white"
             >
-              <PhoneCall className="size-4" /> Call now, {siteConfig.phone.display}
+              <PhoneCall className="size-4" /> Call now,{" "}
+              {siteConfig.phone.display}
             </a>
           )}
         </div>
 
         {/* Lead capture */}
-        <form action={formAction} className="mt-6 rounded-2xl border border-border bg-white p-6">
+        <form
+          action={formAction}
+          className="mt-6 rounded-2xl border border-border bg-white p-6"
+        >
           <h3 className="text-lg font-bold text-navy-900">
             Get your free inspection & claim help
           </h3>
@@ -264,18 +285,47 @@ export function InsuranceWizard() {
           {/* Hidden context */}
           <input type="hidden" name="source" value="insurance-wizard" />
           <input type="hidden" name="storm" value="on" />
-          <input type="hidden" name="service" value="Storm damage / insurance claim" />
+          <input
+            type="hidden"
+            name="service"
+            value="Storm damage / insurance claim"
+          />
           <input type="hidden" name="page" value={pathname} />
-          <input type="hidden" name="message" value={`Insurance claim wizard, ${summary}`} />
-          <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
+          <input
+            type="hidden"
+            name="message"
+            value={`Insurance claim wizard, ${summary}`}
+          />
+          <input
+            type="text"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            className="hidden"
+            aria-hidden="true"
+          />
 
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             <Field name="name" label="Name" error={state.errors?.name} />
-            <Field name="phone" label="Phone" type="tel" error={state.errors?.phone} />
-            <Field name="email" label="Email (optional)" type="email" error={state.errors?.email} />
+            <Field
+              name="phone"
+              label="Phone"
+              type="tel"
+              error={state.errors?.phone}
+            />
+            <Field
+              name="email"
+              label="Email (optional)"
+              type="email"
+              error={state.errors?.email}
+            />
             <Field name="city" label="City" error={state.errors?.city} />
             <div className="sm:col-span-2">
-              <Field name="address" label="Property address" error={state.errors?.address} />
+              <Field
+                name="address"
+                label="Property address"
+                error={state.errors?.address}
+              />
             </div>
           </div>
 
@@ -286,7 +336,12 @@ export function InsuranceWizard() {
           <button
             type="submit"
             disabled={pending}
-            onClick={() => track("cta_click", { action: "submit-lead", source: "insurance-wizard" })}
+            onClick={() =>
+              track("cta_click", {
+                action: "submit-lead",
+                source: "insurance-wizard",
+              })
+            }
             className="mt-5 inline-flex items-center gap-2 rounded-full bg-navy-900 px-6 py-3 font-semibold text-white disabled:opacity-60"
           >
             {pending && <Loader2 className="size-4 animate-spin" />}
@@ -294,9 +349,9 @@ export function InsuranceWizard() {
           </button>
 
           <p className="mt-4 text-xs text-slate-500">
-            Southeast Roofing documents damage and gives honest guidance. We do not
-            determine coverage or act as your insurance adjuster. Your insurer decides
-            your claim.
+            Southeast Roofing documents damage and gives honest guidance. We do
+            not determine coverage or act as your insurance adjuster. Your
+            insurer decides your claim.
           </p>
         </form>
       </div>
@@ -329,7 +384,11 @@ export function InsuranceWizard() {
             className="flex items-center justify-between rounded-xl border border-border bg-white px-5 py-4 text-left font-semibold text-navy-900 transition hover:border-navy-900 hover:bg-secondary"
           >
             <span>{opt.label}</span>
-            {opt.hint && <span className="text-sm font-normal text-slate-500">{opt.hint}</span>}
+            {opt.hint && (
+              <span className="text-sm font-normal text-slate-500">
+                {opt.hint}
+              </span>
+            )}
           </button>
         ))}
       </div>

@@ -61,7 +61,9 @@ export function ProductionLogin() {
 
         <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4">
           <label className="flex flex-col gap-2">
-            <span className="text-sm font-semibold text-navy-900">Password</span>
+            <span className="text-sm font-semibold text-navy-900">
+              Password
+            </span>
             <div className="relative">
               <input
                 type={show ? "text" : "password"}

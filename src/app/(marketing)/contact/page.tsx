@@ -131,7 +131,8 @@ export default function ContactPage() {
                 className="shadow-premium aspect-[4/3] w-full rounded-2xl border border-border object-cover"
               />
               <figcaption className="mt-2 text-sm text-slate-500">
-                Look for the Southeast Roofing sign, Suite F, right on Highway 98.
+                Look for the Southeast Roofing sign, Suite F, right on Highway
+                98.
               </figcaption>
             </figure>
           </Reveal>

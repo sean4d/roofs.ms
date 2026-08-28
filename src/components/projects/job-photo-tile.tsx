@@ -57,7 +57,11 @@ export function JobPhotoTile({
         )}
       </button>
       {open && job && (
-        <JobCard job={job} startPhotoId={startPhotoId} onClose={() => setOpen(false)} />
+        <JobCard
+          job={job}
+          startPhotoId={startPhotoId}
+          onClose={() => setOpen(false)}
+        />
       )}
     </>
   );

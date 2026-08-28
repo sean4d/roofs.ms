@@ -57,8 +57,8 @@ const SHINGLE_LINES = [
 ];
 
 const METAL_PRODUCTS = [
-  '29ga Gibraltar Rib',
-  '26ga Gibraltar Rib',
+  "29ga Gibraltar Rib",
+  "26ga Gibraltar Rib",
   "Standing Seam",
   "5V Crimp",
   "Metal Shingle",
@@ -83,8 +83,20 @@ export const JOB_TYPES: JobType[] = [
     label: "Shingle Roof",
     noun: "shingle roof",
     fields: [
-      { key: "product", label: "Shingle line", kind: "select", options: SHINGLE_LINES, filterable: true },
-      { key: "color", label: "Shingle color", kind: "text", filterable: true, placeholder: "e.g. Pewter Gray" },
+      {
+        key: "product",
+        label: "Shingle line",
+        kind: "select",
+        options: SHINGLE_LINES,
+        filterable: true,
+      },
+      {
+        key: "color",
+        label: "Shingle color",
+        kind: "text",
+        filterable: true,
+        placeholder: "e.g. Pewter Gray",
+      },
     ],
   },
   {
@@ -92,8 +104,20 @@ export const JOB_TYPES: JobType[] = [
     label: "Metal Roof",
     noun: "metal roof",
     fields: [
-      { key: "product", label: "Metal product", kind: "select", options: METAL_PRODUCTS, filterable: true },
-      { key: "color", label: "Metal color", kind: "text", filterable: true, placeholder: "e.g. Galvalume, Burnished Slate" },
+      {
+        key: "product",
+        label: "Metal product",
+        kind: "select",
+        options: METAL_PRODUCTS,
+        filterable: true,
+      },
+      {
+        key: "color",
+        label: "Metal color",
+        kind: "text",
+        filterable: true,
+        placeholder: "e.g. Galvalume, Burnished Slate",
+      },
     ],
   },
   {
@@ -105,7 +129,16 @@ export const JOB_TYPES: JobType[] = [
         key: "damage",
         label: "Type of storm damage",
         kind: "multi",
-        options: ["Hail", "Wind", "Missing shingles", "Heat blister", "Nail pops", "Granular loss", "Tree / impact", "Flashing damage"],
+        options: [
+          "Hail",
+          "Wind",
+          "Missing shingles",
+          "Heat blister",
+          "Nail pops",
+          "Granular loss",
+          "Tree / impact",
+          "Flashing damage",
+        ],
         filterable: true,
       },
     ],
@@ -115,9 +148,26 @@ export const JOB_TYPES: JobType[] = [
     label: "Gutters",
     noun: "gutters",
     fields: [
-      { key: "product", label: "Gutter type", kind: "select", options: GUTTER_PRODUCTS, filterable: true },
-      { key: "material", label: "Material", kind: "select", options: ["Aluminum", "Copper", "Steel"] },
-      { key: "color", label: "Color", kind: "text", filterable: true, placeholder: "e.g. White, Musket Brown" },
+      {
+        key: "product",
+        label: "Gutter type",
+        kind: "select",
+        options: GUTTER_PRODUCTS,
+        filterable: true,
+      },
+      {
+        key: "material",
+        label: "Material",
+        kind: "select",
+        options: ["Aluminum", "Copper", "Steel"],
+      },
+      {
+        key: "color",
+        label: "Color",
+        kind: "text",
+        filterable: true,
+        placeholder: "e.g. White, Musket Brown",
+      },
     ],
   },
   {
@@ -125,8 +175,19 @@ export const JOB_TYPES: JobType[] = [
     label: "Leaf Guard",
     noun: "gutter guards",
     fields: [
-      { key: "productType", label: "Guard type", kind: "select", options: ["Micro-mesh", "Mesh screen", "Reverse-curve", "Foam insert"], filterable: true },
-      { key: "brand", label: "Brand (optional)", kind: "text", placeholder: "e.g. LeafGuard, Gutterglove" },
+      {
+        key: "productType",
+        label: "Guard type",
+        kind: "select",
+        options: ["Micro-mesh", "Mesh screen", "Reverse-curve", "Foam insert"],
+        filterable: true,
+      },
+      {
+        key: "brand",
+        label: "Brand (optional)",
+        kind: "text",
+        placeholder: "e.g. LeafGuard, Gutterglove",
+      },
     ],
   },
   {
@@ -134,7 +195,19 @@ export const JOB_TYPES: JobType[] = [
     label: "Siding",
     noun: "siding",
     fields: [
-      { key: "productType", label: "Siding type", kind: "select", options: ["Vinyl", "Fiber Cement (Hardie)", "Metal", "Wood", "Board & Batten"], filterable: true },
+      {
+        key: "productType",
+        label: "Siding type",
+        kind: "select",
+        options: [
+          "Vinyl",
+          "Fiber Cement (Hardie)",
+          "Metal",
+          "Wood",
+          "Board & Batten",
+        ],
+        filterable: true,
+      },
       { key: "color", label: "Color", kind: "text", filterable: true },
     ],
   },
@@ -143,9 +216,26 @@ export const JOB_TYPES: JobType[] = [
     label: "TPO (Flat/Commercial)",
     noun: "TPO roof",
     fields: [
-      { key: "thickness", label: "Membrane thickness", kind: "select", options: ["45 mil", "60 mil", "80 mil"], filterable: true },
-      { key: "color", label: "Membrane color", kind: "select", options: ["White", "Gray", "Tan"], filterable: true },
-      { key: "attachment", label: "Attachment", kind: "select", options: ["Mechanically attached", "Fully adhered", "Ballasted"] },
+      {
+        key: "thickness",
+        label: "Membrane thickness",
+        kind: "select",
+        options: ["45 mil", "60 mil", "80 mil"],
+        filterable: true,
+      },
+      {
+        key: "color",
+        label: "Membrane color",
+        kind: "select",
+        options: ["White", "Gray", "Tan"],
+        filterable: true,
+      },
+      {
+        key: "attachment",
+        label: "Attachment",
+        kind: "select",
+        options: ["Mechanically attached", "Fully adhered", "Ballasted"],
+      },
     ],
   },
   {
@@ -153,7 +243,17 @@ export const JOB_TYPES: JobType[] = [
     label: "Rolled Roofing",
     noun: "rolled roof",
     fields: [
-      { key: "productType", label: "Type", kind: "select", options: ["Mineral-surfaced (MSR)", "Modified bitumen", "Peel-and-stick"], filterable: true },
+      {
+        key: "productType",
+        label: "Type",
+        kind: "select",
+        options: [
+          "Mineral-surfaced (MSR)",
+          "Modified bitumen",
+          "Peel-and-stick",
+        ],
+        filterable: true,
+      },
     ],
   },
   {
@@ -161,9 +261,26 @@ export const JOB_TYPES: JobType[] = [
     label: "EPDM (Rubber)",
     noun: "EPDM roof",
     fields: [
-      { key: "thickness", label: "Membrane thickness", kind: "select", options: ["45 mil", "60 mil", "90 mil"], filterable: true },
-      { key: "color", label: "Color", kind: "select", options: ["Black", "White"], filterable: true },
-      { key: "attachment", label: "Attachment", kind: "select", options: ["Mechanically attached", "Fully adhered", "Ballasted"] },
+      {
+        key: "thickness",
+        label: "Membrane thickness",
+        kind: "select",
+        options: ["45 mil", "60 mil", "90 mil"],
+        filterable: true,
+      },
+      {
+        key: "color",
+        label: "Color",
+        kind: "select",
+        options: ["Black", "White"],
+        filterable: true,
+      },
+      {
+        key: "attachment",
+        label: "Attachment",
+        kind: "select",
+        options: ["Mechanically attached", "Fully adhered", "Ballasted"],
+      },
     ],
   },
   {
@@ -171,9 +288,26 @@ export const JOB_TYPES: JobType[] = [
     label: "PVC (Flat/Commercial)",
     noun: "PVC roof",
     fields: [
-      { key: "thickness", label: "Membrane thickness", kind: "select", options: ["50 mil", "60 mil", "80 mil"], filterable: true },
-      { key: "color", label: "Membrane color", kind: "select", options: ["White", "Gray", "Tan"], filterable: true },
-      { key: "attachment", label: "Attachment", kind: "select", options: ["Mechanically attached", "Fully adhered"] },
+      {
+        key: "thickness",
+        label: "Membrane thickness",
+        kind: "select",
+        options: ["50 mil", "60 mil", "80 mil"],
+        filterable: true,
+      },
+      {
+        key: "color",
+        label: "Membrane color",
+        kind: "select",
+        options: ["White", "Gray", "Tan"],
+        filterable: true,
+      },
+      {
+        key: "attachment",
+        label: "Attachment",
+        kind: "select",
+        options: ["Mechanically attached", "Fully adhered"],
+      },
     ],
   },
 ];

@@ -12,10 +12,7 @@ import {
 } from "lucide-react";
 
 import { siteConfig } from "@/config/site";
-import {
-  stormPhotos,
-  STORM_CATEGORY_LABELS,
-} from "@/content/photos";
+import { stormPhotos, STORM_CATEGORY_LABELS } from "@/content/photos";
 import { buildMetadata } from "@/lib/seo";
 import { breadcrumbSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -225,7 +222,7 @@ export default function StormCenterPage() {
                 city={card.photo.city}
                 className="aspect-[4/3] w-full rounded-2xl border border-border"
               />
-              <span className="pointer-events-none absolute right-2.5 top-2.5 rounded-full bg-navy-950/80 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur sm:px-3 sm:text-xs">
+              <span className="pointer-events-none absolute top-2.5 right-2.5 rounded-full bg-navy-950/80 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur sm:px-3 sm:text-xs">
                 {card.label}
               </span>
             </StaggerItem>
@@ -255,10 +252,10 @@ export default function StormCenterPage() {
               Documented damage → assisted claim → rebuilt roof
             </h2>
             <p className="mt-5 text-lg leading-relaxed text-steel-100">
-              About half our work is insurance restoration. We document like
-              the file will be argued over, meet your adjuster on the roof,
-              and assist through the entire claims process, start to finish,
-              with no outcome promises and no deductible games.
+              About half our work is insurance restoration. We document like the
+              file will be argued over, meet your adjuster on the roof, and
+              assist through the entire claims process, start to finish, with no
+              outcome promises and no deductible games.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button
@@ -320,9 +317,9 @@ export default function StormCenterPage() {
         <Reveal className="mt-8">
           <p className="text-sm leading-relaxed text-slate-500">
             And one number that isn&apos;t a website:{" "}
-            <PhoneLink className="font-semibold text-navy-900" />, when a
-            storm has just moved through, our crews and claims assistance are
-            already rolling.
+            <PhoneLink className="font-semibold text-navy-900" />, when a storm
+            has just moved through, our crews and claims assistance are already
+            rolling.
           </p>
         </Reveal>
       </Section>

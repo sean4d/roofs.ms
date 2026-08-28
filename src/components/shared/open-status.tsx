@@ -37,7 +37,9 @@ const label12 = (t: string) => {
   const [h, m] = t.split(":").map(Number);
   const ampm = h < 12 ? "AM" : "PM";
   const hr = h % 12 === 0 ? 12 : h % 12;
-  return m === 0 ? `${hr} ${ampm}` : `${hr}:${String(m).padStart(2, "0")} ${ampm}`;
+  return m === 0
+    ? `${hr} ${ampm}`
+    : `${hr}:${String(m).padStart(2, "0")} ${ampm}`;
 };
 
 interface Status {
@@ -62,7 +64,11 @@ function computeStatus(spec: HoursBlock[]): Status {
   const todayIdx = DAYS.indexOf(weekday);
 
   for (const b of spec) {
-    if (b.days.includes(weekday) && nowMin >= toMin(b.opens) && nowMin < toMin(b.closes)) {
+    if (
+      b.days.includes(weekday) &&
+      nowMin >= toMin(b.opens) &&
+      nowMin < toMin(b.closes)
+    ) {
       return { open: true };
     }
   }
@@ -74,7 +80,8 @@ function computeStatus(spec: HoursBlock[]): Status {
     for (const b of spec) {
       if (!b.days.includes(dayName)) continue;
       if (d === 0 && nowMin >= toMin(b.opens)) continue; // already past today's open
-      const prefix = d === 0 ? "today" : d === 1 ? "tomorrow" : dayName.slice(0, 3);
+      const prefix =
+        d === 0 ? "today" : d === 1 ? "tomorrow" : dayName.slice(0, 3);
       return { open: false, next: `Opens ${prefix} ${label12(b.opens)}` };
     }
   }
@@ -116,7 +123,7 @@ export function OpenStatus({
         )}
         aria-hidden="true"
       />
-      {status.open ? "Open now" : status.next ?? "Closed"}
+      {status.open ? "Open now" : (status.next ?? "Closed")}
     </span>
   );
 }

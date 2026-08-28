@@ -105,7 +105,7 @@ export function ProjectCard({
               <span className="font-semibold text-navy-900">{displayName}</span>
               <TypeBadge type={project.projectType} />
               {project.archived && (
-                <span className="rounded-full bg-slate-200 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-slate-600">
+                <span className="rounded-full bg-slate-200 px-2 py-0.5 text-[11px] font-bold tracking-wide text-slate-600 uppercase">
                   Archived
                 </span>
               )}
@@ -169,7 +169,7 @@ export function ProjectCard({
               onClick={() => reorder.onMove(-1)}
               disabled={!reorder.canMoveUp}
               aria-label={`Move ${displayName} up`}
-              className="grid flex-1 min-h-11 w-11 place-items-center text-slate-500 hover:bg-secondary hover:text-navy-900 disabled:opacity-30"
+              className="grid min-h-11 w-11 flex-1 place-items-center text-slate-500 hover:bg-secondary hover:text-navy-900 disabled:opacity-30"
             >
               <ArrowUp className="size-4" aria-hidden="true" />
             </button>
@@ -178,7 +178,7 @@ export function ProjectCard({
               onClick={() => reorder.onMove(1)}
               disabled={!reorder.canMoveDown}
               aria-label={`Move ${displayName} down`}
-              className="grid flex-1 min-h-11 w-11 place-items-center border-t border-border text-slate-500 hover:bg-secondary hover:text-navy-900 disabled:opacity-30"
+              className="grid min-h-11 w-11 flex-1 place-items-center border-t border-border text-slate-500 hover:bg-secondary hover:text-navy-900 disabled:opacity-30"
             >
               <ArrowDown className="size-4" aria-hidden="true" />
             </button>
@@ -212,7 +212,7 @@ export function ProjectCard({
 
       {/* Expanded job sheet */}
       {expanded && (
-        <div className="border-t border-border px-4 pb-4 pt-4 sm:px-5">
+        <div className="border-t border-border px-4 pt-4 pb-4 sm:px-5">
           {/* Customer + job fields */}
           <div className="grid gap-4 sm:grid-cols-2">
             <TextField
@@ -267,7 +267,7 @@ export function ProjectCard({
 
           {/* Workflow stages */}
           <fieldset className="mt-5">
-            <legend className="text-xs font-semibold uppercase tracking-wide text-steel-500">
+            <legend className="text-xs font-semibold tracking-wide text-steel-500 uppercase">
               Production stages
             </legend>
             <ol className="mt-2 flex flex-wrap items-center gap-y-1.5">
@@ -296,7 +296,7 @@ export function ProjectCard({
           <fieldset className="mt-4 rounded-xl bg-secondary/50 px-3 py-2.5">
             <legend className="sr-only">Install closeout</legend>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-              <span className="text-xs font-semibold uppercase tracking-wide text-steel-500">
+              <span className="text-xs font-semibold tracking-wide text-steel-500 uppercase">
                 Closeout
               </span>
               {CLOSEOUT_ITEMS.map((item) => (
@@ -443,7 +443,7 @@ function TypeBadge({ type }: { type: "retail" | "insurance" }) {
   return (
     <span
       className={cn(
-        "rounded-full px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide",
+        "rounded-full px-2 py-0.5 text-[11px] font-bold tracking-wide uppercase",
         type === "insurance"
           ? "bg-steel-100 text-navy-900"
           : "bg-ember-500/25 text-navy-900",

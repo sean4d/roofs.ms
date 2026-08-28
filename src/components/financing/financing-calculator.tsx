@@ -145,10 +145,10 @@ export function FinancingCalculator() {
       <p className="mt-6 text-xs leading-relaxed text-slate-400">
         Estimates only, for planning purposes, not an offer or approval of
         credit. Financing is provided by GoodLeap, LLC, subject to credit
-        approval; your actual rate, term, and payment are determined by
-        GoodLeap at application. Figures shown use the standard-installment
-        12.99% APR with Autopay offer currently available through our
-        program and may change. $0-down availability subject to approval.
+        approval; your actual rate, term, and payment are determined by GoodLeap
+        at application. Figures shown use the standard-installment 12.99% APR
+        with Autopay offer currently available through our program and may
+        change. $0-down availability subject to approval.
       </p>
     </div>
   );

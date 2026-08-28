@@ -2,7 +2,11 @@ import { NextResponse } from "next/server";
 
 import { hasSession, sameOrigin } from "@/lib/production/auth";
 import { projectPatchSchema } from "@/lib/production/model";
-import { deleteProject, getProject, updateProject } from "@/lib/production/store";
+import {
+  deleteProject,
+  getProject,
+  updateProject,
+} from "@/lib/production/store";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";

@@ -23,7 +23,7 @@ import { FinalCta } from "@/components/home/final-cta";
 
 /**
  * City service-area page template (PRD §5). Local proof first, when real
- * Southeast Roofing project photos exist for the city they lead the page, 
+ * Southeast Roofing project photos exist for the city they lead the page,
  * the strongest anti-doorway signal there is.
  */
 
@@ -305,7 +305,10 @@ export function CityPage({
                   href={`/service-areas/${city.slug}`}
                   className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-5 py-2.5 text-sm font-semibold text-navy-900 transition-all duration-200 hover:-translate-y-0.5 hover:border-steel-500 hover:shadow-md"
                 >
-                  <MapPin className="size-3.5 text-steel-500" aria-hidden="true" />
+                  <MapPin
+                    className="size-3.5 text-steel-500"
+                    aria-hidden="true"
+                  />
                   {city.city}
                 </Link>
               </StaggerItem>
@@ -316,7 +319,10 @@ export function CityPage({
                 className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary px-5 py-2.5 text-sm font-semibold text-navy-900 transition-all duration-200 hover:-translate-y-0.5 hover:border-steel-500 hover:shadow-md"
               >
                 All service areas
-                <ArrowRight className="size-3.5 text-steel-500" aria-hidden="true" />
+                <ArrowRight
+                  className="size-3.5 text-steel-500"
+                  aria-hidden="true"
+                />
               </Link>
             </StaggerItem>
           </StaggerGroup>

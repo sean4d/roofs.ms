@@ -43,10 +43,30 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/favicon/favicon-32.png", type: "image/png", sizes: "32x32", media: "(prefers-color-scheme: light)" },
-      { url: "/favicon/favicon-white-32.png", type: "image/png", sizes: "32x32", media: "(prefers-color-scheme: dark)" },
-      { url: "/favicon/favicon-16.png", type: "image/png", sizes: "16x16", media: "(prefers-color-scheme: light)" },
-      { url: "/favicon/favicon-white-16.png", type: "image/png", sizes: "16x16", media: "(prefers-color-scheme: dark)" },
+      {
+        url: "/favicon/favicon-32.png",
+        type: "image/png",
+        sizes: "32x32",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/favicon/favicon-white-32.png",
+        type: "image/png",
+        sizes: "32x32",
+        media: "(prefers-color-scheme: dark)",
+      },
+      {
+        url: "/favicon/favicon-16.png",
+        type: "image/png",
+        sizes: "16x16",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/favicon/favicon-white-16.png",
+        type: "image/png",
+        sizes: "16x16",
+        media: "(prefers-color-scheme: dark)",
+      },
     ],
     // Installed-app icon (filled navy tile). The manual `icon` list above
     // suppresses file-convention auto-detection, so declare it explicitly.

@@ -126,7 +126,7 @@ export default function ServiceAreasHubPage() {
               </ul>
               <p className="mt-5 text-sm leading-relaxed text-slate-500">
                 Don&apos;t see your town? If you&apos;re within about two hours
-                of Hattiesburg, we almost certainly serve you, {" "}
+                of Hattiesburg, we almost certainly serve you,{" "}
                 <Link
                   href="/contact"
                   className="font-medium text-navy-900 underline-offset-4 hover:underline"

@@ -214,8 +214,14 @@ function GalleryInner() {
       >
         {(
           [
-            { key: "roofs", label: `Completed roofs (${completedPhotos.length})` },
-            { key: "progress", label: `During install (${progressPhotos.length})` },
+            {
+              key: "roofs",
+              label: `Completed roofs (${completedPhotos.length})`,
+            },
+            {
+              key: "progress",
+              label: `During install (${progressPhotos.length})`,
+            },
             { key: "storm", label: `Storm response (${stormPhotos.length})` },
           ] as const
         ).map((tab) => (

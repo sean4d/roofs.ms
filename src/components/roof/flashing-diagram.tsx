@@ -25,7 +25,10 @@ export function FlashingDiagram() {
     FLASHING_TYPES.find((f) => f.key === activeKey) ?? FLASHING_TYPES[0];
 
   return (
-    <div id="flashing-diagram" className="grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
+    <div
+      id="flashing-diagram"
+      className="grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]"
+    >
       <div>
         <HotspotHouse
           items={FLASHING_TYPES.map((f) => ({ ...f, short: f.where }))}
@@ -44,47 +47,51 @@ export function FlashingDiagram() {
           Not every flashing detail appears on one house, roof shapes vary. The
           list below covers the full set we install.
         </p>
-      <ol className="mt-4 flex max-h-80 flex-col gap-1.5 overflow-y-auto overscroll-contain rounded-2xl border border-border bg-secondary p-2">
-        {FLASHING_TYPES.map((f, i) => {
-          const isActive = f.key === activeKey;
-          return (
-            <li key={f.key}>
-              <button
-                type="button"
-                aria-pressed={isActive}
-                onClick={() => {
-                  setActiveKey(f.key);
-                  track("diagram_component_clicked", {
-                    tool: "flashing-diagram",
-                    component: f.name,
-                  });
-                }}
-                className={cn(
-                  "flex w-full items-center gap-3 rounded-lg border px-3 py-2.5 text-left transition-all duration-200",
-                  isActive
-                    ? "border-ember-500 bg-white shadow-sm"
-                    : "border-transparent bg-white/55 hover:bg-white",
-                )}
-              >
-                <span
+        <ol className="mt-4 flex max-h-80 flex-col gap-1.5 overflow-y-auto overscroll-contain rounded-2xl border border-border bg-secondary p-2">
+          {FLASHING_TYPES.map((f, i) => {
+            const isActive = f.key === activeKey;
+            return (
+              <li key={f.key}>
+                <button
+                  type="button"
+                  aria-pressed={isActive}
+                  onClick={() => {
+                    setActiveKey(f.key);
+                    track("diagram_component_clicked", {
+                      tool: "flashing-diagram",
+                      component: f.name,
+                    });
+                  }}
                   className={cn(
-                    "grid size-7 flex-none place-items-center rounded-md text-xs font-bold transition-colors",
-                    isActive ? "bg-navy-900 text-white" : "bg-ember-500 text-navy-900",
+                    "flex w-full items-center gap-3 rounded-lg border px-3 py-2.5 text-left transition-all duration-200",
+                    isActive
+                      ? "border-ember-500 bg-white shadow-sm"
+                      : "border-transparent bg-white/55 hover:bg-white",
                   )}
                 >
-                  {i + 1}
-                </span>
-                <span className="min-w-0">
-                  <span className="block font-semibold text-navy-900">{f.name}</span>
-                  <span className="block truncate text-sm text-slate-600">
-                    {f.where}
+                  <span
+                    className={cn(
+                      "grid size-7 flex-none place-items-center rounded-md text-xs font-bold transition-colors",
+                      isActive
+                        ? "bg-navy-900 text-white"
+                        : "bg-ember-500 text-navy-900",
+                    )}
+                  >
+                    {i + 1}
                   </span>
-                </span>
-              </button>
-            </li>
-          );
-        })}
-      </ol>
+                  <span className="min-w-0">
+                    <span className="block font-semibold text-navy-900">
+                      {f.name}
+                    </span>
+                    <span className="block truncate text-sm text-slate-600">
+                      {f.where}
+                    </span>
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+        </ol>
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-border bg-white lg:sticky lg:top-24 lg:self-start">
@@ -112,7 +119,10 @@ export function FlashingDiagram() {
             </p>
           </div>
 
-          <Row icon={<Info className="size-4 text-steel-500" />} label="What it is">
+          <Row
+            icon={<Info className="size-4 text-steel-500" />}
+            label="What it is"
+          >
             {active.what}
           </Row>
           <Row

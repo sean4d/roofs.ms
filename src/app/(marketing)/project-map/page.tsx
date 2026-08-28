@@ -43,9 +43,9 @@ export default async function ProjectMapPage() {
             Roofs all over South Mississippi
           </h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600">
-            Every pin is a real Southeast Roofing job. Explore the map by city and
-            product, then tap any roof to see the photos up close, proof we&apos;re
-            working right in your community.
+            Every pin is a real Southeast Roofing job. Explore the map by city
+            and product, then tap any roof to see the photos up close, proof
+            we&apos;re working right in your community.
           </p>
         </div>
       </section>

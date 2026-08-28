@@ -15,8 +15,16 @@ export interface MaterialPrice {
 
 export const pricingConfig = {
   materials: {
-    "architectural-shingles": { label: "Architectural shingles", low: 400, high: 575 },
-    "premium-shingles": { label: "Premium / designer shingles", low: 575, high: 800 },
+    "architectural-shingles": {
+      label: "Architectural shingles",
+      low: 400,
+      high: 575,
+    },
+    "premium-shingles": {
+      label: "Premium / designer shingles",
+      low: 575,
+      high: 800,
+    },
     "metal-29": { label: "29-gauge metal", low: 900, high: 1250 },
     "metal-26": { label: "26-gauge metal", low: 1100, high: 1550 },
     "commercial-tpo": { label: "Commercial TPO (flat)", low: 600, high: 950 },
@@ -82,7 +90,9 @@ export function estimateCost(input: CalcInput): CalcResult | null {
   // (owner rule. A two-story selection can never lower the estimate).
   const footprint = input.homeSize;
   const roofArea =
-    footprint * pricingConfig.pitch[input.pitch].factor * pricingConfig.wasteFactor;
+    footprint *
+    pricingConfig.pitch[input.pitch].factor *
+    pricingConfig.wasteFactor;
   const squares = roofArea / 100;
 
   let low = squares * mat.low;

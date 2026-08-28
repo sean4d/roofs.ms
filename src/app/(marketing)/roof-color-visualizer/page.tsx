@@ -61,7 +61,9 @@ async function sanityColorPhotos(): Promise<VisualizerRealPhoto[]> {
         material,
         product: productName ?? undefined,
         color,
-        src: urlFor({ _type: "image", asset: { _ref: first.ref } }).width(1000).url(),
+        src: urlFor({ _type: "image", asset: { _ref: first.ref } })
+          .width(1000)
+          .url(),
         alt: first.alt ?? p.title,
         city: p.city,
       },
@@ -82,9 +84,10 @@ export default async function RoofColorVisualizerPage() {
             Roof Color Visualizer
           </h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600">
-            Explore shingle and metal roof colors, and, where we&apos;ve installed it, 
-            see the real roof on a South Mississippi home. Find a color you love, then
-            book a free inspection to see a physical sample.
+            Explore shingle and metal roof colors, and, where we&apos;ve
+            installed it, see the real roof on a South Mississippi home. Find a
+            color you love, then book a free inspection to see a physical
+            sample.
           </p>
         </div>
       </section>

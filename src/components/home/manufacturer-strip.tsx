@@ -6,7 +6,7 @@ import { SectionHeading } from "@/components/shared/section-heading";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 
 /**
- * Manufacturer partnerships (Phase 4 §8, §12): factually exact wording, 
+ * Manufacturer partnerships (Phase 4 §8, §12): factually exact wording,
  * GAF is our certification; Owens Corning is a product line we install,
  * never a certification claim. Official logos slot in when sourced.
  */

@@ -21,9 +21,23 @@ interface NwsAlert {
 
 /** Counties our 31-city service area sits in (see content/cities). */
 const SERVICE_COUNTIES = [
-  "Forrest", "Lamar", "Jones", "Perry", "Covington", "Simpson", "Marion",
-  "Lincoln", "Pike", "Pearl River", "Stone", "George", "Hancock",
-  "Harrison", "Jackson", "Hinds", "Lauderdale",
+  "Forrest",
+  "Lamar",
+  "Jones",
+  "Perry",
+  "Covington",
+  "Simpson",
+  "Marion",
+  "Lincoln",
+  "Pike",
+  "Pearl River",
+  "Stone",
+  "George",
+  "Hancock",
+  "Harrison",
+  "Jackson",
+  "Hinds",
+  "Lauderdale",
 ];
 
 const SEVERITY_ORDER: Record<string, number> = {
@@ -44,13 +58,16 @@ const SEVERITY_STYLE: Record<string, string> = {
 
 async function fetchAlerts(): Promise<NwsAlert[] | null> {
   try {
-    const response = await fetch("https://api.weather.gov/alerts/active?area=MS", {
-      headers: {
-        "User-Agent": "southeastroofing.llc (office@southeastroofing.llc)",
-        Accept: "application/geo+json",
+    const response = await fetch(
+      "https://api.weather.gov/alerts/active?area=MS",
+      {
+        headers: {
+          "User-Agent": "southeastroofing.llc (office@southeastroofing.llc)",
+          Accept: "application/geo+json",
+        },
+        next: { revalidate: 1800 },
       },
-      next: { revalidate: 1800 },
-    });
+    );
     if (!response.ok) return null;
     const data = (await response.json()) as {
       features?: {
@@ -121,8 +138,8 @@ export async function StormAlerts() {
           <span className="font-semibold text-navy-900">
             No active weather alerts for Mississippi right now.
           </span>{" "}
-          Quiet skies are the right time for an inspection, storm season
-          never waits long here.
+          Quiet skies are the right time for an inspection, storm season never
+          waits long here.
         </p>
       </div>
     );

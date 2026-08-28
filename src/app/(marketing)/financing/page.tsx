@@ -67,7 +67,7 @@ export default function FinancingPage() {
               Ready to see your options?
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-steel-100">
-              The application runs through GoodLeap, our financing partner: 
+              The application runs through GoodLeap, our financing partner:
               online, in minutes, with your plans and terms shown to you
               directly.
             </p>

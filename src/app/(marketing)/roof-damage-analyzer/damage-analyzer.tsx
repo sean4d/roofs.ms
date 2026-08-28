@@ -31,7 +31,12 @@ const ISSUES: { value: DamageIssue; label: string }[] = [
 
 const WHEN = ["This week", "1–4 weeks ago", "Over a month ago", "Not sure"];
 const INSURANCE = ["Yes", "No", "Not sure"];
-const STAGES = ["Reviewing your photos & notes", "Identifying likely damage", "Gauging urgency", "Preparing your next step"];
+const STAGES = [
+  "Reviewing your photos & notes",
+  "Identifying likely damage",
+  "Gauging urgency",
+  "Preparing your next step",
+];
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const initialState: LeadFormState = { status: "idle" };
 
@@ -58,7 +63,8 @@ export function DamageAnalyzer() {
     if (!list) return;
     const imgs = Array.from(list).filter((f) => f.type.startsWith("image/"));
     setFiles((prev) => [...prev, ...imgs]);
-    if (imgs.length) track("image_uploaded", { tool: "damage-analyzer", count: imgs.length });
+    if (imgs.length)
+      track("image_uploaded", { tool: "damage-analyzer", count: imgs.length });
   }
 
   async function analyze() {
@@ -69,7 +75,13 @@ export function DamageAnalyzer() {
     const req = fetch("/api/damage-analyzer", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ issue, when, insurance, photoCount: files.length, images }),
+      body: JSON.stringify({
+        issue,
+        when,
+        insurance,
+        photoCount: files.length,
+        images,
+      }),
     }).then((r) => r.json() as Promise<DamageResult>);
     for (let i = 0; i < STAGES.length; i++) {
       await sleep(650);
@@ -84,11 +96,16 @@ export function DamageAnalyzer() {
     return (
       <div className="mx-auto max-w-lg rounded-2xl border border-border bg-white p-8 text-center">
         <CheckCircle2 className="mx-auto size-12 text-emerald-600" />
-        <h2 className="mt-4 text-2xl font-bold text-navy-900">Got it, we&apos;re on it</h2>
+        <h2 className="mt-4 text-2xl font-bold text-navy-900">
+          Got it, we&apos;re on it
+        </h2>
         <p className="mt-2 text-slate-600">
-          Thanks! We&apos;ll reach out shortly to set up your free inspection. Have your
-          photos handy to show our inspector. Urgent?{" "}
-          <a href={`tel:${siteConfig.phone.tel}`} className="font-semibold text-navy-900">
+          Thanks! We&apos;ll reach out shortly to set up your free inspection.
+          Have your photos handy to show our inspector. Urgent?{" "}
+          <a
+            href={`tel:${siteConfig.phone.tel}`}
+            className="font-semibold text-navy-900"
+          >
             Call {siteConfig.phone.display}
           </a>
           .
@@ -113,13 +130,25 @@ export function DamageAnalyzer() {
           >
             <ImagePlus className="size-7 text-steel-500" />
             <span className="font-semibold text-navy-900">
-              {files.length > 0 ? `${files.length} photo${files.length === 1 ? "" : "s"} added` : "Upload photos of the damage"}
+              {files.length > 0
+                ? `${files.length} photo${files.length === 1 ? "" : "s"} added`
+                : "Upload photos of the damage"}
             </span>
-            <span className="text-xs text-slate-500">Tap to browse or drag &amp; drop (optional)</span>
-            <input type="file" accept="image/*" multiple onChange={(e) => addFiles(e.target.files)} className="hidden" />
+            <span className="text-xs text-slate-500">
+              Tap to browse or drag &amp; drop (optional)
+            </span>
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={(e) => addFiles(e.target.files)}
+              className="hidden"
+            />
           </label>
 
-          <p className="mt-6 text-sm font-semibold text-navy-900">What are you seeing?</p>
+          <p className="mt-6 text-sm font-semibold text-navy-900">
+            What are you seeing?
+          </p>
           <div className="mt-3 flex flex-wrap gap-2">
             {ISSUES.map((i) => (
               <Chip
@@ -127,7 +156,10 @@ export function DamageAnalyzer() {
                 active={issue === i.value}
                 onClick={() => {
                   setIssue(i.value);
-                  track("issue_selected", { tool: "damage-analyzer", issue: i.value });
+                  track("issue_selected", {
+                    tool: "damage-analyzer",
+                    issue: i.value,
+                  });
                 }}
               >
                 {i.label}
@@ -149,10 +181,22 @@ export function DamageAnalyzer() {
       {phase === "details" && (
         <div className="rounded-2xl border border-border bg-white p-6">
           <div className="grid gap-3 sm:grid-cols-2">
-            <Field label="City" value={city} onChange={setCity} placeholder="e.g. Hattiesburg" />
-            <Field label="Property address" value={address} onChange={setAddress} placeholder="Street address" />
+            <Field
+              label="City"
+              value={city}
+              onChange={setCity}
+              placeholder="e.g. Hattiesburg"
+            />
+            <Field
+              label="Property address"
+              value={address}
+              onChange={setAddress}
+              placeholder="Street address"
+            />
           </div>
-          <p className="mt-5 text-sm font-semibold text-navy-900">When did it happen?</p>
+          <p className="mt-5 text-sm font-semibold text-navy-900">
+            When did it happen?
+          </p>
           <div className="mt-2 flex flex-wrap gap-2">
             {WHEN.map((w) => (
               <Chip key={w} active={when === w} onClick={() => setWhen(w)}>
@@ -160,19 +204,33 @@ export function DamageAnalyzer() {
               </Chip>
             ))}
           </div>
-          <p className="mt-5 text-sm font-semibold text-navy-900">Is insurance involved?</p>
+          <p className="mt-5 text-sm font-semibold text-navy-900">
+            Is insurance involved?
+          </p>
           <div className="mt-2 flex flex-wrap gap-2">
             {INSURANCE.map((v) => (
-              <Chip key={v} active={insurance === v} onClick={() => setInsurance(v)}>
+              <Chip
+                key={v}
+                active={insurance === v}
+                onClick={() => setInsurance(v)}
+              >
                 {v}
               </Chip>
             ))}
           </div>
           <div className="mt-6 flex gap-3">
-            <button type="button" onClick={analyze} className="rounded-full bg-navy-900 px-6 py-3 font-semibold text-white">
+            <button
+              type="button"
+              onClick={analyze}
+              className="rounded-full bg-navy-900 px-6 py-3 font-semibold text-white"
+            >
               Analyze my roof
             </button>
-            <button type="button" onClick={() => setPhase("intake")} className="rounded-full border border-border px-5 py-3 font-semibold text-navy-900">
+            <button
+              type="button"
+              onClick={() => setPhase("intake")}
+              className="rounded-full border border-border px-5 py-3 font-semibold text-navy-900"
+            >
               Back
             </button>
           </div>
@@ -185,8 +243,21 @@ export function DamageAnalyzer() {
           <ul className="flex flex-col gap-3">
             {STAGES.map((s, i) => (
               <li key={s} className="flex items-center gap-3">
-                {i < stage ? <CheckCircle2 className="size-5 text-emerald-600" /> : i === stage ? <Loader2 className="size-5 animate-spin text-steel-500" /> : <span className="size-5 rounded-full border border-border" />}
-                <span className={cn("text-sm", i <= stage ? "text-navy-900" : "text-slate-400")}>{s}</span>
+                {i < stage ? (
+                  <CheckCircle2 className="size-5 text-emerald-600" />
+                ) : i === stage ? (
+                  <Loader2 className="size-5 animate-spin text-steel-500" />
+                ) : (
+                  <span className="size-5 rounded-full border border-border" />
+                )}
+                <span
+                  className={cn(
+                    "text-sm",
+                    i <= stage ? "text-navy-900" : "text-slate-400",
+                  )}
+                >
+                  {s}
+                </span>
               </li>
             ))}
           </ul>
@@ -199,40 +270,90 @@ export function DamageAnalyzer() {
             <span
               className={cn(
                 "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold",
-                result.urgency === "high" ? "bg-red-50 text-red-700" : result.urgency === "moderate" ? "bg-amber-50 text-amber-700" : "bg-emerald-50 text-emerald-700",
+                result.urgency === "high"
+                  ? "bg-red-50 text-red-700"
+                  : result.urgency === "moderate"
+                    ? "bg-amber-50 text-amber-700"
+                    : "bg-emerald-50 text-emerald-700",
               )}
             >
               <AlertTriangle className="size-3.5" />
-              {result.urgency === "high" ? "Time-sensitive" : result.urgency === "moderate" ? "Worth addressing" : "No rush"}
+              {result.urgency === "high"
+                ? "Time-sensitive"
+                : result.urgency === "moderate"
+                  ? "Worth addressing"
+                  : "No rush"}
             </span>
-            <h2 className="mt-3 text-xl font-bold text-navy-900">{result.damageType}</h2>
+            <h2 className="mt-3 text-xl font-bold text-navy-900">
+              {result.damageType}
+            </h2>
             <p className="mt-2 text-slate-700">{result.urgencyNote}</p>
             <p className="mt-2 text-sm text-slate-600">
-              <span className="font-semibold text-navy-900">Suggested next step:</span> {result.nextStep}
+              <span className="font-semibold text-navy-900">
+                Suggested next step:
+              </span>{" "}
+              {result.nextStep}
             </p>
           </div>
 
           {/* Lead capture */}
-          <form action={formAction} className="mt-6 rounded-2xl border border-border bg-white p-6">
-            <h3 className="text-lg font-bold text-navy-900">Get your free inspection</h3>
-            <p className="mt-1 text-sm text-slate-600">We&apos;ll confirm the damage in person, no obligation.</p>
+          <form
+            action={formAction}
+            className="mt-6 rounded-2xl border border-border bg-white p-6"
+          >
+            <h3 className="text-lg font-bold text-navy-900">
+              Get your free inspection
+            </h3>
+            <p className="mt-1 text-sm text-slate-600">
+              We&apos;ll confirm the damage in person, no obligation.
+            </p>
 
             <input type="hidden" name="source" value="damage-analyzer" />
             <input type="hidden" name="storm" value="on" />
-            <input type="hidden" name="service" value="Storm damage / roof damage" />
+            <input
+              type="hidden"
+              name="service"
+              value="Storm damage / roof damage"
+            />
             <input type="hidden" name="page" value={pathname} />
             <input type="hidden" name="city" value={city} />
             <input type="hidden" name="address" value={address} />
-            <input type="hidden" name="message" value={`Damage analyzer, ${summary}`} />
-            <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
+            <input
+              type="hidden"
+              name="message"
+              value={`Damage analyzer, ${summary}`}
+            />
+            <input
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              className="hidden"
+              aria-hidden="true"
+            />
 
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
               <LeadField name="name" label="Name" error={state.errors?.name} />
-              <LeadField name="phone" label="Phone" type="tel" error={state.errors?.phone} />
-              <LeadField name="email" label="Email (optional)" type="email" error={state.errors?.email} />
+              <LeadField
+                name="phone"
+                label="Phone"
+                type="tel"
+                error={state.errors?.phone}
+              />
+              <LeadField
+                name="email"
+                label="Email (optional)"
+                type="email"
+                error={state.errors?.email}
+              />
               <label className="flex flex-col gap-1.5">
-                <span className="text-sm font-medium text-navy-900">Preferred contact</span>
-                <select name="preferredTime" className="rounded-xl border border-border bg-white px-4 py-2.5 outline-none focus:border-steel-500">
+                <span className="text-sm font-medium text-navy-900">
+                  Preferred contact
+                </span>
+                <select
+                  name="preferredTime"
+                  className="rounded-xl border border-border bg-white px-4 py-2.5 outline-none focus:border-steel-500"
+                >
                   <option>Call</option>
                   <option>Text</option>
                   <option>Email</option>
@@ -248,7 +369,12 @@ export function DamageAnalyzer() {
               <button
                 type="submit"
                 disabled={pending}
-                onClick={() => track("cta_click", { action: "submit-lead", source: "damage-analyzer" })}
+                onClick={() =>
+                  track("cta_click", {
+                    action: "submit-lead",
+                    source: "damage-analyzer",
+                  })
+                }
                 className="inline-flex items-center gap-2 rounded-full bg-navy-900 px-6 py-3 font-semibold text-white disabled:opacity-60"
               >
                 {pending && <Loader2 className="size-4 animate-spin" />}
@@ -257,7 +383,12 @@ export function DamageAnalyzer() {
               {siteConfig.phone.tel && (
                 <a
                   href={`tel:${siteConfig.phone.tel}`}
-                  onClick={() => track("cta_click", { action: "call-now", source: "damage-analyzer" })}
+                  onClick={() =>
+                    track("cta_click", {
+                      action: "call-now",
+                      source: "damage-analyzer",
+                    })
+                  }
                   className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 font-semibold text-navy-900"
                 >
                   <PhoneCall className="size-4" /> Call now
@@ -266,9 +397,9 @@ export function DamageAnalyzer() {
             </div>
 
             <p className="mt-4 text-xs text-slate-500">
-              This is a preliminary, automated read. It does not replace a professional
-              roof inspection. Bring your photos to your inspection so we can review them
-              with you.
+              This is a preliminary, automated read. It does not replace a
+              professional roof inspection. Bring your photos to your inspection
+              so we can review them with you.
             </p>
           </form>
         </div>
@@ -277,7 +408,15 @@ export function DamageAnalyzer() {
   );
 }
 
-function Chip({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
+function Chip({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
   return (
     <button
       type="button"
@@ -285,7 +424,9 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
       aria-pressed={active}
       className={cn(
         "rounded-full border px-3.5 py-1.5 text-sm font-semibold transition",
-        active ? "border-navy-900 bg-navy-900 text-white" : "border-border bg-white text-slate-600 hover:border-steel-500",
+        active
+          ? "border-navy-900 bg-navy-900 text-white"
+          : "border-border bg-white text-slate-600 hover:border-steel-500",
       )}
     >
       {children}
@@ -293,7 +434,17 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
   );
 }
 
-function Field({ label, value, onChange, placeholder }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string }) {
+function Field({
+  label,
+  value,
+  onChange,
+  placeholder,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+}) {
   return (
     <label className="flex flex-col gap-1.5">
       <span className="text-sm font-medium text-navy-900">{label}</span>
@@ -307,11 +458,25 @@ function Field({ label, value, onChange, placeholder }: { label: string; value: 
   );
 }
 
-function LeadField({ name, label, type = "text", error }: { name: string; label: string; type?: string; error?: string }) {
+function LeadField({
+  name,
+  label,
+  type = "text",
+  error,
+}: {
+  name: string;
+  label: string;
+  type?: string;
+  error?: string;
+}) {
   return (
     <label className="flex flex-col gap-1.5">
       <span className="text-sm font-medium text-navy-900">{label}</span>
-      <input name={name} type={type} className="rounded-xl border border-border bg-white px-4 py-2.5 outline-none focus:border-steel-500" />
+      <input
+        name={name}
+        type={type}
+        className="rounded-xl border border-border bg-white px-4 py-2.5 outline-none focus:border-steel-500"
+      />
       {error && <span className="text-xs text-red-600">{error}</span>}
     </label>
   );

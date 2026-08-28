@@ -73,7 +73,11 @@ export const FINANCING = {
 };
 
 /** Monthly payment on a simple amortising loan. */
-export function paymentFor(principal: number, months: number, apr = FINANCING.apr): number {
+export function paymentFor(
+  principal: number,
+  months: number,
+  apr = FINANCING.apr,
+): number {
   const r = apr / 12;
   if (r === 0) return Math.round(principal / months);
   return Math.round((principal * r) / (1 - Math.pow(1 + r, -months)));

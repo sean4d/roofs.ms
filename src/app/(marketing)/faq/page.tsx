@@ -53,8 +53,8 @@ export default function FaqPage() {
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600">
               The questions South Mississippi homeowners actually ask us, about
               cost, insurance, licensing, materials, and how the work goes. No
-              sales spin, and we&apos;ll tell you when the honest answer
-              is &ldquo;you don&apos;t need us yet.&rdquo;
+              sales spin, and we&apos;ll tell you when the honest answer is
+              &ldquo;you don&apos;t need us yet.&rdquo;
             </p>
 
             {/* Jump links, helps long-page scanning and gives crawlers the

@@ -16,7 +16,7 @@ import { PhoneLink } from "@/components/shared/phone-link";
 
 /**
  * Commercial consultation flow (PRD §4.2): dedicated form with
- * "commercial" tagging so the owner can triage. Consultation framing, 
+ * "commercial" tagging so the owner can triage. Consultation framing,
  * no instant-quote language.
  */
 

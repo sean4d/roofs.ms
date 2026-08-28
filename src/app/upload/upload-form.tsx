@@ -70,7 +70,10 @@ async function errorFrom(res: Response, fallback: string): Promise<string> {
   } catch {
     // not JSON, fall through to the status line
   }
-  const snippet = text.replace(/<[^>]*>/g, " ").trim().slice(0, 120);
+  const snippet = text
+    .replace(/<[^>]*>/g, " ")
+    .trim()
+    .slice(0, 120);
   return `${fallback} (HTTP ${res.status}${snippet ? `: ${snippet}` : ""})`;
 }
 
@@ -88,7 +91,9 @@ async function deployedVersion(): Promise<string | null> {
 async function compressImage(file: File): Promise<File> {
   if (!file.type.startsWith("image/")) return file;
   try {
-    const bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
+    const bitmap = await createImageBitmap(file, {
+      imageOrientation: "from-image",
+    });
     const maxDim = 1800;
     let { width, height } = bitmap;
     const longest = Math.max(width, height);
@@ -116,7 +121,9 @@ async function compressImage(file: File): Promise<File> {
 
 export function UploadForm() {
   const [jobType, setJobType] = useState("");
-  const [channel, setChannel] = useState<"residential" | "commercial">("residential");
+  const [channel, setChannel] = useState<"residential" | "commercial">(
+    "residential",
+  );
   const [city, setCity] = useState("");
   const [cityCustom, setCityCustom] = useState("");
   const [featured, setFeatured] = useState(false);
@@ -125,7 +132,11 @@ export function UploadForm() {
   const [customerEmail, setCustomerEmail] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
   const [details, setDetails] = useState<Record<string, DetailValue>>({});
-  const [files, setFiles] = useState<Files>({ before: [], progress: [], after: [] });
+  const [files, setFiles] = useState<Files>({
+    before: [],
+    progress: [],
+    after: [],
+  });
 
   const [status, setStatus] = useState<
     "idle" | "working" | "review" | "done" | "error"
@@ -168,7 +179,8 @@ export function UploadForm() {
   }, []);
 
   const activeJob = getJobType(jobType);
-  const totalPhotos = files.before.length + files.progress.length + files.after.length;
+  const totalPhotos =
+    files.before.length + files.progress.length + files.after.length;
 
   function setDetail(key: string, value: DetailValue) {
     setDetails((prev) => ({ ...prev, [key]: value }));
@@ -203,7 +215,9 @@ export function UploadForm() {
     // no social posts and no visible sign anything was missed.
     const current = await deployedVersion();
     if (current && loadedVersion.current && current !== loadedVersion.current) {
-      setMessage("The uploader updated. Reloading, your photos are still here.");
+      setMessage(
+        "The uploader updated. Reloading, your photos are still here.",
+      );
       setTimeout(() => window.location.reload(), 1200);
       return;
     }
@@ -234,8 +248,12 @@ export function UploadForm() {
           fd.append("phase", phase.key);
           fd.append("index", String(i));
           fd.append("ctx", JSON.stringify(submission));
-          const res = await fetch("/api/upload?step=asset", { method: "POST", body: fd });
-          if (!res.ok) throw new Error(await errorFrom(res, "Photo upload failed"));
+          const res = await fetch("/api/upload?step=asset", {
+            method: "POST",
+            body: fd,
+          });
+          if (!res.ok)
+            throw new Error(await errorFrom(res, "Photo upload failed"));
           media.push((await res.json()) as MediaEntry);
           done++;
         }
@@ -247,7 +265,8 @@ export function UploadForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ submission, media }),
       });
-      if (!res.ok) throw new Error(await errorFrom(res, "Could not plan the post"));
+      if (!res.ok)
+        throw new Error(await errorFrom(res, "Could not plan the post"));
       setPlan((await res.json()) as SocialPlanView);
       setPending({ submission, media });
       setStatus("review");
@@ -259,7 +278,7 @@ export function UploadForm() {
 
   /**
    * Publish the job, then post ONE platform per request. Splitting it this way
-   * is what stops a slow network from swallowing the ones queued behind it, 
+   * is what stops a slow network from swallowing the ones queued behind it,
    * and every outcome lands in `channels` so nothing fails silently again.
    */
   async function publish(skipSocial: boolean) {
@@ -290,7 +309,11 @@ export function UploadForm() {
       setStatus("done");
 
       if (skipSocial || plan.hold || plan.order.length === 0) return;
-      await runSocial(data.id, data.slug, SOCIAL_PLATFORMS.map((p) => p.key));
+      await runSocial(
+        data.id,
+        data.slug,
+        SOCIAL_PLATFORMS.map((p) => p.key),
+      );
     } catch (err) {
       setMessage(err instanceof Error ? err.message : "Something went wrong.");
       setStatus("error");
@@ -303,7 +326,11 @@ export function UploadForm() {
    * that published without its social run had no route back except a developer
    * hitting the API by hand.
    */
-  async function runSocial(id: string, slug: string, platforms: readonly string[]) {
+  async function runSocial(
+    id: string,
+    slug: string,
+    platforms: readonly string[],
+  ) {
     if (!plan) return;
     setSocialBusy(true);
     for (const key of platforms) {
@@ -418,7 +445,10 @@ export function UploadForm() {
                     ? "text-red-600"
                     : "text-slate-400";
               return (
-                <li key={p.key} className="flex items-start gap-2.5 px-4 py-2.5">
+                <li
+                  key={p.key}
+                  className="flex items-start gap-2.5 px-4 py-2.5"
+                >
                   <span className={`font-bold ${tone}`}>{mark}</span>
                   <span className="text-sm">
                     <span className="font-semibold text-navy-900">
@@ -498,7 +528,8 @@ export function UploadForm() {
       <header className="mb-8">
         <h1 className="text-2xl font-bold text-navy-900">Upload a Job</h1>
         <p className="mt-1 text-sm text-slate-600">
-          Add photos and a few details. It posts straight to your project gallery.
+          Add photos and a few details. It posts straight to your project
+          gallery.
         </p>
       </header>
 
@@ -526,7 +557,7 @@ export function UploadForm() {
         {/* Conditional detail fields */}
         {activeJob && activeJob.fields.length > 0 && (
           <div className="flex flex-col gap-5 rounded-2xl border border-border bg-secondary/40 p-4">
-            <p className="text-xs font-semibold uppercase tracking-wide text-steel-500">
+            <p className="text-xs font-semibold tracking-wide text-steel-500 uppercase">
               {activeJob.label} details
             </p>
             {activeJob.fields.map((field) => (
@@ -559,7 +590,12 @@ export function UploadForm() {
 
         {/* City */}
         <Field label="City" required>
-          <select value={city} onChange={(e) => setCity(e.target.value)} className={inputClass} required>
+          <select
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            className={inputClass}
+            required
+          >
             <option value="">Select the city…</option>
             {CITY_OPTIONS.map((c) => (
               <option key={c} value={c}>
@@ -580,7 +616,9 @@ export function UploadForm() {
 
         {/* Photos */}
         <div className="flex flex-col gap-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-steel-500">Photos</p>
+          <p className="text-xs font-semibold tracking-wide text-steel-500 uppercase">
+            Photos
+          </p>
           {PHASES.map((phase) => (
             <PhotoInput
               key={phase.key}
@@ -593,7 +631,10 @@ export function UploadForm() {
         </div>
 
         {/* Description */}
-        <Field label="Job description" hint="Anything notable. The system reads this to add gallery filters.">
+        <Field
+          label="Job description"
+          hint="Anything notable. The system reads this to add gallery filters."
+        >
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -606,7 +647,7 @@ export function UploadForm() {
         {/* Customer contact, optional, powers the auto review request */}
         <div className="flex flex-col gap-4 rounded-2xl border border-border bg-secondary/40 p-4">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-steel-500">
+            <p className="text-xs font-semibold tracking-wide text-steel-500 uppercase">
               Customer (optional)
             </p>
             <p className="mt-1 text-xs text-slate-500">
@@ -649,7 +690,9 @@ export function UploadForm() {
         </label>
 
         {message && (
-          <p className="rounded-lg bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{message}</p>
+          <p className="rounded-lg bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+            {message}
+          </p>
         )}
 
         <button
@@ -657,7 +700,9 @@ export function UploadForm() {
           disabled={status === "working"}
           className="rounded-full bg-navy-900 px-6 py-4 text-base font-semibold text-white disabled:opacity-60"
         >
-          {status === "working" ? progress || "Working…" : "Post job to gallery"}
+          {status === "working"
+            ? progress || "Working…"
+            : "Post job to gallery"}
         </button>
       </form>
 
@@ -678,7 +723,11 @@ function cx(...parts: string[]): string {
  * only changes the hero, the single photo Google and the map pin use.
  */
 function withHero(plan: SocialPlanView, assetId: string): SocialPlanView {
-  const next = { ...plan, heroAssetId: assetId, heroNote: "you picked this one" };
+  const next = {
+    ...plan,
+    heroAssetId: assetId,
+    heroNote: "you picked this one",
+  };
   if (plan.shape !== "showcase") return next;
   const chosen = plan.order.find((p) => p.assetId === assetId);
   if (!chosen) return next;
@@ -720,8 +769,8 @@ function ReviewScreen({
       {plan.hold ? (
         <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
           Every photo still goes on the website. Nothing will be posted to
-          social, because there is no finished roof to lead with, add an
-          after photo if you want this one to go out.
+          social, because there is no finished roof to lead with, add an after
+          photo if you want this one to go out.
         </div>
       ) : (
         <>
@@ -1015,7 +1064,11 @@ function ConnectionsPanel() {
             <Row
               label="Google Business Profile"
               state={
-                data.gbp?.autoPost ? "ok" : data.gbp?.configured ? "warn" : "off"
+                data.gbp?.autoPost
+                  ? "ok"
+                  : data.gbp?.configured
+                    ? "warn"
+                    : "off"
               }
               detail={
                 data.gbp?.autoPost
@@ -1072,7 +1125,9 @@ const inputClass =
 
 function pillClass(active: boolean) {
   return `flex-1 rounded-full border px-4 py-2.5 text-sm font-semibold transition ${
-    active ? "border-navy-900 bg-navy-900 text-white" : "border-border bg-white text-slate-600"
+    active
+      ? "border-navy-900 bg-navy-900 text-white"
+      : "border-border bg-white text-slate-600"
   }`;
 }
 
@@ -1114,7 +1169,9 @@ function DetailInput({
     const selected = Array.isArray(value) ? value : [];
     return (
       <div className="flex flex-col gap-2">
-        <span className="text-sm font-semibold text-navy-900">{field.label}</span>
+        <span className="text-sm font-semibold text-navy-900">
+          {field.label}
+        </span>
         <div className="flex flex-wrap gap-2">
           {field.options?.map((opt) => (
             <button
@@ -1134,7 +1191,11 @@ function DetailInput({
   if (field.kind === "select") {
     return (
       <Field label={field.label}>
-        <select value={(value as string) ?? ""} onChange={(e) => onChange(e.target.value)} className={inputClass}>
+        <select
+          value={(value as string) ?? ""}
+          onChange={(e) => onChange(e.target.value)}
+          className={inputClass}
+        >
           <option value="">Select…</option>
           {field.options?.map((opt) => (
             <option key={opt} value={opt}>
@@ -1172,9 +1233,13 @@ function PhotoInput({
   return (
     <label className="flex cursor-pointer items-center justify-between gap-3 rounded-2xl border border-dashed border-border bg-white px-4 py-4">
       <div>
-        <span className="block text-sm font-semibold text-navy-900">{label}</span>
+        <span className="block text-sm font-semibold text-navy-900">
+          {label}
+        </span>
         <span className="block text-xs text-slate-500">
-          {count > 0 ? `${count} photo${count === 1 ? "" : "s"} selected` : blurb}
+          {count > 0
+            ? `${count} photo${count === 1 ? "" : "s"} selected`
+            : blurb}
         </span>
       </div>
       <span className="rounded-full bg-secondary px-4 py-2 text-sm font-semibold text-navy-900">

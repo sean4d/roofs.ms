@@ -19,7 +19,9 @@ const inputClass =
 
 function pill(active: boolean) {
   return `rounded-full border px-4 py-2 text-sm font-semibold transition ${
-    active ? "border-navy-900 bg-navy-900 text-white" : "border-border bg-white text-slate-600"
+    active
+      ? "border-navy-900 bg-navy-900 text-white"
+      : "border-border bg-white text-slate-600"
   }`;
 }
 
@@ -68,8 +70,14 @@ export function CostCalculator() {
       {/* Inputs */}
       <div className="flex flex-col gap-6 rounded-2xl border border-border bg-white p-6">
         <label className="flex flex-col gap-2">
-          <span className="text-sm font-semibold text-navy-900">Roof material</span>
-          <select value={material} onChange={(e) => setMaterial(e.target.value)} className={inputClass}>
+          <span className="text-sm font-semibold text-navy-900">
+            Roof material
+          </span>
+          <select
+            value={material}
+            onChange={(e) => setMaterial(e.target.value)}
+            className={inputClass}
+          >
             {Object.entries(pricingConfig.materials).map(([key, m]) => (
               <option key={key} value={key}>
                 {m.label}
@@ -79,7 +87,9 @@ export function CostCalculator() {
         </label>
 
         <label className="flex flex-col gap-2">
-          <span className="text-sm font-semibold text-navy-900">Approximate home size (sq ft)</span>
+          <span className="text-sm font-semibold text-navy-900">
+            Approximate home size (sq ft)
+          </span>
           <input
             type="number"
             inputMode="numeric"
@@ -90,16 +100,61 @@ export function CostCalculator() {
           />
         </label>
 
-        <Choice label="Stories" value={stories} set={(v) => setStories(v as "one" | "two")} options={[["one", "One"], ["two", "Two"]]} />
-        <Choice label="Roof pitch" value={pitch} set={(v) => setPitch(v as typeof pitch)} options={[["low", "Low"], ["average", "Average"], ["steep", "Steep"]]} />
-        <Choice label="Tear-off needed?" value={tearOff} set={(v) => setTearOff(v as typeof tearOff)} options={[["yes", "Yes"], ["no", "No"], ["unsure", "Not sure"]]} />
-        <Choice label="Decking concerns?" value={decking} set={(v) => setDecking(v as typeof decking)} options={[["yes", "Yes"], ["no", "No"], ["unsure", "Not sure"]]} />
-        <Choice label="Include gutters?" value={gutters} set={(v) => setGutters(v as "yes" | "no")} options={[["yes", "Yes"], ["no", "No"]]} />
+        <Choice
+          label="Stories"
+          value={stories}
+          set={(v) => setStories(v as "one" | "two")}
+          options={[
+            ["one", "One"],
+            ["two", "Two"],
+          ]}
+        />
+        <Choice
+          label="Roof pitch"
+          value={pitch}
+          set={(v) => setPitch(v as typeof pitch)}
+          options={[
+            ["low", "Low"],
+            ["average", "Average"],
+            ["steep", "Steep"],
+          ]}
+        />
+        <Choice
+          label="Tear-off needed?"
+          value={tearOff}
+          set={(v) => setTearOff(v as typeof tearOff)}
+          options={[
+            ["yes", "Yes"],
+            ["no", "No"],
+            ["unsure", "Not sure"],
+          ]}
+        />
+        <Choice
+          label="Decking concerns?"
+          value={decking}
+          set={(v) => setDecking(v as typeof decking)}
+          options={[
+            ["yes", "Yes"],
+            ["no", "No"],
+            ["unsure", "Not sure"],
+          ]}
+        />
+        <Choice
+          label="Include gutters?"
+          value={gutters}
+          set={(v) => setGutters(v as "yes" | "no")}
+          options={[
+            ["yes", "Yes"],
+            ["no", "No"],
+          ]}
+        />
       </div>
 
       {/* Result */}
       <div className="flex flex-col gap-5 rounded-2xl border border-border bg-secondary/40 p-6">
-        <p className="text-xs font-semibold uppercase tracking-wide text-steel-500">Estimated project range</p>
+        <p className="text-xs font-semibold tracking-wide text-steel-500 uppercase">
+          Estimated project range
+        </p>
         {result ? (
           <>
             <p className="font-display text-4xl font-bold text-navy-900">
@@ -114,7 +169,9 @@ export function CostCalculator() {
             </p>
             {factors.length > 0 && (
               <div>
-                <p className="text-sm font-semibold text-navy-900">Included in this estimate:</p>
+                <p className="text-sm font-semibold text-navy-900">
+                  Included in this estimate:
+                </p>
                 <ul className="mt-1 list-inside list-disc text-sm text-slate-600">
                   {factors.map((f) => (
                     <li key={f}>{f}</li>
@@ -123,12 +180,18 @@ export function CostCalculator() {
               </div>
             )}
             <p className="rounded-lg bg-white p-3 text-xs text-slate-500">
-              This is an estimate only. Final pricing depends on an on-site inspection: 
-              roof condition, access, and material details can change the number.
+              This is an estimate only. Final pricing depends on an on-site
+              inspection: roof condition, access, and material details can
+              change the number.
             </p>
             <Link
               href="/free-inspection"
-              onClick={() => track("cta_click", { action: "free-inspection", source: "cost-calculator" })}
+              onClick={() =>
+                track("cta_click", {
+                  action: "free-inspection",
+                  source: "cost-calculator",
+                })
+              }
               className="inline-flex items-center justify-center gap-2 rounded-full bg-navy-900 px-6 py-3 font-semibold text-white"
             >
               Get your exact price, free inspection
@@ -136,7 +199,9 @@ export function CostCalculator() {
             </Link>
           </>
         ) : (
-          <p className="text-slate-500">Enter your home size to see an estimated range.</p>
+          <p className="text-slate-500">
+            Enter your home size to see an estimated range.
+          </p>
         )}
       </div>
     </div>
@@ -159,7 +224,12 @@ function Choice({
       <span className="text-sm font-semibold text-navy-900">{label}</span>
       <div className="flex flex-wrap gap-2">
         {options.map(([val, lbl]) => (
-          <button key={val} type="button" onClick={() => set(val)} className={pill(value === val)}>
+          <button
+            key={val}
+            type="button"
+            onClick={() => set(val)}
+            className={pill(value === val)}
+          >
             {lbl}
           </button>
         ))}

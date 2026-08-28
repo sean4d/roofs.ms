@@ -96,12 +96,16 @@ export default function CareersPage() {
               Southeast Roofing is a growing, Mississippi-licensed contractor
               based in Hattiesburg. We don&apos;t post ghost listings, when
               we&apos;re hiring, it&apos;s because the work is real and the
-              standard is high. If that sounds like you, introduce yourself
-              any time.
+              standard is high. If that sounds like you, introduce yourself any
+              time.
             </p>
             {mailto && (
               <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Button size="xl" render={<a href={mailto} />} nativeButton={false}>
+                <Button
+                  size="xl"
+                  render={<a href={mailto} />}
+                  nativeButton={false}
+                >
                   <Mail aria-hidden="true" />
                   Email your introduction
                 </Button>
@@ -184,14 +188,18 @@ export default function CareersPage() {
               No forms, no portals, just reach out
             </h2>
             <p className="mt-5 text-lg leading-relaxed text-slate-600">
-              Send a short email telling us who you are, what you&apos;ve
-              built, and what kind of role you&apos;re after. A résumé helps
-              but photos of your work say more. Or call the office and ask for
-              a conversation. We respond to every serious introduction.
+              Send a short email telling us who you are, what you&apos;ve built,
+              and what kind of role you&apos;re after. A résumé helps but photos
+              of your work say more. Or call the office and ask for a
+              conversation. We respond to every serious introduction.
             </p>
             {mailto && (
               <div className="mt-8">
-                <Button size="xl" render={<a href={mailto} />} nativeButton={false}>
+                <Button
+                  size="xl"
+                  render={<a href={mailto} />}
+                  nativeButton={false}
+                >
                   <Mail aria-hidden="true" />
                   {siteConfig.email}
                 </Button>

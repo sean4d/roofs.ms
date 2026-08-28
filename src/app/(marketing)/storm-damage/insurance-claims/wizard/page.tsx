@@ -39,9 +39,9 @@ export default function InsuranceWizardPage() {
             Storm damage? Let&apos;s find your next step
           </h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600">
-            Insurance claims are confusing when you&apos;re dealing with a damaged roof.
-            Answer a few quick questions and we&apos;ll point you to exactly what to do
-            next, no jargon, no pressure.
+            Insurance claims are confusing when you&apos;re dealing with a
+            damaged roof. Answer a few quick questions and we&apos;ll point you
+            to exactly what to do next, no jargon, no pressure.
           </p>
         </div>
       </section>

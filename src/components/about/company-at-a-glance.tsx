@@ -5,15 +5,11 @@ import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 
 /**
  * "Quick answers" entity block (PRD §10 AI discoverability). Renders the
- * company 5 W's as always-visible question/answer text, not an accordion, 
+ * company 5 W's as always-visible question/answer text, not an accordion,
  * so answer engines and crawlers can lift each self-contained fact directly.
  * The matching FAQPage JSON-LD is emitted by the page via faqSchema().
  */
-export function CompanyAtAGlance({
-  tone,
-}: {
-  tone?: "white" | "surface";
-}) {
+export function CompanyAtAGlance({ tone }: { tone?: "white" | "surface" }) {
   return (
     <Section tone={tone}>
       <SectionHeading
@@ -30,9 +26,7 @@ export function CompanyAtAGlance({
             <h3 className="font-display text-lg font-bold text-navy-900">
               {fact.question}
             </h3>
-            <p className="mt-2 leading-relaxed text-slate-600">
-              {fact.answer}
-            </p>
+            <p className="mt-2 leading-relaxed text-slate-600">{fact.answer}</p>
           </StaggerItem>
         ))}
       </StaggerGroup>

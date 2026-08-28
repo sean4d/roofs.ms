@@ -56,7 +56,11 @@ const PHASE_LABEL: Record<string, string> = {
 };
 
 /** Install-timeline order, so a card reads before → during → after. */
-const PHASE_ORDER: Record<string, number> = { before: 0, progress: 1, after: 2 };
+const PHASE_ORDER: Record<string, number> = {
+  before: 0,
+  progress: 1,
+  after: 2,
+};
 
 /**
  * GRID photos, finished work only (owner rule 2026-08-01: the projects page is
@@ -207,7 +211,10 @@ export function UnifiedGallery({ jobs }: { jobs: GalleryJob[] }) {
           aria-expanded={filtersOpen}
           className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-2 text-sm font-semibold text-navy-900"
         >
-          <SlidersHorizontal className="size-4 text-steel-500" aria-hidden="true" />
+          <SlidersHorizontal
+            className="size-4 text-steel-500"
+            aria-hidden="true"
+          />
           {filtersOpen ? "Hide filters" : "Filter photos"}
           {activeCount > 0 && (
             <span className="rounded-full bg-navy-900 px-2 py-0.5 text-xs font-bold text-white">
@@ -390,7 +397,8 @@ export function JobCard({
   const photo = showcase[index] ?? job.photos[0];
 
   const next = () => setIndex((i) => (i + 1) % showcase.length);
-  const prev = () => setIndex((i) => (i - 1 + showcase.length) % showcase.length);
+  const prev = () =>
+    setIndex((i) => (i - 1 + showcase.length) % showcase.length);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {

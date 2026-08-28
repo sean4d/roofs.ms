@@ -76,9 +76,19 @@ export const siteConfig = {
     /** GoodLeap financing application */
     financing:
       "https://www.goodleap.dev/southeastroofingllc/1b96fc28-5e63-477c-8074-0bec137f3154",
-    /** Roofr instant estimator */
-    instantEstimate:
-      "https://app.roofr.com/instant-estimator/70b6fe06-8fb3-43ee-83d5-c27f43145413/SoutheastRoofing",
+    /**
+     * OUR instant estimator, not Roofr's.
+     *
+     * This used to point at app.roofr.com, which meant every "Instant
+     * Estimate" button on the site handed the highest-intent visitor we get to
+     * another company's domain, branding and data. It is now our own page,
+     * running our own measurement engine, and the lead lands in our pipeline
+     * before it is forwarded to Roofr as a job.
+     *
+     * Every button follows this one constant, so there is nothing else to
+     * change if it ever moves again.
+     */
+    instantEstimate: "/instant-estimate",
   },
   /**
    * Trade partners who perform work under Southeast Roofing as
@@ -205,7 +215,7 @@ export const siteConfig = {
     // NOTE: auto-generated scraper directories (roofingquotes, usaroofers,
     // smallbiztrackers, nears.me, tydl.io, roofs.fyi, prosgrade, findglocal,
     // whosmypro, realreviews, etc.) are deliberately EXCLUDED. sameAs should
-    // declare authoritative profiles we actually own or were verified on, 
+    // declare authoritative profiles we actually own or were verified on,
     // padding it with scraped listings adds noise, not authority. Those links
     // are harmless where they are and need no disavow; they just don't belong
     // in our identity graph.

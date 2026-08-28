@@ -39,9 +39,9 @@ export default function RoofDamageAnalyzerPage() {
             Think your roof is damaged? Let&apos;s take a look
           </h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600">
-            Upload a few photos and tell us what you&apos;re seeing. We&apos;ll give you a
-            quick, honest read on what it might be and how urgent it is, then set up a
-            free, in-person inspection to confirm it.
+            Upload a few photos and tell us what you&apos;re seeing. We&apos;ll
+            give you a quick, honest read on what it might be and how urgent it
+            is, then set up a free, in-person inspection to confirm it.
           </p>
         </div>
       </section>

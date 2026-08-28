@@ -70,7 +70,8 @@ export function RoofAssistant() {
     if (!list) return;
     const imgs = Array.from(list).filter((f) => f.type.startsWith("image/"));
     setFiles((prev) => [...prev, ...imgs]);
-    if (imgs.length) track("image_uploaded", { tool: "roof-assistant", count: imgs.length });
+    if (imgs.length)
+      track("image_uploaded", { tool: "roof-assistant", count: imgs.length });
   }
 
   async function analyze() {
@@ -81,7 +82,12 @@ export function RoofAssistant() {
     const req = fetch("/api/roof-assistant", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ topic, description, photoCount: files.length, images }),
+      body: JSON.stringify({
+        topic,
+        description,
+        photoCount: files.length,
+        images,
+      }),
     }).then((r) => r.json() as Promise<AssistantResult>);
 
     for (let i = 0; i < STAGES.length; i++) {
@@ -91,7 +97,11 @@ export function RoofAssistant() {
     const res = await req;
     setResult(res);
     setPhase("result");
-    track("analysis_completed", { tool: "roof-assistant", topic, urgency: res.urgency });
+    track("analysis_completed", {
+      tool: "roof-assistant",
+      topic,
+      urgency: res.urgency,
+    });
   }
 
   function reset() {
@@ -111,14 +121,18 @@ export function RoofAssistant() {
         </span>
         <div>
           <p className="font-semibold">Roof Assistant</p>
-          <p className="text-xs text-steel-300">Quick help from Southeast Roofing</p>
+          <p className="text-xs text-steel-300">
+            Quick help from Southeast Roofing
+          </p>
         </div>
       </div>
 
       <div className="p-5 sm:p-6">
         {phase === "topic" && (
           <>
-            <p className="text-navy-900">Hey! What can we help you with today?</p>
+            <p className="text-navy-900">
+              Hey! What can we help you with today?
+            </p>
             <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-3">
               {TOPICS.map((t) => (
                 <button
@@ -127,7 +141,10 @@ export function RoofAssistant() {
                   onClick={() => chooseTopic(t.value)}
                   className="flex flex-col items-center gap-2 rounded-xl border border-border bg-white px-3 py-4 text-center text-sm font-semibold text-navy-900 transition hover:border-navy-900 hover:bg-secondary"
                 >
-                  <t.icon className="size-5 text-steel-500" aria-hidden="true" />
+                  <t.icon
+                    className="size-5 text-steel-500"
+                    aria-hidden="true"
+                  />
                   {t.label}
                 </button>
               ))}
@@ -138,8 +155,8 @@ export function RoofAssistant() {
         {phase === "input" && (
           <>
             <p className="text-navy-900">
-              Got it. Add a couple photos or a quick note if you like, both optional, 
-              and I&apos;ll point you to the right next step.
+              Got it. Add a couple photos or a quick note if you like, both
+              optional, and I&apos;ll point you to the right next step.
             </p>
 
             <label
@@ -156,7 +173,9 @@ export function RoofAssistant() {
                   ? `${files.length} photo${files.length === 1 ? "" : "s"} added`
                   : "Add photos (optional)"}
               </span>
-              <span className="text-xs text-slate-500">Tap to browse or drag &amp; drop</span>
+              <span className="text-xs text-slate-500">
+                Tap to browse or drag &amp; drop
+              </span>
               <input
                 ref={fileRef}
                 type="file"
@@ -207,7 +226,12 @@ export function RoofAssistant() {
                   ) : (
                     <span className="size-5 rounded-full border border-border" />
                   )}
-                  <span className={cn("text-sm", i <= stage ? "text-navy-900" : "text-slate-400")}>
+                  <span
+                    className={cn(
+                      "text-sm",
+                      i <= stage ? "text-navy-900" : "text-slate-400",
+                    )}
+                  >
                     {s}
                   </span>
                 </li>
@@ -218,12 +242,16 @@ export function RoofAssistant() {
 
         {phase === "result" && result && (
           <div>
-            <h2 className="text-xl font-bold text-navy-900">{result.headline}</h2>
+            <h2 className="text-xl font-bold text-navy-900">
+              {result.headline}
+            </h2>
             <UrgencyBadge urgency={result.urgency} />
             <p className="mt-3 text-slate-700">{result.read}</p>
             <p className="mt-2 text-sm text-slate-600">{result.urgencyNote}</p>
 
-            <p className="mt-5 text-sm font-semibold text-navy-900">Your next steps:</p>
+            <p className="mt-5 text-sm font-semibold text-navy-900">
+              Your next steps:
+            </p>
             <ol className="mt-2 flex list-inside list-decimal flex-col gap-1.5 text-sm text-slate-700">
               {result.steps.map((s) => (
                 <li key={s}>{s}</li>
@@ -232,13 +260,18 @@ export function RoofAssistant() {
 
             <div className="mt-6 flex flex-wrap gap-3">
               {result.ctas.map((cta) => (
-                <CtaButton key={cta.kind} cta={cta} onPhotos={() => setPhase("input")} />
+                <CtaButton
+                  key={cta.kind}
+                  cta={cta}
+                  onPhotos={() => setPhase("input")}
+                />
               ))}
             </div>
 
             <p className="mt-5 rounded-lg bg-secondary/60 p-3 text-xs text-slate-500">
-              This is a quick, automated guide. It does not replace a professional roof
-              inspection. For anything urgent, call us any time.
+              This is a quick, automated guide. It does not replace a
+              professional roof inspection. For anything urgent, call us any
+              time.
             </p>
 
             <button
@@ -257,12 +290,29 @@ export function RoofAssistant() {
 
 function UrgencyBadge({ urgency }: { urgency: AssistantResult["urgency"] }) {
   const map = {
-    high: { label: "Time-sensitive", cls: "bg-red-50 text-red-700", icon: AlertTriangle },
-    moderate: { label: "Worth addressing", cls: "bg-amber-50 text-amber-700", icon: AlertTriangle },
-    low: { label: "No rush", cls: "bg-emerald-50 text-emerald-700", icon: CheckCircle2 },
+    high: {
+      label: "Time-sensitive",
+      cls: "bg-red-50 text-red-700",
+      icon: AlertTriangle,
+    },
+    moderate: {
+      label: "Worth addressing",
+      cls: "bg-amber-50 text-amber-700",
+      icon: AlertTriangle,
+    },
+    low: {
+      label: "No rush",
+      cls: "bg-emerald-50 text-emerald-700",
+      icon: CheckCircle2,
+    },
   }[urgency];
   return (
-    <span className={cn("mt-2 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold", map.cls)}>
+    <span
+      className={cn(
+        "mt-2 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold",
+        map.cls,
+      )}
+    >
       <map.icon className="size-3.5" /> {map.label}
     </span>
   );
@@ -275,14 +325,26 @@ function CtaButton({
   cta: AssistantResult["ctas"][number];
   onPhotos: () => void;
 }) {
-  const base = "inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold";
+  const base =
+    "inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold";
   const primary = cta.kind === "inspection";
-  const cls = cn(base, primary ? "bg-navy-900 text-white" : "border border-border text-navy-900");
-  const fire = () => track("cta_click", { action: cta.kind, source: "roof-assistant" });
+  const cls = cn(
+    base,
+    primary ? "bg-navy-900 text-white" : "border border-border text-navy-900",
+  );
+  const fire = () =>
+    track("cta_click", { action: cta.kind, source: "roof-assistant" });
 
   if (!cta.href) {
     return (
-      <button type="button" onClick={() => { fire(); onPhotos(); }} className={cls}>
+      <button
+        type="button"
+        onClick={() => {
+          fire();
+          onPhotos();
+        }}
+        className={cls}
+      >
         {cta.label}
       </button>
     );

@@ -19,7 +19,9 @@ import { FinalCta } from "@/components/home/final-cta";
  * photo is a real Southeast Roofing job site, never stock.
  */
 
-const completedCount = projectPhotos.filter((p) => p.kind === "completed").length;
+const completedCount = projectPhotos.filter(
+  (p) => p.kind === "completed",
+).length;
 const cityCount = new Set(
   projectPhotos.filter((p) => p.kind === "completed").map((p) => p.citySlug),
 ).size;
@@ -66,10 +68,10 @@ export default async function ProjectsPage() {
               Our work, unfiltered
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600">
-              Every photo below was taken on a real Southeast Roofing job site in
-              South Mississippi, completed roofs our crews installed and storm
-              damage we documented during inspections. Filter by city, product, or
-              damage type, and tap any photo to open the full job.
+              Every photo below was taken on a real Southeast Roofing job site
+              in South Mississippi, completed roofs our crews installed and
+              storm damage we documented during inspections. Filter by city,
+              product, or damage type, and tap any photo to open the full job.
             </p>
             <ul className="mt-7 flex flex-wrap gap-2.5">
               {proofChips.map((chip) => (
@@ -77,7 +79,10 @@ export default async function ProjectsPage() {
                   key={chip.label}
                   className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-2 text-sm font-medium text-navy-900"
                 >
-                  <chip.icon className="size-4 text-steel-500" aria-hidden="true" />
+                  <chip.icon
+                    className="size-4 text-steel-500"
+                    aria-hidden="true"
+                  />
                   {chip.label}
                 </li>
               ))}
@@ -92,7 +97,9 @@ export default async function ProjectsPage() {
 
         <div className="mt-12 rounded-2xl border border-border bg-secondary p-6 sm:p-8">
           <p className="text-base leading-relaxed text-slate-600">
-            <span className="font-semibold text-navy-900">Want to see roofs near you?</span>{" "}
+            <span className="font-semibold text-navy-900">
+              Want to see roofs near you?
+            </span>{" "}
             Our{" "}
             <Link
               href="/service-areas"
@@ -100,8 +107,8 @@ export default async function ProjectsPage() {
             >
               city pages
             </Link>{" "}
-            show completed local projects for many communities we serve, or ask for
-            references from your neighborhood during your{" "}
+            show completed local projects for many communities we serve, or ask
+            for references from your neighborhood during your{" "}
             <Link
               href="/free-inspection"
               className="inline-flex items-center gap-1 font-medium text-navy-900 underline underline-offset-4 hover:text-steel-500"

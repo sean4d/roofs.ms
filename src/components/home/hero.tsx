@@ -63,17 +63,12 @@ export function Hero() {
 
           <Reveal delay={0.15}>
             <div className="mt-6 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center">
-              {/* Primary conversion: Roofr instant estimate, external */}
+              {/* Primary conversion: OUR instant estimator, on our own site.
+                  It used to be an external Roofr link opened in a new tab. */}
               <Button
                 size="xl"
                 className="w-full bg-white text-primary shadow-lg shadow-navy-950/30 hover:bg-steel-100 sm:w-auto"
-                render={
-                  <a
-                    href={siteConfig.links.instantEstimate}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  />
-                }
+                render={<Link href={siteConfig.links.instantEstimate} />}
                 nativeButton={false}
               >
                 <Zap className="size-5" aria-hidden="true" />
@@ -131,7 +126,7 @@ export function Hero() {
         */}
         <Reveal delay={0.25}>
           {/* Even 4-per-line grid on desktop (owner request 2026-07-05) */}
-          <ul className="mt-8 grid grid-cols-2 gap-x-5 gap-y-3.5 border-t border-white/15 pt-6 md:grid-cols-4 sm:pt-7 lg:mt-14">
+          <ul className="mt-8 grid grid-cols-2 gap-x-5 gap-y-3.5 border-t border-white/15 pt-6 sm:pt-7 md:grid-cols-4 lg:mt-14">
             {heroTrustBar.map((item) => (
               <li
                 key={item.label}

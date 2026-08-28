@@ -168,7 +168,7 @@ export function SiteHeader() {
                   {open && (
                     <ul
                       role="menu"
-                      className="shadow-premium absolute left-0 top-full z-50 mt-2 w-60 rounded-2xl border border-border bg-white p-2"
+                      className="shadow-premium absolute top-full left-0 z-50 mt-2 w-60 rounded-2xl border border-border bg-white p-2"
                     >
                       {link.children.map((child) => {
                         const external = child.href.startsWith("http");

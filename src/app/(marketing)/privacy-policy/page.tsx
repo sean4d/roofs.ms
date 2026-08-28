@@ -2,10 +2,7 @@ import type { Metadata } from "next";
 
 import { siteConfig } from "@/config/site";
 import { buildMetadata } from "@/lib/seo";
-import {
-  LegalPage,
-  type LegalSection,
-} from "@/components/shared/legal-page";
+import { LegalPage, type LegalSection } from "@/components/shared/legal-page";
 
 /**
  * Privacy policy, written to describe what this site actually does

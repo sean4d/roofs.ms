@@ -5,7 +5,7 @@ import { Section } from "@/components/shared/section";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 
 /**
- * Insurance, financing & warranty panel (PRD §4.1.7, Phase 4 §7/§10), 
+ * Insurance, financing & warranty panel (PRD §4.1.7, Phase 4 §7/§10),
  * three-up trust band used across service pages. Factual language only:
  * claim decisions rest with the insurer, terms come from the lender, and
  * the lifetime workmanship warranty is owner-confirmed (2026-07-04).

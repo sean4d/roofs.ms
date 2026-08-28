@@ -20,7 +20,7 @@ interface SectionProps {
 }
 
 /**
- * Standard homepage/page section: generous vertical rhythm (PRD §6.4, 
+ * Standard homepage/page section: generous vertical rhythm (PRD §6.4,
  * breathing room) with a consistent content container.
  */
 export function Section({

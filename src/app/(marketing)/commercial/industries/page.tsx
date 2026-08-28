@@ -162,8 +162,8 @@ export default function IndustriesHubPage() {
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600">
               A school, a sanctuary, and a distribution center don&apos;t buy
-              roofing the same way: different schedules, budgets, approvals,
-              and stakes. We&apos;ve built our commercial practice around those
+              roofing the same way: different schedules, budgets, approvals, and
+              stakes. We&apos;ve built our commercial practice around those
               differences.
             </p>
           </Reveal>

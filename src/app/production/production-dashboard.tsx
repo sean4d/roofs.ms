@@ -100,7 +100,9 @@ export function ProductionDashboard() {
 
   const [addOpen, setAddOpen] = useState(false);
   const [creating, setCreating] = useState(false);
-  const [deleteTarget, setDeleteTarget] = useState<ProductionProject | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<ProductionProject | null>(
+    null,
+  );
   const [deleting, setDeleting] = useState(false);
   const [saveInfo, setSaveInfo] = useState<Record<string, SaveInfo>>({});
 
@@ -114,7 +116,9 @@ export function ProductionDashboard() {
   const dirtyRef = useRef(0);
   /** last failed patch per project, for the Retry button */
   const failedRef = useRef(new Map<string, ProjectPatch>());
-  const savedTimerRef = useRef(new Map<string, ReturnType<typeof setTimeout>>());
+  const savedTimerRef = useRef(
+    new Map<string, ReturnType<typeof setTimeout>>(),
+  );
 
   /** Load fresh data. First setState only ever happens after the await. */
   const loadProjects = useCallback(async () => {
@@ -448,7 +452,7 @@ export function ProductionDashboard() {
   }
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-4xl px-4 pb-24 pt-6 sm:px-6">
+    <main className="mx-auto min-h-screen w-full max-w-4xl px-4 pt-6 pb-24 sm:px-6">
       {/* Header */}
       <header className="flex items-center justify-between gap-3">
         <div className="flex min-w-0 items-center gap-3">
@@ -527,7 +531,7 @@ export function ProductionDashboard() {
           <label className="relative flex-1">
             <span className="sr-only">Search projects</span>
             <Search
-              className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-400"
+              className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-slate-400"
               aria-hidden="true"
             />
             <input
@@ -535,7 +539,7 @@ export function ProductionDashboard() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search name, address, phone, notes…"
-              className="h-11 w-full rounded-xl border border-border bg-white pl-10 pr-4 text-sm text-navy-900 outline-none focus:border-steel-500"
+              className="h-11 w-full rounded-xl border border-border bg-white pr-4 pl-10 text-sm text-navy-900 outline-none focus:border-steel-500"
             />
           </label>
           <div className="flex gap-2">
@@ -576,7 +580,10 @@ export function ProductionDashboard() {
           role="alert"
           className="mt-4 flex items-start gap-2 rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
         >
-          <AlertTriangle className="mt-0.5 size-4 flex-none" aria-hidden="true" />
+          <AlertTriangle
+            className="mt-0.5 size-4 flex-none"
+            aria-hidden="true"
+          />
           {loadError}
         </p>
       )}
@@ -611,7 +618,9 @@ export function ProductionDashboard() {
                 expanded={expanded.has(project.id)}
                 onToggleExpand={() => toggleExpand(project.id)}
                 saveInfo={saveInfo[project.id]}
-                onField={(field, value) => updateField(project.id, field, value)}
+                onField={(field, value) =>
+                  updateField(project.id, field, value)
+                }
                 onCheck={(key, value) => toggleCheck(project.id, key, value)}
                 onArchive={(archived) => setArchived(project.id, archived)}
                 onRequestDelete={() => setDeleteTarget(project)}
@@ -635,7 +644,10 @@ export function ProductionDashboard() {
 
       {/* Add Project dialog */}
       {addOpen && (
-        <Modal onClose={() => !creating && setAddOpen(false)} titleId="add-title">
+        <Modal
+          onClose={() => !creating && setAddOpen(false)}
+          titleId="add-title"
+        >
           <h2 id="add-title" className="text-lg font-bold text-navy-900">
             What type of project is this?
           </h2>
@@ -775,7 +787,7 @@ function Modal({
             type="button"
             onClick={onClose}
             aria-label="Close dialog"
-            className="-mr-2 -mt-2 grid size-9 place-items-center rounded-full text-slate-400 hover:bg-secondary hover:text-navy-900"
+            className="-mt-2 -mr-2 grid size-9 place-items-center rounded-full text-slate-400 hover:bg-secondary hover:text-navy-900"
           >
             <X className="size-4" aria-hidden="true" />
           </button>

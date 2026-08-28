@@ -37,7 +37,8 @@ export function HotspotHouse({
   house?: "anatomy" | "flashing";
 }) {
   const Svg = house === "flashing" ? FlashingHouseSvg : RoofHouseSvg;
-  const viewBox = house === "flashing" ? FLASHING_SVG_VIEWBOX : ROOF_SVG_VIEWBOX;
+  const viewBox =
+    house === "flashing" ? FLASHING_SVG_VIEWBOX : ROOF_SVG_VIEWBOX;
   return (
     <div
       className={cn(

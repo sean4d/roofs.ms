@@ -40,7 +40,7 @@ export const roofingToolsNav: NavLink[] = [
 /**
  * The subset shown in the header's "Roofing Tools" dropdown (owner request
  * 2026-07-27). The Damage Analyzer and AI Assistant are deliberately absent
- * here, a long dropdown pushes the rest of the nav out of reach on phones, 
+ * here, a long dropdown pushes the rest of the nav out of reach on phones,
  * but they remain in the footer column and on the /roofing-tools hub, so
  * nothing is orphaned and no URL changes.
  */

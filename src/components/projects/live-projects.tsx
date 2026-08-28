@@ -37,7 +37,7 @@ export function LiveProjects({ projects }: { projects: LiveProject[] }) {
     <section className="border-b border-border bg-white py-14 sm:py-20">
       <div className="mx-auto max-w-6xl px-5">
         <div className="mb-6">
-          <p className="text-xs font-semibold uppercase tracking-wide text-steel-500">
+          <p className="text-xs font-semibold tracking-wide text-steel-500 uppercase">
             Latest jobs
           </p>
           <h2 className="mt-1 text-2xl font-bold text-navy-900 sm:text-3xl">
@@ -47,7 +47,10 @@ export function LiveProjects({ projects }: { projects: LiveProject[] }) {
 
         {tags.length > 0 && (
           <div className="mb-8 flex flex-wrap gap-2">
-            <FilterPill active={active === null} onClick={() => setActive(null)}>
+            <FilterPill
+              active={active === null}
+              onClick={() => setActive(null)}
+            >
               All
             </FilterPill>
             {tags.map((tag) => (
@@ -74,7 +77,9 @@ export function LiveProjects({ projects }: { projects: LiveProject[] }) {
 
 function cover(project: LiveProject) {
   const media = project.media ?? [];
-  return media.find((m) => m.phase === "after") ?? media.find((m) => m.ref) ?? null;
+  return (
+    media.find((m) => m.phase === "after") ?? media.find((m) => m.ref) ?? null
+  );
 }
 
 function ProjectCard({ project }: { project: LiveProject }) {
@@ -103,7 +108,9 @@ function ProjectCard({ project }: { project: LiveProject }) {
       <div className="p-4">
         <h3 className="text-sm font-bold text-navy-900">{project.title}</h3>
         {project.summary && (
-          <p className="mt-1 line-clamp-2 text-sm text-slate-600">{project.summary}</p>
+          <p className="mt-1 line-clamp-2 text-sm text-slate-600">
+            {project.summary}
+          </p>
         )}
       </div>
     </>

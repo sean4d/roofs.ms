@@ -36,9 +36,15 @@ export function ProjectMap({ jobs }: { jobs: GalleryJob[] }) {
     track("tool_opened", { tool: "project-map" });
   }, []);
 
-  const completed = useMemo(() => jobs.filter((j) => j.category === "completed"), [jobs]);
+  const completed = useMemo(
+    () => jobs.filter((j) => j.category === "completed"),
+    [jobs],
+  );
   const products = useMemo(
-    () => [...new Set(completed.map((j) => j.product).filter(Boolean))].sort() as string[],
+    () =>
+      [
+        ...new Set(completed.map((j) => j.product).filter(Boolean)),
+      ].sort() as string[],
     [completed],
   );
   const visible = useMemo(
@@ -76,14 +82,18 @@ export function ProjectMap({ jobs }: { jobs: GalleryJob[] }) {
       {/* Product filter */}
       {products.length > 0 && (
         <div className="mb-6 flex flex-wrap items-center gap-2">
-          <span className="mr-1 text-xs font-semibold uppercase tracking-wide text-steel-500">
+          <span className="mr-1 text-xs font-semibold tracking-wide text-steel-500 uppercase">
             Product
           </span>
           <Chip active={product === null} onClick={() => setProduct(null)}>
             All
           </Chip>
           {products.map((p) => (
-            <Chip key={p} active={product === p} onClick={() => setProduct(product === p ? null : p)}>
+            <Chip
+              key={p}
+              active={product === p}
+              onClick={() => setProduct(product === p ? null : p)}
+            >
               {p}
             </Chip>
           ))}
@@ -91,21 +101,42 @@ export function ProjectMap({ jobs }: { jobs: GalleryJob[] }) {
       )}
 
       <p className="mb-4 text-sm text-slate-500">
-        {totalRoofs} completed roof{totalRoofs === 1 ? "" : "s"} across {groups.length}{" "}
-        {groups.length === 1 ? "community" : "communities"}: tap a pin.
+        {totalRoofs} completed roof{totalRoofs === 1 ? "" : "s"} across{" "}
+        {groups.length} {groups.length === 1 ? "community" : "communities"}: tap
+        a pin.
       </p>
 
       <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr]">
         {/* Map */}
         <div className="overflow-hidden rounded-2xl border border-border bg-[#eaf1f8]">
-          <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label="Map of Southeast Roofing project cities in South Mississippi">
+          <svg
+            viewBox={`0 0 ${W} ${H}`}
+            className="h-auto w-full"
+            role="img"
+            aria-label="Map of Southeast Roofing project cities in South Mississippi"
+          >
             <rect width={W} height={H} fill="#eaf1f8" />
             {/* Gulf hint along the bottom */}
             <rect x={0} y={H - 70} width={W} height={70} fill="#cfe0ef" />
-            <text x={W / 2} y={H - 30} textAnchor="middle" fill="#6f8ba8" fontSize="15" fontWeight="600" letterSpacing="2">
+            <text
+              x={W / 2}
+              y={H - 30}
+              textAnchor="middle"
+              fill="#6f8ba8"
+              fontSize="15"
+              fontWeight="600"
+              letterSpacing="2"
+            >
               GULF OF MEXICO
             </text>
-            <text x={16} y={28} fill="#9db2c7" fontSize="13" fontWeight="700" letterSpacing="1">
+            <text
+              x={16}
+              y={28}
+              fill="#9db2c7"
+              fontSize="13"
+              fontWeight="700"
+              letterSpacing="1"
+            >
               SOUTH MISSISSIPPI
             </text>
 
@@ -113,7 +144,11 @@ export function ProjectMap({ jobs }: { jobs: GalleryJob[] }) {
               const isActive = g.key === selected;
               const r = Math.min(13, 5 + g.jobs.length * 1.4);
               return (
-                <g key={g.key} className="cursor-pointer" onClick={() => pickCity(g.key, g.name)}>
+                <g
+                  key={g.key}
+                  className="cursor-pointer"
+                  onClick={() => pickCity(g.key, g.name)}
+                >
                   <title>{`${g.name}, ${g.jobs.length} roof${g.jobs.length === 1 ? "" : "s"}`}</title>
                   <circle
                     cx={g.x}
@@ -191,13 +226,19 @@ export function ProjectMap({ jobs }: { jobs: GalleryJob[] }) {
             </div>
           ) : (
             <div>
-              <h3 className="text-lg font-bold text-navy-900">Communities we&apos;ve roofed</h3>
+              <h3 className="text-lg font-bold text-navy-900">
+                Communities we&apos;ve roofed
+              </h3>
               <p className="mt-1 text-sm text-slate-600">
                 Tap a pin on the map, or a city below, to see real roofs there.
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {[...groups]
-                  .sort((a, b) => b.jobs.length - a.jobs.length || a.name.localeCompare(b.name))
+                  .sort(
+                    (a, b) =>
+                      b.jobs.length - a.jobs.length ||
+                      a.name.localeCompare(b.name),
+                  )
                   .map((g) => (
                     <button
                       key={g.key}
@@ -215,9 +256,7 @@ export function ProjectMap({ jobs }: { jobs: GalleryJob[] }) {
         </div>
       </div>
 
-      {openJob && (
-        <JobCard job={openJob} onClose={() => setOpenJob(null)} />
-      )}
+      {openJob && <JobCard job={openJob} onClose={() => setOpenJob(null)} />}
     </div>
   );
 }

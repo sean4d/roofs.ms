@@ -38,118 +38,691 @@ export function RoofHouseSvg({
       viewBox="0 0 1040 620"
       className={cn("block h-auto w-full", className)}
       role="img"
-      aria-label={label ?? "Cutaway illustration of a house showing every roof component in place"}
+      aria-label={
+        label ??
+        "Cutaway illustration of a house showing every roof component in place"
+      }
     >
-      <defs><linearGradient id="skyA" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#f8fbfd"/><stop offset="100%" stopColor="#e9f0f7"/></linearGradient></defs>
-      <rect width="1040" height="620" rx="24" fill="url(#skyA)"/>
-      <ellipse cx="544" cy="505" rx="445" ry="68" fill="#0d2c4b" opacity="0.07"/>
-      <polygon points="146.3,234.0 779.6,82.0 685.3,163.9 52.0,315.9" fill="#6c7986" stroke="#46525e" strokeWidth="1.6" strokeLinejoin="round"/>
-      <polygon points="86.8,478.2 249.3,559.5 249.3,380.6 168.0,228.8 86.8,299.3" fill="#e8edf3" stroke="#46525e" strokeWidth="1.6" strokeLinejoin="round"/>
-      <polygon points="249.3,559.5 839.1,417.9 839.1,239.0 249.3,380.6" fill="#ffffff" stroke="#46525e" strokeWidth="1.6" strokeLinejoin="round"/>
-      <line x1="249.3" y1="406.1" x2="839.1" y2="264.6" stroke="#d5dde6" strokeWidth="1.1"/>
-      <line x1="249.3" y1="431.7" x2="839.1" y2="290.1" stroke="#d5dde6" strokeWidth="1.1"/>
-      <line x1="249.3" y1="457.2" x2="839.1" y2="315.7" stroke="#d5dde6" strokeWidth="1.1"/>
-      <line x1="249.3" y1="482.8" x2="839.1" y2="341.2" stroke="#d5dde6" strokeWidth="1.1"/>
-      <line x1="249.3" y1="508.3" x2="839.1" y2="366.8" stroke="#d5dde6" strokeWidth="1.1"/>
-      <line x1="249.3" y1="533.9" x2="839.1" y2="392.3" stroke="#d5dde6" strokeWidth="1.1"/>
-      <polygon points="316.9,407.8 375.0,393.9 375.0,461.6 316.9,475.5" fill="#cfe0ee" stroke="#46525e" strokeWidth="1.4" strokeLinejoin="round"/>
+      <defs>
+        <linearGradient id="skyA" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#f8fbfd" />
+          <stop offset="100%" stopColor="#e9f0f7" />
+        </linearGradient>
+      </defs>
+      <rect width="1040" height="620" rx="24" fill="url(#skyA)" />
+      <ellipse
+        cx="544"
+        cy="505"
+        rx="445"
+        ry="68"
+        fill="#0d2c4b"
+        opacity="0.07"
+      />
+      <polygon
+        points="146.3,234.0 779.6,82.0 685.3,163.9 52.0,315.9"
+        fill="#6c7986"
+        stroke="#46525e"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      <polygon
+        points="86.8,478.2 249.3,559.5 249.3,380.6 168.0,228.8 86.8,299.3"
+        fill="#e8edf3"
+        stroke="#46525e"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      <polygon
+        points="249.3,559.5 839.1,417.9 839.1,239.0 249.3,380.6"
+        fill="#ffffff"
+        stroke="#46525e"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      <line
+        x1="249.3"
+        y1="406.1"
+        x2="839.1"
+        y2="264.6"
+        stroke="#d5dde6"
+        strokeWidth="1.1"
+      />
+      <line
+        x1="249.3"
+        y1="431.7"
+        x2="839.1"
+        y2="290.1"
+        stroke="#d5dde6"
+        strokeWidth="1.1"
+      />
+      <line
+        x1="249.3"
+        y1="457.2"
+        x2="839.1"
+        y2="315.7"
+        stroke="#d5dde6"
+        strokeWidth="1.1"
+      />
+      <line
+        x1="249.3"
+        y1="482.8"
+        x2="839.1"
+        y2="341.2"
+        stroke="#d5dde6"
+        strokeWidth="1.1"
+      />
+      <line
+        x1="249.3"
+        y1="508.3"
+        x2="839.1"
+        y2="366.8"
+        stroke="#d5dde6"
+        strokeWidth="1.1"
+      />
+      <line
+        x1="249.3"
+        y1="533.9"
+        x2="839.1"
+        y2="392.3"
+        stroke="#d5dde6"
+        strokeWidth="1.1"
+      />
+      <polygon
+        points="316.9,407.8 375.0,393.9 375.0,461.6 316.9,475.5"
+        fill="#cfe0ee"
+        stroke="#46525e"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+      />
       <g {...part("soffit-fascia")}>
-      <polygon points="240.6,436.8 873.9,284.8 839.1,265.6 249.3,407.2" fill="#d5dde6" stroke="#46525e" strokeWidth="1.5" strokeLinejoin="round"/>
-      <polygon points="240.6,410.2 873.9,258.2 873.9,284.8 240.6,436.8" fill="#ffffff" stroke="#46525e" strokeWidth="1.6" strokeLinejoin="round"/>
+        <polygon
+          points="240.6,436.8 873.9,284.8 839.1,265.6 249.3,407.2"
+          fill="#d5dde6"
+          stroke="#46525e"
+          strokeWidth="1.5"
+          strokeLinejoin="round"
+        />
+        <polygon
+          points="240.6,410.2 873.9,258.2 873.9,284.8 240.6,436.8"
+          fill="#ffffff"
+          stroke="#46525e"
+          strokeWidth="1.6"
+          strokeLinejoin="round"
+        />
       </g>
       <g {...part("gutters")}>
-      <polygon points="523.4,342.3 724.0,294.2 729.8,301.9 529.2,350.0" fill="#b9c4cf" stroke="#46525e" strokeWidth="1.4" strokeLinejoin="round"/>
-      <polygon points="529.2,350.0 729.8,301.9 729.8,318.3 529.2,366.5" fill="#e6ecf2" stroke="#46525e" strokeWidth="1.5" strokeLinejoin="round"/>
-      <polygon points="541.3,363.6 561.6,358.7 561.6,491.2 541.3,496.1" fill="#e6ecf2" stroke="#46525e" strokeWidth="1.4" strokeLinejoin="round"/>
+        <polygon
+          points="523.4,342.3 724.0,294.2 729.8,301.9 529.2,350.0"
+          fill="#b9c4cf"
+          stroke="#46525e"
+          strokeWidth="1.4"
+          strokeLinejoin="round"
+        />
+        <polygon
+          points="529.2,350.0 729.8,301.9 729.8,318.3 529.2,366.5"
+          fill="#e6ecf2"
+          stroke="#46525e"
+          strokeWidth="1.5"
+          strokeLinejoin="round"
+        />
+        <polygon
+          points="541.3,363.6 561.6,358.7 561.6,491.2 541.3,496.1"
+          fill="#e6ecf2"
+          stroke="#46525e"
+          strokeWidth="1.4"
+          strokeLinejoin="round"
+        />
       </g>
       <g {...part("field-shingles")}>
-      <polygon points="146.3,234.0 779.6,82.0 873.9,258.2 240.6,410.2" fill="#8d9aa8" stroke="#46525e" strokeWidth="1.8" strokeLinejoin="round"/></g>
-      <line x1="156.8" y1="253.6" x2="790.1" y2="101.6" stroke="#6c7986" strokeWidth="1" opacity="0.45"/>
-      <line x1="167.2" y1="273.1" x2="800.6" y2="121.1" stroke="#6c7986" strokeWidth="1" opacity="0.45"/>
-      <line x1="177.7" y1="292.7" x2="811.0" y2="140.7" stroke="#6c7986" strokeWidth="1" opacity="0.45"/>
-      <line x1="188.2" y1="312.3" x2="821.5" y2="160.3" stroke="#6c7986" strokeWidth="1" opacity="0.45"/>
-      <line x1="198.7" y1="331.9" x2="832.0" y2="179.9" stroke="#6c7986" strokeWidth="1" opacity="0.45"/>
-      <line x1="209.1" y1="351.5" x2="842.5" y2="199.4" stroke="#6c7986" strokeWidth="1" opacity="0.45"/>
-      <line x1="219.6" y1="371.0" x2="853.0" y2="219.0" stroke="#6c7986" strokeWidth="1" opacity="0.45"/>
-      <line x1="230.1" y1="390.6" x2="863.4" y2="238.6" stroke="#6c7986" strokeWidth="1" opacity="0.45"/>
+        <polygon
+          points="146.3,234.0 779.6,82.0 873.9,258.2 240.6,410.2"
+          fill="#8d9aa8"
+          stroke="#46525e"
+          strokeWidth="1.8"
+          strokeLinejoin="round"
+        />
+      </g>
+      <line
+        x1="156.8"
+        y1="253.6"
+        x2="790.1"
+        y2="101.6"
+        stroke="#6c7986"
+        strokeWidth="1"
+        opacity="0.45"
+      />
+      <line
+        x1="167.2"
+        y1="273.1"
+        x2="800.6"
+        y2="121.1"
+        stroke="#6c7986"
+        strokeWidth="1"
+        opacity="0.45"
+      />
+      <line
+        x1="177.7"
+        y1="292.7"
+        x2="811.0"
+        y2="140.7"
+        stroke="#6c7986"
+        strokeWidth="1"
+        opacity="0.45"
+      />
+      <line
+        x1="188.2"
+        y1="312.3"
+        x2="821.5"
+        y2="160.3"
+        stroke="#6c7986"
+        strokeWidth="1"
+        opacity="0.45"
+      />
+      <line
+        x1="198.7"
+        y1="331.9"
+        x2="832.0"
+        y2="179.9"
+        stroke="#6c7986"
+        strokeWidth="1"
+        opacity="0.45"
+      />
+      <line
+        x1="209.1"
+        y1="351.5"
+        x2="842.5"
+        y2="199.4"
+        stroke="#6c7986"
+        strokeWidth="1"
+        opacity="0.45"
+      />
+      <line
+        x1="219.6"
+        y1="371.0"
+        x2="853.0"
+        y2="219.0"
+        stroke="#6c7986"
+        strokeWidth="1"
+        opacity="0.45"
+      />
+      <line
+        x1="230.1"
+        y1="390.6"
+        x2="863.4"
+        y2="238.6"
+        stroke="#6c7986"
+        strokeWidth="1"
+        opacity="0.45"
+      />
       <g {...part("decking")}>
-      <polygon points="146.3,234.0 240.6,410.2 240.6,418.4 146.3,242.2" fill="#a8874f" stroke="#a8874f" strokeWidth="1.2"/>
-      <polygon points="146.3,234.0 205.1,219.9 299.4,396.1 240.6,410.2" fill="#c9a679" stroke="#a8874f" strokeWidth="1.6" strokeLinejoin="round"/>
+        <polygon
+          points="146.3,234.0 240.6,410.2 240.6,418.4 146.3,242.2"
+          fill="#a8874f"
+          stroke="#a8874f"
+          strokeWidth="1.2"
+        />
+        <polygon
+          points="146.3,234.0 205.1,219.9 299.4,396.1 240.6,410.2"
+          fill="#c9a679"
+          stroke="#a8874f"
+          strokeWidth="1.6"
+          strokeLinejoin="round"
+        />
       </g>
       <g {...part("underlayment")}>
-      <polygon points="205.1,211.6 299.4,387.9 299.4,396.1 205.1,219.9" fill="#3d6688" stroke="#3d6688" strokeWidth="1.2"/>
-      <polygon points="205.1,211.6 263.9,197.5 358.2,373.7 299.4,387.9" fill="#4f7ea8" stroke="#3d6688" strokeWidth="1.6" strokeLinejoin="round"/>
+        <polygon
+          points="205.1,211.6 299.4,387.9 299.4,396.1 205.1,219.9"
+          fill="#3d6688"
+          stroke="#3d6688"
+          strokeWidth="1.2"
+        />
+        <polygon
+          points="205.1,211.6 263.9,197.5 358.2,373.7 299.4,387.9"
+          fill="#4f7ea8"
+          stroke="#3d6688"
+          strokeWidth="1.6"
+          strokeLinejoin="round"
+        />
       </g>
       <g {...part("field-shingles")}>
-      <polygon points="263.9,189.3 358.2,365.5 358.2,373.7 263.9,197.5" fill="#6c7986" stroke="#6c7986" strokeWidth="1.2"/>
-      <polygon points="263.9,189.3 322.7,175.2 417.0,351.4 358.2,365.5" fill="#a7b3bf" stroke="#6c7986" strokeWidth="1.6" strokeLinejoin="round"/>
+        <polygon
+          points="263.9,189.3 358.2,365.5 358.2,373.7 263.9,197.5"
+          fill="#6c7986"
+          stroke="#6c7986"
+          strokeWidth="1.2"
+        />
+        <polygon
+          points="263.9,189.3 322.7,175.2 417.0,351.4 358.2,365.5"
+          fill="#a7b3bf"
+          stroke="#6c7986"
+          strokeWidth="1.6"
+          strokeLinejoin="round"
+        />
       </g>
       <g {...part("starter-shingles")}>
-      <polygon points="240.6,410.2 724.0,294.2 706.0,260.5 222.6,376.6" fill="#7d8b99" stroke="#46525e" strokeWidth="1.3" strokeLinejoin="round"/>
-      <polygon points="146.3,234.0 240.6,410.2 270.5,403.0 176.3,226.8" fill="#7d8b99" stroke="#46525e" strokeWidth="1.3" strokeLinejoin="round"/>
+        <polygon
+          points="240.6,410.2 724.0,294.2 706.0,260.5 222.6,376.6"
+          fill="#7d8b99"
+          stroke="#46525e"
+          strokeWidth="1.3"
+          strokeLinejoin="round"
+        />
+        <polygon
+          points="146.3,234.0 240.6,410.2 270.5,403.0 176.3,226.8"
+          fill="#7d8b99"
+          stroke="#46525e"
+          strokeWidth="1.3"
+          strokeLinejoin="round"
+        />
       </g>
       <g {...part("drip-edge")}>
-      <polyline points="146.3,234.0 240.6,410.2 724.0,294.2" fill="none" stroke="#b9c4cf" strokeWidth="8" strokeLinejoin="round" strokeLinecap="round"/>
-      <polyline points="146.3,234.0 240.6,410.2 724.0,294.2" fill="none" stroke="#46525e" strokeWidth="1.4" strokeLinejoin="round" strokeLinecap="round" opacity="0.5"/>
+        <polyline
+          points="146.3,234.0 240.6,410.2 724.0,294.2"
+          fill="none"
+          stroke="#b9c4cf"
+          strokeWidth="8"
+          strokeLinejoin="round"
+          strokeLinecap="round"
+        />
+        <polyline
+          points="146.3,234.0 240.6,410.2 724.0,294.2"
+          fill="none"
+          stroke="#46525e"
+          strokeWidth="1.4"
+          strokeLinejoin="round"
+          strokeLinecap="round"
+          opacity="0.5"
+        />
       </g>
       <g {...part("pipe-boots")}>
-      <polygon points="378.1,264.6 426.5,253.0 446.2,289.9 397.9,301.5" fill="#b9c4cf" stroke="#46525e" strokeWidth="1.5" strokeLinejoin="round"/>
-      <ellipse cx="412.2" cy="277.2" rx="12.6" ry="5.8" fill="#5b6773" stroke="#46525e" strokeWidth="1.2"/>
+        <polygon
+          points="378.1,264.6 426.5,253.0 446.2,289.9 397.9,301.5"
+          fill="#b9c4cf"
+          stroke="#46525e"
+          strokeWidth="1.5"
+          strokeLinejoin="round"
+        />
+        <ellipse
+          cx="412.2"
+          cy="277.2"
+          rx="12.6"
+          ry="5.8"
+          fill="#5b6773"
+          stroke="#46525e"
+          strokeWidth="1.2"
+        />
       </g>
-      <polygon points="404.5,279.1 419.9,275.4 419.9,234.3 404.5,238.0" fill="#12304d" stroke="#46525e" strokeWidth="1.3" strokeLinejoin="round"/>
-      <ellipse cx="412.2" cy="236.1" rx="7.7" ry="3.4" fill="#2b4a68" stroke="#46525e" strokeWidth="1.1"/>
-      <polygon points="407.8,207.9 408.3,132.4 461.0,195.2" fill="#a7b3bf" stroke="#46525e" strokeWidth="1.4" strokeLinejoin="round"/>
-      <polygon points="431.0,113.5 484.2,100.7 484.2,238.5 431.0,251.3" fill="#e3d5c8" stroke="#46525e" strokeWidth="1.5" strokeLinejoin="round"/>
-      <polygon points="431.0,113.5 407.8,101.9 407.8,207.9 431.0,251.3" fill="#d3c2b2" stroke="#46525e" strokeWidth="1.5" strokeLinejoin="round"/>
-      <polygon points="431.0,113.5 407.8,101.9 461.0,89.1 484.2,100.7" fill="#efe6dc" stroke="#46525e" strokeWidth="1.5" strokeLinejoin="round"/>
+      <polygon
+        points="404.5,279.1 419.9,275.4 419.9,234.3 404.5,238.0"
+        fill="#12304d"
+        stroke="#46525e"
+        strokeWidth="1.3"
+        strokeLinejoin="round"
+      />
+      <ellipse
+        cx="412.2"
+        cy="236.1"
+        rx="7.7"
+        ry="3.4"
+        fill="#2b4a68"
+        stroke="#46525e"
+        strokeWidth="1.1"
+      />
+      <polygon
+        points="407.8,207.9 408.3,132.4 461.0,195.2"
+        fill="#a7b3bf"
+        stroke="#46525e"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+      />
+      <polygon
+        points="431.0,113.5 484.2,100.7 484.2,238.5 431.0,251.3"
+        fill="#e3d5c8"
+        stroke="#46525e"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      <polygon
+        points="431.0,113.5 407.8,101.9 407.8,207.9 431.0,251.3"
+        fill="#d3c2b2"
+        stroke="#46525e"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      <polygon
+        points="431.0,113.5 407.8,101.9 461.0,89.1 484.2,100.7"
+        fill="#efe6dc"
+        stroke="#46525e"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
       <g {...part("flashing")}>
-      <polyline points="407.8,207.9 431.0,251.3 484.2,238.5 461.0,195.2" fill="none" stroke="#b9c4cf" strokeWidth="9" strokeLinejoin="round" strokeLinecap="round"/>
+        <polyline
+          points="407.8,207.9 431.0,251.3 484.2,238.5 461.0,195.2"
+          fill="none"
+          stroke="#b9c4cf"
+          strokeWidth="9"
+          strokeLinejoin="round"
+          strokeLinecap="round"
+        />
       </g>
-      <polygon points="713.4,269.2 852.6,338.8 852.6,517.7 713.4,448.1" fill="#e8edf3" stroke="#46525e" strokeWidth="1.6" strokeLinejoin="round"/>
-      <polygon points="920.3,250.0 988.0,306.3 988.0,485.2 852.6,517.7 852.6,338.8" fill="#ffffff" stroke="#46525e" strokeWidth="1.6" strokeLinejoin="round"/>
-      <polygon points="728.1,153.9 920.3,250.0 988.0,306.3" fill="#8d9aa8" stroke="#46525e" strokeWidth="1.7" strokeLinejoin="round"/>
-      <polygon points="728.1,153.9 920.3,250.0 852.6,338.8 713.4,269.2" fill="#a7b3bf" stroke="#46525e" strokeWidth="1.7" strokeLinejoin="round"/>
-      <polyline points="728.1,153.9 920.3,250.0" fill="none" stroke="#6c7986" strokeWidth="7" strokeLinecap="round"/>
+      <polygon
+        points="713.4,269.2 852.6,338.8 852.6,517.7 713.4,448.1"
+        fill="#e8edf3"
+        stroke="#46525e"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      <polygon
+        points="920.3,250.0 988.0,306.3 988.0,485.2 852.6,517.7 852.6,338.8"
+        fill="#ffffff"
+        stroke="#46525e"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      <polygon
+        points="728.1,153.9 920.3,250.0 988.0,306.3"
+        fill="#8d9aa8"
+        stroke="#46525e"
+        strokeWidth="1.7"
+        strokeLinejoin="round"
+      />
+      <polygon
+        points="728.1,153.9 920.3,250.0 852.6,338.8 713.4,269.2"
+        fill="#a7b3bf"
+        stroke="#46525e"
+        strokeWidth="1.7"
+        strokeLinejoin="round"
+      />
+      <polyline
+        points="728.1,153.9 920.3,250.0"
+        fill="none"
+        stroke="#6c7986"
+        strokeWidth="7"
+        strokeLinecap="round"
+      />
       <g {...part("ice-water-shield")}>
-      <polygon points="703.9,158.8 752.3,147.2 737.6,262.4 689.2,274.0" fill="#12304d" stroke="#08203a" strokeWidth="1.4" strokeLinejoin="round"/>
+        <polygon
+          points="703.9,158.8 752.3,147.2 737.6,262.4 689.2,274.0"
+          fill="#12304d"
+          stroke="#08203a"
+          strokeWidth="1.4"
+          strokeLinejoin="round"
+        />
       </g>
       <g {...part("ridge-vent")}>
-      <polygon points="187.2,203.4 719.0,75.7 710.9,60.5 179.1,188.2" fill="#55626f" stroke="#46525e" strokeWidth="1.3" strokeLinejoin="round"/>
-      <line x1="216.7" y1="196.3" x2="208.6" y2="181.1" stroke="#adb8c2" strokeWidth="1.2"/>
-      <line x1="246.3" y1="189.2" x2="238.1" y2="174.0" stroke="#adb8c2" strokeWidth="1.2"/>
-      <line x1="275.8" y1="182.1" x2="267.7" y2="166.9" stroke="#adb8c2" strokeWidth="1.2"/>
-      <line x1="305.4" y1="175.0" x2="297.2" y2="159.8" stroke="#adb8c2" strokeWidth="1.2"/>
-      <line x1="334.9" y1="167.9" x2="326.8" y2="152.7" stroke="#adb8c2" strokeWidth="1.2"/>
-      <line x1="364.5" y1="160.8" x2="356.3" y2="145.6" stroke="#adb8c2" strokeWidth="1.2"/>
-      <line x1="394.0" y1="153.7" x2="385.9" y2="138.5" stroke="#adb8c2" strokeWidth="1.2"/>
-      <line x1="423.5" y1="146.6" x2="415.4" y2="131.5" stroke="#adb8c2" strokeWidth="1.2"/>
-      <line x1="453.1" y1="139.5" x2="445.0" y2="124.4" stroke="#adb8c2" strokeWidth="1.2"/>
-      <line x1="482.6" y1="132.5" x2="474.5" y2="117.3" stroke="#adb8c2" strokeWidth="1.2"/>
-      <line x1="512.2" y1="125.4" x2="504.1" y2="110.2" stroke="#adb8c2" strokeWidth="1.2"/>
-      <line x1="541.7" y1="118.3" x2="533.6" y2="103.1" stroke="#adb8c2" strokeWidth="1.2"/>
-      <line x1="571.3" y1="111.2" x2="563.1" y2="96.0" stroke="#adb8c2" strokeWidth="1.2"/>
-      <line x1="600.8" y1="104.1" x2="592.7" y2="88.9" stroke="#adb8c2" strokeWidth="1.2"/>
-      <line x1="630.4" y1="97.0" x2="622.2" y2="81.8" stroke="#adb8c2" strokeWidth="1.2"/>
-      <line x1="659.9" y1="89.9" x2="651.8" y2="74.7" stroke="#adb8c2" strokeWidth="1.2"/>
-      <line x1="689.5" y1="82.8" x2="681.3" y2="67.6" stroke="#adb8c2" strokeWidth="1.2"/>
+        <polygon
+          points="187.2,203.4 719.0,75.7 710.9,60.5 179.1,188.2"
+          fill="#55626f"
+          stroke="#46525e"
+          strokeWidth="1.3"
+          strokeLinejoin="round"
+        />
+        <line
+          x1="216.7"
+          y1="196.3"
+          x2="208.6"
+          y2="181.1"
+          stroke="#adb8c2"
+          strokeWidth="1.2"
+        />
+        <line
+          x1="246.3"
+          y1="189.2"
+          x2="238.1"
+          y2="174.0"
+          stroke="#adb8c2"
+          strokeWidth="1.2"
+        />
+        <line
+          x1="275.8"
+          y1="182.1"
+          x2="267.7"
+          y2="166.9"
+          stroke="#adb8c2"
+          strokeWidth="1.2"
+        />
+        <line
+          x1="305.4"
+          y1="175.0"
+          x2="297.2"
+          y2="159.8"
+          stroke="#adb8c2"
+          strokeWidth="1.2"
+        />
+        <line
+          x1="334.9"
+          y1="167.9"
+          x2="326.8"
+          y2="152.7"
+          stroke="#adb8c2"
+          strokeWidth="1.2"
+        />
+        <line
+          x1="364.5"
+          y1="160.8"
+          x2="356.3"
+          y2="145.6"
+          stroke="#adb8c2"
+          strokeWidth="1.2"
+        />
+        <line
+          x1="394.0"
+          y1="153.7"
+          x2="385.9"
+          y2="138.5"
+          stroke="#adb8c2"
+          strokeWidth="1.2"
+        />
+        <line
+          x1="423.5"
+          y1="146.6"
+          x2="415.4"
+          y2="131.5"
+          stroke="#adb8c2"
+          strokeWidth="1.2"
+        />
+        <line
+          x1="453.1"
+          y1="139.5"
+          x2="445.0"
+          y2="124.4"
+          stroke="#adb8c2"
+          strokeWidth="1.2"
+        />
+        <line
+          x1="482.6"
+          y1="132.5"
+          x2="474.5"
+          y2="117.3"
+          stroke="#adb8c2"
+          strokeWidth="1.2"
+        />
+        <line
+          x1="512.2"
+          y1="125.4"
+          x2="504.1"
+          y2="110.2"
+          stroke="#adb8c2"
+          strokeWidth="1.2"
+        />
+        <line
+          x1="541.7"
+          y1="118.3"
+          x2="533.6"
+          y2="103.1"
+          stroke="#adb8c2"
+          strokeWidth="1.2"
+        />
+        <line
+          x1="571.3"
+          y1="111.2"
+          x2="563.1"
+          y2="96.0"
+          stroke="#adb8c2"
+          strokeWidth="1.2"
+        />
+        <line
+          x1="600.8"
+          y1="104.1"
+          x2="592.7"
+          y2="88.9"
+          stroke="#adb8c2"
+          strokeWidth="1.2"
+        />
+        <line
+          x1="630.4"
+          y1="97.0"
+          x2="622.2"
+          y2="81.8"
+          stroke="#adb8c2"
+          strokeWidth="1.2"
+        />
+        <line
+          x1="659.9"
+          y1="89.9"
+          x2="651.8"
+          y2="74.7"
+          stroke="#adb8c2"
+          strokeWidth="1.2"
+        />
+        <line
+          x1="689.5"
+          y1="82.8"
+          x2="681.3"
+          y2="67.6"
+          stroke="#adb8c2"
+          strokeWidth="1.2"
+        />
       </g>
       <g {...part("ridge-cap")}>
-      <polygon points="146.3,226.2 779.6,74.2 769.8,63.5 136.4,215.5" fill="#6c7986" stroke="#46525e" strokeWidth="1.6" strokeLinejoin="round"/>
-      <line x1="185.9" y1="216.7" x2="176.0" y2="206.0" stroke="#5a6672" strokeWidth="1.1"/>
-      <line x1="225.4" y1="207.2" x2="215.6" y2="196.5" stroke="#5a6672" strokeWidth="1.1"/>
-      <line x1="265.0" y1="197.7" x2="255.2" y2="187.0" stroke="#5a6672" strokeWidth="1.1"/>
-      <line x1="304.6" y1="188.2" x2="294.8" y2="177.5" stroke="#5a6672" strokeWidth="1.1"/>
-      <line x1="344.2" y1="178.7" x2="334.3" y2="168.0" stroke="#5a6672" strokeWidth="1.1"/>
-      <line x1="383.8" y1="169.2" x2="373.9" y2="158.5" stroke="#5a6672" strokeWidth="1.1"/>
-      <line x1="423.4" y1="159.7" x2="413.5" y2="149.0" stroke="#5a6672" strokeWidth="1.1"/>
-      <line x1="463.0" y1="150.2" x2="453.1" y2="139.5" stroke="#5a6672" strokeWidth="1.1"/>
-      <line x1="502.5" y1="140.7" x2="492.7" y2="130.0" stroke="#5a6672" strokeWidth="1.1"/>
-      <line x1="542.1" y1="131.2" x2="532.3" y2="120.5" stroke="#5a6672" strokeWidth="1.1"/>
-      <line x1="581.7" y1="121.7" x2="571.8" y2="111.0" stroke="#5a6672" strokeWidth="1.1"/>
-      <line x1="621.3" y1="112.2" x2="611.4" y2="101.5" stroke="#5a6672" strokeWidth="1.1"/>
-      <line x1="660.9" y1="102.7" x2="651.0" y2="92.0" stroke="#5a6672" strokeWidth="1.1"/>
-      <line x1="700.5" y1="93.2" x2="690.6" y2="82.5" stroke="#5a6672" strokeWidth="1.1"/>
-      <line x1="740.0" y1="83.7" x2="730.2" y2="73.0" stroke="#5a6672" strokeWidth="1.1"/>
+        <polygon
+          points="146.3,226.2 779.6,74.2 769.8,63.5 136.4,215.5"
+          fill="#6c7986"
+          stroke="#46525e"
+          strokeWidth="1.6"
+          strokeLinejoin="round"
+        />
+        <line
+          x1="185.9"
+          y1="216.7"
+          x2="176.0"
+          y2="206.0"
+          stroke="#5a6672"
+          strokeWidth="1.1"
+        />
+        <line
+          x1="225.4"
+          y1="207.2"
+          x2="215.6"
+          y2="196.5"
+          stroke="#5a6672"
+          strokeWidth="1.1"
+        />
+        <line
+          x1="265.0"
+          y1="197.7"
+          x2="255.2"
+          y2="187.0"
+          stroke="#5a6672"
+          strokeWidth="1.1"
+        />
+        <line
+          x1="304.6"
+          y1="188.2"
+          x2="294.8"
+          y2="177.5"
+          stroke="#5a6672"
+          strokeWidth="1.1"
+        />
+        <line
+          x1="344.2"
+          y1="178.7"
+          x2="334.3"
+          y2="168.0"
+          stroke="#5a6672"
+          strokeWidth="1.1"
+        />
+        <line
+          x1="383.8"
+          y1="169.2"
+          x2="373.9"
+          y2="158.5"
+          stroke="#5a6672"
+          strokeWidth="1.1"
+        />
+        <line
+          x1="423.4"
+          y1="159.7"
+          x2="413.5"
+          y2="149.0"
+          stroke="#5a6672"
+          strokeWidth="1.1"
+        />
+        <line
+          x1="463.0"
+          y1="150.2"
+          x2="453.1"
+          y2="139.5"
+          stroke="#5a6672"
+          strokeWidth="1.1"
+        />
+        <line
+          x1="502.5"
+          y1="140.7"
+          x2="492.7"
+          y2="130.0"
+          stroke="#5a6672"
+          strokeWidth="1.1"
+        />
+        <line
+          x1="542.1"
+          y1="131.2"
+          x2="532.3"
+          y2="120.5"
+          stroke="#5a6672"
+          strokeWidth="1.1"
+        />
+        <line
+          x1="581.7"
+          y1="121.7"
+          x2="571.8"
+          y2="111.0"
+          stroke="#5a6672"
+          strokeWidth="1.1"
+        />
+        <line
+          x1="621.3"
+          y1="112.2"
+          x2="611.4"
+          y2="101.5"
+          stroke="#5a6672"
+          strokeWidth="1.1"
+        />
+        <line
+          x1="660.9"
+          y1="102.7"
+          x2="651.0"
+          y2="92.0"
+          stroke="#5a6672"
+          strokeWidth="1.1"
+        />
+        <line
+          x1="700.5"
+          y1="93.2"
+          x2="690.6"
+          y2="82.5"
+          stroke="#5a6672"
+          strokeWidth="1.1"
+        />
+        <line
+          x1="740.0"
+          y1="83.7"
+          x2="730.2"
+          y2="73.0"
+          stroke="#5a6672"
+          strokeWidth="1.1"
+        />
       </g>
     </svg>
   );

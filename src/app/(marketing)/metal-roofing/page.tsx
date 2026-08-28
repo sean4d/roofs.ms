@@ -20,7 +20,7 @@ import { FinalCta } from "@/components/home/final-cta";
 /**
  * Metal cross-hub (PRD §4.3): an SEO landing page whose primary job is the
  * two-path router into /residential/metal-roofing and
- * /commercial/metal-roofing. Metal is a system within the two divisions, 
+ * /commercial/metal-roofing. Metal is a system within the two divisions,
  * never presented as a third division.
  */
 

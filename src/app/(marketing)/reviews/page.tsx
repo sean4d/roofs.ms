@@ -51,8 +51,12 @@ export default async function ReviewsPage() {
   // Every live Google review (via the GBP API), freshest first, with the
   // owner's replies, new reviews appear here on their own. Curated verbatim
   // reviews fill in behind them only for reviewers the live feed hasn't covered.
-  const { live, rating, count, reviews: displayReviews } =
-    await getSiteReviews();
+  const {
+    live,
+    rating,
+    count,
+    reviews: displayReviews,
+  } = await getSiteReviews();
 
   return (
     <>
@@ -246,8 +250,8 @@ export default async function ReviewsPage() {
               Every quote above appears word-for-word as the customer wrote it
               on Google, where reviews are tied to real accounts and we
               can&apos;t edit, reword, or bury a single one. Read them at the
-              source, good and bad, that&apos;s the standard we think you
-              should hold every roofer to.
+              source, good and bad, that&apos;s the standard we think you should
+              hold every roofer to.
             </p>
           </Reveal>
         </div>

@@ -62,9 +62,10 @@ export default function RoofCostCalculatorPage() {
             Roof Replacement Cost Calculator
           </h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600">
-            Get an instant, honest estimate range for your roof, no email required.
-            Pick your material and a few details to see typical South Mississippi pricing,
-            then book a free inspection for your exact number.
+            Get an instant, honest estimate range for your roof, no email
+            required. Pick your material and a few details to see typical South
+            Mississippi pricing, then book a free inspection for your exact
+            number.
           </p>
         </div>
       </section>

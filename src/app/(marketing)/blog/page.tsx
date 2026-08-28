@@ -41,8 +41,8 @@ export default function BlogHubPage() {
               News from the crew
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600">
-              Storm response notes, project stories, and company updates.
-              For evergreen how-to guides, head to the{" "}
+              Storm response notes, project stories, and company updates. For
+              evergreen how-to guides, head to the{" "}
               <Link
                 href="/learn"
                 className="font-medium text-navy-900 underline underline-offset-4 hover:text-steel-500"

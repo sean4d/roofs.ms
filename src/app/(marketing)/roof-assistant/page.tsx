@@ -38,9 +38,9 @@ export default function RoofAssistantPage() {
             Not sure what your roof needs?
           </h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600">
-            Answer one quick question and our Roof Assistant points you to exactly the
-            right next step: a free inspection, an instant estimate, insurance help, or
-            a phone call. No pressure, no jargon.
+            Answer one quick question and our Roof Assistant points you to
+            exactly the right next step: a free inspection, an instant estimate,
+            insurance help, or a phone call. No pressure, no jargon.
           </p>
         </div>
       </section>

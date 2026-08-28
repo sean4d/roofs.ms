@@ -19,7 +19,7 @@ import { HotspotHouse } from "./hotspot-house";
  * there. Selecting from the artwork scrolls the matching row into view (and
  * vice versa) so the two never disagree about what is selected.
  *
- * Pins are real buttons layered over the SVG rather than shapes inside it: 
+ * Pins are real buttons layered over the SVG rather than shapes inside it:
  * that buys focus rings, tab order, and touch targets for free.
  */
 
@@ -34,7 +34,10 @@ export function RoofDiagram() {
 
   function select(key: string, name: string, scrollList: boolean) {
     setActiveKey(key);
-    track("diagram_component_clicked", { tool: "roof-diagram", component: name });
+    track("diagram_component_clicked", {
+      tool: "roof-diagram",
+      component: name,
+    });
     if (scrollList) {
       listRef.current
         ?.querySelector(`[data-row="${key}"]`)
@@ -43,7 +46,10 @@ export function RoofDiagram() {
   }
 
   return (
-    <div id="anatomy-diagram" className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
+    <div
+      id="anatomy-diagram"
+      className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]"
+    >
       {/* ---------------- Illustration + numbered list ---------------- */}
       <div>
         <p className="mb-3 text-xs font-semibold tracking-wide text-steel-500 uppercase">
@@ -132,7 +138,10 @@ export function RoofDiagram() {
               <p className="mt-1 text-sm text-steel-500">{active.short}</p>
             </div>
 
-            <Row icon={<Info className="size-4 text-steel-500" />} label="What it is">
+            <Row
+              icon={<Info className="size-4 text-steel-500" />}
+              label="What it is"
+            >
               {active.what}
             </Row>
             <Row

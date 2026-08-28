@@ -75,7 +75,8 @@ export const ROOF_PARTS: RoofPart[] = [
     photo: {
       src: "/images/projects/gaf-timberline-hdz-pewter-gray-hattiesburg-ms-001.webp",
       alt: "GAF Timberline HDZ shingles in Pewter Gray on a Southeast Roofing roof in Hattiesburg, Mississippi.",
-      caption: "The field of shingles: a real Southeast Roofing roof in Hattiesburg, MS.",
+      caption:
+        "The field of shingles: a real Southeast Roofing roof in Hattiesburg, MS.",
     },
   },
   {
@@ -117,7 +118,8 @@ export const ROOF_PARTS: RoofPart[] = [
     photo: {
       src: "/images/projects/roof-synthetic-felt-gulfport-ms.webp",
       alt: "Synthetic underlayment rolled over a roof deck on a Southeast Roofing job in Gulfport, Mississippi.",
-      caption: "Synthetic underlayment going down: a Southeast Roofing job in Gulfport, MS.",
+      caption:
+        "Synthetic underlayment going down: a Southeast Roofing job in Gulfport, MS.",
     },
   },
   {
@@ -187,7 +189,8 @@ export const ROOF_PARTS: RoofPart[] = [
     photo: {
       src: "/images/anatomy/seamless-gutters-musket-brown-petal-ms.webp",
       alt: "Seamless 6-inch K-style gutters in Musket Brown installed by Southeast Roofing in Petal, Mississippi.",
-      caption: "Seamless gutters. A real Southeast Roofing install in Petal, MS.",
+      caption:
+        "Seamless gutters. A real Southeast Roofing install in Petal, MS.",
     },
   },
   {
@@ -201,7 +204,8 @@ export const ROOF_PARTS: RoofPart[] = [
     photo: {
       src: "/images/services/wood-fascia.webp",
       alt: "New wood fascia board installed along a roof eave, with vented soffit beneath.",
-      caption: "Fascia and vented soffit trim the eave and feed attic intake air.",
+      caption:
+        "Fascia and vented soffit trim the eave and feed attic intake air.",
     },
   },
 ];
@@ -246,7 +250,8 @@ export const FLASHING_TYPES: FlashingType[] = [
     photo: {
       src: "/images/anatomy/roof-chimney-flashing.webp",
       alt: "Step and counter flashing woven into shingle courses where a roof meets a masonry chimney.",
-      caption: "Step flashing woven course by course where the roof meets masonry.",
+      caption:
+        "Step flashing woven course by course where the roof meets masonry.",
     },
   },
   {

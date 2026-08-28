@@ -27,7 +27,7 @@ import { Button } from "@/components/ui/button";
 import { FinalCta } from "@/components/home/final-cta";
 
 /**
- * About page (PRD §13 Phase 6). Integrity rule: only owner-confirmed facts: 
+ * About page (PRD §13 Phase 6). Integrity rule: only owner-confirmed facts:
  * no founding year, team bios, or job counts until supplied (siteConfig
  * [NEEDS] items). The story leans on what is verifiable: credentials,
  * real projects, and how we actually work.

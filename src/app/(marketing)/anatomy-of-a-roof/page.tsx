@@ -44,7 +44,11 @@ const glossarySchema: JsonLdObject = {
   ].map((item, i) => ({
     "@type": "ListItem",
     position: i + 1,
-    item: { "@type": "DefinedTerm", name: item.name, description: item.description },
+    item: {
+      "@type": "DefinedTerm",
+      name: item.name,
+      description: item.description,
+    },
   })),
 };
 
@@ -60,9 +64,10 @@ export default function AnatomyOfARoofPage() {
             What actually goes into a roof
           </h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600">
-            A roof is a system, not just shingles. Tap any layer to see what it is, why
-            it matters, and the shortcuts bad roofers take. This is exactly what we
-            install, and inspect, on every Southeast Roofing job.
+            A roof is a system, not just shingles. Tap any layer to see what it
+            is, why it matters, and the shortcuts bad roofers take. This is
+            exactly what we install, and inspect, on every Southeast Roofing
+            job.
           </p>
         </div>
       </section>
@@ -77,11 +82,12 @@ export default function AnatomyOfARoofPage() {
             Flashing: the part that decides whether a roof leaks
           </h2>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-600">
-            Flashing is one pin on the diagram above and nine separate pieces on a
-            real roof. More leaks start here than anywhere else: not in the middle
-            of the shingles, but at the edges, walls, chimneys, and penetrations
-            where materials meet. These are the names you&apos;ll see on a proposal
-            or an adjuster&apos;s report, and what each one actually does.
+            Flashing is one pin on the diagram above and nine separate pieces on
+            a real roof. More leaks start here than anywhere else: not in the
+            middle of the shingles, but at the edges, walls, chimneys, and
+            penetrations where materials meet. These are the names you&apos;ll
+            see on a proposal or an adjuster&apos;s report, and what each one
+            actually does.
           </p>
           <div className="mt-8">
             <FlashingDiagram />

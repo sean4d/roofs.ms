@@ -91,13 +91,17 @@ const ARTICLE_THUMB: Record<string, string> = {
 
 /** Category fallback for any future article missing an ARTICLE_THUMB entry. */
 const CATEGORY_THUMB: Partial<Record<LearnCategorySlug, string>> = {
-  materials: "/images/projects/gaf-timberline-hdz-pewter-gray-hattiesburg-ms-001.webp",
+  materials:
+    "/images/projects/gaf-timberline-hdz-pewter-gray-hattiesburg-ms-001.webp",
   "insurance-claims": "/images/storm/hail-damage-roof-hattiesburg-ms.webp",
-  "storm-prep": "/images/storm/wind-damage-missing-shingles-hattiesburg-ms.webp",
-  "metal-roofing": "/images/projects/29-gauge-galvalume-metal-roof-mccomb-ms-001.webp",
+  "storm-prep":
+    "/images/storm/wind-damage-missing-shingles-hattiesburg-ms.webp",
+  "metal-roofing":
+    "/images/projects/29-gauge-galvalume-metal-roof-mccomb-ms-001.webp",
   maintenance: "/images/projects/roof-synthetic-underlayment-lucedale-ms.webp",
   hiring: "/images/projects/gaf-timberline-hdz-slate-hattiesburg-ms-001.webp",
-  "cost-guides": "/images/projects/owens-corning-duration-driftwood-waynesboro-ms-001.webp",
+  "cost-guides":
+    "/images/projects/owens-corning-duration-driftwood-waynesboro-ms-001.webp",
 };
 
 const categoryLabel = (slug: LearnCategorySlug) =>
@@ -149,9 +153,9 @@ export default function LearnHubPage() {
               Understand your roof before you spend a dollar on it
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600">
-              Plain-English guides written by the people who actually build roofs here, 
-              including interactive tools from GAF, our shingle manufacturer. Filter by
-              topic or search for exactly what you need.
+              Plain-English guides written by the people who actually build
+              roofs here, including interactive tools from GAF, our shingle
+              manufacturer. Filter by topic or search for exactly what you need.
             </p>
           </Reveal>
         </div>
@@ -168,9 +172,9 @@ export default function LearnHubPage() {
               {learnArticles.length} guides and growing
             </h2>
             <p className="mt-5 text-lg leading-relaxed text-steel-100">
-              New guides publish regularly. Have a roofing question you can&apos;t find
-              answered here? Ask us directly: the questions homeowners actually ask are
-              where our next guides come from.
+              New guides publish regularly. Have a roofing question you
+              can&apos;t find answered here? Ask us directly: the questions
+              homeowners actually ask are where our next guides come from.
             </p>
             <div className="mt-8">
               <Link

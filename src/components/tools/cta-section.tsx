@@ -20,7 +20,8 @@ export function CTASection({
   subtext?: string;
   source?: string;
 }) {
-  const fire = (action: string) => track("cta_click", { action, source: source ?? "unknown" });
+  const fire = (action: string) =>
+    track("cta_click", { action, source: source ?? "unknown" });
 
   return (
     <section className="bg-navy-950 py-14 sm:py-20">
@@ -53,8 +54,6 @@ export function CTASection({
           {siteConfig.links.instantEstimate && (
             <a
               href={siteConfig.links.instantEstimate}
-              target="_blank"
-              rel="noopener noreferrer"
               onClick={() => fire("instant-estimate")}
               className="inline-flex items-center gap-2 rounded-full border border-steel-500 px-6 py-3 font-semibold text-white transition hover:bg-navy-900"
             >

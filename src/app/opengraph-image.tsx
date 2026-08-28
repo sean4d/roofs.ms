@@ -67,7 +67,7 @@ export default async function Image() {
             lineHeight: 1.35,
           }}
         >
-          Residential &amp; commercial roofing across South Mississippi: 
+          Residential &amp; commercial roofing across South Mississippi:
           replacement, repair, metal systems, and storm restoration.
         </div>
       </div>

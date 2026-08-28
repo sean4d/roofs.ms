@@ -61,9 +61,12 @@ export default async function ProjectDetailPage(
   // everything up top rather than rendering an empty hero.
   const afters = media.filter((m) => m.phase === "after");
   const finished = afters.length > 0 ? afters : media;
-  const process = afters.length > 0 ? media.filter((m) => m.phase !== "after") : [];
+  const process =
+    afters.length > 0 ? media.filter((m) => m.phase !== "after") : [];
   const citySlug = project.city ? slugify(project.city) : null;
-  const cityIsServiceArea = siteConfig.serviceArea.some((c) => c.slug === citySlug);
+  const cityIsServiceArea = siteConfig.serviceArea.some(
+    (c) => c.slug === citySlug,
+  );
 
   const breadcrumbs = [
     { name: "Home", path: "/" },
@@ -81,7 +84,9 @@ export default async function ProjectDetailPage(
     caption: m.alt ?? project.title,
     description: m.metaDescription ?? undefined,
     creator: { "@type": "Organization", name: siteConfig.name },
-    contentLocation: project.city ? `${project.city}, ${siteConfig.address.addressRegion}` : undefined,
+    contentLocation: project.city
+      ? `${project.city}, ${siteConfig.address.addressRegion}`
+      : undefined,
   }));
 
   const detailRows = (project.details ?? []).filter((d) => d.value);
@@ -187,10 +192,12 @@ export default async function ProjectDetailPage(
             <dl className="mt-10 grid max-w-xl grid-cols-1 gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2">
               {detailRows.map((d) => (
                 <div key={d.key} className="bg-white px-4 py-3">
-                  <dt className="text-xs font-semibold uppercase tracking-wide text-steel-500">
+                  <dt className="text-xs font-semibold tracking-wide text-steel-500 uppercase">
                     {d.label}
                   </dt>
-                  <dd className="mt-0.5 font-medium text-navy-900">{d.value}</dd>
+                  <dd className="mt-0.5 font-medium text-navy-900">
+                    {d.value}
+                  </dd>
                 </div>
               ))}
             </dl>
@@ -217,7 +224,10 @@ export default async function ProjectDetailPage(
           </div>
 
           <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm">
-            <Link href="/projects" className="font-medium text-navy-900 underline underline-offset-4 hover:text-steel-500">
+            <Link
+              href="/projects"
+              className="font-medium text-navy-900 underline underline-offset-4 hover:text-steel-500"
+            >
               ← All projects
             </Link>
             {cityIsServiceArea && citySlug && (

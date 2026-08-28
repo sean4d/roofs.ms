@@ -10,7 +10,7 @@ import { PhoneLink } from "@/components/shared/phone-link";
 
 /**
  * Renders a lead-capture page for one request type (see config/lead-requests).
- * Every request kind: inspection, itemized estimate, storm inspection, repair: 
+ * Every request kind: inspection, itemized estimate, storm inspection, repair:
  * shares this layout so the site feels consistent, while the headline, form
  * labels, and confirmation copy all match the button the visitor clicked.
  */

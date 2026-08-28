@@ -194,6 +194,9 @@ async function postPlatform(body: {
     const data = (await res.json()) as Record<string, unknown>;
     return { status: data.status ?? `http ${res.status}`, note: data.note };
   } catch (err) {
-    return { status: "error", note: err instanceof Error ? err.message : "failed" };
+    return {
+      status: "error",
+      note: err instanceof Error ? err.message : "failed",
+    };
   }
 }

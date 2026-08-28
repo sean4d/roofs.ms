@@ -20,8 +20,11 @@ export function ToolStrip({
   if (items.length === 0) return null;
 
   return (
-    <section aria-label={heading} className="rounded-2xl border border-border bg-secondary/50 p-6 sm:p-7">
-      <h2 className="text-xs font-semibold uppercase tracking-wide text-steel-500">
+    <section
+      aria-label={heading}
+      className="rounded-2xl border border-border bg-secondary/50 p-6 sm:p-7"
+    >
+      <h2 className="text-xs font-semibold tracking-wide text-steel-500 uppercase">
         {heading}
       </h2>
       <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -36,9 +39,15 @@ export function ToolStrip({
                 <span className="flex items-center gap-1 text-sm font-bold text-navy-900">
                   {tool.title}
                   {tool.external ? (
-                    <ArrowUpRight className="size-3.5 text-slate-400" aria-hidden="true" />
+                    <ArrowUpRight
+                      className="size-3.5 text-slate-400"
+                      aria-hidden="true"
+                    />
                   ) : (
-                    <ArrowRight className="size-3.5 text-slate-400 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                    <ArrowRight
+                      className="size-3.5 text-slate-400 transition-transform group-hover:translate-x-0.5"
+                      aria-hidden="true"
+                    />
                   )}
                 </span>
                 <span className="mt-0.5 block text-xs leading-snug text-slate-600">
@@ -50,7 +59,13 @@ export function ToolStrip({
           const cls =
             "group flex items-start gap-3 rounded-xl border border-border bg-white p-4 transition-all hover:-translate-y-0.5 hover:border-steel-500 hover:shadow-sm";
           return tool.external ? (
-            <a key={tool.key} href={tool.href} target="_blank" rel="noopener noreferrer" className={cls}>
+            <a
+              key={tool.key}
+              href={tool.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cls}
+            >
               {inner}
             </a>
           ) : (

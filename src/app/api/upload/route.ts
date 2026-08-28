@@ -62,7 +62,7 @@ export const maxDuration = 60;
 
 /**
  * Build the TikTok slideshow MP4 from the job's social photos and upload it to
- * Sanity as a public file, returning its CDN URL (or undefined on any failure, 
+ * Sanity as a public file, returning its CDN URL (or undefined on any failure,
  * TikTok then simply skips). Kept here (not in metricool.ts) because it needs
  * the Sanity client to host the video.
  */
@@ -243,7 +243,8 @@ async function handleDedash(request: Request) {
         const next = fix(d[k], isTitle);
         if (next && next !== d[k]) patch[k] = next;
       }
-      if (Object.keys(patch).length) await client.patch(d._id).set(patch).commit();
+      if (Object.keys(patch).length)
+        await client.patch(d._id).set(patch).commit();
     }
     revalidateTag("projects", "max");
     revalidatePath("/projects");
@@ -545,7 +546,9 @@ async function handleGbp(request: Request) {
 
   if (imageUrl) {
     const update = await createGbpUpdate({
-      summary: summary ?? "Southeast Roofing: quality roofing across South Mississippi.",
+      summary:
+        summary ??
+        "Southeast Roofing: quality roofing across South Mississippi.",
       imageUrl,
       learnMoreUrl: `${siteConfig.url}/projects`,
     });
@@ -613,7 +616,11 @@ async function handleGbpBackfill(request: Request) {
       .map((m) => m.image?.asset?._ref)
       .filter((v): v is string => Boolean(v))
       .slice(0, Math.max(1, perProject));
-    return { id: p._id, title: p.title ?? "(untitled)", photos: refs.map(jpgUrl) };
+    return {
+      id: p._id,
+      title: p.title ?? "(untitled)",
+      photos: refs.map(jpgUrl),
+    };
   });
 
   if (!confirm) {
@@ -651,11 +658,12 @@ async function handleGbpBackfill(request: Request) {
  * the OAuth client; the same value must be used for both calls.
  */
 async function handleGbpAuth(request: Request) {
-  const { code, redirectUri = "urn:ietf:wg:oauth:2.0:oob" } =
-    (await request.json().catch(() => ({}))) as {
-      code?: string;
-      redirectUri?: string;
-    };
+  const { code, redirectUri = "urn:ietf:wg:oauth:2.0:oob" } = (await request
+    .json()
+    .catch(() => ({}))) as {
+    code?: string;
+    redirectUri?: string;
+  };
 
   if (!process.env.GBP_CLIENT_ID || !process.env.GBP_CLIENT_SECRET) {
     return Response.json(
@@ -736,7 +744,10 @@ async function handleMetricool(request: Request) {
   // in raw install order is how plywood ends up in front of a caption.
   const plan = planSocialPost(media);
   if (plan.hold) {
-    return Response.json({ error: `Not postable: ${plan.reason}` }, { status: 400 });
+    return Response.json(
+      { error: `Not postable: ${plan.reason}` },
+      { status: 400 },
+    );
   }
   const imageUrls = plan.order.map((m) => jpgUrl(m.assetId)).filter(Boolean);
   const caption = doc.socialCaption ?? doc.title ?? "";
@@ -784,7 +795,7 @@ async function handleMetricool(request: Request) {
 }
 
 /**
- * Submit every sitemap URL to IndexNow (Bing/Yandex/DuckDuckGo instant crawl, 
+ * Submit every sitemap URL to IndexNow (Bing/Yandex/DuckDuckGo instant crawl,
  * NOT Google). Password-gated; run once now to seed the engines, and any time a
  * batch of pages changes. Returns how many URLs were sent + the engines' ack.
  */
@@ -968,7 +979,8 @@ async function handleCreate(request: Request) {
 
   // The caption was approved on the confirm screen; fall back to generating one
   // only if this was called without going through step=plan.
-  const caption = body.caption ?? (await buildCaption(submission, media)).caption;
+  const caption =
+    body.caption ?? (await buildCaption(submission, media)).caption;
   const tags = jobTags(submission);
 
   const doc = await client.create({
@@ -1007,8 +1019,7 @@ async function handleCreate(request: Request) {
   // provided) and always return tap-to-send sms/mailto links so the owner can
   // fire one off from their phone. Opt-in per upload, nothing without contact.
   let reviewRequest:
-    | { emailSent: boolean; smsHref?: string; mailtoHref?: string }
-    | undefined;
+    { emailSent: boolean; smsHref?: string; mailtoHref?: string } | undefined;
   if (submission.customerEmail || submission.customerPhone) {
     const emailSent = submission.customerEmail
       ? await sendReviewRequestEmail({
@@ -1049,21 +1060,15 @@ export type SocialStep = (typeof SOCIAL_STEPS)[number];
  * record that the other three had never run.
  */
 async function handleSocial(request: Request) {
-  const {
-    id,
-    platform,
-    caption,
-    slug,
-    order,
-    heroAssetId,
-  } = (await request.json()) as {
-    id: string;
-    platform: SocialStep;
-    caption: string;
-    slug: string;
-    order: { assetId: string }[];
-    heroAssetId?: string;
-  };
+  const { id, platform, caption, slug, order, heroAssetId } =
+    (await request.json()) as {
+      id: string;
+      platform: SocialStep;
+      caption: string;
+      slug: string;
+      order: { assetId: string }[];
+      heroAssetId?: string;
+    };
 
   if (!id || !platform || !SOCIAL_STEPS.includes(platform)) {
     return Response.json({ error: "Bad platform request" }, { status: 400 });
@@ -1091,7 +1096,11 @@ async function handleSocial(request: Request) {
     // roof Claude picked, never a "before".
     const heroUrl = heroAssetId ? jpgUrl(heroAssetId) : imageUrls[0];
     if (!gbpReady()) {
-      result = { platform: "google-business", status: "skipped", note: "Not connected" };
+      result = {
+        platform: "google-business",
+        status: "skipped",
+        note: "Not connected",
+      };
     } else {
       const gbp = await postJobToGbp({
         summary: caption,
@@ -1145,7 +1154,9 @@ async function handleSocial(request: Request) {
     try {
       const existing = ((await client.getDocument(id)) as ProjectDoc)
         ?.syndication as Array<Record<string, unknown>> | undefined;
-      const kept = (existing ?? []).filter((s) => s.platform !== entry.platform);
+      const kept = (existing ?? []).filter(
+        (s) => s.platform !== entry.platform,
+      );
       await client
         .patch(id)
         .set({ syndication: [...kept, entry] })

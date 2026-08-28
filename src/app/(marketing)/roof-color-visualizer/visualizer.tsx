@@ -55,7 +55,12 @@ export function ColorVisualizer({
         p.color?.toLowerCase() === name,
     );
     if (staticReal)
-      return { src: staticReal.src, alt: staticReal.alt, city: staticReal.city, real: true as const };
+      return {
+        src: staticReal.src,
+        alt: staticReal.alt,
+        city: staticReal.city,
+        real: true as const,
+      };
 
     const sanityReal = sanityPhotos.find((s) => {
       if (s.color?.toLowerCase() !== name) return false;
@@ -68,7 +73,12 @@ export function ColorVisualizer({
       );
     });
     if (sanityReal)
-      return { src: sanityReal.src, alt: sanityReal.alt, city: sanityReal.city, real: true as const };
+      return {
+        src: sanityReal.src,
+        alt: sanityReal.alt,
+        city: sanityReal.city,
+        real: true as const,
+      };
 
     if (activeColor.sample)
       return {
@@ -83,7 +93,11 @@ export function ColorVisualizer({
 
   function pickColor(name: string) {
     setColorName(name);
-    track("color_selected", { tool: "color-visualizer", product: product.label, color: name });
+    track("color_selected", {
+      tool: "color-visualizer",
+      product: product.label,
+      color: name,
+    });
   }
 
   return (
@@ -100,11 +114,12 @@ export function ColorVisualizer({
                 className="h-full w-full object-cover"
               />
               {preview.real ? (
-                <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-navy-950/75 px-3 py-1 text-xs font-semibold text-white">
-                  <BadgeCheck className="size-3.5" /> Real job: {preview.city}, MS
+                <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-navy-950/75 px-3 py-1 text-xs font-semibold text-white">
+                  <BadgeCheck className="size-3.5" /> Real job: {preview.city},
+                  MS
                 </span>
               ) : (
-                <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-navy-950/75 px-3 py-1 text-xs font-semibold text-white">
+                <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-navy-950/75 px-3 py-1 text-xs font-semibold text-white">
                   <ImageIcon className="size-3.5" /> Product sample
                 </span>
               )}
@@ -136,7 +151,9 @@ export function ColorVisualizer({
       {/* Controls */}
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-2">
-          <span className="text-sm font-semibold text-navy-900">Roof product</span>
+          <span className="text-sm font-semibold text-navy-900">
+            Roof product
+          </span>
           <div className="flex flex-wrap gap-2">
             {ROOF_PRODUCTS.map((p) => (
               <button
@@ -169,14 +186,18 @@ export function ColorVisualizer({
                 onClick={() => pickColor(c.name)}
                 className={cn(
                   "flex flex-col items-center gap-1.5 rounded-xl border p-2 text-center transition",
-                  c.name === activeColor.name ? "border-navy-900" : "border-border hover:border-steel-500",
+                  c.name === activeColor.name
+                    ? "border-navy-900"
+                    : "border-border hover:border-steel-500",
                 )}
               >
                 <span
                   className="h-12 w-full rounded-lg border border-black/10"
                   style={{ backgroundColor: c.hex }}
                 />
-                <span className="text-xs font-medium text-navy-900">{c.name}</span>
+                <span className="text-xs font-medium text-navy-900">
+                  {c.name}
+                </span>
               </button>
             ))}
           </div>
@@ -186,7 +207,11 @@ export function ColorVisualizer({
           <Link
             href="/free-inspection"
             onClick={() =>
-              track("cta_click", { action: "request-color", source: "color-visualizer", color: activeColor.name })
+              track("cta_click", {
+                action: "request-color",
+                source: "color-visualizer",
+                color: activeColor.name,
+              })
             }
             className="inline-flex items-center gap-2 rounded-full bg-navy-900 px-5 py-3 font-semibold text-white"
           >
@@ -195,7 +220,12 @@ export function ColorVisualizer({
           </Link>
           <Link
             href="/projects"
-            onClick={() => track("cta_click", { action: "see-local-projects", source: "color-visualizer" })}
+            onClick={() =>
+              track("cta_click", {
+                action: "see-local-projects",
+                source: "color-visualizer",
+              })
+            }
             className="inline-flex items-center rounded-full border border-border px-5 py-3 font-semibold text-navy-900"
           >
             See local projects
@@ -203,10 +233,10 @@ export function ColorVisualizer({
         </div>
 
         <p className="text-xs text-slate-500">
-          Photos marked &ldquo;Real job&rdquo; are actual {siteConfig.name} roofs near you;
-          &ldquo;Product sample&rdquo; images are manufacturer swatches shown until we log
-          that color locally. Actual color varies with light and pitch: ask us for a
-          physical sample.
+          Photos marked &ldquo;Real job&rdquo; are actual {siteConfig.name}{" "}
+          roofs near you; &ldquo;Product sample&rdquo; images are manufacturer
+          swatches shown until we log that color locally. Actual color varies
+          with light and pitch: ask us for a physical sample.
         </p>
       </div>
     </div>

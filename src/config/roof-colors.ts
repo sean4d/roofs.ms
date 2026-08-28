@@ -42,7 +42,11 @@ export interface RoofProduct {
 const VS = "/images/visualizer-samples";
 
 /** Placeholder sample for a shingle product + color. */
-function shingleSample(product: string, color: string, file: string): ColorSample {
+function shingleSample(
+  product: string,
+  color: string,
+  file: string,
+): ColorSample {
   return {
     src: `${VS}/${file}`,
     alt: `${product} architectural shingles in ${color}, manufacturer color sample shown until Southeast Roofing installs this color locally.`,
@@ -92,12 +96,20 @@ export const ROOF_PRODUCTS: RoofProduct[] = [
       {
         name: "Onyx Black",
         hex: "#1c1c1e",
-        sample: shingleSample("Owens Corning Duration", "Onyx Black", "owens-corning-duration-onyx-black-shingle-sample.webp"),
+        sample: shingleSample(
+          "Owens Corning Duration",
+          "Onyx Black",
+          "owens-corning-duration-onyx-black-shingle-sample.webp",
+        ),
       },
       {
         name: "Estate Gray",
         hex: "#595d61",
-        sample: shingleSample("Owens Corning Duration", "Estate Gray", "owens-corning-duration-estate-gray-shingle-sample.webp"),
+        sample: shingleSample(
+          "Owens Corning Duration",
+          "Estate Gray",
+          "owens-corning-duration-estate-gray-shingle-sample.webp",
+        ),
       },
     ],
   },
@@ -112,12 +124,20 @@ export const ROOF_PRODUCTS: RoofProduct[] = [
       {
         name: "Onyx Black",
         hex: "#1c1c1e",
-        sample: shingleSample("Owens Corning Oakridge", "Onyx Black", "owens-corning-oakridge-onyx-black-shingle-sample.webp"),
+        sample: shingleSample(
+          "Owens Corning Oakridge",
+          "Onyx Black",
+          "owens-corning-oakridge-onyx-black-shingle-sample.webp",
+        ),
       },
       {
         name: "Estate Gray",
         hex: "#595d61",
-        sample: shingleSample("Owens Corning Oakridge", "Estate Gray", "owens-corning-oakridge-estate-gray-shingle-sample.webp"),
+        sample: shingleSample(
+          "Owens Corning Oakridge",
+          "Estate Gray",
+          "owens-corning-oakridge-estate-gray-shingle-sample.webp",
+        ),
       },
     ],
   },
@@ -133,7 +153,11 @@ export const ROOF_PRODUCTS: RoofProduct[] = [
       {
         name: "Estate Gray",
         hex: "#595d61",
-        sample: shingleSample("Owens Corning Supreme", "Estate Gray", "owens-corning-supreme-estate-gray-shingle-sample.webp"),
+        sample: shingleSample(
+          "Owens Corning Supreme",
+          "Estate Gray",
+          "owens-corning-supreme-estate-gray-shingle-sample.webp",
+        ),
       },
     ],
   },

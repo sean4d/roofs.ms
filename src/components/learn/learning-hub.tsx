@@ -59,13 +59,13 @@ export function LearningHub({
     <div>
       {/* Search */}
       <div className="relative mb-6 max-w-md">
-        <Search className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
+        <Search className="pointer-events-none absolute top-1/2 left-4 size-4 -translate-y-1/2 text-slate-400" />
         <input
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search guides…"
-          className="w-full rounded-full border border-border bg-white py-3 pl-11 pr-4 text-navy-900 outline-none focus:border-steel-500"
+          className="w-full rounded-full border border-border bg-white py-3 pr-4 pl-11 text-navy-900 outline-none focus:border-steel-500"
         />
       </div>
 
@@ -92,7 +92,10 @@ export function LearningHub({
       {filtered.length === 0 ? (
         <p className="rounded-2xl border border-border bg-secondary/50 p-8 text-center text-slate-500">
           No guides match that yet. Try another search or{" "}
-          <Link href="/contact" className="font-semibold text-navy-900 underline underline-offset-4">
+          <Link
+            href="/contact"
+            className="font-semibold text-navy-900 underline underline-offset-4"
+          >
             ask us directly
           </Link>
           .
@@ -137,7 +140,10 @@ export function LearningHub({
                       {a.categoryLabel}
                     </span>
                     <span className="inline-flex items-center gap-1">
-                      <Clock className="size-3.5 text-steel-500" aria-hidden="true" />
+                      <Clock
+                        className="size-3.5 text-steel-500"
+                        aria-hidden="true"
+                      />
                       {a.readMinutes} min
                     </span>
                   </div>
@@ -149,7 +155,10 @@ export function LearningHub({
                   </p>
                   <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-steel-500 group-hover:text-navy-900">
                     Read the guide
-                    <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true" />
+                    <ArrowRight
+                      className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
+                      aria-hidden="true"
+                    />
                   </span>
                 </div>
               </Link>
