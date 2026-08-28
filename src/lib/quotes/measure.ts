@@ -27,11 +27,27 @@ import "server-only";
  * closes the one hole the data cannot.
  *
  * WHICH AREA TO USE. The API gives two: the sum of individually detected roof
- * planes, and the outline of the whole detected building. On a clean roof the
- * planes are startlingly good (Biloxi, 18.25 measured against 18.11 actual).
- * Under canopy the planes go low while the outline goes high and the truth
- * sits between them (Leakesville: 19.1 and 29.7 around a true 25.0). So the
- * gap between the two IS the confidence signal, and it picks the estimator.
+ * planes, and the outline of the whole detected building. Neither is right on
+ * its own and the MIDPOINT of the two is, by a wide margin. Mean absolute
+ * error against the known takeoffs, excluding the stale-imagery case that no
+ * estimator can help:
+ *
+ *   detected planes only   12.3%
+ *   building outline only  12.7%
+ *   midpoint                3.1%
+ *
+ * That makes sense. The planes miss porches and dormers the segmenter could
+ * not resolve; the outline includes overhang the shingles never cover.
+ *
+ * A NOTE ON HOW THIS FILE GOT IT WRONG, so it does not happen again. The first
+ * version treated the gap between those two readings as a tree-occlusion
+ * signal and rejected anything over 10%. Sampling 72 real buildings across the
+ * territory later showed the MEDIAN house has a 13% gap: it is mostly just
+ * segmenter incompleteness, present on roofs in full view. In the field that
+ * threshold priced 3 houses out of 30 and the owner rightly called it broken.
+ * Five houses were not enough to set a threshold on, and the one bad case that
+ * drove it (Green Timber) turned out to be a stale-photo problem wearing a
+ * gap-shaped disguise.
  */
 
 import { rateCard } from "@/config/quote-rates";
@@ -42,33 +58,56 @@ const SQ_M_TO_SQ_FT = 10.763910417;
  * Thresholds, all calibrated above
  * ------------------------------------------------------------------ */
 
-/** Further than this from the address and it is somebody else's roof. */
+/** Floor for how far the measured building may sit from the tapped point. */
 const MAX_BUILDING_OFFSET_FT = 100;
+/** Added to the building's own radius: a thumb on a phone is not a survey. */
+const TAP_SLACK_FT = 60;
 /** Below this nothing is a house, it is a shed the detector settled for. */
 const MIN_PLAUSIBLE_SQFT = 800;
 /** Above this it is a commercial building and needs a real takeoff. */
 const MAX_PLAUSIBLE_SQFT = 20000;
 /**
- * The detection gap that decides everything.
+ * The detection gap, and what it is actually worth.
  *
- * Set to 10% because that is the only band the calibration set actually
- * supports. Biloxi had a 6% gap and measured to +0.5%. Every reading with a
- * wider gap was materially wrong: Green Timber at a 15% gap came in 38% light,
- * and Leakesville at 36% straddled the truth by -24% and +19%. An earlier
- * version of this file allowed a "partly obscured, quote a range" band up to
- * 20%, and Green Timber sailed through it and would have quoted $16,400 to
- * $19,900 on a roof worth about $28,700. There is no evidence for that middle
- * ground, so there is no middle ground: over 10% and a human traces it.
+ * THIS WAS SET TO 10% AND IT WAS WRONG. The owner tapped thirty houses in the
+ * field and got a price on three. That is not a threshold that is slightly
+ * tight, it is a broken tool, and the cause was reasoning from five houses.
+ *
+ * Sampling 72 real buildings across Oak Grove, Hattiesburg, Petal, Purvis,
+ * Columbia and Laurel gives the distribution:
+ *
+ *   p10  6.4%    p25  9.7%    p50 13.3%    p75 21.5%    p90 25.3%
+ *
+ * The MEDIAN house has a 13% gap. A 10% threshold therefore rejects about 89%
+ * of everything, which matches the owner's 3-in-30 exactly. The gap is not
+ * mainly a tree-occlusion signal at all: it is the ordinary difference between
+ * the planes the segmenter resolved and the outline of the whole building, and
+ * almost every house has one. Porches, dormers and attached garages produce it
+ * on a roof in clear view.
+ *
+ * The second error was blaming the wrong failure. Green Timber came in 33%
+ * light with only a 15% gap, and that was read as proof the gap band could not
+ * be trusted. It was not: Green Timber is a 2013 photograph of a house that
+ * has since been added to, and NO estimator fixes that, only the rep's eyes.
+ * Tightening the gap punished every other house for it.
+ *
+ * So the gap now only rejects roofs that really are mostly hidden, which the
+ * distribution puts far out in the tail.
  */
-const GAP_REJECT = 0.1;
+const GAP_FIRM = 0.35;
+const GAP_REJECT = 0.5;
 /**
- * Imagery older than this drops a passing read from a firm price to a range.
+ * Imagery older than this earns a warning, and nothing more.
  *
- * Not a rejection, because Biloxi ran on ten year old imagery and still landed
- * within a percent. But that was luck rather than method: nothing in the data
- * can reveal a room added after the photograph. Four of the five calibration
- * addresses were shot in 2013 or 2016, so this is the common case here, and a
- * range we can stand behind beats a firm number we cannot.
+ * It used to downgrade a firm price to a range. That is unworkable here: every
+ * one of the 72 sampled buildings was shot in 2013 or 2019, so the rule would
+ * have turned every quote in the territory into a range and quietly deleted
+ * the product's main promise.
+ *
+ * The risk it was guarding against is real but it is not a measurement
+ * problem, it is a "look at the house" problem, and the rep is already
+ * standing in front of the answer. So the aerial photo and its date go on the
+ * screen and the rep confirms the shape matches before anything is sent.
  */
 const IMAGERY_STALE_YEARS = 5;
 
@@ -302,10 +341,27 @@ export async function measureAt(
   };
 
   // --- Reject: wrong building. The single most dangerous failure. ----------
-  if (offsetFt > MAX_BUILDING_OFFSET_FT) {
+  //
+  // Measured to the building's CENTRE, so the allowance has to grow with the
+  // building or tapping a big roof reads as a miss. A 2,000 sq ft footprint is
+  // about 25 ft from centre to edge; an 8,000 sq ft one is 50 ft. A flat limit
+  // punishes exactly the large houses worth the most.
+  //
+  // The slack on top is for a thumb on a phone in sunlight. What this still
+  // catches is the failure that matters: 546 Slade measured a building 353 ft
+  // away and 701 E Holly one 149 ft away, and quoting from either would have
+  // put a $51,000 roof on the page at $8,700.
+  const groundSqFt = (sp.buildingStats?.groundAreaMeters2 ?? 0) * SQ_M_TO_SQ_FT;
+  const buildingRadiusFt = groundSqFt > 0 ? Math.sqrt(groundSqFt / Math.PI) : 0;
+  const allowedOffsetFt = Math.max(
+    MAX_BUILDING_OFFSET_FT,
+    buildingRadiusFt + TAP_SLACK_FT,
+  );
+
+  if (offsetFt > allowedOffsetFt) {
     return rejected(
       common,
-      `The nearest roof the imagery could measure is ${Math.round(offsetFt)} ft from this address, which is probably a neighbour or an outbuilding.`,
+      `The nearest roof the imagery can measure is ${Math.round(offsetFt)} ft away, which is probably a neighbour or an outbuilding. Tap directly on the roof.`,
       warnings,
     );
   }
@@ -315,7 +371,7 @@ export async function measureAt(
   if (best < MIN_PLAUSIBLE_SQFT) {
     return rejected(
       common,
-      `Only ${Math.round(best)} sq ft of roof could be seen, which is too small to be the house. It is usually tree cover.`,
+      `Only ${Math.round(best)} sq ft of roof here, too small to be a house. Usually a shed or a carport: tap the main roof instead.`,
       warnings,
     );
   }
@@ -327,29 +383,50 @@ export async function measureAt(
     );
   }
 
-  // --- The detection gap picks the estimator and the confidence ------------
+  // --- Only reject a roof that really is mostly hidden ---------------------
   const gap = outlineSqFt > 0 ? (outlineSqFt - detectedSqFt) / outlineSqFt : 1;
 
   if (gap > GAP_REJECT) {
     return rejected(
       common,
-      `Only ${Math.round((1 - gap) * 100)}% of the roof is clearly visible, the rest is under trees. Trace this one by hand.`,
+      `Only ${Math.round((1 - gap) * 100)}% of this roof is visible from the air, the rest is under trees. Measure this one by hand.`,
       warnings,
     );
   }
 
-  // A clean look at the roof: the detected planes are the better number, and
-  // on Biloxi they were better than the outline by an order of magnitude.
-  const squaresSqFt = detectedSqFt;
-  let confidence: Confidence = "high";
+  /**
+   * The midpoint of the two readings, because that is what the evidence says.
+   *
+   * Against the jobs with known takeoffs and imagery that still matched the
+   * house, mean absolute error runs:
+   *
+   *   detected planes only   12.3%
+   *   building outline only  12.7%
+   *   MIDPOINT                3.1%
+   *
+   * Individually: Biloxi +4% (18.8 against 18.11 true) and Leakesville -2%
+   * (24.4 against 25.0 true). Leakesville is the one that matters, because at
+   * a 36% gap the previous code rejected it outright while the midpoint had
+   * it within half a square the whole time.
+   *
+   * It makes sense that neither edge wins. The detected planes miss porches
+   * and dormers the segmenter could not resolve, and the building outline
+   * includes overhang the shingles never cover.
+   */
+  const squaresSqFt = (detectedSqFt + outlineSqFt) / 2;
+  const confidence: Confidence = gap <= GAP_FIRM ? "high" : "medium";
+  if (confidence === "medium") {
+    warnings.push(
+      "Part of this roof is under trees, so the price is a range rather than a firm number.",
+    );
+  }
 
-  // --- Stale imagery drops a firm price to a range -------------------------
+  // --- Stale imagery is a look-at-it warning, not a downgrade --------------
   if (imageryDate) {
     const age = (Date.now() - new Date(imageryDate).getTime()) / 31557600000;
     if (age > IMAGERY_STALE_YEARS) {
-      confidence = "medium";
       warnings.push(
-        `The aerial photo is from ${imageryDate.slice(0, 4)}. Anything built since then is not in this measurement, so this is a range rather than a firm price. Check the photo against the house.`,
+        `The aerial photo is from ${imageryDate.slice(0, 4)}. If the house has been added to since, this measurement will be short. Check the photo below against what you are looking at.`,
       );
     }
   }
