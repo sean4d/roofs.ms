@@ -35,7 +35,16 @@ export async function GET() {
   try {
     await db()`SELECT 1`;
     return NextResponse.json(
-      { ok: true },
+      {
+        ok: true,
+        // Which commit is actually serving this. Vercel does not expose a
+        // build id in the HTML, so without this there is no way to tell from
+        // outside whether a push has finished deploying or the old build is
+        // still answering. Several times this session that turned a thirty
+        // second question into a guessing game. It is a public commit hash on
+        // a repository, not a secret.
+        commit: (process.env.VERCEL_GIT_COMMIT_SHA ?? "local").slice(0, 7),
+      },
       { headers: { "Cache-Control": "no-store" } },
     );
   } catch (error) {
