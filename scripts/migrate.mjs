@@ -31,10 +31,27 @@ const sql = neon(url);
 const file = resolve(process.cwd(), "src/lib/quotes/schema.sql");
 const text = readFileSync(file, "utf8");
 
+/**
+ * Is this chunk nothing but comments and blank lines?
+ *
+ * Written as a line-by-line scan rather than the obvious regex. The obvious
+ * regex is /^(--[^\n]*\n?)+$/, and it contains a quantified group wrapping an
+ * optional match, which is the textbook shape for catastrophic backtracking.
+ * Against schema.sql, whose statements are each preceded by twenty-odd lines
+ * of comment, it did not return: the migration appeared to hang before it had
+ * printed a single line, because this filter runs before the first log. A
+ * linear scan cannot do that.
+ */
+const isOnlyComments = (chunk) =>
+  chunk.split("\n").every((line) => {
+    const t = line.trim();
+    return t === "" || t.startsWith("--");
+  });
+
 const statements = text
   .split(/;\s*$/m)
   .map((s) => s.trim())
-  .filter((s) => s && !/^(--[^\n]*\n?)+$/.test(s));
+  .filter((s) => s && !isOnlyComments(s));
 
 console.log(`Applying ${statements.length} statements from schema.sql\n`);
 
