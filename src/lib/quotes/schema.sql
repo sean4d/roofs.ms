@@ -1,0 +1,151 @@
+-- Schema for the /quote estimating tool.
+--
+-- Applied by scripts/migrate.mjs, which is safe to run repeatedly: every
+-- statement here is IF NOT EXISTS or otherwise idempotent.
+
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+-- ---------------------------------------------------------------------------
+-- Users
+--
+-- Accounts are self-serve but the email domain is checked server side, so the
+-- only people who can create one are people who can already receive mail at
+-- the company. There is no invite step and no password.
+--
+-- NOTE ON DELETION. Admins get a "remove" action for reps who quit, and it
+-- sets active = false rather than deleting the row. A rep who leaves takes
+-- their access with them immediately, but their customers, their quotes and
+-- the history of who sent what all have to survive them. A hard delete would
+-- cascade that away, and the first time somebody removed a rep at the end of a
+-- good month the company would lose the month.
+-- ---------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS users (
+  id            uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  email         text NOT NULL UNIQUE,
+  name          text,
+  role          text NOT NULL DEFAULT 'rep' CHECK (role IN ('admin', 'rep')),
+  active        boolean NOT NULL DEFAULT true,
+  created_at    timestamptz NOT NULL DEFAULT now(),
+  last_seen_at  timestamptz
+);
+
+CREATE INDEX IF NOT EXISTS users_active_idx ON users (active, role);
+
+-- ---------------------------------------------------------------------------
+-- Sign-in tokens (magic links)
+--
+-- Only the SHA-256 of the emailed token is stored. A stolen database backup
+-- therefore contains nothing anyone can sign in with, and a token is single
+-- use: used_at is stamped the first time it is redeemed.
+-- ---------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS login_tokens (
+  token_hash  text PRIMARY KEY,
+  email       text NOT NULL,
+  expires_at  timestamptz NOT NULL,
+  used_at     timestamptz,
+  created_at  timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS login_tokens_email_idx ON login_tokens (email, created_at DESC);
+
+-- ---------------------------------------------------------------------------
+-- Customers: one row per address we have quoted or intend to.
+--
+-- owner_id is the rep who pinned it. Reps see only their own rows; admins see
+-- everything. That rule lives in src/lib/quotes/auth.ts and is applied in
+-- every query, never in the UI.
+-- ---------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS customers (
+  id           uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  owner_id     uuid NOT NULL REFERENCES users (id),
+  address      text NOT NULL,
+  city         text,
+  state        text,
+  postal       text,
+  lat          double precision NOT NULL,
+  lon          double precision NOT NULL,
+  -- Google's stable id for the place, so the same house pinned twice by two
+  -- reps can be spotted instead of quietly quoted twice at two prices.
+  place_id     text,
+  name         text,
+  email        text,
+  phone        text,
+  status       text NOT NULL DEFAULT 'new'
+               CHECK (status IN ('new','quoted','contacted','appointment','sold','lost')),
+  tags         text[] NOT NULL DEFAULT '{}',
+  notes        text,
+  created_at   timestamptz NOT NULL DEFAULT now(),
+  updated_at   timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS customers_owner_idx  ON customers (owner_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS customers_status_idx ON customers (status, created_at DESC);
+CREATE INDEX IF NOT EXISTS customers_place_idx  ON customers (place_id);
+CREATE INDEX IF NOT EXISTS customers_tags_idx   ON customers USING gin (tags);
+
+-- ---------------------------------------------------------------------------
+-- Quotes: a priced estimate for a customer, at a moment in time.
+--
+-- The pricing INPUTS are stored alongside the outputs on purpose. Rate cards
+-- change. Without the snapshot, a quote from March cannot be explained in
+-- June, and "why did we tell them $9,232" has no answer.
+-- ---------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS quotes (
+  id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  customer_id     uuid NOT NULL REFERENCES customers (id) ON DELETE CASCADE,
+  created_by      uuid NOT NULL REFERENCES users (id),
+
+  -- Measurement
+  roof_sqft       numeric,
+  squares         numeric,
+  pitch_degrees   numeric,
+  planes          integer,
+  measure_source  text CHECK (measure_source IN ('solar','manual')),
+  measure_quality text,
+
+  -- Pricing inputs, snapshotted
+  material        text,
+  tear_off        boolean,
+  stories         text,
+  rate_card       jsonb,
+
+  -- Pricing outputs
+  price_low       integer,
+  price_high      integer,
+  price_shown     integer,
+  monthly_low     integer,
+  monthly_high    integer,
+
+  -- Delivery
+  pdf_url         text,
+  sent_via        text CHECK (sent_via IN ('email','hand','mail')),
+  sent_at         timestamptz,
+
+  created_at      timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS quotes_customer_idx ON quotes (customer_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS quotes_creator_idx  ON quotes (created_by, created_at DESC);
+CREATE INDEX IF NOT EXISTS quotes_sent_idx     ON quotes (sent_at DESC) WHERE sent_at IS NOT NULL;
+
+-- ---------------------------------------------------------------------------
+-- Roofr handoff queue.
+--
+-- Deliberately NOT every quote. The owner's instruction is that only closed
+-- work goes to Roofr, so a row appears here when a customer is marked sold and
+-- nowhere else. Kept as its own table rather than a flag so a failed push can
+-- be retried and seen.
+-- ---------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS roofr_exports (
+  id           uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  customer_id  uuid NOT NULL REFERENCES customers (id) ON DELETE CASCADE,
+  status       text NOT NULL DEFAULT 'pending'
+               CHECK (status IN ('pending','sent','failed','skipped')),
+  attempts     integer NOT NULL DEFAULT 0,
+  last_error   text,
+  external_id  text,
+  created_at   timestamptz NOT NULL DEFAULT now(),
+  updated_at   timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS roofr_exports_customer_idx ON roofr_exports (customer_id);
