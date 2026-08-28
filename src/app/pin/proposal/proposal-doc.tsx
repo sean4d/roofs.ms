@@ -6,6 +6,7 @@ import {
   type MaterialKey,
 } from "@/config/quote-rates";
 import { InlineSvg, logoSvg, qrSvg } from "./brand";
+import { getProfile } from "@/lib/quotes/profile";
 import { InsurancePage } from "./insurance-page";
 import { summarizeStorms, longDate } from "@/lib/quotes/storms";
 import type { ProposalData } from "@/lib/quotes/save";
@@ -18,13 +19,13 @@ import type { ProposalData } from "@/lib/quotes/save";
  * about fifteen seconds: say who we are and that we are real, say what their
  * roof is and what it costs, and make the next step obvious.
  *
- * EVERY CLAIM HERE COMES FROM siteConfig.trustFacts VERBATIM. Those strings
- * are the owner's own approved wording and they carry constraints that are not
- * obvious: "lifetime warranty" is deliberately unspecific because it is the
- * MANUFACTURER's warranty and not workmanship, and the experience line must
- * keep the word "combined" because the company was founded in 2023. Do not
- * paraphrase, tighten or embellish any of them. A proposal is the document a
- * customer will hold us to.
+ * EVERY CLAIM ON IT IS NOW OWNER-EDITABLE, from /pin/settings, and seeded from
+ * siteConfig.trustFacts. Those seeds carry constraints that are not obvious
+ * from reading them: "lifetime warranty" is deliberately unspecific because it
+ * is the MANUFACTURER's warranty and not workmanship, and the experience line
+ * must keep the word "combined" because the company was founded in 2023.
+ * Whoever edits them is making a claim a customer can hold the company to,
+ * which is why the settings screen says so next to the box.
  *
  * The price is presented with its assumptions attached, in the same size type
  * as everything else. A number a homeowner cannot rely on is worse than no
@@ -39,6 +40,9 @@ export async function ProposalDoc({
   data: ProposalData;
   aerialSrc: string;
 }) {
+  // Everything the office can edit. Falls back to site.ts field by field, so
+  // this renders correctly before anybody has opened the settings screen.
+  const profile = await getProfile();
   const logo = logoSvg();
   // Points at the homeowner's own copy when there is one, so a scan from a
   // mailed piece lands on their price rather than the front page.
@@ -46,7 +50,6 @@ export async function ProposalDoc({
     ? `${siteConfig.url}/estimate/${data.publicToken}`
     : `${siteConfig.url}/free-inspection`;
   const qr = await qrSvg(qrTarget);
-  const t = siteConfig.trustFacts;
   const storms = summarizeStorms(data.lat, data.lon);
   const firm = data.priceShown !== null;
   const pitchOver12 =
@@ -72,7 +75,7 @@ export async function ProposalDoc({
           )}
           <div>
             <h1 className="font-[family-name:var(--font-archivo)] text-2xl leading-none font-extrabold tracking-tight text-[#123b63]">
-              {siteConfig.legalName}
+              {profile.legalName}
             </h1>
             <p className="mt-1.5 text-[11px] font-semibold tracking-[0.14em] text-slate-500 uppercase">
               Roof Replacement Estimate
@@ -80,18 +83,17 @@ export async function ProposalDoc({
           </div>
         </div>
         <div className="text-right text-[11px] leading-[1.7] text-slate-600">
-          {siteConfig.address.streetAddress}
+          {profile.street}
           <br />
-          {siteConfig.address.addressLocality},{" "}
-          {siteConfig.address.addressRegion} {siteConfig.address.postalCode}
+          {profile.city}, {profile.state} {profile.postal}
           <br />
-          <span className="font-bold text-[#123b63]">
-            {siteConfig.phone.display}
+          <span className="font-bold" style={{ color: profile.accentColor }}>
+            {profile.phone}
           </span>
           <br />
-          {siteConfig.email}
+          {profile.email}
           <br />
-          MSBOC #{siteConfig.license}
+          MSBOC #{profile.license}
         </div>
       </header>
 
@@ -137,7 +139,7 @@ export async function ProposalDoc({
         <div className="mt-4 flex items-end justify-between gap-6">
           <div>
             <p className="text-[10px] font-bold tracking-[0.14em] text-white/70 uppercase">
-              Or finance it. {t.financing}
+              Or finance it. {profile.financingLine}
             </p>
             <div className="mt-2 flex gap-6">
               {FINANCING.termsMonths.map((months) => (
@@ -239,7 +241,7 @@ export async function ProposalDoc({
       </section>
 
       {/* ---------- storm history, only when there is something true ---------- */}
-      {storms.sentence && (
+      {profile.showStorms && storms.sentence && (
         <section className="mt-6 px-8">
           <h2 className="border-b border-slate-200 pb-1.5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
             Weather on record at this address
@@ -276,20 +278,15 @@ export async function ProposalDoc({
           Who you would be hiring
         </h2>
         <div className="mt-3 grid grid-cols-2 gap-x-8 gap-y-2 text-[12px]">
-          <Credential>
-            {t.licensed}, MSBOC #{siteConfig.license}
-          </Credential>
-          <Credential>{t.insured}</Credential>
-          <Credential>{t.bbbRating}</Credential>
-          <Credential>{t.googleRating}</Credential>
-          <Credential>{t.warranty}</Credential>
-          <Credential>{t.experience}</Credential>
+          {profile.credentials.map((c) => (
+            <Credential key={c}>{c}</Credential>
+          ))}
         </div>
         <p className="mt-3 text-[11px] leading-relaxed text-slate-600">
-          Based in {siteConfig.address.addressLocality} since{" "}
-          {siteConfig.foundingYear}, working across the Pine Belt and the Gulf
-          Coast. Our license and our BBB and GAF records are public and you are
-          welcome to check every one of them before you call us back.
+          Based in {profile.city} since {siteConfig.foundingYear}, working
+          across the Pine Belt and the Gulf Coast. Our license and our BBB and
+          GAF records are public and you are welcome to check every one of them
+          before you call us back.
         </p>
       </section>
 
@@ -298,35 +295,29 @@ export async function ProposalDoc({
         <div className="flex items-end justify-between gap-6">
           <div>
             <p className="font-[family-name:var(--font-archivo)] text-[17px] font-extrabold text-[#123b63]">
-              The next step is a free inspection.
+              {profile.headline}
             </p>
             <p className="mt-1.5 max-w-[4.6in] text-[12px] leading-relaxed text-slate-700">
-              No cost and no obligation. We go up, photograph what is actually
-              there, and turn this estimate into a firm price. If your roof has
-              years left in it, we will tell you that instead.
+              {profile.closingLine}
             </p>
           </div>
           <div className="text-right">
             <p className="font-[family-name:var(--font-archivo)] text-[21px] leading-none font-extrabold text-[#123b63]">
-              {siteConfig.phone.display}
+              {profile.phone}
             </p>
-            <p className="mt-1 text-[11px] text-slate-600">
-              {new URL(siteConfig.url).hostname}
-            </p>
+            <p className="mt-1 text-[11px] text-slate-600">{profile.website}</p>
           </div>
         </div>
         <p className="mt-5 text-[9.5px] leading-relaxed text-slate-400">
           Estimate {data.quoteId.slice(0, 8).toUpperCase()} prepared{" "}
           {longDate(data.createdAt.slice(0, 10))} by {data.repName}. Valid 30
           days. Roof measurement derived from aerial imagery and subject to
-          on-site verification. {siteConfig.legalName}, MSBOC #
-          {siteConfig.license}, {siteConfig.address.streetAddress},{" "}
-          {siteConfig.address.addressLocality},{" "}
-          {siteConfig.address.addressRegion} {siteConfig.address.postalCode}.
+          on-site verification. {profile.legalName}, MSBOC #{profile.license},{" "}
+          {profile.street}, {profile.city}, {profile.state} {profile.postal}.
         </p>
       </section>
 
-      <InsurancePage />
+      {profile.showInsurance && <InsurancePage />}
     </article>
   );
 }

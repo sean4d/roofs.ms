@@ -8,7 +8,7 @@ export function PinNav({
   active,
 }: {
   user: User;
-  active: "map" | "estimates" | "team";
+  active: "map" | "estimates" | "team" | "settings";
 }) {
   const tab = (href: string, key: string, label: string) => (
     <Link
@@ -27,6 +27,7 @@ export function PinNav({
       {tab("/pin/map", "map", "Map")}
       {tab("/pin/estimates", "estimates", "Estimates")}
       {user.role === "admin" && tab("/pin/team", "team", "Team")}
+      {user.role === "admin" && tab("/pin/settings", "settings", "Settings")}
       <form action="/api/pin/signout" method="post" className="ml-auto">
         <button
           type="submit"

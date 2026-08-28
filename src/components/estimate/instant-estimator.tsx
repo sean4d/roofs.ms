@@ -23,16 +23,19 @@ import { siteConfig } from "@/config/site";
  * number is somewhere to lose people: ask, measuring, the result, and the
  * handover. The address box is the whole first screen for the same reason.
  *
- * A NOTE ON WHERE THE PRICE SITS. The number is shown BEFORE any contact
- * details are asked for. Gating it behind a form converts better on paper and
- * is the reason most of these tools feel like a trick: you type your address,
- * you get a form. Showing the price first means the person who then hands over
- * a phone number actually wants a roof, which is a better lead than a bigger
- * pile of worse ones. It also matches how the company already talks about
- * itself everywhere else on the site: tell people the truth first.
+ * A NOTE ON WHERE THE PRICE SITS. It used to be shown before anything was
+ * asked for. The owner reversed that and he is right: every measurement costs
+ * real money at Google, and a tool anybody can run anonymously is a free
+ * service for competitors and the idly curious. So the name, email and phone
+ * are on the same screen as the address, and nothing is measured until they
+ * are filled in.
+ *
+ * That also collapses two round trips into one, which matters more on a phone
+ * than it looks: the homeowner submits once and gets an answer, instead of
+ * submitting, waiting, and then being asked for more.
  */
 
-type Stage = "ask" | "working" | "result" | "sent";
+type Stage = "ask" | "working" | "result";
 
 interface Payment {
   months: number;
@@ -46,6 +49,7 @@ interface Estimate {
   squares?: number;
   pitchOver12?: number | null;
   price?: number;
+  url?: string | null;
   payments?: Payment[];
   apr?: number;
   partner?: string;
@@ -60,24 +64,22 @@ export function InstantEstimator() {
   const [stage, setStage] = useState<Stage>("ask");
   const [address, setAddress] = useState("");
   const [stories, setStories] = useState<1 | 2>(1);
-  const [estimate, setEstimate] = useState<Estimate | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [sending, setSending] = useState(false);
+  const [estimate, setEstimate] = useState<Estimate | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  async function measure(event: React.FormEvent) {
+  async function submit(event: React.FormEvent) {
     event.preventDefault();
-    if (address.trim().length < 5) return;
+    if (stage === "working") return;
     setStage("working");
     setError(null);
     try {
       const res = await fetch("/api/instant-estimate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ address, stories }),
+        body: JSON.stringify({ name, email, phone, address, stories }),
       });
       const data = await res.json();
       if (!res.ok || !data.ok) {
@@ -93,80 +95,36 @@ export function InstantEstimator() {
     }
   }
 
-  async function send(event: React.FormEvent) {
-    event.preventDefault();
-    if (sending || !estimate) return;
-    setSending(true);
-    setError(null);
-    try {
-      const res = await fetch("/api/instant-estimate/lead", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          email,
-          phone,
-          address: estimate.address,
-          squares: estimate.squares,
-          price: estimate.price,
-          material: estimate.materialLabel,
-          stories: estimate.storiesLabel?.startsWith("2") ? 2 : 1,
-          storm: estimate.storm ?? null,
-        }),
-      });
-      const data = await res.json();
-      if (!res.ok || !data.ok) {
-        setError(data.error ?? "Could not send that.");
-        setSending(false);
-        return;
-      }
-      setStage("sent");
-    } catch {
-      setError("Lost the connection. Try again.");
-      setSending(false);
-    }
-  }
-
   return (
     <div className="mx-auto w-full max-w-2xl">
       <AnimatePresence mode="wait">
         {stage === "ask" && (
           <Panel key="ask">
             <Steps active={0} />
-            <form onSubmit={measure} className="mt-6">
+            <form onSubmit={submit} className="mt-6">
               <label
                 htmlFor="ie-address"
                 className="block text-sm font-semibold text-slate-700"
               >
-                What is the address?
+                Which roof are we pricing?
               </label>
-              <div className="mt-2 flex flex-col gap-2 sm:flex-row">
-                <div className="relative flex-1">
-                  <MapPin
-                    aria-hidden
-                    className="pointer-events-none absolute top-1/2 left-3.5 h-5 w-5 -translate-y-1/2 text-slate-400"
-                  />
-                  <input
-                    id="ie-address"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    placeholder="123 Main St, Hattiesburg, MS"
-                    autoComplete="street-address"
-                    className="w-full rounded-xl border border-slate-300 py-4 pr-4 pl-11 text-base outline-none focus:border-[#123b63] focus:ring-4 focus:ring-[#123b63]/10"
-                  />
-                </div>
-                <motion.button
-                  type="submit"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="flex items-center justify-center gap-2 rounded-xl bg-[#123b63] px-7 py-4 text-base font-bold text-white shadow-lg shadow-[#123b63]/20"
-                >
-                  Get my price
-                  <ArrowRight aria-hidden className="h-5 w-5" />
-                </motion.button>
+              <div className="relative mt-2">
+                <MapPin
+                  aria-hidden
+                  className="pointer-events-none absolute top-1/2 left-3.5 h-5 w-5 -translate-y-1/2 text-slate-400"
+                />
+                <input
+                  id="ie-address"
+                  required
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="123 Main St, Hattiesburg, MS"
+                  autoComplete="street-address"
+                  className="w-full rounded-xl border border-slate-300 py-4 pr-4 pl-11 text-base outline-none focus:border-[#123b63] focus:ring-4 focus:ring-[#123b63]/10"
+                />
               </div>
 
-              <fieldset className="mt-5">
+              <fieldset className="mt-4">
                 <legend className="text-sm font-semibold text-slate-700">
                   How many stories?
                 </legend>
@@ -182,67 +140,17 @@ export function InstantEstimator() {
                           : "border-slate-200 text-slate-600 hover:border-slate-300"
                       }`}
                     >
-                      {n} story{n === 2 ? "" : ""}
+                      {n} story
                     </button>
                   ))}
                 </div>
               </fieldset>
 
-              {error && (
-                <p className="mt-4 rounded-lg bg-red-50 px-3.5 py-2.5 text-sm text-red-700">
-                  {error}
+              <div className="mt-5 border-t border-slate-200 pt-5">
+                <p className="text-sm font-semibold text-slate-700">
+                  Where should we send it?
                 </p>
-              )}
-
-              <p className="mt-4 text-xs leading-relaxed text-slate-500">
-                We measure your roof from aerial imagery and price it on our
-                real rate card. No account, no obligation, and we will not call
-                you unless you ask us to.
-              </p>
-            </form>
-          </Panel>
-        )}
-
-        {stage === "working" && (
-          <Panel key="working">
-            <Steps active={1} />
-            <div className="flex flex-col items-center py-14">
-              <Loader2
-                aria-hidden
-                className="h-9 w-9 animate-spin text-[#123b63]"
-              />
-              <p className="mt-4 font-[family-name:var(--font-archivo)] text-lg font-bold text-[#123b63]">
-                Measuring your roof
-              </p>
-              <p className="mt-1 text-sm text-slate-500">
-                Finding the building, then every plane on it.
-              </p>
-            </div>
-          </Panel>
-        )}
-
-        {stage === "result" && estimate && (
-          <Panel key="result">
-            <Steps active={2} />
-            {estimate.measured ? (
-              <Result estimate={estimate} />
-            ) : (
-              <NotMeasured address={estimate.address} />
-            )}
-
-            {estimate.measured && (
-              <form
-                onSubmit={send}
-                className="mt-7 border-t border-slate-200 pt-6"
-              >
-                <h3 className="font-[family-name:var(--font-archivo)] text-lg font-bold text-[#123b63]">
-                  Want the full written estimate?
-                </h3>
-                <p className="mt-1 text-sm text-slate-600">
-                  We will send it over and book your free inspection to confirm
-                  the number on the roof.
-                </p>
-                <div className="mt-4 grid gap-2.5 sm:grid-cols-3">
+                <div className="mt-2 grid gap-2.5 sm:grid-cols-3">
                   <input
                     required
                     value={name}
@@ -270,52 +178,82 @@ export function InstantEstimator() {
                     className="rounded-xl border border-slate-300 px-4 py-3.5 text-base outline-none focus:border-[#123b63]"
                   />
                 </div>
-                {error && (
-                  <p className="mt-3 rounded-lg bg-red-50 px-3.5 py-2.5 text-sm text-red-700">
-                    {error}
-                  </p>
-                )}
-                <motion.button
-                  type="submit"
-                  disabled={sending}
-                  whileHover={{ scale: sending ? 1 : 1.01 }}
-                  whileTap={{ scale: sending ? 1 : 0.99 }}
-                  className="mt-3.5 flex w-full items-center justify-center gap-2 rounded-xl bg-[#123b63] px-6 py-4 text-base font-bold text-white shadow-lg shadow-[#123b63]/20 disabled:opacity-60"
-                >
-                  {sending ? "Sending..." : "Send me the estimate"}
-                  {!sending && <ArrowRight aria-hidden className="h-5 w-5" />}
-                </motion.button>
-              </form>
-            )}
+              </div>
+
+              {error && (
+                <p className="mt-4 rounded-lg bg-red-50 px-3.5 py-2.5 text-sm text-red-700">
+                  {error}
+                </p>
+              )}
+
+              <motion.button
+                type="submit"
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[#123b63] px-7 py-4 text-base font-bold text-white shadow-lg shadow-[#123b63]/20"
+              >
+                Show me my price
+                <ArrowRight aria-hidden className="h-5 w-5" />
+              </motion.button>
+
+              <p className="mt-3 text-xs leading-relaxed text-slate-500">
+                We measure your roof from aerial imagery, price it on our real
+                rate card, and email you the full written estimate. No
+                obligation, and we will not sell your details to anybody.
+              </p>
+            </form>
           </Panel>
         )}
 
-        {stage === "sent" && (
-          <Panel key="sent">
-            <div className="flex flex-col items-center py-12 text-center">
-              <motion.span
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ type: "spring", stiffness: 260, damping: 18 }}
-                className="flex h-16 w-16 items-center justify-center rounded-full bg-[#123b63]"
-              >
-                <Check aria-hidden className="h-8 w-8 text-white" />
-              </motion.span>
-              <h3 className="mt-5 font-[family-name:var(--font-archivo)] text-2xl font-extrabold text-[#123b63]">
-                On its way
-              </h3>
-              <p className="mt-2 max-w-md text-sm leading-relaxed text-slate-600">
-                We have your estimate and someone will reach out to set up the
-                free inspection. If you would rather not wait, call us.
+        {stage === "working" && (
+          <Panel key="working">
+            <Steps active={1} />
+            <div className="flex flex-col items-center py-14">
+              <Loader2
+                aria-hidden
+                className="h-9 w-9 animate-spin text-[#123b63]"
+              />
+              <p className="mt-4 font-[family-name:var(--font-archivo)] text-lg font-bold text-[#123b63]">
+                Measuring your roof
               </p>
-              <a
-                href={`tel:${siteConfig.phone.tel}`}
-                className="mt-5 inline-flex items-center gap-2 rounded-xl border-2 border-[#123b63] px-6 py-3 text-base font-bold text-[#123b63]"
-              >
-                <Phone aria-hidden className="h-4 w-4" />
-                {siteConfig.phone.display}
-              </a>
+              <p className="mt-1 text-sm text-slate-500">
+                Finding the building, then every plane on it.
+              </p>
             </div>
+          </Panel>
+        )}
+
+        {stage === "result" && estimate && (
+          <Panel key="result">
+            <Steps active={2} />
+            {estimate.measured ? (
+              <>
+                <Result estimate={estimate} />
+                <div className="mt-6 flex flex-col gap-3 border-t border-slate-200 pt-5 sm:flex-row">
+                  {estimate.url && (
+                    <a
+                      href={estimate.url}
+                      className="flex-1 rounded-xl bg-[#123b63] px-6 py-3.5 text-center text-base font-bold text-white"
+                    >
+                      Open the full estimate
+                    </a>
+                  )}
+                  <a
+                    href={`tel:${siteConfig.phone.tel}`}
+                    className="flex items-center justify-center gap-2 rounded-xl border-2 border-[#123b63] px-6 py-3.5 text-base font-bold text-[#123b63]"
+                  >
+                    <Phone aria-hidden className="h-4 w-4" />
+                    {siteConfig.phone.display}
+                  </a>
+                </div>
+                <p className="mt-3 flex items-center gap-2 text-sm text-slate-600">
+                  <Check aria-hidden className="h-4 w-4 text-[#123b63]" />
+                  We emailed a copy to {email}.
+                </p>
+              </>
+            ) : (
+              <NotMeasured address={estimate.address} />
+            )}
           </Panel>
         )}
       </AnimatePresence>
@@ -339,7 +277,7 @@ function Panel({ children }: { children: React.ReactNode }) {
 
 /** Three dots, so somebody always knows how much is left. */
 function Steps({ active }: { active: number }) {
-  const labels = ["Address", "Measure", "Your price"];
+  const labels = ["Your details", "Measure", "Your price"];
   return (
     <ol className="flex items-center gap-2">
       {labels.map((label, i) => (

@@ -188,3 +188,61 @@ CREATE UNIQUE INDEX IF NOT EXISTS quotes_public_token_idx ON quotes (public_toke
 -- lets the page state it instead of claiming freshness it does not have.
 -- ---------------------------------------------------------------------------
 ALTER TABLE quotes ADD COLUMN IF NOT EXISTS imagery_date date;
+
+-- ---------------------------------------------------------------------------
+-- Estimates that came from the website rather than a rep.
+--
+-- The public instant estimator creates real customers and real quotes, but
+-- there is no rep behind them. Rather than invent a fake user row to satisfy a
+-- foreign key, ownership is nullable and NULL means "from the website".
+--
+-- That falls out correctly against the existing scoping rule: ownerScope()
+-- returns null for an admin, so admins see website leads alongside everything
+-- else, and a rep's scope never matches NULL, so website leads stay out of
+-- their pipeline. Which is right: these belong to the office.
+-- ---------------------------------------------------------------------------
+ALTER TABLE customers ALTER COLUMN owner_id DROP NOT NULL;
+ALTER TABLE quotes ALTER COLUMN created_by DROP NOT NULL;
+
+-- ---------------------------------------------------------------------------
+-- Company profile: everything on the proposal that the office should own.
+--
+-- Until now every value on a customer-facing estimate lived in
+-- src/config/site.ts, which means changing a phone number required a code
+-- change and a deploy. That is the wrong place for facts about the business.
+--
+-- A single row, id = 1, because there is one company. Every column is
+-- NULLABLE and NULL means "use the value from site.ts", so the proposal keeps
+-- working before anybody has opened the settings screen, and clearing a field
+-- reverts to the built-in rather than blanking the document.
+--
+-- The logo is stored as a data URI in the row rather than in object storage.
+-- It is one small image for one company, and putting it here means no bucket
+-- to provision, no second set of credentials, and no separate thing to back
+-- up. The upload route caps the size so this stays true.
+-- ---------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS company_profile (
+  id              integer PRIMARY KEY DEFAULT 1 CHECK (id = 1),
+  legal_name      text,
+  display_name    text,
+  phone           text,
+  email           text,
+  website         text,
+  street          text,
+  city            text,
+  state           text,
+  postal          text,
+  license         text,
+  warranty        text,
+  financing_line  text,
+  credentials     text[],
+  headline        text,
+  closing_line    text,
+  accent_color    text,
+  logo_data_uri   text,
+  show_storms     boolean NOT NULL DEFAULT true,
+  show_insurance  boolean NOT NULL DEFAULT true,
+  show_financing  boolean NOT NULL DEFAULT true,
+  updated_at      timestamptz NOT NULL DEFAULT now(),
+  updated_by      uuid REFERENCES users (id)
+);
