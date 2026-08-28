@@ -149,3 +149,20 @@ CREATE TABLE IF NOT EXISTS roofr_exports (
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS roofr_exports_customer_idx ON roofr_exports (customer_id);
+
+-- ---------------------------------------------------------------------------
+-- Cross-device sign-in.
+--
+-- The owner signed in on a laptop, opened the emailed link on his phone, and
+-- the laptop sat on "check your email" forever. That is the normal failure of
+-- a magic link: the browser that ASKED and the browser that OPENS are often
+-- not the same one, because email is read on a phone.
+--
+-- pending_id is a random handle handed to the browser that made the request,
+-- as an http-only cookie. When the link is opened ANYWHERE, claimed_by is
+-- stamped with the user, and the original browser, which is polling, picks up
+-- its own session. The link still works normally on the device that opened it.
+-- ---------------------------------------------------------------------------
+ALTER TABLE login_tokens ADD COLUMN IF NOT EXISTS pending_id text;
+ALTER TABLE login_tokens ADD COLUMN IF NOT EXISTS claimed_by uuid REFERENCES users (id);
+CREATE INDEX IF NOT EXISTS login_tokens_pending_idx ON login_tokens (pending_id);

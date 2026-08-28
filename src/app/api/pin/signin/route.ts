@@ -1,7 +1,12 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-import { sendLoginLink } from "@/lib/quotes/auth";
+import {
+  PENDING_COOKIE,
+  PENDING_MAX_AGE_SECONDS,
+  newPendingId,
+  sendLoginLink,
+} from "@/lib/quotes/auth";
 import {
   clientIp,
   loginAllowed,
@@ -52,8 +57,12 @@ export async function POST(request: Request) {
   // the expensive side effect here, so the limit has to cover the successes.
   recordLoginFailure(ip);
 
+  // A handle for THIS browser, so it can pick up its own session when the
+  // link is opened on a phone. See the status route.
+  const pendingId = newPendingId();
+
   try {
-    await sendLoginLink(email);
+    await sendLoginLink(email, pendingId);
   } catch (error) {
     // A mail or database failure is ours, not the caller's, and it is the one
     // case worth reporting honestly: the form can offer to try again.
@@ -61,8 +70,16 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Could not send." }, { status: 500 });
   }
 
-  return NextResponse.json(
+  const response = NextResponse.json(
     { ok: true },
     { headers: { "Cache-Control": "no-store" } },
   );
+  response.cookies.set(PENDING_COOKIE, pendingId, {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+    maxAge: PENDING_MAX_AGE_SECONDS,
+  });
+  return response;
 }

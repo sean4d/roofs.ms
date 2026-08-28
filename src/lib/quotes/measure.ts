@@ -221,15 +221,15 @@ export async function geocode(address: string): Promise<GeocodeResult | null> {
   };
 }
 
-/** Satellite thumbnail of the pin, for the rep's confirmation step. */
+/**
+ * Satellite thumbnail of the pin, for the rep's confirmation step.
+ *
+ * Points at our own proxy, NOT at Google. This used to return the Static Maps
+ * URL directly, which meant every measurement handed the unrestricted server
+ * key to the browser inside an img src. See src/app/api/pin/aerial/route.ts.
+ */
 export function aerialUrl(lat: number, lon: number, size = 480): string {
-  const url = new URL("https://maps.googleapis.com/maps/api/staticmap");
-  url.searchParams.set("center", `${lat},${lon}`);
-  url.searchParams.set("zoom", "20");
-  url.searchParams.set("size", `${size}x${size}`);
-  url.searchParams.set("maptype", "satellite");
-  url.searchParams.set("key", serverKey());
-  return url.toString();
+  return `/api/pin/aerial?lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}&size=${size}`;
 }
 
 /* ------------------------------------------------------------------ *

@@ -19,7 +19,7 @@ export default function PinLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <div className="flex min-h-dvh flex-col bg-slate-50 font-[family-name:var(--font-inter)] text-slate-900">
+    <div className="flex h-dvh flex-col overflow-hidden bg-slate-50 font-[family-name:var(--font-inter)] text-slate-900">
       {children}
     </div>
   );

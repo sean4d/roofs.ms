@@ -172,7 +172,7 @@ export function MapView({ apiKey }: { apiKey: string }) {
   }
 
   return (
-    <div className="relative flex-1">
+    <div className="relative min-h-0 flex-1">
       <div ref={holder} className="absolute inset-0 bg-slate-200" />
 
       {/* Search sits over the map: typing an address and tapping a roof are
@@ -206,13 +206,13 @@ export function MapView({ apiKey }: { apiKey: string }) {
       )}
 
       {busy && (
-        <div className="absolute inset-x-0 bottom-0 z-20 bg-[#123b63] px-5 py-4 text-center text-sm font-medium text-white">
+        <div className="fixed inset-x-0 bottom-0 z-30 bg-[#123b63] px-5 py-4 pb-[calc(1rem+env(safe-area-inset-bottom))] text-center text-sm font-medium text-white">
           Measuring the roof...
         </div>
       )}
 
       {error && !busy && (
-        <div className="absolute inset-x-0 bottom-0 z-20 bg-white p-5 shadow-2xl">
+        <div className="fixed inset-x-0 bottom-0 z-30 bg-white p-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] shadow-2xl">
           <p className="text-sm text-red-700">{error}</p>
           <button
             onClick={() => setError(null)}
@@ -249,7 +249,7 @@ function ResultSheet({
   const rejected = m.confidence === "reject";
 
   return (
-    <div className="absolute inset-x-0 bottom-0 z-20 max-h-[72%] overflow-y-auto rounded-t-2xl bg-white shadow-2xl">
+    <div className="fixed inset-x-0 bottom-0 z-30 max-h-[70dvh] overflow-y-auto overscroll-contain rounded-t-2xl bg-white pb-[env(safe-area-inset-bottom)] shadow-2xl">
       <div className="sticky top-0 flex items-start justify-between gap-3 border-b border-slate-200 bg-white px-5 pt-4 pb-3">
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold text-slate-900">

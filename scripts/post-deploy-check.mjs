@@ -140,6 +140,31 @@ console.log(`\nField tool`);
   );
 }
 
+{
+  // The aerial image proxy must demand a session. It exists because the
+  // measurement used to return a Google Static Maps URL with the unrestricted
+  // server key in it, which shipped that key to every browser. The earlier
+  // version of this file checked only whether the key appeared in the page
+  // HTML, and it did not: it arrived afterwards, inside an API response. So
+  // the endpoint that replaced it gets checked directly.
+  const r = await get("/api/pin/aerial?lat=31.3271&lon=-89.2903");
+  check(
+    r.status === 401,
+    "/api/pin/aerial requires a session",
+    `http ${r.status}`,
+  );
+}
+{
+  // Belt and braces on the same thing: no Google key of any kind should be
+  // reachable without signing in.
+  const r = await get("/pin");
+  check(
+    !/AIza[0-9A-Za-z_-]{20,}/.test(r.text),
+    "no Google API key in the signed-out page",
+    "a key-shaped string was found",
+  );
+}
+
 /* -- 3. Nothing private became public. ----------------------------------- */
 
 console.log(`\nPrivate areas still locked`);

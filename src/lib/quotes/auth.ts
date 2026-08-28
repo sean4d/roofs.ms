@@ -188,7 +188,14 @@ const hashToken = (token: string) =>
  * same "check your email" screen either way, so this endpoint cannot be used
  * to find out who works here.
  */
-export async function sendLoginLink(rawEmail: string): Promise<boolean> {
+export const PENDING_COOKIE = "ser_quote_pending";
+/** A browser waiting on a link gives up after this long. */
+export const PENDING_MAX_AGE_SECONDS = 30 * 60;
+
+export async function sendLoginLink(
+  rawEmail: string,
+  pendingId?: string,
+): Promise<boolean> {
   const email = normalizeEmail(rawEmail);
   if (!emailAllowed(email)) return true;
 
@@ -204,8 +211,8 @@ export async function sendLoginLink(rawEmail: string): Promise<boolean> {
   const expiresAt = new Date(Date.now() + LOGIN_TOKEN_TTL_MS);
 
   await sql`
-    INSERT INTO login_tokens (token_hash, email, expires_at)
-    VALUES (${hashToken(token)}, ${email}, ${expiresAt.toISOString()})
+    INSERT INTO login_tokens (token_hash, email, expires_at, pending_id)
+    VALUES (${hashToken(token)}, ${email}, ${expiresAt.toISOString()}, ${pendingId ?? null})
   `;
 
   await mailLoginLink(email, token);
@@ -280,7 +287,67 @@ export async function redeemLoginToken(token: string): Promise<string | null> {
 
   const user = users[0];
   if (!user || !user.active) return null;
+
+  // Stamp the claim so the browser that ASKED for this link, which is often a
+  // different device from the one reading the email, can pick up its own
+  // session while it polls. Failure here must not block the sign-in actually
+  // happening on this device.
+  try {
+    await sql`
+      UPDATE login_tokens SET claimed_by = ${user.id}::uuid
+       WHERE token_hash = ${hashToken(token)}
+    `;
+  } catch (error) {
+    console.error("[pin] could not stamp the cross-device claim", error);
+  }
+
   return issueSessionToken(user.id);
+}
+
+/**
+ * Has the link this browser asked for been opened somewhere yet?
+ *
+ * Returns a fresh session token once it has. This is what closes the gap the
+ * owner hit: request the link on a laptop, open it on a phone, and the laptop
+ * would otherwise sit on "check your email" forever.
+ *
+ * The pending id is a bearer credential, so it is 32 random bytes in an
+ * http-only cookie, it only matches a token issued in the last 30 minutes, and
+ * it is cleared the moment it is exchanged. Guessing one is not feasible and a
+ * used one is worth nothing.
+ */
+export async function claimPendingSession(
+  pendingId: string,
+): Promise<string | null> {
+  if (!pendingId || pendingId.length < 20) return null;
+  try {
+    const rows = (await db()`
+      SELECT t.claimed_by, u.active
+        FROM login_tokens t
+        JOIN users u ON u.id = t.claimed_by
+       WHERE t.pending_id = ${pendingId}
+         AND t.claimed_by IS NOT NULL
+         AND t.created_at > now() - interval '30 minutes'
+       ORDER BY t.created_at DESC
+       LIMIT 1
+    `) as Array<{ claimed_by: string; active: boolean }>;
+    if (!rows.length || !rows[0].active) return null;
+
+    // One exchange only. Clearing the handle means a copied cookie cannot be
+    // replayed into a second session later.
+    await db()`
+      UPDATE login_tokens SET pending_id = NULL WHERE pending_id = ${pendingId}
+    `;
+    return issueSessionToken(rows[0].claimed_by);
+  } catch (error) {
+    console.error("[pin] pending claim failed", error);
+    return null;
+  }
+}
+
+/** A fresh handle for a browser that is about to wait on a link. */
+export function newPendingId(): string {
+  return randomBytes(32).toString("base64url");
 }
 
 /* ------------------------------------------------------------------ *

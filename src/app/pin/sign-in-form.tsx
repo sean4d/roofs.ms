@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { ALLOWED_DOMAIN } from "./domain";
 
@@ -34,6 +34,37 @@ export function SignInForm() {
     }
   }
 
+  /**
+   * While waiting, ask the server whether the link has been opened yet.
+   *
+   * Email is read on a phone and sign-in often starts on a laptop, so the
+   * browser that opens the link is frequently not this one. Polling is what
+   * lets this screen finish by itself instead of stranding the user on "check
+   * your email" while their phone works fine.
+   */
+  useEffect(() => {
+    if (state !== "sent") return;
+    let stop = false;
+    const timer = setInterval(async () => {
+      try {
+        const res = await fetch("/api/pin/signin/status", {
+          cache: "no-store",
+        });
+        const data = await res.json();
+        if (!stop && data.signedIn) {
+          clearInterval(timer);
+          window.location.href = "/pin/map";
+        }
+      } catch {
+        // A dropped poll is not worth reporting: the next one is 3 seconds away.
+      }
+    }, 3000);
+    return () => {
+      stop = true;
+      clearInterval(timer);
+    };
+  }, [state]);
+
   if (state === "sent") {
     return (
       <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -44,6 +75,10 @@ export function SignInForm() {
           If <span className="font-medium text-slate-900">{email}</span> is a
           Southeast Roofing address, a sign-in link is on its way. It works once
           and expires in 20 minutes.
+        </p>
+        <p className="mt-3 flex items-center gap-2 text-sm text-slate-500">
+          <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-[#123b63]" />
+          Waiting. Open it on any device and this page will let you in too.
         </p>
         <button
           type="button"
