@@ -107,6 +107,22 @@ console.log(`\nField tool`);
   );
 }
 {
+  // The database, for real.
+  //
+  // This check used to pass 19 of 19 while sign-in was completely broken. The
+  // password had been rotated and the running deployment still carried the old
+  // one, but nothing here actually asked the database a question: the only
+  // call that touched this API was the cross-site POST below, which is refused
+  // before any query runs. A gate that fails closed and a gate that works look
+  // the same from outside. So this one asks for a real query.
+  const r = await get("/api/pin/health");
+  check(
+    r.status === 200 && r.text.includes('"ok":true'),
+    "database is reachable from the deployment",
+    r.status === 200 ? r.text.slice(0, 40) : `http ${r.status}`,
+  );
+}
+{
   // Cross-site POST must be refused, or any page on the internet could make a
   // rep's browser fire requests at this API.
   const r = await get("/api/pin/signin", {
