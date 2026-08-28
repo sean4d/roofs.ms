@@ -17,8 +17,8 @@ import { siteConfig } from "@/config/site";
  */
 export function InsurancePage() {
   return (
-    <section className="proposal-page break-before-page px-8 pt-8 pb-10">
-      <header className="border-b-[3px] border-[#123b63] pb-4">
+    <section className="proposal-page break-before-page px-8 pt-7 pb-6">
+      <header className="border-b-[3px] border-[#123b63] pb-3">
         <h2 className="font-[family-name:var(--font-archivo)] text-[19px] font-extrabold tracking-tight text-[#123b63]">
           If this is storm damage, here is how a claim works
         </h2>
@@ -27,15 +27,15 @@ export function InsurancePage() {
         </p>
       </header>
 
-      <p className="mt-4 text-[12px] leading-relaxed text-slate-700">
+      <p className="mt-3.5 text-[11.5px] leading-relaxed text-slate-700">
         A storm claim is paperwork stapled to a roof. We handle the roof and the
         documentation: thorough inspection reports, photos in the format
         adjusters expect, and someone on your side of the table at the adjuster
         meeting.
       </p>
 
-      <div className="mt-4 rounded border-l-[3px] border-[#123b63] bg-slate-50 px-4 py-3">
-        <p className="text-[12px] leading-relaxed text-slate-800">
+      <div className="mt-3 rounded border-l-[3px] border-[#123b63] bg-slate-50 px-4 py-2.5">
+        <p className="text-[11.5px] leading-relaxed text-slate-800">
           <strong className="text-[#123b63]">The honest version.</strong> The
           decision belongs to your insurance company, not to us. Any roofer who
           guarantees your claim will be approved is selling something. What a
@@ -45,10 +45,10 @@ export function InsurancePage() {
         </p>
       </div>
 
-      <h3 className="mt-6 border-b border-slate-200 pb-1.5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
+      <h3 className="mt-5 border-b border-slate-200 pb-1.5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
         The claim, step by step
       </h3>
-      <ol className="mt-3 grid grid-cols-2 gap-x-8 gap-y-2.5">
+      <ol className="mt-2.5 grid grid-cols-2 gap-x-8 gap-y-2">
         {STEPS.map((s, i) => (
           <li key={s.title} className="flex gap-2.5">
             <span className="mt-[1px] flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-[#123b63] text-[9px] font-bold text-white">
@@ -61,10 +61,10 @@ export function InsurancePage() {
         ))}
       </ol>
 
-      <h3 className="mt-6 border-b border-slate-200 pb-1.5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
+      <h3 className="mt-5 border-b border-slate-200 pb-1.5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
         The words on your paperwork
       </h3>
-      <dl className="mt-3 grid grid-cols-2 gap-x-8 gap-y-2 text-[11px] leading-snug">
+      <dl className="mt-2.5 grid grid-cols-2 gap-x-8 gap-y-1.5 text-[10.5px] leading-snug">
         {TERMS.map((t) => (
           <div key={t.term}>
             <dt className="font-bold text-[#123b63]">{t.term}</dt>
@@ -73,10 +73,10 @@ export function InsurancePage() {
         ))}
       </dl>
 
-      <h3 className="mt-6 border-b border-slate-200 pb-1.5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
+      <h3 className="mt-5 border-b border-slate-200 pb-1.5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
         Have these ready and the whole thing moves faster
       </h3>
-      <ul className="mt-3 grid grid-cols-2 gap-x-8 gap-y-1 text-[11px] leading-snug text-slate-700">
+      <ul className="mt-2.5 grid grid-cols-2 gap-x-8 gap-y-0.5 text-[10.5px] leading-snug text-slate-700">
         {CHECKLIST.map((c) => (
           <li key={c} className="flex gap-2">
             <span aria-hidden className="text-[#123b63]">
@@ -87,7 +87,7 @@ export function InsurancePage() {
         ))}
       </ul>
 
-      <p className="mt-6 border-t border-slate-200 pt-3 text-[9.5px] leading-relaxed text-slate-500">
+      <p className="mt-4 border-t border-slate-200 pt-2.5 text-[9px] leading-relaxed text-slate-500">
         General information about how the process typically works. It is not
         legal advice and not an interpretation of your policy. Your policy
         language and your insurer&rsquo;s decisions control, and timelines

@@ -53,6 +53,16 @@ export default async function PublicEstimate({
           >
             Book a free inspection
           </a>
+          {/* Somebody who scanned a QR code off a mailer has never seen the
+              company. The estimate proves we measured their roof; the site is
+              where they check we are real, which is the question they are
+              actually asking at this point. */}
+          <a
+            href={siteConfig.url}
+            className="rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700"
+          >
+            Check us out online
+          </a>
         </div>
       </div>
     </main>

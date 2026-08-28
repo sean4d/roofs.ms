@@ -36,9 +36,14 @@
   .proposal header {
     break-inside: avoid;
   }
-  /* The insurance sheet is its own page, always. */
+  /* The insurance sheet is its own page, always, and exactly one.
+     It measured 1008px against a page that holds about 980, so a single
+     paragraph of footnote was landing alone on a fourth sheet. The section
+     has been tightened to fit; break-inside keeps it honest if the content
+     ever grows again. */
   .proposal-page {
     break-before: page;
+    break-inside: avoid;
   }
   /* The QR has to survive a photocopier and a phone camera in a hallway, so
      it never scales below a size that still scans. */
