@@ -334,6 +334,10 @@ function ResultSheet({
           </div>
         )}
 
+        {/* Save and make a proposal. Only offered when there is a price to put
+            on it: a rejected measurement has nothing to send. */}
+        {!rejected && <SaveBar result={result} />}
+
         {/* The rep's own eyes are the last check, and the one the data cannot
             do: a room added after the photo was taken is invisible to it. */}
         {m.aerialUrl && (
@@ -350,6 +354,116 @@ function ResultSheet({
             />
           </div>
         )}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Capture what the rep learned at the door, then make the proposal.
+ *
+ * Name, email and phone are all optional. A rep who knocked and got nothing
+ * but a look through the blinds still wants the measurement saved and a piece
+ * to print, and a form that demanded contact details would simply not get
+ * used. Anything they did get makes the follow-up better, so it is offered,
+ * never required.
+ */
+function SaveBar({ result }: { result: Result }) {
+  const { measurement: m } = result;
+  const [open, setOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [failed, setFailed] = useState(false);
+
+  async function save() {
+    if (saving || !m.squares) return;
+    setSaving(true);
+    setFailed(false);
+    try {
+      const res = await fetch("/api/pin/customers", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          address: m.formattedAddress ?? `${m.lat}, ${m.lon}`,
+          lat: m.lat,
+          lon: m.lon,
+          squares: m.squares,
+          pitchDegrees: m.pitchDegrees,
+          planes: m.planes,
+          measureSource: "solar",
+          measureQuality: m.confidence,
+          imageryDate: m.imageryDate,
+          name: name.trim() || null,
+          email: email.trim() || null,
+          phone: phone.trim() || null,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) {
+        setFailed(true);
+        setSaving(false);
+        return;
+      }
+      window.location.href = `/pin/proposal/${data.quoteId}`;
+    } catch {
+      setFailed(true);
+      setSaving(false);
+    }
+  }
+
+  return (
+    <div className="mt-5 border-t border-slate-200 pt-4">
+      {open && (
+        <div className="mb-3 space-y-2">
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Homeowner name (optional)"
+            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-base outline-none focus:border-[#123b63]"
+          />
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            inputMode="email"
+            placeholder="Email (optional)"
+            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-base outline-none focus:border-[#123b63]"
+          />
+          <input
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            type="tel"
+            inputMode="tel"
+            placeholder="Phone (optional)"
+            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-base outline-none focus:border-[#123b63]"
+          />
+        </div>
+      )}
+
+      {failed && (
+        <p className="mb-2 text-sm text-red-700">
+          Could not save that. Try again.
+        </p>
+      )}
+
+      <div className="flex gap-2">
+        {!open && (
+          <button
+            onClick={() => setOpen(true)}
+            className="rounded-lg border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700"
+          >
+            Add contact
+          </button>
+        )}
+        <button
+          onClick={save}
+          disabled={saving}
+          className="flex-1 rounded-lg bg-[#123b63] px-4 py-3 text-base font-semibold text-white disabled:opacity-60"
+        >
+          {saving ? "Saving..." : "Save and make proposal"}
+        </button>
       </div>
     </div>
   );

@@ -1,0 +1,44 @@
+/*
+ * Print rules for the proposal.
+ *
+ * "Download PDF" on a phone is the browser's own print-to-PDF, so this
+ * stylesheet IS the PDF. Everything the rep needs on screen (the toolbar, the
+ * app chrome) has to disappear, and the document has to sit on Letter with
+ * real margins rather than a screenshot of a web page.
+ */
+@media print {
+  @page {
+    size: letter;
+    margin: 0.4in;
+  }
+  html,
+  body {
+    height: auto !important;
+    overflow: visible !important;
+    background: #fff !important;
+  }
+  /* The app shell is a fixed-height flex column for the map. On paper that
+     would crop the document to one screen. */
+  body * {
+    overflow: visible !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .proposal {
+    max-width: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+  }
+  /* Keep a section and its heading together rather than orphaning a title at
+     the foot of page one. */
+  .proposal section,
+  .proposal header {
+    break-inside: avoid;
+  }
+  /* Colour is the whole point of the price block and the masthead rule. */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

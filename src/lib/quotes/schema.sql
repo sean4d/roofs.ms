@@ -166,3 +166,25 @@ CREATE UNIQUE INDEX IF NOT EXISTS roofr_exports_customer_idx ON roofr_exports (c
 ALTER TABLE login_tokens ADD COLUMN IF NOT EXISTS pending_id text;
 ALTER TABLE login_tokens ADD COLUMN IF NOT EXISTS claimed_by uuid REFERENCES users (id);
 CREATE INDEX IF NOT EXISTS login_tokens_pending_idx ON login_tokens (pending_id);
+
+-- ---------------------------------------------------------------------------
+-- Shareable proposals.
+--
+-- A quote needs a link a homeowner can open without an account, for the email
+-- and for the QR code on a printed piece. That link is the credential, so it
+-- is 32 random bytes and it names nothing: no rep, no pipeline, no other
+-- customer. Nullable because a quote only gets one when it is actually shared.
+-- ---------------------------------------------------------------------------
+ALTER TABLE quotes ADD COLUMN IF NOT EXISTS public_token text;
+CREATE UNIQUE INDEX IF NOT EXISTS quotes_public_token_idx ON quotes (public_token)
+  WHERE public_token IS NOT NULL;
+
+-- ---------------------------------------------------------------------------
+-- When the aerial photograph was taken.
+--
+-- The proposal told homeowners their roof was "measured from current aerial
+-- imagery". For most of this territory the imagery is from 2013 or 2019, so
+-- that sentence was false on a document a customer keeps. Storing the date
+-- lets the page state it instead of claiming freshness it does not have.
+-- ---------------------------------------------------------------------------
+ALTER TABLE quotes ADD COLUMN IF NOT EXISTS imagery_date date;
