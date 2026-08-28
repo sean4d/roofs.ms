@@ -2,60 +2,65 @@ import { redirect } from "next/navigation";
 
 import { currentUser } from "@/lib/quotes/auth";
 
+import { MapView } from "./map-view";
+
 export const dynamic = "force-dynamic";
 
 /**
- * The tool itself. Placeholder while the map is built: what it proves today is
- * that the account system works end to end, which is the part everything else
- * hangs off.
+ * The tool.
  *
- * Note the gate. currentUser() re-reads the row on every request, so an admin
- * deactivating a rep takes effect here on the rep's very next tap, not
- * whenever their cookie happens to lapse.
+ * The gate lives here rather than in proxy.ts because currentUser() re-reads
+ * the user row, so an admin deactivating a rep locks them out on their very
+ * next tap instead of whenever their cookie happens to lapse.
+ *
+ * The browser key is passed in from the server because it is public by nature:
+ * it ends up in the page source either way, which is exactly why it must be
+ * restricted by HTTP referrer in the Google console. It is not the server key
+ * and must never be.
  */
 export default async function MapPage() {
   const user = await currentUser();
   if (!user) redirect("/pin");
 
+  const browserKey = process.env.GOOGLE_MAPS_BROWSER_KEY;
+
   return (
-    <main className="mx-auto w-full max-w-2xl flex-1 px-5 py-10">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h1 className="font-[family-name:var(--font-archivo)] text-2xl font-extrabold text-[#123b63]">
-            Signed in
-          </h1>
-          <p className="mt-1 text-sm text-slate-600">{user.email}</p>
-        </div>
-        <span
-          className={`rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase ${
-            user.role === "admin"
-              ? "bg-[#123b63] text-white"
-              : "bg-slate-200 text-slate-700"
-          }`}
-        >
-          {user.role}
+    <>
+      <header className="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-2.5">
+        <span className="font-[family-name:var(--font-archivo)] text-lg font-extrabold text-[#123b63]">
+          Pin
         </span>
-      </div>
+        <div className="flex items-center gap-3">
+          {user.role === "admin" && (
+            <span className="rounded-full bg-[#123b63] px-2.5 py-0.5 text-[10px] font-bold tracking-wide text-white uppercase">
+              Admin
+            </span>
+          )}
+          <form action="/api/pin/signout" method="post">
+            <button
+              type="submit"
+              className="text-xs font-medium text-slate-500 underline underline-offset-4"
+            >
+              Sign out
+            </button>
+          </form>
+        </div>
+      </header>
 
-      <div className="mt-8 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 className="font-[family-name:var(--font-archivo)] text-lg font-bold text-[#123b63]">
-          The map goes here
-        </h2>
-        <p className="mt-2 text-sm leading-relaxed text-slate-600">
-          Tap a house, get it measured and priced, send the estimate. Being
-          built now. Accounts, the rate card, roof measurement and storm history
-          are already done and tested.
-        </p>
-      </div>
-
-      <form action="/api/pin/signout" method="post" className="mt-8">
-        <button
-          type="submit"
-          className="text-sm font-medium text-slate-500 underline underline-offset-4 hover:text-slate-800"
-        >
-          Sign out
-        </button>
-      </form>
-    </main>
+      {browserKey ? (
+        <MapView apiKey={browserKey} />
+      ) : (
+        <main className="flex-1 p-5">
+          <div className="rounded-lg bg-amber-50 p-4">
+            <p className="text-sm font-bold text-amber-900">
+              Map not configured
+            </p>
+            <p className="mt-1 text-sm text-amber-900">
+              GOOGLE_MAPS_BROWSER_KEY is not set on this deployment.
+            </p>
+          </div>
+        </main>
+      )}
+    </>
   );
 }
