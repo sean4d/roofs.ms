@@ -9,6 +9,9 @@ import {
 import { cookies } from "next/headers";
 
 import { db } from "./db";
+import { baseUrl } from "./base-url";
+// The sender domain is always the real one: it is what Resend has verified,
+// and a preview host would fail SPF. Only the LINK follows the deployment.
 import { siteConfig } from "@/config/site";
 
 /**
@@ -211,7 +214,7 @@ export async function sendLoginLink(rawEmail: string): Promise<boolean> {
 
 async function mailLoginLink(email: string, token: string): Promise<void> {
   const key = process.env.RESEND_API_KEY;
-  const link = `${siteConfig.url}/quote/signin/${token}`;
+  const link = `${baseUrl()}/pin/signin/${token}`;
   if (!key) {
     // In local development without a mail key, the link goes to the log so the
     // flow is still testable end to end.

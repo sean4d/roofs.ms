@@ -5,7 +5,7 @@ import {
   redeemLoginToken,
   sessionCookieOptions,
 } from "@/lib/quotes/auth";
-import { siteConfig } from "@/config/site";
+import { baseUrl } from "@/lib/quotes/base-url";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -38,10 +38,10 @@ export async function GET(
   }
 
   if (!session) {
-    return NextResponse.redirect(new URL("/pin?expired=1", siteConfig.url));
+    return NextResponse.redirect(new URL("/pin?expired=1", baseUrl()));
   }
 
-  const response = NextResponse.redirect(new URL("/pin/map", siteConfig.url));
+  const response = NextResponse.redirect(new URL("/pin/map", baseUrl()));
   response.cookies.set(SESSION_COOKIE, session, sessionCookieOptions());
   return response;
 }

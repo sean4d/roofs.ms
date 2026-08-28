@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { SESSION_COOKIE } from "@/lib/quotes/auth";
-import { siteConfig } from "@/config/site";
+import { baseUrl } from "@/lib/quotes/base-url";
 import { sameOrigin } from "@/lib/production/auth";
 
 export const runtime = "nodejs";
@@ -12,7 +12,7 @@ export async function POST(request: Request) {
   if (!sameOrigin(request)) {
     return NextResponse.json({ error: "Blocked request." }, { status: 403 });
   }
-  const response = NextResponse.redirect(new URL("/pin", siteConfig.url), {
+  const response = NextResponse.redirect(new URL("/pin", baseUrl()), {
     // 303 so the browser follows with GET after this POST, rather than
     // re-posting to the destination.
     status: 303,
