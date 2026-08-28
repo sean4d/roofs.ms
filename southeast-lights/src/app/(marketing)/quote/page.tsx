@@ -36,6 +36,23 @@ export default function QuotePage() {
             residential quotes never need a site visit, because we measure from
             the address and aerial imagery.
           </p>
+          {/*
+            The header and the mobile action bar send everyone here, including
+            HOA boards and commercial owners, and this page is framed
+            residential. The proposal form is the one that asks about property
+            counts, decision timelines and uploads, so it needs a visible door
+            rather than only being reachable from the commercial pages.
+          */}
+          <p className="text-bone-400 mt-5 max-w-2xl">
+            Managing an HOA, a school, a church or a commercial property?{" "}
+            <Link
+              href="/commercial/request-proposal"
+              className="text-champagne-300 underline underline-offset-4 hover:text-champagne-200"
+            >
+              Request a commercial proposal
+            </Link>{" "}
+            instead. It asks the questions a board or an owner needs answered.
+          </p>
         </div>
       </section>
       <Breadcrumbs trail={trail} />

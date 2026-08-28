@@ -28,7 +28,9 @@ const SEGMENTS = [
     image: IMAGES.retailCenter,
   },
   {
-    href: "/holiday-lighting/residential",
+    // /holiday-lighting/residential has never existed. The residential
+    // service page is the real destination.
+    href: "/services/residential-holiday-lighting",
     label: "Residential",
     blurb: "Premium homes across the Pine Belt, starting at $1,000.",
     image: IMAGES.colonialColumns,

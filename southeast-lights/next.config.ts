@@ -56,6 +56,49 @@ const nextConfig: NextConfig = {
         destination: "/accessibility",
         permanent: true,
       },
+
+      /*
+       * The rest of the Wix inventory, taken from its own sitemaps rather than
+       * from memory: pages, blog-posts, blog-categories and booking-services.
+       * Without these, every one of them 404s the day the domain moves.
+       *
+       * Both posts target "christmas light installation hattiesburg ms", the
+       * money keyword, so they land on that service page rather than the
+       * homepage. The :slug catch-alls cover anything unpublished or added to
+       * Wix after this inventory was taken.
+       */
+      {
+        source: "/blog",
+        destination: "/services/christmas-light-installation",
+        permanent: true,
+      },
+      {
+        source:
+          "/post/transform-your-holidays-with-professional-christmas-light-installation-in-hattiesburg-ms",
+        destination: "/services/christmas-light-installation",
+        permanent: true,
+      },
+      {
+        source:
+          "/post/professional-christmas-light-installation-in-hattiesburg-ms-surrounding-areas",
+        destination: "/services/christmas-light-installation",
+        permanent: true,
+      },
+      {
+        source: "/post/:slug",
+        destination: "/services/christmas-light-installation",
+        permanent: true,
+      },
+      {
+        source: "/book-online",
+        destination: "/quote",
+        permanent: true,
+      },
+      {
+        source: "/service-page/:slug",
+        destination: "/quote",
+        permanent: true,
+      },
     ];
   },
 };
