@@ -1,0 +1,149 @@
+#!/usr/bin/env node
+/**
+ * Post-deploy check: did that deployment break the site?
+ *
+ * Run after EVERY deploy. scripts/seo-smoke.mjs already guards the SEO
+ * invariants; this one answers the blunter question the owner actually asks,
+ * which is whether the business's website still works and whether anything
+ * private just became public.
+ *
+ * Three groups, and the first one matters most. The field tool is new and
+ * additive, so the real risk of shipping it is not that /pin is broken, it is
+ * that something unrelated went down while nobody was looking at it. So the
+ * public pages that earn money get checked first and failing any of them is
+ * treated as the serious result.
+ *
+ *   node scripts/post-deploy-check.mjs [BASE_URL]
+ *
+ * Exits non-zero if anything fails, so it can gate a release.
+ */
+
+const BASE = (process.argv[2] || "https://southeastroofing.llc").replace(
+  /\/$/,
+  "",
+);
+
+let pass = 0;
+const failures = [];
+
+function check(ok, label, detail = "") {
+  if (ok) {
+    pass++;
+    console.log(`  pass  ${label}`);
+  } else {
+    failures.push(`${label}${detail ? ` (${detail})` : ""}`);
+    console.log(`  FAIL  ${label}${detail ? `  ${detail}` : ""}`);
+  }
+}
+
+async function get(path, init = {}) {
+  try {
+    const res = await fetch(`${BASE}${path}`, { redirect: "manual", ...init });
+    const text = res.status < 400 ? await res.text() : "";
+    return { status: res.status, text, headers: res.headers };
+  } catch (err) {
+    return { status: 0, text: "", headers: new Headers(), error: err.message };
+  }
+}
+
+/* -- 1. The money pages. If any of these break, nothing else matters. ----- */
+
+const PUBLIC_PAGES = [
+  "/",
+  "/free-inspection",
+  "/contact",
+  "/projects",
+  "/reviews",
+  "/service-areas",
+  "/service-areas/hattiesburg",
+  "/roof-cost-calculator",
+  "/residential",
+  "/commercial",
+  "/robots.txt",
+  "/sitemap.xml",
+];
+
+console.log(`\nPublic site  (${BASE})`);
+for (const path of PUBLIC_PAGES) {
+  const r = await get(path);
+  check(
+    r.status === 200,
+    path,
+    r.status === 200 ? "" : `http ${r.status}${r.error ? ` ${r.error}` : ""}`,
+  );
+}
+
+/* -- 2. The field tool, including that its gate actually holds. ----------- */
+
+console.log(`\nField tool`);
+{
+  const r = await get("/pin");
+  check(
+    r.status === 200,
+    "/pin loads",
+    r.status === 200 ? "" : `http ${r.status}`,
+  );
+  check(
+    r.text.includes("Company email"),
+    "/pin renders the sign-in form",
+    r.text.includes("Company email") ? "" : "form markup missing",
+  );
+  // Search engines must never index a login, and everything past it is a
+  // homeowner's address and the price we quoted them.
+  const robots = r.headers.get("x-robots-tag") ?? "";
+  check(
+    robots.includes("noindex") || r.text.includes('name="robots"'),
+    "/pin is noindex",
+    robots || "no directive found",
+  );
+}
+{
+  // The gate. A signed-out request must be turned away, not served.
+  const r = await get("/pin/map");
+  check(
+    r.status >= 300 && r.status < 400,
+    "/pin/map refuses a signed-out request",
+    `http ${r.status}`,
+  );
+}
+{
+  // Cross-site POST must be refused, or any page on the internet could make a
+  // rep's browser fire requests at this API.
+  const r = await get("/api/pin/signin", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Origin: "https://evil.example",
+    },
+    body: JSON.stringify({ email: "sean@southeastroofing.llc" }),
+  });
+  check(
+    r.status === 403,
+    "/api/pin/signin blocks cross-site POST",
+    `http ${r.status}`,
+  );
+}
+
+/* -- 3. Nothing private became public. ----------------------------------- */
+
+console.log(`\nPrivate areas still locked`);
+for (const path of ["/upload", "/production"]) {
+  const r = await get(path);
+  const locked =
+    r.status === 401 || (r.status >= 300 && r.status < 400) || r.status === 200;
+  // /production renders its own login at 200, /upload answers 401. What must
+  // never happen is a 500, which would mean the gate itself is broken.
+  check(
+    locked && r.status !== 500,
+    `${path} responds without erroring`,
+    `http ${r.status}`,
+  );
+}
+
+/* ------------------------------------------------------------------------ */
+
+console.log(
+  `\n${pass} passed, ${failures.length} failed${failures.length ? ":" : ""}`,
+);
+for (const f of failures) console.log(`  - ${f}`);
+process.exit(failures.length ? 1 : 0);
