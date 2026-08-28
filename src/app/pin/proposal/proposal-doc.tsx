@@ -1,5 +1,12 @@
 import { siteConfig } from "@/config/site";
-import { rateCard, MATERIALS, type MaterialKey } from "@/config/quote-rates";
+import {
+  FINANCING,
+  MATERIALS,
+  paymentFor,
+  type MaterialKey,
+} from "@/config/quote-rates";
+import { InlineSvg, logoSvg, qrSvg } from "./brand";
+import { InsurancePage } from "./insurance-page";
 import { summarizeStorms, longDate } from "@/lib/quotes/storms";
 import type { ProposalData } from "@/lib/quotes/save";
 
@@ -25,13 +32,20 @@ import type { ProposalData } from "@/lib/quotes/save";
  * somebody has actually been on the roof.
  */
 
-export function ProposalDoc({
+export async function ProposalDoc({
   data,
   aerialSrc,
 }: {
   data: ProposalData;
   aerialSrc: string;
 }) {
+  const logo = logoSvg();
+  // Points at the homeowner's own copy when there is one, so a scan from a
+  // mailed piece lands on their price rather than the front page.
+  const qrTarget = data.publicToken
+    ? `${siteConfig.url}/estimate/${data.publicToken}`
+    : `${siteConfig.url}/free-inspection`;
+  const qr = await qrSvg(qrTarget);
   const t = siteConfig.trustFacts;
   const storms = summarizeStorms(data.lat, data.lon);
   const firm = data.priceShown !== null;
@@ -52,13 +66,18 @@ export function ProposalDoc({
     <article className="proposal mx-auto w-full max-w-[8.5in] bg-white text-slate-900">
       {/* ---------- masthead ---------- */}
       <header className="flex items-start justify-between gap-6 border-b-[3px] border-[#123b63] px-8 pt-8 pb-5">
-        <div>
-          <h1 className="font-[family-name:var(--font-archivo)] text-2xl leading-none font-extrabold tracking-tight text-[#123b63]">
-            {siteConfig.legalName}
-          </h1>
-          <p className="mt-1.5 text-[11px] font-semibold tracking-[0.14em] text-slate-500 uppercase">
-            Roof Replacement Estimate
-          </p>
+        <div className="flex items-center gap-3.5">
+          {logo && (
+            <InlineSvg svg={logo} className="block h-12 w-12 shrink-0" />
+          )}
+          <div>
+            <h1 className="font-[family-name:var(--font-archivo)] text-2xl leading-none font-extrabold tracking-tight text-[#123b63]">
+              {siteConfig.legalName}
+            </h1>
+            <p className="mt-1.5 text-[11px] font-semibold tracking-[0.14em] text-slate-500 uppercase">
+              Roof Replacement Estimate
+            </p>
+          </div>
         </div>
         <div className="text-right text-[11px] leading-[1.7] text-slate-600">
           {siteConfig.address.streetAddress}
@@ -115,19 +134,40 @@ export function ProposalDoc({
             ? money(data.priceShown!)
             : `${money(data.priceLow)} to ${money(data.priceHigh)}`}
         </p>
-        <p className="mt-2.5 text-[13px] text-white/85">
-          Or about{" "}
-          <span className="font-bold text-white">
-            {money(data.monthlyLow)} a month
-          </span>{" "}
-          with financing. {t.financing}.
-        </p>
-        <p className="mt-1.5 text-[10px] leading-relaxed text-white/60">
-          Example payment only: {money(firm ? data.priceShown! : data.priceLow)}{" "}
-          over {rateCard.financing.months} months at{" "}
-          {(rateCard.financing.apr * 100).toFixed(2)}% APR. Financing is
-          provided by a third party and subject to credit approval. Your rate
-          and term may differ.
+        <div className="mt-4 flex items-end justify-between gap-6">
+          <div>
+            <p className="text-[10px] font-bold tracking-[0.14em] text-white/70 uppercase">
+              Or finance it. {t.financing}
+            </p>
+            <div className="mt-2 flex gap-6">
+              {FINANCING.termsMonths.map((months) => (
+                <div key={months}>
+                  <p className="font-[family-name:var(--font-archivo)] text-[21px] leading-none font-bold">
+                    {money(
+                      paymentFor(
+                        firm ? data.priceShown! : data.priceLow,
+                        months,
+                      ),
+                    )}
+                  </p>
+                  <p className="mt-0.5 text-[10px] text-white/70">
+                    per month, {months / 12} years
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+          {qr && (
+            <div className="shrink-0 rounded bg-white p-1.5">
+              <InlineSvg svg={qr} className="block h-[74px] w-[74px]" />
+            </div>
+          )}
+        </div>
+        <p className="mt-3 text-[9.5px] leading-relaxed text-white/60">
+          Example payments on {money(firm ? data.priceShown! : data.priceLow)}{" "}
+          at {(FINANCING.apr * 100).toFixed(2)}% APR through our partner{" "}
+          {FINANCING.partner}, subject to credit approval. Your rate and term
+          may differ. Scan the code to open this estimate on your phone.
         </p>
       </section>
 
@@ -285,6 +325,8 @@ export function ProposalDoc({
           {siteConfig.address.addressRegion} {siteConfig.address.postalCode}.
         </p>
       </section>
+
+      <InsurancePage />
     </article>
   );
 }

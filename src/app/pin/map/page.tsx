@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { currentUser } from "@/lib/quotes/auth";
 
 import { MapView } from "./map-view";
+import { PinNav } from "../pin-nav";
 
 export const dynamic = "force-dynamic";
 
@@ -26,26 +27,7 @@ export default async function MapPage() {
 
   return (
     <>
-      <header className="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-2.5">
-        <span className="font-[family-name:var(--font-archivo)] text-lg font-extrabold text-[#123b63]">
-          Pin
-        </span>
-        <div className="flex items-center gap-3">
-          {user.role === "admin" && (
-            <span className="rounded-full bg-[#123b63] px-2.5 py-0.5 text-[10px] font-bold tracking-wide text-white uppercase">
-              Admin
-            </span>
-          )}
-          <form action="/api/pin/signout" method="post">
-            <button
-              type="submit"
-              className="text-xs font-medium text-slate-500 underline underline-offset-4"
-            >
-              Sign out
-            </button>
-          </form>
-        </div>
-      </header>
+      <PinNav user={user} active="map" />
 
       {browserKey ? (
         <MapView apiKey={browserKey} />

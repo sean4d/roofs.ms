@@ -64,10 +64,18 @@ export const ADMIN_EMAILS: readonly string[] = [
 ];
 
 export const SESSION_COOKIE = "ser_quote_session";
-/** Thirty days. Long enough that a rep in the field is not re-authenticating
- *  at a door, short enough to be a real expiry. Revocation does not depend on
- *  it: deactivating a rep takes effect on their next request. */
-export const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 30;
+/**
+ * Six months. Effectively "trust this device".
+ *
+ * It was thirty days and the owner found re-authenticating annoying, which is
+ * fair: a rep who has to stop and find an email at a door will stop using the
+ * tool. A long session is normally a bad trade because it delays revocation,
+ * but not here. currentUser() re-reads the user row on EVERY request, so
+ * removing a rep locks them out on their next tap no matter how long their
+ * cookie had left. Expiry is a backstop for a lost phone, not the mechanism
+ * for taking access away, so it can afford to be generous.
+ */
+export const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 180;
 /** Sign-in links are short lived. Long enough to walk to a laptop. */
 const LOGIN_TOKEN_TTL_MS = 20 * 60 * 1000;
 
@@ -360,8 +368,23 @@ interface UserRow {
   name: string | null;
   role: Role;
   active: boolean;
-  created_at: string;
-  last_seen_at: string | null;
+  /** timestamptz arrives from the driver as a Date, never a string. */
+  created_at: string | Date;
+  last_seen_at: string | Date | null;
+}
+
+/**
+ * Coerce a database timestamp to an ISO string.
+ *
+ * Second time this exact bug has bitten: the Neon driver hydrates timestamptz
+ * into a Date while the row type claims string, so `.slice()` throws. It took
+ * out every proposal page once, and the team page here. A row type is an
+ * assertion about the outside world that TypeScript cannot check, so anything
+ * crossing that boundary gets coerced rather than trusted.
+ */
+function isoOrNull(v: string | Date | null): string | null {
+  if (v === null) return null;
+  return v instanceof Date ? v.toISOString() : String(v);
 }
 
 const toUser = (r: UserRow): User => ({
@@ -370,8 +393,8 @@ const toUser = (r: UserRow): User => ({
   name: r.name,
   role: r.role,
   active: r.active,
-  createdAt: r.created_at,
-  lastSeenAt: r.last_seen_at,
+  createdAt: isoOrNull(r.created_at) ?? "",
+  lastSeenAt: isoOrNull(r.last_seen_at),
 });
 
 /**

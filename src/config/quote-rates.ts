@@ -34,7 +34,7 @@ export interface RateCard {
   /** Waste actually observed between takeoff and install, for ordering only.
    *  Never applied to price: it is already inside perSquare. */
   observedWaste: number;
-  /** Illustrative monthly payment, matching the public calculator. */
+  /** Illustrative monthly payment. See FINANCING below. */
   financing: { months: number; apr: number };
 }
 
@@ -43,8 +43,41 @@ export const rateCard: RateCard = {
   perSquareLow: 457,
   perSquareHigh: 554,
   observedWaste: 0.08,
-  financing: { months: 120, apr: 0.0999 },
+  financing: { months: 120, apr: 0.1299 },
 };
+
+/**
+ * Financing, and why the rate is printed rather than hidden.
+ *
+ * GoodLeap is at 12.99% as of 2026-08-28 (owner-supplied). It was 9.99% here,
+ * which meant live estimates were quoting payments about 15% under what a
+ * homeowner would actually be offered. Update this the day the rate moves.
+ *
+ * THE APR HAS TO APPEAR ALONGSIDE THE PAYMENT. The owner asked whether it
+ * could be left off and only the monthly figures shown. It cannot, and the
+ * reason is the opposite of intuition: under Regulation Z, stating the amount
+ * of any payment is a "triggering term", and once one appears the advertisement
+ * must also disclose the terms of repayment and the annual percentage rate.
+ * Showing payments WITHOUT the rate is the exposed position, not the safe one.
+ *
+ * So there are exactly two compliant shapes, and this file implements the
+ * first: show the payments with the rate and the terms in the fine print, or
+ * show no payment figures at all and say only that financing is available.
+ * A middle version that quotes payments quietly is the one to avoid.
+ */
+export const FINANCING = {
+  partner: "GoodLeap",
+  apr: 0.1299,
+  /** The terms a homeowner is actually offered, shown as a small table. */
+  termsMonths: [60, 120, 180] as const,
+};
+
+/** Monthly payment on a simple amortising loan. */
+export function paymentFor(principal: number, months: number, apr = FINANCING.apr): number {
+  const r = apr / 12;
+  if (r === 0) return Math.round(principal / months);
+  return Math.round((principal * r) / (1 - Math.pow(1 + r, -months)));
+}
 
 /**
  * Material choices, as multipliers on the base rate.

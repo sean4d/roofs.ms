@@ -36,6 +36,15 @@
   .proposal header {
     break-inside: avoid;
   }
+  /* The insurance sheet is its own page, always. */
+  .proposal-page {
+    break-before: page;
+  }
+  /* The QR has to survive a photocopier and a phone camera in a hallway, so
+     it never scales below a size that still scans. */
+  .proposal svg {
+    shape-rendering: crispEdges;
+  }
   /* Colour is the whole point of the price block and the masthead rule. */
   * {
     -webkit-print-color-adjust: exact !important;
