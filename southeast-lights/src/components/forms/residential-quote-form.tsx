@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
+import { AddressFields } from "@/components/forms/address-fields";
 import { FileUpload } from "@/components/forms/file-upload";
 import {
   ChipGroup,
@@ -45,6 +46,9 @@ export function ResidentialQuoteForm() {
       email: String(form.get("email") ?? ""),
       phone: String(form.get("phone") ?? ""),
       address: String(form.get("address") ?? ""),
+      city: String(form.get("city") ?? ""),
+      state: String(form.get("state") ?? ""),
+      postal: String(form.get("postal") ?? ""),
       notes: String(form.get("notes") ?? ""),
       services,
       budget: budget || undefined,
@@ -142,25 +146,10 @@ export function ResidentialQuoteForm() {
         />
       </Field>
 
-      <Field
-        id="address"
-        label="Property address"
-        required
-        error={errors.address}
+      <AddressFields
+        errors={errors}
         hint="We measure from aerial imagery, so the address is how we price accurately without a site visit."
-      >
-        {/* The placeholder shows the shape the CRM can be filled from: with
-            the city comma-separated, the lead email can split city, state and
-            ZIP onto their own lines instead of leaving them for a human. */}
-        <TextInput
-          id="address"
-          name="address"
-          autoComplete="street-address"
-          placeholder="123 Main St, Hattiesburg, MS 39401"
-          required
-          error={errors.address}
-        />
-      </Field>
+      />
 
       <ChipGroup
         legend="What are you interested in?"

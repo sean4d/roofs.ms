@@ -59,7 +59,7 @@ export function TextInput({
   error,
   className,
   ...props
-}: React.InputHTMLAttributes<HTMLInputElement> & { error?: string }) {
+}: React.ComponentPropsWithRef<"input"> & { error?: string }) {
   return (
     <input
       {...props}

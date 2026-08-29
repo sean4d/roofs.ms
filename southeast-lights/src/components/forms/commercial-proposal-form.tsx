@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
+import { AddressFields } from "@/components/forms/address-fields";
 import { FileUpload } from "@/components/forms/file-upload";
 import {
   ChipGroup,
@@ -67,6 +68,9 @@ export function CommercialProposalForm() {
       email: String(form.get("email") ?? ""),
       phone: String(form.get("phone") ?? ""),
       address: String(form.get("address") ?? ""),
+      city: String(form.get("city") ?? ""),
+      state: String(form.get("state") ?? ""),
+      postal: String(form.get("postal") ?? ""),
       propertyType,
       communityName: String(form.get("communityName") ?? ""),
       buildingCount: String(form.get("buildingCount") ?? ""),
@@ -227,19 +231,7 @@ export function CommercialProposalForm() {
         />
       </Field>
 
-      <Field
-        id="address"
-        label="Property address"
-        required
-        error={errors.address}
-      >
-        <TextInput
-          id="address"
-          name="address"
-          required
-          error={errors.address}
-        />
-      </Field>
+      <AddressFields errors={errors} />
 
       <ChipGroup
         legend="Project type"
