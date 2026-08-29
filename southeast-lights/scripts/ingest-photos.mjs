@@ -143,9 +143,23 @@ const SLOTS = {
  * Tuned by eye against the softest file in the set. Heavier sharpening puts
  * halos around the bulbs and heavier saturation blows out their filaments,
  * both of which read as processed rather than sharp.
+ *
+ * MAX_EDGE is a ceiling on the long edge, not a target to reach for. A photo
+ * that arrives smaller than this stays the size it arrived: see the resize
+ * call for why.
+ *
+ * Two sharpening strengths, because sharpening is a fix for one specific
+ * thing, the softening that resampling causes, and not a way to make a soft
+ * photograph sharp. A downscaled image was genuinely smeared by the resample
+ * and takes the stronger pass. An image left at its own resolution was not
+ * touched, so it gets a light pass that counters the WebP encode and nothing
+ * more. Running the heavy numbers over an untouched phone photo is what
+ * produces the crunchy, haloed look of a blurry picture trying to pass for a
+ * sharp one.
  */
-const MIN_WIDTH = 2400;
-const SHARPEN = { sigma: 1.45, m1: 0.55, m2: 2.6 };
+const MAX_EDGE = 2400;
+const SHARPEN_RESAMPLED = { sigma: 1.45, m1: 0.55, m2: 2.6 };
+const SHARPEN_NATIVE = { sigma: 0.8, m1: 0.4, m2: 1.4 };
 
 const IN = "incoming";
 const OUT = "public/img";
@@ -244,23 +258,45 @@ for (const file of incoming) {
     return box ? pipeline.extract(box) : pipeline;
   };
 
-  const target = Math.max(SLOTS[slot].width, MIN_WIDTH);
+  const target = Math.max(SLOTS[slot].width, MAX_EDGE);
+
+  /*
+   * Long edge, not width: a portrait photograph resized to 2400 wide comes
+   * out 3500 tall, which is a lot of bytes for a phone hero. Orientation can
+   * swap width and height, and cropping happens before the resize, so the
+   * comparison is against the longer side of whatever prepared() will hand
+   * over.
+   */
+  const sourceEdge = box
+    ? Math.max(box.width, box.height)
+    : Math.max(meta.width ?? 0, meta.height ?? 0);
+  const willResample = sourceEdge > target;
 
   await prepared()
-    // Deliberately allowed to enlarge. These arrive as compressed phone
-    // photographs around 1200 to 1440px, which is thin for a full-bleed hero
-    // on a large monitor. Resampling up and then sharpening recovers apparent
-    // detail that the downscale and the JPEG pass smeared; it does not invent
-    // anything that was not photographed.
-    // Long edge, not width: a portrait photograph resized to 2400 wide comes
-    // out 3500 tall, which is a lot of bytes for a phone hero.
     .resize({
       width: target,
       height: target,
       fit: "inside",
       kernel: "lanczos3",
+      /*
+       * NEVER ENLARGE.
+       *
+       * This flag was missing, and it is the whole reason the owner photos
+       * look soft. A photograph that arrived at 1000px was resampled up to
+       * 2400 and then unsharp-masked, which cannot add detail that was never
+       * captured: it only enlarges the softness and rings the edges, so the
+       * result is a mushy 2400px file that a viewer reads as blurry. Every
+       * one of the first twenty-six ingests went through that, and halving
+       * any of them loses no detail at all, which is the measurable
+       * signature of it.
+       *
+       * A small file staying small is honest. next/image serves it at the
+       * size it really is, a browser downscales it into the layout, and
+       * downscaling is the one operation that makes a photo look sharper.
+       */
+      withoutEnlargement: true,
     })
-    .sharpen(SHARPEN)
+    .sharpen(willResample ? SHARPEN_RESAMPLED : SHARPEN_NATIVE)
     .modulate({ saturation: 1.1 })
     // Slight contrast lift. Night photographs of lit rooflines come back flat
     // because the camera exposes for the bulbs.
