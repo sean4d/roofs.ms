@@ -12,7 +12,9 @@ import { UPLOAD } from "./config";
  *
  * Set to activate:
  *   SUPABASE_URL              https://<project>.supabase.co
- *   SUPABASE_SERVICE_ROLE_KEY service_role key (SERVER ONLY, never NEXT_PUBLIC)
+ *   SUPABASE_SERVICE_ROLE_KEY a secret key (SERVER ONLY, never NEXT_PUBLIC).
+ *                             Either an sb_secret_... key or a legacy
+ *                             service_role JWT; both are accepted.
  *   SUPABASE_UPLOAD_BUCKET    optional, defaults to "lead-uploads"
  *
  * The bucket should be PRIVATE. Links in the lead email are signed for a
@@ -34,6 +36,24 @@ export interface StoredFile {
   url?: string;
   /** True when the file was accepted but could not be persisted. */
   pending?: boolean;
+}
+
+/**
+ * Credentials for the Storage API.
+ *
+ * Supabase has two key systems in play. The legacy `service_role` key is a
+ * JWT and the gateway accepts it as a bearer token alone. The current
+ * `sb_secret_...` keys are not JWTs and are presented in the `apikey`
+ * header. New projects are issued the second kind and shown the first under
+ * a "Legacy" tab, so which one lands in the environment depends on which tab
+ * the person was looking at.
+ *
+ * Sending both costs nothing and means either works. Guessing wrong would
+ * fail as a 401 on upload, which reads like a broken integration rather than
+ * a key in the wrong format.
+ */
+function authHeaders(key: string): Record<string, string> {
+  return { authorization: `Bearer ${key}`, apikey: key };
 }
 
 /** A year. The office opens these links weeks after the season, not minutes. */
@@ -70,7 +90,7 @@ async function linkFor(
       {
         method: "POST",
         headers: {
-          authorization: `Bearer ${key}`,
+          ...authHeaders(key),
           "content-type": "application/json",
         },
         body: JSON.stringify({ expiresIn: LINK_LIFETIME_SECONDS }),
@@ -126,7 +146,7 @@ export async function storeFiles(
         {
           method: "POST",
           headers: {
-            authorization: `Bearer ${key}`,
+            ...authHeaders(key),
             "content-type": file.type || "application/octet-stream",
             "x-upsert": "false",
           },
