@@ -238,17 +238,48 @@ const toProposal = (r: Row): ProposalData => ({
   mailNote: r.mail_note,
 });
 
-const SELECT = `
-  SELECT q.id, q.public_token, q.squares, q.pitch_degrees, q.planes,
+const CORE = `
          q.price_low, q.price_high, q.price_shown, q.monthly_low, q.monthly_high,
          q.created_at, q.imagery_date, q.material, q.stories, q.structures,
-         q.emailed_at, q.printed_at, q.mail_status, q.mail_note,
          c.address, c.name, c.email, c.phone, c.lat, c.lon,
          u.email AS rep_email
     FROM quotes q
     JOIN customers c ON c.id = q.customer_id
     JOIN users u ON u.id = q.created_by
 `;
+
+const SELECT = `
+  SELECT q.id, q.public_token, q.squares, q.pitch_degrees, q.planes,
+         q.emailed_at, q.printed_at, q.mail_status, q.mail_note,
+${CORE}`;
+
+/**
+ * The same query without the delivery columns.
+ *
+ * Migrations are applied by hand, so this deployment can be live before its
+ * columns exist. A proposal is a document a customer is waiting to read, and
+ * it must not 500 because the office has not pressed a button yet. So a
+ * missing column costs the delivery badges on the toolbar and nothing else.
+ * The health endpoint is what reports the schema is behind.
+ */
+const SELECT_LEGACY = `
+  SELECT q.id, q.public_token, q.squares, q.pitch_degrees, q.planes,
+         NULL::timestamptz AS emailed_at, NULL::timestamptz AS printed_at,
+         NULL::text AS mail_status, NULL::text AS mail_note,
+${CORE}`;
+
+/** Run the full query, and fall back to the pre-delivery one if it cannot. */
+async function selectProposal(
+  where: string,
+  params: unknown[],
+): Promise<Row[]> {
+  try {
+    return (await db().query(`${SELECT} ${where}`, params)) as Row[];
+  } catch (error) {
+    console.error("[quotes] proposal query degraded to legacy columns", error);
+    return (await db().query(`${SELECT_LEGACY} ${where}`, params)) as Row[];
+  }
+}
 
 /**
  * Load a proposal for a signed-in rep.
@@ -263,10 +294,10 @@ export async function getProposalForUser(
   user: User,
 ): Promise<ProposalData | null> {
   const scope = ownerScope(user);
-  const rows = (await db().query(
-    `${SELECT} WHERE q.id = $1::uuid AND ($2::uuid IS NULL OR c.owner_id = $2::uuid) LIMIT 1`,
+  const rows = await selectProposal(
+    `WHERE q.id = $1::uuid AND ($2::uuid IS NULL OR c.owner_id = $2::uuid) LIMIT 1`,
     [id, scope],
-  )) as Row[];
+  );
   return rows.length ? toProposal(rows[0]) : null;
 }
 
@@ -275,9 +306,8 @@ export async function getProposalByToken(
   token: string,
 ): Promise<ProposalData | null> {
   if (!token || token.length < 20) return null;
-  const rows = (await db().query(
-    `${SELECT} WHERE q.public_token = $1 LIMIT 1`,
-    [token],
-  )) as Row[];
+  const rows = await selectProposal(`WHERE q.public_token = $1 LIMIT 1`, [
+    token,
+  ]);
   return rows.length ? toProposal(rows[0]) : null;
 }

@@ -54,6 +54,33 @@ export interface PriorContact {
 const SAME_HOUSE_LAT = 0.0004;
 const SAME_HOUSE_LON = 0.0005;
 
+/**
+ * Run a query, or give up quietly.
+ *
+ * EVERY READ OF A COLUMN ADDED IN THIS FILE GOES THROUGH HERE, and the reason
+ * is a mistake worth not repeating. Migrations are applied by hand, so a
+ * deployment can be live for minutes or days before its columns exist. The
+ * first version of this module queried them directly, which meant the moment
+ * it shipped the settings page threw a 500 on the missing column, and the
+ * settings page is where the button that runs the migration lives. The tool
+ * had locked its own keys inside.
+ *
+ * So a missing column degrades to "nothing to show" rather than to a broken
+ * page. The health endpoint is what reports the schema is behind; this is what
+ * makes sure the site still works while it is.
+ */
+async function queryOrNull<T>(
+  sql: string,
+  params: unknown[],
+): Promise<T[] | null> {
+  try {
+    return (await db().query(sql, params)) as T[];
+  } catch (error) {
+    console.error("[delivery] query failed, degrading", error);
+    return null;
+  }
+}
+
 const iso = (v: string | Date | null): string | null =>
   v == null ? null : v instanceof Date ? v.toISOString() : String(v);
 
@@ -104,7 +131,7 @@ export async function priorContactNear(
   lat: number,
   lon: number,
 ): Promise<PriorContact | null> {
-  const rows = (await db().query(
+  const rows = (await queryOrNull(
     `SELECT q.id, c.address, u.email AS rep_email,
             q.emailed_at, q.emailed_to, q.printed_at,
             q.mail_status, q.mail_requested_at, q.mail_handled_at
@@ -124,9 +151,9 @@ export async function priorContactNear(
                ) DESC
       LIMIT 1`,
     [lat, lon, SAME_HOUSE_LAT, SAME_HOUSE_LON],
-  )) as PriorRow[];
+  )) as PriorRow[] | null;
 
-  if (!rows.length) return null;
+  if (!rows || !rows.length) return null;
   const r = rows[0];
 
   const emailedAt = iso(r.emailed_at);
@@ -269,7 +296,7 @@ interface RawMailRow {
  * history is read newest first.
  */
 export async function listMail(status: MailStatus): Promise<MailRow[]> {
-  const rows = (await db().query(
+  const rows = (await queryOrNull(
     `SELECT q.id, q.public_token, q.price_shown, q.price_low, q.squares,
             q.created_at, q.mail_requested_at, q.mail_handled_at,
             q.mail_status, q.mail_note, q.emailed_at,
@@ -284,9 +311,9 @@ export async function listMail(status: MailStatus): Promise<MailRow[]> {
                q.mail_handled_at DESC NULLS LAST
       LIMIT 300`,
     [status],
-  )) as RawMailRow[];
+  )) as RawMailRow[] | null;
 
-  return rows.map((r) => ({
+  return (rows ?? []).map((r) => ({
     quoteId: r.id,
     publicToken: r.public_token,
     address: r.address,
@@ -308,8 +335,9 @@ export async function listMail(status: MailStatus): Promise<MailRow[]> {
 
 /** How many are waiting, for the badge on the nav. */
 export async function mailQueueSize(): Promise<number> {
-  const rows = (await db()`
-    SELECT count(*)::int AS n FROM quotes WHERE mail_status = 'requested'
-  `) as Array<{ n: number }>;
-  return rows[0]?.n ?? 0;
+  const rows = await queryOrNull<{ n: number }>(
+    `SELECT count(*)::int AS n FROM quotes WHERE mail_status = 'requested'`,
+    [],
+  );
+  return rows?.[0]?.n ?? 0;
 }
