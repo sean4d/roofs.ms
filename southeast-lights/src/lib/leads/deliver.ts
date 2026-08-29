@@ -2,6 +2,7 @@ import "server-only";
 
 import { siteConfig } from "@/config/site";
 
+import { splitAddress, splitName } from "./crm-fields";
 import { sendToRoofr, type DeliveryResult } from "./roofr";
 import type { Lead } from "./types";
 
@@ -196,6 +197,27 @@ function plainTextBody(lead: Lead): string {
     add("Desired completion", lead.desiredCompletion);
     add("Electrical", lead.electrical);
     add("Site access", lead.siteAccess);
+  }
+
+  /*
+   * The name and address again, split into the separate fields Roofr marks
+   * required. An email parser cannot reliably find where a city ends inside a
+   * free-text line, so each part gets its own. Kept as one block with a stable
+   * label order so the parser template survives a lead that omits a field, and
+   * placed before NOTES so free text the customer wrote can never land inside
+   * it. Parts that could not be read confidently are absent, never guessed.
+   */
+  const name = splitName(lead.name);
+  const where = splitAddress(lead.address);
+  if (name.last || where.city || where.state || where.postal) {
+    lines.push("", "CRM FIELDS", "");
+    add("First name", name.first);
+    add("Last name", name.last);
+    add("Street", where.street);
+    add("City", where.city);
+    add("State", where.state);
+    add("ZIP", where.postal);
+    add("Country", "United States");
   }
 
   if (lead.notes) lines.push("", "NOTES", lead.notes);
