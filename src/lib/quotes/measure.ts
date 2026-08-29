@@ -162,6 +162,19 @@ interface GeocodeResult {
   formatted: string;
   /** ROOFTOP is the only one precise enough to pin a single house. */
   precision: string;
+  /**
+   * The address in pieces, because a CRM wants fields and not a sentence.
+   *
+   * Roofr requires city, state and postal code separately, and splitting
+   * "154 Peres Rd, Carriere, MS 39426, USA" on commas is the kind of code that
+   * works until somebody lives on a street with a comma in it. Google returns
+   * these components in the same response we were already paying for and we
+   * were throwing them away.
+   */
+  street: string;
+  city: string;
+  state: string;
+  postal: string;
 }
 
 const EARTH_FT = 20902231;
@@ -205,6 +218,11 @@ export async function geocode(address: string): Promise<GeocodeResult | null> {
     status: string;
     results?: Array<{
       formatted_address: string;
+      address_components?: Array<{
+        long_name: string;
+        short_name: string;
+        types: string[];
+      }>;
       geometry: {
         location: { lat: number; lng: number };
         location_type: string;
@@ -213,11 +231,31 @@ export async function geocode(address: string): Promise<GeocodeResult | null> {
   };
   if (data.status !== "OK" || !data.results?.length) return null;
   const top = data.results[0];
+
+  const parts = top.address_components ?? [];
+  const find = (type: string, short = false) => {
+    const hit = parts.find((c) => c.types.includes(type));
+    return hit ? (short ? hit.short_name : hit.long_name) : "";
+  };
+  const number = find("street_number");
+  const road = find("route");
+
   return {
     lat: top.geometry.location.lat,
     lon: top.geometry.location.lng,
     formatted: top.formatted_address,
     precision: top.geometry.location_type,
+    street: [number, road].filter(Boolean).join(" "),
+    // Rural south Mississippi is full of unincorporated places, where Google
+    // returns no "locality" at all. The town on the postal address is then
+    // whichever administrative level it did return, which is what a customer
+    // would write on an envelope anyway.
+    city:
+      find("locality") ||
+      find("sublocality") ||
+      find("administrative_area_level_3"),
+    state: find("administrative_area_level_1", true),
+    postal: find("postal_code"),
   };
 }
 

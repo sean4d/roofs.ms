@@ -27,6 +27,13 @@ export interface Lead {
   phone: string;
   email?: string;
   city?: string;
+  /**
+   * Two-letter state and postcode, kept apart from `city` because Roofr
+   * requires all three as separate fields and will not split a string for us.
+   * Forms that only ask for "city or ZIP" still fill `city` alone.
+   */
+  state?: string;
+  postal?: string;
   address?: string;
   service?: string;
   /** Customer indicated storm damage / insurance claim involvement */
@@ -138,36 +145,74 @@ async function sendEmail(lead: Lead): Promise<boolean> {
   // context (service, storm flag, message) so a parser can map it in one shot.
   const details = [
     `Website ${lead.source} lead`,
-    lead.service ? `, ${lead.service}` : null,
+    lead.service,
     lead.storm ? "(storm/insurance)" : null,
-    lead.message ? `, ${lead.message.replace(/\s+/g, " ").trim()}` : null,
+    lead.message?.replace(/\s+/g, " ").trim(),
   ]
     .filter(Boolean)
-    .join(" ");
+    // Joined here rather than by pasting a comma onto the front of each piece,
+    // which produced "Website instant-estimate lead , Website Instant Estimate"
+    // with the space on the wrong side of the comma.
+    .join(", ");
+
+  /**
+   * EVERY LINE, EVERY TIME, IN THE SAME ORDER.
+   *
+   * This body used to drop any line whose value was empty, which reads better
+   * to a human and is exactly wrong for the machine on the other end. Zapier's
+   * Email Parser learns positions from one training email: teach it on a lead
+   * that had an email address and a city, and the next lead without one shifts
+   * every field below it up a line. Roofr then gets the phone number in the
+   * postcode box, or the step fails outright.
+   *
+   * That is precisely what the owner hit on 2026-08-29. An instant estimate
+   * carried no City/ZIP line and Zapier warned that city and postcode were
+   * missing. A free inspection submitted without an email address dropped the
+   * Email line and Zapier warned the email was missing. Adding the email back
+   * changed the shape a third time and no Roofr job was created at all. Three
+   * different symptoms, one cause: the shape of this block was not stable.
+   *
+   * So a field with no value prints as an empty string after its label. The
+   * block is the same height and the same order for every lead on the site,
+   * which is the only thing that makes positional parsing safe.
+   *
+   * A consequence worth knowing: CHANGING THIS LIST BREAKS THE PARSER
+   * TEMPLATE. Add a field in the middle and every field below it moves. Add
+   * new ones at the end, and retrain the template when you do.
+   */
+  const field = (label: string, value: unknown) =>
+    `${label}: ${value === undefined || value === null || value === false ? "" : String(value)}`;
 
   const lines = [
-    `Source: ${lead.source}${lead.page ? ` (${lead.page})` : ""}`,
-    `Details: ${details}`,
-    `Name: ${lead.name}`,
-    `First name: ${firstName}`,
-    `Last name: ${lastName}`,
-    `Phone: ${lead.phone}`,
-    lead.email && `Email: ${lead.email}`,
-    lead.company && `Company: ${lead.company}`,
-    lead.role && `Role: ${lead.role}`,
-    lead.propertyType && `Property type: ${lead.propertyType}`,
-    lead.city && `City/ZIP: ${lead.city}`,
-    lead.address && `Address: ${lead.address}`,
-    lead.service && `Service: ${lead.service}`,
-    lead.preference && `Estimate preference: ${lead.preference}`,
-    lead.roofType && `Roof type: ${lead.roofType}`,
-    lead.squareFootage && `Approx. square footage: ${lead.squareFootage}`,
-    lead.timeline && `Timeline: ${lead.timeline}`,
-    lead.storm !== undefined &&
-      `Storm damage / insurance: ${lead.storm ? "YES" : "no"}`,
-    lead.preferredTime && `Preferred time: ${lead.preferredTime}`,
-    lead.message && `\nMessage:\n${lead.message}`,
-  ].filter(Boolean);
+    field("Source", `${lead.source}${lead.page ? ` (${lead.page})` : ""}`),
+    field("Details", details),
+    field("Name", lead.name),
+    field("First name", firstName),
+    field("Last name", lastName),
+    field("Phone", lead.phone),
+    field("Email", lead.email),
+    field("Company", lead.company),
+    field("Role", lead.role),
+    field("Property type", lead.propertyType),
+    field("City", lead.city),
+    field("State", lead.state),
+    field("ZIP", lead.postal),
+    field("Address", lead.address),
+    field("Service", lead.service),
+    field("Estimate preference", lead.preference),
+    field("Roof type", lead.roofType),
+    field("Approx. square footage", lead.squareFootage),
+    field("Timeline", lead.timeline),
+    field(
+      "Storm damage / insurance",
+      lead.storm === undefined ? "" : lead.storm ? "YES" : "no",
+    ),
+    field("Preferred time", lead.preferredTime),
+    field("Country", "US"),
+    // Last on purpose. A message is the only free-text field and the only one
+    // that can run to several lines, so anything after it would be unfindable.
+    field("Message", (lead.message ?? "").replace(/\s+/g, " ").trim()),
+  ];
 
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",

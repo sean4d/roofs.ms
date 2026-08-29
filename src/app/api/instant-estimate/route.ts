@@ -172,6 +172,13 @@ export async function POST(request: Request) {
         email: input.email,
         phone: input.phone,
         address: point.formatted,
+        // Roofr requires these three separately and will not split an address
+        // string. They come straight out of the geocode we already ran, so the
+        // CRM gets the components Google resolved rather than a guess made by
+        // cutting the formatted address on commas.
+        city: point.city || undefined,
+        state: point.state || undefined,
+        postal: point.postal || undefined,
         service: measured
           ? `Website Instant Estimate $${price!.toLocaleString()}`
           : "Website Instant Estimate (could not measure, needs a visit)",
