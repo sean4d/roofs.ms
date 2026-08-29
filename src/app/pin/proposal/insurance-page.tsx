@@ -17,7 +17,7 @@ import { siteConfig } from "@/config/site";
  */
 export function InsurancePage() {
   return (
-    <section className="proposal-page break-before-page px-8 pt-6 pb-4">
+    <section className="proposal-page break-before-page px-5 pt-6 pb-4 sm:px-8 print:px-8">
       <header className="border-b-[3px] border-[#123b63] pb-3">
         <h2 className="font-[family-name:var(--font-archivo)] text-[19px] font-extrabold tracking-tight text-[#123b63]">
           If this is storm damage, here is how a claim works
@@ -47,7 +47,7 @@ export function InsurancePage() {
       <h3 className="mt-4 border-b border-slate-200 pb-1.5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
         The claim, step by step
       </h3>
-      <ol className="mt-2.5 grid grid-cols-2 gap-x-8 gap-y-2">
+      <ol className="mt-2.5 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2 print:grid-cols-2">
         {STEPS.map((s, i) => (
           <li key={s.title} className="flex gap-2.5">
             <span className="mt-[1px] flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-[#123b63] text-[9px] font-bold text-white">
@@ -63,7 +63,7 @@ export function InsurancePage() {
       <h3 className="mt-4 border-b border-slate-200 pb-1.5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
         The words on your paperwork
       </h3>
-      <dl className="mt-2.5 grid grid-cols-2 gap-x-8 gap-y-1.5 text-[10.5px] leading-snug">
+      <dl className="mt-2.5 grid grid-cols-1 gap-x-8 gap-y-1.5 text-[10.5px] leading-snug sm:grid-cols-2 print:grid-cols-2">
         {TERMS.map((t) => (
           <div key={t.term}>
             <dt className="font-bold text-[#123b63]">{t.term}</dt>
@@ -75,7 +75,7 @@ export function InsurancePage() {
       <h3 className="mt-4 border-b border-slate-200 pb-1.5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
         Have these ready and the whole thing moves faster
       </h3>
-      <ul className="mt-2.5 grid grid-cols-3 gap-x-6 gap-y-0.5 text-[10.5px] leading-snug text-slate-700">
+      <ul className="mt-2.5 grid grid-cols-1 gap-x-6 gap-y-0.5 text-[10.5px] leading-snug text-slate-700 sm:grid-cols-3 print:grid-cols-3">
         {CHECKLIST.map((c) => (
           <li key={c} className="flex gap-2">
             <span aria-hidden className="text-[#123b63]">

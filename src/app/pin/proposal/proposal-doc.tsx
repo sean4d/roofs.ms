@@ -31,6 +31,17 @@ import type { ProposalData } from "@/lib/quotes/save";
  * as everything else. A number a homeowner cannot rely on is worse than no
  * number, and the assumptions are what make it one we can stand behind after
  * somebody has actually been on the roof.
+ *
+ * LAYOUT RULE, AND IT MATTERS. This was written as a sheet of paper and then
+ * read on a phone, where 8.5 inches of fixed columns became a document wider
+ * than the screen: the address ran off the right edge and the pitch sat on top
+ * of the storey count. So the base classes here are the PHONE layout, and both
+ * `sm:` and `print:` restore the paper one.
+ *
+ * Both, every time, with the same values. `sm:` alone would be wrong because a
+ * rep printing from an iPhone is in print media, and `print:` alone would be
+ * wrong on a laptop screen. Giving the pair identical values also means it
+ * cannot matter which of them Tailwind emits last.
  */
 
 export async function ProposalDoc({
@@ -86,13 +97,13 @@ export async function ProposalDoc({
   return (
     <article className="proposal mx-auto w-full max-w-[8.5in] bg-white text-slate-900">
       {/* ---------- masthead ---------- */}
-      <header className="flex items-start justify-between gap-6 border-b-[3px] border-[#123b63] px-8 pt-8 pb-5">
+      <header className="flex flex-col gap-3 border-b-[3px] border-[#123b63] px-5 pt-6 pb-4 sm:flex-row sm:items-start sm:justify-between sm:gap-6 sm:px-8 sm:pt-8 sm:pb-5 print:flex-row print:items-start print:justify-between print:gap-6 print:px-8 print:pt-8 print:pb-5">
         <div className="flex items-center gap-3.5">
           {logo && (
             <InlineSvg svg={logo} className="block h-12 w-12 shrink-0" />
           )}
           <div>
-            <h1 className="font-[family-name:var(--font-archivo)] text-2xl leading-none font-extrabold tracking-tight text-[#123b63]">
+            <h1 className="font-[family-name:var(--font-archivo)] text-xl leading-tight font-extrabold tracking-tight text-[#123b63] sm:text-2xl sm:leading-none print:text-2xl print:leading-none">
               {profile.legalName}
             </h1>
             <p className="mt-1.5 text-[11px] font-semibold tracking-[0.14em] text-slate-500 uppercase">
@@ -100,7 +111,7 @@ export async function ProposalDoc({
             </p>
           </div>
         </div>
-        <div className="text-right text-[11px] leading-[1.7] text-slate-600">
+        <div className="text-[11px] leading-[1.7] text-slate-600 sm:text-right print:text-right">
           {profile.street}
           <br />
           {profile.city}, {profile.state} {profile.postal}
@@ -116,8 +127,8 @@ export async function ProposalDoc({
       </header>
 
       {/* ---------- who this is for ---------- */}
-      <section className="grid grid-cols-2 gap-6 px-8 pt-6">
-        <div>
+      <section className="grid grid-cols-2 gap-4 px-5 pt-5 sm:gap-6 sm:px-8 sm:pt-6 print:gap-6 print:px-8 print:pt-6">
+        <div className="min-w-0">
           <p className="text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
             Prepared for
           </p>
@@ -128,7 +139,7 @@ export async function ProposalDoc({
             {data.address}
           </p>
         </div>
-        <div className="text-right">
+        <div className="min-w-0 text-right">
           <p className="text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
             Date
           </p>
@@ -145,21 +156,21 @@ export async function ProposalDoc({
       </section>
 
       {/* ---------- the number ---------- */}
-      <section className="mx-8 mt-6 rounded-lg bg-[#123b63] px-7 py-6 text-white">
+      <section className="mx-5 mt-5 rounded-lg bg-[#123b63] px-5 py-5 text-white sm:mx-8 sm:mt-6 sm:px-7 sm:py-6 print:mx-8 print:mt-6 print:px-7 print:py-6">
         <p className="text-[10px] font-bold tracking-[0.14em] text-white/70 uppercase">
           Estimated investment
         </p>
-        <p className="mt-1 font-[family-name:var(--font-archivo)] text-[42px] leading-none font-extrabold">
+        <p className="mt-1 font-[family-name:var(--font-archivo)] text-[34px] leading-none font-extrabold sm:text-[42px] print:text-[42px]">
           {firm
             ? money(data.priceShown!)
             : `${money(data.priceLow)} to ${money(data.priceHigh)}`}
         </p>
-        <div className="mt-4 flex items-end justify-between gap-6">
-          <div>
+        <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between sm:gap-6 print:flex-row print:items-end print:justify-between print:gap-6">
+          <div className="min-w-0">
             <p className="text-[10px] font-bold tracking-[0.14em] text-white/70 uppercase">
               Or finance it. {profile.financingLine}
             </p>
-            <div className="mt-2 flex gap-6">
+            <div className="mt-2 flex flex-wrap gap-x-6 gap-y-3">
               {FINANCING.termsMonths.map((months) => (
                 <div key={months}>
                   <p className="font-[family-name:var(--font-archivo)] text-[21px] leading-none font-bold">
@@ -178,7 +189,7 @@ export async function ProposalDoc({
             </div>
           </div>
           {qr && (
-            <div className="shrink-0 rounded bg-white p-1.5">
+            <div className="w-fit shrink-0 self-start rounded bg-white p-1.5">
               <InlineSvg svg={qr} className="block h-[74px] w-[74px]" />
             </div>
           )}
@@ -193,13 +204,13 @@ export async function ProposalDoc({
 
       {/* ---------- their roof ---------- */}
       <section
-        className={`mt-7 px-8 ${parts && parts.length > 3 ? "allow-break" : ""}`}
+        className={`mt-6 px-5 sm:mt-7 sm:px-8 print:mt-7 print:px-8 ${parts && parts.length > 3 ? "allow-break" : ""}`}
       >
         <h2 className="border-b border-slate-200 pb-1.5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
           {parts ? "Your roofs, measured" : "Your roof, measured"}
         </h2>
-        <div className="mt-4 flex gap-6">
-          <div className="grid flex-1 grid-cols-3 gap-y-4 self-start">
+        <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:gap-6 print:flex-row print:gap-6">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-4 sm:flex-1 sm:grid-cols-3 sm:self-start print:flex-1 print:grid-cols-3 print:self-start">
             <Fact
               label={parts ? "Total roof area" : "Roof area"}
               value={`${data.squares} squares`}
@@ -223,7 +234,7 @@ export async function ProposalDoc({
           <img
             src={aerialSrc}
             alt="Aerial view of the roof"
-            className="h-[150px] w-[150px] shrink-0 rounded border border-slate-300 object-cover"
+            className="h-[180px] w-full rounded border border-slate-300 object-cover sm:h-[150px] sm:w-[150px] sm:shrink-0 print:h-[150px] print:w-[150px] print:shrink-0"
           />
         </div>
         {/* One line per building, priced on its own terms. Every figure here
@@ -231,46 +242,48 @@ export async function ProposalDoc({
             total exactly, because a customer checks that before anything
             else on the page. */}
         {parts && (
-          <table className="mt-4 w-full border-collapse text-[12px]">
-            <thead>
-              <tr className="border-b border-slate-300 text-left text-[10px] font-bold tracking-[0.12em] text-slate-500 uppercase">
-                <th className="pb-1.5 font-bold">Structure</th>
-                <th className="pb-1.5 text-right font-bold">Squares</th>
-                <th className="pb-1.5 pl-4 font-bold">Roof system</th>
-                <th className="pb-1.5 text-right font-bold">Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              {parts.map((p, i) => (
-                <tr
-                  key={`${p.lat}${p.lon}${i}`}
-                  className="border-b border-slate-200"
-                >
-                  <td className="py-1.5 font-semibold">{p.label}</td>
-                  <td className="py-1.5 text-right tabular-nums">
-                    {p.squares.toFixed(1)}
+          <div className="-mx-5 mt-4 overflow-x-auto px-5 sm:mx-0 sm:overflow-visible sm:px-0 print:mx-0 print:overflow-visible print:px-0">
+            <table className="w-full min-w-[19rem] border-collapse text-[12px]">
+              <thead>
+                <tr className="border-b border-slate-300 text-left text-[10px] font-bold tracking-[0.12em] text-slate-500 uppercase">
+                  <th className="pb-1.5 font-bold">Structure</th>
+                  <th className="pb-1.5 text-right font-bold">Squares</th>
+                  <th className="pb-1.5 pl-4 font-bold">Roof system</th>
+                  <th className="pb-1.5 text-right font-bold">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {parts.map((p, i) => (
+                  <tr
+                    key={`${p.lat}${p.lon}${i}`}
+                    className="border-b border-slate-200"
+                  >
+                    <td className="py-1.5 font-semibold">{p.label}</td>
+                    <td className="py-1.5 text-right tabular-nums">
+                      {p.squares.toFixed(1)}
+                    </td>
+                    <td className="py-1.5 pl-4 text-slate-600">
+                      {p.materialLabel}
+                      {p.stories === 2 ? ", 2 story" : ""}
+                    </td>
+                    <td className="py-1.5 text-right tabular-nums">
+                      {money(p.price)}
+                    </td>
+                  </tr>
+                ))}
+                <tr>
+                  <td className="pt-2 font-bold text-[#123b63]">Total</td>
+                  <td className="pt-2 text-right font-bold text-[#123b63] tabular-nums">
+                    {data.squares}
                   </td>
-                  <td className="py-1.5 pl-4 text-slate-600">
-                    {p.materialLabel}
-                    {p.stories === 2 ? ", 2 story" : ""}
-                  </td>
-                  <td className="py-1.5 text-right tabular-nums">
-                    {money(p.price)}
+                  <td />
+                  <td className="pt-2 text-right font-bold text-[#123b63] tabular-nums">
+                    {money(firm ? data.priceShown! : data.priceLow)}
                   </td>
                 </tr>
-              ))}
-              <tr>
-                <td className="pt-2 font-bold text-[#123b63]">Total</td>
-                <td className="pt-2 text-right font-bold tabular-nums text-[#123b63]">
-                  {data.squares}
-                </td>
-                <td />
-                <td className="pt-2 text-right font-bold tabular-nums text-[#123b63]">
-                  {money(firm ? data.priceShown! : data.priceLow)}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+          </div>
         )}
 
         <p className="mt-4 text-[11px] leading-relaxed text-slate-600">
@@ -283,11 +296,11 @@ export async function ProposalDoc({
       </section>
 
       {/* ---------- what the price assumes ---------- */}
-      <section className="mt-6 px-8">
+      <section className="mt-6 px-5 sm:px-8 print:px-8">
         <h2 className="border-b border-slate-200 pb-1.5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
           What this price includes, and what it assumes
         </h2>
-        <div className="mt-3 grid grid-cols-2 gap-x-8 gap-y-1.5 text-[12px] leading-relaxed">
+        <div className="mt-3 grid grid-cols-1 gap-x-8 gap-y-1.5 text-[12px] leading-relaxed sm:grid-cols-2 print:grid-cols-2">
           <ul className="space-y-1.5">
             <Line>Tear off the existing roof and haul it away</Line>
             <Line>{materialLabel}, installed to manufacturer spec</Line>
@@ -296,7 +309,7 @@ export async function ProposalDoc({
             <Line>Magnetic sweep of the property when we finish</Line>
             <Line>Permits and final inspection</Line>
           </ul>
-          <ul className="space-y-1.5 text-slate-600">
+          <ul className="mt-1.5 space-y-1.5 text-slate-600 sm:mt-0 print:mt-0">
             <Assumes>One existing layer of shingles</Assumes>
             <Assumes>Decking sound and not needing replacement</Assumes>
             <Assumes>Normal access for a truck and dumpster</Assumes>
@@ -318,7 +331,7 @@ export async function ProposalDoc({
 
       {/* ---------- storm history, only when there is something true ---------- */}
       {profile.showStorms && storms.sentence && (
-        <section className="mt-6 px-8">
+        <section className="mt-6 px-5 sm:px-8 print:px-8">
           <h2 className="border-b border-slate-200 pb-1.5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
             Weather on record at this address
           </h2>
@@ -349,11 +362,11 @@ export async function ProposalDoc({
       )}
 
       {/* ---------- why us ---------- */}
-      <section className="mt-6 px-8">
+      <section className="mt-6 px-5 sm:px-8 print:px-8">
         <h2 className="border-b border-slate-200 pb-1.5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
           Who you would be hiring
         </h2>
-        <div className="mt-3 grid grid-cols-2 gap-x-8 gap-y-2 text-[12px]">
+        <div className="mt-3 grid grid-cols-1 gap-x-8 gap-y-2 text-[12px] sm:grid-cols-2 print:grid-cols-2">
           {profile.credentials.map((c) => (
             <Credential key={c}>{c}</Credential>
           ))}
@@ -367,9 +380,9 @@ export async function ProposalDoc({
       </section>
 
       {/* ---------- next step ---------- */}
-      <section className="mt-7 border-t-2 border-[#123b63] px-8 pt-5 pb-8">
-        <div className="flex items-end justify-between gap-6">
-          <div>
+      <section className="mt-7 border-t-2 border-[#123b63] px-5 pt-5 pb-8 sm:px-8 print:px-8">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between sm:gap-6 print:flex-row print:items-end print:justify-between print:gap-6">
+          <div className="min-w-0">
             <p className="font-[family-name:var(--font-archivo)] text-[17px] font-extrabold text-[#123b63]">
               {profile.headline}
             </p>
@@ -377,7 +390,7 @@ export async function ProposalDoc({
               {profile.closingLine}
             </p>
           </div>
-          <div className="text-right">
+          <div className="shrink-0 sm:text-right print:text-right">
             <p className="font-[family-name:var(--font-archivo)] text-[21px] leading-none font-extrabold text-[#123b63]">
               {profile.phone}
             </p>
