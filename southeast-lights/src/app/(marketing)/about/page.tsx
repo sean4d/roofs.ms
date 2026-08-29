@@ -29,7 +29,7 @@ export default function AboutPage() {
         eyebrow="About"
         title="A contracting company that happens to hang lights."
         intro="Southeast Lights is the lighting division of Southeast Roofing LLC. Same owner, same license, same insurance, same crews."
-        image={IMAGES.crewBoomLift}
+        image={IMAGES.installerRoof}
         quoteLocation="about"
       />
       <Breadcrumbs trail={trail} />

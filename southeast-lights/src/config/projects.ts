@@ -415,32 +415,8 @@ export const PROJECTS: Project[] = [
     isDemo: false,
   },
   {
-    slug: "community-entrance-monument",
-    title: "Community Entrance and Boulevard",
-    city: "Hattiesburg",
-    propertyType: "HOA",
-    serviceSlugs: ["hoa-community-lighting", "tree-wrapping"],
-    tags: ["holiday", "trees", "warm-white"],
-    summary:
-      "Entrance monument, landscaped beds and boulevard trees designed as one display.",
-    scope:
-      "Both sides of the entrance monument outlined in warm white with the landscaped beds lit, and the boulevard trees wrapped down the median so the display reads continuously as residents turn in.",
-    highlights: [
-      "Matched treatment on both entry walls",
-      "Boulevard trees wrapped down the median",
-      "Circuits and timers planned around existing entrance power",
-    ],
-    hero: IMAGES.hoaEntrance,
-    gallery: [
-      { image: IMAGES.hoaEntrance, caption: "The entrance from the approach" },
-      { image: IMAGES.treeShrub, caption: "Bed and ornamental tree lighting" },
-    ],
-    isDemo: true,
-    year: 2025,
-  },
-  {
-    slug: "church-campus-christmas",
-    title: "Church Campus Christmas Display",
+    slug: "church-christmas-display",
+    title: "Church Christmas Display",
     city: "Laurel",
     propertyType: "Church",
     serviceSlugs: ["commercial-holiday-lighting", "tree-wrapping"],
@@ -456,88 +432,7 @@ export const PROJECTS: Project[] = [
     ],
     hero: IMAGES.church,
     gallery: [
-      { image: IMAGES.church, caption: "The campus from the road" },
-      {
-        image: IMAGES.crewBoomLift,
-        caption: "Lift work along the high roofline",
-      },
-    ],
-    isDemo: true,
-    year: 2025,
-  },
-  {
-    slug: "coast-hospitality-entrance",
-    title: "Resort Entrance and Palms",
-    city: "Biloxi",
-    propertyType: "Hospitality",
-    serviceSlugs: ["commercial-holiday-lighting"],
-    tags: ["holiday", "rooflines", "trees", "warm-white"],
-    summary:
-      "Porte-cochere, facade and palm trunks lit for a coastal hospitality property.",
-    scope:
-      "Porte-cochere and facade rooflines outlined in warm white with palm trunks wrapped along the arrival drive. Installed overnight to avoid check-in, with scheduled night inspections through the season.",
-    highlights: [
-      "Installed overnight around guest arrival peaks",
-      "Coastal-rated fixtures and fixings for salt air",
-      "Scheduled night inspections every two weeks",
-    ],
-    hero: IMAGES.hotelResort,
-    gallery: [
-      { image: IMAGES.hotelResort, caption: "The arrival drive after dark" },
-      {
-        image: IMAGES.mardiGras,
-        caption: "The same property in Mardi Gras colors",
-      },
-    ],
-    isDemo: true,
-    year: 2025,
-  },
-  {
-    slug: "downtown-district-lighting",
-    title: "Downtown District Holiday Lighting",
-    city: "Columbia",
-    propertyType: "Municipal",
-    serviceSlugs: ["commercial-holiday-lighting"],
-    tags: ["holiday", "rooflines", "warm-white"],
-    summary:
-      "Historic storefronts, street trees and lamp posts across a downtown block.",
-    scope:
-      "Storefront rooflines outlined along a downtown block, street trees wrapped and lamp posts fitted with lit wreaths, coordinated with public works for lane access.",
-    highlights: [
-      "Coordinated with public works for right-of-way access",
-      "Consistent bulb temperature across multiple building owners",
-      "Serviced through the season from a single point of contact",
-    ],
-    hero: IMAGES.downtownMunicipal,
-    gallery: [
-      { image: IMAGES.downtownMunicipal, caption: "The block after dark" },
-    ],
-    isDemo: true,
-    year: 2025,
-  },
-  {
-    slug: "permanent-lighting-modern-home",
-    title: "Permanent Architectural Lighting",
-    city: "Hattiesburg",
-    propertyType: "Residential",
-    serviceSlugs: ["permanent-architectural-lighting"],
-    tags: ["permanent", "rooflines", "warm-white", "color"],
-    summary:
-      "Permanent LED track installed into the trim: warm white nightly, color on demand.",
-    scope:
-      "Permanent LED channel installed into the fascia and trim with no penetration of the roof surface. Warm white for everyday use, with full color available for holidays and game days from the app.",
-    highlights: [
-      "Channel mounted to trim and fascia, not through the roof surface",
-      "Color-matched to the existing trim, unobtrusive by day",
-      "App-controlled scenes for holidays and game days",
-    ],
-    hero: IMAGES.permanentHero,
-    gallery: [
-      { image: IMAGES.permanentHero, caption: "Everyday warm white" },
-      {
-        image: IMAGES.permanentColor,
-        caption: "The same system in holiday color",
-      },
+      { image: IMAGES.church, caption: "The building from the road" },
     ],
     isDemo: true,
     year: 2025,

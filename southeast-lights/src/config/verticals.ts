@@ -31,7 +31,7 @@ export const VERTICALS: Vertical[] = [
       "Holiday lighting for HOAs, master-planned communities and neighborhood entrances across Mississippi. Board-ready proposals, insured crews, consistent design year over year.",
     summary:
       "We light neighborhood entrances, boulevards and common areas for HOAs and master-planned communities, with proposals a board can actually vote on and a display that looks identical next year.",
-    image: IMAGES.hoaEntrance,
+    image: IMAGES.projectHattiesburgPalms,
     priority: 1,
     concerns: [
       {
@@ -261,7 +261,7 @@ export const VERTICALS: Vertical[] = [
       "Holiday lighting for apartment communities, multifamily developments and property managers across Mississippi. Entrances, clubhouses and amenity areas.",
     summary:
       "We light apartment community entrances, clubhouses and amenity areas so a property looks leased-up and cared for through leasing season.",
-    image: IMAGES.apartments,
+    image: IMAGES.projectPoplarvilleOutbuildings,
     priority: 9,
     concerns: [
       {
@@ -286,7 +286,7 @@ export const VERTICALS: Vertical[] = [
       "Christmas and architectural lighting for office buildings, corporate campuses and commercial properties in Mississippi. Insured, lift-equipped crews.",
     summary:
       "We light office buildings and corporate properties where the brief is restraint: clean lines, one color temperature and nothing that reads as novelty.",
-    image: IMAGES.officeBuilding,
+    image: IMAGES.projectPearsonsBlock,
     priority: 10,
     concerns: [
       {
