@@ -93,7 +93,11 @@ export async function POST(request: Request) {
               sentence: storms.sentence,
               headline: storms.headline,
               counts: storms.counts,
-              recent: storms.events.filter((e) => e.damaging).slice(0, 3),
+              // Same selection the proposal prints, so a rep reading the
+              // result sheet sees what the customer will see. Slicing the
+              // nearest three here had the same fault: wind is five times more
+              // common than hail, so the hail never showed up.
+              recent: storms.supporting,
               years: storms.years,
             }
           : null,

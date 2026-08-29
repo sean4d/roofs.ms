@@ -116,7 +116,9 @@ export async function ProposalDoc({
               className="block h-12 w-auto max-w-[2.4in] shrink-0 object-contain"
             />
           ) : (
-            logo && <InlineSvg svg={logo} className="block h-12 w-12 shrink-0" />
+            logo && (
+              <InlineSvg svg={logo} className="block h-12 w-12 shrink-0" />
+            )
           )}
           <div>
             <h1 className="font-[family-name:var(--font-archivo)] text-xl leading-tight font-extrabold tracking-tight text-[#123b63] sm:text-2xl sm:leading-none print:text-2xl print:leading-none">
@@ -352,20 +354,21 @@ export async function ProposalDoc({
             Weather on record at this address
           </h2>
           <p className="mt-3 text-[12px] leading-relaxed">{storms.sentence}</p>
-          {storms.events.filter((e) => e.damaging).length > 1 && (
+          {/* Chosen in summarizeStorms rather than sliced here. Picking the
+              three nearest meant printing three wind reports on an address
+              where hail had fallen, because wind outnumbers hail five to one
+              in this territory. */}
+          {storms.supporting.length > 0 && (
             <ul className="mt-2 space-y-0.5">
-              {storms.events
-                .filter((e) => e.damaging)
-                .slice(1, 4)
-                .map((e) => (
-                  <li
-                    key={`${e.date}${e.label}`}
-                    className="text-[11px] text-slate-600"
-                  >
-                    {longDate(e.date)} &middot; {e.label} &middot;{" "}
-                    {e.distanceMi} miles away
-                  </li>
-                ))}
+              {storms.supporting.map((e) => (
+                <li
+                  key={`${e.date}${e.label}${e.distanceMi}`}
+                  className="text-[11px] text-slate-600"
+                >
+                  {longDate(e.date)} &middot; {e.label} &middot; {e.distanceMi}{" "}
+                  miles away
+                </li>
+              ))}
             </ul>
           )}
           <p className="mt-2.5 text-[10px] leading-relaxed text-slate-500">

@@ -57,6 +57,23 @@ export interface StormSummary {
   events: StormEvent[];
   /** The single most useful one to lead with, or null when nothing is near. */
   headline: StormEvent | null;
+  /**
+   * The handful to print underneath the headline, already chosen and ordered.
+   *
+   * This exists because the page used to do it itself, by taking the damaging
+   * events sorted by distance and slicing off items 1 to 3. That was wrong
+   * twice over, and the owner spotted the symptom: "how come only wind dates
+   * are shown and never hail info?"
+   *
+   * Wind outnumbers hail here more than five to one, so the three NEAREST
+   * events are nearly always wind. At Biloxi the page led with 1.75 inch hail
+   * and then listed three wind reports, burying the one fact a homeowner
+   * actually wanted. And slicing from index 1 assumed the headline was the
+   * nearest event, which it usually is not: at Hattiesburg it silently dropped
+   * a 61 mph gust 0.2 miles away, the most relevant line on the page, while at
+   * Carriere it printed the headline event a second time.
+   */
+  supporting: StormEvent[];
   counts: { hail: number; wind: number; tornado: number };
   /** One sentence, true as written, safe to print on a mailer. */
   sentence: string | null;
@@ -177,6 +194,45 @@ function rank(e: StormEvent): number {
   return severity - e.distanceMi * 0.25 + recency;
 }
 
+/**
+ * The lines to print under the headline.
+ *
+ * Every kind of storm that happened near this address gets a slot before any
+ * kind gets a second one. That is the whole point: hail is rare here and it is
+ * the thing a homeowner most wants to know about, so a page that ranks purely
+ * by distance or severity will bury it under wind every time.
+ *
+ * The headline is excluded by identity rather than by position, because it is
+ * picked by rank while the list is built from a different ordering, and
+ * assuming they agreed is what printed one event twice.
+ *
+ * Ordered newest first once chosen. A homeowner reads this as a history, and a
+ * history runs in time order, not in order of how close the observer stood.
+ */
+function supportingEvents(
+  pool: StormEvent[],
+  headline: StormEvent | null,
+  n = 3,
+): StormEvent[] {
+  const rest = pool.filter((e) => e !== headline);
+  const best = [...rest].sort((a, b) => rank(b) - rank(a));
+  const out: StormEvent[] = [];
+  const covered = new Set<StormKind>(headline ? [headline.kind] : []);
+
+  for (const e of best) {
+    if (out.length >= n) break;
+    if (covered.has(e.kind)) continue;
+    covered.add(e.kind);
+    out.push(e);
+  }
+  for (const e of best) {
+    if (out.length >= n) break;
+    if (!out.includes(e)) out.push(e);
+  }
+
+  return out.sort((a, b) => b.date.localeCompare(a.date));
+}
+
 const MONTH_NAMES = [
   "January",
   "February",
@@ -241,6 +297,7 @@ export function summarizeStorms(
   return {
     events,
     headline,
+    supporting: supportingEvents(pool, headline),
     counts,
     sentence,
     years: data.years as number[],
