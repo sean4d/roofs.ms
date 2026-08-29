@@ -323,27 +323,62 @@ interface RawMailRow {
  * sitting for a week is the one costing money. Everything else is history, and
  * history is read newest first.
  */
+/**
+ * The office's mail board.
+ *
+ * Requested first and oldest first inside that, because a mailer that has been
+ * sitting for a week is the one costing money. Everything else is history, and
+ * history is read newest first.
+ *
+ * TWO FORMS, AND THE SECOND ONE MATTERS. This query grew a reference to
+ * edited_at when the office got an edit button, and edited_at arrives in a
+ * migration that is applied by hand. Between the deploy and that button being
+ * pressed the whole query failed, queryOrNull did what it is supposed to do
+ * and returned nothing, and the board showed "Nothing waiting" to an owner who
+ * had a mailer requested and another posted. Degrading to silence is worse
+ * than degrading to slightly less: his data was there the whole time and the
+ * screen told him it was not.
+ *
+ * So the fallback drops the columns it cannot have and keeps the rows. The
+ * board loses one grey line saying who corrected the quote. It does not lose
+ * the queue.
+ */
 export async function listMail(status: MailStatus): Promise<MailRow[]> {
-  const rows = (await queryOrNull(
-    `SELECT q.id, q.public_token, q.price_shown, q.price_low, q.squares,
+  const CORE = `q.id, q.public_token, q.price_shown, q.price_low, q.squares,
             q.created_at, q.mail_requested_at, q.mail_handled_at,
             q.mail_status, q.mail_note, q.emailed_at,
             q.pitch_degrees, q.planes, q.material, q.stories, q.structures,
-            q.edited_at,
             c.address, c.name, c.phone, c.email, c.lat, c.lon,
-            req.email AS requested_by, handler.email AS handled_by,
-            editor.email AS edited_by
+            req.email AS requested_by, handler.email AS handled_by`;
+  const FROM = `
        FROM quotes q
        JOIN customers c ON c.id = q.customer_id
        LEFT JOIN users req     ON req.id = q.mail_requested_by
-       LEFT JOIN users handler ON handler.id = q.mail_handled_by
-       LEFT JOIN users editor  ON editor.id  = q.edited_by
+       LEFT JOIN users handler ON handler.id = q.mail_handled_by`;
+  const TAIL = `
       WHERE q.mail_status = $1
       ORDER BY CASE WHEN $1 = 'requested' THEN q.mail_requested_at END ASC,
                q.mail_handled_at DESC NULLS LAST
-      LIMIT 300`,
-    [status],
-  )) as RawMailRow[] | null;
+      LIMIT 300`;
+
+  let rows: RawMailRow[] | null = null;
+  try {
+    rows = (await db().query(
+      `SELECT ${CORE}, q.edited_at, editor.email AS edited_by
+       ${FROM}
+       LEFT JOIN users editor ON editor.id = q.edited_by
+       ${TAIL}`,
+      [status],
+    )) as RawMailRow[];
+  } catch (error) {
+    console.error("[delivery] mail board without the edit columns", error);
+    rows = await queryOrNull<RawMailRow>(
+      `SELECT ${CORE},
+              NULL::timestamptz AS edited_at, NULL::text AS edited_by
+       ${FROM} ${TAIL}`,
+      [status],
+    );
+  }
 
   return (rows ?? []).map((r) => ({
     quoteId: r.id,
