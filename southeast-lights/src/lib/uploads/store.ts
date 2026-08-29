@@ -72,6 +72,12 @@ const LINK_LIFETIME_SECONDS = 31_536_000;
  * public bucket would be worth guessing at, and these are photographs of
  * customers' houses.
  *
+ * The path goes in unencoded. encodeURIComponent turns the slashes into %2F,
+ * and Supabase then mints a token for one reading of that string while the
+ * URL it hands back carries another, so the link comes back InvalidSignature
+ * even though the file uploaded perfectly. Filenames are already stripped to
+ * [A-Za-z0-9_.-] before they get here, so there is nothing left to escape.
+ *
  * If signing fails the file is still stored, so rather than lose the link
  * entirely this falls back to the public URL form. That works if the bucket
  * was made public, and fails with a clear Supabase error if not, which beats
@@ -83,10 +89,9 @@ async function linkFor(
   bucket: string,
   path: string,
 ): Promise<string> {
-  const encoded = encodeURIComponent(path);
   try {
     const response = await fetch(
-      `${base}/storage/v1/object/sign/${bucket}/${encoded}`,
+      `${base}/storage/v1/object/sign/${bucket}/${path}`,
       {
         method: "POST",
         headers: {
@@ -104,7 +109,7 @@ async function linkFor(
   } catch {
     // Fall through to the public form.
   }
-  return `${base}/storage/v1/object/public/${bucket}/${encoded}`;
+  return `${base}/storage/v1/object/public/${bucket}/${path}`;
 }
 
 export function uploadsConfigured(): boolean {
@@ -142,7 +147,7 @@ export async function storeFiles(
 
     try {
       const response = await fetch(
-        `${base}/storage/v1/object/${bucket}/${encodeURIComponent(path)}`,
+        `${base}/storage/v1/object/${bucket}/${path}`,
         {
           method: "POST",
           headers: {

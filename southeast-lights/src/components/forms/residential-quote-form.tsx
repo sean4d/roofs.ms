@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 import { AddressFields } from "@/components/forms/address-fields";
@@ -18,6 +18,12 @@ import { enabledServices } from "@/config/services";
 import { siteConfig } from "@/config/site";
 import { track } from "@/lib/analytics";
 import { captureAttribution } from "@/lib/attribution";
+import {
+  clearEstimate,
+  estimateSnapshot,
+  serverEstimateSnapshot,
+  subscribeEstimate,
+} from "@/lib/estimate-handoff";
 
 type Errors = Record<string, string>;
 
@@ -31,6 +37,16 @@ export function ResidentialQuoteForm() {
     "idle",
   );
   const [message, setMessage] = useState("");
+
+  /* Whatever the customer built in the estimator before clicking through.
+     Via useSyncExternalStore because sessionStorage does not exist on the
+     server, so the card must be absent in the server render and appear on
+     the client without a hydration mismatch. */
+  const estimate = useSyncExternalStore(
+    subscribeEstimate,
+    estimateSnapshot,
+    serverEstimateSnapshot,
+  );
 
   const serviceOptions = enabledServices().map((service) => service.label);
 
@@ -52,6 +68,7 @@ export function ResidentialQuoteForm() {
       notes: String(form.get("notes") ?? ""),
       services,
       budget: budget || undefined,
+      estimate: estimate ?? undefined,
       attribution: captureAttribution(),
       company: honeypot,
     };
@@ -81,7 +98,11 @@ export function ResidentialQuoteForm() {
           context: "residential",
           count: files.length,
         });
-      track("residential_lead_submit", { budget: budget || "unspecified" });
+      track("residential_lead_submit", {
+        budget: budget || "unspecified",
+        estimateTotal: estimate?.total ?? 0,
+      });
+      clearEstimate();
       setStatus("sent");
     } catch {
       setMessage(
@@ -112,6 +133,28 @@ export function ResidentialQuoteForm() {
       className="relative flex flex-col gap-6"
     >
       <Honeypot value={honeypot} onChange={setHoneypot} />
+
+      {estimate?.total ? (
+        <div className="card-lit flex flex-col gap-1 p-5">
+          <p className="text-xs tracking-[0.14em] text-champagne-400 uppercase">
+            Your estimate is attached
+          </p>
+          <p className="text-bone-100 text-lg font-semibold">
+            About ${Math.round(estimate.total).toLocaleString("en-US")}
+          </p>
+          <p className="text-sm leading-relaxed text-bone-500">
+            {[
+              estimate.roofFt ? `${estimate.roofFt} ft of roofline` : null,
+              estimate.colorScheme,
+            ]
+              .filter(Boolean)
+              .join(" \u00b7 ")}
+            {estimate.roofFt || estimate.colorScheme ? ". " : ""}
+            Everything you chose comes through with this request, so we quote
+            the display you designed.
+          </p>
+        </div>
+      ) : null}
 
       <div className="grid gap-6 sm:grid-cols-2">
         <Field id="name" label="Your name" required error={errors.name}>
