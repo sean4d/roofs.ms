@@ -14,10 +14,11 @@ import { siteConfig } from "@/config/site";
  * If NO transport is configured the submission fails loudly (the form
  * tells the visitor to call). A lead must never silently vanish.
  *
- * ONE LEAD, TWO AUDIENCES. The office wants to hear about every enquiry. The
- * CRM should only ever see instant estimates, so it stays a pipeline of people
- * who asked for a price. LEAD_ROOFR_EMAIL carries that second audience and
- * recipientsFor() decides who is on a given lead.
+ * ONE LEAD, TWO DESTINATIONS. LEAD_NOTIFY_EMAIL is the office inbox and
+ * LEAD_ROOFR_EMAIL is the Zapier Email Parser mailbox that creates the Roofr
+ * job. Both receive every lead: every form on the site is somebody worth a job
+ * card. Rep estimates from /pin are the ones that stay out of the CRM, and
+ * they do so by never calling deliverLead at all.
  */
 
 export interface Lead {
@@ -78,15 +79,6 @@ async function sendWebhook(lead: Lead): Promise<boolean> {
   return true;
 }
 
-/**
- * The only lead source that should reach the CRM.
- *
- * The owner wants Roofr to hold instant-estimate leads and nothing else, so
- * that it stays a pipeline of people who asked for a price rather than a dump
- * of every form on the site.
- */
-const CRM_SOURCE = "instant-estimate";
-
 const addressList = (value: string | null | undefined): string[] =>
   (value ?? "")
     .split(",")
@@ -96,24 +88,27 @@ const addressList = (value: string | null | undefined): string[] =>
 /**
  * Who gets told about this lead.
  *
- * LEAD_NOTIFY_EMAIL is the office, and hears about everything.
- * LEAD_ROOFR_EMAIL is the Zapier Email Parser mailbox that creates the Roofr
- * job, and hears only about instant estimates.
+ * LEAD_NOTIFY_EMAIL is the office. LEAD_ROOFR_EMAIL is the Zapier Email Parser
+ * mailbox that creates the Roofr job. BOTH GET EVERY LEAD, because every form
+ * on the site is somebody worth a job card and always has been.
  *
- * THE SPLIT IS DONE HERE BECAUSE ZAPIER WILL NOT DO IT. The obvious place for
- * this rule is a Filter step in the Zap, and that is where it was put. Filter
- * is a paid Zapier feature, so adding it disabled the whole Zap the moment the
- * trial ended and leads stopped reaching Roofr altogether. A rule this simple
- * is not worth a subscription, and it is more reliable here anyway: it cannot
- * be switched off by a billing event.
+ * THIS BRIEFLY FILTERED BY SOURCE AND THAT WAS A MISREADING. The owner asked
+ * that rep estimates from /pin stay out of Roofr while website leads go in. I
+ * read it as "instant estimates only" and gated this on the source, which
+ * stopped free inspections creating job cards, a thing they had always done.
+ * The requirement he actually stated needs no code at all: /pin saves through
+ * saveQuote and never calls deliverLead, so a rep estimate cannot reach Roofr
+ * by any route. The only way in is a website form, and every website form
+ * belongs there.
  *
- * The parser address is also SUBTRACTED from the office list, so it makes no
- * difference whether it is still sitting in LEAD_NOTIFY_EMAIL from before. Two
- * environment variables that have to agree with each other is a trap, and the
- * failure mode is silent: every lead would keep going to Roofr and nobody
- * would notice until the pipeline was full of them.
+ * Two addresses rather than one comma-separated list because the destinations
+ * mean different things: one is a person's inbox, the other is a machine that
+ * parses. Keeping them apart means a change to one cannot silently reroute the
+ * other, and the parser address is SUBTRACTED from the office list, so it does
+ * not matter if it is still sitting in LEAD_NOTIFY_EMAIL from before. Two
+ * variables that must agree with each other is a trap.
  */
-function recipientsFor(lead: Lead): string[] {
+function recipientsFor(): string[] {
   const crm = addressList(process.env.LEAD_ROOFR_EMAIL);
   const crmSet = new Set(crm.map((a) => a.toLowerCase()));
 
@@ -121,18 +116,18 @@ function recipientsFor(lead: Lead): string[] {
     process.env.LEAD_NOTIFY_EMAIL ?? siteConfig.email,
   ).filter((a) => !crmSet.has(a.toLowerCase()));
 
-  // The office must never end up with nobody on it because of the filtering
+  // The office must never end up with nobody on it because of the subtraction
   // above. A lead that reaches only the CRM is a lead no human has read.
   const fallback = office.length ? office : addressList(siteConfig.email);
 
-  return lead.source === CRM_SOURCE ? [...fallback, ...crm] : fallback;
+  return [...fallback, ...crm];
 }
 
 async function sendEmail(lead: Lead): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return false;
 
-  const recipients = recipientsFor(lead);
+  const recipients = recipientsFor();
   if (!recipients.length) return false;
 
   // Split the full name so an email parser can map Roofr's required
