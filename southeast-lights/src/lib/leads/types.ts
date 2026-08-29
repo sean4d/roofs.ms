@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { STATE_CODES } from "./crm-fields";
+
 /** Shared shape for every lead the site produces. */
 
 export const attributionSchema = z
@@ -16,6 +18,27 @@ export const attributionSchema = z
   })
   .optional();
 
+/**
+ * The address, in the shape a CRM can actually use.
+ *
+ * Roofr requires street, city, state and postal code as four separate
+ * required fields and rejects the job card when one is blank. Asking for
+ * them separately is the only way to be sure they arrive, so the form no
+ * longer tries to read a city out of one free-text line. The street box
+ * still accepts a pasted full address and fills the rest in.
+ */
+const ADDRESS_PARTS = {
+  city: z.string().trim().min(2, "City is required").max(80),
+  state: z
+    .string()
+    .transform((value) => value.trim().toUpperCase())
+    .refine((value) => STATE_CODES.has(value), "Use a two-letter state code"),
+  postal: z
+    .string()
+    .trim()
+    .regex(/^\d{5}(-\d{4})?$/, "Enter a 5 digit ZIP code"),
+};
+
 /** Honeypot: a real user never fills this. Must be empty. */
 const honeypot = z.string().max(0, "Rejected").optional();
 
@@ -24,7 +47,8 @@ export const residentialLeadSchema = z.object({
   name: z.string().min(2, "Please enter your name").max(120),
   email: z.string().email("Please enter a valid email"),
   phone: z.string().min(10, "Please enter a valid phone number").max(30),
-  address: z.string().min(5, "Property address is required").max(240),
+  address: z.string().min(4, "Street address is required").max(240),
+  ...ADDRESS_PARTS,
   services: z.array(z.string()).default([]),
   budget: z.string().optional(),
   notes: z.string().max(4000).optional(),
@@ -47,7 +71,8 @@ export const commercialLeadSchema = z.object({
   name: z.string().min(2, "Please enter your name").max(120),
   email: z.string().email("Please enter a valid email"),
   phone: z.string().min(10, "Please enter a valid phone number").max(30),
-  address: z.string().min(5, "Property address is required").max(240),
+  address: z.string().min(4, "Street address is required").max(240),
+  ...ADDRESS_PARTS,
   propertyType: z.string().min(1, "Please choose a property type"),
   communityName: z.string().max(200).optional(),
   buildingCount: z.string().max(40).optional(),
