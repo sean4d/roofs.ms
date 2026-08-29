@@ -24,6 +24,16 @@ export interface SaveInput {
   email?: string | null;
   phone?: string | null;
   squares: number;
+  /**
+   * What the IMAGERY said, before any human touched it.
+   *
+   * Kept apart from `squares`, which the rep may already have corrected on the
+   * sheet and the office may correct again before posting. Without this column
+   * every adjustment overwrites the machine's answer and there is no way to
+   * ever ask how good the machine is. It is the fixed point the whole
+   * calibration hangs off.
+   */
+  measuredSquares?: number | null;
   pitchDegrees: number | null;
   planes: number;
   measureSource: "solar" | "manual";
@@ -95,23 +105,61 @@ export async function saveQuote(
 
   const publicToken = randomBytes(24).toString("base64url");
 
-  const quote = (await sql`
-    INSERT INTO quotes (
-      customer_id, created_by, roof_sqft, squares, pitch_degrees, planes,
-      measure_source, measure_quality, imagery_date, material, stories, structures, rate_card,
-      price_low, price_high, price_shown, monthly_low, monthly_high, public_token
-    ) VALUES (
-      ${customerId}::uuid, ${user.id}::uuid, ${Math.round(input.squares * 100)},
-      ${input.squares}, ${input.pitchDegrees}, ${input.planes},
-      ${input.measureSource}, ${input.measureQuality}, ${input.imageryDate},
-      ${input.material}, ${String(input.stories)},
-      ${input.structures ? JSON.stringify(input.structures) : null}::jsonb,
-      ${JSON.stringify(rateCard)}::jsonb,
-      ${input.priceLow}, ${input.priceHigh}, ${input.priceShown},
-      ${input.monthlyLow}, ${input.monthlyHigh}, ${publicToken}
-    )
-    RETURNING id
-  `) as Array<{ id: string }>;
+  /**
+   * Written twice: once with the calibration column, once without.
+   *
+   * Migrations here are applied by hand, so this deployment can be live before
+   * measured_squares exists. Saving a quote is the single action the whole
+   * tool is for, and it must not fail because the office has not pressed a
+   * button yet. Losing the calibration figure on a handful of quotes costs
+   * nothing anybody notices; losing the quote costs the job.
+   *
+   * The same lesson as the delivery columns, learned the expensive way: code
+   * ships before schema in this setup, and the code has to behave in that
+   * window rather than assume its way out of it.
+   */
+  const values = [
+    customerId,
+    user.id,
+    Math.round(input.squares * 100),
+    input.squares,
+    input.pitchDegrees,
+    input.planes,
+    input.measureSource,
+    input.measureQuality,
+    input.imageryDate,
+    input.material,
+    String(input.stories),
+    input.structures ? JSON.stringify(input.structures) : null,
+    JSON.stringify(rateCard),
+    input.priceLow,
+    input.priceHigh,
+    input.priceShown,
+    input.monthlyLow,
+    input.monthlyHigh,
+    publicToken,
+  ];
+  const COLUMNS = `customer_id, created_by, roof_sqft, squares, pitch_degrees,
+      planes, measure_source, measure_quality, imagery_date, material, stories,
+      structures, rate_card, price_low, price_high, price_shown, monthly_low,
+      monthly_high, public_token`;
+  const PLACEHOLDERS = `$1::uuid, $2::uuid, $3, $4, $5, $6, $7, $8, $9, $10,
+      $11, $12::jsonb, $13::jsonb, $14, $15, $16, $17, $18, $19`;
+
+  let quote: Array<{ id: string }>;
+  try {
+    quote = (await sql.query(
+      `INSERT INTO quotes (${COLUMNS}, measured_squares)
+       VALUES (${PLACEHOLDERS}, $20) RETURNING id`,
+      [...values, input.measuredSquares ?? null],
+    )) as Array<{ id: string }>;
+  } catch (error) {
+    console.error("[quotes] saving without measured_squares", error);
+    quote = (await sql.query(
+      `INSERT INTO quotes (${COLUMNS}) VALUES (${PLACEHOLDERS}) RETURNING id`,
+      values,
+    )) as Array<{ id: string }>;
+  }
 
   return { quoteId: quote[0].id, customerId, publicToken };
 }

@@ -9,7 +9,7 @@ export function PinNav({
   mailQueue = 0,
 }: {
   user: User;
-  active: "map" | "estimates" | "mail" | "team" | "settings";
+  active: "map" | "estimates" | "mail" | "accuracy" | "team" | "settings";
   /** How many mailers are waiting. Shown as a badge so the office can see
    *  work is queued without opening the page. */
   mailQueue?: number;
@@ -36,6 +36,7 @@ export function PinNav({
           "mail",
           mailQueue > 0 ? `Mailers ${mailQueue}` : "Mailers",
         )}
+      {user.role === "admin" && tab("/pin/accuracy", "accuracy", "Accuracy")}
       {user.role === "admin" && tab("/pin/team", "team", "Team")}
       {user.role === "admin" && tab("/pin/settings", "settings", "Settings")}
       <form action="/api/pin/signout" method="post" className="ml-auto">

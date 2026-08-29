@@ -4,6 +4,8 @@ import { useState } from "react";
 
 import type { MailRow, MailStatus } from "@/lib/quotes/delivery";
 
+import { QuoteEditor } from "./quote-editor";
+
 /**
  * The three lists, and the two decisions the office makes on each one.
  *
@@ -27,6 +29,7 @@ export function MailBoard({
   const [rows, setRows] = useState({ requested, mailed, rejected });
   const [search, setSearch] = useState("");
   const [busy, setBusy] = useState<string | null>(null);
+  const [editing, setEditing] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   async function resolve(row: MailRow, action: "mailed" | "rejected") {
@@ -162,6 +165,12 @@ export function MailBoard({
                       ? ` · also emailed ${new Date(r.emailedAt).toLocaleDateString()}`
                       : ""}
                   </p>
+                  {r.editedAt && (
+                    <p className="mt-1 text-xs text-slate-500">
+                      Corrected by {r.editedBy ?? "the office"} on{" "}
+                      {new Date(r.editedAt).toLocaleDateString()}
+                    </p>
+                  )}
                   {r.note && (
                     <p className="mt-1.5 rounded bg-red-50 px-2 py-1 text-xs text-red-800">
                       {r.note}
@@ -177,6 +186,14 @@ export function MailBoard({
                   </a>
                   {tab === "requested" && (
                     <>
+                      <button
+                        onClick={() =>
+                          setEditing(editing === r.quoteId ? null : r.quoteId)
+                        }
+                        className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700"
+                      >
+                        {editing === r.quoteId ? "Close" : "Edit"}
+                      </button>
                       <button
                         onClick={() => resolve(r, "rejected")}
                         disabled={busy === r.quoteId}
@@ -195,6 +212,32 @@ export function MailBoard({
                   )}
                 </div>
               </div>
+
+              {/* Only on the queue. Once it is in the post the number is out
+                  in the world, and editing it afterwards would make the
+                  record disagree with the paper on the customer's table. */}
+              {editing === r.quoteId && tab === "requested" && (
+                <QuoteEditor
+                  row={r}
+                  onClose={() => setEditing(null)}
+                  onSaved={(squares, price) =>
+                    setRows((all) => ({
+                      ...all,
+                      requested: all.requested.map((x) =>
+                        x.quoteId === r.quoteId
+                          ? {
+                              ...x,
+                              squares,
+                              price,
+                              editedAt: new Date().toISOString(),
+                              editedBy: "You",
+                            }
+                          : x,
+                      ),
+                    }))
+                  }
+                />
+              )}
             </li>
           ))}
         </ul>

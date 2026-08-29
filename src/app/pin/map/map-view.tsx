@@ -601,6 +601,9 @@ function Estimator({
           lat: measurement.lat,
           lon: measurement.lon,
           squares: totalSquares,
+          // The machine's own answer, untouched by the +/- buttons above, so
+          // the tool can later be asked how close it really was.
+          measuredSquares: measurement.squares,
           pitchDegrees:
             (Math.atan((items[0].pitchOver12 ?? 5) / 12) * 180) / Math.PI,
           planes: items[0].planes,

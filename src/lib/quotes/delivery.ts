@@ -266,6 +266,25 @@ export interface MailRow {
   status: MailStatus;
   note: string | null;
   emailedAt: string | null;
+  /** Everything the office needs to correct the quote before it is printed. */
+  pitchOver12: number | null;
+  planes: number;
+  material: string;
+  stories: number;
+  structures: Array<{
+    label: string;
+    squares: number;
+    pitchOver12: number | null;
+    planes: number;
+    material: string;
+    stories: number;
+    lat: number;
+    lon: number;
+  }> | null;
+  lat: number;
+  lon: number;
+  editedAt: string | null;
+  editedBy: string | null;
 }
 
 interface RawMailRow {
@@ -286,6 +305,15 @@ interface RawMailRow {
   mail_status: MailStatus;
   mail_note: string | null;
   emailed_at: string | Date | null;
+  pitch_degrees: string | number | null;
+  planes: number | null;
+  material: string | null;
+  stories: string | number | null;
+  structures: MailRow["structures"];
+  lat: number;
+  lon: number;
+  edited_at: string | Date | null;
+  edited_by: string | null;
 }
 
 /**
@@ -300,12 +328,16 @@ export async function listMail(status: MailStatus): Promise<MailRow[]> {
     `SELECT q.id, q.public_token, q.price_shown, q.price_low, q.squares,
             q.created_at, q.mail_requested_at, q.mail_handled_at,
             q.mail_status, q.mail_note, q.emailed_at,
-            c.address, c.name, c.phone, c.email,
-            req.email AS requested_by, handler.email AS handled_by
+            q.pitch_degrees, q.planes, q.material, q.stories, q.structures,
+            q.edited_at,
+            c.address, c.name, c.phone, c.email, c.lat, c.lon,
+            req.email AS requested_by, handler.email AS handled_by,
+            editor.email AS edited_by
        FROM quotes q
        JOIN customers c ON c.id = q.customer_id
        LEFT JOIN users req     ON req.id = q.mail_requested_by
        LEFT JOIN users handler ON handler.id = q.mail_handled_by
+       LEFT JOIN users editor  ON editor.id  = q.edited_by
       WHERE q.mail_status = $1
       ORDER BY CASE WHEN $1 = 'requested' THEN q.mail_requested_at END ASC,
                q.mail_handled_at DESC NULLS LAST
@@ -330,6 +362,20 @@ export async function listMail(status: MailStatus): Promise<MailRow[]> {
     status: r.mail_status,
     note: r.mail_note,
     emailedAt: iso(r.emailed_at),
+    pitchOver12:
+      r.pitch_degrees === null
+        ? null
+        : Math.round(
+            Math.tan((Number(r.pitch_degrees) * Math.PI) / 180) * 12 * 10,
+          ) / 10,
+    planes: r.planes ?? 0,
+    material: r.material ?? "architectural",
+    stories: Number(r.stories ?? 1),
+    structures: r.structures ?? null,
+    lat: Number(r.lat),
+    lon: Number(r.lon),
+    editedAt: iso(r.edited_at),
+    editedBy: r.edited_by ? repName(r.edited_by) : null,
   }));
 }
 

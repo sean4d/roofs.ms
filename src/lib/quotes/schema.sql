@@ -309,3 +309,39 @@ CREATE INDEX IF NOT EXISTS quotes_mail_queue_idx
 -- the map, before anything is saved, so it has to be cheap. The lookup is by
 -- position, so the index is on the customer's coordinates.
 CREATE INDEX IF NOT EXISTS customers_latlon_idx ON customers (lat, lon);
+
+-- ---------------------------------------------------------------------------
+-- The office's last look, and the ground truth.
+--
+-- TWO DIFFERENT JOBS, one set of columns, because they are the same argument
+-- from both ends.
+--
+-- An admin gets one more chance to correct a quote before it is printed and
+-- posted. A rep in a driveway may not have noticed the house is two storeys or
+-- that the pitch came back shallow, and once an envelope is sealed the price
+-- in it is the price the company is standing behind. So a requested mailer can
+-- be edited, and the edit is attributed.
+--
+-- measured_squares is the figure the IMAGERY produced, frozen at save time and
+-- never touched again. Without it the rep's adjustment and the office's edit
+-- both overwrite the machine's answer, and there is no way to ever ask how
+-- good the machine actually is. With it there are three numbers that mean
+-- three different things: what the imagery said, what we quoted, and what the
+-- roof turned out to be.
+--
+-- actual_squares is that third one, typed in when a job is really measured. It
+-- is the only thing that can turn "3.1% error across four houses" into a
+-- figure worth trusting, and every job the company closes is one more row.
+-- ---------------------------------------------------------------------------
+ALTER TABLE quotes ADD COLUMN IF NOT EXISTS edited_at        timestamptz;
+ALTER TABLE quotes ADD COLUMN IF NOT EXISTS edited_by        uuid REFERENCES users (id);
+ALTER TABLE quotes ADD COLUMN IF NOT EXISTS measured_squares numeric(7,2);
+ALTER TABLE quotes ADD COLUMN IF NOT EXISTS actual_squares   numeric(7,2);
+ALTER TABLE quotes ADD COLUMN IF NOT EXISTS actual_at        timestamptz;
+ALTER TABLE quotes ADD COLUMN IF NOT EXISTS actual_by        uuid REFERENCES users (id);
+
+-- The calibration set: every quote where we know both what was measured from
+-- the air and what the roof really was.
+CREATE INDEX IF NOT EXISTS quotes_calibration_idx
+  ON quotes (actual_at DESC)
+  WHERE actual_squares IS NOT NULL AND measured_squares IS NOT NULL;

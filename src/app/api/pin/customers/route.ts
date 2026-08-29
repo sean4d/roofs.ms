@@ -27,6 +27,8 @@ const schema = z.object({
   lat: z.number().min(-90).max(90),
   lon: z.number().min(-180).max(180),
   squares: z.number().positive().max(500),
+  /** The untouched figure from the imagery, for calibration. */
+  measuredSquares: z.number().positive().max(500).nullable().optional(),
   pitchDegrees: z.number().min(0).max(89).nullable(),
   planes: z.number().int().min(0).max(200),
   measureSource: z.enum(["solar", "manual"]),
@@ -108,6 +110,7 @@ export async function POST(request: Request) {
       email: input.email ?? null,
       phone: input.phone ?? null,
       squares: multi ? multi.totalSquares : input.squares,
+      measuredSquares: input.measuredSquares ?? null,
       structures: multi ? multi.structures : undefined,
       pitchDegrees: input.pitchDegrees,
       planes: input.planes,

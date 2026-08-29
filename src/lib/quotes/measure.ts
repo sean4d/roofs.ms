@@ -324,6 +324,53 @@ function rejected(
 }
 
 /**
+ * The pitch a roofer would actually say, which is not the average one.
+ *
+ * THIS WAS AN AREA-WEIGHTED MEAN AND THE OWNER NOTICED. "Pitch seems wrong a
+ * good bit, not too bad but could be better." A mean is dragged down by every
+ * low-slope thing attached to a house: a porch, a carport, a patio cover, an
+ * added-on garage. A 2,000 sq ft roof at 6:12 with a 400 sq ft porch at 2:12
+ * averages to 5.3:12, and the man standing in the driveway looking at it would
+ * tell you it is a 6:12. The error only ever runs one way, too shallow, which
+ * is exactly the shape of the complaint.
+ *
+ * So: bin the planes by pitch, add up the area in each bin, and report the
+ * biggest bin. That is the pitch most of the roof actually is, and it is the
+ * number a roofer quotes, prices materials against and orders ridge cap for.
+ *
+ * Half-inch bins, because a roofer thinks in halves of twelve and Google's
+ * per-plane figures on one continuous roof surface vary by a fraction of a
+ * degree. Rounding finer would split one real roof plane across two bins and
+ * hand the vote to a porch.
+ */
+function dominantPitch(segments: RoofSegment[]): number | null {
+  const bins = new Map<number, { area: number; sum: number }>();
+
+  for (const s of segments) {
+    const area = s.stats?.areaMeters2 ?? 0;
+    if (!area || s.pitchDegrees == null) continue;
+    // Bin on rise-over-twelve rather than on degrees, because that is the
+    // scale the answer is reported in and it is not linear in degrees.
+    const over12 = Math.tan(rad(s.pitchDegrees)) * 12;
+    const key = Math.round(over12 * 2) / 2;
+    const bin = bins.get(key) ?? { area: 0, sum: 0 };
+    bin.area += area;
+    bin.sum += s.pitchDegrees * area;
+    bins.set(key, bin);
+  }
+
+  if (!bins.size) return null;
+
+  let best: { area: number; sum: number } | null = null;
+  for (const bin of bins.values()) {
+    if (!best || bin.area > best.area) best = bin;
+  }
+  // The area-weighted mean WITHIN the winning bin, so a roof whose planes read
+  // 26.4 and 26.7 degrees reports what it is rather than a rounded bin label.
+  return best ? best.sum / best.area : null;
+}
+
+/**
  * Measure the roof at a point.
  *
  * Returns a rejection rather than a bad number whenever the checks fail. The
@@ -469,18 +516,7 @@ export async function measureAt(
     }
   }
 
-  // Pitch, weighted by the area of each plane so a big main roof outvotes a
-  // porch. Reported the way a roofer says it.
-  let pitchDegrees: number | null = null;
-  const weighted = segments.reduce(
-    (acc, s) => {
-      const area = s.stats?.areaMeters2 ?? 0;
-      if (!area || s.pitchDegrees == null) return acc;
-      return { sum: acc.sum + s.pitchDegrees * area, area: acc.area + area };
-    },
-    { sum: 0, area: 0 },
-  );
-  if (weighted.area > 0) pitchDegrees = weighted.sum / weighted.area;
+  const pitchDegrees = dominantPitch(segments);
 
   return {
     ...common,
