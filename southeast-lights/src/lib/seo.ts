@@ -87,6 +87,12 @@ export function localBusinessSchema() {
       postalCode: address.postalCode ?? undefined,
       addressCountry: address.addressCountry,
     },
+    openingHoursSpecification: siteConfig.hours.spec.map((slot) => ({
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [...slot.days],
+      opens: slot.opens,
+      closes: slot.closes,
+    })),
     sameAs: [
       siteConfig.socials.facebook,
       siteConfig.socials.instagram,

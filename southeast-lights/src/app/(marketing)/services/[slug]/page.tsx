@@ -11,6 +11,7 @@ import { Section } from "@/components/shared/section";
 import { JsonLd } from "@/components/seo/json-ld";
 import { faqsFor, type FaqCategory } from "@/config/faqs";
 import { HOLIDAY, INCLUDED, PERMANENT } from "@/config/pricing";
+import { siteConfig } from "@/config/site";
 import { SERVICES, enabledServices, serviceBySlug } from "@/config/services";
 import { SERVICE_AREAS } from "@/config/service-areas";
 import {
@@ -159,6 +160,40 @@ export default async function ServicePage({
             lighting manufacturer; we install and warrant the work itself, and
             will walk you through system options during design.
           </p>
+        </Section>
+      ) : null}
+
+      {/*
+        The warranty. Two genuinely different promises rather than one policy
+        worded twice: seasonal work has nothing left on the building to
+        warrant, permanent work has the customer's own hardware on it for
+        years. With no manufacturer warranty behind the permanent product,
+        this term is the entire guarantee, so it gets a band rather than a
+        line of small print.
+      */}
+      {isPermanent || isHoliday ? (
+        <Section
+          eyebrow="Warranty"
+          title={
+            isPermanent
+              ? siteConfig.warranty.permanent.headline
+              : siteConfig.warranty.seasonal.headline
+          }
+        >
+          <p className="max-w-2xl text-lg leading-relaxed text-bone-300">
+            {isPermanent
+              ? siteConfig.warranty.permanent.body
+              : siteConfig.warranty.seasonal.body}
+          </p>
+          {isPermanent ? (
+            <p className="text-bone-400 mt-5 max-w-2xl leading-relaxed">
+              We are not an authorized dealer for any permanent lighting
+              manufacturer, so there is no factory warranty sitting behind ours.
+              That is the reason the term is{" "}
+              {siteConfig.warranty.permanent.years} years and not a footnote:
+              our workmanship is what you are relying on.
+            </p>
+          ) : null}
         </Section>
       ) : null}
 

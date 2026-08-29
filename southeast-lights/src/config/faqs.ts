@@ -46,6 +46,12 @@ export const FAQS: Faq[] = [
   },
   {
     category: "service",
+    question: "What is the warranty on a seasonal display?",
+    answer:
+      "Seasonal displays do not carry a workmanship warranty, because there is nothing left on your building for one to cover. The lights are ours. We maintain them from the day they go up until the day we take them down, replace failed bulbs at no charge, and never charge a service-call fee. That is broader than a warranty, not narrower: a warranty covers defects, and this covers the whole season however the display fails.",
+  },
+  {
+    category: "service",
     question: "Do I own the lights?",
     answer:
       "No. Seasonal lighting remains the property of Southeast Lights, and that is deliberately how the service works. Because the lights are ours, we are the ones responsible for maintaining them, removing them, storing them properly and bringing them back next season. You are buying a finished display and a season of service, not a box of product you have to store in your attic.",
@@ -121,6 +127,12 @@ export const FAQS: Faq[] = [
     question: "Do returning customers get priority?",
     answer:
       "Yes, automatically. Returning customers are scheduled before we open the calendar to new bookings, and you do not have to sign up for anything to get that. We may also take reservations for the following year during December.",
+  },
+  {
+    category: "permanent",
+    question: "Is permanent lighting under warranty?",
+    answer:
+      "Our workmanship is warrantied for five years: the mounting, the channel, the terminations and the way the run is fixed to the structure. We are not an authorized dealer for any permanent lighting manufacturer, so there is no factory warranty behind ours, and we would rather say that plainly than let you assume one exists. It is also the reason the term is five years rather than a footnote. We install it, so we stand behind it.",
   },
   {
     category: "permanent",

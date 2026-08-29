@@ -60,6 +60,17 @@ export default function ContactPage() {
                 {address.postalCode}
               </address>
             ) : null}
+
+            {/* Hours are one of the first things a caller checks, and until
+                now they were nowhere on the site. */}
+            <div className="mt-2 border-t border-white/10 pt-4">
+              <p className="text-bone-200 text-sm font-medium">
+                {siteConfig.hours.display}
+              </p>
+              <p className="mt-1.5 text-sm leading-relaxed text-bone-500">
+                {siteConfig.hours.note}
+              </p>
+            </div>
           </div>
 
           <div className="card-lit p-6">

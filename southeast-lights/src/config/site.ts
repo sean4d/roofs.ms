@@ -66,8 +66,34 @@ export const siteConfig = {
   /**
    * [NEEDS: exact lat/lng for 3705 Mable St]. Left null on purpose rather
    * than guessed. A wrong pin on a local business is worse than no pin.
+   * Deliberately NOT copied from the roofing config: that pin is the roofing
+   * office on a different street, and this profile is verified at Mable St.
    */
   geo: null as { latitude: number; longitude: number } | null,
+
+  /**
+   * Business hours. Owner-confirmed 2026-08-26 as identical to Southeast
+   * Roofing: office staffed Monday to Friday, 8 to 5, closed weekends. One
+   * legal entity, one office, one set of hours.
+   *
+   * No after-hours emergency claim here, unlike the roofing config. Roofing
+   * takes storm calls at 2am; a light that has gone out is a next-morning
+   * problem and promising otherwise would be a promise to keep in December.
+   *
+   * `spec` feeds schema.org openingHoursSpecification. Weekend days omitted
+   * means closed, which is what Google reads.
+   */
+  hours: {
+    display: "Monday to Friday, 8 AM to 5 PM",
+    note: "In-season, crews are out past dark. Messages left overnight are answered the next morning.",
+    spec: [
+      {
+        days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] as const,
+        opens: "08:00",
+        closes: "17:00",
+      },
+    ],
+  },
 
   /** Owner-supplied 2026-08-24, verified handles (no `.llc` suffix here,
    *  unlike the roofing accounts). */
@@ -130,9 +156,6 @@ export const siteConfig = {
    *     Owner confirmed 2026-08-24 they are NOT an authorized dealer for any
    *     permanent-lighting manufacturer, so the permanent pages stay
    *     unbranded. See the note in config/pricing.ts.
-   *   - workmanshipWarranty: our install warranty. With no manufacturer
-   *     warranty to lean on, this is the whole guarantee. It matters more
-   *     here than it would for a dealer.
    *   - season dates: install window, booking cutoff, takedown window
    *   - foundingYear for Southeast Lights specifically
    */
@@ -152,6 +175,33 @@ export const siteConfig = {
     /** No provider connected. Do not enable without owner approval. */
     onlinePaymentsEnabled: false,
   },
+  /**
+   * Warranty. Owner-confirmed 2026-08-26, and the two halves of the business
+   * are genuinely different promises rather than one policy worded twice.
+   *
+   * Seasonal work carries no workmanship warranty because the concept does
+   * not apply: the lights are ours, they come down in January, and we
+   * maintain them the whole time they are up. That is a stronger promise than
+   * a warranty, not a weaker one, so it is stated as coverage rather than
+   * apologised for.
+   *
+   * Permanent lighting is the customer's property and stays on the building
+   * for years, so it needs a real term. Five years on our workmanship. There
+   * is no manufacturer warranty behind it (see the dealer note in
+   * config/pricing.ts), which makes this the entire guarantee.
+   */
+  warranty: {
+    seasonal: {
+      headline: "Covered for the whole season, not warrantied afterwards",
+      body: "Seasonal displays do not carry a workmanship warranty, because they do not need one. The lights are ours. We maintain them from the day they go up until the day we take them down, replace failed bulbs at no charge, and there is no service-call fee. Nothing is left on your building for a warranty to cover.",
+    },
+    permanent: {
+      years: 5,
+      headline: "Five-year workmanship warranty",
+      body: "Permanent lighting is yours and it stays on the building, so our installation is warrantied for five years. That covers the work: mounting, channel, terminations and the way the run is fixed to the structure.",
+    },
+  },
+  /** Kept for compatibility. Use `warranty` above. */
   workmanshipWarranty: null as string | null,
   foundingYear: null as number | null,
 } as const;
