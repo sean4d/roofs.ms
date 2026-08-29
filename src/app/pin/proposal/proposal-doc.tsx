@@ -2,6 +2,7 @@ import { siteConfig } from "@/config/site";
 import {
   FINANCING,
   MATERIALS,
+  materialForCustomer,
   paymentFor,
   type MaterialKey,
 } from "@/config/quote-rates";
@@ -44,6 +45,20 @@ import type { ProposalData } from "@/lib/quotes/save";
  * cannot matter which of them Tailwind emits last.
  */
 
+/**
+ * The stored material, narrowed back to a key we recognise.
+ *
+ * The column is plain text and holds whatever was current when the quote was
+ * saved, so a value that has since been renamed or removed must not throw on a
+ * document a customer is waiting to read. Architectural is the fallback because
+ * it is what the rate card is built on.
+ */
+function materialKeyOf(stored: string | null): MaterialKey {
+  return stored && stored in MATERIALS
+    ? (stored as MaterialKey)
+    : "architectural";
+}
+
 export async function ProposalDoc({
   data,
   aerialSrc,
@@ -82,17 +97,16 @@ export async function ProposalDoc({
   const parts =
     data.structures && data.structures.length > 1 ? data.structures : null;
 
-  // The material the rep actually chose. Falling back to architectural keeps
-  // older quotes, written before the choice existed, readable. With several
-  // structures the materials can differ, so name each distinct one: a customer
-  // reading "architectural shingles" on a job that includes a metal shop would
-  // be right to think we had not looked.
-  const materialLabel = (
-    parts
-      ? [...new Set(parts.map((p) => p.materialLabel))].join(", ")
-      : (MATERIALS[data.material as MaterialKey]?.label ??
-        "Architectural shingle")
-  ).replace(/ shingle$/, " shingles");
+  // The material the rep actually chose, named as a customer should read it:
+  // through materialForCustomer, which adds the manufacturer and line where the
+  // price assumes one. Falling back to architectural keeps older quotes,
+  // written before the choice existed, readable. With several structures the
+  // materials can differ, so name each distinct one: a customer reading
+  // "architectural shingles" on a job that includes a metal shop would be right
+  // to think we had not looked.
+  const materialLabel = parts
+    ? [...new Set(parts.map((p) => materialForCustomer(p.material)))].join(", ")
+    : materialForCustomer(materialKeyOf(data.material));
 
   return (
     <article className="proposal mx-auto w-full max-w-[8.5in] bg-white text-slate-900">

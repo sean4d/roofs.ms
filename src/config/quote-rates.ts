@@ -122,6 +122,37 @@ export const MATERIALS = {
 export type MaterialKey = keyof typeof MATERIALS;
 
 /**
+ * The manufacturer and line the price actually assumes.
+ *
+ * Owner-confirmed 2026-08-29: the architectural shingle rate is priced on GAF
+ * Timberline HDZ, so the estimate says so. Naming the product is worth more
+ * than "architectural shingles" to a homeowner comparing quotes, because it is
+ * checkable and most of what lands in their letterbox is not.
+ *
+ * KEYED BY MATERIAL, not a constant, because it is only true of one of them. A
+ * metal roof priced at the 29-gauge rate must never carry a shingle product
+ * name, and a flat roof must never carry either. Anything without an entry
+ * here prints as its plain label, which is the honest answer when we have not
+ * committed to a specific product at that price.
+ */
+export const MATERIAL_PRODUCT: Partial<Record<MaterialKey, string>> = {
+  architectural: "GAF Timberline HDZ\u00ae",
+};
+
+/**
+ * How the material should read on a document a customer keeps.
+ *
+ * One function so the estimate a rep prints, the one the office posts and the
+ * one emailed from the field cannot disagree about what we said we were
+ * installing.
+ */
+export function materialForCustomer(key: MaterialKey): string {
+  const label = MATERIALS[key].label.replace(/ shingle$/, " shingles");
+  const product = MATERIAL_PRODUCT[key];
+  return product ? `${product} ${label}` : label;
+}
+
+/**
  * Every material key, as a plain array.
  *
  * So request validation is derived from this file rather than retyped next to
