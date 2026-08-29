@@ -17,7 +17,7 @@ import { siteConfig } from "@/config/site";
  */
 export function InsurancePage() {
   return (
-    <section className="proposal-page break-before-page px-8 pt-7 pb-6">
+    <section className="proposal-page break-before-page px-8 pt-6 pb-4">
       <header className="border-b-[3px] border-[#123b63] pb-3">
         <h2 className="font-[family-name:var(--font-archivo)] text-[19px] font-extrabold tracking-tight text-[#123b63]">
           If this is storm damage, here is how a claim works
@@ -27,14 +27,13 @@ export function InsurancePage() {
         </p>
       </header>
 
-      <p className="mt-3.5 text-[11.5px] leading-relaxed text-slate-700">
-        A storm claim is paperwork stapled to a roof. We handle the roof and the
-        documentation: thorough inspection reports, photos in the format
-        adjusters expect, and someone on your side of the table at the adjuster
-        meeting.
+      <p className="mt-3 text-[11.5px] leading-relaxed text-slate-700">
+        A storm claim is paperwork stapled to a roof. We handle both: thorough
+        inspection reports, photos in the format adjusters expect, and someone
+        on your side of the table at the adjuster meeting.
       </p>
 
-      <div className="mt-3 rounded border-l-[3px] border-[#123b63] bg-slate-50 px-4 py-2.5">
+      <div className="mt-3 rounded border-l-[3px] border-[#123b63] bg-slate-50 px-4 py-2">
         <p className="text-[11.5px] leading-relaxed text-slate-800">
           <strong className="text-[#123b63]">The honest version.</strong> The
           decision belongs to your insurance company, not to us. Any roofer who
@@ -45,7 +44,7 @@ export function InsurancePage() {
         </p>
       </div>
 
-      <h3 className="mt-5 border-b border-slate-200 pb-1.5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
+      <h3 className="mt-4 border-b border-slate-200 pb-1.5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
         The claim, step by step
       </h3>
       <ol className="mt-2.5 grid grid-cols-2 gap-x-8 gap-y-2">
@@ -61,7 +60,7 @@ export function InsurancePage() {
         ))}
       </ol>
 
-      <h3 className="mt-5 border-b border-slate-200 pb-1.5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
+      <h3 className="mt-4 border-b border-slate-200 pb-1.5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
         The words on your paperwork
       </h3>
       <dl className="mt-2.5 grid grid-cols-2 gap-x-8 gap-y-1.5 text-[10.5px] leading-snug">
@@ -73,10 +72,10 @@ export function InsurancePage() {
         ))}
       </dl>
 
-      <h3 className="mt-5 border-b border-slate-200 pb-1.5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
+      <h3 className="mt-4 border-b border-slate-200 pb-1.5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
         Have these ready and the whole thing moves faster
       </h3>
-      <ul className="mt-2.5 grid grid-cols-2 gap-x-8 gap-y-0.5 text-[10.5px] leading-snug text-slate-700">
+      <ul className="mt-2.5 grid grid-cols-3 gap-x-6 gap-y-0.5 text-[10.5px] leading-snug text-slate-700">
         {CHECKLIST.map((c) => (
           <li key={c} className="flex gap-2">
             <span aria-hidden className="text-[#123b63]">
@@ -91,10 +90,9 @@ export function InsurancePage() {
         General information about how the process typically works. It is not
         legal advice and not an interpretation of your policy. Your policy
         language and your insurer&rsquo;s decisions control, and timelines
-        depend on your policy terms, your insurer&rsquo;s process and regional
-        storm volume, so nobody can honestly promise you a date. Read the fuller
-        version at {new URL(siteConfig.url).hostname}
-        /storm-damage/insurance-claims.
+        depend on your insurer and on regional storm volume, so nobody can
+        honestly promise you a date. Fuller version at{" "}
+        {new URL(siteConfig.url).hostname}/storm-damage/insurance-claims.
       </p>
     </section>
   );
@@ -140,7 +138,7 @@ const STEPS = [
   },
   {
     title: "Final documents",
-    body: "Completion paperwork and the final invoice go to you and the insurer, including the request for recoverable depreciation where your policy provides it.",
+    body: "Completion paperwork and the final invoice go to you and your insurer, with the depreciation request where your policy allows it.",
   },
 ];
 

@@ -6,6 +6,7 @@ import { db } from "./db";
 import type { User } from "./auth";
 import { ownerScope } from "./auth";
 import { rateCard } from "@/config/quote-rates";
+import type { PricedStructure } from "./structures";
 
 /**
  * Turning a measurement into a customer and a saved quote.
@@ -30,6 +31,7 @@ export interface SaveInput {
   imageryDate: string | null;
   material: string;
   stories: number;
+  structures?: unknown;
   priceLow: number;
   priceHigh: number;
   priceShown: number | null;
@@ -96,13 +98,14 @@ export async function saveQuote(
   const quote = (await sql`
     INSERT INTO quotes (
       customer_id, created_by, roof_sqft, squares, pitch_degrees, planes,
-      measure_source, measure_quality, imagery_date, material, stories, rate_card,
+      measure_source, measure_quality, imagery_date, material, stories, structures, rate_card,
       price_low, price_high, price_shown, monthly_low, monthly_high, public_token
     ) VALUES (
       ${customerId}::uuid, ${user.id}::uuid, ${Math.round(input.squares * 100)},
       ${input.squares}, ${input.pitchDegrees}, ${input.planes},
       ${input.measureSource}, ${input.measureQuality}, ${input.imageryDate},
       ${input.material}, ${String(input.stories)},
+      ${input.structures ? JSON.stringify(input.structures) : null}::jsonb,
       ${JSON.stringify(rateCard)}::jsonb,
       ${input.priceLow}, ${input.priceHigh}, ${input.priceShown},
       ${input.monthlyLow}, ${input.monthlyHigh}, ${publicToken}
@@ -134,6 +137,7 @@ export interface ProposalData {
   imageryDate: string | null;
   material: string | null;
   stories: number | null;
+  structures: PricedStructure[] | null;
   repName: string;
 }
 
@@ -160,6 +164,7 @@ interface Row {
   imagery_date: string | Date | null;
   material: string | null;
   stories: string | number | null;
+  structures: PricedStructure[] | null;
   rep_email: string;
 }
 
@@ -216,13 +221,14 @@ const toProposal = (r: Row): ProposalData => ({
   imageryDate: r.imagery_date ? toIsoDate(r.imagery_date) : null,
   material: r.material,
   stories: r.stories === null ? null : Number(r.stories),
+  structures: r.structures ?? null,
   repName: repDisplayName(r.rep_email),
 });
 
 const SELECT = `
   SELECT q.id, q.public_token, q.squares, q.pitch_degrees, q.planes,
          q.price_low, q.price_high, q.price_shown, q.monthly_low, q.monthly_high,
-         q.created_at, q.imagery_date, q.material, q.stories,
+         q.created_at, q.imagery_date, q.material, q.stories, q.structures,
          c.address, c.name, c.email, c.phone, c.lat, c.lon,
          u.email AS rep_email
     FROM quotes q

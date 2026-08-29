@@ -93,13 +93,47 @@ export function paymentFor(
  * does not have to be made in six places.
  */
 export const MATERIALS = {
-  architectural: { label: "Architectural shingle", factor: 1.0 },
-  premium: { label: "Premium / designer shingle", factor: 1.4 },
-  "metal-29": { label: "29-gauge metal", factor: 2.15 },
-  "metal-26": { label: "26-gauge metal", factor: 2.6 },
+  architectural: { label: "Architectural shingle", factor: 1.0, flat: false },
+  premium: { label: "Premium / designer shingle", factor: 1.4, flat: false },
+  "metal-29": { label: "29-gauge metal", factor: 2.15, flat: false },
+  "metal-26": { label: "26-gauge metal", factor: 2.6, flat: false },
+
+  /**
+   * Low-slope and flat systems.
+   *
+   * PLACEHOLDER PRICING, deliberately on the high side. The owner asked for
+   * numbers that will obviously make a profit until he sets real ones, so
+   * these are anchored to the $496 shingle base and land roughly where
+   * commercial single-ply sells in this market: TPO around $700 a square,
+   * PVC and EPDM above it, modified bitumen between.
+   *
+   * Treat every one of these as a number to be replaced, not a quote to
+   * defend. Commercial pricing turns on insulation thickness, attachment
+   * method, tear-off versus recover and roof access, none of which the aerial
+   * measurement can see. The tool flags the roof as low slope and gives a
+   * starting figure; a real commercial bid still needs somebody up there.
+   */
+  tpo: { label: "TPO (flat)", factor: 1.45, flat: true },
+  pvc: { label: "PVC (flat)", factor: 1.7, flat: true },
+  "mod-bit": { label: "Modified bitumen (flat)", factor: 1.55, flat: true },
+  epdm: { label: "EPDM (flat)", factor: 1.5, flat: true },
 } as const;
 
 export type MaterialKey = keyof typeof MATERIALS;
+
+/**
+ * Every material key, as a plain array.
+ *
+ * So request validation is derived from this file rather than retyped next to
+ * it. The API's schema had the four shingle and metal keys hard-coded and the
+ * flat systems were added here only, which meant picking TPO on a commercial
+ * building passed every check in the browser and came back "Bad request" from
+ * the server. A list written twice is a list that will disagree.
+ */
+export const MATERIAL_KEYS = Object.keys(MATERIALS) as [
+  MaterialKey,
+  ...MaterialKey[],
+];
 
 /**
  * Second-storey surcharge.
@@ -120,9 +154,40 @@ export const STORIES = {
 
 export type StoriesKey = keyof typeof STORIES;
 
+/**
+ * Complexity, from the number of roof planes.
+ *
+ * Owner-flagged: a cut-up roof full of hips, valleys and ridges wastes far
+ * more material than a simple gable, and the tool was pricing them the same.
+ * Every valley is two cut edges, every hip is a run of cap, and the offcuts
+ * are unusable.
+ *
+ * Plane count is the proxy, because it is the one complexity signal the aerial
+ * measurement actually returns. A simple gable is 2 planes and a hip roof is
+ * 4; anything past about 8 is genuinely cut up. Industry practice runs 10%
+ * waste on a simple roof and 15% or more on a complex one, and these steps sit
+ * inside that range rather than inventing a new one.
+ *
+ * Applied on top of the base rate, which already carries the ~8% waste seen
+ * across the owner's own five jobs, so these are the ADDITIONAL cost of
+ * complexity and not the whole waste allowance.
+ */
+export const COMPLEXITY = [
+  { maxPlanes: 4, label: "Simple", factor: 1.0 },
+  { maxPlanes: 8, label: "Moderate", factor: 1.04 },
+  { maxPlanes: 14, label: "Complex", factor: 1.08 },
+  { maxPlanes: Infinity, label: "Very cut up", factor: 1.12 },
+] as const;
+
+export function complexityFor(planes: number) {
+  return COMPLEXITY.find((c) => planes <= c.maxPlanes) ?? COMPLEXITY[0];
+}
+
 export interface QuoteOptions {
   material: MaterialKey;
   stories: StoriesKey;
+  /** Roof planes, for the complexity surcharge. Omit for none. */
+  planes?: number;
 }
 
 export const DEFAULT_OPTIONS: QuoteOptions = {
@@ -130,12 +195,17 @@ export const DEFAULT_OPTIONS: QuoteOptions = {
   stories: 1,
 };
 
-/** The rate for a given material and storey count. */
+/** The rate for a given material, storey count and roof complexity. */
 export function rateFor(options: QuoteOptions): number {
+  const complexity = options.planes
+    ? complexityFor(options.planes).factor
+    : 1.0;
   return (
     rateCard.perSquare *
     MATERIALS[options.material].factor *
-    STORIES[options.stories].factor
+    // A flat roof has no hips or valleys, so complexity never applies to one.
+    (MATERIALS[options.material].flat ? 1.0 : STORIES[options.stories].factor) *
+    (MATERIALS[options.material].flat ? 1.0 : complexity)
   );
 }
 

@@ -36,6 +36,21 @@
   .proposal header {
     break-inside: avoid;
   }
+  /* One exception, for the property with several buildings on it.
+     Every other section is short enough that keeping it whole is free, but a
+     structure table with five or six lines cannot fit under the price block,
+     so "keep it together" throws the whole section onto the next sheet and
+     pushes the document to four pages. Splitting the table is the lesser
+     evil, and the header repeats so the second half is still readable. */
+  .proposal .allow-break {
+    break-inside: auto;
+  }
+  .proposal .allow-break thead {
+    display: table-header-group;
+  }
+  .proposal .allow-break tr {
+    break-inside: avoid;
+  }
   /* The insurance sheet is its own page, always, and exactly one.
      It measured 1008px against a page that holds about 980, so a single
      paragraph of footnote was landing alone on a fourth sheet. The section

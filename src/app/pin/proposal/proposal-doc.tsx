@@ -59,10 +59,28 @@ export async function ProposalDoc({
         10;
 
   const money = (n: number) => `$${n.toLocaleString()}`;
+
+  /**
+   * More than one roof on the property.
+   *
+   * 109 Green Timber is the reason: a house and a detached shed in the same
+   * yard, quoted as one job. Anything with a single structure prints exactly as
+   * it always did, so every estimate written before this existed still reads
+   * correctly.
+   */
+  const parts =
+    data.structures && data.structures.length > 1 ? data.structures : null;
+
   // The material the rep actually chose. Falling back to architectural keeps
-  // older quotes, written before the choice existed, readable.
+  // older quotes, written before the choice existed, readable. With several
+  // structures the materials can differ, so name each distinct one: a customer
+  // reading "architectural shingles" on a job that includes a metal shop would
+  // be right to think we had not looked.
   const materialLabel = (
-    MATERIALS[data.material as MaterialKey]?.label ?? "Architectural shingle"
+    parts
+      ? [...new Set(parts.map((p) => p.materialLabel))].join(", ")
+      : (MATERIALS[data.material as MaterialKey]?.label ??
+        "Architectural shingle")
   ).replace(/ shingle$/, " shingles");
 
   return (
@@ -174,20 +192,31 @@ export async function ProposalDoc({
       </section>
 
       {/* ---------- their roof ---------- */}
-      <section className="mt-7 px-8">
+      <section
+        className={`mt-7 px-8 ${parts && parts.length > 3 ? "allow-break" : ""}`}
+      >
         <h2 className="border-b border-slate-200 pb-1.5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
-          Your roof, measured
+          {parts ? "Your roofs, measured" : "Your roof, measured"}
         </h2>
         <div className="mt-4 flex gap-6">
           <div className="grid flex-1 grid-cols-3 gap-y-4 self-start">
-            <Fact label="Roof area" value={`${data.squares} squares`} />
+            <Fact
+              label={parts ? "Total roof area" : "Roof area"}
+              value={`${data.squares} squares`}
+            />
             <Fact
               label="Pitch"
               value={pitchOver12 ? `${pitchOver12}:12` : "See inspection"}
             />
             <Fact
-              label="Stories"
-              value={data.stories ? `${data.stories}` : String(data.planes)}
+              label={parts ? "Structures" : "Stories"}
+              value={
+                parts
+                  ? String(parts.length)
+                  : data.stories
+                    ? `${data.stories}`
+                    : String(data.planes)
+              }
             />
           </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -197,6 +226,53 @@ export async function ProposalDoc({
             className="h-[150px] w-[150px] shrink-0 rounded border border-slate-300 object-cover"
           />
         </div>
+        {/* One line per building, priced on its own terms. Every figure here
+            comes from the server's own arithmetic and the lines add to the
+            total exactly, because a customer checks that before anything
+            else on the page. */}
+        {parts && (
+          <table className="mt-4 w-full border-collapse text-[12px]">
+            <thead>
+              <tr className="border-b border-slate-300 text-left text-[10px] font-bold tracking-[0.12em] text-slate-500 uppercase">
+                <th className="pb-1.5 font-bold">Structure</th>
+                <th className="pb-1.5 text-right font-bold">Squares</th>
+                <th className="pb-1.5 pl-4 font-bold">Roof system</th>
+                <th className="pb-1.5 text-right font-bold">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {parts.map((p, i) => (
+                <tr
+                  key={`${p.lat}${p.lon}${i}`}
+                  className="border-b border-slate-200"
+                >
+                  <td className="py-1.5 font-semibold">{p.label}</td>
+                  <td className="py-1.5 text-right tabular-nums">
+                    {p.squares.toFixed(1)}
+                  </td>
+                  <td className="py-1.5 pl-4 text-slate-600">
+                    {p.materialLabel}
+                    {p.stories === 2 ? ", 2 story" : ""}
+                  </td>
+                  <td className="py-1.5 text-right tabular-nums">
+                    {money(p.price)}
+                  </td>
+                </tr>
+              ))}
+              <tr>
+                <td className="pt-2 font-bold text-[#123b63]">Total</td>
+                <td className="pt-2 text-right font-bold tabular-nums text-[#123b63]">
+                  {data.squares}
+                </td>
+                <td />
+                <td className="pt-2 text-right font-bold tabular-nums text-[#123b63]">
+                  {money(firm ? data.priceShown! : data.priceLow)}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        )}
+
         <p className="mt-4 text-[11px] leading-relaxed text-slate-600">
           {data.imageryDate
             ? `Measured from aerial imagery of your property photographed ${longDate(data.imageryDate.slice(0, 10))}, not a guess from square footage.`

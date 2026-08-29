@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
+import { MATERIAL_KEYS } from "@/config/quote-rates";
 import { currentUser } from "@/lib/quotes/auth";
 import { sameOrigin } from "@/lib/production/auth";
 import { saveQuote } from "@/lib/quotes/save";
@@ -31,10 +32,23 @@ const schema = z.object({
   measureSource: z.enum(["solar", "manual"]),
   measureQuality: z.string().max(40).nullable(),
   imageryDate: z.string().max(20).nullable().optional(),
-  material: z
-    .enum(["architectural", "premium", "metal-29", "metal-26"])
-    .optional(),
+  material: z.enum(MATERIAL_KEYS).optional(),
   stories: z.union([z.literal(1), z.literal(2)]).optional(),
+  structures: z
+    .array(
+      z.object({
+        label: z.string().max(60),
+        squares: z.number().positive().max(500),
+        pitchOver12: z.number().min(0).max(24).nullable(),
+        planes: z.number().int().min(0).max(200),
+        material: z.enum(MATERIAL_KEYS),
+        stories: z.union([z.literal(1), z.literal(2)]),
+        lat: z.number().min(-90).max(90),
+        lon: z.number().min(-180).max(180),
+      }),
+    )
+    .max(8)
+    .optional(),
   name: z.string().max(120).nullable().optional(),
   email: z.string().max(200).nullable().optional(),
   phone: z.string().max(40).nullable().optional(),
@@ -68,8 +82,23 @@ export async function POST(request: Request) {
     const options = {
       material: input.material ?? DEFAULT_OPTIONS.material,
       stories: input.stories ?? DEFAULT_OPTIONS.stories,
+      planes: input.planes,
     };
-    const price = priceFor(input.squares, options);
+
+    // When the rep added structures, THEY are the estimate: the total is the
+    // sum of the line items so the arithmetic on the proposal adds up exactly.
+    const { priceStructures } = await import("@/lib/quotes/structures");
+    const multi =
+      input.structures && input.structures.length > 1
+        ? priceStructures(input.structures)
+        : null;
+    const price = multi
+      ? {
+          low: multi.totalPrice,
+          high: multi.totalPrice,
+          shown: multi.totalPrice,
+        }
+      : priceFor(input.squares, options);
 
     const saved = await saveQuote(user, {
       address: input.address,
@@ -78,7 +107,8 @@ export async function POST(request: Request) {
       name: input.name ?? null,
       email: input.email ?? null,
       phone: input.phone ?? null,
-      squares: input.squares,
+      squares: multi ? multi.totalSquares : input.squares,
+      structures: multi ? multi.structures : undefined,
       pitchDegrees: input.pitchDegrees,
       planes: input.planes,
       measureSource: input.measureSource,

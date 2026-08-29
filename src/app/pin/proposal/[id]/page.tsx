@@ -28,7 +28,7 @@ export default async function ProposalPage({
   if (!data) notFound();
 
   return (
-    <main className="min-h-dvh overflow-y-auto bg-slate-100 pb-20">
+    <main className="min-h-dvh overflow-y-auto bg-slate-100 pb-20 print:min-h-0 print:pb-0">
       <PrintBar token={data.publicToken} address={data.address} />
       <div className="mx-auto max-w-[8.5in] px-3 py-4 print:p-0">
         <div className="shadow-xl print:shadow-none">

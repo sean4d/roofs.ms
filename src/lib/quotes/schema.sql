@@ -246,3 +246,23 @@ CREATE TABLE IF NOT EXISTS company_profile (
   updated_at      timestamptz NOT NULL DEFAULT now(),
   updated_by      uuid REFERENCES users (id)
 );
+
+-- ---------------------------------------------------------------------------
+-- Properties with more than one roof.
+--
+-- 109 Green Timber is the case: a house and a detached shed, both plainly
+-- visible in the same yard, and the tool measured only the building nearest
+-- the tap. That produced 38.9 squares against a real 94.36 and read as a
+-- measurement failure when it was actually a modelling failure. Google's
+-- findClosest returns ONE building; a property can have several.
+--
+-- So a quote carries a list of structures. The first is the main roof and the
+-- rest are whatever the rep tapped afterwards, each with its own area, pitch,
+-- plane count and material, priced separately and totalled. One estimate, one
+-- customer, one piece of paper.
+--
+-- jsonb rather than a child table because these are never queried across
+-- quotes: they are read back with the quote and rendered. A table would add a
+-- join to every proposal render and buy nothing.
+-- ---------------------------------------------------------------------------
+ALTER TABLE quotes ADD COLUMN IF NOT EXISTS structures jsonb;

@@ -19,6 +19,21 @@ import type { CompanyProfile } from "@/lib/quotes/profile";
  */
 export function SettingsForm({ profile }: { profile: CompanyProfile }) {
   const [form, setForm] = useState(profile);
+  /**
+   * The credential list is edited as ONE STRING, not as an array.
+   *
+   * It used to split on newlines and trim every line on each keystroke, then
+   * re-join for the textarea's value. Trimming changes the string, so React
+   * wrote a different value back into the DOM than the one being typed, and
+   * the caret jumped to the end of the box on every character. The symptom
+   * was that a new line could only ever be added at the bottom, which is
+   * exactly what the owner hit trying to put GAF under BBB.
+   *
+   * So the raw text is the state, and it is only split and trimmed on save.
+   */
+  const [credentialsText, setCredentialsText] = useState(
+    profile.credentials.join("\n"),
+  );
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -71,7 +86,10 @@ export function SettingsForm({ profile }: { profile: CompanyProfile }) {
           license: form.license,
           warranty: form.warranty,
           financingLine: form.financingLine,
-          credentials: form.credentials,
+          credentials: credentialsText
+            .split("\n")
+            .map((l) => l.trim())
+            .filter(Boolean),
           headline: form.headline,
           closingLine: form.closingLine,
           accentColor: form.accentColor,
@@ -197,14 +215,9 @@ export function SettingsForm({ profile }: { profile: CompanyProfile }) {
           read them, because that is a claim they can hold you to.
         </p>
         <textarea
-          value={form.credentials.join("\n")}
-          onChange={(e) =>
-            set(
-              "credentials",
-              e.target.value.split("\n").map((l) => l.trim()),
-            )
-          }
-          rows={7}
+          value={credentialsText}
+          onChange={(e) => setCredentialsText(e.target.value)}
+          rows={8}
           className="w-full rounded-lg border border-slate-300 px-3 py-2.5 font-mono text-sm outline-none focus:border-[#123b63]"
         />
         <Field
