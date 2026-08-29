@@ -1,6 +1,54 @@
 "use server";
 
 import { deliverLead, type Lead } from "@/lib/leads";
+import { geocode } from "@/lib/quotes/measure";
+
+/**
+ * Turn what the visitor typed into the fields a CRM needs.
+ *
+ * The form asks for "City or ZIP" in one box, which is the right question to
+ * ask a homeowner and the wrong shape for Roofr, which requires city, state
+ * and postal code as three separate required fields. Somebody who types 39426
+ * gives us a postcode and no city; somebody who types Hattiesburg gives us a
+ * city and no postcode. Either way two of Roofr's three fields are empty and
+ * the job card is rejected or lands half blank.
+ *
+ * So the address is resolved through the same geocoder the estimator uses, and
+ * the pieces come back separated. The visitor still answers one easy question.
+ *
+ * NEVER FATAL. This is a network call sitting in the path of a lead, and a
+ * lead is worth far more than a tidy postcode. Any failure, timeout, missing
+ * key or unrecognisable address leaves the lead exactly as the visitor typed
+ * it and delivery carries on.
+ */
+async function withAddressParts(lead: Lead): Promise<Lead> {
+  const typed = [lead.address, lead.city].filter(Boolean).join(", ");
+  if (!typed) return lead;
+
+  try {
+    const point = await geocode(typed);
+    if (!point) return lead;
+
+    // A bare city name is ambiguous across states: "Columbia" is a real place
+    // in Mississippi and a bigger one in South Carolina. Accepting a result
+    // from outside the territory would put a Hattiesburg homeowner's job card
+    // in the wrong state, which is worse than leaving the field blank. The
+    // Gulf Coast work crosses into Alabama and Louisiana, so those count.
+    if (point.state && !["MS", "AL", "LA"].includes(point.state)) return lead;
+
+    return {
+      ...lead,
+      // What the visitor typed wins where the geocoder found nothing, so a
+      // resolvable address never loses detail it already had.
+      city: point.city || lead.city,
+      state: point.state || undefined,
+      postal: point.postal || undefined,
+      address: point.formatted || lead.address,
+    };
+  } catch {
+    return lead;
+  }
+}
 
 /**
  * Lead form server action (invoked via useActionState). Validates, filters
@@ -78,7 +126,7 @@ export async function submitLead(
     };
   }
 
-  const result = await deliverLead(lead);
+  const result = await deliverLead(await withAddressParts(lead));
 
   if (!result.delivered) {
     return {
