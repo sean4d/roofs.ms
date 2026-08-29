@@ -76,7 +76,7 @@ export const SERVICES: Service[] = [
       "Holiday lighting for HOAs, master-planned communities and neighborhood entrances in Mississippi. Board-ready proposals, consistent design year to year, full maintenance and storage.",
     summary:
       "Entrance monuments, boulevard trees and common areas designed as one coherent display, with board-ready proposals and the same look every year.",
-    image: IMAGES.hoaEntrance,
+    image: IMAGES.projectHattiesburgPalms,
     enabled: true,
     audience: "commercial",
   },

@@ -53,7 +53,7 @@ export default function ServiceAreasPage() {
         eyebrow="Coverage"
         title="Where we work."
         intro="Hattiesburg and the Pine Belt are home. We cover the Gulf Coast for commercial and hospitality work, and we travel further for projects worth traveling for."
-        image={IMAGES.hoaEntrance}
+        image={IMAGES.projectHattiesburgPalms}
         quoteLocation="areas_hub"
       />
       <Breadcrumbs trail={trail} />

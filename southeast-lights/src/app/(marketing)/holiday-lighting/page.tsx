@@ -58,7 +58,7 @@ export default function HolidayLightingPage() {
         eyebrow="Holiday Lighting"
         title="Christmas lighting, handled from start to finish."
         intro="Commercial-grade lighting custom cut to your property, installed by roof-trained crews, maintained all season, then removed and stored until next year."
-        image={IMAGES.holidayHero}
+        image={IMAGES.projectHattiesburgCanopy}
         quoteLocation="holiday_hub"
         secondary={{ label: "Build your display", href: "/estimator" }}
       />

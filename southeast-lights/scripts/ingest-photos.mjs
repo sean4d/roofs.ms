@@ -19,14 +19,11 @@ import fs from "node:fs";
 import path from "node:path";
 
 const SLOTS = {
-  "holiday-hero-estate": { width: 2400, use: "Homepage hero, holiday mode" },
   "permanent-hero": { width: 2400, use: "Homepage hero, off-season mode" },
   "estate-wide": { width: 2400, use: "Final CTA band, services hub hero" },
-  "hoa-entrance": { width: 2400, use: "HOA segment tile, HOA vertical hero" },
   "retail-center": { width: 1600, use: "Commercial segment tile and vertical" },
   "colonial-columns": { width: 1600, use: "Residential segment tile" },
   "installer-roof": { width: 1600, use: "Why a roofing company section" },
-  "crew-boom-lift": { width: 1600, use: "About hero, commercial proof" },
   "live-oak-wrap": { width: 1600, use: "Tree wrapping service" },
   "tree-wrapping-hero": {
     width: 2400,
@@ -34,11 +31,8 @@ const SLOTS = {
   },
   church: { width: 1600, use: "Churches vertical" },
   "country-club": { width: 1600, use: "Country clubs vertical" },
-  "golf-club": { width: 1600, use: "Golf clubs" },
   "hotel-resort": { width: 1600, use: "Hotels and resorts vertical" },
   "downtown-municipal": { width: 1600, use: "Municipal vertical" },
-  apartments: { width: 1600, use: "Multifamily vertical" },
-  "office-building": { width: 1600, use: "Commercial buildings vertical" },
   "bistro-patio": { width: 1600, use: "Bistro and patio service" },
   "mardi-gras": { width: 1600, use: "Mardi Gras service" },
   "wedding-event": { width: 1600, use: "Wedding and event service" },

@@ -27,10 +27,10 @@ export function generateStaticParams() {
 
 /** Hero image varies by market so coastal pages do not show a Pine Belt estate. */
 const HERO_BY_TIER = {
-  home: IMAGES.holidayHero,
+  home: IMAGES.projectPoplarvilleContinuousRun,
   core: IMAGES.colonialColumns,
   coast: IMAGES.hotelResort,
-  regional: IMAGES.hoaEntrance,
+  regional: IMAGES.projectHattiesburgPalms,
 } as const;
 
 export async function generateMetadata({

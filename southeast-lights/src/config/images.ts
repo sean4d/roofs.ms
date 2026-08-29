@@ -41,8 +41,6 @@ const meta = manifest as Record<string, ManifestEntry>;
 
 /** Slots filled with owner-supplied photography rather than AI placeholders. */
 const OWNER_SUPPLIED = new Set([
-  "holiday-hero-estate",
-  "hoa-entrance",
   "retail-center",
   "colonial-columns",
   "installer-roof",
@@ -161,10 +159,6 @@ export const IMAGES = {
     "An installer near the top of an extension ladder clipping warm white C9 bulbs along a gable rake two stories up, with the neighboring rooflines already lit",
     "60% center",
   ),
-  holidayHero: img(
-    "holiday-hero-estate",
-    "A large evergreen wrapped in multicolor Christmas lights at the center of a lit campus courtyard, with warm white bistro strings overhead and surrounding trees wrapped in white lights",
-  ),
   /**
    * The closing band on the homepage, plus the hero on the projects, services
    * and inspiration hubs. Real work, resampled and sharpened up to the same
@@ -178,10 +172,6 @@ export const IMAGES = {
   permanentHero: img(
     "permanent-hero",
     "Contemporary luxury home at night lit by permanent architectural LED lighting concealed beneath the roof eaves",
-  ),
-  hoaEntrance: img(
-    "hoa-entrance",
-    "Two mature trees with trunks and limbs fully wrapped in warm white lights beside a lit modern home at dusk",
   ),
   retailCenter: img(
     "retail-center",
@@ -206,10 +196,6 @@ export const IMAGES = {
   liveOakWrap: img(
     "live-oak-wrap",
     "Enormous Southern live oak with every major limb wrapped in warm white lights glowing against a night sky",
-  ),
-  crewBoomLift: img(
-    "crew-boom-lift",
-    "Installation crew using an articulating boom lift to hang commercial Christmas lighting along a high building parapet at dusk",
   ),
   installerRoof: img(
     "installer-roof",
@@ -252,10 +238,6 @@ export const IMAGES = {
     "country-club",
     "Country club clubhouse with white columns and porte-cochere outlined in warm white Christmas lights",
   ),
-  golfClub: img(
-    "golf-club",
-    "Golf club stone entry monument and landscaped beds lit in warm white with uplit pines at twilight",
-  ),
   hotelResort: img(
     "hotel-resort",
     "Luxury resort porte-cochere outlined in warm white Christmas lights with palm trunks wrapped in lights",
@@ -263,14 +245,6 @@ export const IMAGES = {
   downtownMunicipal: img(
     "downtown-municipal",
     "Historic downtown main street decorated for Christmas with lit storefronts, wrapped street trees and lamp post wreaths",
-  ),
-  apartments: img(
-    "apartments",
-    "Modern apartment community clubhouse and entrance with rooflines outlined in warm white lights",
-  ),
-  officeBuilding: img(
-    "office-building",
-    "Modern commercial office building with roofline and entry canopy outlined in crisp warm white lighting",
   ),
   colonialColumns: img(
     "colonial-columns",
