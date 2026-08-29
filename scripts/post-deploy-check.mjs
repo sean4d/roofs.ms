@@ -121,6 +121,14 @@ console.log(`\nField tool`);
     "database is reachable from the deployment",
     r.status === 200 ? r.text.slice(0, 40) : `http ${r.status}`,
   );
+  // Migrations are run by hand and a deploy does not wait for one, so the code
+  // can be ahead of the schema. That failure is invisible until a rep saves a
+  // quote in front of a customer and gets a 500.
+  check(
+    r.text.includes('"schema":true'),
+    "the schema has every column this build needs",
+    r.text.includes('"schema"') ? r.text.slice(0, 60) : "endpoint too old",
+  );
 }
 {
   // Cross-site POST must be refused, or any page on the internet could make a

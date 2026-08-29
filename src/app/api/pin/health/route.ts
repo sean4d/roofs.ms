@@ -34,9 +34,41 @@ export async function GET() {
 
   try {
     await db()`SELECT 1`;
+
+    /**
+     * Is the schema as new as the code?
+     *
+     * Migrations are run by hand, and a deploy does not wait for one. So a
+     * build can ship a feature whose column does not exist yet, everything
+     * looks healthy, and the failure surfaces as a 500 in front of a customer
+     * the first time a rep uses it. That is exactly the shape of the password
+     * rotation this endpoint was written for: broken in production, invisible
+     * from outside.
+     *
+     * A boolean, deliberately. Which columns are missing is useful to us and
+     * to nobody else, so the list stays in the code and only the verdict is
+     * published. Add a column here when a migration ships with a feature.
+     */
+    const required = [
+      ["quotes", "structures"],
+      ["quotes", "public_token"],
+      ["quotes", "imagery_date"],
+      ["company_profile", "logo_data_uri"],
+      ["users", "active"],
+    ];
+    const found = (await db()`
+      SELECT table_name, column_name
+        FROM information_schema.columns
+       WHERE table_schema = 'public'
+         AND table_name = ANY(${required.map((r) => r[0])})
+    `) as Array<{ table_name: string; column_name: string }>;
+    const have = new Set(found.map((r) => `${r.table_name}.${r.column_name}`));
+    const schemaCurrent = required.every((r) => have.has(`${r[0]}.${r[1]}`));
+
     return NextResponse.json(
       {
         ok: true,
+        schema: schemaCurrent,
         // Which commit is actually serving this. Vercel does not expose a
         // build id in the HTML, so without this there is no way to tell from
         // outside whether a push has finished deploying or the old build is
