@@ -1,0 +1,232 @@
+{
+  "apartments": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADQAQCdASoQAAoABABsJbACdAD1RDS6AAD+pluRFRIAHxSL4Z2q43Pqr2r7wlMCcM2LAg5U3Jm0OGaPNFs1Je8+TDformh0hsAAAA=="
+  },
+  "bistro-patio": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAABQAgCdASoQAAoABABsJbACdH8AF8hLvhIlbyAA/nVMhnW802Rjbe/gcypajSYW7uinxGM7085eV/q91HiqGDTjWk2p9CINhz+pck36U4Uh3mHHeH2zsZqmT2x6Fy03+4AAAA=="
+  },
+  "c9-detail": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAwAgCdASoQAAoABABsJbACdAYrxmsOQS9QAAD+wfrDlH+nRjgTKGQt669Wo2RT0U8odwtSEyDO+4RuCePrMNjT0SKFLkY1baRSaWK4W1Nv4Oxp0IAAAA=="
+  },
+  "church": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADwAQCdASoQAAoABABsJYgCdADdlpLPEEAA/vDoPlhzivopBIkemJpZ2UXP2EW9K7Nmlzy+oSsep/37YtEgBStaTcjBdPDEAAA="
+  },
+  "colonial-columns": {
+    "width": 2400,
+    "height": 1525,
+    "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoQAAoABABsJQBOgBhwZY07AAD+9EUd79T+YWLuRhGrfmpUp9FW1YSy/9Bt8dprMWnzReHxTwYjS8wOEmAAAA=="
+  },
+  "country-club": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAAAwAgCdASoQAAoABABsJaACdEf/ggVEQH6lAAD+29GfJQ3E9N7z/1bErtc+fPl8KHtteJiDFh2b/ieMM7GDNERv/acHZUAA"
+  },
+  "crew-boom-lift": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAAAwAgCdASoQAAoABABsJZACdIDZFYAc6vaCAAD+38FDM3i8LS8k+clL1cNQ0hNw32uWwkN6RW/ShSOF5dvmcpUfxbtulZ/jbVjn0Cp5iDiaMa+/itsJia7rXx96AAAA"
+  },
+  "downtown-municipal": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAAAQAgCdASoQAAoABABsJbACdH8ADT3tVeQAAP7AdLoiLkwF6RyQ46Ztg77HGGJzcdpaaIcn/kVro6PX7fqsffOYeR4rBwbuVLOdk7wmk9QBNS/MjNxLQAAA"
+  },
+  "estate-wide": {
+    "width": 2400,
+    "height": 1805,
+    "blurDataURL": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAAAwAgCdASoQAAwABABsJZgCw7EfnTOoRvIQAAD+0KSh5nQTyDOsPTWmoEAklujFS3SOWbAQ094EdgcJJcJEBdlnmuCm4hA5S4AAAA=="
+  },
+  "golf-club": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAQCdASoQAAoABABsJbACdADHau2AAAD7g71zmNLB1VMbd7rgwos3q0iM0faIrCJYjLAbk5kmxThmu7awAaP6wX4LKI6Lq7dhkzzAAAA="
+  },
+  "hoa-entrance": {
+    "width": 600,
+    "height": 400,
+    "blurDataURL": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADQAQCdASoQAAsABABsJbACdAEGqvAxAAD+7on59DRwGFqdj9iXU6zN512AQeyTpsH+Y7s6BmyyW1I9dJ2q2at7RWgoLiUNMdt6wptUhgHacwFG1EAAAA=="
+  },
+  "holiday-hero-estate": {
+    "width": 1500,
+    "height": 650,
+    "blurDataURL": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAACwAQCdASoQAAcABABsJQBOgBrdHMBAAP7prXfACttIlxDL8+gO1xQawcTKVbXHXrYCgASsa2AlNBTXPAoyfNAA"
+  },
+  "hotel-resort": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADwAQCdASoQAAoABABsJbACdAEeX4XbkTAA/qaRdPVMgPVSzu3mhzjlkjYEAcsRXdtI6BU2HhoONDJZTg4C2LUioEG1wxvGyNc1HF9groZOIAAA"
+  },
+  "installer-roof": {
+    "width": 1536,
+    "height": 2048,
+    "blurDataURL": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAAAwBACdASoQABUAPxl0slCspqSisAgBkCMJbACdMoAlkxfq2Z1rtYqoU4AA/g5xuKzSuQ3WRKeRNMVLiXs8XX79Kq69cSF1wmxDp0BMPEpkpdrleFKtxz9YvxktlEhwXQ56kh8Pkl1d2AH3cFYz/oSpiwArWxqgPNRWyFCLOAA="
+  },
+  "landscape-lighting": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAwAgCdASoQAAoABABsJYwCdAEfgNE1D8/YAAD+24PK/22TgKfYgxTpENC9swc3JFLNix7o25S+4hhIe2EhUyoHom4BQg6n7iUyCsgtAAA="
+  },
+  "live-oak-wrap": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAAAQAgCdASoQAAoABABsJYwCdAEeknp4CgwAAP7ckhPD8cFyg7ywY30G2oN/uHWHvZz1uN0QbqQEwm/nWJpN3hxiuwKAAA=="
+  },
+  "mardi-gras": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAwAgCdASoQAAoABABsJaACdAEflj6estoVAAD+26Ry2wTf3MyKSGz7MIHUmNKRCPAdV/UFBlg1RPxp4PXGQwzQF4aPz+kSOi+KdDgAAAA="
+  },
+  "office-building": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAAAQAgCdASoQAAoABABsJagCdGuAAgWzpTwAAP7QNiFabhf7cgpBqOAeRunJr3aYCBMX1tUZ6fekh2F+1eAacK9/1xAAAA=="
+  },
+  "permanent-color": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAQAgCdASoQAAoABABsJZACdIExFjR3TBrwAP7u7SRVXYi4NNFCp/R6c8q3E+3iucvcywGZkVrZP12y11QEjs0pnc4LaiQZ2RNWS4jXUsAAAA=="
+  },
+  "permanent-hero": {
+    "width": 2400,
+    "height": 1371,
+    "blurDataURL": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADwAQCdASoQAAkABABsJZACdACzW7gfQgAA9gl8+Gbe2tJAl2cxnf3brKkHAeaAvfPvj41uLjp8sRRrphjYWoPA1CLTkkqdnfyYE6jhPEW3jIAE0JAAAA=="
+  },
+  "retail-center": {
+    "width": 1600,
+    "height": 1064,
+    "blurDataURL": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAQAgCdASoQAAsABABsJbACdAEPdvT2qk4AAP7mC9Ei4V01Qt7rXZ9CH2iQxxzODyccgeioFf6MeSO9FPtXROjoVeDu7hx+5bVciyzBEC9C16d+F4AAAA=="
+  },
+  "storage-warehouse": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAwAgCdASoQAAoABABsJZwAAxS1MPlrSZaAAAD+fhMg3A2Rrm9F5D1gW7ehHPcHZkuyMmAipQg/bfz1tvlJJof9Mn9VKe8oLryKg02V4AA="
+  },
+  "tree-shrub": {
+    "width": 1600,
+    "height": 1179,
+    "blurDataURL": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAwAgCdASoQAAwABABsJbACdGuAAvlv1yv3AAD+5GQSwS400o/ccejhLF5Te4mH99ECnr7VV8xpSdTvnjBQqelUV6zkoSscCphJLKIoUJsBTCgA"
+  },
+  "wedding-event": {
+    "width": 1600,
+    "height": 1040,
+    "blurDataURL": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAQAgCdASoQAAoABABsJQBOgjgAqCfazHQAAP7O+OyrV9XspUXtBI/vTEi3s++7ourZATuQTLmhhfxLhss0AKpSHt46DwznbQNI7Bn8yAAAAA=="
+  },
+  "project-poplarville-colonial": {
+    "width": 2400,
+    "height": 1525,
+    "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoQAAoABABsJQBOgBhwZY07AAD+9EUd79T+YWLuRhGrfmpUp9FW1YSy/9Bt8dprMWnzReHxTwYjS8wOEmAAAA=="
+  },
+  "project-hattiesburg-palms": {
+    "width": 2400,
+    "height": 2408,
+    "blurDataURL": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAAAQAgCdASoQABAABABsJZgCdAD0a2tQMuXAAP7pWKe3qvfEQqMrVAVw3+GbUh5QqBC+kOcM3KnLpJkhILootXsTDJHJPM4YAAA="
+  },
+  "project-hattiesburg-ridges-hips": {
+    "width": 2400,
+    "height": 1800,
+    "blurDataURL": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAAAQAgCdASoQAAwABABsJQBOgCG0QSA7UIVwAP7xpjpKg31K4jT5hXwlM77MHEvACQ7sGpZGogXAVuc+U1CAAA=="
+  },
+  "project-poplarville-blue-white": {
+    "width": 2400,
+    "height": 1833,
+    "blurDataURL": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAABwAQCdASoQAAwABABsJZAC7AFAAAD+8WdkllXXhqHmgZ7+uM1L8GmGA6lPTDJ5ByxupLLyF8YAAA=="
+  },
+  "project-poplarville-red-green-white": {
+    "width": 2400,
+    "height": 1805,
+    "blurDataURL": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAACQAQCdASoQAAwABABsJaQAAtRZuwAA/vaJ2GnQJWHV2xiN5b4uRPUJX01X0QYdLtAAAA=="
+  },
+  "project-poplarville-outbuildings": {
+    "width": 2400,
+    "height": 1805,
+    "blurDataURL": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADwAQCdASoQAAwABABsJZwAAudfNos7WAAA/vaC+Wha5U6122bHS8nKk2QsgUAA"
+  },
+  "project-poplarville-apples": {
+    "width": 2400,
+    "height": 1663,
+    "blurDataURL": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADwAQCdASoQAAsABABsJZQC/ODp+/66GYAA/vaT1vPKX4dotsyfme8tDalqq8OqKsnRpZZmdRAAAA=="
+  },
+  "project-poplarville-halloween": {
+    "width": 2400,
+    "height": 1800,
+    "blurDataURL": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAABwAQCdASoQAAwABABsJagCdAGIQAD+8Q0nH+jFBf6mN9Vf9nbT/kxQOqz0i6KfkTgWwJnTIgAAAA=="
+  },
+  "project-hattiesburg-two-story": {
+    "width": 2400,
+    "height": 1800,
+    "blurDataURL": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADQAQCdASoQAAwABABsJZQAAucSLhDAAAD+9oYL9F8fMSlM02M3T3ph38OszeZlQOXSXQtiZwIAAA=="
+  },
+  "project-hattiesburg-canopy": {
+    "width": 2400,
+    "height": 2012,
+    "blurDataURL": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAQAgCdASoQAA0ABABsJYgCdAEN/iJeHnAAAP7s2nyNfXBTNmZ9FD/wXlMQ4UN2ZB5eaT6Vf3dbSk3paVLnnavk86Rcze/gEW88wAAA"
+  },
+  "project-gcs-front": {
+    "width": 2400,
+    "height": 1800,
+    "blurDataURL": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADwAQCdASoQAAwABABsJZgC7AEO4b+gC4AA/vVwX5IuBW9/9n0VHlCnfPOJO7FiLNiA/7/rxwZDlA30gMz3QAAA"
+  },
+  "project-gcs-mural": {
+    "width": 2400,
+    "height": 1800,
+    "blurDataURL": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAACwAQCdASoQAAwABABsJaAAAuc/r9QAAP72hgvGcmmVMi+ov0N12GyISPYJHnGrPgointIfc8P+eKAAAAA="
+  },
+  "project-gcs-walkway": {
+    "width": 2400,
+    "height": 1800,
+    "blurDataURL": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAQCdASoQAAwABABsJQBOgCHOE+c4XAD+9oN3OL2fNvTnzVxrK1HvpM0CzDW9avCN27VYAj4xTrwAuUAAAA=="
+  },
+  "project-hattiesburg-low-wide-angle": {
+    "width": 2400,
+    "height": 1800,
+    "blurDataURL": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADwAQCdASoQAAwABABsJYgCdAEO4Vjat4AA/vRTdn2WnM0lSoK89KyCr3i+fWcL3Tef8YV3FBzc9TVnWAAAAA=="
+  },
+  "project-hattiesburg-low-wide": {
+    "width": 2400,
+    "height": 1800,
+    "blurDataURL": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAAAQAgCdASoQAAwABABsJYgCdAEPDwk4vNQAAP7zMYgqX7r2JEPCL2ZjKcOPwlOzEeNNM+AA"
+  },
+  "project-pearsons-block": {
+    "width": 2400,
+    "height": 1805,
+    "blurDataURL": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADQAQCdASoQAAwABABsJZACsAED7BpX4AD+G87BhBOogMrNsd0Kwaq7MSrxnKrYe4wzAFBoStvPzGgCAAA="
+  },
+  "project-pearsons-front": {
+    "width": 2400,
+    "height": 1800,
+    "blurDataURL": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADwAQCdASoQAAwABABsJZgC7AEK/LjU6IAA/vDUciW9UyEaWpDvs5JaYcu9V/89wg6rdG/FMJhIwRAAAAA="
+  },
+  "project-poplarville-continuous-run": {
+    "width": 2400,
+    "height": 1803,
+    "blurDataURL": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADQAQCdASoQAAwABABsJZAC7AEPfoWWAAD+74kk3EmOBMa8iYNipuz/exQ0wFUV0I5ja0eHik7tuddBazosmbY79antcAAA"
+  },
+  "project-hattiesburg-clean-line": {
+    "width": 2400,
+    "height": 1800,
+    "blurDataURL": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADQAQCdASoQAAwABABsJZQAAubf82MVQAD+9WzK/hFxcjotfShxz50qd1sF1dGNmhe6uhge8XAAAA=="
+  },
+  "hero-mobile-install": {
+    "width": 1658,
+    "height": 2400,
+    "blurDataURL": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAAAQBACdASoQABcAPxl0slCspqSisAgBkCMJQBZwBDwCA/dDjWdqtL9qAAD+7ndfwXrAJsMUDKmzHcnv7mt33+eqBg0BkPX5bqa2lpKfkUv3vK65wltOHl5X5mBOMf6OZtFY/LOCu6wYd4ehZ+nCcChM14l8Rg+SeMvdNlmQAAA="
+  },
+  "tree-wrapping-hero": {
+    "width": 2400,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoQAAsABABsJZgCdADHoIjkngD+8XRjQHPO3ZMtw1sjMUtVkQNhyQCaXvP9HHwT+FWhTYeHfHWcm6JAtcAAAA=="
+  },
+  "landscape-lighting-hero": {
+    "width": 1800,
+    "height": 2400,
+    "blurDataURL": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADQAwCdASoQABUAPxl0sVCspqSisAgBkCMJYwC06CHfjf0X2O6MlAAA/ujZwm9XJJMu4cCY4BAKhaCx/LOdMQoJ5foHSgXCbRV8YPfHzw/1h5n8rtpfFEbEAAA="
+  }
+}

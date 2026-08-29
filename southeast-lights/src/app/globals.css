@@ -1,0 +1,422 @@
+@import "tailwindcss";
+
+/*
+ * Southeast Lights design system.
+ *
+ * Anchored to the real logo: its mark is a deep crimson (#B00000 sampled from
+ * the artwork), so red is the brand color, not a seasonal decoration. The
+ * job of this system is to make that red read as expensive rather than as a
+ * generic red-and-green Christmas template.
+ *
+ * How that is achieved:
+ *   - The ground is near-black with a warm bias, not navy and not pure black.
+ *     Lighting photography sits on it without a color cast.
+ *   - Red is used at low frequency and high value: primary buttons, the
+ *     wordmark, a single accent rule. Never large red fills.
+ *   - Champagne carries warmth and "lit" everywhere red is not. It is the
+ *     color of an incandescent C9 filament and does most of the emotional
+ *     work.
+ *   - Evergreen exists but is rationed to holiday-mode surfaces only.
+ */
+
+@theme {
+  /* ---- Brand, sampled from the logo artwork ---- */
+  --color-brand-700: #8a0000;
+  --color-brand-600: #a00000;
+  --color-brand-500: #b00000; /* the logo red */
+  --color-brand-400: #cc2222;
+  --color-brand-300: #e05555;
+
+  /* ---- Night grounds. Warm-biased charcoal, never pure black. ---- */
+  --color-ink-950: #0a0908;
+  --color-ink-900: #121010;
+  --color-ink-850: #1a1717;
+  --color-ink-800: #221e1d;
+  --color-ink-700: #322c2b;
+  --color-ink-600: #4a4241;
+
+  /* ---- Champagne. Warm filament light: the workhorse accent. ---- */
+  --color-champagne-200: #f6e7c8;
+  --color-champagne-300: #efd9ab;
+  --color-champagne-400: #e5c589;
+  --color-champagne-500: #d4ae6a;
+  --color-champagne-600: #b08f4f;
+
+  /* ---- Warm neutrals for text on dark ---- */
+  --color-bone-100: #f5f1ea;
+  --color-bone-300: #d9d2c7;
+  --color-bone-500: #a89f93;
+
+  /* ---- Day surfaces for reading-heavy pages ---- */
+  --color-paper-50: #fbfaf8;
+  --color-paper-100: #f4f1ec;
+  --color-paper-200: #e7e2d9;
+  --color-graphite-900: #1d1a19;
+  --color-graphite-600: #5c5551;
+
+  /* Rationed to holiday-mode surfaces. Never a general accent. */
+  --color-evergreen-700: #17392a;
+  --color-evergreen-500: #2c6c4f;
+
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-fraunces);
+
+  --radius-card: 0.875rem;
+
+  --animate-twinkle: twinkle 4s ease-in-out infinite;
+  --animate-drift: drift 1s linear infinite;
+
+  @keyframes twinkle {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.45;
+    }
+  }
+
+  @keyframes drift {
+    to {
+      transform: translateY(100vh);
+    }
+  }
+}
+
+@layer base {
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+    /* No page should ever scroll sideways. A stray wide child is a bug, and
+       this makes it show up as a clipped element rather than a broken page. */
+    overflow-x: hidden;
+    /* Dark by default: this site lives at night. */
+    background-color: var(--color-ink-950);
+  }
+
+  body {
+    @apply bg-ink-950 text-bone-300 antialiased;
+    /*
+     * Reserve space for the sticky mobile action bar site-wide, plus the iOS
+     * home indicator. Done once here rather than per-page, so nothing can
+     * ever end up underneath it: form submit buttons, estimator controls,
+     * footer links and modal close buttons all stay reachable.
+     */
+    padding-bottom: calc(5.25rem + env(safe-area-inset-bottom));
+  }
+
+  @media (min-width: 1024px) {
+    body {
+      padding-bottom: 0;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display font-semibold tracking-[-0.015em] text-bone-100;
+  }
+
+  /* Light bands invert the type stack. */
+  .surface-day :is(h1, h2, h3, h4, h5, h6) {
+    @apply text-graphite-900;
+  }
+
+  ::selection {
+    background-color: var(--color-champagne-400);
+    color: var(--color-ink-950);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-champagne-400);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-[86rem] px-5 sm:px-8 lg:px-10;
+  }
+
+  /*
+   * One vertical rhythm for every band on the site. Sections were drifting
+   * between py-20 and py-28 by hand, which is what made the spacing feel
+   * uneven. Everything uses this now.
+   */
+  .band {
+    @apply py-16 sm:py-20 lg:py-28;
+  }
+
+  .band-tight {
+    @apply py-12 sm:py-16 lg:py-20;
+  }
+
+  .surface-day {
+    @apply bg-paper-50 text-graphite-600;
+  }
+
+  /* Eyebrow label. Small, tracked, champagne. */
+  .eyebrow {
+    @apply font-sans text-[0.7rem] font-semibold tracking-[0.2em] uppercase;
+  }
+
+  /*
+   * The signature card. Translucent, with a hairline that warms and a bloom
+   * that rises on hover.
+   *
+   * USE SPARINGLY. This is an accent, not the default container. Glass inside
+   * glass inside glass is what makes a site read as a component showcase
+   * rather than a designed page. Reach for `.panel`, a plain border, or
+   * nothing at all before reaching for this.
+   */
+  .card-lit {
+    @apply relative rounded-card border border-white/10 bg-white/[0.035] backdrop-blur-sm transition-all duration-500;
+  }
+
+  .card-lit:hover,
+  .card-lit:focus-within {
+    @apply -translate-y-1 border-champagne-400/40 bg-white/[0.06];
+    box-shadow:
+      0 0 0 1px --alpha(var(--color-champagne-400) / 10%),
+      0 24px 60px -20px --alpha(var(--color-champagne-500) / 30%),
+      0 10px 24px -12px rgb(0 0 0 / 0.6);
+  }
+
+  /*
+   * The workhorse container: a hairline and a whisper of lift, no glass, no
+   * blur, no bloom. Most grids should use this.
+   */
+  .panel {
+    @apply rounded-card border border-white/[0.09] bg-white/[0.02] transition-colors duration-300;
+  }
+
+  .panel:hover,
+  .panel:focus-within {
+    @apply border-white/20;
+  }
+
+  /*
+   * Grid children that must line up. Applied to the <a> or <div> inside a
+   * grid cell: full height, column flow, so `mt-auto` on the last element
+   * pins every card's footer to the same baseline regardless of how long the
+   * paragraph above it runs.
+   */
+  .cell {
+    @apply flex h-full flex-col;
+  }
+
+  /* Consistent media block inside a card. Never let images set their own height. */
+  .cell-media {
+    @apply relative w-full overflow-hidden;
+    aspect-ratio: 3 / 2;
+  }
+
+  .card-day {
+    @apply rounded-card border border-paper-200 bg-white transition-all duration-300;
+  }
+
+  .card-day:hover,
+  .card-day:focus-within {
+    @apply -translate-y-1 border-champagne-500/50;
+    box-shadow: 0 18px 40px -18px rgb(29 26 25 / 0.22);
+  }
+
+  /* Primary action. Brand red, used sparingly so it keeps its authority. */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-brand-500 px-6 py-3.5 font-semibold text-white transition-all duration-200 hover:bg-brand-400;
+    box-shadow: 0 8px 24px -10px --alpha(var(--color-brand-500) / 70%);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-white/20 px-6 py-3.5 font-semibold text-bone-100 transition-colors duration-200 hover:border-champagne-400/60 hover:text-champagne-300;
+  }
+
+  .btn-ghost-day {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-paper-200 px-6 py-3.5 font-semibold text-graphite-900 transition-colors duration-200 hover:border-champagne-500;
+  }
+
+  /* Champagne wash behind a hero: a roofline just out of frame. */
+  .glow-top {
+    background: radial-gradient(
+      60% 100% at 50% 0%,
+      --alpha(var(--color-champagne-400) / 18%) 0%,
+      transparent 70%
+    );
+  }
+
+  /* Legibility scrim over photography. Two stops, never a flat overlay. */
+  .scrim {
+    background: linear-gradient(
+      to top,
+      var(--color-ink-950) 0%,
+      --alpha(var(--color-ink-950) / 82%) 28%,
+      --alpha(var(--color-ink-950) / 45%) 60%,
+      --alpha(var(--color-ink-950) / 25%) 100%
+    );
+  }
+
+  /*
+   * Hero scrim. Directional rather than a flat wash: heavy at the lower left
+   * where the headline sits, and clearing toward the upper right so the
+   * photograph stays vivid. A uniform overlay protects the type but flattens
+   * the image, which defeats the point of shooting lighting at night.
+   */
+  .scrim-hero {
+    background:
+      linear-gradient(
+        to right,
+        var(--color-ink-950) 0%,
+        --alpha(var(--color-ink-950) / 80%) 32%,
+        --alpha(var(--color-ink-950) / 30%) 62%,
+        --alpha(var(--color-ink-950) / 12%) 100%
+      ),
+      linear-gradient(
+        to top,
+        --alpha(var(--color-ink-950) / 88%) 0%,
+        --alpha(var(--color-ink-950) / 35%) 38%,
+        transparent 72%
+      );
+  }
+
+  /*
+   * Scrim for a photograph whose subject is centered rather than off to one
+   * side. Weighted hard at the very bottom where the title sits and clearing
+   * fast above it, so a house in the middle of the frame keeps its contrast.
+   * The flat .scrim is fine over a bright image and murders a dusk one.
+   */
+  .scrim-subject {
+    background: linear-gradient(
+      to top,
+      var(--color-ink-950) 0%,
+      --alpha(var(--color-ink-950) / 78%) 22%,
+      --alpha(var(--color-ink-950) / 42%) 44%,
+      --alpha(var(--color-ink-950) / 14%) 70%,
+      transparent 100%
+    );
+  }
+
+  /*
+   * The estimator dock. Sticky under the header on every width, so the house
+   * and the running price travel with whoever is configuring.
+   *
+   * The offset is the SCROLLED header height (4rem), because by the time the
+   * dock is pinned the header has already shrunk. env() is added rather than
+   * assumed: on a notched phone in landscape the header sits below the inset,
+   * so the dock has to as well.
+   *
+   * z-30 puts it under the header (z-50) and under the bottom action bar
+   * (z-50) while staying above page content. It never shares space with
+   * either, but the order still has to be right when a card animates.
+   *
+   * Containment comes from the wrapper this sits in, not from anything here.
+   */
+  .estimator-dock {
+    position: sticky;
+    top: calc(4rem + env(safe-area-inset-top, 0px));
+    z-index: 30;
+  }
+
+  @media (min-width: 64rem) {
+    .estimator-dock {
+      top: calc(6.5rem + env(safe-area-inset-top, 0px));
+      align-self: start;
+    }
+  }
+
+  /* Restrained: a fade and two pixels. Not a performance. */
+  @keyframes estimator-price-in {
+    from {
+      opacity: 0;
+      transform: translateY(2px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .estimator-price {
+    animation: estimator-price-in 180ms ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .estimator-price {
+      animation: none;
+    }
+  }
+
+  /*
+   * Phone hero.
+   *
+   * Top weighted, because on a phone the copy starts just under the header
+   * and runs down the frame: badge, headline, paragraph, buttons. It clears
+   * toward the bottom so the lower part of the photograph, the ladder and the
+   * lit rooflines under it, stays visible below the CTA.
+   *
+   * The desktop scrim is left weighted instead, which is right there and
+   * wrong here: on a narrow screen the text spans the full width, so a
+   * left-weighted wash dims the whole picture and protects nothing.
+   */
+  .scrim-hero-phone {
+    background: linear-gradient(
+      to bottom,
+      --alpha(var(--color-ink-950) / 92%) 0%,
+      --alpha(var(--color-ink-950) / 84%) 30%,
+      --alpha(var(--color-ink-950) / 66%) 52%,
+      --alpha(var(--color-ink-950) / 48%) 72%,
+      --alpha(var(--color-ink-950) / 40%) 100%
+    );
+  }
+
+  .scrim-soft {
+    background: linear-gradient(
+      to top,
+      --alpha(var(--color-ink-950) / 92%) 0%,
+      --alpha(var(--color-ink-950) / 55%) 45%,
+      --alpha(var(--color-ink-950) / 20%) 100%
+    );
+  }
+
+  .text-champagne-gradient {
+    background-image: linear-gradient(
+      100deg,
+      var(--color-champagne-200) 0%,
+      var(--color-champagne-500) 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  /* Hairline rule with a lit center. Used as a section divider. */
+  .rule-lit {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      --alpha(var(--color-champagne-400) / 45%),
+      transparent
+    );
+  }
+
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-100 focus:rounded-md focus:bg-brand-500 focus:px-4 focus:py-2 focus:text-white;
+  }
+}

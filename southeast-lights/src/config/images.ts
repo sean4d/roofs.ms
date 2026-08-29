@@ -1,0 +1,384 @@
+import manifest from "./image-manifest.json";
+
+/**
+ * Every image on the site, in one place.
+ *
+ * MIXED SOURCES. Read this before using any file here in marketing claims.
+ *
+ * Slots listed in OWNER_SUPPLIED below are photographs the owner sent us.
+ * Everything else is AI-generated placeholder photography chosen to match its
+ * page subject so the site reads as finished during development. Placeholders
+ * are NOT Southeast Lights work and must never be presented as such.
+ *
+ * To swap in real photography: drop a file into public/img with the SAME
+ * base name, run `node scripts/optimize-images.mjs`, and set
+ * `isPlaceholder: false`. Nothing else changes. Layouts, aspect ratios,
+ * crops and scrims are already built around these dimensions.
+ *
+ * The gallery is stricter still: see config/projects.ts. Placeholder projects
+ * are flagged as demo content and are excluded from production builds.
+ */
+
+export interface SiteImage {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  blurDataURL: string;
+  /** False once genuine Southeast Lights photography replaces the file. */
+  isPlaceholder: boolean;
+  /**
+   * object-position for wide crops, when the middle of the frame is not the
+   * subject. A phone photograph of a house under a tree canopy puts the roof
+   * in the bottom quarter and leaves two thirds of the file to branches; a
+   * centered crop of that is a picture of a tree.
+   */
+  focus?: string;
+}
+
+type ManifestEntry = { width: number; height: number; blurDataURL: string };
+const meta = manifest as Record<string, ManifestEntry>;
+
+/** Slots filled with owner-supplied photography rather than AI placeholders. */
+const OWNER_SUPPLIED = new Set([
+  "holiday-hero-estate",
+  "hoa-entrance",
+  "retail-center",
+  "colonial-columns",
+  "installer-roof",
+  "project-poplarville-colonial",
+  "project-hattiesburg-ridges-hips",
+  "project-hattiesburg-palms",
+  "project-poplarville-blue-white",
+  "project-poplarville-red-green-white",
+  "project-poplarville-outbuildings",
+  "project-poplarville-apples",
+  "project-poplarville-halloween",
+  "project-hattiesburg-two-story",
+  "project-hattiesburg-canopy",
+  "project-gcs-front",
+  "project-gcs-walkway",
+  "project-gcs-mural",
+  "project-hattiesburg-low-wide",
+  "project-hattiesburg-low-wide-angle",
+  "project-pearsons-front",
+  "project-pearsons-block",
+  "project-poplarville-continuous-run",
+  "project-hattiesburg-clean-line",
+  "estate-wide",
+  "hero-mobile-install",
+]);
+
+/**
+ * Photography the owner confirmed is a Southeast Lights job, with the property
+ * and the scope named. Only these may appear in the gallery: see the
+ * authenticity rule in config/projects.ts.
+ */
+const CONFIRMED_OWN_WORK = new Set([
+  "project-poplarville-colonial",
+  "project-hattiesburg-ridges-hips",
+  "project-hattiesburg-palms",
+  "project-poplarville-blue-white",
+  "project-poplarville-red-green-white",
+  "project-poplarville-outbuildings",
+  "project-poplarville-apples",
+  "project-poplarville-halloween",
+  "project-hattiesburg-two-story",
+  "project-hattiesburg-canopy",
+  "project-gcs-front",
+  "project-gcs-walkway",
+  "project-gcs-mural",
+  "project-hattiesburg-low-wide",
+  "project-hattiesburg-low-wide-angle",
+  "project-pearsons-front",
+  "project-pearsons-block",
+  "project-poplarville-continuous-run",
+  "project-hattiesburg-clean-line",
+  "estate-wide",
+  "colonial-columns",
+]);
+
+export const isConfirmedOwnWork = (name: string) =>
+  CONFIRMED_OWN_WORK.has(name);
+
+function img(name: string, alt: string, focus?: string): SiteImage {
+  const entry = meta[name];
+  if (!entry) throw new Error(`Missing image in manifest: ${name}`);
+  return {
+    src: `/img/${name}.webp`,
+    alt,
+    width: entry.width,
+    height: entry.height,
+    blurDataURL: entry.blurDataURL,
+    /*
+     * NOTE: false here means "no longer an AI placeholder", not "verified
+     * Southeast Lights work". Several owner-supplied files carry filenames
+     * from third-party sources, so they remain temporary imagery on service
+     * and segment surfaces. CONFIRMED_OWN_WORK above is the narrower set that
+     * may populate the gallery.
+     */
+    isPlaceholder: !OWNER_SUPPLIED.has(name),
+    focus,
+  };
+}
+
+/**
+ * A slot that may not be filled yet. Returns null until the photo is
+ * ingested, so a section can be written now and light up the moment the file
+ * lands, with no code change and no broken build in between.
+ */
+export function optionalImage(name: string, alt: string): SiteImage | null {
+  const entry = meta[name];
+  if (!entry) return null;
+  return {
+    src: `/img/${name}.webp`,
+    alt,
+    width: entry.width,
+    height: entry.height,
+    blurDataURL: entry.blurDataURL,
+    isPlaceholder: false,
+  };
+}
+
+/** Photo of the actual hardware that goes into a display. Owner-supplied. */
+export const COMPONENTS_FLATLAY = optionalImage(
+  "components-flatlay",
+  "Christmas light installation components laid out on pavers: roof and gutter clips, vampire plugs, sockets, adapters, zip ties, snips and a light-hanging pole",
+);
+
+export const IMAGES = {
+  /**
+   * Homepage hero on phones, holiday mode only. Portrait, which is why it is
+   * a phone image and not a desktop one: on a wide band it would crop to a
+   * strip of siding.
+   *
+   * Deliberately NOT in CONFIRMED_OWN_WORK. A hero illustrates; it does not
+   * claim a completed job at an address the way a gallery entry does, and
+   * nobody has told me whose crew this is.
+   */
+  heroMobileInstall: img(
+    "hero-mobile-install",
+    "An installer near the top of an extension ladder clipping warm white C9 bulbs along a gable rake two stories up, with the neighboring rooflines already lit",
+    "60% center",
+  ),
+  holidayHero: img(
+    "holiday-hero-estate",
+    "A large evergreen wrapped in multicolor Christmas lights at the center of a lit campus courtyard, with warm white bistro strings overhead and surrounding trees wrapped in white lights",
+  ),
+  /**
+   * The closing band on the homepage, plus the hero on the projects, services
+   * and inspiration hubs. Real work, resampled and sharpened up to the same
+   * 2400px the AI file it replaced had.
+   */
+  estateWide: img(
+    "estate-wide",
+    "Southeast Lights display in Poplarville: warm white C9 carried in one unbroken line across a long low frontage, over the porch gable and out onto the detached garage",
+    "center 52%",
+  ),
+  permanentHero: img(
+    "permanent-hero",
+    "Contemporary luxury home at night lit by permanent architectural LED lighting concealed beneath the roof eaves",
+  ),
+  hoaEntrance: img(
+    "hoa-entrance",
+    "Two mature trees with trunks and limbs fully wrapped in warm white lights beside a lit modern home at dusk",
+  ),
+  retailCenter: img(
+    "retail-center",
+    "A historic stone building covered in a curtain of warm white lights with an illuminated pink bow on the balcony",
+  ),
+  church: img(
+    "church",
+    "Red brick church with a white steeple outlined in warm white Christmas lights, oak trees on the lawn wrapped in lights",
+  ),
+  /**
+   * Tree Lighting & Wrapping, on the card and the service hero.
+   *
+   * Not in OWNER_SUPPLIED and not in CONFIRMED_OWN_WORK: nobody has said this
+   * is our work, and the setting reads as a large public display rather than
+   * a Pine Belt property. It illustrates the service, which is what a service
+   * card does. It must not move to the gallery.
+   */
+  treeWrappingHero: img(
+    "tree-wrapping-hero",
+    "A mature tree wrapped from the trunk out to the branch tips in warm white lights, with a second wrapped tree and a row of blue lit cone trees behind it",
+  ),
+  liveOakWrap: img(
+    "live-oak-wrap",
+    "Enormous Southern live oak with every major limb wrapped in warm white lights glowing against a night sky",
+  ),
+  crewBoomLift: img(
+    "crew-boom-lift",
+    "Installation crew using an articulating boom lift to hang commercial Christmas lighting along a high building parapet at dusk",
+  ),
+  installerRoof: img(
+    "installer-roof",
+    "An installer on a steep roof using yellow roof pads and a ladder hook to run a line of C9 bulbs along the gable",
+  ),
+  /**
+   * Landscape Lighting, on the card and the service hero. Portrait, so both
+   * surfaces crop it hard; the focus keeps the trunk fork and the fixture at
+   * the base in frame, which is what makes it read as landscape lighting
+   * rather than a photograph of a tree.
+   *
+   * Illustrative, like the rest of the service photography. Not in
+   * OWNER_SUPPLIED and not gallery-eligible.
+   *
+   * landscapeLighting below still fronts the off-season closing band, where a
+   * portrait file would crop to a strip.
+   */
+  landscapeLightingHero: img(
+    "landscape-lighting-hero",
+    "A mature hardwood uplit from the ground at night, trunk and lower canopy picked out in warm light with the fixture visible at the base",
+    "center 76%",
+  ),
+  landscapeLighting: img(
+    "landscape-lighting",
+    "Warm white path lights along a flagstone walkway with dramatic uplighting on mature oak trunks",
+  ),
+  bistroPatio: img(
+    "bistro-patio",
+    "Restaurant courtyard patio strung overhead with warm filament bistro cafe lights",
+  ),
+  mardiGras: img(
+    "mardi-gras",
+    "Historic Gulf Coast building with wrought-iron balconies lit in purple, green and gold for Mardi Gras",
+  ),
+  weddingEvent: img(
+    "wedding-event",
+    "Outdoor wedding reception beneath a canopy of warm white string lights and hanging filament bulbs",
+  ),
+  countryClub: img(
+    "country-club",
+    "Country club clubhouse with white columns and porte-cochere outlined in warm white Christmas lights",
+  ),
+  golfClub: img(
+    "golf-club",
+    "Golf club stone entry monument and landscaped beds lit in warm white with uplit pines at twilight",
+  ),
+  hotelResort: img(
+    "hotel-resort",
+    "Luxury resort porte-cochere outlined in warm white Christmas lights with palm trunks wrapped in lights",
+  ),
+  downtownMunicipal: img(
+    "downtown-municipal",
+    "Historic downtown main street decorated for Christmas with lit storefronts, wrapped street trees and lamp post wreaths",
+  ),
+  apartments: img(
+    "apartments",
+    "Modern apartment community clubhouse and entrance with rooflines outlined in warm white lights",
+  ),
+  officeBuilding: img(
+    "office-building",
+    "Modern commercial office building with roofline and entry canopy outlined in crisp warm white lighting",
+  ),
+  colonialColumns: img(
+    "colonial-columns",
+    "Two-story colonial home at dusk with warm white C9 bulbs along every roof edge and both entry columns wrapped base to capital",
+  ),
+  projectHattiesburgCleanLine: img(
+    "project-hattiesburg-clean-line",
+    "Southeast Lights display in Hattiesburg: a brick ranch with warm white C9 running the length of the front eave and up over the entry gable, evenly spaced from corner to corner",
+    "center 52%",
+  ),
+  projectPoplarvilleContinuousRun: img(
+    "project-poplarville-continuous-run",
+    "Southeast Lights display in Poplarville: warm white C9 running unbroken along the main eave, up over the porch gable rake and on past the far corner of the house",
+    "center 55%",
+  ),
+  projectPearsonsFront: img(
+    "project-pearsons-front",
+    "Southeast Lights display in Poplarville: Pearson's Barber Shop at dusk, a two-story Main Street building with red, green and white C9 along the upper gable rake, the full length of the porch awning and the roofline of the attached wing",
+    "center 58%",
+  ),
+  projectPearsonsBlock: img(
+    "project-pearsons-block",
+    "Pearson's Barber Shop from across the street, all three roof planes of the building outlined in the same red, green and white sequence",
+    "center 48%",
+  ),
+  projectHattiesburgLowWide: img(
+    "project-hattiesburg-low-wide",
+    "Southeast Lights display in Hattiesburg: a wide single-story brick home seen across a deep front lawn, warm white C9 along the eaves and along every ridge of the hip roof",
+    "center 55%",
+  ),
+  projectHattiesburgLowWideAngle: img(
+    "project-hattiesburg-low-wide-angle",
+    "The same Hattiesburg house from the drive, warm white C9 picking out the eave line and the stepped ridges of the hip roof",
+    "center 52%",
+  ),
+  projectGcsFront: img(
+    "project-gcs-front",
+    "Southeast Lights display at Grace Community School in Hattiesburg: three gables and the covered entry walkway outlined in alternating red, green and warm white C9 bulbs",
+    "center 62%",
+  ),
+  projectGcsWalkway: img(
+    "project-gcs-walkway",
+    "Grace Community School at night from the parking lot, red, green and warm white C9 running the full length of the covered walkway fascia and up each gable rake",
+    "center 58%",
+  ),
+  projectGcsMural: img(
+    "project-gcs-mural",
+    "The Grace Community School mural elevation at night with red, green and warm white C9 along the gable rake and the walkway roof beyond it",
+    "center 55%",
+  ),
+  projectHattiesburgCanopy: img(
+    "project-hattiesburg-canopy",
+    "Southeast Lights display in Hattiesburg: a brick home on a wooded lot at night, warm white C9 along every eave, hip and ridge, framed by the tree canopy overhead",
+    // The house sits in the bottom quarter under a full canopy.
+    "center 88%",
+  ),
+  projectHattiesburgTwoStory: img(
+    "project-hattiesburg-two-story",
+    "Southeast Lights display in Hattiesburg: a two-story house with double galleries at night, warm white C9 running along the front roofline twenty feet up and continuing along the lower wing roof",
+  ),
+  projectPoplarvilleHalloween: img(
+    "project-poplarville-halloween",
+    "Southeast Lights Halloween display in Poplarville: a bungalow at night with orange and purple C9 bulbs along the roofline, ridges and gable rakes, above a porch decorated for Halloween",
+  ),
+  projectPoplarvilleApples: img(
+    "project-poplarville-apples",
+    "Southeast Lights display in Poplarville: the Apples Ltd. storefront at night with purple C9 bulbs along the upper roofline and warm white C9 along the porch fascia below, lit shop windows between them",
+  ),
+  projectPoplarvilleOutbuildings: img(
+    "project-poplarville-outbuildings",
+    "Southeast Lights display in Poplarville: a cottage at night with red, green and white C9 carried around the roofline, up the gable rakes and along the ridges, with the attached carport and a small side building lit in the same pattern",
+  ),
+  projectPoplarvilleRedGreenWhite: img(
+    "project-poplarville-red-green-white",
+    "Southeast Lights display in Poplarville: a brick farmhouse at night with a repeating red, green and white C9 pattern across the porch roof, both wing rooflines and the gable rakes, and every porch column wrapped in the same sequence",
+  ),
+  projectPoplarvilleBlueWhite: img(
+    "project-poplarville-blue-white",
+    "Southeast Lights display in Poplarville: a white craftsman home at night with alternating blue and bright white C9 bulbs along the roofline, gables and hips, and the porch columns wrapped in the same pattern",
+  ),
+  projectHattiesburgRidgesHips: img(
+    "project-hattiesburg-ridges-hips",
+    "Southeast Lights display in Hattiesburg: a brick home at night with alternating red and warm white C9 bulbs running the full roofline and continuing up every ridge and hip, and a lit Christmas tree visible through the front window",
+  ),
+  projectHattiesburgPalms: img(
+    "project-hattiesburg-palms",
+    "Four palm trunks wrapped in alternating bands of red and white lights against a clipped hedge at night",
+  ),
+  projectPoplarvilleColonial: img(
+    "project-poplarville-colonial",
+    "Southeast Lights display in Poplarville: a two-story colonial at dusk with warm white C9 along the main roofline, both wings and the center gable, and twenty-foot entry columns wrapped from base to capital",
+  ),
+  c9Detail: img(
+    "c9-detail",
+    "Close-up of commercial-grade C9 bulbs clipped along a roof edge, warm filaments glowing",
+  ),
+  permanentColor: img(
+    "permanent-color",
+    "Modern home facade showing permanent LED lighting displaying festive red and green along the roof eaves",
+  ),
+  storageWarehouse: img(
+    "storage-warehouse",
+    "Organized warehouse shelving with labeled bins and neatly coiled light strands ready for next season",
+  ),
+  treeShrub: img(
+    "tree-shrub",
+    "Ornamental trees and shrub beds wrapped and net-lit in warm white with a pathway lined by stake lights",
+  ),
+} as const;
+
+export type ImageKey = keyof typeof IMAGES;
