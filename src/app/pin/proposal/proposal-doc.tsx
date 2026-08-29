@@ -146,14 +146,21 @@ export async function ProposalDoc({
 
       {/* ---------- who this is for ---------- */}
       <section className="grid grid-cols-2 gap-4 px-5 pt-5 sm:gap-6 sm:px-8 sm:pt-6 print:gap-6 print:px-8 print:pt-6">
+        {/* WHEN THE NAME IS UNKNOWN, THE PROPERTY IS THE PERSONALISATION.
+            This printed "Homeowner" where a person's name goes, which reads as
+            a mail merge that failed and undoes the one thing this document has
+            going for it: that we picked out their actual roof and measured it.
+            No name means the address becomes the subject of the sentence. */}
         <div className="min-w-0">
           <p className="text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
-            Prepared for
+            {data.name ? "Prepared for" : "Prepared for the property at"}
           </p>
-          <p className="mt-1 text-[15px] font-semibold">
-            {data.name ?? "Homeowner"}
-          </p>
-          <p className="text-[13px] leading-snug text-slate-700">
+          {data.name && (
+            <p className="mt-1 text-[15px] font-semibold">{data.name}</p>
+          )}
+          <p
+            className={`text-[13px] leading-snug text-slate-700 ${data.name ? "" : "mt-1 text-[15px] font-semibold text-slate-900"}`}
+          >
             {data.address}
           </p>
         </div>
@@ -304,12 +311,18 @@ export async function ProposalDoc({
           </div>
         )}
 
+        {/* THE DATE AND THE PICTURE ARE NOT THE SAME SOURCE, and this used to
+            say they were. imageryDate belongs to Google's Solar mesh, which is
+            what the measurement is taken from; the photograph beside it is a
+            Maps Static satellite tile, a different and usually newer dataset.
+            Saying "photographed November 2019" under a picture that is not
+            from 2019 is a claim a homeowner can disprove by looking. */}
         <p className="mt-4 text-[11px] leading-relaxed text-slate-600">
           {data.imageryDate
-            ? `Measured from aerial imagery of your property photographed ${longDate(data.imageryDate.slice(0, 10))}, not a guess from square footage.`
-            : "Measured from aerial imagery of your property, not a guess from square footage."}{" "}
+            ? `Measured from aerial survey data recorded ${longDate(data.imageryDate.slice(0, 10))}. `
+            : "Measured from aerial survey data. "}
           One roofing square is 100 square feet. If the house has been added to
-          since that photograph, tell us and we will remeasure.
+          since, tell us and we will remeasure.
         </p>
       </section>
 

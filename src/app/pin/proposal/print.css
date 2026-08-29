@@ -89,3 +89,59 @@
     print-color-adjust: exact !important;
   }
 }
+
+/*
+ * The mailed piece: four Letter pages, exactly, every time.
+ *
+ * Two sheets printed double sided, folded once, into a 6x9 envelope. Sheet one
+ * carries pages 1 and 2, sheet two carries 3 and 4. A fifth page is not a
+ * cosmetic problem: it is a third sheet that costs postage and arrives nearly
+ * empty, and at the volumes this is meant for that is real money.
+ *
+ * So each page is DECLARED rather than flowed. break-after on every page but
+ * the last, break-inside avoid so nothing splits across the fold, and a fixed
+ * height so the content of one page can never push into the next. Browser
+ * pagination is not something to rely on when somebody else's print dialog
+ * decides the usable height.
+ */
+@media print {
+  .mailer-page {
+    break-after: page;
+    break-inside: avoid;
+    box-sizing: border-box;
+  }
+  /*
+   * NO FIXED HEIGHT, AND THAT IS DELIBERATE. Pinning each page to 10.2in and
+   * hiding the overflow guarantees four pages, and buys that guarantee by
+   * silently deleting whatever does not fit. On a document that goes to a
+   * customer that is the worst possible failure: nobody sees the sentence that
+   * vanished, least of all us. If somebody's print dialog gives a smaller box
+   * than we designed for, spilling to a fifth sheet is a cost. Clipping a
+   * paragraph out of a price explanation is a liability.
+   *
+   * Instead every page is kept comfortably inside the smallest realistic box,
+   * and break-after does the grouping. Content heights are checked against a
+   * one-inch margin, which is more than any normal dialog takes.
+   */
+  /* No trailing blank sheet from a break after the final page. */
+  .mailer-page:last-child {
+    break-after: auto;
+  }
+  /* Nothing on this piece may be split by the fold. */
+  .mailer ul,
+  .mailer ol,
+  .mailer dl,
+  .mailer img,
+  .mailer svg {
+    break-inside: avoid;
+  }
+}
+
+/* On screen the pages are separated so the office can check the piece before
+   committing paper to it. */
+@media screen {
+  .mailer-page {
+    min-height: 10.2in;
+    border-bottom: 1px dashed #cbd5e1;
+  }
+}

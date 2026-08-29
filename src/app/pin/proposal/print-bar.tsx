@@ -104,6 +104,9 @@ export function PrintBar({
    * to being a record of what somebody intended to do.
    */
   async function requestMail() {
+    // A rep on a slow connection taps twice. The button is disabled once the
+    // state lands, but the guard closes the window before it does.
+    if (mailing || mail === "requested" || mail === "mailed") return;
     setMailing(true);
     setError(null);
     try {
@@ -208,7 +211,7 @@ export function PrintBar({
           )}
           {mail === "requested" && (
             <span className="font-semibold text-amber-700">
-              Mailer requested, waiting on the office
+              Mailer requested. The office will print it and send it.
             </span>
           )}
           {mail === "mailed" && (

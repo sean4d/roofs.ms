@@ -101,6 +101,23 @@ export default async function EstimatesPage({
                     {r.email ? ` · ${r.email}` : ""}
                     {r.phone ? ` · ${r.phone}` : ""}
                   </p>
+                  {/* Only what actually happened. A card with a chip on every
+                      line is a card nobody reads, so an estimate that has not
+                      been sent anywhere shows nothing at all. */}
+                  {(r.emailedAt || r.mailStatus) && (
+                    <div className="mt-1.5 flex flex-wrap gap-1.5">
+                      {r.emailedAt && <Chip tone="green">Emailed</Chip>}
+                      {r.mailStatus === "requested" && (
+                        <Chip tone="amber">Mailer requested</Chip>
+                      )}
+                      {r.mailStatus === "mailed" && (
+                        <Chip tone="navy">Posted</Chip>
+                      )}
+                      {r.mailStatus === "rejected" && (
+                        <Chip tone="red">Mailer rejected</Chip>
+                      )}
+                    </div>
+                  )}
                 </Link>
               </li>
             ))}
@@ -108,5 +125,27 @@ export default async function EstimatesPage({
         )}
       </main>
     </>
+  );
+}
+
+function Chip({
+  tone,
+  children,
+}: {
+  tone: "green" | "amber" | "navy" | "red";
+  children: React.ReactNode;
+}) {
+  const tones = {
+    green: "bg-green-50 text-green-800 border-green-200",
+    amber: "bg-amber-50 text-amber-800 border-amber-200",
+    navy: "bg-slate-100 text-[#123b63] border-slate-300",
+    red: "bg-red-50 text-red-800 border-red-200",
+  } as const;
+  return (
+    <span
+      className={`rounded border px-1.5 py-0.5 text-[10px] font-semibold ${tones[tone]}`}
+    >
+      {children}
+    </span>
   );
 }

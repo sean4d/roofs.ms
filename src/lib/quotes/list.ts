@@ -32,6 +32,10 @@ export interface QuoteListRow {
   createdAt: string;
   repName: string;
   repEmail: string;
+  /** What has reached this customer. Drives the small chips on the card. */
+  emailedAt: string | null;
+  mailStatus: "requested" | "mailed" | "rejected" | null;
+  hasContact: boolean;
 }
 
 interface Raw {
@@ -46,6 +50,8 @@ interface Raw {
   price_shown: number | null;
   created_at: string | Date;
   rep_email: string;
+  emailed_at?: string | Date | null;
+  mail_status?: "requested" | "mailed" | "rejected" | null;
 }
 
 const iso = (v: string | Date) =>
@@ -73,6 +79,9 @@ const toRow = (r: Raw): QuoteListRow => ({
   createdAt: iso(r.created_at),
   repName: repName(r.rep_email),
   repEmail: r.rep_email,
+  emailedAt: r.emailed_at ? iso(r.emailed_at) : null,
+  mailStatus: r.mail_status ?? null,
+  hasContact: Boolean(r.name || r.email || r.phone),
 });
 
 /**
@@ -96,10 +105,10 @@ export async function searchQuotes(
   const q = query.trim();
   const digits = q.replace(/\D/g, "");
 
-  const rows = (await db().query(
-    `SELECT q.id, q.public_token, q.squares, q.price_shown, q.created_at,
+  const CORE = `q.id, q.public_token, q.squares, q.price_shown, q.created_at,
             c.address, c.name, c.email, c.phone, c.status,
-            u.email AS rep_email
+            u.email AS rep_email`;
+  const BODY = `
        FROM quotes q
        JOIN customers c ON c.id = q.customer_id
        JOIN users u ON u.id = q.created_by
@@ -113,17 +122,35 @@ export async function searchQuotes(
           OR ($5 <> '' AND regexp_replace(coalesce(c.phone,''), '\\D', '', 'g') LIKE $6)
         )
       ORDER BY q.created_at DESC
-      LIMIT $7`,
-    [
-      q,
-      scope,
-      `${q.replace(/[^A-Za-z0-9]/g, "")}%`,
-      `%${q}%`,
-      digits,
-      `%${digits}%`,
-      limit,
-    ],
-  )) as Raw[];
+      LIMIT $7`;
+  const params = [
+    q,
+    scope,
+    `${q.replace(/[^A-Za-z0-9]/g, "")}%`,
+    `%${q}%`,
+    digits,
+    `%${digits}%`,
+    limit,
+  ];
+
+  /**
+   * The delivery columns are optional here, not required.
+   *
+   * They arrive in a hand-applied migration, and this is the screen somebody
+   * opens with a customer on the phone. Losing two small chips is a fair price
+   * for never losing the search, which is the lesson the mail board taught the
+   * expensive way: degrading to nothing looks exactly like having nothing.
+   */
+  let rows: Raw[];
+  try {
+    rows = (await db().query(
+      `SELECT ${CORE}, q.emailed_at, q.mail_status ${BODY}`,
+      params,
+    )) as Raw[];
+  } catch (error) {
+    console.error("[quotes] estimate list without delivery columns", error);
+    rows = (await db().query(`SELECT ${CORE} ${BODY}`, params)) as Raw[];
+  }
 
   return rows.map(toRow);
 }

@@ -345,3 +345,37 @@ ALTER TABLE quotes ADD COLUMN IF NOT EXISTS actual_by        uuid REFERENCES use
 CREATE INDEX IF NOT EXISTS quotes_calibration_idx
   ON quotes (actual_at DESC)
   WHERE actual_squares IS NOT NULL AND measured_squares IS NOT NULL;
+
+-- ---------------------------------------------------------------------------
+-- What a homeowner did with the estimate we sent them.
+--
+-- A mailed estimate is the only part of this system with no feedback at all:
+-- an envelope goes out and nothing comes back until a phone rings, and nobody
+-- can say which envelope caused it. Every estimate already has a unique
+-- shareable URL, so that URL is the identity, and the events below are what
+-- turns "we posted four hundred" into "eleven of them scanned the code".
+--
+-- Deliberately a log rather than counters on the quote. Counters answer how
+-- many; a log answers when, and the gap between posting a piece and somebody
+-- acting on it is the number that decides whether mailing is worth doing.
+--
+-- No personal data. A row says an estimate was opened or a number was tapped,
+-- not by whom, and nothing here identifies a person beyond the estimate they
+-- were already sent.
+-- ---------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS estimate_events (
+  id         bigserial PRIMARY KEY,
+  quote_id   uuid NOT NULL REFERENCES quotes (id) ON DELETE CASCADE,
+  kind       text NOT NULL
+             CHECK (kind IN ('opened','call','text','email','inspection','financing')),
+  -- 'mail' when the visit arrived from a printed piece (the QR carries a
+  -- marker), 'link' otherwise. Not a source enum on the estimate itself: the
+  -- estimate's identity is unchanged, this only records how somebody arrived.
+  via        text CHECK (via IN ('mail','link')),
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS estimate_events_quote_idx
+  ON estimate_events (quote_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS estimate_events_kind_idx
+  ON estimate_events (kind, created_at DESC);

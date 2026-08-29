@@ -4,6 +4,8 @@ import type { Metadata } from "next";
 import { getProposalByToken } from "@/lib/quotes/save";
 import { ProposalDoc } from "@/app/pin/proposal/proposal-doc";
 import { siteConfig } from "@/config/site";
+
+import { TrackEstimate } from "./track";
 import "@/app/pin/proposal/print.css";
 
 export const dynamic = "force-dynamic";
@@ -33,6 +35,7 @@ export default async function PublicEstimate({
 
   return (
     <main className="min-h-dvh bg-slate-100 py-4 print:bg-white print:py-0">
+      <TrackEstimate token={token} />
       <div className="mx-auto max-w-[8.5in] px-3 print:p-0">
         <div className="shadow-xl print:shadow-none">
           <ProposalDoc
@@ -57,6 +60,14 @@ export default async function PublicEstimate({
               company. The estimate proves we measured their roof; the site is
               where they check we are real, which is the question they are
               actually asking at this point. */}
+          {/* Texting converts on a mail piece where calling does not: a
+              homeowner who is not sure what to say will send four words. */}
+          <a
+            href={`sms:${siteConfig.phone.tel}`}
+            className="rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700"
+          >
+            Text us
+          </a>
           <a
             href={siteConfig.url}
             className="rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700"

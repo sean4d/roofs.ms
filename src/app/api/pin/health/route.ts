@@ -50,6 +50,7 @@ export async function GET() {
      * published. Add a column here when a migration ships with a feature.
      */
     const required = [
+      ["estimate_events", "kind"],
       ["quotes", "actual_squares"],
       ["quotes", "measured_squares"],
       ["quotes", "edited_at"],
