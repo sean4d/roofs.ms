@@ -110,6 +110,13 @@
     break-inside: avoid;
     box-sizing: border-box;
   }
+  /* Belt and braces. Some engines honour a break before an element more
+     reliably than a break after the one in front of it, and this piece has to
+     paginate the same way on an office desktop and on the phone in a rep's
+     hand. */
+  .mailer-page + .mailer-page {
+    break-before: page;
+  }
   /*
    * NO FIXED HEIGHT, AND THAT IS DELIBERATE. Pinning each page to 10.2in and
    * hiding the overflow guarantees four pages, and buys that guarantee by
@@ -119,9 +126,18 @@
    * than we designed for, spilling to a fifth sheet is a cost. Clipping a
    * paragraph out of a price explanation is a liability.
    *
-   * Instead every page is kept comfortably inside the smallest realistic box,
-   * and break-after does the grouping. Content heights are checked against a
-   * one-inch margin, which is more than any normal dialog takes.
+   * Instead every page is kept inside a deliberately small budget and
+   * break-after does the grouping.
+   *
+   * THAT BUDGET IS 640px, NOT THE 979px A LETTER PAGE SUGGESTS, and the
+   * difference is iOS. Safari on a phone prints with margins it chooses and a
+   * header and footer that cannot be switched off, and what is left is around
+   * 700 CSS pixels. Designed against 979 the piece came out as SIX pages on
+   * the owner's phone: pages one and three each split, and the overflow landed
+   * on a sheet of its own with four lines on it.
+   *
+   * Desktop Chrome would have been fine. The office prints from whatever is to
+   * hand, so the smaller number is the real one.
    */
   /* No trailing blank sheet from a break after the final page. */
   .mailer-page:last-child {
