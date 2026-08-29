@@ -15,6 +15,11 @@ import { UPLOAD } from "./config";
  *   SUPABASE_SERVICE_ROLE_KEY service_role key (SERVER ONLY, never NEXT_PUBLIC)
  *   SUPABASE_UPLOAD_BUCKET    optional, defaults to "lead-uploads"
  *
+ * The bucket should be PRIVATE. Links in the lead email are signed for a
+ * year rather than pointing at a public object, because the storage paths
+ * are timestamps rather than random ids and these are photographs of
+ * customers' houses.
+ *
  * Until then storeFiles reports files as pending rather than throwing, so a
  * submission always succeeds and the lead email lists what was attached.
  * Losing a $50,000 proposal request because a bucket is not configured would
@@ -29,6 +34,57 @@ export interface StoredFile {
   url?: string;
   /** True when the file was accepted but could not be persisted. */
   pending?: boolean;
+}
+
+/** A year. The office opens these links weeks after the season, not minutes. */
+const LINK_LIFETIME_SECONDS = 31_536_000;
+
+/**
+ * A link the office can actually open.
+ *
+ * The obvious URL, /storage/v1/object/<bucket>/<path>, is the AUTHENTICATED
+ * endpoint: it needs the service key as a bearer token, so pasted into an
+ * email it returns 400 and looks like the upload failed. It did not; the file
+ * is there and the link was simply unopenable.
+ *
+ * So the bucket stays private and this signs a long-lived URL instead.
+ * Private matters here: the paths contain timestamps, not random ids, so a
+ * public bucket would be worth guessing at, and these are photographs of
+ * customers' houses.
+ *
+ * If signing fails the file is still stored, so rather than lose the link
+ * entirely this falls back to the public URL form. That works if the bucket
+ * was made public, and fails with a clear Supabase error if not, which beats
+ * silently dropping an attachment the office was told to expect.
+ */
+async function linkFor(
+  base: string,
+  key: string,
+  bucket: string,
+  path: string,
+): Promise<string> {
+  const encoded = encodeURIComponent(path);
+  try {
+    const response = await fetch(
+      `${base}/storage/v1/object/sign/${bucket}/${encoded}`,
+      {
+        method: "POST",
+        headers: {
+          authorization: `Bearer ${key}`,
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ expiresIn: LINK_LIFETIME_SECONDS }),
+        signal: AbortSignal.timeout(10_000),
+      },
+    );
+    if (response.ok) {
+      const signed = (await response.json()) as { signedURL?: string };
+      if (signed.signedURL) return `${base}/storage/v1${signed.signedURL}`;
+    }
+  } catch {
+    // Fall through to the public form.
+  }
+  return `${base}/storage/v1/object/public/${bucket}/${encoded}`;
 }
 
 export function uploadsConfigured(): boolean {
@@ -85,7 +141,7 @@ export async function storeFiles(
               name: file.name,
               size: file.size,
               type: file.type,
-              url: `${base}/storage/v1/object/${bucket}/${encodeURIComponent(path)}`,
+              url: await linkFor(base, key, bucket, path),
             }
           : {
               name: file.name,
