@@ -107,7 +107,15 @@ export function Select({
       aria-describedby={error ? `${props.id}-error` : undefined}
       className={cn(
         base,
-        "appearance-none",
+        /*
+         * The option list is painted by the OS, not by us. Without a declared
+         * color-scheme the browser paints it light while the options inherit
+         * the select's near-white text, so the choices are invisible until
+         * hover repaints them. Declaring dark makes the native popup dark;
+         * globals.css also sets explicit option colours for browsers that
+         * ignore it.
+         */
+        "appearance-none [color-scheme:dark]",
         error ? "border-brand-400/70" : "border-white/12",
         className,
       )}
