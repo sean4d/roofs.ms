@@ -126,18 +126,20 @@
    * than we designed for, spilling to a fifth sheet is a cost. Clipping a
    * paragraph out of a price explanation is a liability.
    *
-   * Instead every page is kept inside a deliberately small budget and
-   * break-after does the grouping.
+   * Instead every page is kept inside the page it will actually be printed
+   * on, and break-after does the grouping.
    *
-   * THAT BUDGET IS 640px, NOT THE 979px A LETTER PAGE SUGGESTS, and the
-   * difference is iOS. Safari on a phone prints with margins it chooses and a
-   * header and footer that cannot be switched off, and what is left is around
-   * 700 CSS pixels. Designed against 979 the piece came out as SIX pages on
-   * the owner's phone: pages one and three each split, and the overflow landed
-   * on a sheet of its own with four lines on it.
+   * THAT PAGE IS A DESKTOP ONE, ABOUT 980px. This was briefly sized for iOS
+   * Safari, which prints with margins it picks and a header and footer that
+   * cannot be turned off and leaves about 700px. Fitting that made every sheet
+   * use two thirds of itself and leave a third of it blank on the office
+   * printer, which is worse than the problem it solved: mail is an office job
+   * done at an office machine, and a piece that arrives with a dead band along
+   * the bottom of every page looks unfinished.
    *
-   * Desktop Chrome would have been fine. The office prints from whatever is to
-   * hand, so the smaller number is the real one.
+   * So this is built for the printer it is printed on. A phone will paginate
+   * it differently and that is fine, because a phone is not where hundreds of
+   * envelopes get run off.
    */
   /* No trailing blank sheet from a break after the final page. */
   .mailer-page:last-child {

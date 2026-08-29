@@ -97,23 +97,18 @@ export async function ProposalDoc({
   return (
     <article className="proposal mx-auto w-full max-w-[8.5in] bg-white text-slate-900">
       {/* ---------- masthead ---------- */}
-      <header className="flex flex-col gap-3 border-b-[3px] border-[#123b63] px-5 pt-6 pb-4 sm:flex-row sm:items-start sm:justify-between sm:gap-6 sm:px-8 sm:pt-8 sm:pb-5 print:flex-row print:items-start print:justify-between print:gap-6 print:px-8 print:pt-8 print:pb-5">
-        <div className="flex items-center gap-3.5">
-          {/* The office's own logo wins, and the built-in mark is the fallback.
-              THE UPLOAD USED TO DO NOTHING. /pin/settings saved the image and
-              showed it back in its own preview, so it looked like it had
-              worked, and this masthead went on rendering public/icon.svg
-              because it never read the profile at all.
-
-              Sized by HEIGHT with the width left free, because an uploaded
-              logo is usually a wide lockup while the built-in mark is square.
-              Forcing a 12-by-12 box on a 5-by-2 image would squash it. */}
+      {/* SAME CONSTRUCTION AS THE MAILER, deliberately. A rep prints one of
+          these at a door and the office posts the other, and until now they
+          looked like documents from two different companies. Whatever a
+          homeowner receives should be recognisably the same firm. */}
+      <header className="flex flex-col gap-3 border-b-2 border-[#123b63] px-5 pt-6 pb-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:px-8 print:flex-row print:items-center print:justify-between print:gap-6 print:px-8">
+        <div className="flex items-center gap-3">
           {profile.logoDataUri ? (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
               src={profile.logoDataUri}
               alt={profile.legalName}
-              className="block h-12 w-auto max-w-[2.4in] shrink-0 object-contain"
+              className="block h-12 w-auto max-w-[2.3in] shrink-0 object-contain"
             />
           ) : (
             logo && (
@@ -121,26 +116,20 @@ export async function ProposalDoc({
             )
           )}
           <div>
-            <h1 className="font-[family-name:var(--font-archivo)] text-xl leading-tight font-extrabold tracking-tight text-[#123b63] sm:text-2xl sm:leading-none print:text-2xl print:leading-none">
+            <p className="font-[family-name:var(--font-archivo)] text-[19px] leading-none font-extrabold tracking-tight text-[#123b63]">
               {profile.legalName}
-            </h1>
-            <p className="mt-1.5 text-[11px] font-semibold tracking-[0.14em] text-slate-500 uppercase">
-              Roof Replacement Estimate
+            </p>
+            <p className="mt-1 text-[10px] tracking-[0.14em] text-slate-500 uppercase">
+              {profile.city}, {profile.state} &middot; MSBOC #{profile.license}
             </p>
           </div>
         </div>
-        <div className="text-[11px] leading-[1.7] text-slate-600 sm:text-right print:text-right">
-          {profile.street}
-          <br />
-          {profile.city}, {profile.state} {profile.postal}
-          <br />
+        <div className="text-[10px] leading-[1.6] text-slate-600 sm:text-right print:text-right">
           <span className="font-bold" style={{ color: profile.accentColor }}>
             {profile.phone}
           </span>
           <br />
-          {profile.email}
-          <br />
-          MSBOC #{profile.license}
+          {profile.website}
         </div>
       </header>
 
@@ -181,50 +170,70 @@ export async function ProposalDoc({
       </section>
 
       {/* ---------- the number ---------- */}
-      <section className="mx-5 mt-5 rounded-lg bg-[#123b63] px-5 py-4 text-white sm:mx-8 sm:mt-5 sm:px-6 sm:py-4.5 print:mx-8 print:mt-5 print:px-6 print:py-4.5">
-        <p className="text-[10px] font-bold tracking-[0.14em] text-white/70 uppercase">
-          Estimated investment
+      {/* THE SAME TREATMENT AS THE MAILER: a white card with navy rules rather
+          than a filled navy block. Two reasons. It matches the piece the office
+          posts, so a homeowner who gets both is looking at one company. And it
+          is a fraction of the ink on a document reps print all day.
+
+          "Estimated roof replacement", not "estimated investment". A price is a
+          price, and calling it an investment is the kind of word that makes a
+          homeowner trust the rest of the page less. */}
+      <section className="mx-5 mt-5 border-y-[3px] border-[#123b63] py-5 sm:mx-8 print:mx-8">
+        <p className="text-[11px] font-bold tracking-[0.16em] text-slate-500 uppercase">
+          Estimated roof replacement
         </p>
-        <p className="mt-0.5 font-[family-name:var(--font-archivo)] text-[34px] leading-none font-extrabold sm:text-[38px] print:text-[38px]">
+        <p className="mt-1 font-[family-name:var(--font-archivo)] text-[40px] leading-none font-extrabold text-[#123b63] sm:text-[52px] print:text-[52px]">
           {firm
             ? money(data.priceShown!)
             : `${money(data.priceLow)} to ${money(data.priceHigh)}`}
         </p>
-        <div className="mt-3 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between sm:gap-6 print:flex-row print:items-end print:justify-between print:gap-6">
-          <div className="min-w-0">
-            <p className="text-[10px] font-bold tracking-[0.14em] text-white/70 uppercase">
-              Or finance it. {profile.financingLine}
-            </p>
-            <div className="mt-2 flex flex-wrap gap-x-6 gap-y-3">
-              {FINANCING.termsMonths.map((months) => (
-                <div key={months}>
-                  <p className="font-[family-name:var(--font-archivo)] text-[21px] leading-none font-bold">
-                    {money(
-                      paymentFor(
-                        firm ? data.priceShown! : data.priceLow,
-                        months,
-                      ),
-                    )}
-                  </p>
-                  <p className="mt-0.5 text-[10px] text-white/70">
-                    per month, {months / 12} years
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-          {qr && (
-            <div className="w-fit shrink-0 self-start rounded bg-white p-1.5">
-              <InlineSvg svg={qr} className="block h-[68px] w-[68px]" />
-            </div>
-          )}
-        </div>
-        <p className="mt-2.5 text-[9px] leading-relaxed text-white/60">
-          Example payments on {money(firm ? data.priceShown! : data.priceLow)}{" "}
-          at {(FINANCING.apr * 100).toFixed(2)}% APR through our partner{" "}
-          {FINANCING.partner}, subject to credit approval. Your rate and term
-          may differ. Scan the code to open this estimate on your phone.
+        <p className="mt-2.5 text-[12.5px] leading-relaxed text-slate-700">
+          Approximately <strong>{data.squares} roofing squares</strong>
+          {data.stories ? `, ${data.stories} story` : ""}
+          {pitchOver12 ? `, ${pitchOver12}:12 pitch` : ""}, {materialLabel}
+          {parts ? `, ${parts.length} structures` : ""}.
         </p>
+
+        {profile.showFinancing && (
+          <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between print:flex-row print:items-end print:justify-between">
+            <div className="min-w-0">
+              <p className="text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
+                {profile.financingLine}
+              </p>
+              <p className="mt-1.5 text-[14px] leading-snug text-slate-800">
+                {FINANCING.termsMonths.map((months, i) => (
+                  <span key={months}>
+                    {i > 0 ? "  ·  " : ""}
+                    <strong className="font-[family-name:var(--font-archivo)] text-[18px] font-bold text-[#123b63]">
+                      {money(
+                        paymentFor(
+                          firm ? data.priceShown! : data.priceLow,
+                          months,
+                        ),
+                      )}
+                    </strong>
+                    <span className="text-slate-600">
+                      /mo, {months / 12} yrs
+                    </span>
+                  </span>
+                ))}
+              </p>
+              <p className="mt-1.5 text-[9px] leading-relaxed text-slate-500">
+                Example payments on{" "}
+                {money(firm ? data.priceShown! : data.priceLow)} at{" "}
+                {(FINANCING.apr * 100).toFixed(2)}% APR through{" "}
+                {FINANCING.partner}, subject to credit approval. Your rate and
+                term may differ. Scan the code to open this estimate on your
+                phone.
+              </p>
+            </div>
+            {qr && (
+              <div className="w-fit shrink-0 self-start rounded border border-slate-300 bg-white p-1.5 sm:self-end print:self-end">
+                <InlineSvg svg={qr} className="block h-[74px] w-[74px]" />
+              </div>
+            )}
+          </div>
+        )}
       </section>
 
       {/* ---------- their roof ---------- */}

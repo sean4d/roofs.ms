@@ -79,7 +79,7 @@ export async function MailerDoc({
   return (
     <article className="mailer mx-auto w-full max-w-[8.5in] bg-white text-slate-900">
       {/* ================= PAGE 1: the price, and their roof ================= */}
-      <section className="mailer-page px-9 pt-5 pb-3">
+      <section className="mailer-page px-10 pt-8 pb-6">
         <header className="flex items-center justify-between gap-6 border-b-2 border-[#123b63] pb-4">
           <div className="flex items-center gap-3">
             {profile.logoDataUri ? (
@@ -87,10 +87,10 @@ export async function MailerDoc({
               <img
                 src={profile.logoDataUri}
                 alt={profile.legalName}
-                className="block h-10 w-auto max-w-[2.1in] object-contain"
+                className="block h-12 w-auto max-w-[2.3in] object-contain"
               />
             ) : (
-              logo && <InlineSvg svg={logo} className="block h-10 w-10" />
+              logo && <InlineSvg svg={logo} className="block h-12 w-12" />
             )}
             <div>
               <p className="font-[family-name:var(--font-archivo)] text-[19px] leading-none font-extrabold tracking-tight text-[#123b63]">
@@ -111,7 +111,7 @@ export async function MailerDoc({
           </div>
         </header>
 
-        <h1 className="mt-4 font-[family-name:var(--font-archivo)] text-[22px] leading-none font-extrabold tracking-tight text-[#123b63]">
+        <h1 className="mt-7 font-[family-name:var(--font-archivo)] text-[27px] leading-none font-extrabold tracking-tight text-[#123b63]">
           Roof Replacement Estimate
         </h1>
 
@@ -119,7 +119,7 @@ export async function MailerDoc({
             printing "Homeowner" in the space a name goes reads as a mail merge
             that failed and throws away the one thing this piece has: that we
             picked out their actual roof. */}
-        <p className="mt-3 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
+        <p className="mt-5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
           {data.name ? "Prepared for" : "Prepared for the property at"}
         </p>
         {data.name && (
@@ -127,7 +127,7 @@ export async function MailerDoc({
             {data.name}
           </p>
         )}
-        <p className="mt-1 font-[family-name:var(--font-archivo)] text-[17px] leading-snug font-bold text-slate-900">
+        <p className="mt-1 font-[family-name:var(--font-archivo)] text-[21px] leading-snug font-bold text-slate-900">
           {data.address}
         </p>
         <p className="mt-1 text-[10px] text-slate-500">
@@ -137,14 +137,14 @@ export async function MailerDoc({
 
         {/* The price, as a white card with a navy rule rather than a navy
             block. Same prominence, a fraction of the ink. */}
-        <div className="mt-3.5 border-y-[3px] border-[#123b63] py-3.5">
+        <div className="mt-6 border-y-[3px] border-[#123b63] py-6">
           <p className="text-[11px] font-bold tracking-[0.16em] text-slate-500 uppercase">
             Estimated roof replacement
           </p>
-          <p className="mt-1 font-[family-name:var(--font-archivo)] text-[42px] leading-none font-extrabold text-[#123b63]">
+          <p className="mt-1 font-[family-name:var(--font-archivo)] text-[58px] leading-none font-extrabold text-[#123b63]">
             {money(price)}
           </p>
-          <p className="mt-2.5 text-[12px] leading-relaxed text-slate-700">
+          <p className="mt-3 text-[13px] leading-relaxed text-slate-700">
             Approximately <strong>{data.squares} roofing squares</strong>
             {data.stories ? `, ${data.stories} story` : ""}
             {pitchOver12 ? `, ${pitchOver12}:12 pitch` : ""}, {materialLabel}
@@ -153,15 +153,15 @@ export async function MailerDoc({
         </div>
 
         {profile.showFinancing && (
-          <div className="mt-3">
+          <div className="mt-5">
             <p className="text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
               {profile.financingLine}
             </p>
-            <p className="mt-1 text-[13px] leading-snug text-slate-800">
+            <p className="mt-1.5 text-[15px] leading-snug text-slate-800">
               {FINANCING.termsMonths.map((months, i) => (
                 <span key={months}>
                   {i > 0 ? "  ·  " : ""}
-                  <strong className="font-[family-name:var(--font-archivo)] text-[16px] font-bold text-[#123b63]">
+                  <strong className="font-[family-name:var(--font-archivo)] text-[19px] font-bold text-[#123b63]">
                     {money(paymentFor(price, months))}
                   </strong>
                   <span className="text-slate-600">/mo, {months / 12} yrs</span>
@@ -179,12 +179,12 @@ export async function MailerDoc({
 
         {/* The recognition moment. A homeowner seeing their own roof from the
             air is the difference between this and a flyer. */}
-        <div className="mt-4">
+        <div className="mt-6">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={aerialSrc}
             alt="Aerial view of the roof measured for this estimate"
-            className="h-[1.7in] w-full rounded border border-slate-300 object-cover"
+            className="h-[2.75in] w-full rounded border border-slate-300 object-cover"
           />
           <p className="mt-1.5 text-[10px] text-slate-500">
             The roof measured for this estimate.
@@ -193,13 +193,13 @@ export async function MailerDoc({
       </section>
 
       {/* ================= PAGE 2: what it is based on ================= */}
-      <section className="mailer-page px-9 pt-5 pb-3">
+      <section className="mailer-page px-10 pt-8 pb-6">
         <SheetHead
           title="What this estimate is based on"
           note="We measured this property from aerial survey data. No appointment was needed."
         />
 
-        <dl className="mt-3.5 grid grid-cols-2 gap-x-8 gap-y-2">
+        <dl className="mt-6 grid grid-cols-2 gap-x-10 gap-y-5">
           <Fact label="Roof area" value={`${data.squares} squares`} />
           <Fact
             label="Stories"
@@ -231,7 +231,7 @@ export async function MailerDoc({
             saying the picture was taken then is a claim they can disprove by
             looking at their own house. */}
         {data.imageryDate && (
-          <p className="mt-4 rounded border-l-[3px] border-[#123b63] bg-slate-50 px-3 py-2 text-[10.5px] leading-relaxed text-slate-700">
+          <p className="mt-4 rounded border-l-[3px] border-[#123b63] bg-slate-50 px-4 py-3 text-[11.5px] leading-relaxed text-slate-700">
             This is the most recent survey data available for this address
             through our mapping provider. If the house has been extended or
             altered since, the area above will be short, and we correct that in
@@ -239,10 +239,10 @@ export async function MailerDoc({
           </p>
         )}
 
-        <h2 className="mt-5 border-b border-slate-300 pb-1.5 text-[11px] font-bold tracking-[0.14em] text-slate-600 uppercase">
+        <h2 className="mt-8 border-b border-slate-300 pb-2 text-[11px] font-bold tracking-[0.14em] text-slate-600 uppercase">
           What is included at this price
         </h2>
-        <ul className="mt-3 grid grid-cols-2 gap-x-8 gap-y-1 text-[11px] leading-relaxed">
+        <ul className="mt-3 grid grid-cols-2 gap-x-8 gap-y-2.5 text-[12px] leading-relaxed">
           {[
             "Tear off the existing roof and haul it away",
             `${materialLabel}, installed to manufacturer spec`,
@@ -262,10 +262,10 @@ export async function MailerDoc({
           ))}
         </ul>
 
-        <h2 className="mt-5 border-b border-slate-300 pb-1.5 text-[11px] font-bold tracking-[0.14em] text-slate-600 uppercase">
+        <h2 className="mt-8 border-b border-slate-300 pb-2 text-[11px] font-bold tracking-[0.14em] text-slate-600 uppercase">
           What can change the final price
         </h2>
-        <ul className="mt-3 grid grid-cols-2 gap-x-8 gap-y-1 text-[11px] leading-relaxed text-slate-700">
+        <ul className="mt-3 grid grid-cols-2 gap-x-8 gap-y-2.5 text-[12px] leading-relaxed text-slate-700">
           {[
             "A second layer of shingles underneath",
             "Decking that has rotted and has to be replaced",
@@ -283,7 +283,7 @@ export async function MailerDoc({
           ))}
         </ul>
 
-        <p className="mt-4 border-t-2 border-[#123b63] pt-2.5 text-[11.5px] leading-relaxed">
+        <p className="mt-8 border-t-2 border-[#123b63] pt-4 text-[12.5px] leading-relaxed">
           <strong className="text-[#123b63]">
             This is an estimate, not a contract price.
           </strong>{" "}
@@ -294,10 +294,10 @@ export async function MailerDoc({
       </section>
 
       {/* ================= PAGE 3: who we are, and the weather ============= */}
-      <section className="mailer-page px-9 pt-5 pb-3">
+      <section className="mailer-page px-10 pt-8 pb-6">
         <SheetHead title={`Why ${profile.displayName}`} />
 
-        <ul className="mt-3 grid grid-cols-2 gap-x-8 gap-y-1.5 text-[11.5px]">
+        <ul className="mt-5 grid grid-cols-2 gap-x-10 gap-y-3 text-[12.5px]">
           {profile.credentials.map((c) => (
             <li key={c} className="flex gap-2">
               <span aria-hidden className="font-bold text-[#123b63]">
@@ -307,7 +307,7 @@ export async function MailerDoc({
             </li>
           ))}
         </ul>
-        <p className="mt-3 text-[11.5px] leading-relaxed text-slate-700">
+        <p className="mt-5 text-[12.5px] leading-relaxed text-slate-700">
           Based in {profile.city} since {siteConfig.foundingYear}, working
           across the Pine Belt and the Gulf Coast. Our licence and our BBB and
           manufacturer records are public, and you are welcome to check every
@@ -319,10 +319,10 @@ export async function MailerDoc({
             "1.4 miles away" would be a number we cannot support. */}
         {projects.count > 0 && (
           <>
-            <h2 className="mt-5 border-b border-slate-300 pb-1.5 text-[11px] font-bold tracking-[0.14em] text-slate-600 uppercase">
+            <h2 className="mt-8 border-b border-slate-300 pb-2 text-[11px] font-bold tracking-[0.14em] text-slate-600 uppercase">
               Roofs we have completed in {projects.city}
             </h2>
-            <p className="mt-2.5 text-[11.5px] leading-relaxed text-slate-700">
+            <p className="mt-4 text-[12.5px] leading-relaxed text-slate-700">
               {projects.count} completed {projects.city}{" "}
               {projects.count === 1 ? "roof is" : "roofs are"} in our public
               gallery, with photographs of the finished work. You can see them
@@ -333,18 +333,18 @@ export async function MailerDoc({
 
         {weather?.sentence && (
           <>
-            <h2 className="mt-5 border-b border-slate-300 pb-1.5 text-[11px] font-bold tracking-[0.14em] text-slate-600 uppercase">
+            <h2 className="mt-8 border-b border-slate-300 pb-2 text-[11px] font-bold tracking-[0.14em] text-slate-600 uppercase">
               Severe weather recorded near this property
             </h2>
-            <p className="mt-2.5 text-[12px] leading-relaxed">
+            <p className="mt-4 text-[13px] leading-relaxed">
               {weather.sentence}
             </p>
             {weather.supporting.length > 0 && (
-              <ul className="mt-1.5 space-y-0.5">
-                {weather.supporting.slice(0, 2).map((e) => (
+              <ul className="mt-2.5 space-y-1">
+                {weather.supporting.map((e) => (
                   <li
                     key={`${e.date}${e.label}${e.distanceMi}`}
-                    className="text-[11px] text-slate-600"
+                    className="text-[12px] text-slate-600"
                   >
                     {longDate(e.date)} &middot; {e.label} &middot;{" "}
                     {e.distanceMi} miles away
@@ -352,7 +352,7 @@ export async function MailerDoc({
                 ))}
               </ul>
             )}
-            <p className="mt-2.5 text-[10px] leading-relaxed text-slate-500">
+            <p className="mt-4 text-[11px] leading-relaxed text-slate-500">
               Source: {weather.source}, {weather.years[0]} to{" "}
               {weather.years[weather.years.length - 1]}.{" "}
               <strong className="text-slate-700">
@@ -361,10 +361,10 @@ export async function MailerDoc({
               An inspection is what determines its condition.
             </p>
 
-            <h2 className="mt-5 border-b border-slate-300 pb-1.5 text-[11px] font-bold tracking-[0.14em] text-slate-600 uppercase">
+            <h2 className="mt-8 border-b border-slate-300 pb-2 text-[11px] font-bold tracking-[0.14em] text-slate-600 uppercase">
               If your roof has storm damage
             </h2>
-            <ol className="mt-2.5 space-y-1 text-[11px] leading-relaxed">
+            <ol className="mt-5 space-y-3 text-[12.5px] leading-relaxed">
               {[
                 "We inspect the roof and photograph what is actually there.",
                 "We explain the conditions we found, including when there is nothing wrong.",
@@ -373,7 +373,7 @@ export async function MailerDoc({
                 "Your insurer decides what is covered. That decision is theirs, not ours.",
               ].map((step, i) => (
                 <li key={step} className="flex gap-2.5">
-                  <span className="mt-[1px] flex h-[17px] w-[17px] shrink-0 items-center justify-center rounded-full border border-[#123b63] text-[9px] font-bold text-[#123b63]">
+                  <span className="mt-[1px] flex h-[19px] w-[19px] shrink-0 items-center justify-center rounded-full border border-[#123b63] text-[9px] font-bold text-[#123b63]">
                     {i + 1}
                   </span>
                   <span>{step}</span>
@@ -385,44 +385,68 @@ export async function MailerDoc({
       </section>
 
       {/* ================= PAGE 4: how to answer ================= */}
-      <section className="mailer-page flex min-h-0 flex-col px-9 pt-5 pb-3">
+      <section className="mailer-page flex min-h-0 flex-col px-10 pt-8 pb-6">
         <SheetHead title="Want us to verify this estimate?" />
 
-        <p className="mt-4 text-[13px] leading-relaxed text-slate-800">
+        <p className="mt-6 text-[15px] leading-relaxed text-slate-800">
           We will inspect the property, measure the roof properly and confirm
           the scope. If the roof has years left in it, we will tell you that
           instead.
         </p>
-        <p className="mt-2 font-[family-name:var(--font-archivo)] text-[15px] font-bold text-[#123b63]">
+        <p className="mt-2 font-[family-name:var(--font-archivo)] text-[17px] font-bold text-[#123b63]">
           No cost. No obligation.
         </p>
 
         {/* The one dark element on the piece, because it is the one place a
             reader has to look. */}
-        <div className="mt-6 flex items-center gap-6 rounded bg-[#123b63] px-6 py-5 text-white">
+        <div className="mt-7 flex items-center gap-7 rounded bg-[#123b63] px-7 py-6 text-white">
           {qr && (
             <div className="shrink-0 rounded bg-white p-2">
-              <InlineSvg svg={qr} className="block h-[1.5in] w-[1.5in]" />
+              <InlineSvg svg={qr} className="block h-[1.7in] w-[1.7in]" />
             </div>
           )}
           <div className="min-w-0">
-            <p className="font-[family-name:var(--font-archivo)] text-[21px] leading-tight font-extrabold">
+            <p className="font-[family-name:var(--font-archivo)] text-[23px] leading-tight font-extrabold">
               Verify my estimate
             </p>
-            <p className="mt-1.5 text-[11.5px] leading-relaxed text-white/80">
+            <p className="mt-2 text-[12px] leading-relaxed text-white/80">
               Scan the code with your phone camera to open this estimate,
               including the measurements and the photograph of your roof.
             </p>
-            <p className="mt-3 font-[family-name:var(--font-archivo)] text-[26px] leading-none font-extrabold">
+            <p className="mt-4 font-[family-name:var(--font-archivo)] text-[29px] leading-none font-extrabold">
               {profile.phone}
             </p>
-            <p className="mt-1 text-[11px] text-white/80">
+            <p className="mt-1.5 text-[12px] text-white/80">
               Call or text. {profile.website}
             </p>
           </div>
         </div>
 
-        <p className="mt-5 text-[11.5px] leading-relaxed text-slate-700">
+        {/* WHAT ACTUALLY HAPPENS NEXT. The page was mostly white below the
+            response band, and a blank third of a sheet reads as a document
+            somebody abandoned. This is the question a homeowner holding an
+            unexpected estimate is really asking: what am I agreeing to by
+            calling. Answering it plainly is worth more than the white space. */}
+        <h2 className="mt-8 border-b border-slate-300 pb-2 text-[11px] font-bold tracking-[0.14em] text-slate-600 uppercase">
+          What happens when you call
+        </h2>
+        <ol className="mt-5 space-y-3.5 text-[12.5px] leading-relaxed">
+          {[
+            "We agree a time. Most inspections take under an hour and you do not need to be home for the roof itself.",
+            "We go up, photograph the whole roof, and measure it properly rather than from the air.",
+            "You get the photographs and a firm price, in writing. If the roof does not need replacing, we say so.",
+            "Nothing is agreed until you sign something. There is no deposit to book an inspection.",
+          ].map((step, i) => (
+            <li key={step} className="flex gap-3">
+              <span className="mt-[1px] flex h-[19px] w-[19px] shrink-0 items-center justify-center rounded-full border border-[#123b63] text-[10px] font-bold text-[#123b63]">
+                {i + 1}
+              </span>
+              <span>{step}</span>
+            </li>
+          ))}
+        </ol>
+
+        <p className="mt-7 text-[12.5px] leading-relaxed text-slate-700">
           Mention estimate{" "}
           <strong className="text-[#123b63]">
             #{data.quoteId.slice(0, 8).toUpperCase()}
@@ -465,7 +489,7 @@ function Fact({ label, value }: { label: string; value: string }) {
       <dt className="text-[10px] font-bold tracking-[0.1em] text-slate-500 uppercase">
         {label}
       </dt>
-      <dd className="mt-0.5 font-[family-name:var(--font-archivo)] text-[15px] leading-tight font-bold text-[#123b63]">
+      <dd className="mt-1 font-[family-name:var(--font-archivo)] text-[19px] leading-tight font-bold text-[#123b63]">
         {value}
       </dd>
     </div>
