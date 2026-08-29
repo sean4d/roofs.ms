@@ -127,21 +127,16 @@ export function PrintBar({
   }
 
   /**
-   * Print, and leave a note that it happened.
+   * Print goes to the print layout, not to this screen.
    *
-   * Best effort, and the wording everywhere says PRINTED rather than posted,
-   * because nothing here can know whether paper came out of a printer. What
-   * was actually posted is the office's to confirm on the mail board.
+   * ONE PRINTED ESTIMATE, whoever prints it. A rep who runs one off and posts
+   * it themselves rather than asking the office to must not hand the customer
+   * a different-looking document than the office would have. This page is for
+   * reading and sending on a phone; the mailer route is what paper looks like.
+   *
+   * The emailed copy is the one that is allowed to differ, because it goes to
+   * somebody the rep has already spoken to.
    */
-  function printAndRecord() {
-    void fetch("/api/pin/mail", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ quoteId, action: "printed" }),
-      keepalive: true,
-    }).catch(() => {});
-    window.print();
-  }
 
   const mailLabel =
     mail === "mailed"
@@ -176,12 +171,12 @@ export function PrintBar({
             {copied ? "Link copied" : "Copy link"}
           </button>
         )}
-        <button
-          onClick={printAndRecord}
+        <Link
+          href={`/pin/mailer/${quoteId}`}
           className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700"
         >
           Print
-        </button>
+        </Link>
         <button
           onClick={requestMail}
           disabled={mailing || mail === "requested" || mail === "mailed"}

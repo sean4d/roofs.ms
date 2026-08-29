@@ -14,9 +14,13 @@ import { useState } from "react";
 export function MailerBar({
   quoteId,
   address,
+  isAdmin,
 }: {
   quoteId: string;
   address: string;
+  /** Only the office marks something posted. The API refuses a rep, and a
+   *  button that always errors is worse than no button. */
+  isAdmin: boolean;
 }) {
   const [busy, setBusy] = useState(false);
   const [posted, setPosted] = useState(false);
@@ -55,10 +59,10 @@ export function MailerBar({
     <div className="no-print sticky top-0 z-10 border-b border-slate-200 bg-white/95 backdrop-blur">
       <div className="mx-auto flex max-w-[8.5in] flex-wrap items-center gap-2 px-3 py-2.5">
         <Link
-          href="/pin/mail"
+          href={isAdmin ? "/pin/mail" : `/pin/proposal/${quoteId}`}
           className="rounded-lg px-2 py-2 text-sm font-medium text-slate-500"
         >
-          &larr; Mailers
+          &larr; {isAdmin ? "Mailers" : "Estimate"}
         </Link>
         <p className="mr-auto hidden min-w-0 flex-1 truncate text-sm text-slate-600 sm:block">
           {address}
@@ -76,13 +80,15 @@ export function MailerBar({
         >
           Print
         </button>
-        <button
-          onClick={markPosted}
-          disabled={busy || posted}
-          className="rounded-lg bg-[#123b63] px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
-        >
-          {busy ? "..." : posted ? "Posted" : "Mark posted"}
-        </button>
+        {isAdmin && (
+          <button
+            onClick={markPosted}
+            disabled={busy || posted}
+            className="rounded-lg bg-[#123b63] px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
+          >
+            {busy ? "..." : posted ? "Posted" : "Mark posted"}
+          </button>
+        )}
       </div>
       {(error || posted) && (
         <p

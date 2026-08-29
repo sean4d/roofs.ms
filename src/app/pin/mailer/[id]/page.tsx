@@ -12,12 +12,18 @@ export const dynamic = "force-dynamic";
 /**
  * The print view for a piece going in an envelope.
  *
- * A SEPARATE ROUTE RATHER THAN A FLAG ON THE PROPOSAL, because the office
- * reaches it from the mailer queue and reps never need it. The estimate is the
- * same estimate: nothing here changes what it is or how it was made, only how
- * it is laid out for a reader who has not met anybody from the company.
+ * A SEPARATE ROUTE RATHER THAN A FLAG ON THE PROPOSAL, because it is a
+ * different layout for the same estimate: nothing here changes what the quote
+ * is or how it was made, only how it is set for paper.
  *
- * Admin only. Reps request mailers; the office prints them.
+ * REPS REACH IT TOO, and that is the point. A rep who prints and posts an
+ * estimate themselves rather than asking the office to must not produce a
+ * different document for the customer than the office would have. There is one
+ * printed estimate. Where it was printed is our business and not something a
+ * homeowner should be able to see in the layout.
+ *
+ * Scoped through getProposalForUser, so a rep gets their own customers and an
+ * admin gets everybody's, exactly as everywhere else.
  */
 export default async function MailerPrintPage({
   params,
@@ -26,7 +32,6 @@ export default async function MailerPrintPage({
 }) {
   const user = await currentUser();
   if (!user) redirect("/pin");
-  if (user.role !== "admin") redirect("/pin/estimates");
 
   const { id } = await params;
   const data = await getProposalForUser(id, user);
@@ -34,7 +39,11 @@ export default async function MailerPrintPage({
 
   return (
     <main className="min-h-dvh overflow-y-auto bg-slate-100 pb-20 print:min-h-0 print:bg-white print:pb-0">
-      <MailerBar quoteId={data.quoteId} address={data.address} />
+      <MailerBar
+        quoteId={data.quoteId}
+        address={data.address}
+        isAdmin={user.role === "admin"}
+      />
       <div className="mx-auto max-w-[8.5in] px-3 py-4 print:p-0">
         <div className="bg-white shadow-xl print:shadow-none">
           <MailerDoc

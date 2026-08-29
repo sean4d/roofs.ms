@@ -107,9 +107,21 @@
 @media print {
   .mailer-page {
     break-after: page;
-    break-inside: avoid;
     box-sizing: border-box;
   }
+  /*
+   * NO break-inside: avoid ON THE PAGE ITSELF. It was here as insurance and it
+   * is what broke the document: told not to split a block that is close to a
+   * full page, Chrome's interactive print preview pushes the contents around
+   * rather than splitting, and the aerial photograph landed on top of the
+   * price. Headless rendering did not reproduce it, which is why it shipped:
+   * page.pdf() and the preview a human actually looks at are different code
+   * paths, and only one of them is the one that gets printed.
+   *
+   * break-before and break-after already put every page where it belongs.
+   * Without avoid, a page that grows too tall spills onto another sheet, which
+   * is visible and fixable. Overlapping text is neither.
+   */
   /* Belt and braces. Some engines honour a break before an element more
      reliably than a break after the one in front of it, and this piece has to
      paginate the same way on an office desktop and on the phone in a rep's

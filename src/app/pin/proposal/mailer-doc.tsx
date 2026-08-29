@@ -181,9 +181,16 @@ export async function MailerDoc({
             air is the difference between this and a flyer. */}
         <div className="mt-6">
           {/* eslint-disable-next-line @next/next/no-img-element */}
+          {/* WIDTH AND HEIGHT ATTRIBUTES, not only CSS. This is fetched over
+              the network while the print layout is being computed, and an
+              image with no intrinsic size reserves no space until it arrives.
+              The attributes give the browser the ratio up front so nothing
+              below it moves when the photograph lands. */}
           <img
             src={aerialSrc}
             alt="Aerial view of the roof measured for this estimate"
+            width={640}
+            height={264}
             className="h-[2.75in] w-full rounded border border-slate-300 object-cover"
           />
           <p className="mt-1.5 text-[10px] text-slate-500">
