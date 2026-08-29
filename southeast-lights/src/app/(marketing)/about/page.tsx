@@ -95,6 +95,14 @@ export default function AboutPage() {
                     {siteConfig.legalName} d/b/a {siteConfig.name}
                   </dd>
                 </div>
+                {siteConfig.foundingYear ? (
+                  <div>
+                    <dt className="text-bone-500">Serving South Mississippi</dt>
+                    <dd className="text-bone-200">
+                      Since {siteConfig.foundingYear}
+                    </dd>
+                  </div>
+                ) : null}
                 {siteConfig.parent.license ? (
                   <div>
                     <dt className="text-bone-500">MS contractor license</dt>

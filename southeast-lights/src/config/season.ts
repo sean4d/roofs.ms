@@ -34,10 +34,34 @@ export const HOLIDAY_WINDOW = {
 } as const;
 
 /**
+ * The install season. Owner-supplied 2026-08-29: crews install from 1 October
+ * and the last install date is 15 December.
+ *
+ * This is NOT the same as HOLIDAY_WINDOW above, and conflating the two is the
+ * mistake to avoid. That window decides how the site LOOKS, and runs to the
+ * end of December so the site stays festive through Christmas. These dates
+ * decide what the site PROMISES, and they stop on the 15th, because after
+ * that there is no crew day left to give anybody.
+ */
+export const INSTALL_SEASON = {
+  startMonth: 10,
+  startDay: 1,
+  endMonth: 12,
+  endDay: 15,
+  /** For copy. Kept beside the numbers so the two cannot drift apart. */
+  startLabel: "October 1",
+  endLabel: "December 15",
+} as const;
+
+/**
  * Phases inside holiday mode. Each drives its own honest urgency message.
  * No fake countdowns: the scarcity is real because the calendar is real.
+ *
+ * `closed` exists because 16 to 31 December is still holiday mode on the
+ * site while the install season is over. Saying "availability is limited" in
+ * that fortnight would be selling something that cannot be delivered.
  */
-export type HolidayPhase = "booking" | "underway" | "limited";
+export type HolidayPhase = "booking" | "underway" | "limited" | "closed";
 
 export interface SeasonMessaging {
   /** Short badge above the hero headline. */
@@ -47,23 +71,25 @@ export interface SeasonMessaging {
 }
 
 const HOLIDAY_MESSAGING: Record<HolidayPhase, SeasonMessaging> = {
-  // August - September
+  // August - September, before crews go out
   booking: {
     badge: "Now Booking Holiday Installations",
-    urgency:
-      "Installation calendars fill through the fall. Early bookings choose their install week.",
+    urgency: `Installations begin ${INSTALL_SEASON.startLabel}. Early bookings choose their install week.`,
   },
-  // October - November
+  // October 1 - November 30, crews are out
   underway: {
     badge: "Holiday Installations Underway",
-    urgency:
-      "Crews are installing now. Remaining install dates are going quickly.",
+    urgency: `Crews are installing now. The last install date is ${INSTALL_SEASON.endLabel}.`,
   },
-  // December
+  // December 1 - 15, the last fortnight of install days
   limited: {
     badge: "Limited Holiday Availability",
-    urgency:
-      "December availability is limited. Larger commercial displays may need to be scheduled for next season.",
+    urgency: `Installs finish ${INSTALL_SEASON.endLabel}. Larger commercial displays may need to be scheduled for next season.`,
+  },
+  // December 16 - 31, the season is over but the site is still festive
+  closed: {
+    badge: "Booking for Next Season",
+    urgency: `This season's installs finished ${INSTALL_SEASON.endLabel}. Book now to choose your install week for next year.`,
   },
 };
 
@@ -101,10 +127,25 @@ export function seasonModeForDate(now: Date): SeasonMode {
 
 /** Which holiday sub-phase we are in. Only meaningful in holiday mode. */
 export function holidayPhaseForDate(now: Date): HolidayPhase {
-  const { month } = businessDateParts(now);
-  if (month >= 12) return "limited";
-  if (month >= 10) return "underway";
+  const { month, day } = businessDateParts(now);
+  if (month === INSTALL_SEASON.endMonth) {
+    return day > INSTALL_SEASON.endDay ? "closed" : "limited";
+  }
+  if (month > INSTALL_SEASON.endMonth) return "closed";
+  if (month >= INSTALL_SEASON.startMonth) return "underway";
   return "booking";
+}
+
+/** Is a crew going out today? Drives copy that promises an install. */
+export function isInstallSeason(now: Date): boolean {
+  const { month, day } = businessDateParts(now);
+  const afterStart =
+    month > INSTALL_SEASON.startMonth ||
+    (month === INSTALL_SEASON.startMonth && day >= INSTALL_SEASON.startDay);
+  const beforeEnd =
+    month < INSTALL_SEASON.endMonth ||
+    (month === INSTALL_SEASON.endMonth && day <= INSTALL_SEASON.endDay);
+  return afterStart && beforeEnd;
 }
 
 /** Mardi Gras merchandising window (Jan-Feb), used on Gulf Coast surfaces. */
