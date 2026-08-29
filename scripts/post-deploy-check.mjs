@@ -129,6 +129,14 @@ console.log(`\nField tool`);
     "the schema has every column this build needs",
     r.text.includes('"schema"') ? r.text.slice(0, 60) : "endpoint too old",
   );
+  // Without a Resend key every send is a silent no-op. The rep sees nothing
+  // wrong and the customer gets nothing, which is exactly how the missing
+  // send button went unnoticed.
+  check(
+    r.text.includes('"email":true'),
+    "the deployment can send email",
+    r.text.includes('"email"') ? r.text.slice(0, 80) : "endpoint too old",
+  );
 }
 {
   // Cross-site POST must be refused, or any page on the internet could make a

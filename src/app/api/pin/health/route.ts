@@ -69,6 +69,16 @@ export async function GET() {
       {
         ok: true,
         schema: schemaCurrent,
+        /**
+         * Can this deployment send mail at all?
+         *
+         * Without a Resend key every send is a silent no-op: the website's
+         * estimate email logs a line and returns false, and the caller carries
+         * on. A rep would tap "Email it", see nothing wrong, and the customer
+         * would get nothing. A boolean about our own configuration, not about
+         * the key.
+         */
+        email: Boolean(process.env.RESEND_API_KEY),
         // Which commit is actually serving this. Vercel does not expose a
         // build id in the HTML, so without this there is no way to tell from
         // outside whether a push has finished deploying or the old build is
