@@ -157,6 +157,20 @@
   .mailer-page:last-child {
     break-after: auto;
   }
+  /*
+   * The one place overflow must NOT be forced visible.
+   *
+   * `body * { overflow: visible !important }` above exists so the app shell,
+   * which is a fixed-height flex column for the map, does not crop the
+   * document to one screen on paper. It also quietly disarms every attempt to
+   * clip anything, which is why framing the aerial photograph would not have
+   * worked without this. Same !important, higher specificity, so the frame
+   * wins and the photograph cannot escape it onto the price.
+   */
+  .mailer .shot {
+    overflow: hidden !important;
+  }
+
   /* Nothing on this piece may be split by the fold. */
   .mailer ul,
   .mailer ol,

@@ -180,19 +180,36 @@ export async function MailerDoc({
         {/* The recognition moment. A homeowner seeing their own roof from the
             air is the difference between this and a flyer. */}
         <div className="mt-6">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          {/* WIDTH AND HEIGHT ATTRIBUTES, not only CSS. This is fetched over
-              the network while the print layout is being computed, and an
-              image with no intrinsic size reserves no space until it arrives.
-              The attributes give the browser the ratio up front so nothing
-              below it moves when the photograph lands. */}
-          <img
-            src={aerialSrc}
-            alt="Aerial view of the roof measured for this estimate"
-            width={640}
-            height={264}
-            className="h-[2.75in] w-full rounded border border-slate-300 object-cover"
-          />
+          {/*
+            A FRAME THAT CLIPS, AND INLINE SIZES, BECAUSE THE CLASS WAS LOSING.
+            The photograph printed at its own natural size, square and enormous,
+            straight over the price. Whatever was beating `h-[2.75in]` in the
+            print cascade, arguing with it was not working: three attempts fixed
+            nothing because none of them could be reproduced headlessly, where
+            page.pdf() renders differently from the preview a person prints
+            from.
+
+            So the photograph now sits in a box of a fixed height with the
+            overflow clipped, and its own dimensions are inline. Inline styles
+            are not subject to whatever class generation or cascade problem this
+            was, and even if the image still arrives at its natural size it is
+            cut off by the frame instead of landing on the price. The failure
+            mode goes from "destroys the document" to "photo is cropped", which
+            is one somebody can see and I can fix.
+          */}
+          <div
+            className="shot rounded border border-slate-300"
+            style={{ height: "2.75in", overflow: "hidden" }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={aerialSrc}
+              alt="Aerial view of the roof measured for this estimate"
+              width={640}
+              height={264}
+              style={{ height: "100%", width: "100%", objectFit: "cover" }}
+            />
+          </div>
           <p className="mt-1.5 text-[10px] text-slate-500">
             The roof measured for this estimate.
           </p>
