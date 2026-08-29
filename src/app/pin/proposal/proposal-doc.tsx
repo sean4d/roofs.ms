@@ -174,16 +174,16 @@ export async function ProposalDoc({
       </section>
 
       {/* ---------- the number ---------- */}
-      <section className="mx-5 mt-5 rounded-lg bg-[#123b63] px-5 py-5 text-white sm:mx-8 sm:mt-6 sm:px-7 sm:py-6 print:mx-8 print:mt-6 print:px-7 print:py-6">
+      <section className="mx-5 mt-5 rounded-lg bg-[#123b63] px-5 py-4 text-white sm:mx-8 sm:mt-5 sm:px-6 sm:py-4.5 print:mx-8 print:mt-5 print:px-6 print:py-4.5">
         <p className="text-[10px] font-bold tracking-[0.14em] text-white/70 uppercase">
           Estimated investment
         </p>
-        <p className="mt-1 font-[family-name:var(--font-archivo)] text-[34px] leading-none font-extrabold sm:text-[42px] print:text-[42px]">
+        <p className="mt-0.5 font-[family-name:var(--font-archivo)] text-[34px] leading-none font-extrabold sm:text-[38px] print:text-[38px]">
           {firm
             ? money(data.priceShown!)
             : `${money(data.priceLow)} to ${money(data.priceHigh)}`}
         </p>
-        <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between sm:gap-6 print:flex-row print:items-end print:justify-between print:gap-6">
+        <div className="mt-3 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between sm:gap-6 print:flex-row print:items-end print:justify-between print:gap-6">
           <div className="min-w-0">
             <p className="text-[10px] font-bold tracking-[0.14em] text-white/70 uppercase">
               Or finance it. {profile.financingLine}
@@ -208,11 +208,11 @@ export async function ProposalDoc({
           </div>
           {qr && (
             <div className="w-fit shrink-0 self-start rounded bg-white p-1.5">
-              <InlineSvg svg={qr} className="block h-[74px] w-[74px]" />
+              <InlineSvg svg={qr} className="block h-[68px] w-[68px]" />
             </div>
           )}
         </div>
-        <p className="mt-3 text-[9.5px] leading-relaxed text-white/60">
+        <p className="mt-2.5 text-[9px] leading-relaxed text-white/60">
           Example payments on {money(firm ? data.priceShown! : data.priceLow)}{" "}
           at {(FINANCING.apr * 100).toFixed(2)}% APR through our partner{" "}
           {FINANCING.partner}, subject to credit approval. Your rate and term
@@ -222,7 +222,7 @@ export async function ProposalDoc({
 
       {/* ---------- their roof ---------- */}
       <section
-        className={`mt-6 px-5 sm:mt-7 sm:px-8 print:mt-7 print:px-8 ${parts && parts.length > 3 ? "allow-break" : ""}`}
+        className={`page-one-end mt-6 px-5 sm:mt-7 sm:px-8 print:mt-7 print:px-8 ${parts && parts.length > 3 ? "allow-break" : ""}`}
       >
         <h2 className="border-b border-slate-200 pb-1.5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
           {parts ? "Your roofs, measured" : "Your roof, measured"}

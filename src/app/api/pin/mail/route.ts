@@ -26,8 +26,15 @@ export const dynamic = "force-dynamic";
 const schema = z.object({
   quoteId: z.string().uuid(),
   action: z.enum(["request", "mailed", "rejected", "printed"]),
-  /** Why the office would not post it. Shown back to the rep. */
-  note: z.string().max(400).optional(),
+  /**
+   * Why the office would not post it. Shown back to the rep.
+   *
+   * NULLABLE, not merely optional. Zod's .optional() admits undefined and
+   * rejects null, and the board sends `note: null` on every "mark posted"
+   * because there is no reason to give for posting something. So the one
+   * button the whole queue exists for answered "Bad request" and did nothing.
+   */
+  note: z.string().max(400).nullable().optional(),
 });
 
 export async function POST(request: Request) {

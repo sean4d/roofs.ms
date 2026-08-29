@@ -36,6 +36,24 @@
   .proposal header {
     break-inside: avoid;
   }
+  /*
+   * The page one / page two boundary, forced rather than hoped for.
+   *
+   * The owner prints on a machine whose usable page height is not the one this
+   * was designed against: headers and footers, a different default margin, a
+   * different scale, all shave it, and the document that measures three sheets
+   * here came out as five on his desk. Letting the flow decide meant the
+   * layout depended on somebody else's print dialog.
+   *
+   * So the first sheet is declared: masthead, who it is for, the price and the
+   * roof. The second starts with what the price includes. That is the shape he
+   * asked for, and now it is what gets printed regardless of whose printer it
+   * is.
+   */
+  .proposal .page-one-end {
+    break-after: page;
+  }
+
   /* One exception, for the property with several buildings on it.
      Every other section is short enough that keeping it whole is free, but a
      structure table with five or six lines cannot fit under the price block,
