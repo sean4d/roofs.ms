@@ -69,7 +69,15 @@ export const siteConfig = {
    * Deliberately NOT copied from the roofing config: that pin is the roofing
    * office on a different street, and this profile is verified at Mable St.
    */
-  geo: null as { latitude: number; longitude: number } | null,
+  /**
+   * Owner-supplied 2026-08-29, pin dropped on the building itself. Six
+   * decimals is roughly ten centimetres; the extra digits Google Maps hands
+   * you are noise and make the schema look machine-generated.
+   */
+  geo: { latitude: 31.330668, longitude: -89.345288 } as {
+    latitude: number;
+    longitude: number;
+  } | null,
 
   /**
    * Business hours. Owner-confirmed 2026-08-26 as identical to Southeast
@@ -203,7 +211,8 @@ export const siteConfig = {
   },
   /** Kept for compatibility. Use `warranty` above. */
   workmanshipWarranty: null as string | null,
-  foundingYear: null as number | null,
+  /** Owner-supplied 2026-08-29. */
+  foundingYear: 2023 as number | null,
 } as const;
 
 export type SiteConfig = typeof siteConfig;

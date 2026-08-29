@@ -87,6 +87,18 @@ export function localBusinessSchema() {
       postalCode: address.postalCode ?? undefined,
       addressCountry: address.addressCountry,
     },
+    foundingDate: siteConfig.foundingYear
+      ? String(siteConfig.foundingYear)
+      : undefined,
+    /* Coordinates of the address Google actually verified, which is what
+       ties this profile to the map pack. */
+    geo: siteConfig.geo
+      ? {
+          "@type": "GeoCoordinates",
+          latitude: siteConfig.geo.latitude,
+          longitude: siteConfig.geo.longitude,
+        }
+      : undefined,
     openingHoursSpecification: siteConfig.hours.spec.map((slot) => ({
       "@type": "OpeningHoursSpecification",
       dayOfWeek: [...slot.days],
