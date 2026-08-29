@@ -130,6 +130,19 @@
     color: var(--color-ink-950);
   }
 
+  /*
+   * Dropdown options are drawn by the operating system and do not inherit
+   * the dark surface behind the select, only its near-white text colour.
+   * That left the budget choices white on white until the pointer hovered
+   * one. The select declares color-scheme: dark, which fixes it in current
+   * Chrome and Firefox; these explicit colours cover browsers that paint
+   * the list light regardless.
+   */
+  select option {
+    background-color: var(--color-ink-900);
+    color: var(--color-bone-100);
+  }
+
   :focus-visible {
     outline: 2px solid var(--color-champagne-400);
     outline-offset: 3px;

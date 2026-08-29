@@ -149,10 +149,14 @@ export function ResidentialQuoteForm() {
         error={errors.address}
         hint="We measure from aerial imagery, so the address is how we price accurately without a site visit."
       >
+        {/* The placeholder shows the shape the CRM can be filled from: with
+            the city comma-separated, the lead email can split city, state and
+            ZIP onto their own lines instead of leaving them for a human. */}
         <TextInput
           id="address"
           name="address"
           autoComplete="street-address"
+          placeholder="123 Main St, Hattiesburg, MS 39401"
           required
           error={errors.address}
         />

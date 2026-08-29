@@ -2,6 +2,7 @@ import "server-only";
 
 import { siteConfig } from "@/config/site";
 
+import { splitAddress, splitName } from "./crm-fields";
 import { sendToRoofr, type DeliveryResult } from "./roofr";
 import type { Lead } from "./types";
 
@@ -63,13 +64,49 @@ async function sendGenericWebhook(lead: Lead): Promise<DeliveryResult> {
   }
 }
 
+const addressList = (value: string | null | undefined): string[] =>
+  (value ?? "")
+    .split(",")
+    .map((address) => address.trim())
+    .filter(Boolean);
+
+/**
+ * Who gets told about this lead.
+ *
+ * LEAD_NOTIFY_EMAIL is the office. LEAD_ROOFR_EMAIL is a mailbox a machine
+ * watches, typically a Zapier Email Parser inbox that turns the mail into a
+ * Roofr job. Both accept a comma-separated list.
+ *
+ * This is the arrangement the roofing site already runs, and it exists
+ * because Zapier's webhook trigger is a paid app while the Email Parser is
+ * free: the CRM hand-off rides on an email the office was getting anyway.
+ *
+ * The parser address is SUBTRACTED from the office list, so it does not
+ * matter if it is also sitting in LEAD_NOTIFY_EMAIL. Two variables that must
+ * agree with each other is a trap. The office can never end up empty as a
+ * result of that subtraction: a lead only a machine has read is a lead no
+ * human has read.
+ */
+function recipientsFor(): string[] {
+  const crm = addressList(process.env.LEAD_ROOFR_EMAIL);
+  const crmSet = new Set(crm.map((address) => address.toLowerCase()));
+
+  const office = addressList(
+    process.env.LEAD_NOTIFY_EMAIL ?? siteConfig.email,
+  ).filter((address) => !crmSet.has(address.toLowerCase()));
+
+  const humans = office.length ? office : addressList(siteConfig.email);
+
+  return [...humans, ...crm];
+}
+
 async function sendLeadEmail(lead: Lead): Promise<DeliveryResult> {
   const key = process.env.RESEND_API_KEY;
   if (!key)
     return { ok: false, skipped: true, detail: "RESEND_API_KEY not set" };
 
-  const to = process.env.LEAD_NOTIFY_EMAIL ?? siteConfig.email;
-  if (!to)
+  const to = recipientsFor();
+  if (!to.length)
     return { ok: false, skipped: true, detail: "No notification address" };
 
   try {
@@ -83,7 +120,7 @@ async function sendLeadEmail(lead: Lead): Promise<DeliveryResult> {
         from:
           process.env.LEAD_FROM_EMAIL ??
           "Southeast Lights <leads@southeastlights.llc>",
-        to: [to],
+        to,
         reply_to: lead.email,
         subject: subjectFor(lead),
         text: plainTextBody(lead),
@@ -160,6 +197,27 @@ function plainTextBody(lead: Lead): string {
     add("Desired completion", lead.desiredCompletion);
     add("Electrical", lead.electrical);
     add("Site access", lead.siteAccess);
+  }
+
+  /*
+   * The name and address again, split into the separate fields Roofr marks
+   * required. An email parser cannot reliably find where a city ends inside a
+   * free-text line, so each part gets its own. Kept as one block with a stable
+   * label order so the parser template survives a lead that omits a field, and
+   * placed before NOTES so free text the customer wrote can never land inside
+   * it. Parts that could not be read confidently are absent, never guessed.
+   */
+  const name = splitName(lead.name);
+  const where = splitAddress(lead.address);
+  if (name.last || where.city || where.state || where.postal) {
+    lines.push("", "CRM FIELDS", "");
+    add("First name", name.first);
+    add("Last name", name.last);
+    add("Street", where.street);
+    add("City", where.city);
+    add("State", where.state);
+    add("ZIP", where.postal);
+    add("Country", "United States");
   }
 
   if (lead.notes) lines.push("", "NOTES", lead.notes);
