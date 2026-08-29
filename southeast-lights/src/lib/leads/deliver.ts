@@ -223,13 +223,25 @@ function plainTextBody(lead: Lead): string {
   if (lead.notes) lines.push("", "NOTES", lead.notes);
 
   if (lead.attachments?.length) {
+    /*
+     * Filename and link on separate lines, blank line between entries.
+     *
+     * Signed storage URLs are around five hundred characters and end in a
+     * JWT, and mail clients auto-link plain text by scanning for something
+     * URL-shaped. Put "name - url" on one line each and the linkifier runs
+     * the end of one URL into the start of the next filename, producing a
+     * link that 400s while the file behind it is perfectly fine. A URL
+     * alone on its own line, with a blank line after it, has nothing
+     * adjacent to swallow.
+     */
     lines.push("", `ATTACHMENTS (${lead.attachments.length})`, "");
     for (const file of lead.attachments) {
+      lines.push(file.name);
       lines.push(
-        file.url
-          ? `${file.name} - ${file.url}`
-          : `${file.name} (upload storage not configured; ask the customer to resend)`,
+        file.url ??
+          "  (upload storage not configured; ask the customer to resend)",
       );
+      lines.push("");
     }
   }
 
