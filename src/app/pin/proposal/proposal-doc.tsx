@@ -209,8 +209,8 @@ export async function ProposalDoc({
         <h2 className="border-b border-slate-200 pb-1.5 text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">
           {parts ? "Your roofs, measured" : "Your roof, measured"}
         </h2>
-        <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:gap-6 print:flex-row print:gap-6">
-          <div className="grid grid-cols-2 gap-x-4 gap-y-4 sm:flex-1 sm:grid-cols-3 sm:self-start print:flex-1 print:grid-cols-3 print:self-start">
+        <div className="mt-4 flex flex-col gap-4 md:flex-row md:gap-6 print:flex-row print:gap-6">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-4 md:flex-1 md:grid-cols-3 md:self-start print:flex-1 print:grid-cols-3 print:self-start">
             <Fact
               label={parts ? "Total roof area" : "Roof area"}
               value={`${data.squares} squares`}
@@ -234,7 +234,7 @@ export async function ProposalDoc({
           <img
             src={aerialSrc}
             alt="Aerial view of the roof"
-            className="h-[180px] w-full rounded border border-slate-300 object-cover sm:h-[150px] sm:w-[150px] sm:shrink-0 print:h-[150px] print:w-[150px] print:shrink-0"
+            className="h-[180px] w-full rounded border border-slate-300 object-cover md:h-[150px] md:w-[150px] md:shrink-0 print:h-[150px] print:w-[150px] print:shrink-0"
           />
         </div>
         {/* One line per building, priced on its own terms. Every figure here

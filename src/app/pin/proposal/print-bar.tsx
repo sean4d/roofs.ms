@@ -51,9 +51,13 @@ export function PrintBar({
         >
           &larr; Map
         </Link>
-        <p className="mr-auto min-w-0 flex-1 truncate text-sm text-slate-600">
+        {/* Hidden on a phone. Three buttons and an address do not fit in
+            390px, and squeezing it produced "154 P...", which tells nobody
+            anything. The address is in full two inches down the document. */}
+        <p className="mr-auto hidden min-w-0 flex-1 truncate text-sm text-slate-600 sm:block">
           {address}
         </p>
+        <span className="mr-auto sm:hidden" />
         {shareUrl && (
           <button
             onClick={copy}
