@@ -17,6 +17,7 @@ import {
 } from "@/config/estimator";
 import { HOLIDAY } from "@/config/pricing";
 import { track } from "@/lib/analytics";
+import { saveEstimate } from "@/lib/estimate-handoff";
 import { cn, formatUsd } from "@/lib/utils";
 
 /**
@@ -210,6 +211,12 @@ export function Estimator() {
       needsReview,
     };
   }, [quantities, treeCounts]);
+
+  /* Every per-foot line added up. The office reads one number for how much
+     roofline is involved, not three. */
+  const rooflineFeet = ESTIMATOR_OPTIONS.filter(
+    (option) => option.mode === "perFoot",
+  ).reduce((feet, option) => feet + (quantities[option.key] ?? 0), 0);
 
   const low = Math.round((quote.total * 0.9) / 50) * 50;
   const high = Math.round((quote.total * 1.15) / 50) * 50;
@@ -592,9 +599,25 @@ export function Estimator() {
 
         <Link
           href="/quote"
-          onClick={() =>
-            track("estimator_complete", { total: quote.total, scheme })
-          }
+          onClick={() => {
+            track("estimator_complete", { total: quote.total, scheme });
+            /* Carry the configuration to the form. Without this the lead
+               arrives with no total, no footage and no colour, and the
+               office cannot tell what was priced. */
+            saveEstimate({
+              total: quote.total,
+              roofFt: rooflineFeet,
+              colorScheme: COLOR_SCHEMES[scheme]?.label,
+              selections: Object.fromEntries(
+                quote.lines.map((line) => [
+                  line.label,
+                  line.amount === null
+                    ? "Quoted after review"
+                    : `$${line.amount.toLocaleString("en-US")}`,
+                ]),
+              ),
+            });
+          }}
           className="btn-primary mt-6 w-full sm:w-auto"
         >
           Get my exact quote
