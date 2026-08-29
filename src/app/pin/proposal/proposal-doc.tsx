@@ -99,8 +99,24 @@ export async function ProposalDoc({
       {/* ---------- masthead ---------- */}
       <header className="flex flex-col gap-3 border-b-[3px] border-[#123b63] px-5 pt-6 pb-4 sm:flex-row sm:items-start sm:justify-between sm:gap-6 sm:px-8 sm:pt-8 sm:pb-5 print:flex-row print:items-start print:justify-between print:gap-6 print:px-8 print:pt-8 print:pb-5">
         <div className="flex items-center gap-3.5">
-          {logo && (
-            <InlineSvg svg={logo} className="block h-12 w-12 shrink-0" />
+          {/* The office's own logo wins, and the built-in mark is the fallback.
+              THE UPLOAD USED TO DO NOTHING. /pin/settings saved the image and
+              showed it back in its own preview, so it looked like it had
+              worked, and this masthead went on rendering public/icon.svg
+              because it never read the profile at all.
+
+              Sized by HEIGHT with the width left free, because an uploaded
+              logo is usually a wide lockup while the built-in mark is square.
+              Forcing a 12-by-12 box on a 5-by-2 image would squash it. */}
+          {profile.logoDataUri ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={profile.logoDataUri}
+              alt={profile.legalName}
+              className="block h-12 w-auto max-w-[2.4in] shrink-0 object-contain"
+            />
+          ) : (
+            logo && <InlineSvg svg={logo} className="block h-12 w-12 shrink-0" />
           )}
           <div>
             <h1 className="font-[family-name:var(--font-archivo)] text-xl leading-tight font-extrabold tracking-tight text-[#123b63] sm:text-2xl sm:leading-none print:text-2xl print:leading-none">
