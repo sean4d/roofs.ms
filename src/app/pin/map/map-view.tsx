@@ -43,10 +43,19 @@ interface StormResult {
   years: number[];
 }
 
+/** What the company has already sent this homeowner, if anything. */
+interface PriorContact {
+  quoteId: string;
+  repName: string;
+  sentence: string | null;
+  mailStatus: "requested" | "mailed" | "rejected" | null;
+}
+
 interface Result {
   measurement: Measurement;
   price: PriceResult | null;
   storms: StormResult | null;
+  prior: PriorContact | null;
 }
 
 // Hattiesburg. Where the truck usually starts.
@@ -382,6 +391,26 @@ function ResultSheet({
       </div>
 
       <div className="px-5 py-4">
+        {/* Before anything else on the sheet. A rep who has already read the
+            price has already decided how to open the conversation, so a
+            warning underneath it arrives too late to change anything. */}
+        {result.prior?.sentence && (
+          <div className="mb-4 rounded-lg border-2 border-amber-400 bg-amber-50 p-3">
+            <p className="text-xs font-bold tracking-wide text-amber-900 uppercase">
+              Already contacted
+            </p>
+            <p className="mt-1 text-sm leading-relaxed text-amber-900">
+              {result.prior.sentence}
+            </p>
+            <a
+              href={`/pin/proposal/${result.prior.quoteId}`}
+              className="mt-2 inline-block text-sm font-semibold text-[#123b63] underline underline-offset-4"
+            >
+              View that estimate
+            </a>
+          </div>
+        )}
+
         {rejected ? (
           <RejectedBox reason={m.reason} />
         ) : (
@@ -547,7 +576,8 @@ function Estimator({
   }));
   const active = Math.min(activeIndex, items.length - 1);
   const total = priced.reduce((a, s) => a + s.price, 0);
-  const totalSquares = Math.round(items.reduce((a, s) => a + s.squares, 0) * 10) / 10;
+  const totalSquares =
+    Math.round(items.reduce((a, s) => a + s.squares, 0) * 10) / 10;
   const monthly = monthlyPayment(total);
   const current = items[active];
 
@@ -659,7 +689,17 @@ function Estimator({
       )}
 
       <div className="mt-4 flex items-center gap-3">
-        <Step label="&minus;" onClick={() => patch({ squares: Math.max(1, Math.round((current.squares - 0.5) * 10) / 10) })} />
+        <Step
+          label="&minus;"
+          onClick={() =>
+            patch({
+              squares: Math.max(
+                1,
+                Math.round((current.squares - 0.5) * 10) / 10,
+              ),
+            })
+          }
+        />
         <div className="flex-1 text-center">
           <p className="font-[family-name:var(--font-archivo)] text-2xl font-bold text-slate-900">
             {current.squares.toFixed(1)}
@@ -668,7 +708,12 @@ function Estimator({
             squares &middot; {items.length > 1 ? current.label : "this roof"}
           </p>
         </div>
-        <Step label="+" onClick={() => patch({ squares: Math.round((current.squares + 0.5) * 10) / 10 })} />
+        <Step
+          label="+"
+          onClick={() =>
+            patch({ squares: Math.round((current.squares + 0.5) * 10) / 10 })
+          }
+        />
       </div>
 
       <div className="mt-4 space-y-3">
@@ -690,11 +735,14 @@ function Estimator({
           label="Material"
           value={current.material}
           options={Object.keys(MATERIALS) as MaterialKey[]}
-          render={(v) => MATERIALS[v].label.replace(" shingle", "").replace(" (flat)", "")}
+          render={(v) =>
+            MATERIALS[v].label.replace(" shingle", "").replace(" (flat)", "")
+          }
           onChange={(v) => patch({ material: v })}
         />
         <p className="text-[11px] text-slate-500">
-          {current.planes} planes, {complexityFor(current.planes).label.toLowerCase()} cut.
+          {current.planes} planes,{" "}
+          {complexityFor(current.planes).label.toLowerCase()} cut.
           {complexityFor(current.planes).factor > 1
             ? " Extra waste is priced in."
             : ""}
@@ -711,8 +759,18 @@ function Estimator({
       {contactOpen && (
         <div className="mt-4 space-y-2">
           <Field value={name} onChange={setName} placeholder="Homeowner name" />
-          <Field value={email} onChange={setEmail} placeholder="Email" type="email" />
-          <Field value={phone} onChange={setPhone} placeholder="Phone" type="tel" />
+          <Field
+            value={email}
+            onChange={setEmail}
+            placeholder="Email"
+            type="email"
+          />
+          <Field
+            value={phone}
+            onChange={setPhone}
+            placeholder="Phone"
+            type="tel"
+          />
         </div>
       )}
 

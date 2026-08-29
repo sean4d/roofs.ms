@@ -7,6 +7,7 @@ import { db } from "@/lib/quotes/db";
 import { emailEstimate } from "@/lib/quotes/public-quote";
 import { getProposalForUser } from "@/lib/quotes/save";
 import { baseUrl } from "@/lib/quotes/base-url";
+import { recordEmailed } from "@/lib/quotes/delivery";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -102,21 +103,17 @@ export async function POST(request: Request) {
       );
     }
 
-    const sql = db();
     // Remember the address the rep typed, so the next send does not ask again
     // and the office can see who this customer is.
     if (input.email) {
-      await sql`
+      await db()`
         UPDATE customers SET email = ${input.email}, updated_at = now()
          WHERE id = (SELECT customer_id FROM quotes WHERE id = ${input.quoteId}::uuid)
       `;
     }
-    // These two columns were in the schema from the start and nothing ever
-    // wrote to them, which is its own evidence that the send was missing.
-    await sql`
-      UPDATE quotes SET sent_via = 'email', sent_at = now()
-       WHERE id = ${input.quoteId}::uuid
-    `;
+    // Recorded per channel, because the map warns the next rep off this house
+    // on the strength of it.
+    await recordEmailed(input.quoteId, to);
 
     return NextResponse.json(
       { ok: true, to },

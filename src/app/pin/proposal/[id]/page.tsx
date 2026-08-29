@@ -34,6 +34,9 @@ export default async function ProposalPage({
         token={data.publicToken}
         address={data.address}
         customerEmail={data.email}
+        mailStatus={data.mailStatus}
+        mailNote={data.mailNote}
+        emailedAt={data.emailedAt}
       />
       <div className="mx-auto max-w-[8.5in] px-3 py-4 print:p-0">
         <div className="shadow-xl print:shadow-none">

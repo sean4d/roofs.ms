@@ -6,6 +6,7 @@ import { sameOrigin } from "@/lib/production/auth";
 import { geocode, measureAt, measureAddress } from "@/lib/quotes/measure";
 import { summarizeStorms } from "@/lib/quotes/storms";
 import { priceFor, monthlyPayment } from "@/config/quote-rates";
+import { priorContactNear } from "@/lib/quotes/delivery";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -77,10 +78,26 @@ export async function POST(request: Request) {
         ? priceFor(measurement.squares)
         : null;
 
+    /**
+     * Has anybody here already sent this homeowner an estimate?
+     *
+     * Asked on every tap, before anything is saved, because the only useful
+     * moment to warn a rep is before they knock. Never fatal: a lookup failure
+     * must not cost the measurement the rep is standing there waiting for, so
+     * it degrades to no warning rather than to no price.
+     */
+    let prior = null;
+    try {
+      prior = await priorContactNear(measurement.lat, measurement.lon);
+    } catch (error) {
+      console.error("[pin] prior-contact lookup failed", error);
+    }
+
     return NextResponse.json(
       {
         ok: true,
         measurement,
+        prior,
         price: price
           ? {
               ...price,

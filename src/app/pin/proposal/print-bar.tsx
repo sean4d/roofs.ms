@@ -26,11 +26,17 @@ export function PrintBar({
   token,
   address,
   customerEmail,
+  mailStatus,
+  mailNote,
+  emailedAt,
 }: {
   quoteId: string;
   token: string | null;
   address: string;
   customerEmail: string | null;
+  mailStatus: "requested" | "mailed" | "rejected" | null;
+  mailNote: string | null;
+  emailedAt: string | null;
 }) {
   const [copied, setCopied] = useState(false);
   const [email, setEmail] = useState(customerEmail ?? "");
@@ -38,6 +44,8 @@ export function PrintBar({
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [mail, setMail] = useState(mailStatus);
+  const [mailing, setMailing] = useState(false);
 
   const shareUrl = token
     ? `${typeof window === "undefined" ? "" : window.location.origin}/estimate/${token}`
@@ -88,6 +96,59 @@ export function PrintBar({
     }
   }
 
+  /**
+   * Ask the office to print this one and put it in an envelope.
+   *
+   * A rep cannot mark anything as posted, only as requested. If they could,
+   * the board would stop being a record of what left the building and go back
+   * to being a record of what somebody intended to do.
+   */
+  async function requestMail() {
+    setMailing(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/pin/mail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ quoteId, action: "request" }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok)
+        setError(data.error ?? "Could not request that.");
+      else setMail("requested");
+    } catch {
+      setError("Lost the connection. Try again.");
+    } finally {
+      setMailing(false);
+    }
+  }
+
+  /**
+   * Print, and leave a note that it happened.
+   *
+   * Best effort, and the wording everywhere says PRINTED rather than posted,
+   * because nothing here can know whether paper came out of a printer. What
+   * was actually posted is the office's to confirm on the mail board.
+   */
+  function printAndRecord() {
+    void fetch("/api/pin/mail", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ quoteId, action: "printed" }),
+      keepalive: true,
+    }).catch(() => {});
+    window.print();
+  }
+
+  const mailLabel =
+    mail === "mailed"
+      ? "Posted"
+      : mail === "requested"
+        ? "Mailer requested"
+        : mail === "rejected"
+          ? "Mailer rejected"
+          : "Request mailer";
+
   return (
     <div className="no-print sticky top-0 z-10 border-b border-slate-200 bg-white/95 backdrop-blur">
       <div className="mx-auto flex max-w-[8.5in] flex-wrap items-center gap-2 px-3 py-2.5">
@@ -113,10 +174,17 @@ export function PrintBar({
           </button>
         )}
         <button
-          onClick={() => window.print()}
+          onClick={printAndRecord}
           className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700"
         >
           Print
+        </button>
+        <button
+          onClick={requestMail}
+          disabled={mailing || mail === "requested" || mail === "mailed"}
+          className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 disabled:opacity-60"
+        >
+          {mailing ? "..." : mailLabel}
         </button>
         <button
           onClick={send}
@@ -126,6 +194,33 @@ export function PrintBar({
           {sending ? "Sending..." : sent ? "Sent" : "Email it"}
         </button>
       </div>
+
+      {/* What has actually reached this customer. The rep needs it in front
+          of them before they decide what to do next, not buried in an admin
+          screen they will not open while standing on a driveway. */}
+      {(emailedAt || mail) && (
+        <div className="mx-auto flex max-w-[8.5in] flex-wrap gap-x-4 gap-y-1 px-3 pb-2 text-xs text-slate-600">
+          {emailedAt && (
+            <span>
+              Emailed {new Date(emailedAt).toLocaleDateString()}
+              {customerEmail ? ` to ${customerEmail}` : ""}
+            </span>
+          )}
+          {mail === "requested" && (
+            <span className="font-semibold text-amber-700">
+              Mailer requested, waiting on the office
+            </span>
+          )}
+          {mail === "mailed" && (
+            <span className="font-semibold text-green-700">Posted</span>
+          )}
+          {mail === "rejected" && (
+            <span className="font-semibold text-red-700">
+              Mailer rejected{mailNote ? `: ${mailNote}` : ""}
+            </span>
+          )}
+        </div>
+      )}
 
       {(asking || error || sent) && (
         <div className="mx-auto max-w-[8.5in] px-3 pb-3">

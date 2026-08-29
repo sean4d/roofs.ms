@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 
 import { currentUser } from "@/lib/quotes/auth";
+import { mailQueueSize } from "@/lib/quotes/delivery";
 import { searchQuotes, quoteStats } from "@/lib/quotes/list";
 
 import { PinNav } from "../pin-nav";
@@ -32,9 +33,11 @@ export default async function EstimatesPage({
     quoteStats(user),
   ]);
 
+  const mailQueue = user.role === "admin" ? await mailQueueSize() : 0;
+
   return (
     <>
-      <PinNav user={user} active="estimates" />
+      <PinNav user={user} active="estimates" mailQueue={mailQueue} />
       <main className="mx-auto w-full max-w-3xl flex-1 overflow-y-auto px-4 py-5">
         <div className="mb-4 flex gap-4 text-sm text-slate-600">
           <span>

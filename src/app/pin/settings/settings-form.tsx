@@ -37,6 +37,8 @@ export function SettingsForm({ profile }: { profile: CompanyProfile }) {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [migrating, setMigrating] = useState(false);
+  const [migrated, setMigrated] = useState<string | null>(null);
 
   const set = <K extends keyof CompanyProfile>(
     key: K,
@@ -63,6 +65,35 @@ export function SettingsForm({ profile }: { profile: CompanyProfile }) {
     };
     reader.onerror = () => setError("Could not read that file.");
     reader.readAsDataURL(file);
+  }
+
+  /**
+   * Apply the schema that shipped with this deployment.
+   *
+   * Migrations used to need somebody with the database URL on a laptop, which
+   * meant a feature could go live before its columns existed and the failure
+   * showed up as a 500 in front of a customer. This runs the committed
+   * schema.sql and nothing else: there is no way to hand it a statement.
+   */
+  async function migrate() {
+    setMigrating(true);
+    setError(null);
+    setMigrated(null);
+    try {
+      const res = await fetch("/api/pin/migrate", { method: "POST" });
+      const data = await res.json();
+      if (!res.ok || !data.ok) {
+        setError(data.error ?? "Could not apply the updates.");
+      } else {
+        setMigrated(
+          `Done. ${data.applied} of ${data.statements} statements applied.`,
+        );
+      }
+    } catch {
+      setError("Lost the connection. Try again.");
+    } finally {
+      setMigrating(false);
+    }
   }
 
   async function save() {
@@ -270,6 +301,24 @@ export function SettingsForm({ profile }: { profile: CompanyProfile }) {
           on={form.showInsurance}
           onChange={(v) => set("showInsurance", v)}
         />
+      </Group>
+
+      <Group title="Database">
+        <p className="text-xs leading-relaxed text-slate-500">
+          New features sometimes need new columns, and a deploy does not add
+          them by itself. If something in the tool reports that the database is
+          out of date, press this. It applies the schema that shipped with this
+          version and is safe to press twice: every statement checks whether the
+          thing already exists before creating it.
+        </p>
+        <button
+          onClick={migrate}
+          disabled={migrating}
+          className="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 disabled:opacity-60"
+        >
+          {migrating ? "Applying..." : "Apply database updates"}
+        </button>
+        {migrated && <p className="text-sm text-green-700">{migrated}</p>}
       </Group>
 
       <div className="fixed inset-x-0 bottom-0 border-t border-slate-200 bg-white/95 p-3 backdrop-blur">

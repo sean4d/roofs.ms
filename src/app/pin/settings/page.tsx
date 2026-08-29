@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { currentUser } from "@/lib/quotes/auth";
+import { mailQueueSize } from "@/lib/quotes/delivery";
 import { getProfile } from "@/lib/quotes/profile";
 
 import { PinNav } from "../pin-nav";
@@ -16,9 +17,11 @@ export default async function SettingsPage() {
 
   const profile = await getProfile();
 
+  const mailQueue = user.role === "admin" ? await mailQueueSize() : 0;
+
   return (
     <>
-      <PinNav user={user} active="settings" />
+      <PinNav user={user} active="settings" mailQueue={mailQueue} />
       <main className="mx-auto w-full max-w-2xl flex-1 overflow-y-auto px-4 py-5">
         <p className="mb-5 text-sm leading-relaxed text-slate-600">
           These are the details on every estimate you send. Clear a box to go

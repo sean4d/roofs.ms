@@ -50,6 +50,9 @@ export async function GET() {
      * published. Add a column here when a migration ships with a feature.
      */
     const required = [
+      ["quotes", "mail_status"],
+      ["quotes", "emailed_at"],
+      ["quotes", "printed_at"],
       ["quotes", "structures"],
       ["quotes", "public_token"],
       ["quotes", "imagery_date"],

@@ -39,6 +39,10 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["@ffmpeg-installer/ffmpeg"],
   outputFileTracingIncludes: {
     "/api/upload": ["./node_modules/@ffmpeg-installer/**/*"],
+    // The migrate route reads the committed schema at runtime. Nothing imports
+    // a .sql file, so the tracer cannot see it and it would be absent from the
+    // serverless bundle.
+    "/api/pin/migrate": ["./src/lib/quotes/schema.sql"],
   },
   /**
    * Google was crawling the generated Open Graph image and the favicon as if

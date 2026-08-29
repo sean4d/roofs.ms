@@ -139,6 +139,11 @@ export interface ProposalData {
   stories: number | null;
   structures: PricedStructure[] | null;
   repName: string;
+  /** What has actually reached this customer, and what is queued to. */
+  emailedAt: string | null;
+  printedAt: string | null;
+  mailStatus: "requested" | "mailed" | "rejected" | null;
+  mailNote: string | null;
 }
 
 interface Row {
@@ -166,6 +171,10 @@ interface Row {
   stories: string | number | null;
   structures: PricedStructure[] | null;
   rep_email: string;
+  emailed_at: string | Date | null;
+  printed_at: string | Date | null;
+  mail_status: "requested" | "mailed" | "rejected" | null;
+  mail_note: string | null;
 }
 
 /**
@@ -223,12 +232,17 @@ const toProposal = (r: Row): ProposalData => ({
   stories: r.stories === null ? null : Number(r.stories),
   structures: r.structures ?? null,
   repName: repDisplayName(r.rep_email),
+  emailedAt: r.emailed_at ? toIsoDate(r.emailed_at) : null,
+  printedAt: r.printed_at ? toIsoDate(r.printed_at) : null,
+  mailStatus: r.mail_status,
+  mailNote: r.mail_note,
 });
 
 const SELECT = `
   SELECT q.id, q.public_token, q.squares, q.pitch_degrees, q.planes,
          q.price_low, q.price_high, q.price_shown, q.monthly_low, q.monthly_high,
          q.created_at, q.imagery_date, q.material, q.stories, q.structures,
+         q.emailed_at, q.printed_at, q.mail_status, q.mail_note,
          c.address, c.name, c.email, c.phone, c.lat, c.lon,
          u.email AS rep_email
     FROM quotes q

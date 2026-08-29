@@ -266,3 +266,46 @@ CREATE TABLE IF NOT EXISTS company_profile (
 -- join to every proposal render and buy nothing.
 -- ---------------------------------------------------------------------------
 ALTER TABLE quotes ADD COLUMN IF NOT EXISTS structures jsonb;
+
+-- ---------------------------------------------------------------------------
+-- Delivery: what has actually reached this customer, and what is queued to.
+--
+-- The problem this solves is two reps working the same street a fortnight
+-- apart and both mailing the same homeowner, which reads to that homeowner as
+-- a company that does not know what its own people are doing. There was no way
+-- to tell: an estimate recorded that it existed and nothing about whether
+-- anyone had ever been sent it.
+--
+-- ONE COLUMN PER CHANNEL rather than a single status. An estimate can be
+-- printed at the door, emailed that evening and posted the following week, and
+-- all three are true at once. sent_via and sent_at above predate this and can
+-- only hold the most recent, so they are kept up to date for anything already
+-- reading them and these are the ones to trust.
+--
+-- The mail flow is a queue with a human in it, so it needs a state machine
+-- rather than a timestamp: a rep REQUESTS a mailer, the office prints and
+-- posts it and marks it MAILED, or decides the measurement is not good enough
+-- to put in an envelope and marks it REJECTED with a reason. Rejected is not a
+-- failure to record quietly; it is the office telling the rep the estimate was
+-- not good enough, which is the only way that ever improves.
+-- ---------------------------------------------------------------------------
+ALTER TABLE quotes ADD COLUMN IF NOT EXISTS emailed_at        timestamptz;
+ALTER TABLE quotes ADD COLUMN IF NOT EXISTS emailed_to        text;
+ALTER TABLE quotes ADD COLUMN IF NOT EXISTS printed_at        timestamptz;
+ALTER TABLE quotes ADD COLUMN IF NOT EXISTS mail_status       text
+  CHECK (mail_status IN ('requested','mailed','rejected'));
+ALTER TABLE quotes ADD COLUMN IF NOT EXISTS mail_requested_at timestamptz;
+ALTER TABLE quotes ADD COLUMN IF NOT EXISTS mail_requested_by uuid REFERENCES users (id);
+ALTER TABLE quotes ADD COLUMN IF NOT EXISTS mail_handled_at   timestamptz;
+ALTER TABLE quotes ADD COLUMN IF NOT EXISTS mail_handled_by   uuid REFERENCES users (id);
+ALTER TABLE quotes ADD COLUMN IF NOT EXISTS mail_note         text;
+
+-- The office's work queue: everything waiting to be printed, oldest first,
+-- because a mailer that has been sitting for a week is the urgent one.
+CREATE INDEX IF NOT EXISTS quotes_mail_queue_idx
+  ON quotes (mail_requested_at) WHERE mail_status = 'requested';
+
+-- "Has this homeowner already heard from us?" is asked on every single tap of
+-- the map, before anything is saved, so it has to be cheap. The lookup is by
+-- position, so the index is on the customer's coordinates.
+CREATE INDEX IF NOT EXISTS customers_latlon_idx ON customers (lat, lon);
