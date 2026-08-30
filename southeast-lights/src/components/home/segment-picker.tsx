@@ -18,7 +18,7 @@ const SEGMENTS = [
     label: "HOA & Communities",
     blurb:
       "Entrances, boulevards and common areas designed as one display, with proposals a board can vote on.",
-    image: IMAGES.projectHattiesburgPalms,
+    image: IMAGES.hoaEntrance,
   },
   {
     href: "/commercial",

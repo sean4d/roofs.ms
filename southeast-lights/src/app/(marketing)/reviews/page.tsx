@@ -6,7 +6,12 @@ import { PageHero } from "@/components/shared/page-hero";
 import { Section } from "@/components/shared/section";
 import { JsonLd } from "@/components/seo/json-ld";
 import { IMAGES } from "@/config/images";
-import { GOOGLE_AGGREGATE, REVIEWS, hasReviewText } from "@/config/reviews";
+import {
+  GOOGLE_AGGREGATE,
+  REVIEWS,
+  hasReviewText,
+  reviewCountLabel,
+} from "@/config/reviews";
 import { breadcrumbSchema, pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -28,7 +33,7 @@ export default function ReviewsPage() {
       <PageHero
         eyebrow="Reviews"
         title={`${GOOGLE_AGGREGATE.ratingValue.toFixed(1)} stars on Google.`}
-        intro={`${GOOGLE_AGGREGATE.ratingCount} reviews on the Southeast Lights Google Business Profile. Every one of them from a real customer.`}
+        intro={`${reviewCountLabel()} reviews across the Southeast Lights and Southeast Roofing Google profiles. Same company, same crews, same licence, and every one of them from a real customer.`}
         image={IMAGES.colonialColumns}
         quoteLocation="reviews"
       />
@@ -54,7 +59,7 @@ export default function ReviewsPage() {
                 ))}
               </div>
               <p className="text-bone-400 mt-1.5 text-sm">
-                {GOOGLE_AGGREGATE.ratingCount} Google reviews
+                {reviewCountLabel()} Google reviews, both profiles
               </p>
             </div>
           </div>

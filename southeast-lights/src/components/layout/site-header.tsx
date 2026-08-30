@@ -20,11 +20,45 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
 
+  /*
+   * HYSTERESIS, and it is load-bearing rather than a nicety.
+   *
+   * A single threshold made the header shake itself apart. The header is
+   * sticky, so it occupies layout: crossing the threshold swaps h-24 for
+   * h-16 and removes 32px from the document. On a page whose height is close
+   * to the viewport that shortens the scrollable range, the browser clamps
+   * scrollY back down, the header crosses the threshold the other way, grows
+   * 32px, and the whole thing oscillates every frame. Reported as the header
+   * banner and the hero text twitching a fraction below the top of the page,
+   * and stopping the moment you scroll either way, which is exactly the
+   * signature: it only happens inside the band where the feedback closes.
+   *
+   * Two thresholds with a gap between them breaks the loop. It takes 72px to
+   * compress and a return to 16px to expand, so the 32px the header gives
+   * back can never re-cross the line that made it shrink.
+   */
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const COMPRESS_AT = 72;
+    const EXPAND_AT = 16;
+    let frame = 0;
+
+    const onScroll = () => {
+      // Coalesce to one read per frame: scroll fires far faster than paint,
+      // and reading scrollY in the handler is a layout read either way.
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const y = window.scrollY;
+        setScrolled((was) => (was ? y > EXPAND_AT : y > COMPRESS_AT));
+      });
+    };
+
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, []);
 
   // Stop the page scrolling behind the open panel. The panel closes itself
@@ -51,7 +85,7 @@ export function SiteHeader() {
           scrolled ? "h-16" : "h-20 lg:h-24",
         )}
       >
-        <Logo showDivisionLine={!scrolled} />
+        <Logo />
 
         <nav
           aria-label="Main"

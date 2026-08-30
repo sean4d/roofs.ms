@@ -35,17 +35,68 @@ export interface Review {
 }
 
 /**
- * Aggregate for the Southeast Lights Google Business Profile.
- * Owner-reported 2026-08-24. This is the only rating figure the site
- * displays, and AggregateRating schema is emitted ONLY from this.
+ * TWO PROFILES, ONE COMPANY, ONE NUMBER.
+ *
+ * Southeast Roofing LLC operates both Google Business Profiles, so the
+ * reviews on each were earned by the same crews under the same licence. The
+ * site may therefore count them together, and it should: the lighting
+ * profile is young and its twelve reviews undersell a company that has been
+ * reviewed far more than that.
+ *
+ * What it must NOT do is what it was doing before, which was to print the
+ * LIGHTING profile's count of twelve directly above review text taken from
+ * the ROOFING profile. That reads as twelve lighting reviews and it is not
+ * true. Wherever a count now appears it is the combined figure and the copy
+ * says so.
+ *
+ * The roofing count is deliberately a FLOOR, not a guess. The owner reports
+ * "over thirty" and thirty is what is stored, so every figure the site
+ * prints is one it can defend even if the real number is higher. The UI
+ * renders it as "over N" for the same reason. Set GOOGLE_PLACES_API_KEY and
+ * lib/live-reviews.ts replaces both counts with the live ones daily, at
+ * which point the floor stops being used and the number tracks by itself.
+ *
+ * NO AggregateRating SCHEMA FROM THIS. Visible copy may say "across both our
+ * Google profiles" because a reader can see both. Structured data cannot:
+ * it would attach forty-two reviews to the Southeast Lights entity, whose
+ * own profile has twelve, and that is the kind of inflation Google
+ * penalises. seo.ts emits no rating markup and must not start.
  */
-export const GOOGLE_AGGREGATE = {
+export const LIGHTS_PROFILE = {
   ratingValue: 5.0,
   ratingCount: 12,
   lastVerified: "2026-08-24",
+} as const;
+
+export const ROOFING_PROFILE = {
+  ratingValue: 5.0,
+  /** Owner-reported floor: "over thirty". Never round this up. */
+  ratingCount: 30,
+  isFloor: true,
+  lastVerified: "2026-08-30",
+} as const;
+
+export const GOOGLE_AGGREGATE = {
+  ratingValue: 5.0,
+  ratingCount: LIGHTS_PROFILE.ratingCount + ROOFING_PROFILE.ratingCount,
+  /** True while any component count is a floor, so the UI says "over". */
+  isFloor: ROOFING_PROFILE.isFloor,
+  lightsCount: LIGHTS_PROFILE.ratingCount,
+  roofingCount: ROOFING_PROFILE.ratingCount,
+  lastVerified: "2026-08-30",
   profileUrl: siteConfig.google.profileUrl,
   reviewUrl: `https://search.google.com/local/writereview?placeid=${siteConfig.google.placeId}`,
 } as const;
+
+/**
+ * How a count is written wherever it appears. "over 40" rather than "42"
+ * while the roofing figure is a floor, so the sentence stays true if the
+ * real number has moved on since the owner last looked.
+ */
+export const reviewCountLabel = (): string =>
+  GOOGLE_AGGREGATE.isFloor
+    ? `over ${Math.floor(GOOGLE_AGGREGATE.ratingCount / 10) * 10}`
+    : String(GOOGLE_AGGREGATE.ratingCount);
 
 /**
  * Real review text. EMPTY BY DESIGN.

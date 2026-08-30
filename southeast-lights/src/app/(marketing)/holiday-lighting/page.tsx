@@ -12,7 +12,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { faqsFor } from "@/config/faqs";
 import { IMAGES } from "@/config/images";
 import { HOLIDAY, INCLUDED, PACKAGES } from "@/config/pricing";
-import { servicesByDivision } from "@/config/services";
+import { serviceCardImage, servicesByDivision } from "@/config/services";
 import {
   breadcrumbSchema,
   faqSchema,
@@ -166,12 +166,12 @@ export default function HolidayLightingPage() {
               className="card-lit group relative isolate flex min-h-[16rem] flex-col justify-end overflow-hidden p-6"
             >
               <Image
-                src={service.image.src}
+                src={serviceCardImage(service).src}
                 alt=""
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 placeholder="blur"
-                blurDataURL={service.image.blurDataURL}
+                blurDataURL={serviceCardImage(service).blurDataURL}
                 className="-z-10 object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="scrim-soft absolute inset-0 -z-10" />

@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
-import { enabledServices } from "@/config/services";
+import { enabledServices, serviceCardImage } from "@/config/services";
 import type { SeasonMode } from "@/config/season";
 
 /**
@@ -58,12 +58,12 @@ export function ServiceGrid({ mode }: { mode: SeasonMode }) {
             >
               <div className="cell-media">
                 <Image
-                  src={service.image.src}
-                  alt={service.image.alt}
+                  src={serviceCardImage(service).src}
+                  alt={serviceCardImage(service).alt}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   placeholder="blur"
-                  blurDataURL={service.image.blurDataURL}
+                  blurDataURL={serviceCardImage(service).blurDataURL}
                   className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                 />
               </div>
