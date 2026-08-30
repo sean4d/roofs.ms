@@ -23,13 +23,13 @@ import { messagingFor, type SeasonMode } from "@/config/season";
 export function Hero({ mode, now }: { mode: SeasonMode; now: Date }) {
   const holiday = mode === "holiday";
   /*
-   * Desktop background. The live oak wrap is the strongest photograph in
-   * the set and it reads at full-bleed width, which a roofline shot does
+   * Desktop background: the owner's chosen hero, a row of fully wrapped
+   * live oaks. It reads at full-bleed width, which a roofline shot does
    * not: a roof crops to a stripe across a 2400px hero, a wrapped canopy
    * fills the frame. Off season the permanent-lighting colour shot takes
    * over. Phones keep their own portrait image below, untouched.
    */
-  const image = holiday ? IMAGES.liveOakWrap : IMAGES.permanentColor;
+  const image = holiday ? IMAGES.holidayHero : IMAGES.permanentColor;
   /*
    * Phones get a portrait photograph of an install in progress. A wide hero
    * crops to a strip on a phone, and the vertical frame is the only shape
@@ -103,7 +103,9 @@ export function Hero({ mode, now }: { mode: SeasonMode; now: Date }) {
          */
         className="container-site relative z-20 flex min-h-[66svh] flex-col justify-start pt-8 pb-14 sm:min-h-[78svh] sm:justify-end sm:pt-28 lg:min-h-[88svh] lg:pt-32 lg:pb-24"
       >
-        <Reveal>
+        {/* flex-col because both chips are inline-flex: inside a plain
+            block wrapper they sit side by side on one line. */}
+        <Reveal className="flex flex-col items-start">
           {/*
            * Two chips, deliberately unequal.
            *

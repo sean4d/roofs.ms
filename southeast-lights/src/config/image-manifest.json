@@ -32,7 +32,7 @@
   "landscape-lighting": {
     "width": 1600,
     "height": 1155,
-    "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoQAAwABABsJZgCdAD0i2q+AAD+6e1IzYdQaP5urOqKgvoZJsVPwSdACd+bI6OxPmhvFEKaW8qNNI1bsAAAAA=="
+    "blurDataURL": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADQAQCdASoQAAwABABsJZgCdAD0h0aWAAD+6e1IzYdQaP5urOqJR2xfqGo4maE235sjo7E+aG8UQppbyo00jVuwAAA="
   },
   "live-oak-wrap": {
     "width": 2400,
@@ -187,11 +187,11 @@
   "hoa-entrance": {
     "width": 2400,
     "height": 1596,
-    "blurDataURL": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADwAQCdASoQAAsABABsJagC/OEOmIBfaQAA/vV0daZDE1+aZNYin2BHrmsJMjFV3E9et70Ar4/EYJKDQAA="
+    "blurDataURL": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADwAQCdASoQAAsABABsJagC/OEOmIBfaQAA/vV0daZDE1+aZNYin2BHrmsJMjFV3E9et70AtKHYLYuBoAA="
   },
   "holiday-hero-estate": {
-    "width": 1500,
-    "height": 650,
-    "blurDataURL": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADwAQCdASoQAAcABABsJYgCdADbXm6K7QAA/umtd8AK2z50P6nkIysOqE4xfUrxNIIvUC17gSISSQjpLmgUZQ1mAAA="
+    "width": 2400,
+    "height": 1584,
+    "blurDataURL": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADwAQCdASoQAAsABABsJZgCdAC6z6b1MwAA/t2wHJoJ1J15rLB4/6sUUNavjrWz7QCG64l8ON+W5KTBkCJLuWq8de4tI7j/yb6O8AAA"
   }
 }
