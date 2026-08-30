@@ -176,6 +176,7 @@ export function ResidentialQuoteForm() {
           <TextInput
             id="firstName"
             name="firstName"
+            placeholder="John"
             autoComplete="given-name"
             required
             error={errors.firstName}
@@ -185,6 +186,7 @@ export function ResidentialQuoteForm() {
           <TextInput
             id="lastName"
             name="lastName"
+            placeholder="Smith"
             autoComplete="family-name"
             required
             error={errors.lastName}
@@ -197,6 +199,7 @@ export function ResidentialQuoteForm() {
           <TextInput
             id="phone"
             name="phone"
+            placeholder="(601) 555-0123"
             type="tel"
             autoComplete="tel"
             required
@@ -207,6 +210,7 @@ export function ResidentialQuoteForm() {
           <TextInput
             id="email"
             name="email"
+            placeholder="you@example.com"
             type="email"
             autoComplete="email"
             required

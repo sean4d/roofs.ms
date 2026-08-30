@@ -218,6 +218,7 @@ export function CommercialProposalForm() {
           <TextInput
             id="firstName"
             name="firstName"
+            placeholder="John"
             autoComplete="given-name"
             required
             error={errors.firstName}
@@ -227,6 +228,7 @@ export function CommercialProposalForm() {
           <TextInput
             id="lastName"
             name="lastName"
+            placeholder="Smith"
             autoComplete="family-name"
             required
             error={errors.lastName}
@@ -239,6 +241,7 @@ export function CommercialProposalForm() {
           <TextInput
             id="phone"
             name="phone"
+            placeholder="(601) 555-0123"
             type="tel"
             autoComplete="tel"
             required
@@ -249,6 +252,7 @@ export function CommercialProposalForm() {
           <TextInput
             id="email"
             name="email"
+            placeholder="you@company.com"
             type="email"
             autoComplete="email"
             required

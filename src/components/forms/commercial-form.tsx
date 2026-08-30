@@ -157,7 +157,7 @@ export function CommercialForm() {
             required
             aria-invalid={state.errors?.firstName ? true : undefined}
             className={inputClass}
-            placeholder="Sean"
+            placeholder="John"
           />
         </Field>
         <Field label="Last name" name="lastName" error={state.errors?.lastName}>
@@ -169,7 +169,7 @@ export function CommercialForm() {
             required
             aria-invalid={state.errors?.lastName ? true : undefined}
             className={inputClass}
-            placeholder="Ford"
+            placeholder="Smith"
           />
         </Field>
         <Field label="Phone" name="phone" error={state.errors?.phone}>
@@ -232,8 +232,32 @@ export function CommercialForm() {
             id="address"
             name="address"
             type="text"
+            autoComplete="street-address"
             className={inputClass}
-            placeholder="Street, city"
+            placeholder="123 Hardy St"
+          />
+        </Field>
+        {/* City and ZIP separately, matching the other forms. Roofr treats
+            them as two required fields and will not split one for us. */}
+        <Field label="City" name="city" optional>
+          <input
+            id="city"
+            name="city"
+            type="text"
+            autoComplete="address-level2"
+            className={inputClass}
+            placeholder="Hattiesburg"
+          />
+        </Field>
+        <Field label="ZIP" name="postal" optional>
+          <input
+            id="postal"
+            name="postal"
+            type="text"
+            inputMode="numeric"
+            autoComplete="postal-code"
+            className={inputClass}
+            placeholder="39401"
           />
         </Field>
         <Field label="Current roof type" name="roofType" optional>

@@ -49,7 +49,10 @@ export function AddressFields({
     const input = event.currentTarget;
     input.value = parts.street ?? pasted;
 
-    const fill = (ref: React.RefObject<HTMLInputElement | null>, value?: string) => {
+    const fill = (
+      ref: React.RefObject<HTMLInputElement | null>,
+      value?: string,
+    ) => {
       if (ref.current && value && !ref.current.value) ref.current.value = value;
     };
     fill(city, parts.city);
@@ -70,7 +73,7 @@ export function AddressFields({
           id="address"
           name="address"
           autoComplete="address-line1"
-          placeholder="3705 Mable St"
+          placeholder="123 Hardy St"
           required
           error={errors.address}
           onPaste={spread}

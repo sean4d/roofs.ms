@@ -418,7 +418,7 @@ export function QuoteWizard() {
                 required
                 aria-invalid={state.errors?.firstName ? true : undefined}
                 className={inputClass}
-                placeholder="Sean"
+                placeholder="John"
               />
               {state.errors?.firstName && (
                 <p role="alert" className="mt-1.5 text-sm text-destructive">
@@ -441,7 +441,7 @@ export function QuoteWizard() {
                 required
                 aria-invalid={state.errors?.lastName ? true : undefined}
                 className={inputClass}
-                placeholder="Ford"
+                placeholder="Smith"
               />
               {state.errors?.lastName && (
                 <p role="alert" className="mt-1.5 text-sm text-destructive">
@@ -508,8 +508,29 @@ export function QuoteWizard() {
                 id="city"
                 name="city"
                 type="text"
+                autoComplete="address-level2"
                 className={inputClass}
                 placeholder="Hattiesburg"
+              />
+            </div>
+            {/* ZIP as its own box. Roofr requires city and postcode as two
+                separate fields, so asking for one and deriving the other
+                left half the address to a guess. */}
+            <div>
+              <label
+                htmlFor="postal"
+                className="mb-1.5 block text-sm font-semibold text-navy-900"
+              >
+                ZIP
+              </label>
+              <input
+                id="postal"
+                name="postal"
+                type="text"
+                inputMode="numeric"
+                autoComplete="postal-code"
+                className={inputClass}
+                placeholder="39401"
               />
             </div>
           </div>

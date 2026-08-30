@@ -48,6 +48,7 @@ export function DamageAnalyzer() {
   const [files, setFiles] = useState<File[]>([]);
   const [issue, setIssue] = useState<DamageIssue | null>(null);
   const [city, setCity] = useState("");
+  const [postal, setPostal] = useState("");
   const [address, setAddress] = useState("");
   const [when, setWhen] = useState("");
   const [insurance, setInsurance] = useState("");
@@ -185,7 +186,15 @@ export function DamageAnalyzer() {
               label="City"
               value={city}
               onChange={setCity}
-              placeholder="e.g. Hattiesburg"
+              placeholder="Hattiesburg"
+            />
+            {/* ZIP separately, because Roofr requires city and postcode as
+                two fields and will not split one for us. */}
+            <Field
+              label="ZIP"
+              value={postal}
+              onChange={setPostal}
+              placeholder="39401"
             />
             <Field
               label="Property address"
@@ -317,6 +326,7 @@ export function DamageAnalyzer() {
             />
             <input type="hidden" name="page" value={pathname} />
             <input type="hidden" name="city" value={city} />
+            <input type="hidden" name="postal" value={postal} />
             <input type="hidden" name="address" value={address} />
             <input
               type="hidden"
