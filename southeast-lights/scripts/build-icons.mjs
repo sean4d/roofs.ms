@@ -1,26 +1,36 @@
 /**
  * Build the favicon and app-icon set from the roof mark.
  *
- * Run with `node scripts/build-icons.mjs` after changing the mark artwork.
+ *   npm run icons:build
  *
- * WHY THIS EXISTS. The tab icon used to point straight at the 2048px brand
- * lockup, lettering, divider bar, internal padding and all. A browser asked
- * for sixteen pixels then downscaled the whole thing itself, so the roof
- * ended up occupying about a third of the height and the word "SOUTHEAST
- * LIGHTS" became a grey smudge under it. Small and blurry, and no amount of
- * fiddling with the source file fixes it, because the problem is that one
- * image was doing a job that needs several.
+ * WHY THIS FILE EXISTS. The tab icon used to point straight at the 2048px
+ * brand lockup, lettering and all, for every size a browser might ask for.
+ * The browser then shrank the whole thing to sixteen pixels itself, so the
+ * roof came out about a third of the height and the wordmark under it became
+ * a grey smudge. Rendering each size deliberately, at the size it will be
+ * shown, is the only thing that fixes that.
  *
- * So each size is rendered here, on purpose, at the size it will be shown:
- * a 16px favicon is drawn as 16px with a sharpening pass, not handed to the
- * browser as 512px and hoped for.
+ * TWO THINGS LEARNED THE HARD WAY, both worth keeping:
  *
- * WHY A FILLED TILE, when the roofing site's favicon is a transparent mark.
- * Roofing's mark is a single-colour vector, so it can flip navy-on-light to
- * white-on-dark and sit directly on the tab bar. This mark is full colour,
- * and the white fur on the hat disappears against a light tab. Painting it
- * on the site's own near-black gives one icon that reads on both, and it is
- * the same choice roofing already makes for its installed-app icon.
+ * 1. NO TILE BEHIND THE TAB ICON. The first version of this script painted
+ *    the mark on a rounded near-black square. The mark's red pixels cover
+ *    only about a quarter of their own bounding box, and that box is nearly
+ *    two to one, so on a square tile the artwork worked out to roughly a
+ *    tenth of the icon and the other nine tenths were black. In a tab it
+ *    read as a black square. The mark now sits on transparency, the way the
+ *    roofing site's favicon does.
+ *
+ * 2. CROP TO THE PART THAT SURVIVES SIXTEEN PIXELS. The full mark is a wide
+ *    lockup: hat, main gable, and a second chevron trailing off to the right.
+ *    Fitted into a square it is half the height of the frame and every stroke
+ *    lands on less than a pixel. Cropping to the hat and the main gable, the
+ *    half anyone would actually recognise, makes the same artwork about
+ *    seventy percent larger in the icon without redrawing anything.
+ *
+ * The installed-app icons keep a filled tile, because iOS and Android
+ * composite them onto backgrounds of their own and a transparent app icon
+ * looks broken. At 180px and up the detail is all visible anyway, so the
+ * tile costs nothing there.
  */
 import { Buffer } from "node:buffer";
 import { mkdir, writeFile } from "node:fs/promises";
@@ -29,39 +39,69 @@ import sharp from "sharp";
 const MARK = "public/brand/southeast-lights-roofmark.png";
 const INK = "#0A0908";
 
-/** Fraction of the tile the mark spans horizontally. */
-const FILL = 0.88;
-/** Corner radius as a fraction of the tile, roughly the iOS squircle. */
-const RADIUS = 0.22;
-
 /**
- * One square icon: ink tile, mark centred on it.
+ * The hat and the main gable, out of the full 1523x800 mark.
  *
- * `rounded` is off for Apple and maskable icons, where the platform applies
- * its own mask and a pre-rounded corner shows as a dark notch inside it.
- * `fill` is overridable so the maskable icon can hold its safe zone.
+ * Nearly square on purpose, so fitting it into the icon barely scales it
+ * down. Nudging these numbers changes how much of the second chevron shows;
+ * anything wider starts shrinking the hat again.
  */
-async function tile(size, { rounded = true, fill = FILL } = {}) {
-  const markWidth = Math.round(size * fill);
-  const mark = await sharp(MARK)
-    .resize({ width: markWidth, kernel: "lanczos3" })
-    // Small renders lose the chevron edge to the resample; a light pass puts
-    // it back. Larger ones are already crisp and sharpening only adds halos.
-    .sharpen(size <= 64 ? { sigma: 0.6, m1: 0.5, m2: 2 } : { sigma: 0.4 })
-    .toBuffer({ resolveWithObject: true });
+const CROP = { left: 120, top: 0, width: 880, height: 800 };
 
-  const base = sharp({
+/** Sharpen small renders only. Larger ones are crisp and only gain halos. */
+const sharpenFor = (size) =>
+  size <= 64 ? { sigma: 0.6, m1: 0.5, m2: 2 } : { sigma: 0.4 };
+
+/** The cropped mark, scaled to fit a square of `size` at `fill` of its width. */
+async function mark(size, fill) {
+  const box = Math.round(size * fill);
+  return sharp(MARK)
+    .extract(CROP)
+    .resize(box, box, {
+      fit: "contain",
+      background: { r: 0, g: 0, b: 0, alpha: 0 },
+      kernel: "lanczos3",
+    })
+    .sharpen(sharpenFor(size))
+    .toBuffer({ resolveWithObject: true });
+}
+
+/** Tab icon: the mark on transparency, near full bleed. */
+async function favicon(size) {
+  const m = await mark(size, 1);
+  return sharp({
     create: {
       width: size,
       height: size,
       channels: 4,
-      background: rounded ? { r: 0, g: 0, b: 0, alpha: 0 } : INK,
+      background: { r: 0, g: 0, b: 0, alpha: 0 },
     },
-  });
+  })
+    .composite([
+      {
+        input: m.data,
+        top: Math.round((size - m.info.height) / 2),
+        left: Math.round((size - m.info.width) / 2),
+      },
+    ])
+    .png({ compressionLevel: 9 })
+    .toBuffer();
+}
 
+/**
+ * Installed-app icon: the mark on a filled tile.
+ *
+ * `rounded` is off for Apple and maskable icons, where the platform applies
+ * its own mask and a pre-rounded corner shows as a dark notch inside it.
+ * `fill` drops for the maskable icon, which has to hold a safe zone Android
+ * crops into.
+ */
+async function appIcon(size, { rounded = true, fill = 0.82 } = {}) {
+  const m = await mark(size, fill);
   const layers = [];
+
   if (rounded) {
-    const r = Math.round(size * RADIUS);
+    const r = Math.round(size * 0.22);
     layers.push({
       input: Buffer.from(
         `<svg width="${size}" height="${size}"><rect width="${size}" height="${size}" rx="${r}" ry="${r}" fill="${INK}"/></svg>`,
@@ -70,13 +110,24 @@ async function tile(size, { rounded = true, fill = FILL } = {}) {
       left: 0,
     });
   }
+
   layers.push({
-    input: mark.data,
-    top: Math.round((size - mark.info.height) / 2),
-    left: Math.round((size - mark.info.width) / 2),
+    input: m.data,
+    top: Math.round((size - m.info.height) / 2),
+    left: Math.round((size - m.info.width) / 2),
   });
 
-  return base.composite(layers).png({ compressionLevel: 9 }).toBuffer();
+  return sharp({
+    create: {
+      width: size,
+      height: size,
+      channels: 4,
+      background: rounded ? { r: 0, g: 0, b: 0, alpha: 0 } : INK,
+    },
+  })
+    .composite(layers)
+    .png({ compressionLevel: 9 })
+    .toBuffer();
 }
 
 /**
@@ -120,10 +171,10 @@ const put = async (path, data) => {
   written.push(`${path}  ${(data.length / 1024).toFixed(1)} kB`);
 };
 
-// Tab icons, each drawn at its own size.
+// Tab icons, each drawn at its own size, on transparency.
 const small = {};
 for (const size of [16, 32, 48]) {
-  small[size] = await tile(size);
+  small[size] = await favicon(size);
   await put(`public/favicon/favicon-${size}.png`, small[size]);
 }
 await put(
@@ -131,14 +182,13 @@ await put(
   ico([16, 32, 48].map((size) => ({ size, data: small[size] }))),
 );
 
-// Installed-app icons. Apple and maskable go full bleed; the maskable one
-// also holds the 20% safe zone Android crops into.
-await put("src/app/apple-icon.png", await tile(180, { rounded: false }));
-await put("public/icons/icon-192.png", await tile(192));
-await put("public/icons/icon-512.png", await tile(512));
+// Installed-app icons, on a filled tile.
+await put("src/app/apple-icon.png", await appIcon(180, { rounded: false }));
+await put("public/icons/icon-192.png", await appIcon(192));
+await put("public/icons/icon-512.png", await appIcon(512));
 await put(
   "public/icons/icon-maskable-512.png",
-  await tile(512, { rounded: false, fill: 0.6 }),
+  await appIcon(512, { rounded: false, fill: 0.58 }),
 );
 
 console.log(written.join("\n"));
