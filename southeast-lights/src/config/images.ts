@@ -173,6 +173,14 @@ export const IMAGES = {
     "permanent-hero",
     "Contemporary luxury home at night lit by permanent architectural LED lighting concealed beneath the roof eaves",
   ),
+  holidayHero: img(
+    "holiday-hero-estate",
+    "A large evergreen wrapped in multicolor Christmas lights at the center of a lit courtyard, with warm white bistro strings overhead and surrounding trees wrapped in white lights",
+  ),
+  hoaEntrance: img(
+    "hoa-entrance",
+    "Mature trees along a community drive with trunks and limbs fully wrapped in warm white lights, a lit tree and building beyond",
+  ),
   retailCenter: img(
     "retail-center",
     "A historic stone building covered in a curtain of warm white lights with an illuminated pink bow on the balcony",
@@ -233,18 +241,6 @@ export const IMAGES = {
   weddingEvent: img(
     "wedding-event",
     "Outdoor wedding reception beneath a canopy of warm white string lights and hanging filament bulbs",
-  ),
-  countryClub: img(
-    "country-club",
-    "Country club clubhouse with white columns and porte-cochere outlined in warm white Christmas lights",
-  ),
-  hotelResort: img(
-    "hotel-resort",
-    "Luxury resort porte-cochere outlined in warm white Christmas lights with palm trunks wrapped in lights",
-  ),
-  downtownMunicipal: img(
-    "downtown-municipal",
-    "Historic downtown main street decorated for Christmas with lit storefronts, wrapped street trees and lamp post wreaths",
   ),
   colonialColumns: img(
     "colonial-columns",

@@ -20,6 +20,8 @@ import path from "node:path";
 
 const SLOTS = {
   "permanent-hero": { width: 2400, use: "Homepage hero, off-season mode" },
+  "holiday-hero-estate": { width: 2400, use: "Homepage hero, holiday mode" },
+  "hoa-entrance": { width: 2400, use: "HOA card, HOA vertical hero" },
   "estate-wide": { width: 2400, use: "Final CTA band, services hub hero" },
   "retail-center": { width: 1600, use: "Commercial segment tile and vertical" },
   "colonial-columns": { width: 1600, use: "Residential segment tile" },
@@ -30,9 +32,6 @@ const SLOTS = {
     use: "Tree Lighting & Wrapping card and service hero",
   },
   church: { width: 1600, use: "Churches vertical" },
-  "country-club": { width: 1600, use: "Country clubs vertical" },
-  "hotel-resort": { width: 1600, use: "Hotels and resorts vertical" },
-  "downtown-municipal": { width: 1600, use: "Municipal vertical" },
   "bistro-patio": { width: 1600, use: "Bistro and patio service" },
   "mardi-gras": { width: 1600, use: "Mardi Gras service" },
   "wedding-event": { width: 1600, use: "Wedding and event service" },
