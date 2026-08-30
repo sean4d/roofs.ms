@@ -18,6 +18,8 @@ import { plainTextBody } from "../src/lib/leads/deliver.ts";
 const LABELS = [
   "First name",
   "Last name",
+  "Phone",
+  "Email",
   "Street",
   "City",
   "State",
@@ -57,7 +59,10 @@ const base = {
 const cases = [
   ["full residential lead", base],
   ["no budget, no notes", { ...base, budget: undefined, notes: undefined }],
-  ["single-word surname", { ...base, firstName: "Cher", lastName: "Sarkisian" }],
+  [
+    "single-word surname",
+    { ...base, firstName: "Cher", lastName: "Sarkisian" },
+  ],
   ["no estimate attached", { ...base, estimate: undefined }],
   [
     "full commercial lead",
@@ -139,7 +144,8 @@ for (const blank of ["address", "city", "state", "postal"]) {
     const labels = block?.map((line) => line.slice(0, line.indexOf(":"))) ?? [];
     check(
       `${blank} = ${value === undefined ? "undefined" : JSON.stringify(value)}: block keeps its shape`,
-      labels.length === LABELS.length && labels.every((l, i) => l === LABELS[i]),
+      labels.length === LABELS.length &&
+        labels.every((l, i) => l === LABELS[i]),
       `got [${labels.join(", ")}]`,
     );
   }
@@ -151,7 +157,7 @@ const allBlank = crmBlock(
   plainTextBody({ ...base, address: "", city: "", state: "", postal: "" }),
 );
 check(
-  "a lead with no address at all still prints seven labels",
+  "a lead with no address at all still prints every label",
   allBlank.length === LABELS.length,
   `got [${allBlank.join(" | ")}]`,
 );

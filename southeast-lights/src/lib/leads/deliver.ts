@@ -219,6 +219,10 @@ export function plainTextBody(lead: Lead): string {
    * lead that had one. The roofing site had already been bitten by the same
    * thing and fixed it the same way; this is that fix, ported.
    *
+   * The phone and email lines were added here the same day, for the same
+   * reason: they had been left in the readable header, where an optional
+   * field above them going blank moved them.
+   *
    * So a field with no value prints as an empty string after its label. The
    * block is the same height and the same order for every lead, which is the
    * only thing that makes positional parsing safe.
@@ -238,6 +242,20 @@ export function plainTextBody(lead: Lead): string {
   lines.push("", "CRM FIELDS", "");
   field("First name", lead.firstName);
   field("Last name", lead.lastName);
+  /*
+   * Phone and email live in here too, not only in the readable header above.
+   *
+   * They were in the header alone, which is built with `add` and therefore
+   * drops a line when a value is empty. Both are required so neither is ever
+   * blank itself, but the lines ABOVE them are not: a commercial lead with no
+   * community name and no building count is two lines shorter, so the phone
+   * and email move. Roofr requires both, so a parser trained on a lead that
+   * had those optional fields would have read the wrong values off one that
+   * did not. Same failure as the one this block exists to prevent, in the two
+   * fields it would hurt most to get wrong.
+   */
+  field("Phone", lead.phone);
+  field("Email", lead.email);
   field("Street", lead.address);
   field("City", lead.city);
   field("State", lead.state);
