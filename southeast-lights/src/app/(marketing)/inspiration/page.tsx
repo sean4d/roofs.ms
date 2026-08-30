@@ -68,7 +68,7 @@ const STYLES: {
   },
   {
     name: "Community Entrance",
-    image: IMAGES.projectHattiesburgPalms,
+    image: IMAGES.hoaEntrance,
     body: "Monument walls, landscaped beds and boulevard trees designed so the display reads continuously as residents turn in.",
     suits: "HOAs, master-planned communities, neighborhood associations.",
   },

@@ -19,7 +19,7 @@ import { messagingFor, type SeasonMode } from "@/config/season";
  */
 export function Hero({ mode, now }: { mode: SeasonMode; now: Date }) {
   const holiday = mode === "holiday";
-  const image = holiday ? IMAGES.projectHattiesburgCanopy : IMAGES.permanentHero;
+  const image = holiday ? IMAGES.holidayHero : IMAGES.permanentHero;
   /*
    * Phones get a portrait photograph of an install in progress. A wide hero
    * crops to a strip on a phone, and the vertical frame is the only shape

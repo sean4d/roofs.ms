@@ -76,7 +76,7 @@ export const SERVICES: Service[] = [
       "Holiday lighting for HOAs, master-planned communities and neighborhood entrances in Mississippi. Board-ready proposals, consistent design year to year, full maintenance and storage.",
     summary:
       "Entrance monuments, boulevard trees and common areas designed as one coherent display, with board-ready proposals and the same look every year.",
-    image: IMAGES.projectHattiesburgPalms,
+    image: IMAGES.hoaEntrance,
     enabled: true,
     audience: "commercial",
   },
@@ -89,7 +89,7 @@ export const SERVICES: Service[] = [
       "Professional tree wrapping and tree lighting in South Mississippi, from ornamental trees to enormous live oaks. Trunk and limb wrapping, canopy lighting and uplighting.",
     summary:
       "Trunk and limb wrapping on everything from ornamental trees to century-old live oaks. The single most dramatic thing you can light on a property.",
-    image: IMAGES.treeWrappingHero,
+    image: IMAGES.liveOakWrap,
     enabled: true,
     audience: "both",
   },
@@ -102,7 +102,7 @@ export const SERVICES: Service[] = [
       "Permanent exterior LED lighting installed into your trim in Hattiesburg and South Mississippi. Warm white nightly, full color for every holiday, invisible by day.",
     summary:
       "Track LED installed once into your trim: warm white on an ordinary evening, any color for any holiday, and invisible from the street in daylight.",
-    image: IMAGES.permanentHero,
+    image: IMAGES.permanentColor,
     enabled: true,
     audience: "both",
   },

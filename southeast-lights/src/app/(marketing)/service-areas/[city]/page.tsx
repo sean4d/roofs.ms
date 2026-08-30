@@ -29,8 +29,8 @@ export function generateStaticParams() {
 const HERO_BY_TIER = {
   home: IMAGES.projectPoplarvilleContinuousRun,
   core: IMAGES.colonialColumns,
-  coast: IMAGES.hotelResort,
-  regional: IMAGES.projectHattiesburgPalms,
+  coast: IMAGES.projectHattiesburgPalms,
+  regional: IMAGES.hoaEntrance,
 } as const;
 
 export async function generateMetadata({
