@@ -191,4 +191,72 @@ await put(
   await appIcon(512, { rounded: false, fill: 0.58 }),
 );
 
+/*
+ * Two more marks that are not icons, both cropped free of lettering.
+ *
+ * The supplied artwork for both brands sets the company name under a divider
+ * bar. Printed at the size a footer or a search listing uses, that lettering
+ * is a few pixels tall and reads as a smudge, and beside it sits the same
+ * name set properly in HTML. So the artwork is cropped to the mark and the
+ * name is type, which is the same split the header lockup already makes.
+ *
+ * The divider bar is what makes this safe to automate: it runs the full
+ * width of the canvas at about 78% down in both files, so the crop is found
+ * rather than guessed. If new artwork arrives without a bar, this throws
+ * instead of quietly cutting the roof in half.
+ */
+async function cropAboveDivider(file, out, { width }) {
+  const src = sharp(file);
+  const { width: w, height: h } = await src.metadata();
+  const { data, info } = await sharp(file)
+    .ensureAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+
+  let bar = -1;
+  for (let y = Math.floor(h * 0.5); y < h; y++) {
+    let ink = 0;
+    for (let x = 0; x < w; x++)
+      if (data[(y * w + x) * info.channels + 3] > 24) ink++;
+    if (ink > w * 0.92) {
+      bar = y;
+      break;
+    }
+  }
+  if (bar < 0)
+    throw new Error(
+      `${file}: no full-width divider bar found, refusing to guess where the lettering starts`,
+    );
+
+  // Stop a few pixels short of the bar so no part of the rule survives.
+  const keep = bar - Math.round(h * 0.02);
+  const buf = await sharp(file)
+    .extract({ left: 0, top: 0, width: w, height: keep })
+    .trim({ threshold: 10 })
+    .resize({ width, kernel: "lanczos3" })
+    .png({ compressionLevel: 9 })
+    .toBuffer();
+  await put(out, buf);
+}
+
+await cropAboveDivider(
+  "public/brand/southeast-roofing-mark.png",
+  "public/brand/southeast-roofing-roofmark.png",
+  { width: 960 },
+);
+
+/*
+ * The square logo that structured data points at.
+ *
+ * schema.org's `logo` has to be one image, so it cannot use the HTML wordmark
+ * the site uses everywhere else. It was pointing at the 2048px lockup with
+ * the lettering baked in, which is what search results were showing beside
+ * the listing. The mark on the brand's own near-black is cleaner at the size
+ * a search result actually renders, and carries no type to go blurry.
+ */
+await put(
+  "public/brand/southeast-lights-logo-square.png",
+  await appIcon(512, { rounded: false, fill: 0.86 }),
+);
+
 console.log(written.join("\n"));

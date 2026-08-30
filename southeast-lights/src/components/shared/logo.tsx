@@ -20,11 +20,37 @@ import { cn } from "@/lib/utils";
  * and translatable, and lets the icons reuse the same crop, since a wordmark
  * at sixteen pixels is a smear while a red roof is still a red roof.
  */
-export function Logo({ className }: { className?: string }) {
+const SIZES = {
+  /* Header: compact, and stacks the name on the narrowest phones so the
+     lockup never crowds the menu button. */
+  header: {
+    gap: "gap-2.5",
+    mark: "h-9 sm:h-11",
+    text: "text-lg sm:text-xl",
+    stack: true,
+  },
+  /* Footer: larger, and never stacked. There is nothing beside it to crowd. */
+  footer: {
+    gap: "gap-3",
+    mark: "h-12 sm:h-14",
+    text: "text-xl sm:text-2xl",
+    stack: false,
+  },
+} as const;
+
+export function Logo({
+  className,
+  size = "header",
+}: {
+  className?: string;
+  /** "footer" is the same lockup, larger and on one line. */
+  size?: keyof typeof SIZES;
+}) {
+  const s = SIZES[size];
   return (
     <Link
       href="/"
-      className={cn("group flex shrink-0 items-center gap-2.5", className)}
+      className={cn("group flex shrink-0 items-center", s.gap, className)}
       aria-label={`${siteConfig.name} home`}
     >
       <Image
@@ -35,15 +61,25 @@ export function Logo({ className }: { className?: string }) {
         alt="Southeast Lights logo"
         width={1523}
         height={800}
-        priority
-        className="h-9 w-auto shrink-0 object-contain transition-opacity duration-200 group-hover:opacity-90 sm:h-11"
+        /* Only the header lockup is above the fold. Preloading the footer's
+           copy would compete with the hero for the same connection. */
+        priority={size === "header"}
+        className={cn(
+          "w-auto shrink-0 object-contain transition-opacity duration-200 group-hover:opacity-90",
+          s.mark,
+        )}
       />
-      {/* Stacks on the narrowest phones so the lockup never crowds the menu
-          button, and sits on one line from the small breakpoint up. */}
-      <span className="font-display text-lg leading-none font-semibold tracking-tight text-bone-100 sm:text-xl">
+      <span
+        className={cn(
+          "font-display leading-none font-semibold tracking-tight text-bone-100",
+          s.text,
+        )}
+      >
         Southeast
-        <br className="sm:hidden" />
-        <span className="sm:before:content-['_']">Lights</span>
+        {s.stack ? <br className="sm:hidden" /> : " "}
+        <span className={s.stack ? "sm:before:content-['_']" : undefined}>
+          Lights
+        </span>
       </span>
     </Link>
   );

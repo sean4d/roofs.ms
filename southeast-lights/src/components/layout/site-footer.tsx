@@ -6,6 +6,7 @@ import {
   EmailLink,
   TextLink,
 } from "@/components/shared/contact-actions";
+import { Logo } from "@/components/shared/logo";
 import { SocialLinks } from "@/components/shared/social-links";
 import { footerNav } from "@/config/navigation";
 import { SERVICE_AREAS } from "@/config/service-areas";
@@ -59,13 +60,12 @@ export function SiteFooter() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
           {/* Identity and direct contact */}
           <div className="lg:col-span-4">
-            <Image
-              src="/brand/southeast-lights-mark.png"
-              alt="Southeast Lights"
-              width={1751}
-              height={1034}
-              className="h-14 w-auto object-contain"
-            />
+            {/* The same lockup the header uses: mark, then the name set in
+                type beside it. This was the supplied artwork with "SOUTHEAST
+                LIGHTS" printed under a divider bar, which at this size was an
+                unreadable smear of a wordmark where the header has a crisp
+                one. Sharing the component means they cannot drift apart. */}
+            <Logo size="footer" />
             <p className="mt-6 max-w-xs leading-relaxed text-bone-500">
               Holiday, permanent and architectural lighting for homes,
               communities and commercial property across South Mississippi.
@@ -121,10 +121,13 @@ export function SiteFooter() {
       <div className="border-t border-white/[0.07]">
         <div className="container-site flex flex-col gap-5 py-8 sm:flex-row sm:items-center sm:gap-7">
           <Image
-            src="/brand/southeast-roofing-mark.png"
+            /* Cropped above the divider, so the parent brand's own
+               "SOUTHEAST ROOFING" lettering is not printed nine pixels tall
+               next to a sentence that already says it. */
+            src="/brand/southeast-roofing-roofmark.png"
             alt=""
-            width={479}
-            height={278}
+            width={960}
+            height={427}
             className="h-9 w-auto shrink-0 object-contain opacity-60 invert"
           />
           <p className="max-w-xl text-sm leading-relaxed text-bone-500">
