@@ -1,3 +1,4 @@
+import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
@@ -49,40 +50,41 @@ export function ServiceGrid({ mode }: { mode: SeasonMode }) {
           </Link>
         </div>
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <StaggerGroup className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service) => (
-            <Link
-              key={service.slug}
-              href={`/services/${service.slug}`}
-              className="group cell overflow-hidden rounded-card border border-white/[0.09] transition-colors hover:border-champagne-400/40"
-            >
-              <div className="cell-media">
-                <Image
-                  src={serviceCardImage(service).src}
-                  alt={serviceCardImage(service).alt}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  placeholder="blur"
-                  blurDataURL={serviceCardImage(service).blurDataURL}
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                />
-              </div>
-              <div className="flex flex-1 flex-col p-6">
-                <h3 className="text-lg font-semibold">{service.label}</h3>
-                <p className="text-bone-400 mt-2.5 text-sm leading-relaxed">
-                  {service.summary}
-                </p>
-                <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-xs font-medium text-champagne-300">
-                  Learn more
-                  <ArrowUpRight
-                    className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    strokeWidth={2}
+            <StaggerItem key={service.slug}>
+              <Link
+                href={`/services/${service.slug}`}
+                className="group cell overflow-hidden rounded-card border border-white/[0.09] transition-colors hover:border-champagne-400/40"
+              >
+                <div className="cell-media">
+                  <Image
+                    src={serviceCardImage(service).src}
+                    alt={serviceCardImage(service).alt}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    placeholder="blur"
+                    blurDataURL={serviceCardImage(service).blurDataURL}
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                   />
-                </span>
-              </div>
-            </Link>
+                </div>
+                <div className="flex flex-1 flex-col p-6">
+                  <h3 className="text-lg font-semibold">{service.label}</h3>
+                  <p className="text-bone-400 mt-2.5 text-sm leading-relaxed">
+                    {service.summary}
+                  </p>
+                  <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-xs font-medium text-champagne-300">
+                    Learn more
+                    <ArrowUpRight
+                      className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      strokeWidth={2}
+                    />
+                  </span>
+                </div>
+              </Link>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGroup>
       </div>
     </section>
   );

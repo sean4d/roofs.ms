@@ -177,14 +177,6 @@ export const IMAGES = {
     "hoa-entrance",
     "Mature trees along a community drive with trunks and limbs fully wrapped in warm white lights, a lit tree and building beyond",
   ),
-  holidayHero: img(
-    "holiday-hero-estate",
-    "A large evergreen wrapped in multicolor Christmas lights at the center of a lit courtyard, with warm white bistro strings overhead and surrounding trees wrapped in white lights",
-  ),
-  hoaEntrance: img(
-    "hoa-entrance",
-    "Mature trees along a community drive with trunks and limbs fully wrapped in warm white lights, a lit tree and building beyond",
-  ),
   retailCenter: img(
     "retail-center",
     "A historic stone building covered in a curtain of warm white lights with an illuminated pink bow on the balcony",

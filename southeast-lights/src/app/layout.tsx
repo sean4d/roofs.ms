@@ -70,6 +70,20 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${fraunces.variable}`}>
       <body>
+        {/*
+         * Scroll reveals ship their hidden state in the server HTML, which is
+         * what stops the flash of a fully-laid-out page collapsing into place
+         * on hydration. The cost is that if JavaScript never runs, every
+         * revealed section stays at opacity 0 and the site looks empty.
+         *
+         * Google renders JavaScript so indexing is unaffected, but a reader
+         * with a blocked script, a failed chunk or JS switched off would get
+         * a blank page, and that is too high a price for an animation. Two
+         * declarations remove the risk entirely.
+         */}
+        <noscript>
+          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
         <a href="#main" className="skip-link">
           Skip to content
         </a>

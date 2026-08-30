@@ -1,3 +1,4 @@
+import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 /**
  * How the service works.
  *
@@ -37,9 +38,12 @@ export function Process() {
           Five steps, and you are only involved in the first one.
         </h2>
 
-        <ol className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-5">
+        <StaggerGroup
+          as="ul"
+          className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-5"
+        >
           {STEPS.map((step, index) => (
-            <li key={step.title} className="relative">
+            <StaggerItem as="li" key={step.title} className="relative">
               <span className="font-display text-sm font-semibold text-champagne-500 tabular-nums">
                 {String(index + 1).padStart(2, "0")}
               </span>
@@ -48,9 +52,9 @@ export function Process() {
               <p className="mt-2 text-sm leading-relaxed text-bone-500">
                 {step.body}
               </p>
-            </li>
+            </StaggerItem>
           ))}
-        </ol>
+        </StaggerGroup>
       </div>
     </section>
   );

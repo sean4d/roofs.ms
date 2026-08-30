@@ -1,3 +1,4 @@
+import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
@@ -50,14 +51,18 @@ export function SegmentPicker() {
           A board and a homeowner need different things from us.
         </h2>
 
-        <div className="mt-12 grid gap-5 lg:grid-cols-2">
-          <SegmentTile segment={lead} priority />
+        <StaggerGroup className="mt-12 grid gap-5 lg:grid-cols-2">
+          <StaggerItem>
+            <SegmentTile segment={lead} priority />
+          </StaggerItem>
           <div className="grid gap-5">
             {rest.map((segment) => (
-              <SegmentTile key={segment.href} segment={segment} compact />
+              <StaggerItem key={segment.href}>
+                <SegmentTile segment={segment} compact />
+              </StaggerItem>
             ))}
           </div>
-        </div>
+        </StaggerGroup>
       </div>
     </section>
   );
