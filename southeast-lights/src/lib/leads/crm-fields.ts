@@ -24,11 +24,62 @@
 
 /** USPS codes, including DC and the territories Roofr accepts. */
 export const STATE_CODES = new Set([
-  "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI",
-  "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN",
-  "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH",
-  "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA",
-  "WV", "WI", "WY", "PR", "VI", "GU", "AS", "MP",
+  "AL",
+  "AK",
+  "AZ",
+  "AR",
+  "CA",
+  "CO",
+  "CT",
+  "DE",
+  "DC",
+  "FL",
+  "GA",
+  "HI",
+  "ID",
+  "IL",
+  "IN",
+  "IA",
+  "KS",
+  "KY",
+  "LA",
+  "ME",
+  "MD",
+  "MA",
+  "MI",
+  "MN",
+  "MS",
+  "MO",
+  "MT",
+  "NE",
+  "NV",
+  "NH",
+  "NJ",
+  "NM",
+  "NY",
+  "NC",
+  "ND",
+  "OH",
+  "OK",
+  "OR",
+  "PA",
+  "RI",
+  "SC",
+  "SD",
+  "TN",
+  "TX",
+  "UT",
+  "VT",
+  "VA",
+  "WA",
+  "WV",
+  "WI",
+  "WY",
+  "PR",
+  "VI",
+  "GU",
+  "AS",
+  "MP",
 ]);
 
 export interface AddressParts {
@@ -57,7 +108,9 @@ export function splitAddress(input: string): AddressParts {
   const parts: AddressParts = {};
 
   // Trailing country, which some browsers autofill and Roofr sets separately.
-  rest = rest.replace(/,?\s*(united states(\s+of\s+america)?|usa|us)\.?$/i, "").trim();
+  rest = rest
+    .replace(/,?\s*(united states(\s+of\s+america)?|usa|us)\.?$/i, "")
+    .trim();
 
   const zip = rest.match(/(\d{5}(?:-\d{4})?)\s*$/);
   if (zip) {
@@ -87,23 +140,4 @@ export function splitAddress(input: string): AddressParts {
   }
 
   return parts;
-}
-
-export interface NameParts {
-  first?: string;
-  last?: string;
-}
-
-/**
- * Split a full name into the two fields a CRM asks for.
- *
- * First token is the given name, everything after it is the family name, so
- * "Mary Beth Van Horn" keeps "Van Horn" together rather than dropping it. A
- * single word goes in the family name, which is the field CRMs mark required.
- */
-export function splitName(input: string): NameParts {
-  const tokens = input.replace(/\s+/g, " ").trim().split(" ").filter(Boolean);
-  if (!tokens.length) return {};
-  if (tokens.length === 1) return { last: tokens[0] };
-  return { first: tokens[0], last: tokens.slice(1).join(" ") };
 }

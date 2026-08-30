@@ -47,9 +47,23 @@ export const metadata: Metadata = {
     description: siteConfig.description,
   },
   robots: { index: true, follow: true },
+  /*
+   * Tab icons are rendered at the size they are displayed, by
+   * scripts/build-icons.mjs. This used to point at the 2048px brand lockup
+   * for every slot, which left the browser downscaling the whole wordmark to
+   * sixteen pixels: the roof came out a third of the height and the lettering
+   * a smudge. Declaring the sizes lets the browser pick the render made for
+   * it. app/favicon.ico (auto-wired) covers anything that asks for .ico.
+   */
   icons: {
-    icon: "/brand/southeast-lights-logo.png",
-    apple: "/brand/southeast-lights-logo.png",
+    icon: [
+      { url: "/favicon/favicon-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon/favicon-16.png", type: "image/png", sizes: "16x16" },
+      { url: "/favicon/favicon-48.png", type: "image/png", sizes: "48x48" },
+    ],
+    // Listing `icon` by hand turns off file-convention detection, so the
+    // iOS home-screen icon has to be named too.
+    apple: "/apple-icon.png",
   },
   verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
     ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
