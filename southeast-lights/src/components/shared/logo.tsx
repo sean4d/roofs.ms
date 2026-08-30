@@ -5,39 +5,46 @@ import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 
 /**
- * The Southeast Lights mark: the roof and the Santa hat, and nothing else.
+ * The brand lockup: roof mark, then the name set in type beside it.
  *
- * NO LETTERING, anywhere it appears. The supplied logo file sets the words
- * "SOUTHEAST LIGHTS" under a divider bar, and the header used to render that
- * artwork beside a second, typeset "Southeast Lights" alongside it. The name
- * therefore appeared twice, in two different typefaces, in a space about
- * forty pixels tall. Cropping to the mark is what the roofing site does and
- * it is the reason its header reads cleanly at every width.
+ * The same arrangement the roofing site uses, and for the same reason: the
+ * mark alone is not a wordmark. Someone landing from a search result has to
+ * read who this is, and a red roof with a Santa hat does not say "Southeast
+ * Lights" to a first-time visitor.
  *
- * The mark alone is also the only version that survives being an icon. A
- * favicon is sixteen pixels; a wordmark at sixteen pixels is a grey smear,
- * while a red roof is still a red roof. src/app/icon.png and apple-icon.png
- * are generated from the same crop, so the tab, the home screen and the
- * header are one identity rather than three.
- *
- * The company name is not lost: it is the accessible name of this link, it
- * is the <title> of every page, and the footer carries the full legal line.
+ * WHAT IS DELIBERATELY NOT HERE is lettering baked into the image. The
+ * supplied artwork sets "SOUTHEAST LIGHTS" under a divider bar, and pairing
+ * that with this typeset name printed it twice in two different faces inside
+ * forty pixels. The image is cropped to the mark; the name is HTML. That
+ * split is also what makes the name legible at any size, keeps it selectable
+ * and translatable, and lets the icons reuse the same crop, since a wordmark
+ * at sixteen pixels is a smear while a red roof is still a red roof.
  */
 export function Logo({ className }: { className?: string }) {
   return (
     <Link
       href="/"
-      className={cn("group flex shrink-0 items-center", className)}
+      className={cn("group flex shrink-0 items-center gap-2.5", className)}
       aria-label={`${siteConfig.name} home`}
     >
       <Image
+        /* Descriptive alt for crawlers and image search. The anchor's
+           aria-label supplies the accessible name, so a screen reader
+           announces the link once rather than twice. */
         src="/brand/southeast-lights-roofmark.png"
-        alt=""
+        alt="Southeast Lights logo"
         width={1523}
         height={800}
         priority
         className="h-9 w-auto shrink-0 object-contain transition-opacity duration-200 group-hover:opacity-90 sm:h-11"
       />
+      {/* Stacks on the narrowest phones so the lockup never crowds the menu
+          button, and sits on one line from the small breakpoint up. */}
+      <span className="font-display text-lg leading-none font-semibold tracking-tight text-bone-100 sm:text-xl">
+        Southeast
+        <br className="sm:hidden" />
+        <span className="sm:before:content-['_']">Lights</span>
+      </span>
     </Link>
   );
 }
