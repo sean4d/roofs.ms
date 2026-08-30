@@ -31,7 +31,7 @@ export default function ProjectsPage() {
         // line listed estates, churches, hospitality and downtown districts,
         // which was written to match the placeholder set.
         intro="Rooflines, ridges, gable rakes and wrapped columns on homes, storefronts and school campuses across the Pine Belt."
-        image={IMAGES.estateWide}
+        image={IMAGES.projectPoplarvilleColonial}
         quoteLocation="projects_hub"
       />
       <Breadcrumbs trail={trail} />

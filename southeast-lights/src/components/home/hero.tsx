@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { MapPin } from "lucide-react";
 
 import { Snowfall } from "@/components/effects/snowfall";
 import { CallLink } from "@/components/shared/contact-actions";
@@ -19,7 +20,14 @@ import { messagingFor, type SeasonMode } from "@/config/season";
  */
 export function Hero({ mode, now }: { mode: SeasonMode; now: Date }) {
   const holiday = mode === "holiday";
-  const image = holiday ? IMAGES.projectHattiesburgCanopy : IMAGES.permanentHero;
+  /*
+   * Desktop background. The live oak wrap is the strongest photograph in
+   * the set and it reads at full-bleed width, which a roofline shot does
+   * not: a roof crops to a stripe across a 2400px hero, a wrapped canopy
+   * fills the frame. Off season the permanent-lighting colour shot takes
+   * over. Phones keep their own portrait image below, untouched.
+   */
+  const image = holiday ? IMAGES.liveOakWrap : IMAGES.permanentColor;
   /*
    * Phones get a portrait photograph of an install in progress. A wide hero
    * crops to a strip on a phone, and the vertical frame is the only shape
@@ -93,8 +101,34 @@ export function Hero({ mode, now }: { mode: SeasonMode; now: Date }) {
          */
         className="container-site relative z-20 flex min-h-[66svh] flex-col justify-start pt-8 pb-14 sm:min-h-[78svh] sm:justify-end sm:pt-28 lg:min-h-[88svh] lg:pt-32 lg:pb-24"
       >
-        <p className="eyebrow inline-flex w-fit items-center gap-2 rounded-full border border-champagne-400/30 bg-ink-950/50 px-4 py-2 text-champagne-300 backdrop-blur-sm">
-          <span className="size-1.5 rounded-full bg-champagne-400 motion-safe:animate-twinkle" />
+        {/*
+         * Two chips, deliberately unequal.
+         *
+         * The first says where we are, and it comes first because "local" is
+         * the strongest single signal a lighting customer looks for. It is
+         * the louder of the two: warmer ground, brighter border, a pin, the
+         * same shape the roofing site uses.
+         *
+         * The second is the seasonal booking note. It still matters, but it
+         * is a detail next to who we are, so it sits underneath at a smaller
+         * size rather than competing for the same attention.
+         */}
+        <p className="inline-flex w-fit items-center gap-2 rounded-full border border-champagne-400/55 bg-champagne-400/[0.12] px-4 py-2 text-[0.8125rem] font-semibold text-champagne-200 backdrop-blur-sm sm:text-sm">
+          <MapPin
+            className="size-4 shrink-0 text-champagne-400"
+            strokeWidth={2}
+          />
+          <span>
+            Hattiesburg, Mississippi
+            <span className="mx-1.5 text-champagne-400/70">&middot;</span>
+            <span className="font-medium text-champagne-300/95">
+              Serving all of South Mississippi
+            </span>
+          </span>
+        </p>
+
+        <p className="eyebrow mt-2.5 inline-flex w-fit items-center gap-1.5 rounded-full border border-white/[0.12] bg-ink-950/45 px-2.5 py-1 text-[0.625rem] text-bone-300 backdrop-blur-sm">
+          <span className="size-1 rounded-full bg-champagne-400 motion-safe:animate-twinkle" />
           {messaging.badge}
         </p>
 

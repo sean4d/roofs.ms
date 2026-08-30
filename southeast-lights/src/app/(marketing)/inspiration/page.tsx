@@ -49,7 +49,7 @@ const STYLES: {
   },
   {
     name: "Architectural",
-    image: IMAGES.permanentHero,
+    image: IMAGES.permanentColor,
     body: "Permanent LED washing the facade in warm white, on every evening rather than six weeks a year. Color available when you want it.",
     suits: "Contemporary architecture, and anyone tired of a seasonal cycle.",
   },

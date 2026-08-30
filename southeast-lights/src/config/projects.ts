@@ -414,29 +414,6 @@ export const PROJECTS: Project[] = [
     gallery: [],
     isDemo: false,
   },
-  {
-    slug: "church-christmas-display",
-    title: "Church Christmas Display",
-    city: "Laurel",
-    propertyType: "Church",
-    serviceSlugs: ["commercial-holiday-lighting", "tree-wrapping"],
-    tags: ["holiday", "rooflines", "trees", "warm-white"],
-    summary:
-      "Steeple, rooflines and lawn oaks lit for the Christmas service season.",
-    scope:
-      "Rooflines and steeple edges outlined in warm white using lift equipment, with the lawn oaks wrapped. Designed to read from the highway, and installed between services.",
-    highlights: [
-      "Steeple work completed with an articulating lift",
-      "Designed for highway visibility at driving speed",
-      "Installation scheduled around the service calendar",
-    ],
-    hero: IMAGES.church,
-    gallery: [
-      { image: IMAGES.church, caption: "The building from the road" },
-    ],
-    isDemo: true,
-    year: 2025,
-  },
 ];
 
 /**

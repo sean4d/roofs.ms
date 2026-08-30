@@ -7,6 +7,7 @@ import { Hero } from "@/components/home/hero";
 import { Process } from "@/components/home/process";
 import { ReviewsBand } from "@/components/home/reviews-band";
 import { RoofAdvantage } from "@/components/home/roof-advantage";
+import { StorageBand } from "@/components/home/storage-band";
 import { SegmentPicker } from "@/components/home/segment-picker";
 import { ServiceAreasBand } from "@/components/home/service-areas-band";
 import { ServiceGrid } from "@/components/home/service-grid";
@@ -49,6 +50,7 @@ export default async function HomePage({
       <CommercialBand />
       <AllInclusive />
       <RoofAdvantage />
+      <StorageBand />
       <ReviewsBand />
       <FeaturedProjects />
       <Process />

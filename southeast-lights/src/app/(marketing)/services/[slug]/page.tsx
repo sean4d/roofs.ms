@@ -12,7 +12,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { faqsFor, type FaqCategory } from "@/config/faqs";
 import { HOLIDAY, INCLUDED, PERMANENT } from "@/config/pricing";
 import { siteConfig } from "@/config/site";
-import { SERVICES, enabledServices, serviceBySlug } from "@/config/services";
+import { SERVICES, enabledServices, serviceBySlug, serviceCardImage } from "@/config/services";
 import { SERVICE_AREAS } from "@/config/service-areas";
 import {
   breadcrumbSchema,
@@ -232,12 +232,12 @@ export default async function ServicePage({
                 className="card-lit group relative isolate flex min-h-[15rem] flex-col justify-end overflow-hidden p-6"
               >
                 <Image
-                  src={item.image.src}
+                  src={serviceCardImage(item).src}
                   alt=""
                   fill
                   sizes="(max-width: 1024px) 100vw, 33vw"
                   placeholder="blur"
-                  blurDataURL={item.image.blurDataURL}
+                  blurDataURL={serviceCardImage(item).blurDataURL}
                   className="-z-10 object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="scrim-soft absolute inset-0 -z-10" />

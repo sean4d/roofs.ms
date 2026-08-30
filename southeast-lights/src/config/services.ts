@@ -21,7 +21,20 @@ export interface Service {
   metaDescription: string;
   /** One-sentence answer-first summary. Used in cards and by AI assistants. */
   summary: string;
+  /** Page hero. Full-bleed, so it wants a wide frame. */
   image: SiteImage;
+  /**
+   * Card face, where this service appears in a grid or in another page's
+   * "often booked together" row. Defaults to `image`.
+   *
+   * They are separate because the two shapes want different photographs.
+   * A hero is a wide letterbox and forgives a tall frame; a card is close
+   * to square and crops hard to the middle. The Christmas service is the
+   * case in point: the canopy shot is beautiful across a hero and reads as
+   * a picture of trees in a card, because the house sits in the bottom
+   * fifth and the crop throws it away.
+   */
+  cardImage?: SiteImage;
   enabled: boolean;
   /** Audience weighting: commercial work gets more visual space. */
   audience: "residential" | "commercial" | "both";
@@ -37,7 +50,8 @@ export const SERVICES: Service[] = [
       "All-inclusive Christmas light installation in Hattiesburg and South Mississippi. Design, commercial-grade LEDs, installation, in-season maintenance, takedown and storage for one price.",
     summary:
       "One price covers design, commercial-grade lighting, installation, in-season maintenance, takedown and storage. You never handle a strand or climb a ladder.",
-    image: IMAGES.projectHattiesburgCanopy,
+    image: IMAGES.projectHattiesburgLowWideAngle,
+    cardImage: IMAGES.projectHattiesburgRidgesHips,
     enabled: true,
     audience: "both",
   },
@@ -76,7 +90,7 @@ export const SERVICES: Service[] = [
       "Holiday lighting for HOAs, master-planned communities and neighborhood entrances in Mississippi. Board-ready proposals, consistent design year to year, full maintenance and storage.",
     summary:
       "Entrance monuments, boulevard trees and common areas designed as one coherent display, with board-ready proposals and the same look every year.",
-    image: IMAGES.projectHattiesburgPalms,
+    image: IMAGES.hoaEntrance,
     enabled: true,
     audience: "commercial",
   },
@@ -177,6 +191,10 @@ export const enabledServices = () => SERVICES.filter((s) => s.enabled);
 
 export const servicesByDivision = (division: Division) =>
   enabledServices().filter((s) => s.division === division);
+
+/** The face a service shows in a grid or a related-services row. */
+export const serviceCardImage = (service: Service): SiteImage =>
+  service.cardImage ?? service.image;
 
 export const serviceBySlug = (slug: string) =>
   SERVICES.find((s) => s.slug === slug && s.enabled);

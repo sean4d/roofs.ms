@@ -1,6 +1,6 @@
 import { BadgeCheck, HardHat, ShieldCheck, Star } from "lucide-react";
 
-import { GOOGLE_AGGREGATE } from "@/config/reviews";
+import { GOOGLE_AGGREGATE, reviewCountLabel } from "@/config/reviews";
 import { siteConfig } from "@/config/site";
 
 /**
@@ -19,7 +19,7 @@ export function TrustStrip() {
     {
       icon: Star,
       value: `${GOOGLE_AGGREGATE.ratingValue.toFixed(1)} on Google`,
-      label: `${GOOGLE_AGGREGATE.ratingCount} reviews`,
+      label: `${reviewCountLabel()} reviews, both profiles`,
       href: GOOGLE_AGGREGATE.profileUrl,
     },
     {

@@ -169,9 +169,13 @@ export const IMAGES = {
     "Southeast Lights display in Poplarville: warm white C9 carried in one unbroken line across a long low frontage, over the porch gable and out onto the detached garage",
     "center 52%",
   ),
-  permanentHero: img(
-    "permanent-hero",
-    "Contemporary luxury home at night lit by permanent architectural LED lighting concealed beneath the roof eaves",
+  holidayHero: img(
+    "holiday-hero-estate",
+    "A large evergreen wrapped in multicolor Christmas lights at the center of a lit courtyard, with warm white bistro strings overhead and surrounding trees wrapped in white lights",
+  ),
+  hoaEntrance: img(
+    "hoa-entrance",
+    "Mature trees along a community drive with trunks and limbs fully wrapped in warm white lights, a lit tree and building beyond",
   ),
   holidayHero: img(
     "holiday-hero-estate",

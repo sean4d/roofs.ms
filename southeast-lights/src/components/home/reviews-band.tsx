@@ -1,7 +1,12 @@
 import Link from "next/link";
 import { Star } from "lucide-react";
 
-import { GOOGLE_AGGREGATE, REVIEWS, lightsReviews } from "@/config/reviews";
+import {
+  GOOGLE_AGGREGATE,
+  REVIEWS,
+  lightsReviews,
+  reviewCountLabel,
+} from "@/config/reviews";
 
 /**
  * Social proof.
@@ -30,9 +35,13 @@ export function ReviewsBand() {
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-xl">
             <p className="eyebrow text-champagne-500">What people say</p>
+            {/* The count spans both Google profiles because Southeast
+                Roofing LLC owns both. Saying so is the difference between
+                a true sentence and an implied claim of forty lighting
+                reviews on a profile that has twelve. */}
             <h2 className="mt-5 text-3xl font-semibold text-balance sm:text-4xl">
               {GOOGLE_AGGREGATE.ratingValue.toFixed(1)} stars across{" "}
-              {GOOGLE_AGGREGATE.ratingCount} Google reviews.
+              {reviewCountLabel()} Google reviews.
             </h2>
           </div>
 
