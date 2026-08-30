@@ -77,7 +77,12 @@ export function localBusinessSchema() {
     telephone: phone.tel ?? undefined,
     email: siteConfig.email ?? undefined,
     image: `${siteConfig.url}/img/holiday-hero-estate.webp`,
-    logo: `${siteConfig.url}/brand/southeast-lights-logo.png`,
+    /* The mark on the brand's near-black, with no lettering in the artwork.
+       This pointed at the 2048px lockup, whose baked-in "SOUTHEAST LIGHTS"
+       is a smudge at the size a search listing renders. Structured data
+       needs one image and cannot use the HTML wordmark the site uses
+       everywhere else, so it gets a clean square instead. */
+    logo: `${siteConfig.url}/brand/southeast-lights-logo-square.png`,
     priceRange: "$$-$$$$",
     address: {
       "@type": "PostalAddress",
