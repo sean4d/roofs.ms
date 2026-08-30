@@ -58,7 +58,8 @@ export function ResidentialQuoteForm() {
     const form = new FormData(event.currentTarget);
     const payload = {
       kind: "residential" as const,
-      name: String(form.get("name") ?? ""),
+      firstName: String(form.get("firstName") ?? ""),
+      lastName: String(form.get("lastName") ?? ""),
       email: String(form.get("email") ?? ""),
       phone: String(form.get("phone") ?? ""),
       address: String(form.get("address") ?? ""),
@@ -139,7 +140,7 @@ export function ResidentialQuoteForm() {
           <p className="text-xs tracking-[0.14em] text-champagne-400 uppercase">
             Your estimate is attached
           </p>
-          <p className="text-bone-100 text-lg font-semibold">
+          <p className="text-lg font-semibold text-bone-100">
             About ${Math.round(estimate.total).toLocaleString("en-US")}
           </p>
           <p className="text-sm leading-relaxed text-bone-500">
@@ -156,16 +157,42 @@ export function ResidentialQuoteForm() {
         </div>
       ) : null}
 
+      {/* Two name boxes, not one.
+          A single "Your name" field left us splitting on the first space to
+          fill the CRM's two required name fields, so anyone who typed one
+          word got a last name invented for them. Asking for both parts is
+          the only version where nothing is guessed and nothing is blank.
+
+          Phone and email both required for the same reason: the CRM rejects
+          the whole job card when the email is missing or malformed, and a
+          rejected card is a lead we never see. */}
       <div className="grid gap-6 sm:grid-cols-2">
-        <Field id="name" label="Your name" required error={errors.name}>
+        <Field
+          id="firstName"
+          label="First name"
+          required
+          error={errors.firstName}
+        >
           <TextInput
-            id="name"
-            name="name"
-            autoComplete="name"
+            id="firstName"
+            name="firstName"
+            autoComplete="given-name"
             required
-            error={errors.name}
+            error={errors.firstName}
           />
         </Field>
+        <Field id="lastName" label="Last name" required error={errors.lastName}>
+          <TextInput
+            id="lastName"
+            name="lastName"
+            autoComplete="family-name"
+            required
+            error={errors.lastName}
+          />
+        </Field>
+      </div>
+
+      <div className="grid gap-6 sm:grid-cols-2">
         <Field id="phone" label="Phone" required error={errors.phone}>
           <TextInput
             id="phone"
@@ -176,18 +203,17 @@ export function ResidentialQuoteForm() {
             error={errors.phone}
           />
         </Field>
+        <Field id="email" label="Email" required error={errors.email}>
+          <TextInput
+            id="email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            required
+            error={errors.email}
+          />
+        </Field>
       </div>
-
-      <Field id="email" label="Email" required error={errors.email}>
-        <TextInput
-          id="email"
-          name="email"
-          type="email"
-          autoComplete="email"
-          required
-          error={errors.email}
-        />
-      </Field>
 
       <AddressFields
         errors={errors}

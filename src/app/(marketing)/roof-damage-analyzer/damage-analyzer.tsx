@@ -333,17 +333,33 @@ export function DamageAnalyzer() {
             />
 
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              <LeadField name="name" label="Name" error={state.errors?.name} />
+              {/* Name split in two and email no longer optional: Roofr marks
+                  first name, last name and email all required, and rejects the
+                  job card outright when any of them is blank. */}
+              <LeadField
+                name="firstName"
+                label="First name"
+                autoComplete="given-name"
+                error={state.errors?.firstName}
+              />
+              <LeadField
+                name="lastName"
+                label="Last name"
+                autoComplete="family-name"
+                error={state.errors?.lastName}
+              />
               <LeadField
                 name="phone"
                 label="Phone"
                 type="tel"
+                autoComplete="tel"
                 error={state.errors?.phone}
               />
               <LeadField
                 name="email"
-                label="Email (optional)"
+                label="Email"
                 type="email"
+                autoComplete="email"
                 error={state.errors?.email}
               />
               <label className="flex flex-col gap-1.5">
@@ -458,15 +474,22 @@ function Field({
   );
 }
 
+/**
+ * Every field here is required, so `required` is the default rather than
+ * something each caller has to remember. The CRM rejects a lead that is
+ * missing any of them, and a lead rejected by the CRM is a lead we lose.
+ */
 function LeadField({
   name,
   label,
   type = "text",
+  autoComplete,
   error,
 }: {
   name: string;
   label: string;
   type?: string;
+  autoComplete?: string;
   error?: string;
 }) {
   return (
@@ -475,6 +498,9 @@ function LeadField({
       <input
         name={name}
         type={type}
+        autoComplete={autoComplete}
+        required
+        aria-invalid={error ? true : undefined}
         className="rounded-xl border border-border bg-white px-4 py-2.5 outline-none focus:border-steel-500"
       />
       {error && <span className="text-xs text-red-600">{error}</span>}

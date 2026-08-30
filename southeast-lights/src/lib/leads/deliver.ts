@@ -2,7 +2,6 @@ import "server-only";
 
 import { siteConfig } from "@/config/site";
 
-import { splitName } from "./crm-fields";
 import { sendToRoofr, type DeliveryResult } from "./roofr";
 import type { Lead } from "./types";
 
@@ -145,11 +144,17 @@ function subjectFor(lead: Lead): string {
   const value = lead.estimate?.total
     ? ` ~$${Math.round(lead.estimate.total).toLocaleString("en-US")}`
     : "";
-  return `New quote request: ${lead.name}${value}`;
+  return `New quote request: ${lead.firstName} ${lead.lastName}${value}`;
 }
 
 /** Plain text so it is readable on a phone at the top of the inbox. */
-function plainTextBody(lead: Lead): string {
+/**
+ * Exported so scripts/test-crm-block.mjs can assert the CRM block keeps the
+ * same shape for every lead. That block is parsed by position, so a test is
+ * the only thing standing between an innocent-looking edit and a week of
+ * job cards landing with the phone number in the postcode field.
+ */
+export function plainTextBody(lead: Lead): string {
   const lines: string[] = [];
   const add = (label: string, value?: string | number | null) => {
     if (value !== undefined && value !== null && `${value}`.trim() !== "") {
@@ -167,13 +172,10 @@ function plainTextBody(lead: Lead): string {
     lines.push("RESIDENTIAL QUOTE REQUEST", "");
   }
 
-  add("Name", lead.name);
+  add("Name", `${lead.firstName} ${lead.lastName}`);
   add("Email", lead.email);
   add("Phone", lead.phone);
-  add(
-    "Address",
-    `${lead.address}, ${lead.city}, ${lead.state} ${lead.postal}`,
-  );
+  add("Address", `${lead.address}, ${lead.city}, ${lead.state} ${lead.postal}`);
   add("Budget", lead.budget);
 
   if (lead.kind === "residential") {
@@ -203,22 +205,44 @@ function plainTextBody(lead: Lead): string {
   }
 
   /*
-   * The name and address again, in the separate fields Roofr marks required.
-   * The address parts are asked for directly on the form rather than read out
-   * of one line, so nothing here is a guess. Kept as one block with a stable
-   * label order so an email parser template survives a lead that omits an
-   * optional field, and placed before NOTES so free text the customer wrote
-   * can never land inside it.
+   * EVERY LINE, EVERY TIME, IN THE SAME ORDER.
+   *
+   * This block used to use `add`, which drops a line whose value is empty.
+   * That reads better to a human and is exactly wrong for the machine on the
+   * other end. Zapier's Email Parser learns field positions from a single
+   * training email: teach it on a lead that had every field, and the next
+   * lead missing one shifts every field below it up a line. Roofr then reads
+   * the phone number out of the postcode box, or the step fails outright.
+   *
+   * That is what the owner hit on 2026-08-30. A lead submitted without a last
+   * name dropped a line here, and Zapier reported the last name missing on a
+   * lead that had one. The roofing site had already been bitten by the same
+   * thing and fixed it the same way; this is that fix, ported.
+   *
+   * So a field with no value prints as an empty string after its label. The
+   * block is the same height and the same order for every lead, which is the
+   * only thing that makes positional parsing safe.
+   *
+   * CHANGING THIS LIST BREAKS THE PARSER TEMPLATE. Add a field in the middle
+   * and everything below it moves. Append at the end, and retrain the
+   * template in Zapier when you do.
+   *
+   * Placed before NOTES so free text a customer wrote can never land inside
+   * it and be read as a field.
    */
-  const name = splitName(lead.name);
+  const field = (label: string, value: unknown) =>
+    lines.push(
+      `${label}: ${value === undefined || value === null || value === false ? "" : String(value)}`,
+    );
+
   lines.push("", "CRM FIELDS", "");
-  add("First name", name.first);
-  add("Last name", name.last);
-  add("Street", lead.address);
-  add("City", lead.city);
-  add("State", lead.state);
-  add("ZIP", lead.postal);
-  add("Country", "United States");
+  field("First name", lead.firstName);
+  field("Last name", lead.lastName);
+  field("Street", lead.address);
+  field("City", lead.city);
+  field("State", lead.state);
+  field("ZIP", lead.postal);
+  field("Country", "United States");
 
   if (lead.notes) lines.push("", "NOTES", lead.notes);
 

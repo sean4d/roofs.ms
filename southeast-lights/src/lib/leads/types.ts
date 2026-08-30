@@ -44,7 +44,20 @@ const honeypot = z.string().max(0, "Rejected").optional();
 
 export const residentialLeadSchema = z.object({
   kind: z.literal("residential"),
-  name: z.string().min(2, "Please enter your name").max(120),
+  /*
+   * Two fields, both required, rather than one "Name" box.
+   *
+   * Roofr marks first and last name required and rejects the job card
+   * when either is blank, so a single box forced us to guess: split on
+   * the first space and hope. A customer who typed only "Elizabeth"
+   * produced a lead with no first name, the CRM hand-off failed, and
+   * the roofing site solved the same problem by copying the first name
+   * into the last name field, which created a customer called
+   * "Sean Sean". Asking for the two parts separately is the only
+   * version where nothing is invented and nothing is missing.
+   */
+  firstName: z.string().min(1, "First name is required").max(60),
+  lastName: z.string().min(1, "Last name is required").max(60),
   email: z.string().email("Please enter a valid email"),
   phone: z.string().min(10, "Please enter a valid phone number").max(30),
   address: z.string().min(4, "Street address is required").max(240),
@@ -68,7 +81,20 @@ export const residentialLeadSchema = z.object({
 export const commercialLeadSchema = z.object({
   kind: z.literal("commercial"),
   organization: z.string().min(2, "Organization name is required").max(200),
-  name: z.string().min(2, "Please enter your name").max(120),
+  /*
+   * Two fields, both required, rather than one "Name" box.
+   *
+   * Roofr marks first and last name required and rejects the job card
+   * when either is blank, so a single box forced us to guess: split on
+   * the first space and hope. A customer who typed only "Elizabeth"
+   * produced a lead with no first name, the CRM hand-off failed, and
+   * the roofing site solved the same problem by copying the first name
+   * into the last name field, which created a customer called
+   * "Sean Sean". Asking for the two parts separately is the only
+   * version where nothing is invented and nothing is missing.
+   */
+  firstName: z.string().min(1, "First name is required").max(60),
+  lastName: z.string().min(1, "Last name is required").max(60),
   email: z.string().email("Please enter a valid email"),
   phone: z.string().min(10, "Please enter a valid phone number").max(30),
   address: z.string().min(4, "Street address is required").max(240),

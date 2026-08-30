@@ -13,7 +13,9 @@
     "images:ingest": "node scripts/ingest-photos.mjs",
     "images:optimize": "node scripts/optimize-images.mjs",
     "test:pricing": "node --experimental-strip-types --no-warnings scripts/test-pricing.mjs",
-    "test:season": "node --experimental-strip-types --no-warnings scripts/test-season.mjs"
+    "test:season": "node --experimental-strip-types --no-warnings scripts/test-season.mjs",
+    "test:crm": "node --experimental-strip-types --no-warnings --import ./scripts/register-alias.mjs scripts/test-crm-block.mjs",
+    "icons:build": "node scripts/build-icons.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

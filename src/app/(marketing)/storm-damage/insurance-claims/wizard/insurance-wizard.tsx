@@ -306,17 +306,33 @@ export function InsuranceWizard() {
           />
 
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            <Field name="name" label="Name" error={state.errors?.name} />
+            {/* Name split in two and email now required: Roofr marks first
+                name, last name and email required and rejects the job card
+                when any of them is blank. */}
+            <Field
+              name="firstName"
+              label="First name"
+              autoComplete="given-name"
+              error={state.errors?.firstName}
+            />
+            <Field
+              name="lastName"
+              label="Last name"
+              autoComplete="family-name"
+              error={state.errors?.lastName}
+            />
             <Field
               name="phone"
               label="Phone"
               type="tel"
+              autoComplete="tel"
               error={state.errors?.phone}
             />
             <Field
               name="email"
-              label="Email (optional)"
+              label="Email"
               type="email"
+              autoComplete="email"
               error={state.errors?.email}
             />
             <Field name="city" label="City" error={state.errors?.city} />
@@ -406,15 +422,22 @@ export function InsuranceWizard() {
   );
 }
 
+/**
+ * Every field on this step is required, so `required` is the default here
+ * rather than something each call site has to remember. A lead missing any
+ * of them is one the CRM refuses, which loses the claim entirely.
+ */
 function Field({
   name,
   label,
   type = "text",
+  autoComplete,
   error,
 }: {
   name: string;
   label: string;
   type?: string;
+  autoComplete?: string;
   error?: string;
 }) {
   return (
@@ -423,6 +446,9 @@ function Field({
       <input
         name={name}
         type={type}
+        autoComplete={autoComplete}
+        required
+        aria-invalid={error ? true : undefined}
         className="rounded-xl border border-border bg-white px-4 py-2.5 outline-none focus:border-steel-500"
       />
       {error && <span className="text-xs text-red-600">{error}</span>}

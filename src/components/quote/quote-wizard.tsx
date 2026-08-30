@@ -400,26 +400,52 @@ export function QuoteWizard() {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
+            {/* First and last name as separate boxes. One "Name" field left
+                the CRM hand-off splitting on whitespace to fill Roofr's two
+                required fields, which guessed wrong on any single-word name. */}
             <div>
               <label
-                htmlFor="name"
+                htmlFor="firstName"
                 className="mb-1.5 block text-sm font-semibold text-navy-900"
               >
-                Name
+                First name
               </label>
               <input
-                id="name"
-                name="name"
+                id="firstName"
+                name="firstName"
                 type="text"
-                autoComplete="name"
+                autoComplete="given-name"
                 required
-                aria-invalid={state.errors?.name ? true : undefined}
+                aria-invalid={state.errors?.firstName ? true : undefined}
                 className={inputClass}
-                placeholder="Your name"
+                placeholder="Sean"
               />
-              {state.errors?.name && (
+              {state.errors?.firstName && (
                 <p role="alert" className="mt-1.5 text-sm text-destructive">
-                  {state.errors.name}
+                  {state.errors.firstName}
+                </p>
+              )}
+            </div>
+            <div>
+              <label
+                htmlFor="lastName"
+                className="mb-1.5 block text-sm font-semibold text-navy-900"
+              >
+                Last name
+              </label>
+              <input
+                id="lastName"
+                name="lastName"
+                type="text"
+                autoComplete="family-name"
+                required
+                aria-invalid={state.errors?.lastName ? true : undefined}
+                className={inputClass}
+                placeholder="Ford"
+              />
+              {state.errors?.lastName && (
+                <p role="alert" className="mt-1.5 text-sm text-destructive">
+                  {state.errors.lastName}
                 </p>
               )}
             </div>
@@ -451,14 +477,16 @@ export function QuoteWizard() {
                 htmlFor="email"
                 className="mb-1.5 block text-sm font-semibold text-navy-900"
               >
-                Email{" "}
-                <span className="font-normal text-slate-400">optional</span>
+                Email
               </label>
+              {/* No longer optional: Roofr will not create a job card without
+                  a valid email, so the "optional" label cost us the lead. */}
               <input
                 id="email"
                 name="email"
                 type="email"
                 autoComplete="email"
+                required
                 aria-invalid={state.errors?.email ? true : undefined}
                 className={inputClass}
                 placeholder="you@example.com"
