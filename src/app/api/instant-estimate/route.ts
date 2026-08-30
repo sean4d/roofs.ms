@@ -65,7 +65,11 @@ function allowed(ip: string): boolean {
 }
 
 const schema = z.object({
-  name: z.string().trim().min(2).max(120),
+  /* Two fields, because Roofr needs both separately and splitting one
+     box on whitespace invented a surname for single-word names. The
+     saved quote and the customer email still show them joined. */
+  firstName: z.string().trim().min(1).max(60),
+  lastName: z.string().trim().min(1).max(60),
   email: z.string().trim().email().max(200),
   phone: z.string().trim().min(7).max(40),
   address: z.string().trim().min(5).max(300),
@@ -123,6 +127,9 @@ export async function POST(request: Request) {
       stories: input.stories ?? DEFAULT_OPTIONS.stories,
     };
     const measured = m.confidence !== "reject" && Boolean(m.squares);
+    // Display only: the saved quote page and the customer's email read
+    // as a person's name, while the CRM below gets the two parts apart.
+    const fullName = `${input.firstName} ${input.lastName}`;
     const price = measured ? priceFor(m.squares!, options).shown : null;
 
     // Save first, because the estimate link has to exist before it is mailed
@@ -131,7 +138,7 @@ export async function POST(request: Request) {
     if (measured && price) {
       try {
         const saved = await savePublicQuote({
-          name: input.name,
+          name: fullName,
           email: input.email,
           phone: input.phone,
           address: point.formatted,
@@ -150,7 +157,7 @@ export async function POST(request: Request) {
         url = saved.url;
         await emailEstimate({
           to: input.email,
-          name: input.name,
+          name: fullName,
           address: point.formatted,
           price,
           squares: m.squares!,
@@ -168,7 +175,8 @@ export async function POST(request: Request) {
     try {
       await deliverLead({
         source: "instant-estimate",
-        name: input.name,
+        firstName: input.firstName,
+        lastName: input.lastName,
         email: input.email,
         phone: input.phone,
         address: point.formatted,

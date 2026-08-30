@@ -24,9 +24,26 @@ import { siteConfig } from "@/config/site";
 export interface Lead {
   /** "free-inspection", "contact", or "commercial-consultation" */
   source: string;
-  name: string;
+  /*
+   * First and last name are separate, and both are required.
+   *
+   * They used to be one `name` string that was split on the first space
+   * here. Roofr marks both required and rejects a job card when either is
+   * blank, so the split fell back to copying the first name into the last,
+   * and a customer who typed only "Sean" arrived in the CRM as "Sean Sean".
+   * There is no safe way to guess the missing half; the forms ask for both.
+   */
+  firstName: string;
+  lastName: string;
   phone: string;
-  email?: string;
+  /*
+   * Required, not optional. Roofr will not create a job card without a valid
+   * email address: a lead submitted with the field blank came back from
+   * Zapier as "The email must be a valid email address" and no card was made
+   * at all. A form that calls email optional is a form that silently loses
+   * the lead, so every form on the site asks for one.
+   */
+  email: string;
   city?: string;
   /**
    * Two-letter state and postcode, kept apart from `city` because Roofr
@@ -130,11 +147,16 @@ async function sendEmail(lead: Lead): Promise<boolean> {
   const recipients = recipientsFor();
   if (!recipients.length) return false;
 
-  // Split the full name so an email parser can map Roofr's required
-  // First Name / Last Name fields directly (last name falls back to first
-  // when only one word is given, so Roofr's required field is never blank).
-  const [firstName, ...restName] = lead.name.trim().split(/\s+/);
-  const lastName = restName.join(" ") || firstName;
+  /*
+   * The two name parts come in already separated, so nothing is guessed here.
+   *
+   * This used to split lead.name on whitespace and, when only one word was
+   * given, copy the first name into the last so Roofr's required field was
+   * never blank. That is where "Sean Sean" came from. The forms ask for both
+   * parts now, which is the only version with no wrong answer.
+   */
+  const { firstName, lastName } = lead;
+  const fullName = `${firstName} ${lastName}`;
 
   // Single-line summary for the CRM's "Details/notes" field: bundles the
   // context (service, storm flag, message) so a parser can map it in one shot.
@@ -181,7 +203,7 @@ async function sendEmail(lead: Lead): Promise<boolean> {
   const lines = [
     field("Source", `${lead.source}${lead.page ? ` (${lead.page})` : ""}`),
     field("Details", details),
-    field("Name", lead.name),
+    field("Name", fullName),
     field("First name", firstName),
     field("Last name", lastName),
     field("Phone", lead.phone),
@@ -219,7 +241,7 @@ async function sendEmail(lead: Lead): Promise<boolean> {
       from: `Website Leads <leads@${new URL(siteConfig.url).hostname}>`,
       to: recipients,
       reply_to: lead.email,
-      subject: `New lead: ${lead.name}, ${lead.service ?? lead.source}${lead.storm ? " (storm/insurance)" : ""}`,
+      subject: `New lead: ${fullName}, ${lead.service ?? lead.source}${lead.storm ? " (storm/insurance)" : ""}`,
       text: lines.join("\n"),
     }),
   });
@@ -244,7 +266,7 @@ export async function deliverLead(lead: Lead): Promise<DeliveryResult> {
 
   // Always leave a trace in server logs. The last line of defense.
   console.log(
-    `[leads] ${lead.source} lead from ${lead.name} (${lead.phone}), delivered via: ${transports.join(", ") || "NONE"}`,
+    `[leads] ${lead.source} lead from ${lead.firstName} ${lead.lastName} (${lead.phone}), delivered via: ${transports.join(", ") || "NONE"}`,
   );
 
   return { delivered: transports.length > 0, transports };

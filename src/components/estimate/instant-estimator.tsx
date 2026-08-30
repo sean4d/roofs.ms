@@ -64,7 +64,8 @@ export function InstantEstimator() {
   const [stage, setStage] = useState<Stage>("ask");
   const [address, setAddress] = useState("");
   const [stories, setStories] = useState<1 | 2>(1);
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [estimate, setEstimate] = useState<Estimate | null>(null);
@@ -79,7 +80,14 @@ export function InstantEstimator() {
       const res = await fetch("/api/instant-estimate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone, address, stories }),
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          phone,
+          address,
+          stories,
+        }),
       });
       const data = await res.json();
       if (!res.ok || !data.ok) {
@@ -150,13 +158,24 @@ export function InstantEstimator() {
                 <p className="text-sm font-semibold text-slate-700">
                   Where should we send it?
                 </p>
-                <div className="mt-2 grid gap-2.5 sm:grid-cols-3">
+                {/* Two by two rather than one row of four. The name is two
+                    fields now because Roofr needs first and last separately,
+                    and four boxes across a phone is a scrum. */}
+                <div className="mt-2 grid gap-2.5 sm:grid-cols-2">
                   <input
                     required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Your name"
-                    autoComplete="name"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    placeholder="First name"
+                    autoComplete="given-name"
+                    className="rounded-xl border border-slate-300 px-4 py-3.5 text-base outline-none focus:border-[#123b63]"
+                  />
+                  <input
+                    required
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    placeholder="Last name"
+                    autoComplete="family-name"
                     className="rounded-xl border border-slate-300 px-4 py-3.5 text-base outline-none focus:border-[#123b63]"
                   />
                   <input

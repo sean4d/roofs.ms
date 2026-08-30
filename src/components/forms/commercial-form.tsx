@@ -141,16 +141,35 @@ export function CommercialForm() {
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Contact name" name="name" error={state.errors?.name}>
+        {/* Two boxes, not one: Roofr needs first and last separately, and
+            splitting a single field guessed wrong for anyone with one word,
+            a compound surname, or a name typed in the other order. */}
+        <Field
+          label="First name"
+          name="firstName"
+          error={state.errors?.firstName}
+        >
           <input
-            id="name"
-            name="name"
+            id="firstName"
+            name="firstName"
             type="text"
-            autoComplete="name"
+            autoComplete="given-name"
             required
-            aria-invalid={state.errors?.name ? true : undefined}
+            aria-invalid={state.errors?.firstName ? true : undefined}
             className={inputClass}
-            placeholder="Your name"
+            placeholder="Sean"
+          />
+        </Field>
+        <Field label="Last name" name="lastName" error={state.errors?.lastName}>
+          <input
+            id="lastName"
+            name="lastName"
+            type="text"
+            autoComplete="family-name"
+            required
+            aria-invalid={state.errors?.lastName ? true : undefined}
+            className={inputClass}
+            placeholder="Ford"
           />
         </Field>
         <Field label="Phone" name="phone" error={state.errors?.phone}>
@@ -165,12 +184,15 @@ export function CommercialForm() {
             placeholder="(601) 555-0123"
           />
         </Field>
-        <Field label="Email" name="email" error={state.errors?.email} optional>
+        {/* Required now. Roofr rejects a job card with no valid email, so
+            leaving this optional lost the lead rather than saving a keystroke. */}
+        <Field label="Email" name="email" error={state.errors?.email}>
           <input
             id="email"
             name="email"
             type="email"
             autoComplete="email"
+            required
             aria-invalid={state.errors?.email ? true : undefined}
             className={inputClass}
             placeholder="you@company.com"

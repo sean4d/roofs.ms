@@ -84,9 +84,10 @@ export async function submitLead(
 
   const lead: Lead = {
     source: text(formData, "source") || "contact",
-    name: text(formData, "name", 100),
+    firstName: text(formData, "firstName", 60),
+    lastName: text(formData, "lastName", 60),
     phone: text(formData, "phone", 30),
-    email: text(formData, "email", 200) || undefined,
+    email: text(formData, "email", 200),
     city: text(formData, "city", 100) || undefined,
     address: text(formData, "address", 200) || undefined,
     service: text(formData, "service", 100) || undefined,
@@ -103,12 +104,24 @@ export async function submitLead(
     timeline: text(formData, "timeline", 100) || undefined,
   };
 
+  /*
+   * Name, phone and email are all required on every form.
+   *
+   * Email was optional until a lead came in without one and Roofr refused to
+   * create the job card: "The email must be a valid email address". An
+   * optional field that makes the CRM drop the whole lead is not optional,
+   * it is a trap. Same reasoning for asking the two name parts separately
+   * rather than splitting one box and guessing.
+   */
   const errors: Record<string, string> = {};
-  if (lead.name.length < 2) errors.name = "Please enter your name.";
+  if (lead.firstName.length < 1)
+    errors.firstName = "Please enter your first name.";
+  if (lead.lastName.length < 1)
+    errors.lastName = "Please enter your last name.";
   if (!PHONE_RE.test(lead.phone))
     errors.phone = "Please enter a valid phone number.";
-  if (lead.email && !EMAIL_RE.test(lead.email))
-    errors.email = "That email doesn't look right.";
+  if (!EMAIL_RE.test(lead.email))
+    errors.email = "Please enter a valid email address.";
 
   // The free-inspection ("short") form needs a property address + city so the
   // lead can create a proper job (with a roof to measure) in the CRM. The
