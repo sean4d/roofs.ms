@@ -33,40 +33,33 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   /**
    * Browser favicons use a TRANSPARENT roof mark that follows the tab theme:
-   * navy on light tabs, white on dark tabs. The theme-aware SVG handles this in
-   * all modern browsers (Chrome/Edge 80+, Firefox, Safari 16.4+) via
-   * prefers-color-scheme; the light/dark PNGs are a fallback for browsers that
-   * take a favicon `media` hint but not SVG; app/favicon.ico (auto-wired) is the
-   * universal legacy fallback. Installed-app icons (apple-icon.png + the
-   * manifest's public/icons/*) keep the filled navy tile, the standard there.
+   * navy on light tabs, white on dark tabs. The theme-aware SVG does that in
+   * every modern browser (Chrome/Edge 80+, Firefox, Safari 16.4+) via
+   * prefers-color-scheme. app/favicon.ico (auto-wired) is the universal legacy
+   * fallback. Installed-app icons (apple-icon.png + the manifest's
+   * public/icons/*) keep the filled navy tile, the standard there.
+   *
+   * NO WHITE PNG IS PUBLISHED, and that is the point. There used to be a
+   * favicon-white pair declared as ordinary <link rel="icon"> and separated
+   * from the navy pair only by a `media` attribute. Google's favicon crawler
+   * does not honour `media`: it sees several equally valid icons and picks
+   * one. That is why the two Search Console properties show this mark in
+   * different colours, and it is a real risk rather than a curiosity, because
+   * a white mark on the white background of a search result is a blank square
+   * where the brand should be.
+   *
+   * The pair only ever served browsers that honour `media` on a favicon but
+   * cannot render an SVG one, which is close to nobody: anything new enough to
+   * do the first does the second. Dropping them costs that empty set a slightly
+   * dark mark on a dark tab, and removes any way for a crawler to publish an
+   * invisible icon. The files stay in public/favicon for anything that wants to
+   * reference one deliberately.
    */
   icons: {
     icon: [
       { url: "/icon.svg", type: "image/svg+xml" },
-      {
-        url: "/favicon/favicon-32.png",
-        type: "image/png",
-        sizes: "32x32",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/favicon/favicon-white-32.png",
-        type: "image/png",
-        sizes: "32x32",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/favicon/favicon-16.png",
-        type: "image/png",
-        sizes: "16x16",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/favicon/favicon-white-16.png",
-        type: "image/png",
-        sizes: "16x16",
-        media: "(prefers-color-scheme: dark)",
-      },
+      { url: "/favicon/favicon-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon/favicon-16.png", type: "image/png", sizes: "16x16" },
     ],
     // Installed-app icon (filled navy tile). The manual `icon` list above
     // suppresses file-convention auto-detection, so declare it explicitly.
