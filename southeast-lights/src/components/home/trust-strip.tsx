@@ -1,3 +1,4 @@
+import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 import { BadgeCheck, HardHat, ShieldCheck, Star } from "lucide-react";
 
 import { GOOGLE_AGGREGATE, reviewCountLabel } from "@/config/reviews";
@@ -44,7 +45,7 @@ export function TrustStrip() {
 
   return (
     <section className="border-y border-white/10 bg-ink-900">
-      <div className="container-site grid gap-x-8 gap-y-7 py-9 sm:grid-cols-2 lg:grid-cols-4">
+      <StaggerGroup className="container-site grid gap-x-8 gap-y-7 py-9 sm:grid-cols-2 lg:grid-cols-4">
         {facts.map((fact) => {
           const Icon = fact.icon;
           const inner = (
@@ -64,23 +65,24 @@ export function TrustStrip() {
             </>
           );
 
-          return fact.href ? (
-            <a
-              key={fact.value}
-              href={fact.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-start gap-3 transition-opacity hover:opacity-80"
-            >
-              {inner}
-            </a>
-          ) : (
-            <div key={fact.value} className="flex items-start gap-3">
-              {inner}
-            </div>
+          return (
+            <StaggerItem key={fact.value}>
+              {fact.href ? (
+                <a
+                  href={fact.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-3 transition-opacity hover:opacity-80"
+                >
+                  {inner}
+                </a>
+              ) : (
+                <div className="flex items-start gap-3">{inner}</div>
+              )}
+            </StaggerItem>
           );
         })}
-      </div>
+      </StaggerGroup>
     </section>
   );
 }

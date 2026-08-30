@@ -1,3 +1,4 @@
+import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
@@ -27,11 +28,13 @@ export function FeaturedProjects() {
           </Link>
         </div>
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <StaggerGroup className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
+            <StaggerItem key={project.slug}>
+              <ProjectCard project={project} />
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGroup>
       </div>
     </section>
   );

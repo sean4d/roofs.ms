@@ -73,7 +73,7 @@ export function StorageBand() {
                 />
                 <div>
                   <h3 className="font-semibold text-bone-100">{point.title}</h3>
-                  <p className="mt-1.5 leading-relaxed text-bone-400">
+                  <p className="text-bone-400 mt-1.5 leading-relaxed">
                     {point.body}
                   </p>
                 </div>
