@@ -6,15 +6,19 @@ import { geocode } from "@/lib/quotes/measure";
 /**
  * Turn what the visitor typed into the fields a CRM needs.
  *
- * The form asks for "City or ZIP" in one box, which is the right question to
- * ask a homeowner and the wrong shape for Roofr, which requires city, state
- * and postal code as three separate required fields. Somebody who types 39426
- * gives us a postcode and no city; somebody who types Hattiesburg gives us a
- * city and no postcode. Either way two of Roofr's three fields are empty and
- * the job card is rejected or lands half blank.
+ * The forms now ask for city and ZIP in separate boxes, so the common case
+ * needs nothing from this function. It used to be one "City or ZIP" box,
+ * which is a fair question to ask a homeowner and the wrong shape for Roofr:
+ * it requires city, state and postal code as three separate required fields,
+ * so somebody who typed 39426 gave us a postcode and no city, somebody who
+ * typed Hattiesburg gave us a city and no postcode, and either way two of
+ * Roofr's three were empty and the job card came back rejected or half blank.
  *
- * So the address is resolved through the same geocoder the estimator uses, and
- * the pieces come back separated. The visitor still answers one easy question.
+ * What is still missing after two boxes is the STATE, which no form asks for
+ * because nobody enjoys being asked what state they live in. So the address
+ * is resolved through the same geocoder the estimator uses and the pieces
+ * come back separated. Anything the visitor typed themselves wins; the
+ * geocoder only fills the gaps.
  *
  * NEVER FATAL. This is a network call sitting in the path of a lead, and a
  * lead is worth far more than a tidy postcode. Any failure, timeout, missing
@@ -36,14 +40,26 @@ async function withAddressParts(lead: Lead): Promise<Lead> {
     // Gulf Coast work crosses into Alabama and Louisiana, so those count.
     if (point.state && !["MS", "AL", "LA"].includes(point.state)) return lead;
 
+    /*
+     * What the visitor typed wins. The geocoder only fills the gaps.
+     *
+     * This used to be the other way round for three of the four fields, from
+     * when the form asked one vague "City or ZIP" question and the geocoder
+     * genuinely knew better. It does not any more: someone who typed their
+     * own street, city and ZIP is a better authority on their address than a
+     * lookup, and `point.formatted` in particular is the WHOLE address, city
+     * and state and postcode included, so writing it into `address` put all
+     * of that into the CRM's Street field and duplicated the rest.
+     *
+     * State is the one nothing else supplies, because no form asks for it.
+     * That is the gap this call exists to fill.
+     */
     return {
       ...lead,
-      // What the visitor typed wins where the geocoder found nothing, so a
-      // resolvable address never loses detail it already had.
-      city: point.city || lead.city,
+      city: lead.city || point.city,
       state: point.state || undefined,
-      postal: point.postal || undefined,
-      address: point.formatted || lead.address,
+      postal: lead.postal || point.postal,
+      address: lead.address || point.formatted,
     };
   } catch {
     return lead;
@@ -89,6 +105,7 @@ export async function submitLead(
     phone: text(formData, "phone", 30),
     email: text(formData, "email", 200),
     city: text(formData, "city", 100) || undefined,
+    postal: text(formData, "postal", 20) || undefined,
     address: text(formData, "address", 200) || undefined,
     service: text(formData, "service", 100) || undefined,
     storm: formData.get("storm") === "on",
@@ -123,12 +140,13 @@ export async function submitLead(
   if (!EMAIL_RE.test(lead.email))
     errors.email = "Please enter a valid email address.";
 
-  // The free-inspection ("short") form needs a property address + city so the
+  // The free-inspection ("short") form needs a full property address so the
   // lead can create a proper job (with a roof to measure) in the CRM. The
   // "full" contact form stays low-friction, general questions don't need one.
   if (text(formData, "variant") === "short") {
     if (!lead.address) errors.address = "Please add the property address.";
-    if (!lead.city) errors.city = "Please add the city or ZIP.";
+    if (!lead.city) errors.city = "Please add the city.";
+    if (!lead.postal) errors.postal = "Please add the ZIP code.";
   }
 
   if (Object.keys(errors).length > 0) {

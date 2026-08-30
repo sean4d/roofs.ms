@@ -193,7 +193,7 @@ export function LeadForm({
             required
             aria-invalid={state.errors?.firstName ? true : undefined}
             className={inputClass}
-            placeholder="Sean"
+            placeholder="John"
           />
         </Field>
         <Field label="Last name" name="lastName" error={state.errors?.lastName}>
@@ -205,7 +205,7 @@ export function LeadForm({
             required
             aria-invalid={state.errors?.lastName ? true : undefined}
             className={inputClass}
-            placeholder="Ford"
+            placeholder="Smith"
           />
         </Field>
         <Field label="Phone" name="phone" error={state.errors?.phone}>
@@ -235,8 +235,12 @@ export function LeadForm({
             placeholder="you@example.com"
           />
         </Field>
+        {/* City and ZIP as two boxes, not one "City or ZIP".
+            Roofr wants them separately, and asking for one or the other meant
+            whichever the visitor typed left the other blank, so the job card
+            arrived half addressed and the geocoder had to guess the rest. */}
         <Field
-          label="City or ZIP"
+          label="City"
           name="city"
           error={state.errors?.city}
           optional={variant === "full"}
@@ -245,11 +249,29 @@ export function LeadForm({
             id="city"
             name="city"
             type="text"
-            autoComplete="postal-code"
+            autoComplete="address-level2"
             required={variant === "short"}
             aria-invalid={state.errors?.city ? true : undefined}
             className={inputClass}
             placeholder="Hattiesburg"
+          />
+        </Field>
+        <Field
+          label="ZIP"
+          name="postal"
+          error={state.errors?.postal}
+          optional={variant === "full"}
+        >
+          <input
+            id="postal"
+            name="postal"
+            type="text"
+            inputMode="numeric"
+            autoComplete="postal-code"
+            required={variant === "short"}
+            aria-invalid={state.errors?.postal ? true : undefined}
+            className={inputClass}
+            placeholder="39401"
           />
         </Field>
 

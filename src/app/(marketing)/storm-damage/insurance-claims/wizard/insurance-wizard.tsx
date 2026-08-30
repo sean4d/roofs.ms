@@ -336,6 +336,9 @@ export function InsuranceWizard() {
               error={state.errors?.email}
             />
             <Field name="city" label="City" error={state.errors?.city} />
+            {/* ZIP separately: Roofr treats city and postcode as two
+                required fields and will not split one for us. */}
+            <Field name="postal" label="ZIP" error={state.errors?.postal} />
             <div className="sm:col-span-2">
               <Field
                 name="address"
