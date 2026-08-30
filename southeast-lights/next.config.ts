@@ -51,6 +51,23 @@ const nextConfig: NextConfig = {
       },
       { source: "/areas", destination: "/service-areas", permanent: true },
       { source: "/gallery", destination: "/projects", permanent: true },
+      /*
+       * Anything nested under those two as well.
+       *
+       * `:path*` matches any depth, including none, where `:slug` matched
+       * exactly one segment. Wix put city pages under /areas and album pages
+       * under /gallery, and a single-segment rule left /areas/hattiesburg and
+       * /gallery/album-1 to 404 on a domain that had just been told these
+       * paths were permanent. Landing on the index is not as good as landing
+       * on the matching page, but the slugs are not guaranteed to line up and
+       * a redirect into another 404 is worse than a soft landing.
+       */
+      {
+        source: "/areas/:path*",
+        destination: "/service-areas",
+        permanent: true,
+      },
+      { source: "/gallery/:path*", destination: "/projects", permanent: true },
       {
         source: "/accessibility-statement",
         destination: "/accessibility",
@@ -64,11 +81,24 @@ const nextConfig: NextConfig = {
        *
        * Both posts target "christmas light installation hattiesburg ms", the
        * money keyword, so they land on that service page rather than the
-       * homepage. The :slug catch-alls cover anything unpublished or added to
-       * Wix after this inventory was taken.
+       * homepage. The :path* catch-alls cover anything unpublished or added
+       * to Wix after this inventory was taken, at any depth: they were
+       * :slug, which matches one segment only, so a nested path such as
+       * /post/2023/some-article still 404d. Verified against the live domain
+       * on 30 August, which is how that was found.
        */
       {
         source: "/blog",
+        destination: "/services/christmas-light-installation",
+        permanent: true,
+      },
+      /*
+       * Wix's blog category pages live at /blog/categories/<name>, which the
+       * bare /blog rule above does not reach. Checked against the live
+       * domain: they were 404ing.
+       */
+      {
+        source: "/blog/:path*",
         destination: "/services/christmas-light-installation",
         permanent: true,
       },
@@ -85,7 +115,7 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/post/:slug",
+        source: "/post/:path*",
         destination: "/services/christmas-light-installation",
         permanent: true,
       },
@@ -95,7 +125,7 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/service-page/:slug",
+        source: "/service-page/:path*",
         destination: "/quote",
         permanent: true,
       },
