@@ -1,5 +1,10 @@
 import { siteConfig } from "@/config/site";
-import { FINANCING, MATERIALS, paymentFor } from "@/config/quote-rates";
+import {
+  FINANCING,
+  MATERIALS,
+  materialForCustomer,
+  paymentFor,
+} from "@/config/quote-rates";
 import type { MaterialKey } from "@/config/quote-rates";
 import { getProfile } from "@/lib/quotes/profile";
 import { summarizeStorms, longDate } from "@/lib/quotes/storms";
@@ -63,12 +68,18 @@ export async function MailerDoc({
         10;
 
   const structures = data.structures?.length ?? 1;
-  const materialLabel = (
-    data.structures?.length
-      ? [...new Set(data.structures.map((p) => p.materialLabel))].join(", ")
-      : (MATERIALS[data.material as MaterialKey]?.label ??
-        "Architectural shingle")
-  ).replace(/ shingle$/, " shingles");
+  // Named as a customer should read it, manufacturer and line included where
+  // the price assumes one. Same helper as the rep's copy, so the two documents
+  // cannot disagree about what we said we were installing.
+  const materialLabel = data.structures?.length
+    ? [
+        ...new Set(data.structures.map((p) => materialForCustomer(p.material))),
+      ].join(", ")
+    : materialForCustomer(
+        data.material && data.material in MATERIALS
+          ? (data.material as MaterialKey)
+          : "architectural",
+      );
 
   const projects = nearbyProjects(data.address);
 
