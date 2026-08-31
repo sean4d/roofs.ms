@@ -178,12 +178,14 @@ const outDir = process.env.MAILER_PDF_OUT ?? "/tmp";
 let failed = 0;
 for (const [label, data] of Object.entries(variants)) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { bytes, pages } = await buildMailerPdf(data as any);
+  const { bytes, pages, qr } = await buildMailerPdf(data as any);
   const out = `${outDir}/mailer-${label}.pdf`;
   writeFileSync(out, bytes);
 
   const problems: string[] = [];
   if (pages.length !== 4) problems.push(`${pages.length} pages, expected 4`);
+  // The code is the only thing on the piece a reader is asked to act on.
+  if (!qr) problems.push("no QR code on page four");
   pages.forEach((page, i) => {
     // A springy page solves to slack zero, so allow a point of float error.
     if (page.slack < -1)

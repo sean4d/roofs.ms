@@ -85,6 +85,10 @@ export interface MailerPdfResult {
   bytes: Uint8Array;
   filename: string;
   pages: PageFit[];
+  /** Whether the response code actually made it onto page four. It is the one
+   *  thing on the piece a reader is asked to act on, and it went missing once
+   *  already, so a caller can assert on it rather than hope. */
+  qr: boolean;
 }
 
 /* -------------------------------------------------------------- brand mark */
@@ -171,42 +175,43 @@ async function embedLogo(pdf: PDFDocument, dataUri: string | null) {
 }
 
 /**
- * The QR as vector squares rather than an image.
+ * The QR, as ONE EMBEDDED IMAGE rather than a thousand vector squares.
  *
- * These get printed small, posted, and scanned off a kitchen counter with a
- * phone camera. Vector modules stay sharp at any size and survive a
- * photocopier; a rasterised code at the wrong resolution does not. Error
- * correction is at the highest level for the same reason.
+ * The first version drew every module as its own filled rectangle, on the
+ * reasoning that vectors stay sharp at any size and survive a photocopier.
+ * That reasoning is fine and the result was not: a code at error correction H
+ * is 41 modules square for a short link and 49 for a long one, so the page
+ * carried between eight hundred and twelve hundred separate rectangles, each
+ * about a point and a half across. It rendered on a desktop and came out
+ * BLANK ON A PHONE, which is the one place it matters, because the whole
+ * point of the code is that somebody holding the paper scans it.
+ *
+ * An image is a single object and every renderer treats it the same. Sharpness
+ * is bought with resolution instead: 16 pixels per module is roughly 350 dpi at
+ * the size it prints, which is finer than any office laser will lay down, and
+ * the PNG is about six kilobytes.
+ *
+ * Error correction stays at the highest level. These get posted, folded, and
+ * scanned off a kitchen counter, and a scuffed code that still reads is the
+ * entire point.
  */
-function drawQr(
-  page: PDFPage,
+async function embedQr(
+  pdf: PDFDocument,
   url: string,
-  x: number,
-  topY: number,
-  size: number,
-): boolean {
+): Promise<PDFImage | null> {
   try {
-    const qr = QRCode.create(url, { errorCorrectionLevel: "H" });
-    const count = qr.modules.size;
-    const data = qr.modules.data;
-    const cell = size / count;
-    for (let row = 0; row < count; row++) {
-      for (let col = 0; col < count; col++) {
-        if (!data[row * count + col]) continue;
-        page.drawRectangle({
-          x: x + col * cell,
-          y: topY - (row + 1) * cell,
-          // A hair of overlap, so neighbouring modules do not show a hairline
-          // seam where a rasteriser rounds them to different pixels.
-          width: cell + 0.12,
-          height: cell + 0.12,
-          color: COLORS.navy,
-        });
-      }
-    }
-    return true;
+    const png = await QRCode.toBuffer(url, {
+      type: "png",
+      errorCorrectionLevel: "H",
+      // No quiet zone from the encoder: the white card it sits on is wider
+      // than the four modules the spec asks for.
+      margin: 0,
+      scale: 16,
+      color: { dark: "#123b63ff", light: "#ffffffff" },
+    });
+    return await pdf.embedPng(png);
   } catch {
-    return false;
+    return null;
   }
 }
 
@@ -304,6 +309,9 @@ export async function buildMailerPdf(
     }
   }
   const logo = await embedLogo(pdf, profile.logoDataUri);
+  // Built once, up here, because every page is laid out twice and there is no
+  // sense encoding the same code again for a trial run that gets thrown away.
+  const qr = await embedQr(pdf, estimateUrl);
 
   const pages: PageFit[] = [];
   // Page one does not spring: the aerial photograph absorbs whatever room is
@@ -322,15 +330,14 @@ export async function buildMailerPdf(
     await fitted(pdf, (sheet) => pageThree(sheet, data, profile, fonts)),
   );
   pages.push(
-    await fitted(pdf, (sheet) =>
-      pageFour(sheet, data, profile, fonts, estimateUrl),
-    ),
+    await fitted(pdf, (sheet) => pageFour(sheet, data, profile, fonts, qr)),
   );
 
   return {
     bytes: await pdf.save(),
     filename: `estimate-${shortId(data)}.pdf`,
     pages,
+    qr: qr !== null,
   };
 }
 
@@ -927,7 +934,7 @@ function pageFour(
   data: ProposalData,
   profile: Profile,
   fonts: Fonts,
-  estimateUrl: string,
+  qr: PDFImage | null,
 ): void {
   const s = styles(fonts);
   const page = sheet.page;
@@ -970,16 +977,26 @@ function pageFour(
 
   const bandTop = sheet.topAt(sheet.y);
   const qrX = sheet.left + pad;
-  page.drawRectangle({
-    x: qrX - 7,
-    y: bandTop - pad - qrSize - 7,
-    width: qrSize + 14,
-    height: qrSize + 14,
-    color: COLORS.white,
-  });
-  const hasQr = drawQr(page, estimateUrl, qrX, bandTop - pad, qrSize);
+  if (qr) {
+    // The white card is the code's quiet zone. The encoder was told not to
+    // add one, because a scanner needs clear space around the code and this
+    // is wider than the four modules the specification asks for.
+    page.drawRectangle({
+      x: qrX - 7,
+      y: bandTop - pad - qrSize - 7,
+      width: qrSize + 14,
+      height: qrSize + 14,
+      color: COLORS.white,
+    });
+    page.drawImage(qr, {
+      x: qrX,
+      y: bandTop - pad - qrSize,
+      width: qrSize,
+      height: qrSize,
+    });
+  }
 
-  const textX = hasQr ? qrX + qrSize + 28 : sheet.left + pad;
+  const textX = qr ? qrX + qrSize + 28 : sheet.left + pad;
   const textWidth = sheet.left + sheet.width - pad - textX;
   const bandStart = sheet.y;
   sheet.down(pad + 4);
@@ -990,7 +1007,7 @@ function pageFour(
   );
   sheet.down(px(8));
   sheet.text(
-    hasQr
+    qr
       ? "Scan the code with your phone camera to open this estimate, including the measurements and the photograph of your roof."
       : "Call or text and we will send you this estimate, including the measurements and the photograph of your roof.",
     {
