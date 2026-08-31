@@ -171,6 +171,19 @@ console.log(`\nField tool`);
   );
 }
 {
+  // The printed mailer names a specific property and the person it was
+  // prepared for. It is built from the same scoped lookup as every other
+  // estimate view, and nobody signed out should get as far as an id.
+  const r = await get(
+    "/api/pin/mailer-pdf?id=00000000-0000-0000-0000-000000000000",
+  );
+  check(
+    r.status === 401,
+    "/api/pin/mailer-pdf requires a session",
+    `http ${r.status}`,
+  );
+}
+{
   // Belt and braces on the same thing: no Google key of any kind should be
   // reachable without signing in.
   const r = await get("/pin");
