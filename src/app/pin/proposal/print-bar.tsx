@@ -6,13 +6,17 @@ import { useState } from "react";
 /**
  * The actions on a proposal: send it, copy the link, or print it.
  *
- * "Print" is the browser's own print-to-PDF rather than a PDF built on the
- * server. That is a deliberate choice, not a shortcut. Generating real PDFs on
- * Vercel means shipping a headless Chromium into the function bundle, which is
- * tens of megabytes and a cold start measured in seconds, on a tool whose
- * whole promise is a number before the rep steps off the porch. The browser
- * already has a perfect renderer and, on iOS, print goes straight into the
- * share sheet where Mail, Messages and Save to Files are one tap away.
+ * "Print" goes to the mailer route, which is where the printed document lives.
+ * That page previews the piece and hands over a real PDF built on the server.
+ *
+ * This used to be the browser's own print-to-PDF, on the reasoning that
+ * generating PDFs on Vercel means shipping a headless Chromium into the
+ * function bundle. That reasoning was sound and the conclusion was still
+ * wrong: the piece is four pages by design and the browser would not hold it
+ * there, because iOS Safari's printable area is about 280 CSS pixels shorter
+ * than a desktop browser's and no stylesheet satisfies both. The PDF is drawn
+ * directly instead, in lib/quotes/mailer-pdf, with no browser involved and
+ * nothing added to the bundle but a small pure-JS writer.
  *
  * SEND CAME LAST AND SHOULD HAVE COME FIRST. There was no way to email a
  * customer their estimate from here. The rep typed an address into "add

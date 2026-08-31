@@ -10,6 +10,13 @@ import { useState } from "react";
  * because the two things happen thirty seconds apart at a printer and making
  * somebody navigate back to a list in between is how a stack of envelopes goes
  * out with nothing marked.
+ *
+ * PRINT OPENS A PDF, IT DOES NOT CALL window.print(). The page below is the
+ * preview; the PDF is the document. Printing the page meant asking whatever
+ * dialog the user happened to open how tall a sheet is, and the answers differ
+ * by about 280 CSS pixels between a desktop browser and iOS Safari, which is
+ * why a four page piece kept coming off a phone as five sheets. A PDF page is
+ * a page, and it prints as four everywhere.
  */
 export function MailerBar({
   quoteId,
@@ -26,14 +33,14 @@ export function MailerBar({
   const [posted, setPosted] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  function print() {
+  /** Recorded on the way to the PDF, not instead of opening it. */
+  function recordPrinted() {
     void fetch("/api/pin/mail", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ quoteId, action: "printed" }),
       keepalive: true,
     }).catch(() => {});
-    window.print();
   }
 
   async function markPosted() {
@@ -74,12 +81,17 @@ export function MailerBar({
         >
           Standard view
         </Link>
-        <button
-          onClick={print}
-          className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700"
+        {/* A plain link rather than window.open, so no popup blocker can eat
+            it, and target=_blank so the preview stays put behind the PDF. */}
+        <a
+          href={`/api/pin/mailer-pdf?id=${encodeURIComponent(quoteId)}`}
+          target="_blank"
+          rel="noopener"
+          onClick={recordPrinted}
+          className="rounded-lg bg-slate-800 px-3 py-2 text-sm font-semibold text-white"
         >
-          Print
-        </button>
+          Print PDF
+        </a>
         {isAdmin && (
           <button
             onClick={markPosted}
@@ -98,8 +110,10 @@ export function MailerBar({
         </p>
       )}
       <p className="mx-auto max-w-[8.5in] px-3 pb-2 text-xs text-slate-500">
-        Four pages, two sheets double sided, folded once for a 6&times;9
-        envelope.
+        Below is the preview. <strong>Print PDF</strong> opens the document that
+        actually goes in the envelope: four pages, two sheets double sided,
+        folded once for a 6&times;9 envelope, the same on every printer and
+        every phone.
       </p>
     </div>
   );

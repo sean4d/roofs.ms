@@ -91,18 +91,20 @@
 }
 
 /*
- * The mailed piece: four Letter pages, exactly, every time.
+ * The mailed piece on screen, and a best effort if somebody prints the page.
  *
- * Two sheets printed double sided, folded once, into a 6x9 envelope. Sheet one
- * carries pages 1 and 2, sheet two carries 3 and 4. A fifth page is not a
- * cosmetic problem: it is a third sheet that costs postage and arrives nearly
- * empty, and at the volumes this is meant for that is real money.
+ * THE REAL DOCUMENT IS A PDF NOW. /api/pin/mailer-pdf draws it directly, four
+ * Letter pages, and that is what the Print button opens. These rules stayed
+ * because a person can always hit Cmd+P on a preview and should get something
+ * sensible, but they are no longer what the four page guarantee rests on.
  *
- * So each page is DECLARED rather than flowed. break-after on every page but
- * the last, break-inside avoid so nothing splits across the fold, and a fixed
- * height so the content of one page can never push into the next. Browser
- * pagination is not something to rely on when somebody else's print dialog
- * decides the usable height.
+ * They could not be. Two sheets printed double sided and folded once into a
+ * 6x9 envelope is a fixed budget, and the usable page height is not: desktop
+ * Chrome leaves about 980 CSS pixels between its margins, iOS Safari about
+ * 700, because it prints a header and a footer that cannot be switched off.
+ * Sized for one, the piece split on the other. That is not a bug in the
+ * declarations below; it is two different page boxes, and no stylesheet
+ * satisfies both at once.
  */
 @media print {
   .mailer-page {
@@ -139,19 +141,9 @@
    * paragraph out of a price explanation is a liability.
    *
    * Instead every page is kept inside the page it will actually be printed
-   * on, and break-after does the grouping.
-   *
-   * THAT PAGE IS A DESKTOP ONE, ABOUT 980px. This was briefly sized for iOS
-   * Safari, which prints with margins it picks and a header and footer that
-   * cannot be turned off and leaves about 700px. Fitting that made every sheet
-   * use two thirds of itself and leave a third of it blank on the office
-   * printer, which is worse than the problem it solved: mail is an office job
-   * done at an office machine, and a piece that arrives with a dead band along
-   * the bottom of every page looks unfinished.
-   *
-   * So this is built for the printer it is printed on. A phone will paginate
-   * it differently and that is fine, because a phone is not where hundreds of
-   * envelopes get run off.
+   * on, and break-after does the grouping. Where that lands depends on the
+   * dialog, which is exactly why the document people are handed is the PDF and
+   * not this.
    */
   /* No trailing blank sheet from a break after the final page. */
   .mailer-page:last-child {

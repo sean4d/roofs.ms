@@ -14,7 +14,20 @@ import type { ProposalData } from "@/lib/quotes/save";
 import { InlineSvg, logoSvg, qrSvg } from "./brand";
 
 /**
- * The version that goes in an envelope.
+ * The version that goes in an envelope, ON SCREEN.
+ *
+ * THIS IS THE PREVIEW, NOT THE PRINTED DOCUMENT. What comes out of a printer
+ * is lib/quotes/mailer-pdf, drawn straight to PDF. The two are the same piece
+ * and the same four pages; this one exists so the office can read the estimate
+ * before committing paper to it, and so the admin edit link has somewhere to
+ * live. Anything that changes in one belongs in the other.
+ *
+ * The page count is the reason for the split. Held in HTML, it depended on
+ * whichever print dialog was open: about 980 CSS pixels of usable page in
+ * desktop Chrome, about 700 on iOS Safari, which stamps a header and a footer
+ * on every web page it prints. Tuned to one, it split on the other, and the
+ * owner kept getting five sheets off his phone. A PDF page cannot be
+ * renegotiated by a dialog.
  *
  * A SIBLING OF proposal-doc, NOT A MODE INSIDE IT. The standard document is
  * what a rep shows on a doorstep and emails to somebody they have just spoken

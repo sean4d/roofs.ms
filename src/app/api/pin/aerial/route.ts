@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { currentUser } from "@/lib/quotes/auth";
+import { fetchAerial } from "@/lib/quotes/aerial";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -22,15 +23,15 @@ export const dynamic = "force-dynamic";
  * has been widened to look there too.
  *
  * Now the browser asks us for the picture and the key never leaves the server.
+ *
+ * The fetch itself lives in lib/quotes/aerial so the printed piece, which is
+ * built on the server and cannot call this route, uses the same code path.
  */
 export async function GET(request: Request) {
   const user = await currentUser();
   if (!user) {
     return new NextResponse("Sign in to continue.", { status: 401 });
   }
-
-  const key = process.env.GOOGLE_MAPS_SERVER_KEY;
-  if (!key) return new NextResponse("Not configured.", { status: 503 });
 
   const params = new URL(request.url).searchParams;
   const lat = Number(params.get("lat"));
@@ -44,30 +45,21 @@ export async function GET(request: Request) {
     return new NextResponse("Bad coordinates.", { status: 400 });
   }
 
-  // Clamped rather than passed through: a caller that could name any size
-  // could bill us for 2048px tiles all day.
-  const size = Math.min(Math.max(Number(params.get("size")) || 480, 160), 640);
-
-  const upstream = new URL("https://maps.googleapis.com/maps/api/staticmap");
-  upstream.searchParams.set("center", `${lat},${lon}`);
-  upstream.searchParams.set("zoom", "20");
-  upstream.searchParams.set("size", `${size}x${size}`);
-  upstream.searchParams.set("maptype", "satellite");
-  upstream.searchParams.set("key", key);
-
-  try {
-    const res = await fetch(upstream, { cache: "no-store" });
-    if (!res.ok) return new NextResponse("Unavailable.", { status: 502 });
-    const body = await res.arrayBuffer();
-    return new NextResponse(body, {
-      headers: {
-        "Content-Type": res.headers.get("content-type") ?? "image/png",
-        // Private: this names a specific house. It may sit in the rep's own
-        // browser cache, never in a shared one.
-        "Cache-Control": "private, max-age=86400",
-      },
-    });
-  } catch {
-    return new NextResponse("Unavailable.", { status: 502 });
+  if (!process.env.GOOGLE_MAPS_SERVER_KEY) {
+    return new NextResponse("Not configured.", { status: 503 });
   }
+
+  const image = await fetchAerial(lat, lon, {
+    size: Number(params.get("size")) || 480,
+  });
+  if (!image) return new NextResponse("Unavailable.", { status: 502 });
+
+  return new NextResponse(image.bytes as unknown as BodyInit, {
+    headers: {
+      "Content-Type": image.contentType,
+      // Private: this names a specific house. It may sit in the rep's own
+      // browser cache, never in a shared one.
+      "Cache-Control": "private, max-age=86400",
+    },
+  });
 }
