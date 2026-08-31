@@ -256,6 +256,16 @@ function repName(email: string | null): string {
     .join(" ");
 }
 
+/**
+ * Just the street line, for a rep reading a phone in the sun.
+ *
+ * Google returns "15084 Sagewood St, Gulfport, MS 39503, USA" and printing all
+ * of it turned a one line notice into four. The rep is standing on Sagewood
+ * Street; they do not need telling which country it is in.
+ */
+export const shortAddress = (address: string): string =>
+  address.split(",")[0]?.trim() || address;
+
 const shortDate = (v: string | null): string => {
   if (!v) return "";
   const d = new Date(v);
@@ -355,8 +365,8 @@ export async function priorContactNear(
    * was not true. If it is not the house they tapped, the sentence has to say
    * whose house it is.
    */
-  const where = sameProperty ? "this address" : r.address;
-  const whose = sameProperty ? "this customer" : r.address;
+  const where = sameProperty ? "this address" : shortAddress(r.address);
+  const whose = sameProperty ? "this customer" : shortAddress(r.address);
 
   let sentence: string | null = null;
   if (mailedAt) {
