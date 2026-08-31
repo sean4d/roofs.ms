@@ -12,7 +12,8 @@
     "format:check": "prettier --check .",
     "seo:smoke": "node scripts/seo-smoke.mjs",
     "check:deploy": "node scripts/post-deploy-check.mjs",
-    "check:mailer": "node --conditions=react-server --import tsx scripts/check-mailer-pdf.mts"
+    "check:mailer": "node --conditions=react-server --import tsx scripts/check-mailer-pdf.mts",
+    "check:prior": "node --conditions=react-server --import tsx scripts/check-prior-contact.mts"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",

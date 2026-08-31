@@ -30,6 +30,8 @@ export type MailStatus = "requested" | "mailed" | "rejected";
 /** What the map says when a rep taps a house we have already contacted. */
 export interface PriorContact {
   quoteId: string;
+  /** The address of the estimate that matched, which is NOT always the one the
+   *  rep just tapped. Always show it. */
   address: string;
   /** Who owns the relationship. The rep about to duplicate it needs a name. */
   repName: string;
@@ -39,20 +41,179 @@ export interface PriorContact {
   mailStatus: MailStatus | null;
   mailRequestedAt: string | null;
   mailedAt: string | null;
+  /** How far the matched pin is from the tap. */
+  distanceFeet: number;
+  /**
+   * TRUE ONLY WHEN IT IS THE SAME PROPERTY. False means a neighbour, and the
+   * two must never be shown the same way: one is "you have already done this
+   * house", the other is "somebody has worked this street".
+   */
+  sameProperty: boolean;
   /** One sentence, ready to show. Null when nothing has actually gone out. */
   sentence: string | null;
 }
 
 /**
- * How close two taps have to be to mean the same house.
+ * How close counts as the same house, and how close counts as nearby.
  *
- * About 45 metres. Deliberately generous: two reps tapping the same roof will
- * land tens of feet apart, and a warning that fails to fire is worthless while
- * one that fires on the house next door costs a rep ten seconds to dismiss.
- * When in doubt, warn.
+ * THIS WAS ONE NUMBER AND IT WAS FAR TOO BIG. The rule was a box of about 45
+ * metres in each direction from the tap, on the reasoning that a warning that
+ * fails to fire is worthless while one that fires on the house next door costs
+ * ten seconds to dismiss. That reasoning is wrong in a subdivision, which is
+ * where this tool is used.
+ *
+ * 45 metres each way is a box 90 by 96 metres, roughly 300 feet square. Gulf
+ * Coast tract lots run 60 to 70 feet wide and 110 to 120 deep, so that box
+ * holds two houses either side, the ones across the street and the ones backing
+ * on to the yard: eight to twelve properties, all reported as "this address".
+ * Patrick and Aaron found it the first morning they canvassed Gulfport
+ * together. One of them would request a mailer, the other would tap a house
+ * three doors down that nobody had ever opened, and the map told him the
+ * customer had already been contacted.
+ *
+ * A warning that is wrong most of the time is worse than no warning, because
+ * reps learn to tap through it and then it fails on the one that was real.
+ *
+ * So there are two distances now and they mean different things. Inside
+ * SAME_PROPERTY_FT it is the same roof: two reps tapping one house land a few
+ * feet apart, and even a large house is only about fifty feet across. Out to
+ * NEARBY_FT it is the street, which is still worth knowing and is shown as
+ * what it is. Beyond that, nothing.
+ *
+ * The distance is only the fallback. When both addresses are known, the
+ * ADDRESS decides, because two different house numbers are two different
+ * houses no matter how close the pins are.
  */
-const SAME_HOUSE_LAT = 0.0004;
-const SAME_HOUSE_LON = 0.0005;
+const SAME_PROPERTY_FT = 80;
+const NEARBY_FT = 300;
+const FT_PER_M = 3.280839895;
+
+const EARTH_M = 6371008.8;
+const rad = (d: number) => (d * Math.PI) / 180;
+
+/** Great-circle distance in feet. */
+function distanceFeet(
+  aLat: number,
+  aLon: number,
+  bLat: number,
+  bLon: number,
+): number {
+  const dLat = rad(bLat - aLat);
+  const dLon = rad(bLon - aLon);
+  const h =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(rad(aLat)) * Math.cos(rad(bLat)) * Math.sin(dLon / 2) ** 2;
+  return 2 * EARTH_M * Math.asin(Math.sqrt(h)) * FT_PER_M;
+}
+
+/**
+ * Street suffixes and directions, so one spelling of an address matches another.
+ *
+ * Google is consistent about formatted addresses most of the time and not all
+ * of the time: the same house can come back as "Loop" from a reverse geocode
+ * and "Lp" from a forward one. Folding both to the same token means a rep who
+ * typed the address and a rep who tapped the roof are recognised as having
+ * found the same property.
+ */
+const STREET_WORD: Record<string, string> = {
+  street: "st",
+  road: "rd",
+  avenue: "ave",
+  av: "ave",
+  drive: "dr",
+  lane: "ln",
+  court: "ct",
+  circle: "cir",
+  loop: "lp",
+  boulevard: "blvd",
+  place: "pl",
+  terrace: "ter",
+  trail: "trl",
+  highway: "hwy",
+  parkway: "pkwy",
+  north: "n",
+  south: "s",
+  east: "e",
+  west: "w",
+  northeast: "ne",
+  northwest: "nw",
+  southeast: "se",
+  southwest: "sw",
+};
+
+/**
+ * The house number and street, normalised, or null when there is no number.
+ *
+ * No number means no property: "Hattiesburg, MS 39402" identifies a town. Those
+ * fall back to distance rather than matching everything in the town.
+ */
+export function streetKey(address: string | null | undefined): string | null {
+  if (!address) return null;
+  const tokens = (address.split(",")[0] ?? "")
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, " ")
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((t) => STREET_WORD[t] ?? t);
+  if (!tokens.length || !/^\d/.test(tokens[0])) return null;
+  return tokens.join(" ");
+}
+
+export interface NearCandidate {
+  address: string;
+  lat: number | string;
+  lon: number | string;
+}
+
+export interface NearMatch<T> {
+  row: T;
+  feet: number;
+  sameProperty: boolean;
+}
+
+/**
+ * Which pin near a tap is worth showing, and whether it is the same property.
+ *
+ * SEPARATED FROM THE QUERY SO IT CAN BE TESTED. This is the rule that was
+ * wrong, and it was wrong in a way no amount of reading the code would have
+ * caught: it needed real coordinates a real distance apart on a real street.
+ * scripts/check-prior-contact.mts walks a Gulfport block through it.
+ *
+ * The address decides when both are known, because two different house numbers
+ * are two different houses. Distance is the fallback, and it is only reached
+ * where a reverse geocode found no street address: rural addresses, where the
+ * lots are acres and eighty feet cannot reach a neighbour.
+ */
+export function classifyNear<T extends NearCandidate>(
+  lat: number,
+  lon: number,
+  tappedAddress: string | null | undefined,
+  rows: T[],
+): NearMatch<T> | null {
+  const tapped = streetKey(tappedAddress);
+
+  const scored = rows
+    .map((row) => {
+      const feet = distanceFeet(lat, lon, Number(row.lat), Number(row.lon));
+      const key = streetKey(row.address);
+      const sameProperty =
+        tapped && key ? tapped === key : feet <= SAME_PROPERTY_FT;
+      return { row, feet, sameProperty };
+    })
+    .filter((c) => c.feet <= NEARBY_FT);
+
+  if (!scored.length) return null;
+
+  // The same house always outranks a neighbour, however recent the neighbour
+  // is. Within a tier the nearest wins, and the rows arrive newest first so
+  // ties keep that order.
+  scored.sort((a, b) => {
+    if (a.sameProperty !== b.sameProperty) return a.sameProperty ? -1 : 1;
+    return a.feet - b.feet;
+  });
+
+  return scored[0];
+}
 
 /**
  * Run a query, or give up quietly.
@@ -108,6 +269,8 @@ const shortDate = (v: string | null): string => {
 interface PriorRow {
   id: string;
   address: string;
+  lat: number | string;
+  lon: number | string;
   rep_email: string | null;
   emailed_at: string | Date | null;
   emailed_to: string | null;
@@ -130,9 +293,23 @@ interface PriorRow {
 export async function priorContactNear(
   lat: number,
   lon: number,
+  /** The address the rep just tapped, when the reverse geocode found one. It
+   *  is the strongest signal there is and beats any distance. */
+  tappedAddress?: string | null,
 ): Promise<PriorContact | null> {
+  // A rejected address lookup returns 0,0. Asking what has been posted near
+  // the Gulf of Guinea is at best a wasted query.
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+  if (lat === 0 && lon === 0) return null;
+
+  // The search box is derived from the distance rather than hard-coded, so it
+  // is the right shape at any latitude. A degree of longitude is only 96,000
+  // feet at Gulfport and a degree of latitude is 364,000 everywhere.
+  const degLat = NEARBY_FT / 364000;
+  const degLon = NEARBY_FT / (364000 * Math.max(Math.cos(rad(lat)), 0.05));
+
   const rows = (await queryOrNull(
-    `SELECT q.id, c.address, u.email AS rep_email,
+    `SELECT q.id, c.address, c.lat, c.lon, u.email AS rep_email,
             q.emailed_at, q.emailed_to, q.printed_at,
             q.mail_status, q.mail_requested_at, q.mail_handled_at
        FROM quotes q
@@ -149,12 +326,18 @@ export async function priorContactNear(
                  COALESCE(q.mail_handled_at, 'epoch'::timestamptz),
                  COALESCE(q.mail_requested_at, 'epoch'::timestamptz)
                ) DESC
-      LIMIT 1`,
-    [lat, lon, SAME_HOUSE_LAT, SAME_HOUSE_LON],
+      LIMIT 40`,
+    [lat, lon, degLat, degLon],
   )) as PriorRow[] | null;
 
   if (!rows || !rows.length) return null;
-  const r = rows[0];
+
+  /* The box is a candidate list, not an answer. It is square, so its corners
+     reach 40% further than its sides, and it says nothing about whether the
+     pin inside it is the house the rep is standing in front of. */
+  const best = classifyNear(lat, lon, tappedAddress, rows);
+  if (!best) return null;
+  const { row: r, feet, sameProperty } = best;
 
   const emailedAt = iso(r.emailed_at);
   const printedAt = iso(r.printed_at);
@@ -162,19 +345,30 @@ export async function priorContactNear(
   const mailRequestedAt = iso(r.mail_requested_at);
   const who = repName(r.rep_email);
 
-  // The most committing thing that happened is the one worth saying. A posted
-  // estimate outranks an emailed one, which outranks a queued mailer.
+  /*
+   * The most committing thing that happened is the one worth saying. A posted
+   * estimate outranks an emailed one, which outranks a queued mailer.
+   *
+   * THE ADDRESS IS NAMED WHEN IT IS A NEIGHBOUR. These sentences used to say
+   * "this address" and "this customer" whatever had matched, which is what
+   * turned a loose proximity rule into the tool telling a rep something that
+   * was not true. If it is not the house they tapped, the sentence has to say
+   * whose house it is.
+   */
+  const where = sameProperty ? "this address" : r.address;
+  const whose = sameProperty ? "this customer" : r.address;
+
   let sentence: string | null = null;
   if (mailedAt) {
-    sentence = `${who} posted this customer an estimate on ${shortDate(mailedAt)}.`;
+    sentence = `${who} posted ${whose} an estimate on ${shortDate(mailedAt)}.`;
   } else if (emailedAt) {
-    sentence = `${who} emailed this customer an estimate on ${shortDate(emailedAt)}.`;
+    sentence = `${who} emailed ${whose} an estimate on ${shortDate(emailedAt)}.`;
   } else if (r.mail_status === "requested") {
-    sentence = `${who} has a mailer waiting to go out for this address, requested ${shortDate(mailRequestedAt)}.`;
+    sentence = `${who} has a mailer waiting to go out for ${where}, requested ${shortDate(mailRequestedAt)}.`;
   } else if (r.mail_status === "rejected") {
-    sentence = `A mailer for this address was rejected by the office. Check the estimate before sending another.`;
+    sentence = `A mailer for ${where} was rejected by the office. Check the estimate before sending another.`;
   } else if (printedAt) {
-    sentence = `${who} printed an estimate for this address on ${shortDate(printedAt)}.`;
+    sentence = `${who} printed an estimate for ${where} on ${shortDate(printedAt)}.`;
   }
 
   return {
@@ -187,6 +381,8 @@ export async function priorContactNear(
     mailStatus: r.mail_status,
     mailRequestedAt,
     mailedAt,
+    distanceFeet: Math.round(feet),
+    sameProperty,
     sentence,
   };
 }

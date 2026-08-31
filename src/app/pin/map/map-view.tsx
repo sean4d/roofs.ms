@@ -46,9 +46,16 @@ interface StormResult {
 /** What the company has already sent this homeowner, if anything. */
 interface PriorContact {
   quoteId: string;
+  /** The address that matched, which is not always the one just tapped. */
+  address: string;
   repName: string;
   sentence: string | null;
   mailStatus: "requested" | "mailed" | "rejected" | null;
+  /** How far the matched pin is from the tap. */
+  distanceFeet: number;
+  /** True only when it is the same property. False means a neighbour, and the
+   *  two are shown differently on purpose. */
+  sameProperty: boolean;
 }
 
 interface Result {
@@ -391,25 +398,49 @@ function ResultSheet({
       </div>
 
       <div className="px-5 py-4">
-        {/* Before anything else on the sheet. A rep who has already read the
-            price has already decided how to open the conversation, so a
-            warning underneath it arrives too late to change anything. */}
-        {result.prior?.sentence && (
-          <div className="mb-4 rounded-lg border-2 border-amber-400 bg-amber-50 p-3">
-            <p className="text-xs font-bold tracking-wide text-amber-900 uppercase">
-              Already contacted
-            </p>
-            <p className="mt-1 text-sm leading-relaxed text-amber-900">
-              {result.prior.sentence}
-            </p>
-            <a
-              href={`/pin/proposal/${result.prior.quoteId}`}
-              className="mt-2 inline-block text-sm font-semibold text-[#123b63] underline underline-offset-4"
-            >
-              View that estimate
-            </a>
-          </div>
-        )}
+        {/*
+          Before anything else on the sheet. A rep who has already read the
+          price has already decided how to open the conversation, so a warning
+          underneath it arrives too late to change anything.
+
+          TWO DIFFERENT THINGS, SHOWN TWO DIFFERENT WAYS. An amber alarm means
+          this house. A grey note means somebody has worked this street and
+          names the house it was, because for a while both of these were the
+          same amber box saying "Already contacted" and reps were being told
+          houses they had never opened were already done.
+        */}
+        {result.prior?.sentence &&
+          (result.prior.sameProperty ? (
+            <div className="mb-4 rounded-lg border-2 border-amber-400 bg-amber-50 p-3">
+              <p className="text-xs font-bold tracking-wide text-amber-900 uppercase">
+                Already contacted
+              </p>
+              <p className="mt-1 text-sm leading-relaxed text-amber-900">
+                {result.prior.sentence}
+              </p>
+              <a
+                href={`/pin/proposal/${result.prior.quoteId}`}
+                className="mt-2 inline-block text-sm font-semibold text-[#123b63] underline underline-offset-4"
+              >
+                View that estimate
+              </a>
+            </div>
+          ) : (
+            <div className="mb-4 rounded-lg border border-slate-300 bg-slate-50 p-3">
+              <p className="text-xs font-bold tracking-wide text-slate-500 uppercase">
+                Not this house &middot; {result.prior.distanceFeet} ft away
+              </p>
+              <p className="mt-1 text-sm leading-relaxed text-slate-700">
+                {result.prior.sentence}
+              </p>
+              <a
+                href={`/pin/proposal/${result.prior.quoteId}`}
+                className="mt-2 inline-block text-sm font-semibold text-slate-600 underline underline-offset-4"
+              >
+                View that estimate
+              </a>
+            </div>
+          ))}
 
         {rejected ? (
           <RejectedBox reason={m.reason} />

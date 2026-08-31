@@ -85,10 +85,19 @@ export async function POST(request: Request) {
      * moment to warn a rep is before they knock. Never fatal: a lookup failure
      * must not cost the measurement the rep is standing there waiting for, so
      * it degrades to no warning rather than to no price.
+     *
+     * The ADDRESS goes with the coordinates. Distance alone cannot tell one
+     * house from the one next door, and for a while this told reps in Gulfport
+     * that houses nobody had opened had already been contacted. A house number
+     * can, whenever the reverse geocode found one.
      */
     let prior = null;
     try {
-      prior = await priorContactNear(measurement.lat, measurement.lon);
+      prior = await priorContactNear(
+        measurement.lat,
+        measurement.lon,
+        measurement.formattedAddress,
+      );
     } catch (error) {
       console.error("[pin] prior-contact lookup failed", error);
     }
