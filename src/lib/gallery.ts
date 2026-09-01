@@ -173,6 +173,10 @@ const MATERIAL_BY_JOBTYPE: Record<string, MaterialClass> = {
   "rolled-roofing": "other",
   epdm: "other",
   pvc: "other",
+  // A coating is a restoration of whatever is already up there, so it has no
+  // material class of its own. The substrate detail is what says what it went
+  // over, and that is a filter chip in its own right.
+  "roof-coating": "other",
 };
 
 function detailValue(p: LiveProject, key: string): string | undefined {
@@ -183,7 +187,10 @@ function detailValue(p: LiveProject, key: string): string | undefined {
 export function sanityGalleryJob(p: LiveProject): GalleryJob {
   const isStorm = p.jobType === "storm-damage";
   const product =
-    detailValue(p, "product") ?? detailValue(p, "productType") ?? undefined;
+    detailValue(p, "product") ??
+    detailValue(p, "productType") ??
+    detailValue(p, "coatingType") ??
+    undefined;
   const color = detailValue(p, "color");
   const material = (p.jobType && MATERIAL_BY_JOBTYPE[p.jobType]) || "other";
 

@@ -65,15 +65,54 @@ function shortOption(s: string): string {
 function productLead(sub: JobSubmission): string {
   const product = str(sub.details.product);
   if (product) return product;
+  // A coating has no product line, but it has a chemistry, and "silicone roof
+  // coating" is what a reader needs to see rather than "roof coating".
+  const coating = str(sub.details.coatingType);
+  if (coating && coating !== "Other") return coating;
   const brand = str(sub.details.brand);
   const productType = shortOption(str(sub.details.productType));
   return [brand, productType].filter(Boolean).join(" ").trim();
 }
 
+/**
+ * Lead plus noun, WITHOUT saying the noun twice.
+ *
+ * The gutter products are named 'Seamless 6" Gutters' and the job type's noun
+ * is "gutters", so gluing them together produced 'Seamless 6" Gutters gutters'
+ * on the gallery card, the photo alt text and the caption. It read as a bug
+ * because it was one. If the product name already ends with the noun, the noun
+ * has done its job and gets dropped.
+ */
+function leadWithNoun(lead: string, noun: string): string {
+  if (!lead) return noun;
+  if (lead.toLowerCase().endsWith(noun.toLowerCase())) return lead;
+  return `${lead} ${noun}`;
+}
+
+/**
+ * What was installed, as one noun phrase with the colour in front.
+ *
+ * The colour used to trail the noun as "in Charcoal", which is fine on its own
+ * and falls apart the moment a sentence puts a place after it: "a roof coating
+ * in White in Hattiesburg". As an adjective it never collides with the
+ * location, and it is how somebody would actually say it out loud.
+ */
+function subjectPhrase(sub: JobSubmission): string {
+  const jt = getJobType(sub.jobType);
+  const noun = jt?.noun ?? "roofing project";
+  const color = str(sub.details.color);
+  const core = leadWithNoun(productLead(sub), noun);
+  return color ? `${titleCase(color)} ${core}` : core;
+}
+
+/** Capitalise the first letter only, leaving product names alone. */
+function sentenceCase(s: string): string {
+  return s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+}
+
 /** Human title, e.g. "GAF Architectural Shingle Roof in Pewter Gray". */
 export function jobTitle(sub: JobSubmission): string {
-  const jt = getJobType(sub.jobType);
-  const noun = titleCase(jt?.noun ?? "roofing project");
+  const noun = getJobType(sub.jobType)?.noun ?? "roofing project";
   const color = str(sub.details.color);
 
   let core: string;
@@ -81,8 +120,7 @@ export function jobTitle(sub: JobSubmission): string {
     const dmg = arr(sub.details.damage).slice(0, 2).join(" & ");
     core = dmg ? `Storm Damage, ${dmg}` : "Storm Damage";
   } else {
-    const lead = productLead(sub);
-    core = [lead, noun].filter(Boolean).join(" ");
+    core = titleCase(leadWithNoun(productLead(sub), noun));
     if (color) core += ` in ${titleCase(color)}`;
   }
   // Parentheses, not a comma, for the location. The colour already sits in a
@@ -101,7 +139,7 @@ export function jobSummary(sub: JobSubmission): string {
     const dmg = arr(sub.details.damage).join(", ").toLowerCase();
     return `Storm response${where}${dmg ? `: documented ${dmg}` : ""}.`;
   }
-  const what = [lead, noun].filter(Boolean).join(" ");
+  const what = leadWithNoun(lead, noun);
   return `${titleCase(sub.channel)} ${what}${where} by ${siteConfig.name}.`;
 }
 
@@ -177,7 +215,7 @@ export function photoSeo(
   const where = sub.city ? `${sub.city}, ${REGION}` : `South ${REGION}`;
   const phaseWord = PHASE_WORD[phase];
 
-  const subject = [lead, noun].filter(Boolean).join(" ") || "roofing project";
+  const subject = leadWithNoun(lead, noun) || "roofing project";
   const colorPart = color ? ` in ${titleCase(color)}` : "";
 
   const title = `${phaseWord}: ${titleCase(subject)}${colorPart}, ${where}`;
@@ -197,14 +235,63 @@ export function photoSeo(
 }
 
 /**
+ * Six openings, rotated by the job, so the fallback does not have the fault
+ * the AI prompt had.
+ *
+ * This template used to be one sentence: "Another X done right in Y." Every
+ * post that fell back to it opened identically, which is the same complaint
+ * the owner made about the AI captions and the same cause: one shape, used
+ * every time. These are written to differ in what the sentence is about, not
+ * just in its adjectives.
+ */
+const OPENERS: Array<(what: string, where: string, a: string) => string> = [
+  (what, where, a) => `${a ? "A new" : "New"} ${what} in ${where}.`,
+  (what, where, a) => `${where} picked up ${a}${what} this week.`,
+  (what, where, a) => `This one is ${a}${what}, out in ${where}.`,
+  (what, where) => `Fresh ${what} on a property in ${where}.`,
+  (what, where) =>
+    `${sentenceCase(what)}, finished and handed over in ${where}.`,
+  (what, where, a) => `Work wrapped on ${a}${what} in ${where}.`,
+];
+
+/**
+ * "a " or nothing, because some of the job types are plural nouns.
+ *
+ * Gutters, gutter guards and siding do not take an article, and "a White
+ * Seamless 6in Gutters" is the kind of sentence that tells a reader instantly
+ * that nobody wrote it.
+ */
+function articleFor(sub: JobSubmission): string {
+  const noun = getJobType(sub.jobType)?.noun ?? "";
+  return /(gutters|guards|siding)$/i.test(noun) ? "" : "a ";
+}
+
+const CLOSERS = [
+  "Quality materials, clean workmanship, and a customer we were glad to work for.",
+  "Installed to manufacturer spec, cleaned up properly, and inspected before we left.",
+  "The kind of job that looks simple because it was done in the right order.",
+  "Built for what the weather does here, not for what it does on a brochure.",
+];
+
+/** Stable index from a string. FNV-1a: short, dependency free, spreads well. */
+function pick(seed: string, length: number): number {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < seed.length; i++) {
+    h ^= seed.charCodeAt(i);
+    h = Math.imul(h, 0x01000193);
+  }
+  return Math.abs(h) % length;
+}
+
+/**
  * Deterministic, polished caption body, NEVER the owner's raw notes verbatim.
  * Used as the fallback when AI polish (lib/ai-caption) isn't available.
  */
 export function deterministicBody(sub: JobSubmission): string {
-  const jt = getJobType(sub.jobType);
   const where = sub.city ? `${sub.city}, ${REGION}` : `South ${REGION}`;
-  const lead = productLead(sub);
-  const noun = jt?.noun ?? "roofing project";
+  const seed = [sub.city, sub.jobType, sub.channel, sub.description]
+    .filter(Boolean)
+    .join("|");
 
   if (sub.jobType === "storm-damage") {
     const dmg = arr(sub.details.damage).join(", ").toLowerCase();
@@ -213,19 +300,20 @@ export function deterministicBody(sub: JobSubmission): string {
       `Our crew documented the damage and got this ${sub.channel} property protected.`
     );
   }
-  const what = [lead, noun].filter(Boolean).join(" ");
-  const color = str(sub.details.color);
-  return (
-    `Another ${what}${color ? ` in ${titleCase(color)}` : ""} done right in ${where}. ` +
-    `Quality materials, clean workmanship, and a ${sub.channel} customer we're proud to serve.`
-  );
+
+  const what = subjectPhrase(sub);
+  const opener = OPENERS[pick(seed, OPENERS.length)];
+  const closer = CLOSERS[pick(`${seed}#close`, CLOSERS.length)];
+  return `${opener(what, where, articleFor(sub))} ${closer}`;
 }
 
 /** Wrap a caption body with the shared CTA + hashtags (all platforms). */
 export function assembleCaption(sub: JobSubmission, body: string): string {
   const cta =
     `📞 ${siteConfig.phone.display} · Free inspection & estimate` +
-    (siteConfig.links.booking ? `\n📅 Book online: ${siteConfig.links.booking}` : "");
+    (siteConfig.links.booking
+      ? `\n📅 Book online: ${siteConfig.links.booking}`
+      : "");
   const tags = jobTags(sub)
     .map((t) => "#" + t.replace(/[^A-Za-z0-9]+/g, ""))
     .slice(0, 6);

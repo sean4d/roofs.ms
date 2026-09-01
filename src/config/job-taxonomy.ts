@@ -310,6 +310,84 @@ export const JOB_TYPES: JobType[] = [
       },
     ],
   },
+  {
+    /**
+     * Roof coatings (owner request 2026-08-31, after a commercial coating job).
+     *
+     * A restoration, not a replacement, and the detail fields say so: the
+     * chemistry, what it went over, and how thick it was laid. Those three
+     * decide almost everything about a coating job, and the substrate matters
+     * most of all, because "silicone over metal" and "silicone over a failing
+     * mod-bit roof" are different jobs with different lifespans.
+     *
+     * Kept out of the membrane group above on purpose. TPO, PVC and EPDM are
+     * things we install; a coating is something we put ON one of them, and
+     * lumping it in would have made the gallery filter lie about what the
+     * building actually has on it.
+     */
+    value: "roof-coating",
+    label: "Roof Coating / Restoration",
+    noun: "roof coating",
+    fields: [
+      {
+        key: "coatingType",
+        label: "Coating type",
+        kind: "select",
+        options: [
+          "Silicone",
+          "Acrylic",
+          "Elastomeric",
+          "Aluminum-fibered",
+          "Polyurethane",
+          "Asphalt emulsion",
+          "Other",
+        ],
+        filterable: true,
+      },
+      {
+        key: "substrate",
+        label: "Coated over",
+        kind: "select",
+        options: [
+          "Metal",
+          "Modified bitumen",
+          "Built-up / BUR",
+          "TPO",
+          "EPDM",
+          "PVC",
+          "Existing coating",
+          "Concrete",
+        ],
+        filterable: true,
+      },
+      {
+        key: "color",
+        label: "Color",
+        kind: "select",
+        options: ["White", "Gray", "Tan", "Aluminum"],
+        filterable: true,
+      },
+      {
+        key: "prep",
+        label: "Prep work",
+        kind: "multi",
+        options: [
+          "Power wash",
+          "Rust treatment",
+          "Seam and lap reinforcement",
+          "Fastener re-set",
+          "Ponding repair",
+          "Primer coat",
+        ],
+      },
+      {
+        key: "thickness",
+        label: "Applied thickness",
+        kind: "select",
+        options: ["Single coat", "Two coat", "20 mil", "30 mil", "40 mil+"],
+      },
+    ],
+  },
 ];
 
 /** Residential vs commercial, matches the existing `project.channel` field. */
