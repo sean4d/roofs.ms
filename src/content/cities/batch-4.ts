@@ -4,16 +4,28 @@ import type { CityContent } from "@/content/cities/types";
  * City batch 4: Waynesboro and Crystal Springs (owner request 2026-07-05),
  * both listed on the legacy site's service area but not yet on the new
  * platform, plus Leakesville (owner request 2026-08-08, first Greene County
- * job booked). Anti-doorway rules hold: genuinely local copy (county, rivers,
- * highways, storm exposure), honest drive times, and, because we have no
- * project photos in any of the three, NO claims of completed local work.
- * These pages present service availability, not local proof.
+ * job booked) and Perkinston (owner request 2026-08-31, job completed).
+ * Anti-doorway rules hold: genuinely local copy (county, rivers, highways,
+ * storm exposure) and honest drive times.
+ *
+ * ON CLAIMING LOCAL WORK. Waynesboro, Crystal Springs and Leakesville have no
+ * completed project photos, so their copy claims no completed local work: they
+ * present service availability, not local proof. Perkinston is the exception
+ * and the owner is the source: he finished a roof there on 2026-08-31. The
+ * page says so plainly and says nothing more than that. The photo strip is
+ * driven by content/photos.ts, so it stays empty until the job's photographs
+ * are labelled and added, which is the right way round. A claim we can stand
+ * behind is allowed; a photo we do not have is not invented to decorate it.
  *
  * Waynesboro and Leakesville both sit on the Chickasawhay and share the
  * Highway 63 corridor, so their copy is deliberately written from different
  * angles: Waynesboro as a railroad county seat with river-bottom humidity,
  * Leakesville as national-forest country where tree cover drives the damage.
- * Neither is a find-and-replace of the other.
+ * Perkinston is six miles down 49 from Wiggins and had to avoid being a
+ * reskin of it: Wiggins is written as the county seat halfway to the coast,
+ * Perkinston as unincorporated college-and-forest country where there is no
+ * town to be in and the addresses are county roads. Neither is a
+ * find-and-replace of the other.
  */
 
 export const citiesBatch4: CityContent[] = [
@@ -215,6 +227,70 @@ export const citiesBatch4: CityContent[] = [
         question: "A tree came down on the house. Where do I start?",
         answer:
           "Call us first. Tree-on-structure has to be sequenced so removal does not make the roof damage worse, so we help coordinate the removal and the roof protection in the right order, tarp it, and document the whole thing for the claim.",
+      },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  /* Perkinston: unincorporated Stone County, 45 minutes down 49         */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "perkinston",
+    city: "Perkinston",
+    county: "Stone County",
+    driveTime: "about 45 minutes",
+    metaTitle: "Roofing Contractor in Perkinston, MS | Southeast Roofing",
+    metaDescription:
+      "Roof replacement and repair in Perkinston, MS: unincorporated Stone County on Highway 49, in the pines around the MGCCC campus. Free inspections, 45 minutes from Hattiesburg.",
+    hero: {
+      headline: "Perkinston roofing, out where the addresses are county roads",
+      subhead:
+        "No city limits, no town water, pines on every side and Highway 49 straight up to our office in 45 minutes. We have worked here, and we come back.",
+    },
+    intro: {
+      title: "College, forest, and a highway through the middle",
+      paragraphs: [
+        "Perkinston is not a town and does not pretend to be one. It is an unincorporated stretch of Stone County either side of Highway 49, built around Mississippi Gulf Coast Community College's original campus, the one students actually live on, with pine timber and DeSoto National Forest filling in everything the highway does not. Wiggins is six miles north, McHenry a few miles south, and most of what is in between is county road, long drive, and roof under trees.",
+        "That shapes the roofing work more than any of it shapes the roofs. Properties here sit under mature pine, which means shade, needles in the valleys and gutters year round, and limbs that come down in weather that would not trouble a roof in the open. Metal earns its keep out here for exactly that reason, and we will say so when it is the better buy rather than only when it is the bigger ticket.",
+        "It also means the address is often a rural route and a mailbox rather than something a mapping app has ever been sure about. That is our problem, not yours: we would rather ring you from the end of the drive than not turn up. We completed a roof in Perkinston on 31 August 2026 and Stone County is regular ground for us, running the 49 corridor between the Pine Belt and the Coast several times a week.",
+      ],
+    },
+    localAreas: {
+      title: "Around Perkinston",
+      items: [
+        "MGCCC campus area",
+        "Highway 49 corridor",
+        "County roads east and west of 49",
+        "Toward Wiggins",
+        "Toward McHenry",
+        "Rural Stone County",
+      ],
+    },
+    stormContext: {
+      title: "Far enough inland to relax, close enough that you cannot",
+      text: "Thirty-five miles up from the beach sounds safe and is not. Katrina came through Stone County still carrying hurricane-force wind and took timber down across the whole county, and Zeta and Ida both crossed close enough to be felt here since. Between hurricanes it is the pines that do the work: a limb through a slope, needles damming a valley until water backs up under the shingles, and shade keeping a roof damp long enough to age it from the top down. Our inspections here read the trees as carefully as the roof, and we photograph and document everything for a claim.",
+    },
+    faqs: [
+      {
+        question: "Do you actually come out to Perkinston, or just say you do?",
+        answer:
+          "We come out. It is about 45 minutes from our Hattiesburg office straight down Highway 49, and we run that corridor constantly between Pine Belt and Coast work. We finished a roof in Perkinston at the end of August 2026.",
+      },
+      {
+        question:
+          "My address does not come up right on maps. Is that a problem?",
+        answer:
+          "Not for us. Plenty of Stone County addresses land a mapping app in the wrong place or in the road, so tell us the landmark, the drive, or the nearest crossroad and we will find you. If we are unsure we call from the end of the drive rather than guess.",
+      },
+      {
+        question: "Metal or shingle under all these pines?",
+        answer:
+          "Under heavy pine, metal is often the better long-term buy: it sheds needles instead of holding them, takes a limb strike far better than shingle, and asks almost nothing in maintenance. We price both honestly against each other and tell you where the extra money does and does not earn itself.",
+      },
+      {
+        question: "Does living out here cost me more on the estimate?",
+        answer:
+          "No. Same free inspection, same photographs of what we actually found, same itemized proposal with every line priced before anything is ordered. The drive is our logistics problem, not a line on your bill.",
       },
     ],
   },

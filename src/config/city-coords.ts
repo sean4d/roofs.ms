@@ -24,6 +24,7 @@ export const CITY_COORDS: Record<string, LatLng> = {
   columbia: { lat: 31.25, lng: -89.84 },
   poplarville: { lat: 30.84, lng: -89.53 },
   wiggins: { lat: 30.86, lng: -89.14 },
+  perkinston: { lat: 30.78, lng: -89.14 },
   lucedale: { lat: 30.92, lng: -88.59 },
   saucier: { lat: 30.63, lng: -89.13 },
   mchenry: { lat: 30.7, lng: -89.14 },

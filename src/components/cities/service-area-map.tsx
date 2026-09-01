@@ -33,6 +33,7 @@ const CITIES: MapCity[] = [
   { name: "Columbia", lat: 31.25, lon: -89.84 },
   { name: "Poplarville", lat: 30.84, lon: -89.53 },
   { name: "Wiggins", lat: 30.86, lon: -89.14 },
+  { name: "Perkinston", lat: 30.78, lon: -89.14 },
   { name: "Lucedale", lat: 30.92, lon: -88.59 },
   { name: "Kiln", lat: 30.41, lon: -89.44 },
   { name: "McHenry", lat: 30.71, lon: -89.14 },

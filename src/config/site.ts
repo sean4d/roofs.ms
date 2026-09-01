@@ -253,6 +253,7 @@ export const siteConfig = {
     // South toward the Coast
     { city: "Poplarville", slug: "poplarville", tier: 2, hub: false },
     { city: "Wiggins", slug: "wiggins", tier: 2, hub: false },
+    { city: "Perkinston", slug: "perkinston", tier: 2, hub: false },
     { city: "Lucedale", slug: "lucedale", tier: 2, hub: false },
     { city: "Kiln", slug: "kiln", tier: 2, hub: false },
     { city: "McHenry", slug: "mchenry", tier: 2, hub: false },

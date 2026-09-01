@@ -40,7 +40,7 @@ const REGIONS: string[][] = [
     "pascagoula",
   ],
   // Stone / Pearl River corridor (between the Pine Belt and the Coast)
-  ["wiggins", "mchenry", "poplarville", "picayune"],
+  ["wiggins", "perkinston", "mchenry", "poplarville", "picayune"],
   // I-55 southwest corridor
   ["columbia", "mccomb", "brookhaven", "crystal-springs", "jackson"],
   // East Mississippi
