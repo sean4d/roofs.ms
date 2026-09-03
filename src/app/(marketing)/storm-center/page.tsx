@@ -67,7 +67,11 @@ const CHECKLIST = [
   {
     icon: PhoneCall,
     title: "4. Call someone accountable",
-    text: "After big storms, out-of-town crews knock fast and leave faster. Check the license (ours: MSBOC #R22245), the local address, and never sign on the doorstep.",
+    // The number comes from the config, not from this sentence. It was typed
+    // in here as a literal, which is the one place on the site a licence
+    // change would not have reached: the page telling homeowners to CHECK a
+    // roofer's licence is the worst possible place to print a stale one.
+    text: `After big storms, out-of-town crews knock fast and leave faster. Check the license (ours: MSBOC #${siteConfig.license}), the local address, and never sign on the doorstep.`,
   },
 ];
 
