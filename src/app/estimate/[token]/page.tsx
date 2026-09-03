@@ -56,18 +56,28 @@ export default async function PublicEstimate({
           >
             Book a free inspection
           </a>
+          {/*
+            THERE IS NO TEXT BUTTON, BECAUSE THE NUMBER IS A LANDLINE.
+
+            This used to offer "Text us" on an sms: link, on the reasoning that
+            texting converts on a mail piece where calling does not: a homeowner
+            unsure what to say will send four words but will not dial. The
+            reasoning is sound and the button was still broken, and broken in
+            the worst way, silently. The messages app opens, they type, they
+            send, and it arrives nowhere. This is the page the mailer's QR code
+            lands on, so it was the exact end of the journey the piece exists to
+            start.
+
+            "Book a free inspection" now carries that need: it is the option for
+            somebody who does not want to talk to anybody yet.
+
+            IF THE NUMBER EVER TAKES TEXTS, bring the button back. The
+            conversion argument was never the problem.
+          */}
           {/* Somebody who scanned a QR code off a mailer has never seen the
               company. The estimate proves we measured their roof; the site is
               where they check we are real, which is the question they are
               actually asking at this point. */}
-          {/* Texting converts on a mail piece where calling does not: a
-              homeowner who is not sure what to say will send four words. */}
-          <a
-            href={`sms:${siteConfig.phone.tel}`}
-            className="rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700"
-          >
-            Text us
-          </a>
           <a
             href={siteConfig.url}
             className="rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700"

@@ -486,7 +486,7 @@ export async function MailerDoc({
               {profile.phone}
             </p>
             <p className="mt-1.5 text-[12px] text-white/80">
-              Call or text. {profile.website}
+              Call us. {profile.website}
             </p>
           </div>
         </div>

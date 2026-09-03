@@ -46,6 +46,9 @@ export function TrackEstimate({ token }: { token: string }) {
       if (!link) return;
       const href = link.getAttribute("href") ?? "";
       if (href.startsWith("tel:")) send("call");
+      // No sms: link is on the page today, because the number is a landline.
+      // The branch stays so the button can come back without this file
+      // silently dropping the events it produces.
       else if (href.startsWith("sms:")) send("text");
       else if (href.startsWith("mailto:")) send("email");
       else if (href.includes("free-inspection")) send("inspection");

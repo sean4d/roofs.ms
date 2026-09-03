@@ -1062,7 +1062,7 @@ function pageFour(
   sheet.text(
     qr
       ? "Scan the code with your phone camera to open this estimate, including the measurements and the photograph of your roof."
-      : "Call or text and we will send you this estimate, including the measurements and the photograph of your roof.",
+      : "Give us a call and we will send you this estimate, including the measurements and the photograph of your roof.",
     {
       font: fonts.regular,
       size: px(12.5),
@@ -1079,7 +1079,7 @@ function pageFour(
   );
   sheet.down(px(5));
   sheet.text(
-    `Call or text.  ${profile.website}`,
+    `Call us.  ${profile.website}`,
     {
       font: fonts.regular,
       size: px(12.5),
