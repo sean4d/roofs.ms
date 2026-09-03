@@ -176,6 +176,27 @@ export async function MailerDoc({
           </p>
         </div>
 
+        {/*
+          THE QUALIFIER SITS NEXT TO THE PRICE, NOT ON PAGE TWO.
+
+          Page two explains at length what the estimate is based on, and page
+          two is not where a homeowner is standing when they read the number.
+          They see a figure, they form an opinion, and everything after that
+          is read against the opinion they already hold. Both directions,
+          deliberately: a caveat that only ever warns of increases reads as a
+          sales tactic, because it is one.
+        */}
+        <div className="mt-5 rounded border-l-[3px] border-[#123b63] bg-slate-50 px-4 py-3">
+          <p className="text-[12px] leading-relaxed font-bold text-[#123b63]">
+            This number came from aerial measurements, not a visit.
+          </p>
+          <p className="mt-0.5 text-[12px] leading-relaxed text-slate-700">
+            It can land a little over or a little under once somebody gets on
+            the roof and measures it properly. You will see the final figure in
+            writing, and nothing is agreed until you do.
+          </p>
+        </div>
+
         {profile.showFinancing && (
           <div className="mt-5">
             <p className="text-[10px] font-bold tracking-[0.14em] text-slate-500 uppercase">

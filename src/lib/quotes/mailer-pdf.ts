@@ -588,6 +588,59 @@ function pageOne(
   );
   sheet.down(px(19)).rule(COLORS.navy, 2.25);
 
+  /*
+   * THE QUALIFIER GOES NEXT TO THE PRICE, NOT ON PAGE TWO.
+   *
+   * Page two explains at length what the estimate is based on, and page two is
+   * not where a homeowner is standing when they read the number. They see a
+   * figure, they form an opinion, and everything after that is read against
+   * the opinion they already have. If the first thing they learn about how we
+   * got it is on the other side of the sheet, we have let them believe it is
+   * firmer than it is, and then corrected them.
+   *
+   * Both directions, deliberately. "It may be a bit more, it may be a bit
+   * less" is the owner's own wording and it is the honest shape: a caveat that
+   * only ever warns of increases reads as a sales tactic, because it is one.
+   */
+  const caveatLead = "This number came from aerial measurements, not a visit.";
+  const caveatBody =
+    "It can land a little over or a little under once somebody gets on the roof and measures it properly. You will see the final figure in writing, and nothing is agreed until you do.";
+  const inset = 14;
+  const caveatWidth = sheet.width - inset - 16;
+  const leadStyle: TextStyle = {
+    font: fonts.bold,
+    size: px(12),
+    color: COLORS.navy,
+    lineHeight: 1.4,
+  };
+  const bodyStyle: TextStyle = {
+    font: fonts.regular,
+    size: px(12),
+    color: COLORS.slate700,
+    lineHeight: 1.4,
+  };
+  const caveatHeight =
+    sheet.measure(caveatLead, leadStyle, caveatWidth) +
+    sheet.measure(caveatBody, bodyStyle, caveatWidth) +
+    px(21);
+  sheet.down(px(14));
+  // The same light tint and navy bar as the survey note on page two, so a
+  // reader learns the treatment once. Barely any ink at #f8fafc, which matters
+  // when hundreds of these go through an office printer.
+  sheet.box(caveatHeight, COLORS.slate50);
+  sheet.box(caveatHeight, COLORS.navy, { width: 2.5 });
+  sheet.down(px(10));
+  sheet.text(caveatLead, leadStyle, {
+    x: sheet.left + inset,
+    width: caveatWidth,
+  });
+  sheet.down(px(2));
+  sheet.text(caveatBody, bodyStyle, {
+    x: sheet.left + inset,
+    width: caveatWidth,
+  });
+  sheet.down(px(10));
+
   /* Financing. The APR is printed beside the payments, not hidden: under
      Regulation Z, stating a payment amount is a triggering term and the rate
      has to appear with it. Showing payments without it is the exposed
