@@ -49,13 +49,7 @@ export function FinancingStrip() {
               <Button
                 size="xl"
                 className="w-full bg-white text-primary hover:bg-steel-100 sm:w-auto"
-                render={
-                  <a
-                    href={financingSection.cta.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  />
-                }
+                render={<a href={financingSection.cta.href} />}
                 nativeButton={false}
               >
                 {financingSection.cta.label}

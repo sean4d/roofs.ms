@@ -104,13 +104,7 @@ export default async function ReviewsPage() {
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Button
                 size="xl"
-                render={
-                  <a
-                    href={siteConfig.links.googleBusiness}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  />
-                }
+                render={<a href={siteConfig.links.googleBusiness} />}
                 nativeButton={false}
               >
                 Read our Google reviews
@@ -119,13 +113,7 @@ export default async function ReviewsPage() {
               <Button
                 size="xl"
                 variant="outline"
-                render={
-                  <a
-                    href={siteConfig.links.googleReview}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  />
-                }
+                render={<a href={siteConfig.links.googleReview} />}
                 nativeButton={false}
               >
                 <Star
@@ -209,13 +197,7 @@ export default async function ReviewsPage() {
           </div>
           <Button
             size="xl"
-            render={
-              <a
-                href={siteConfig.links.googleReview}
-                target="_blank"
-                rel="noopener noreferrer"
-              />
-            }
+            render={<a href={siteConfig.links.googleReview} />}
             nativeButton={false}
           >
             <Star
@@ -226,8 +208,6 @@ export default async function ReviewsPage() {
           </Button>
           <a
             href={siteConfig.links.googleBusiness}
-            target="_blank"
-            rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 font-semibold text-navy-900 underline-offset-4 hover:underline"
           >
             Verify every word on our Google profile

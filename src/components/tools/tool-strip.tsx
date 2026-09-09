@@ -59,13 +59,7 @@ export function ToolStrip({
           const cls =
             "group flex items-start gap-3 rounded-xl border border-border bg-white p-4 transition-all hover:-translate-y-0.5 hover:border-steel-500 hover:shadow-sm";
           return tool.external ? (
-            <a
-              key={tool.key}
-              href={tool.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cls}
-            >
+            <a key={tool.key} href={tool.href} className={cls}>
               {inner}
             </a>
           ) : (

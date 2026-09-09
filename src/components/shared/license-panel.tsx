@@ -107,8 +107,6 @@ export function LicensePanel({
             */}
             <a
               href={license.href}
-              target="_blank"
-              rel="noopener noreferrer"
               className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-steel-500 underline underline-offset-4 transition-colors hover:text-navy-900"
             >
               Verify {siteConfig.name}&rsquo;s {license.label} {license.number}
@@ -162,8 +160,6 @@ export function CommercialLicenseCallout({
           <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
             <a
               href={siteConfig.links.msbocCommercialLicense}
-              target="_blank"
-              rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-steel-500 underline underline-offset-4 transition-colors hover:text-navy-900"
             >
               Verify MSBOC Commercial License {siteConfig.licenseCommercial}

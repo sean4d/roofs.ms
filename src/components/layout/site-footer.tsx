@@ -92,8 +92,6 @@ export function SiteFooter() {
                       {external ? (
                         <a
                           href={link.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
                           className="text-sm text-steel-300 transition-colors hover:text-white"
                         >
                           {link.label}
@@ -138,8 +136,6 @@ export function SiteFooter() {
                 {" · "}
                 <a
                   href={siteConfig.links.msbocCommercialLicense}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="underline underline-offset-4 transition-colors hover:text-white"
                 >
                   Verify MSBOC Commercial License #

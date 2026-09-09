@@ -116,12 +116,7 @@ export default function RoofingToolsPage() {
             return (
               <li key={tool.key} className="h-full">
                 {tool.external ? (
-                  <a
-                    href={tool.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cls}
-                  >
+                  <a href={tool.href} className={cls}>
                     {inner}
                   </a>
                 ) : (

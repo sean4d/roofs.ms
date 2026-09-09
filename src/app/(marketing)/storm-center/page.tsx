@@ -298,8 +298,6 @@ export default function StormCenterPage() {
             <StaggerItem as="li" key={resource.href}>
               <a
                 href={resource.href}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="group flex items-start justify-between gap-4 rounded-2xl border border-border bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-steel-500 hover:shadow-md"
               >
                 <span>

@@ -706,11 +706,17 @@ export const finalCta = {
   description:
     "Schedule a free inspection or get an instant estimate right now. $0 down financing available through GoodLeap.",
   primary: { label: "Schedule Free Inspection", href: "/free-inspection" },
-  /** Roofr instant estimator (owner-supplied 2026-07-04), external */
+  /**
+   * OUR instant estimator, and no longer external.
+   *
+   * The flag said `external: true` from when this pointed at Roofr. Bringing
+   * the estimator in house changed the href and left the flag behind, so the
+   * homepage's main secondary CTA sent visitors to our own page in a new tab.
+   */
   estimate: {
     label: "Get an Instant Estimate",
     href: siteConfig.links.instantEstimate,
-    external: true,
+    external: false,
   },
   /** GoodLeap financing application, external */
   financing: {

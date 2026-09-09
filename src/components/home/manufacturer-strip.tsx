@@ -39,8 +39,6 @@ export function ManufacturerStrip() {
             {item.href && item.cta && (
               <a
                 href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary underline-offset-4 hover:underline"
               >
                 {item.cta}

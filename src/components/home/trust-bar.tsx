@@ -64,12 +64,7 @@ export function TrustBar() {
                       {inner}
                     </Link>
                   ) : (
-                    <a
-                      href={badge.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`${card} ${hover}`}
-                    >
+                    <a href={badge.href} className={`${card} ${hover}`}>
                       {inner}
                     </a>
                   )

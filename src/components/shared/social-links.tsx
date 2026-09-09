@@ -31,8 +31,6 @@ export function SocialLinks({ className }: { className?: string }) {
         <li key={key}>
           <a
             href={href}
-            target="_blank"
-            rel="noopener noreferrer"
             aria-label={`Southeast Roofing on ${LABELS[key]}`}
             className={
               key === "nextdoor"

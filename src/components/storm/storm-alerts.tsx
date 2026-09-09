@@ -114,8 +114,6 @@ export async function StormAlerts() {
           warnings, check{" "}
           <a
             href="https://www.weather.gov"
-            target="_blank"
-            rel="noopener noreferrer"
             className="inline-flex items-center gap-1 font-semibold text-navy-900 underline-offset-4 hover:underline"
           >
             weather.gov
@@ -184,8 +182,6 @@ export async function StormAlerts() {
           + {alerts.length - 8} more on{" "}
           <a
             href="https://www.weather.gov"
-            target="_blank"
-            rel="noopener noreferrer"
             className="font-medium text-navy-900 underline-offset-4 hover:underline"
           >
             weather.gov

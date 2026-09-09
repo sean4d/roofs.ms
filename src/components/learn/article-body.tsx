@@ -28,12 +28,7 @@ function ParagraphText({ text, link }: { text: string; link?: InlineLink }) {
     <>
       {text.slice(0, at)}
       {link.external ? (
-        <a
-          href={link.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={anchorClass}
-        >
+        <a href={link.href} className={anchorClass}>
           {link.text}
         </a>
       ) : (

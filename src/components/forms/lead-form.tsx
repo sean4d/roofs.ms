@@ -134,13 +134,7 @@ export function LeadForm({
           {bookingUrl && (
             <Button
               size="xl"
-              render={
-                <a
-                  href={bookingUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                />
-              }
+              render={<a href={bookingUrl} />}
               nativeButton={false}
             >
               <CalendarCheck className="size-5" aria-hidden="true" />

@@ -294,8 +294,6 @@ export default function AboutPage() {
                 {credential.href ? (
                   <a
                     href={credential.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className={`${cardClass} hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/10`}
                   >
                     {inner}

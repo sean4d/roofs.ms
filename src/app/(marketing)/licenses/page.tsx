@@ -184,8 +184,6 @@ export default function LicensesPage() {
                 </p>
                 <a
                   href={credential.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-steel-500 underline underline-offset-4 transition-colors hover:text-navy-900"
                 >
                   {credential.cta}

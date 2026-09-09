@@ -73,12 +73,7 @@ export function ReviewsTrust() {
                     {inner}
                   </Link>
                 ) : (
-                  <a
-                    href={badge.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`${cardClass} ${hoverClass}`}
-                  >
+                  <a href={badge.href} className={`${cardClass} ${hoverClass}`}>
                     {inner}
                   </a>
                 )
@@ -94,13 +89,7 @@ export function ReviewsTrust() {
         {/* Live Google Business Profile, external */}
         <Button
           size="xl"
-          render={
-            <a
-              href={reviewsSection.googleCta.href}
-              target="_blank"
-              rel="noopener noreferrer"
-            />
-          }
+          render={<a href={reviewsSection.googleCta.href} />}
           nativeButton={false}
         >
           {reviewsSection.googleCta.label}

@@ -179,8 +179,6 @@ export function SiteHeader() {
                             {external ? (
                               <a
                                 href={child.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
                                 role="menuitem"
                                 onClick={() => setOpenMenu(null)}
                                 className={cls}

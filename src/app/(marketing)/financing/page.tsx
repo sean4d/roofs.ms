@@ -76,13 +76,7 @@ export default function FinancingPage() {
               <Button
                 size="lg"
                 className="bg-white text-base text-primary hover:bg-steel-100"
-                render={
-                  <a
-                    href={siteConfig.links.financing}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  />
-                }
+                render={<a href={siteConfig.links.financing} />}
                 nativeButton={false}
               >
                 Apply with GoodLeap

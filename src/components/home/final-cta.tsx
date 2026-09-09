@@ -40,34 +40,31 @@ export function FinalCta() {
           >
             {finalCta.primary.label}
           </Button>
-          {/* External Roofr instant estimator, opens in a new tab */}
+          {/*
+            OUR OWN ESTIMATOR, SO IT IS A Link.
+
+            This comment used to read "External Roofr instant estimator, opens
+            in a new tab" and both halves had stopped being true. The estimator
+            was brought in house months ago and the href is /instant-estimate,
+            but the markup was never revisited: the highest-intent button on the
+            homepage was still a plain anchor throwing our own page into a second
+            tab. Client-side navigation now, same tab, back button works.
+          */}
           <Button
             size="xl"
             variant="outline"
             className="border-white/35 bg-white/5 text-white hover:border-white hover:bg-white/15"
-            render={
-              <a
-                href={finalCta.estimate.href}
-                target="_blank"
-                rel="noopener noreferrer"
-              />
-            }
+            render={<Link href={finalCta.estimate.href} />}
             nativeButton={false}
           >
             {finalCta.estimate.label}
           </Button>
-          {/* External GoodLeap financing application, opens in a new tab */}
+          {/* GoodLeap financing application, an outside site, same tab. */}
           <Button
             size="xl"
             variant="outline"
             className="border-white/35 bg-white/5 text-white hover:border-white hover:bg-white/15"
-            render={
-              <a
-                href={finalCta.financing.href}
-                target="_blank"
-                rel="noopener noreferrer"
-              />
-            }
+            render={<a href={finalCta.financing.href} />}
             nativeButton={false}
           >
             {finalCta.financing.label}

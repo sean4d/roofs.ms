@@ -128,13 +128,7 @@ export function FinancingCalculator() {
       <div className="mt-8 text-center">
         <Button
           size="xl"
-          render={
-            <a
-              href={siteConfig.links.financing}
-              target="_blank"
-              rel="noopener noreferrer"
-            />
-          }
+          render={<a href={siteConfig.links.financing} />}
           nativeButton={false}
         >
           Apply with GoodLeap

@@ -111,8 +111,6 @@ export function MobileNav() {
                             {external ? (
                               <a
                                 href={child.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
                                 onClick={() => setOpen(false)}
                                 className={cls}
                               >
