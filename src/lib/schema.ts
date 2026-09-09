@@ -85,9 +85,17 @@ export function roofingContractorSchema(): JsonLdObject {
       "Storm damage roof repair",
       "Roof insurance claims",
       "Commercial roofing",
+      "Commercial roof replacement",
+      "Flat roofing",
       "TPO roofing",
       "EPDM roofing",
+      "PVC roofing",
+      "Modified bitumen roofing",
+      "Roof coatings",
+      "Silicone roof restoration",
       "Seamless gutters",
+      "Siding",
+      "Fascia and soffit",
     ],
     makesOffer: [
       { name: "Residential Roofing", path: "/residential" },
@@ -96,7 +104,17 @@ export function roofingContractorSchema(): JsonLdObject {
       { name: "Metal Roofing", path: "/residential/metal-roofing" },
       { name: "Storm Damage & Insurance Claims", path: "/storm-damage" },
       { name: "Seamless Gutters", path: "/residential/gutters" },
+      // Commercial systems, every one a route that exists. A Service URL in
+      // schema that 404s is worse than no Service entry at all.
       { name: "Commercial Roofing", path: "/commercial" },
+      {
+        name: "Commercial Roof Replacement",
+        path: "/commercial/roof-replacement",
+      },
+      { name: "Commercial Roof Repair", path: "/commercial/roof-repair" },
+      { name: "TPO Roofing", path: "/commercial/tpo" },
+      { name: "Commercial Roof Coatings", path: "/commercial/roof-coatings" },
+      { name: "Commercial Metal Roofing", path: "/commercial/metal-roofing" },
     ].map((service) => ({
       "@type": "Offer",
       itemOffered: {
@@ -106,23 +124,72 @@ export function roofingContractorSchema(): JsonLdObject {
         url: absoluteUrl(service.path),
       },
     })),
-    // Verifiable credentials (owner-confirmed): MS contractor license +
-    // GAF manufacturer certification.
+    /*
+     * The two licence numbers as plain identifiers.
+     *
+     * hasCredential below says the same thing more richly, and this says it in
+     * the shape anything parsing the page can read without knowing what an
+     * EducationalOccupationalCredential is. `identifier` accepts PropertyValue
+     * on any Thing, and a licence number is exactly the sort of external
+     * identifier the property exists for.
+     */
+    identifier: [
+      siteConfig.license
+        ? {
+            "@type": "PropertyValue",
+            propertyID: "MSBOC Residential License",
+            name: "Mississippi State Board of Contractors Residential License",
+            value: siteConfig.license,
+            url: siteConfig.links.msbocLicense,
+          }
+        : null,
+      siteConfig.licenseCommercial
+        ? {
+            "@type": "PropertyValue",
+            propertyID: "MSBOC Commercial License",
+            name: "Mississippi State Board of Contractors Commercial Certificate of Responsibility",
+            value: siteConfig.licenseCommercial,
+            url: siteConfig.links.msbocCommercialLicense,
+          }
+        : null,
+    ].filter(Boolean),
+    /*
+     * Verifiable credentials (owner-confirmed): both MSBOC licences and the
+     * GAF manufacturer certification.
+     *
+     * TWO LICENCES, NAMED SEPARATELY, AND THAT IS A CHANGE. There used to be
+     * one entry here deliberately called "Mississippi Roofing Contractor
+     * License" rather than "residential", because only the residential record
+     * existed publicly and the narrower name would have taught search engines
+     * this company only does houses. Mississippi issues residential licensure
+     * and a commercial Certificate of Responsibility separately, Southeast
+     * Roofing now holds both, and two accurately named credentials say more
+     * than one vague one ever did. Neither may be dropped in favour of the
+     * other: they are different numbers from different registers.
+     */
     hasCredential: [
       siteConfig.license
         ? {
             "@type": "EducationalOccupationalCredential",
             credentialCategory: "license",
-            // Deliberately NOT "residential license", Southeast Roofing is
-            // licensed for both residential and commercial work, and the
-            // public MSBOC record simply lives in their residential index
-            // (see siteConfig.links.msbocLicense). Narrower wording here
-            // would teach search engines and AI assistants that we only do
-            // homes, which is false.
-            name: "Mississippi Roofing Contractor License",
+            name: "Mississippi Residential Roofing Contractor License",
             identifier: siteConfig.license,
             /** Third-party verifiable record on the licensing authority's site. */
             url: siteConfig.links.msbocLicense,
+            recognizedBy: {
+              "@type": "GovernmentOrganization",
+              name: "Mississippi State Board of Contractors",
+              url: "https://www.msboc.us/",
+            },
+          }
+        : null,
+      siteConfig.licenseCommercial
+        ? {
+            "@type": "EducationalOccupationalCredential",
+            credentialCategory: "license",
+            name: "Mississippi Commercial Contractor Certificate of Responsibility",
+            identifier: siteConfig.licenseCommercial,
+            url: siteConfig.links.msbocCommercialLicense,
             recognizedBy: {
               "@type": "GovernmentOrganization",
               name: "Mississippi State Board of Contractors",
@@ -137,7 +204,20 @@ export function roofingContractorSchema(): JsonLdObject {
         recognizedBy: { "@type": "Organization", name: "GAF" },
       },
     ].filter(Boolean),
-    sameAs: [...siteConfig.socialProfiles],
+    /*
+     * Both government licence records belong in sameAs. sameAs is for pages
+     * that unambiguously identify the entity, and a state licensing register
+     * entry for this exact company is about as unambiguous as the web gets.
+     * The residential record already arrives inside socialProfiles.
+     */
+    sameAs: [
+      ...new Set(
+        [
+          ...siteConfig.socialProfiles,
+          siteConfig.links.msbocCommercialLicense,
+        ].filter(Boolean),
+      ),
+    ],
     foundingDate: siteConfig.foundingYear
       ? String(siteConfig.foundingYear)
       : null,

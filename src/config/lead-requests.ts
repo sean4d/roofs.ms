@@ -1,3 +1,4 @@
+import { siteConfig } from "@/config/site";
 import type { ElementType } from "react";
 import {
   CalendarCheck,
@@ -146,7 +147,7 @@ export const LEAD_REQUESTS = {
       {
         icon: ShieldCheck,
         title: "From a licensed local crew",
-        text: "GAF Certified, MS License #R22245, BBB A+ rated, and still here long after the storm-chasers leave.",
+        text: `GAF Certified, MSBOC licensed for residential (#${siteConfig.license}) and commercial (#${siteConfig.licenseCommercial}), BBB A+ rated, and still here long after the storm-chasers leave.`,
       },
     ],
   },

@@ -8,6 +8,7 @@ import { industryCards } from "@/content/services";
 import { defaultServiceTools } from "@/config/tools";
 import { Section } from "@/components/shared/section";
 import { SectionHeading } from "@/components/shared/section-heading";
+import { CommercialLicenseCallout } from "@/components/shared/license-panel";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 import { requestForSlug, requestCtaLabel } from "@/config/lead-requests";
 import { ToolStrip } from "@/components/tools/tool-strip";
@@ -90,6 +91,19 @@ export function ServicePage({
         audience={audience}
         ctaOverride={ctaOverride}
       />
+      {/*
+        Commercial pages carry the commercial licence, every one of them.
+        A property manager may land on the TPO page from a search and never
+        see the hub, so the credential that says we are allowed on their
+        building cannot live only one level up. Residential pages do not get
+        this: the residential number is already in the footer of every page,
+        and repeating it here would be noise rather than proof.
+      */}
+      {commercial && (
+        <Section className="!pb-0">
+          <CommercialLicenseCallout />
+        </Section>
+      )}
       <ServiceIntro intro={service.intro} />
       {service.signs && <ServiceSigns signs={service.signs} />}
       {service.sections && <ServiceProse sections={service.sections} />}

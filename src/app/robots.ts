@@ -26,7 +26,21 @@ const AI_CRAWLERS = [
   "Applebot-Extended",
 ];
 
-const DISALLOW = ["/studio", "/upload", "/production"];
+/**
+ * Owner-only and customer-private areas.
+ *
+ * Every one of these already sends `robots: noindex` from its own layout, so
+ * nothing here was ever at risk of ranking. They are listed anyway because a
+ * meta tag only works after a crawler has fetched the page, and these are
+ * pages nobody outside the company should be fetched at all: /pin is the
+ * field tool, and /estimate/<token> is one named customer's private estimate.
+ *
+ * THE TRAILING SLASH ON /estimate/ IS LOAD-BEARING. "/estimate" is a public
+ * marketing page that belongs in the index; "/estimate/" only matches the
+ * token routes beneath it. Dropping the slash would quietly deindex a page we
+ * want found.
+ */
+const DISALLOW = ["/studio", "/upload", "/production", "/pin", "/estimate/"];
 
 export default function robots(): MetadataRoute.Robots {
   return {

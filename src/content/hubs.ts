@@ -14,6 +14,7 @@ import {
   Wrench,
 } from "lucide-react";
 
+import { siteConfig } from "@/config/site";
 import type { FaqEntry } from "@/lib/schema";
 import type { ProseSection } from "@/content/services/types";
 import { stormPhotos } from "@/content/photos";
@@ -696,23 +697,35 @@ export const financingHub = {
 /* ------------------------------------------------------------------ */
 
 export const commercialHub = {
-  metaTitle: "Commercial Roofing Contractor in Mississippi | Southeast Roofing",
+  metaTitle:
+    "Commercial Roofing Contractor in Hattiesburg, MS | Southeast Roofing",
   metaDescription:
-    "Commercial roofing across South Mississippi: TPO, EPDM, PVC, modified bitumen, coatings, metal systems, and planned maintenance: engineered proposals, operations-first scheduling.",
+    "MSBOC licensed commercial roofing contractor in Hattiesburg serving South Mississippi. TPO, PVC, EPDM, modified bitumen, silicone roof coatings, metal systems, repairs and planned maintenance.",
   hero: {
-    eyebrow: "Commercial division",
+    // The eyebrow carries the search intent so the conversion headline does
+    // not have to. "Commercial division" told a building owner nothing and
+    // told a search engine less.
+    eyebrow: "Commercial roofing contractor · Hattiesburg, MS",
     headline: "Protect your property, your tenants, and your budget",
     subhead:
-      "Flat, metal, and everything between: engineered proposals, installation phased around your operations, and one accountable local contractor across your whole portfolio.",
+      "Flat, metal, and everything between: engineered proposals, installation phased around your operations, and one accountable local contractor across your whole portfolio. Licensed by the Mississippi State Board of Contractors for commercial work.",
     photo: stockPhotos.commercialAerial,
     photoBadge: "Commercial low-slope roofing",
   },
-  /** Publishable proof only, no invented bonding limits or safety stats */
+  /**
+   * Publishable proof only, no invented bonding limits or safety stats.
+   *
+   * THE COMMERCIAL LICENCE COMES FIRST HERE, and until 2026-09-09 this strip
+   * carried the residential number alone. A property manager checking whether
+   * we were allowed on their warehouse was being shown a licence for houses,
+   * which is the single least useful credential we could have led with on
+   * this page.
+   */
   trustStrip: [
-    "MS License #R22245",
+    `MSBOC Commercial License #${siteConfig.licenseCommercial}`,
+    `MSBOC Residential License #${siteConfig.license}`,
     "Fully insured & bonded",
     "GAF Certified Contractor",
-    "BBB Accredited · A+ Rating",
   ],
   services: [
     {

@@ -24,9 +24,14 @@ import { FaqSection } from "@/components/home/faq-section";
 import { FinalCta } from "@/components/home/final-cta";
 
 export const metadata: Metadata = buildMetadata({
-  title: `${siteConfig.name} | Licensed Roofing Contractor in Hattiesburg, MS`,
+  /*
+   * "Licensed Roofing Contractor" was true and ambiguous. Mississippi
+   * licenses the two sides separately and we hold both, so the title says
+   * which, which is also the distinction a searcher types.
+   */
+  title: `${siteConfig.name} | Residential & Commercial Roofing Contractor in Hattiesburg, MS`,
   description:
-    "Licensed roofing contractor in Hattiesburg serving South Mississippi. Residential, commercial, and metal roofing, storm damage, financing, free inspections.",
+    "MSBOC licensed residential and commercial roofing contractor in Hattiesburg, serving South Mississippi. Roof replacement and repair, shingle and metal, TPO and flat roofing, coatings, storm damage and free inspections.",
   path: "/",
 });
 

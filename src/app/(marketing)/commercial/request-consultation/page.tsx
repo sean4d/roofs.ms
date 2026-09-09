@@ -6,6 +6,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
+import { siteConfig } from "@/config/site";
 import { buildMetadata } from "@/lib/seo";
 import { breadcrumbSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -94,7 +95,8 @@ export default function RequestConsultationPage() {
                   className="size-4 text-steel-500"
                   aria-hidden="true"
                 />
-                MS License #R22245 · Fully insured & bonded
+                MSBOC Commercial License #{siteConfig.licenseCommercial} · Fully
+                insured & bonded
               </span>
             </div>
             <p className="mt-6 text-sm text-slate-600">

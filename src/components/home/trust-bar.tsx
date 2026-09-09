@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 
 import { reviewsSection } from "@/content/homepage";
@@ -26,7 +27,7 @@ export function TrustBar() {
               <>
                 <div className="flex items-center justify-center sm:justify-between">
                   {brandMarks[badge.key as keyof typeof brandMarks]}
-                  {badge.href && (
+                  {badge.href && !badge.href.startsWith("/") && (
                     <ExternalLink
                       className="hidden size-4 text-slate-400 transition-colors group-hover:text-steel-500 sm:block"
                       aria-hidden="true"
@@ -41,24 +42,37 @@ export function TrustBar() {
                 </p>
                 {badge.cta && (
                   <span className="mt-3 hidden text-xs font-semibold text-steel-500 underline-offset-4 transition-colors group-hover:text-navy-900 group-hover:underline sm:inline-block">
-                    {badge.cta} ↗
+                    {badge.cta} {badge.href?.startsWith("/") ? "→" : "↗"}
                   </span>
                 )}
               </>
             );
             const card =
               "group flex h-full flex-col items-center text-center rounded-2xl border border-border bg-white p-2.5 shadow-premium transition-all duration-300 sm:items-start sm:p-6 sm:text-left";
+            // A badge can now point at a page on this site (the licences page
+            // carries both MSBOC numbers, which one external record cannot),
+            // and an internal link must not open in a new tab or carry
+            // noopener as though it were leaving.
+            const internal = badge.href?.startsWith("/");
+            const hover =
+              "hover:-translate-y-1 hover:border-steel-500 hover:shadow-xl";
             return (
               <StaggerItem as="li" key={badge.key} className="h-full">
                 {badge.href ? (
-                  <a
-                    href={badge.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`${card} hover:-translate-y-1 hover:border-steel-500 hover:shadow-xl`}
-                  >
-                    {inner}
-                  </a>
+                  internal ? (
+                    <Link href={badge.href} className={`${card} ${hover}`}>
+                      {inner}
+                    </Link>
+                  ) : (
+                    <a
+                      href={badge.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`${card} ${hover}`}
+                    >
+                      {inner}
+                    </a>
+                  )
                 ) : (
                   <div className={card}>{inner}</div>
                 )}

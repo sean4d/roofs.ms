@@ -31,11 +31,22 @@ export function SiteFooter() {
               height={brandAssets.logo.aspect.height}
               className="h-16 w-auto"
             />
+            {/* The descriptor, not the tagline, because this is the line a
+                crawler and a building owner both read as "what is this
+                company". The tagline sells; this one states. */}
             <p className="mt-5 text-sm leading-relaxed text-steel-300">
-              {siteConfig.tagline}.
+              {siteConfig.descriptor}, based in{" "}
+              {siteConfig.address.addressLocality},{" "}
+              {siteConfig.address.addressRegion}.
             </p>
             <p className="mt-5 text-xs leading-relaxed text-steel-300">
-              GAF Certified Contractor · BBB Accredited · MSBOC Licensed
+              GAF Certified Contractor · BBB Accredited ·{" "}
+              <Link
+                href="/licenses"
+                className="underline underline-offset-4 transition-colors hover:text-white"
+              >
+                MSBOC licensed for residential &amp; commercial
+              </Link>
             </p>
             <SocialLinks className="mt-5 flex items-center gap-1" />
           </div>
@@ -107,10 +118,34 @@ export function SiteFooter() {
       {/* Legal bar */}
       <div className="border-t border-white/10">
         <div className="container-site flex flex-col items-center justify-between gap-3 py-6 text-xs text-steel-300 sm:flex-row">
-          <p>
+          {/*
+            BOTH LICENCE NUMBERS, AND THE COMMERCIAL ONE IS A LINK.
+
+            This was one line reading "MS Contractor License #R22245", which
+            was accurate and told a building owner nothing about whether we
+            are allowed to reroof their warehouse. Mississippi issues the two
+            separately and we hold both, so the footer of every page now
+            carries both numbers and a route to check the commercial one
+            against the state's own register.
+          */}
+          <p className="text-center sm:text-left">
             © {year} {siteConfig.legalName}. All rights reserved.
             {siteConfig.license && (
-              <span> · MS Contractor License #{siteConfig.license}</span>
+              <span> · MSBOC Residential License #{siteConfig.license}</span>
+            )}
+            {siteConfig.licenseCommercial && (
+              <span>
+                {" · "}
+                <a
+                  href={siteConfig.links.msbocCommercialLicense}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline underline-offset-4 transition-colors hover:text-white"
+                >
+                  Verify MSBOC Commercial License #
+                  {siteConfig.licenseCommercial}
+                </a>
+              </span>
             )}
           </p>
           <ul className="flex items-center gap-5">

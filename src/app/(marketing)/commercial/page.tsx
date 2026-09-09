@@ -17,6 +17,7 @@ import { ServiceFaq } from "@/components/services/service-faq";
 import { CommercialCta } from "@/components/services/commercial-cta";
 import { Section } from "@/components/shared/section";
 import { SectionHeading } from "@/components/shared/section-heading";
+import { CommercialLicenseCallout } from "@/components/shared/license-panel";
 import { Reveal } from "@/components/motion/reveal";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 
@@ -70,6 +71,16 @@ export default function CommercialHubPage() {
             </li>
           ))}
         </ul>
+      </Section>
+
+      {/*
+        The licence, high on the page, because it is the first question a
+        property manager has about a roofer they have not used before and the
+        one thing on this page that is checkable against a government register
+        rather than against our own word.
+      */}
+      <Section className="!pb-0">
+        <CommercialLicenseCallout />
       </Section>
 
       <Section>

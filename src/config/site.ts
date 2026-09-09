@@ -22,7 +22,15 @@ export const siteConfig = {
 
   tagline: "Premium residential & commercial roofing in South Mississippi",
   description:
-    "Southeast Roofing is a Hattiesburg, Mississippi roofing contractor serving residential and commercial customers across South Mississippi: roof replacement, repair, metal roofing, storm damage, and insurance claim assistance.",
+    "Southeast Roofing LLC is a Mississippi licensed residential and commercial roofing contractor based in Hattiesburg, serving South Mississippi and the Pine Belt: roof replacement, roof repair, metal roofing, TPO and flat roofing, roof coatings, storm damage and insurance claim assistance.",
+
+  /**
+   * How the business describes itself in one line, everywhere a descriptor is
+   * needed. One string so the footer, the licence page, llms.txt and the
+   * schema cannot drift into three different versions of what this company is.
+   */
+  descriptor:
+    "Mississippi Licensed Residential & Commercial Roofing Contractor",
 
   phone: {
     /** Office number (owner-supplied 2026-07-04) */
@@ -57,20 +65,34 @@ export const siteConfig = {
     bbbProfile:
       "https://www.bbb.org/us/ms/hattiesburg/profile/roofing-contractors/southeast-roofing-llc-0523-235902892",
     /**
-     * Public Mississippi State Board of Contractors license record for
-     * #R22245, third-party proof of licensure (owner-supplied 2026-07-30).
+     * Public MSBOC record for RESIDENTIAL licence R22245 (owner-supplied
+     * 2026-07-30).
      *
-     * IMPORTANT: the URL carries MSBOC's own `ContractorType=Residential`
-     * query because that is the only search index MSBOC has published so
-     * far. Southeast Roofing holds BOTH residential and commercial
-     * licensure; MSBOC has not yet built the commercial-side record page.
-     * So NEVER label this link, its anchor text, or any schema/alt text as
-     * a "residential license", describe it only as the MSBOC license
-     * record. Anything narrower would tell search engines and AI
-     * assistants we are residential-only, which is false.
+     * THIS COMMENT USED TO SAY THE OPPOSITE and was right at the time. It
+     * warned never to call this a "residential license", because MSBOC had
+     * only published a residential index and describing the link narrowly
+     * would have told search engines the company was residential-only.
+     *
+     * That is no longer the situation. As of 2026-09-09 there are two real
+     * records, this one and `msbocCommercialLicense` below, and naming each
+     * for what it is has become the accurate thing to do rather than the
+     * limiting one. The rule the old comment was protecting still stands: no
+     * page may show one licence without the other.
      */
     msbocLicense:
       "https://search.msboc.us/Detail.cfm?ContractorID=53298&ContractorType=Residential&varDataSource=BOCRes&Advanced=1",
+    /**
+     * Public MSBOC record for the COMMERCIAL Certificate of Responsibility
+     * 27720-SC (owner-supplied 2026-09-09).
+     *
+     * A different index from the residential one above, which is why the same
+     * company carries a different ContractorID in each: BOC is the commercial
+     * register, BOCRes the residential one. Being a government record for this
+     * exact business makes it a legitimate `sameAs` for the organisation as
+     * well as the link a building owner clicks to check us.
+     */
+    msbocCommercialLicense:
+      "https://search.msboc.us/Detail.cfm?ContractorID=36955&ContractorType=Commercial&varDataSource=BOC",
     gafProfile:
       "https://www.gaf.com/en-us/roofing-contractors/residential/usa/ms/hattiesburg/southeast-roofing-1147340",
     /** GoodLeap financing application */
@@ -146,8 +168,27 @@ export const siteConfig = {
       },
     ],
   },
-  /** MS contractor license number (owner-supplied 2026-07-04) */
+  /**
+   * MSBOC residential licence (owner-supplied 2026-07-04).
+   *
+   * `license` stays the RESIDENTIAL number because it is the one that has been
+   * on this site since launch, is indexed against it, and is what every
+   * existing reference resolves to. Renaming the field would have been tidier
+   * and would have quietly repointed a dozen call sites at a different number.
+   */
   license: "R22245" as string | null,
+
+  /**
+   * MSBOC commercial Certificate of Responsibility (owner-supplied
+   * 2026-09-09, after passing the Roofing/Sheet Metal/Siding trade exam).
+   *
+   * A SEPARATE CREDENTIAL, NOT A REPLACEMENT. Mississippi issues residential
+   * licensure and a commercial Certificate of Responsibility through two
+   * different indexes with two different record IDs, and Southeast Roofing now
+   * holds both. Anywhere one of these appears without the other, the site is
+   * telling half the truth about what the company is allowed to build.
+   */
+  licenseCommercial: "27720-SC" as string | null,
   /** Founding year (BBB: business started & incorporated 9/25/2023) */
   foundingYear: 2023 as number | null,
 
@@ -160,7 +201,12 @@ export const siteConfig = {
     googleRating: "5-star Google rating",
     googleGuaranteed: "Google Guaranteed",
     bbbRating: "BBB Accredited: A+ rating",
-    licensed: "Mississippi licensed",
+    /**
+     * Owner update 2026-09-09: both licences held, so the badge says so.
+     * "Mississippi licensed" alone was true and undersold it, and a building
+     * owner scanning credentials needs the word commercial to appear.
+     */
+    licensed: "Licensed residential & commercial",
     insured: "Fully insured & bonded",
     financing: "$0 down financing available",
     /**

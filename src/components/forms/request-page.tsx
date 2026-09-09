@@ -1,5 +1,6 @@
 import { ShieldCheck, Star } from "lucide-react";
 
+import { siteConfig } from "@/config/site";
 import type { LeadRequest } from "@/config/lead-requests";
 import { breadcrumbSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -64,7 +65,8 @@ export function RequestPage({ request }: { request: LeadRequest }) {
                   className="size-4 text-steel-500"
                   aria-hidden="true"
                 />
-                GAF Certified · MS License #R22245
+                GAF Certified · MSBOC #{siteConfig.license} residential, #
+                {siteConfig.licenseCommercial} commercial
               </span>
             </div>
             <p className="mt-6 text-sm text-slate-600">

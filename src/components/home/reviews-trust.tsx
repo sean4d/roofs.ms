@@ -34,7 +34,7 @@ export function ReviewsTrust() {
             <>
               <div className="flex items-center justify-between">
                 {brandMarks[badge.key as keyof typeof brandMarks]}
-                {badge.href && (
+                {badge.href && !badge.href.startsWith("/") && (
                   <ExternalLink
                     className="size-4 text-slate-400 transition-colors group-hover:text-steel-500"
                     aria-hidden="true"
@@ -49,7 +49,7 @@ export function ReviewsTrust() {
               </p>
               {badge.cta && (
                 <span className="mt-4 text-sm font-semibold text-steel-500 underline-offset-4 transition-colors group-hover:text-navy-900 group-hover:underline">
-                  {badge.cta} ↗
+                  {badge.cta} {badge.href?.startsWith("/") ? "→" : "↗"}
                 </span>
               )}
             </>
@@ -58,17 +58,30 @@ export function ReviewsTrust() {
           const cardClass =
             "group flex h-full flex-col rounded-2xl border border-border bg-white p-6 shadow-premium transition-all duration-300";
 
+          // Same rule as the trust bar: a badge pointing at a page on this
+          // site is a Link, not a new tab.
+          const hoverClass =
+            "hover:-translate-y-1 hover:border-steel-500 hover:shadow-xl";
           return (
             <StaggerItem key={badge.key} className="h-full">
               {badge.href ? (
-                <a
-                  href={badge.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`${cardClass} hover:-translate-y-1 hover:border-steel-500 hover:shadow-xl`}
-                >
-                  {inner}
-                </a>
+                badge.href.startsWith("/") ? (
+                  <Link
+                    href={badge.href}
+                    className={`${cardClass} ${hoverClass}`}
+                  >
+                    {inner}
+                  </Link>
+                ) : (
+                  <a
+                    href={badge.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${cardClass} ${hoverClass}`}
+                  >
+                    {inner}
+                  </a>
+                )
               ) : (
                 <div className={cardClass}>{inner}</div>
               )}

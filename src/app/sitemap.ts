@@ -32,6 +32,17 @@ const launchedStaticRoutes = [
   "/projects",
   "/reviews",
   "/about",
+  /**
+   * Two indexable pages that were simply never added to this list.
+   *
+   * /instant-estimate is the highest-intent page on the site, the one every
+   * "Instant Estimate" button points at, and it has been shipping a title, a
+   * description and no noindex while sitting outside the sitemap since it
+   * launched. /licenses is new. Neither was excluded on purpose; a hand
+   * maintained array is a list somebody forgets to append to.
+   */
+  "/instant-estimate",
+  "/licenses",
   "/careers",
   "/privacy-policy",
   "/terms-of-service",

@@ -51,10 +51,32 @@ export function Hero() {
               <MapPin className="size-3.5 text-steel-300" aria-hidden="true" />
               {hero.locationLine}
             </p>
-            <h1 className="mt-5 font-display text-[2.5rem] leading-[1.06] font-bold text-white sm:mt-7 sm:text-5xl lg:text-6xl">
-              {hero.headline.lead}{" "}
-              <span className="text-steel-300">{hero.headline.accent}</span>
-              {hero.headline.tail && ` ${hero.headline.tail}`}
+            {/*
+              THE BRAND LINE KEEPS THE PAGE, THE H1 GAINS AN ENTITY.
+
+              "Roofing done right." is owner-confirmed copy and it stays the
+              thing a visitor reads first. On its own it was also an H1 that
+              said nothing about what this company does, where it does it, or
+              that it is licensed for both sides of the trade, which is the
+              single most valuable line on the site to a search engine.
+
+              So the descriptor joins it INSIDE the same h1 rather than
+              replacing it. Read aloud by a screen reader or a crawler it is
+              one heading: "Residential and commercial roofing contractor in
+              Hattiesburg, MS. Roofing done right." Nothing is hidden, nothing
+              is stuffed, and the visual hierarchy is unchanged.
+            */}
+            <h1 className="mt-5 font-display font-bold text-white">
+              <span className="block text-sm font-semibold tracking-wide text-steel-300 uppercase sm:text-base">
+                Residential &amp; commercial roofing contractor in{" "}
+                {siteConfig.address.addressLocality},{" "}
+                {siteConfig.address.addressRegion}
+              </span>
+              <span className="mt-2 block text-[2.5rem] leading-[1.06] sm:mt-3 sm:text-5xl lg:text-6xl">
+                {hero.headline.lead}{" "}
+                <span className="text-steel-300">{hero.headline.accent}</span>
+                {hero.headline.tail && ` ${hero.headline.tail}`}
+              </span>
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-steel-100 sm:text-xl">
               {hero.subhead}

@@ -83,7 +83,7 @@ export default async function Image() {
         }}
       >
         <div style={{ display: "flex", color: STEEL_100 }}>
-          GAF Certified · MSBOC Licensed · BBB Accredited
+          GAF Certified · MSBOC Residential & Commercial · BBB Accredited
         </div>
         <div style={{ display: "flex", fontWeight: 700 }}>
           {siteConfig.phone.display}

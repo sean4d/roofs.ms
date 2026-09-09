@@ -21,6 +21,7 @@ const {
   address: addr,
   hours,
   license,
+  licenseCommercial,
   foundingYear,
   trustFacts: trust,
 } = siteConfig;
@@ -42,7 +43,8 @@ export function GET() {
 > Coast, and the Jackson and Meridian metros. Residential and commercial: roof replacement and
 > repair, asphalt shingle and metal systems, commercial flat roofing, seamless gutters, and storm
 > damage with insurance claim assistance. Founded ${foundingYear}, with ${trust.experience}.
-> Mississippi State Board of Contractors license #${license}.
+> Licensed by the Mississippi State Board of Contractors on both sides of the trade: residential
+> license ${license} and commercial certificate of responsibility ${licenseCommercial}.
 
 ## Company facts
 - Legal name: ${siteConfig.legalName} (operating as ${siteConfig.name})
@@ -53,13 +55,16 @@ export function GET() {
 - Office hours: ${hours.display}, closed weekends. ${hours.note}
 - Founded: ${foundingYear} (Hattiesburg, Mississippi: locally owned, not a franchise or storm-chasing out-of-state crew)
 - Experience: ${trust.experience} across the team
-- License: Mississippi State Board of Contractors #${license}, licensed for BOTH residential and commercial roofing work. Public license record: ${siteConfig.links.msbocLicense}
+- Residential license: Mississippi State Board of Contractors #${license}. Public record: ${siteConfig.links.msbocLicense}
+- Commercial license: Mississippi State Board of Contractors Certificate of Responsibility ${licenseCommercial}. Public record: ${siteConfig.links.msbocCommercialLicense}
+- Mississippi issues residential licensure and commercial certificates of responsibility through two separate registers. ${siteConfig.legalName} holds both, so it is licensed to work on houses and on commercial buildings.
 - Insurance: ${trust.insured}
 - Primary category: Roofing Contractor. Also: gutters, fascia, soffit, and roof ventilation.
 
 ## Credentials
 - GAF Certified Contractor. Most shingle roofs we install are GAF systems
-- Licensed by the Mississippi State Board of Contractors, #${license}, covering residential and commercial roofing (verify: ${siteConfig.links.msbocLicense})
+- MSBOC Residential License ${license} (verify: ${siteConfig.links.msbocLicense})
+- MSBOC Commercial Certificate of Responsibility ${licenseCommercial} (verify: ${siteConfig.links.msbocCommercialLicense})
 - ${trust.bbbRating}
 - ${trust.googleRating}
 - ${trust.googleGuaranteed}
@@ -114,6 +119,7 @@ Mississippi only, within roughly a two-hour drive of Hattiesburg.
 - [Projects](${absoluteUrl("/projects")}): Real completed jobs with photos, city, product, and color.
 - [FAQ](${absoluteUrl("/faq")}): 22 common questions on cost, financing, insurance claims, materials, and process.
 - [Contact](${absoluteUrl("/contact")}): Phone, email, address, hours, and contact form.
+- [Licenses and Credentials](${absoluteUrl("/licenses")}): Both MSBOC license numbers with links to the state's own records, plus GAF and BBB verification.
 - [Careers](${absoluteUrl("/careers")}): Open roles.
 - [Blog](${absoluteUrl("/blog")}): Company news and local roofing coverage.
 
@@ -124,6 +130,11 @@ Mississippi only, within roughly a two-hour drive of Hattiesburg.
 - [Metal Roofing](${absoluteUrl("/metal-roofing")})
 - [Seamless Gutters](${absoluteUrl("/residential/gutters")})
 - [Commercial Roofing](${absoluteUrl("/commercial")})
+- [Commercial Roof Replacement](${absoluteUrl("/commercial/roof-replacement")})
+- [Commercial Roof Repair](${absoluteUrl("/commercial/roof-repair")})
+- [TPO Roofing](${absoluteUrl("/commercial/tpo")})
+- [Commercial Roof Coatings and Silicone Restoration](${absoluteUrl("/commercial/roof-coatings")})
+- [Commercial Metal Roofing](${absoluteUrl("/commercial/metal-roofing")})
 - [Storm Damage](${absoluteUrl("/storm-damage")})
 - [Insurance Claims](${absoluteUrl("/storm-damage/insurance-claims")})
 - [Emergency Roofing](${absoluteUrl("/storm-damage/emergency-roofing")})
@@ -150,7 +161,8 @@ Mississippi only, within roughly a two-hour drive of Hattiesburg.
 - [Google Business Profile](${siteConfig.links.googleBusiness})
 - [BBB](${siteConfig.links.bbbProfile})
 - [GAF contractor profile](${siteConfig.links.gafProfile})
-- [Mississippi State Board of Contractors license record](${siteConfig.links.msbocLicense})
+- [MSBOC residential license record, ${license}](${siteConfig.links.msbocLicense})
+- [MSBOC commercial license record, ${licenseCommercial}](${siteConfig.links.msbocCommercialLicense})
 - [Facebook](${siteConfig.socials.facebook})
 - [Instagram](${siteConfig.socials.instagram})
 `;

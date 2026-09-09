@@ -5,7 +5,7 @@ import type { FaqEntry } from "@/lib/schema";
  *
  * Google Business Profile Q&A is NOT enabled on this profile, so the
  * question-intent traffic that would land there has to be captured here
- * instead. These are written the way people actually ask them out loud, 
+ * instead. These are written the way people actually ask them out loud,
  * which is also how they get asked to AI assistants and voice search, and
  * every answer sticks to facts already established elsewhere on the site
  * (license, certifications, service area, pricing posture, insurance stance).
@@ -53,7 +53,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes. We're licensed by the Mississippi State Board of Contractors (MSBOC #R22245), carry general liability and workers' compensation insurance, are a GAF Certified Contractor, and hold an A+ rating with the BBB. We're glad to provide documentation for any of it before you commit to anything.",
+          "Yes, on both sides of the trade. Mississippi licenses residential and commercial contracting separately, and we hold both: MSBOC Residential License R22245 and Commercial Certificate of Responsibility 27720-SC. We also carry general liability and workers' compensation insurance, are a GAF Certified Contractor, and hold an A+ rating with the BBB. Every number is verifiable on our licenses page, and we are glad to provide documentation before you commit to anything.",
       },
       {
         question: "Do roofers in Mississippi have to be licensed?",

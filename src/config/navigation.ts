@@ -145,6 +145,9 @@ export const footerColumns: FooterColumn[] = [
     links: [
       { label: "Get a Quote", href: "/quote" },
       { label: "About Us", href: "/about" },
+      // A crawlable, sitewide link so the licences page is reachable from
+      // every page rather than only from the credential badges.
+      { label: "Licenses & Credentials", href: "/licenses" },
       { label: "Storm Damage", href: "/storm-damage" },
       { label: "Insurance Claims", href: "/storm-damage/insurance-claims" },
       { label: "Storm Center", href: "/storm-center" },

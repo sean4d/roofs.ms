@@ -70,12 +70,12 @@ const commitments = [
 
 const credentials = [
   {
-    title: "Mississippi licensed",
-    // Residential AND commercial licensure; the public MSBOC record lives in
-    // their residential index, so the label stays neutral (see
-    // siteConfig.links.msbocLicense).
-    detail: `MS State Board of Contractors, License #${siteConfig.license}. Verify it on msboc.us`,
-    href: siteConfig.links.msbocLicense,
+    title: "Mississippi licensed, residential & commercial",
+    // Two separate registers, two separate numbers, and both are ours. The
+    // old single entry hedged its wording because only the residential record
+    // was public; naming them is the accurate version now that both exist.
+    detail: `MS State Board of Contractors: residential #${siteConfig.license}, commercial #${siteConfig.licenseCommercial}. Verify both on our licenses page`,
+    href: "/licenses",
   },
   {
     title: "GAF Certified Contractor",

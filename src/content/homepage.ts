@@ -51,11 +51,11 @@ export const hero = {
   headline: { lead: "Roofing done", accent: "right.", tail: "" },
   /**
    * Mobile-first copy: short sentences, no long dashes that wrap awkwardly
-   * on phones. Positioning (owner 2026-07-04): experts in EVERY roof type: 
+   * on phones. Positioning (owner 2026-07-04): experts in EVERY roof type:
    * never imply one system is the specialty and the rest are new to us.
    */
   subhead:
-    "Residential or commercial. Shingle, metal, or flat. Whatever roof your home or business needs, we're the local experts who install it right: from first inspection to final walkthrough.",
+    "Residential or commercial. Shingle, metal, or flat. Whatever roof your home or business needs, we're the local experts who install it right: from first inspection to final walkthrough. Mississippi licensed on both sides of the trade, and based here in Hattiesburg.",
   /** Full-bleed hero background (2400px licensed stock, dark overlay) */
   photo: stockPhotos.heroHome,
   /** Descriptive only, stock imagery is never presented as our project */
@@ -72,7 +72,9 @@ export const heroTrustBar = [
   { icon: BadgeCheck, label: "Google Guaranteed" },
   { icon: ShieldCheck, label: "GAF Certified Contractor" },
   { icon: Handshake, label: "BBB Accredited · A+ Rating" },
-  { icon: Landmark, label: "Mississippi Licensed" },
+  // Both licences named, because "Mississippi Licensed" is true of a company
+  // that can only touch houses and a property manager cannot tell which we are.
+  { icon: Landmark, label: "MSBOC Licensed · Residential & Commercial" },
   { icon: FileCheck, label: "Fully Insured & Bonded" },
   { icon: Banknote, label: "$0 Down Financing" },
   { icon: Medal, label: "Lifetime Warranty" },
@@ -123,7 +125,7 @@ export const trustItems: TrustItem[] = [
 /* ------------------------------------------------------------------ */
 
 /**
- * Owner rebalance 2026-07-04: residential and commercial presented evenly, 
+ * Owner rebalance 2026-07-04: residential and commercial presented evenly,
  * equal panels, both photo-led.
  */
 export const divisionSplit = {
@@ -276,7 +278,7 @@ export const stormSection = {
 /* ------------------------------------------------------------------ */
 
 /**
- * Owner positioning (2026-07-04): we're experts in EVERY roofing system: 
+ * Owner positioning (2026-07-04): we're experts in EVERY roofing system:
  * shingle, metal, AND commercial flat/low-slope. No system is presented as
  * the specialty with the others as afterthoughts.
  */
@@ -455,7 +457,7 @@ export const processSection = {
 
 /**
  * Retail/insurance rebalance (owner directive 2026-07-04): the business is
- * 50/50 insurance/retail. This section sells the retail experience: 
+ * 50/50 insurance/retail. This section sells the retail experience:
  * transparent, itemized digital proposals: written for a discerning,
  * high-net-worth buyer: control, clarity, zero pressure.
  */
@@ -489,7 +491,7 @@ export const proposalSection = {
   example: {
     heading: "Example roofing proposal",
     subheading: "Itemized · sent to your email",
-    /** Wording mirrors the company's real Roofr proposals exactly, 
+    /** Wording mirrors the company's real Roofr proposals exactly,
      *  no quantities/measurements shown, line cost only. */
     lineItems: [
       { label: "Remove existing roof system down to the decking", price: 1360 },
@@ -641,12 +643,14 @@ export const reviewsSection = {
     {
       key: "msboc",
       title: "MSBOC Licensed",
-      subtitle: `License #${siteConfig.license} · Mississippi State Board of Contractors`,
-      // Neutral label on purpose: the public MSBOC record page happens to
-      // sit in their residential index, but our licensure covers both
-      // divisions (see siteConfig.links.msbocLicense).
-      href: siteConfig.links.msbocLicense,
-      cta: "Verify on msboc.us",
+      // Both numbers, because both exist and a building owner scanning this
+      // strip is looking for the commercial one. The badge links to the
+      // residential record; /licenses carries both with a verification link
+      // each, which is why the call to action points there rather than at one
+      // of the two registers.
+      subtitle: `Residential #${siteConfig.license} · Commercial #${siteConfig.licenseCommercial} · Mississippi State Board of Contractors`,
+      href: "/licenses",
+      cta: "See both licenses",
     },
   ],
 } as const;

@@ -20,7 +20,7 @@ import type { ServiceContent } from "@/content/services/types";
  * competitors. Each speaks to that industry's actual concerns (schedules,
  * budgets, disruption, compliance). Reuses the service template: signs →
  * industry concerns, materials → recommended systems. No invented project
- * history or unconfirmed claims (municipal bid experience stays generic, 
+ * history or unconfirmed claims (municipal bid experience stays generic,
  * [NEEDS: confirm municipal bid experience]).
  */
 
@@ -1426,7 +1426,7 @@ export const industries: ServiceContent[] = [
     intro: {
       title: "Accountability is the specification",
       paragraphs: [
-        "Public projects answer to taxpayers, which changes how everything must be written: scopes itemized so committees can compare bids line by line, our Mississippi State Board of Contractors license #R22245 and current insurance certificates attached, with bond requirements addressed project by project when the bid documents call for them, and records thorough enough to stand review years later. We build proposals for that standard because it's the standard public work deserves.",
+        "Public projects answer to taxpayers, which changes how everything must be written: scopes itemized so committees can compare bids line by line, our Mississippi State Board of Contractors commercial certificate of responsibility #27720-SC and current insurance certificates attached, with bond requirements addressed project by project when the bid documents call for them, and records thorough enough to stand review years later. We build proposals for that standard because it's the standard public work deserves.",
         "The buildings themselves serve missions that can't pause, a fire station roofs over trucks that must roll, a water office serves residents daily. Continuity planning for essential services sits at the center of how municipal projects get phased and scheduled.",
       ],
     },
@@ -1635,7 +1635,7 @@ export const industries: ServiceContent[] = [
       {
         question: "Are you licensed and insured for public work?",
         answer:
-          "We hold Mississippi State Board of Contractors license #R22245 and provide current insurance certificates as part of any proposal package. Where a project requires bonds, we address those requirements project by project against the bid documents.",
+          "We hold Mississippi State Board of Contractors commercial certificate of responsibility #27720-SC, which is the credential Mississippi requires for commercial and public construction work, alongside residential license #R22245. Current insurance certificates come as part of any proposal package. Where a project requires bonds, we address those requirements project by project against the bid documents.",
       },
       {
         question: "Can you work within our procurement and bid requirements?",
