@@ -56,6 +56,12 @@ interface PriorContact {
   /** True only when it is the same property. False means a neighbour, and the
    *  two are shown differently on purpose. */
   sameProperty: boolean;
+  /** Whether this rep can open it. False means name it and stop, because the
+   *  proposal route scopes to the owner and would answer a colleague with a
+   *  404. */
+  mine: boolean;
+  /** Whether anything has actually reached the customer yet. */
+  contacted: boolean;
 }
 
 interface Result {
@@ -369,6 +375,21 @@ function ResultSheet({
 }) {
   const { measurement: m, storms } = result;
   const rejected = m.confidence === "reject";
+  /*
+   * A property that already has an estimate is READ ONLY.
+   *
+   * No price controls, no save, no PDF, and nothing that could put a second
+   * mailer in front of the same homeowner. The office was getting the same
+   * address twice on the mail board and reps were re-quoting houses a
+   * colleague had already worked, at whatever number the measurement happened
+   * to give that day. Two prices for one roof is the version a customer
+   * notices.
+   *
+   * Correcting an estimate is a real need and it has a real home: the office
+   * edits the existing one from the mail board. Making a second one was never
+   * the fix for the first being wrong.
+   */
+  const taken = result.prior?.sameProperty === true;
 
   return (
     <div
@@ -413,17 +434,29 @@ function ResultSheet({
           (result.prior.sameProperty ? (
             <div className="mb-4 rounded-lg border-2 border-amber-400 bg-amber-50 p-3">
               <p className="text-xs font-bold tracking-wide text-amber-900 uppercase">
-                Already contacted
+                {result.prior.contacted
+                  ? "Already contacted"
+                  : "Already estimated"}
               </p>
               <p className="mt-1 text-sm leading-relaxed text-amber-900">
                 {result.prior.sentence}
               </p>
-              <a
-                href={`/pin/proposal/${result.prior.quoteId}`}
-                className="mt-2 inline-block text-sm font-semibold text-[#123b63] underline underline-offset-4"
-              >
-                View that estimate
-              </a>
+              {result.prior.mine ? (
+                <a
+                  href={`/pin/proposal/${result.prior.quoteId}`}
+                  className="mt-2 inline-block text-sm font-semibold text-[#123b63] underline underline-offset-4"
+                >
+                  View that estimate
+                </a>
+              ) : (
+                /* Reps see their own customers only, so a link here would be a
+                   404 and would read as the tool being broken rather than as
+                   the rule it is. Name who has it instead. */
+                <p className="mt-2 text-sm text-amber-900">
+                  It is {result.prior.repName}&rsquo;s customer. Ask them or the
+                  office for a copy.
+                </p>
+              )}
             </div>
           ) : (
             <div className="mb-4 rounded-lg border border-slate-300 bg-slate-50 p-3">
@@ -433,16 +466,24 @@ function ResultSheet({
               <p className="mt-1 text-sm leading-relaxed text-slate-700">
                 {result.prior.sentence}
               </p>
-              <a
-                href={`/pin/proposal/${result.prior.quoteId}`}
-                className="mt-2 inline-block text-sm font-semibold text-slate-600 underline underline-offset-4"
-              >
-                View that estimate
-              </a>
+              {result.prior.mine && (
+                <a
+                  href={`/pin/proposal/${result.prior.quoteId}`}
+                  className="mt-2 inline-block text-sm font-semibold text-slate-600 underline underline-offset-4"
+                >
+                  View that estimate
+                </a>
+              )}
             </div>
           ))}
 
-        {rejected ? (
+        {taken ? (
+          <p className="rounded-lg bg-slate-100 px-3 py-3 text-sm leading-relaxed text-slate-700">
+            This property already has an estimate, so there is nothing to price
+            here. If the number on it is wrong, the office can correct that
+            estimate rather than start a second one.
+          </p>
+        ) : rejected ? (
           <RejectedBox reason={m.reason} />
         ) : (
           <Estimator
@@ -651,6 +692,14 @@ function Estimator({
       });
       const data = await res.json();
       if (!res.ok || !data.ok) {
+        // The property was taken between this screen loading and this tap:
+        // another rep saved it, or a queued request finally went through. Send
+        // them to the estimate that won if it is theirs, tell them whose it is
+        // if it is not.
+        if (res.status === 409 && data.duplicate?.mine) {
+          window.location.href = `/pin/proposal/${data.duplicate.quoteId}`;
+          return;
+        }
         setFailed(data.error ?? "Could not save that.");
         setSaving(false);
         return;

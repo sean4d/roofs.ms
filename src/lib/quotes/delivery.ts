@@ -51,6 +51,20 @@ export interface PriorContact {
   sameProperty: boolean;
   /** One sentence, ready to show. Null when nothing has actually gone out. */
   sentence: string | null;
+  /** When this estimate was made. Every match has one; being sent is optional. */
+  estimatedAt: string;
+  /** Whether anything has actually reached the customer yet. */
+  contacted: boolean;
+  /**
+   * Whether the rep looking at this can open it.
+   *
+   * Reps see their own customers only, so linking a colleague's estimate at
+   * a rep sends them to a 404 and tells them the tool is broken. When this is
+   * false the map names who has it and stops there, which is the same rule the
+   * rest of this lookup follows: the minimum a rep needs, never a colleague's
+   * pipeline.
+   */
+  mine: boolean;
 }
 
 /**
@@ -163,6 +177,10 @@ export interface NearCandidate {
   address: string;
   lat: number | string;
   lon: number | string;
+  /** Whether anything has actually gone out on this one. A quote that exists
+   *  and has never been sent still blocks a duplicate, but it is not worth
+   *  interrupting a rep about when it belongs to the house next door. */
+  contacted?: boolean;
 }
 
 export interface NearMatch<T> {
@@ -204,15 +222,48 @@ export function classifyNear<T extends NearCandidate>(
 
   if (!scored.length) return null;
 
-  // The same house always outranks a neighbour, however recent the neighbour
-  // is. Within a tier the nearest wins, and the rows arrive newest first so
-  // ties keep that order.
+  /*
+   * The same house always outranks a neighbour, however recent the neighbour
+   * is. Then a quote that has actually been sent outranks one that has only
+   * been saved, and only then does distance decide. The rows arrive newest
+   * first so ties keep that order.
+   *
+   * THE CONTACTED TIER EXISTS BECAUSE THIS QUERY WIDENED. It used to return
+   * only quotes that had been emailed, printed or queued for post, so every
+   * row it produced was worth saying out loud. It now returns every quote,
+   * because an estimate that exists at an address is what stops a second one
+   * being made there, and a saved-but-never-sent quote at the house next door
+   * has nothing to say to a rep. Without this tier a silent neighbour sorted
+   * ahead of a posted one on distance alone and swallowed a notice that
+   * mattered.
+   */
   scored.sort((a, b) => {
     if (a.sameProperty !== b.sameProperty) return a.sameProperty ? -1 : 1;
+    const aSent = a.row.contacted ?? true;
+    const bSent = b.row.contacted ?? true;
+    if (aSent !== bSent) return aSent ? -1 : 1;
     return a.feet - b.feet;
   });
 
   return scored[0];
+}
+
+/**
+ * One property, as a string, for grouping rows that are the same house.
+ *
+ * The house number and street when there is one, because that is what makes
+ * two records the same property. Coordinates rounded to about eleven feet when
+ * there is not, which is the case for rural addresses a reverse geocode could
+ * not name, and is tight enough that it never merges two buildings.
+ */
+export function propertyKey(
+  address: string | null | undefined,
+  lat: number | string,
+  lon: number | string,
+): string {
+  const street = streetKey(address);
+  if (street) return street;
+  return `@${Number(lat).toFixed(4)},${Number(lon).toFixed(4)}`;
 }
 
 /**
@@ -281,6 +332,8 @@ interface PriorRow {
   address: string;
   lat: number | string;
   lon: number | string;
+  owner_id: string | null;
+  created_at: string | Date;
   rep_email: string | null;
   emailed_at: string | Date | null;
   emailed_to: string | null;
@@ -288,6 +341,7 @@ interface PriorRow {
   mail_status: MailStatus | null;
   mail_requested_at: string | Date | null;
   mail_handled_at: string | Date | null;
+  contacted: boolean;
 }
 
 /**
@@ -299,6 +353,14 @@ interface PriorRow {
  * the other rep is somebody else. What comes back is deliberately thin: an
  * address the rep is already standing in front of, a colleague's first name,
  * and what was sent when. Not the price, not the customer's phone number.
+ *
+ * IT RETURNS EVERY QUOTE NOW, not only the ones that were sent. The filter
+ * used to require an email, a print or a mail status, which was right when the
+ * only job was warning a rep before they knocked. It is wrong for the job it
+ * has now: an estimate that merely EXISTS at an address is what stops a second
+ * one being made there, and one saved this morning and not yet sent is exactly
+ * the duplicate worth catching. Whether anything actually went out comes back
+ * as `contacted` instead, and the ranking uses it.
  */
 export async function priorContactNear(
   lat: number,
@@ -306,6 +368,9 @@ export async function priorContactNear(
   /** The address the rep just tapped, when the reverse geocode found one. It
    *  is the strongest signal there is and beats any distance. */
   tappedAddress?: string | null,
+  /** Who is asking, so the map knows whether to offer them a link or a name.
+   *  Omitted means treat the match as somebody else's. */
+  viewer?: Pick<User, "id" | "role"> | null,
 ): Promise<PriorContact | null> {
   // A rejected address lookup returns 0,0. Asking what has been posted near
   // the Gulf of Guinea is at best a wasted query.
@@ -319,24 +384,26 @@ export async function priorContactNear(
   const degLon = NEARBY_FT / (364000 * Math.max(Math.cos(rad(lat)), 0.05));
 
   const rows = (await queryOrNull(
-    `SELECT q.id, c.address, c.lat, c.lon, u.email AS rep_email,
+    `SELECT q.id, c.address, c.lat, c.lon, c.owner_id, q.created_at,
+            u.email AS rep_email,
             q.emailed_at, q.emailed_to, q.printed_at,
-            q.mail_status, q.mail_requested_at, q.mail_handled_at
+            q.mail_status, q.mail_requested_at, q.mail_handled_at,
+            (q.emailed_at IS NOT NULL
+             OR q.printed_at IS NOT NULL
+             OR q.mail_status IS NOT NULL) AS contacted
        FROM quotes q
        JOIN customers c ON c.id = q.customer_id
        LEFT JOIN users u ON u.id = q.created_by
       WHERE c.lat BETWEEN $1::float8 - $3::float8 AND $1::float8 + $3::float8
         AND c.lon BETWEEN $2::float8 - $4::float8 AND $2::float8 + $4::float8
-        AND (q.emailed_at IS NOT NULL
-             OR q.printed_at IS NOT NULL
-             OR q.mail_status IS NOT NULL)
       ORDER BY GREATEST(
+                 q.created_at,
                  COALESCE(q.emailed_at, 'epoch'::timestamptz),
                  COALESCE(q.printed_at, 'epoch'::timestamptz),
                  COALESCE(q.mail_handled_at, 'epoch'::timestamptz),
                  COALESCE(q.mail_requested_at, 'epoch'::timestamptz)
                ) DESC
-      LIMIT 40`,
+      LIMIT 60`,
     [lat, lon, degLat, degLon],
   )) as PriorRow[] | null;
 
@@ -379,6 +446,10 @@ export async function priorContactNear(
     sentence = `A mailer for ${where} was rejected by the office. Check the estimate before sending another.`;
   } else if (printedAt) {
     sentence = `${who} printed an estimate for ${where} on ${shortDate(printedAt)}.`;
+  } else if (sameProperty) {
+    // Saved and never sent. Worth saying at the same house, because it is why
+    // the rep cannot make another one. Not worth saying about a neighbour.
+    sentence = `${who} already estimated this address on ${shortDate(iso(r.created_at))}. Nothing has been sent to the customer yet.`;
   }
 
   return {
@@ -394,6 +465,13 @@ export async function priorContactNear(
     distanceFeet: Math.round(feet),
     sameProperty,
     sentence,
+    estimatedAt: iso(r.created_at)!,
+    contacted: Boolean(r.contacted),
+    // An admin sees every estimate, a rep only their own. Anyone else gets a
+    // name and no link, rather than a link that 404s.
+    mine: Boolean(
+      viewer && (viewer.role === "admin" || viewer.id === r.owner_id),
+    ),
   };
 }
 
@@ -586,7 +664,7 @@ export async function listMail(status: MailStatus): Promise<MailRow[]> {
     );
   }
 
-  return (rows ?? []).map((r) => ({
+  const mapped: MailRow[] = (rows ?? []).map((r) => ({
     quoteId: r.id,
     publicToken: r.public_token,
     address: r.address,
@@ -618,13 +696,50 @@ export async function listMail(status: MailStatus): Promise<MailRow[]> {
     editedAt: iso(r.edited_at),
     editedBy: r.edited_by ? repName(r.edited_by) : null,
   }));
+
+  return dedupeByProperty(mapped);
 }
 
-/** How many are waiting, for the badge on the nav. */
+/**
+ * One row per property on the board.
+ *
+ * THE OFFICE WAS SEEING THE SAME HOUSE TWICE. Two reps could both request a
+ * mailer for one address, and the board showed both, so two envelopes went to
+ * one homeowner with two different prices on them. Nothing upstream stopped
+ * it: requesting a mailer sets a flag on a quote, and there were two quotes.
+ *
+ * The map refuses to create the second estimate now, which stops new pairs
+ * appearing. This is for the ones already in the table and for anything that
+ * slips past: a board that is right only for data created after a fix is not
+ * right.
+ *
+ * The rows arrive already ordered the way the board wants them, oldest first
+ * in the requested queue and newest first everywhere else, so keeping the
+ * first occurrence of each property keeps that meaning: the one that has been
+ * waiting longest is the one the office should act on.
+ */
+function dedupeByProperty(rows: MailRow[]): MailRow[] {
+  const seen = new Set<string>();
+  const out: MailRow[] = [];
+  for (const row of rows) {
+    const key = propertyKey(row.address, row.lat, row.lon);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(row);
+  }
+  return out;
+}
+
+/**
+ * How many are waiting, for the badge on the nav.
+ *
+ * COUNTED THE SAME WAY THE BOARD COUNTS. This was a count(*) over the requested
+ * rows, which is cheaper and was wrong the moment the board started folding two
+ * requests for one property into one line. A badge saying five above a list of
+ * four is a small thing that teaches somebody the numbers here cannot be
+ * trusted, and the queue is capped at 300 rows, so the honest count is
+ * affordable.
+ */
 export async function mailQueueSize(): Promise<number> {
-  const rows = await queryOrNull<{ n: number }>(
-    `SELECT count(*)::int AS n FROM quotes WHERE mail_status = 'requested'`,
-    [],
-  );
-  return rows?.[0]?.n ?? 0;
+  return (await listMail("requested")).length;
 }

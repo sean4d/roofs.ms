@@ -1,4 +1,4 @@
-import { classifyNear, streetKey } from "@/lib/quotes/delivery";
+import { classifyNear, propertyKey, streetKey } from "@/lib/quotes/delivery";
 
 /**
  * Walk a Gulfport block through the "has this house already heard from us"
@@ -189,6 +189,102 @@ for (const [input, want] of keys) {
     `${ok ? "PASS" : "FAIL"}  streetKey(${JSON.stringify(input)}) -> ${JSON.stringify(got)}`,
   );
   if (!ok) console.log(`      want ${JSON.stringify(want)}`);
+}
+
+/*
+ * A quote that was actually sent outranks one that was only saved.
+ *
+ * The lookup widened to every quote, not just the ones that went out, because
+ * an estimate that merely exists at an address is what blocks a second one.
+ * That let a silent neighbour sort ahead of a posted one on distance alone and
+ * swallow a notice the rep needed.
+ */
+const NEARER_SILENT = { ...houseAt(1), contacted: false };
+const FURTHER_POSTED = { ...houseAt(3), contacted: true };
+{
+  const got = classifyNear(
+    BLOCK_LAT,
+    east(65),
+    "999 Nowhere Rd, Gulfport, MS",
+    [NEARER_SILENT, FURTHER_POSTED],
+  );
+  const ok = got?.row.address === FURTHER_POSTED.address;
+  if (!ok) failed++;
+  console.log(
+    `${ok ? "PASS" : "FAIL"}  a posted neighbour outranks a nearer silent one`,
+  );
+  console.log(
+    `      got  ${got?.row.address.split(",")[0]} at ${Math.round(got?.feet ?? 0)} ft`,
+  );
+}
+{
+  // ...but never over the house the rep is actually standing at.
+  const TAKEN_HERE = { ...houseAt(1), contacted: false };
+  const got = classifyNear(BLOCK_LAT, east(65), houseAt(1).address, [
+    FURTHER_POSTED,
+    TAKEN_HERE,
+  ]);
+  const ok = got?.row.address === TAKEN_HERE.address && got.sameProperty;
+  if (!ok) failed++;
+  console.log(
+    `${ok ? "PASS" : "FAIL"}  an unsent estimate at THIS house still wins, so it can block`,
+  );
+  console.log(
+    `      got  ${got?.sameProperty ? "SAME HOUSE" : "neighbour"} ${got?.row.address.split(",")[0]}`,
+  );
+}
+
+/*
+ * Grouping the office's mail board. Two requests for one house must collapse
+ * to one line, and two genuinely different houses must not.
+ */
+const groups: Array<[string, string | null, number, number, string]> = [
+  [
+    "same house, two quotes",
+    "100 Chapman Rd, Gulfport, MS 39503, USA",
+    BLOCK_LAT,
+    BLOCK_LON,
+    "100 chapman rd",
+  ],
+  [
+    "same house, Road spelled out",
+    "100 Chapman Road, Gulfport, MS",
+    BLOCK_LAT,
+    BLOCK_LON,
+    "100 chapman rd",
+  ],
+  [
+    "next door",
+    "102 Chapman Rd, Gulfport, MS 39503, USA",
+    BLOCK_LAT,
+    BLOCK_LON,
+    "102 chapman rd",
+  ],
+  [
+    "rural, no house number",
+    "Chapman Rd, Gulfport, MS",
+    30.41,
+    -89.07,
+    "@30.4100,-89.0700",
+  ],
+];
+for (const [label, address, lat, lon, want] of groups) {
+  const got = propertyKey(address, lat, lon);
+  const ok = got === want;
+  if (!ok) failed++;
+  console.log(
+    `${ok ? "PASS" : "FAIL"}  propertyKey, ${label} -> ${JSON.stringify(got)}`,
+  );
+  if (!ok) console.log(`      want ${JSON.stringify(want)}`);
+}
+{
+  const keys = groups.map(([, a, la, lo]) => propertyKey(a, la, lo));
+  const distinct = new Set(keys).size;
+  const ok = distinct === 3;
+  if (!ok) failed++;
+  console.log(
+    `${ok ? "PASS" : "FAIL"}  four board rows collapse to ${distinct} properties (want 3)`,
+  );
 }
 
 console.log(failed ? `\n${failed} failed` : "\nall passed");

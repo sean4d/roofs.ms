@@ -4,6 +4,7 @@ import { z } from "zod";
 import { MATERIAL_KEYS } from "@/config/quote-rates";
 import { currentUser } from "@/lib/quotes/auth";
 import { sameOrigin } from "@/lib/production/auth";
+import { priorContactNear } from "@/lib/quotes/delivery";
 import { saveQuote } from "@/lib/quotes/save";
 
 export const runtime = "nodejs";
@@ -101,6 +102,42 @@ export async function POST(request: Request) {
           shown: multi.totalPrice,
         }
       : priceFor(input.squares, options);
+
+    /*
+     * ONE ESTIMATE PER PROPERTY, ENFORCED HERE AND NOT ONLY ON THE SCREEN.
+     *
+     * The map hides the save buttons when a property already has an estimate,
+     * and that is where a rep learns about it, but a hidden button is not a
+     * rule. Two reps can tap the same roof within seconds of each other, a
+     * phone can replay a queued request when the signal comes back, and the
+     * button was only ever hidden by a lookup that is allowed to fail quietly.
+     * This is the check that actually holds.
+     *
+     * The existing estimate's id goes back with the refusal so the screen can
+     * offer to open it rather than leaving a rep at a dead end. Correcting a
+     * saved estimate is the office's job through the mail board editor, which
+     * is why there is no "save anyway".
+     */
+    const existing = await priorContactNear(
+      input.lat,
+      input.lon,
+      input.address,
+      user,
+    );
+    if (existing?.sameProperty) {
+      return NextResponse.json(
+        {
+          error: `${existing.repName} already has an estimate for this address.`,
+          duplicate: {
+            quoteId: existing.quoteId,
+            address: existing.address,
+            repName: existing.repName,
+            mine: existing.mine,
+          },
+        },
+        { status: 409 },
+      );
+    }
 
     const saved = await saveQuote(user, {
       address: input.address,

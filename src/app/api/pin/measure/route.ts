@@ -97,6 +97,7 @@ export async function POST(request: Request) {
         measurement.lat,
         measurement.lon,
         measurement.formattedAddress,
+        user,
       );
     } catch (error) {
       console.error("[pin] prior-contact lookup failed", error);
