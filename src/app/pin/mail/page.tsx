@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { currentUser } from "@/lib/quotes/auth";
-import { listMail } from "@/lib/quotes/delivery";
+import { listMail, mailCounts } from "@/lib/quotes/delivery";
 
 import { PinNav } from "../pin-nav";
 import { MailBoard } from "./mail-board";
@@ -24,15 +24,22 @@ export default async function MailPage() {
   if (!user) redirect("/pin");
   if (user.role !== "admin") redirect("/pin/estimates");
 
-  const [requested, mailed, rejected] = await Promise.all([
+  /*
+   * The lists are capped at 300 rows each so the board stays quick. The counts
+   * are not: they come from a separate count over the whole table, because a
+   * tab reading "Posted 300" when the cap is 300 tells the office nothing
+   * about how many mailers have actually gone out.
+   */
+  const [requested, mailed, rejected, counts] = await Promise.all([
     listMail("requested"),
     listMail("mailed"),
     listMail("rejected"),
+    mailCounts(),
   ]);
 
   return (
     <>
-      <PinNav user={user} active="mail" mailQueue={requested.length} />
+      <PinNav user={user} active="mail" mailQueue={counts.requested} />
       <main className="min-h-0 flex-1 overflow-y-auto bg-slate-100">
         <div className="mx-auto max-w-4xl px-4 py-5">
           <h1 className="font-[family-name:var(--font-archivo)] text-2xl font-extrabold text-[#123b63]">
@@ -46,6 +53,7 @@ export default async function MailPage() {
             requested={requested}
             mailed={mailed}
             rejected={rejected}
+            counts={counts}
           />
         </div>
       </main>

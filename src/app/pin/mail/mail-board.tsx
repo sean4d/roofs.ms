@@ -20,10 +20,13 @@ export function MailBoard({
   requested,
   mailed,
   rejected,
+  counts,
 }: {
   requested: MailRow[];
   mailed: MailRow[];
   rejected: MailRow[];
+  /** True totals from the whole table, not the length of the capped list. */
+  counts: Record<MailStatus, number>;
 }) {
   const [tab, setTab] = useState<MailStatus>("requested");
   const [rows, setRows] = useState({ requested, mailed, rejected });
@@ -31,6 +34,19 @@ export function MailBoard({
   const [busy, setBusy] = useState<string | null>(null);
   const [editing, setEditing] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  /*
+   * How far the tab counts have moved since the page loaded.
+   *
+   * The counts are the server's, taken over the whole table. Resolving a
+   * mailer moves a row between lists here without a reload, so the numbers
+   * above them have to follow, and adding a delta is the only way to do that
+   * without pretending the capped lists are the whole picture.
+   */
+  const [drift, setDrift] = useState<Record<MailStatus, number>>({
+    requested: 0,
+    mailed: 0,
+    rejected: 0,
+  });
 
   async function resolve(row: MailRow, action: "mailed" | "rejected") {
     // A rejection without a reason is just a disappearance, and the rep whose
@@ -74,6 +90,11 @@ export function MailBoard({
         requested: r.requested.filter((x) => x.quoteId !== row.quoteId),
         [action]: [moved, ...r[action]],
       }));
+      setDrift((d) => ({
+        ...d,
+        requested: d.requested - 1,
+        [action]: d[action] + 1,
+      }));
     } catch {
       setError("Lost the connection. Try again.");
     } finally {
@@ -97,9 +118,15 @@ export function MailBoard({
       <div className="flex flex-wrap gap-1.5">
         {(
           [
-            ["requested", "To send", rows.requested.length],
-            ["mailed", "Posted", rows.mailed.length],
-            ["rejected", "Rejected", rows.rejected.length],
+            /*
+             * The counts come from the server's count over every row, not
+             * from these lists, which are capped at 300. Resolving a mailer
+             * moves it between lists here without a reload, so the tab it
+             * left and the tab it joined both shift by one to keep up.
+             */
+            ["requested", "To send", counts.requested + drift.requested],
+            ["mailed", "Posted", counts.mailed + drift.mailed],
+            ["rejected", "Rejected", counts.rejected + drift.rejected],
           ] as const
         ).map(([key, label, n]) => (
           <button
@@ -128,6 +155,20 @@ export function MailBoard({
       />
 
       {error && <p className="mt-3 text-sm text-red-700">{error}</p>}
+
+      {/*
+        The lists are capped server-side. Saying so is the difference between
+        a board that is showing you everything and a board that looks like it
+        is: search still reaches only what was loaded, and somebody hunting a
+        homeowner who rang should know when the answer might be older than the
+        window rather than missing.
+      */}
+      {!search && rows[tab].length < counts[tab] + drift[tab] && (
+        <p className="mt-3 text-xs text-slate-500">
+          Showing the {rows[tab].length} most recent of{" "}
+          {counts[tab] + drift[tab]}.
+        </p>
+      )}
 
       {list.length === 0 ? (
         <p className="mt-6 text-sm text-slate-500">
@@ -168,7 +209,11 @@ export function MailBoard({
                     {r.requestedAt
                       ? ` on ${new Date(r.requestedAt).toLocaleDateString()}`
                       : ""}
-                    {r.handledAt
+                    {/* Only on a tab where the handling IS this row's status.
+                        A row waiting again carries the last handling too, and
+                        that gets its own line below rather than being read as
+                        what happened to this request. */}
+                    {r.handledAt && r.status !== "requested"
                       ? ` · ${r.status === "mailed" ? "posted" : "rejected"} ${new Date(r.handledAt).toLocaleDateString()}${r.handledBy ? ` by ${r.handledBy}` : ""}`
                       : ""}
                     {r.emailedAt
@@ -181,7 +226,33 @@ export function MailBoard({
                       {new Date(r.editedAt).toLocaleDateString()}
                     </p>
                   )}
-                  {r.note && (
+                  {/*
+                    THIS HOUSE HAS BEEN THROUGH HERE BEFORE.
+
+                    A rep can ask for a mailer on an estimate the office
+                    already posted or already refused. That is allowed, and
+                    sometimes right, but whoever is standing at the printer
+                    needs to know before they run it: a second envelope to a
+                    homeowner who already has one is a phone call, and
+                    reposting something rejected for a bad measurement
+                    reposts the bad measurement.
+                  */}
+                  {r.status === "requested" &&
+                    r.priorOutcome &&
+                    r.handledAt && (
+                      <p
+                        className={`mt-1.5 rounded px-2 py-1 text-xs ${
+                          r.priorOutcome === "mailed"
+                            ? "bg-amber-50 text-amber-900"
+                            : "bg-red-50 text-red-800"
+                        }`}
+                      >
+                        {r.priorOutcome === "mailed"
+                          ? `Already posted on ${new Date(r.handledAt).toLocaleDateString()}${r.handledBy ? ` by ${r.handledBy}` : ""}. This is a second request for the same house.`
+                          : `Rejected on ${new Date(r.handledAt).toLocaleDateString()}${r.handledBy ? ` by ${r.handledBy}` : ""}${r.note ? `: ${r.note}` : ""}. Check it was fixed before posting.`}
+                      </p>
+                    )}
+                  {r.note && r.status !== "requested" && (
                     <p className="mt-1.5 rounded bg-red-50 px-2 py-1 text-xs text-red-800">
                       {r.note}
                     </p>

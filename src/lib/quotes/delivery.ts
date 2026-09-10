@@ -500,16 +500,35 @@ export async function recordPrinted(quoteId: string) {
   `;
 }
 
-/** A rep asks the office to print and post this one. */
+/**
+ * A rep asks the office to print and post this one.
+ *
+ * RE-REQUESTING NO LONGER ERASES WHAT THE OFFICE DID.
+ *
+ * This used to null mail_handled_at, mail_handled_by and mail_note on the way
+ * through, which is fine the first time a quote enters the queue and is
+ * destructive every time after. There is one row per quote and no history
+ * table, so those three columns ARE the record that somebody in the office put
+ * an envelope in the post, or looked at the measurement and refused to. A rep
+ * tapping "request mailer" again on a house that had already been handled
+ * deleted that record, permanently, and moved the row out of Posted or
+ * Rejected into To send. From the owner's chair the count on a tab simply went
+ * down overnight and it looked like rows were disappearing (owner, 2026-09-10).
+ *
+ * Now the columns are left alone. mail_status still flips to 'requested',
+ * because the thing is genuinely waiting again, and the board shows the office
+ * what happened last time so they are not printing a second envelope for a
+ * house they already posted, or reposting one they rejected for a good reason.
+ *
+ * resolveMail overwrites all three when the office acts again, which is right:
+ * at that point there is a new, current answer.
+ */
 export async function requestMail(quoteId: string, user: User) {
   await db()`
     UPDATE quotes
        SET mail_status = 'requested',
            mail_requested_at = now(),
-           mail_requested_by = ${user.id}::uuid,
-           mail_handled_at = NULL,
-           mail_handled_by = NULL,
-           mail_note = NULL
+           mail_requested_by = ${user.id}::uuid
      WHERE id = ${quoteId}::uuid
   `;
 }
@@ -569,9 +588,22 @@ export interface MailRow {
   lon: number;
   editedAt: string | null;
   editedBy: string | null;
+  /**
+   * What the office did with this one LAST time, when it has been through the
+   * board before and a rep has asked again.
+   *
+   * There is one row per quote and no history table, so "posted" and
+   * "rejected" have to be inferred from what survives: a posting stamps
+   * sent_via='mail' and sent_at, a rejection leaves a handled timestamp and a
+   * reason without those. Null means this quote has never been handled, which
+   * is the ordinary case.
+   */
+  priorOutcome: "mailed" | "rejected" | null;
 }
 
 interface RawMailRow {
+  sent_via: string | null;
+  sent_at: string | Date | null;
   id: string;
   public_token: string | null;
   address: string;
@@ -630,7 +662,7 @@ interface RawMailRow {
 export async function listMail(status: MailStatus): Promise<MailRow[]> {
   const CORE = `q.id, q.public_token, q.price_shown, q.price_low, q.squares,
             q.created_at, q.mail_requested_at, q.mail_handled_at,
-            q.mail_status, q.mail_note, q.emailed_at,
+            q.mail_status, q.mail_note, q.emailed_at, q.sent_via, q.sent_at,
             q.pitch_degrees, q.planes, q.material, q.stories, q.structures,
             c.address, c.name, c.phone, c.email, c.lat, c.lon,
             req.email AS requested_by, handler.email AS handled_by`;
@@ -695,9 +727,60 @@ export async function listMail(status: MailStatus): Promise<MailRow[]> {
     lon: Number(r.lon),
     editedAt: iso(r.edited_at),
     editedBy: r.edited_by ? repName(r.edited_by) : null,
+    priorOutcome: !r.mail_handled_at
+      ? null
+      : r.sent_via === "mail" && r.sent_at
+        ? "mailed"
+        : "rejected",
   }));
 
   return dedupeByProperty(mapped);
+}
+
+/**
+ * The true number on each tab.
+ *
+ * THE TAB LABELS USED TO COUNT A WINDOW, NOT A TABLE. listMail caps at 300
+ * rows so the board stays fast, and the tabs were showing the length of what
+ * came back. "Posted 300" was not three hundred posted mailers, it was the
+ * limit, and the real figure was somewhere at or above it with no way to tell
+ * from the screen. The day the office crosses that line the number stops
+ * moving and quietly starts lying.
+ *
+ * This counts every row, with no join and no limit, and applies the same
+ * one-line-per-property rule the board applies, so the number above a list
+ * always means the same thing as the list.
+ */
+export async function mailCounts(): Promise<Record<MailStatus, number>> {
+  const rows =
+    (await queryOrNull<{
+      mail_status: MailStatus;
+      address: string;
+      lat: number;
+      lon: number;
+    }>(
+      `SELECT q.mail_status, c.address, c.lat, c.lon
+         FROM quotes q
+         JOIN customers c ON c.id = q.customer_id
+        WHERE q.mail_status IS NOT NULL`,
+      [],
+    )) ?? [];
+
+  const seen: Record<MailStatus, Set<string>> = {
+    requested: new Set(),
+    mailed: new Set(),
+    rejected: new Set(),
+  };
+  for (const r of rows) {
+    const bucket = seen[r.mail_status];
+    if (bucket)
+      bucket.add(propertyKey(r.address, Number(r.lat), Number(r.lon)));
+  }
+  return {
+    requested: seen.requested.size,
+    mailed: seen.mailed.size,
+    rejected: seen.rejected.size,
+  };
 }
 
 /**
@@ -741,5 +824,5 @@ function dedupeByProperty(rows: MailRow[]): MailRow[] {
  * affordable.
  */
 export async function mailQueueSize(): Promise<number> {
-  return (await listMail("requested")).length;
+  return (await mailCounts()).requested;
 }
