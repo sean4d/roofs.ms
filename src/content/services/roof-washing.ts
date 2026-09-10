@@ -42,6 +42,7 @@ export const residentialRoofWashing: ServiceContent = {
 
   hero: {
     eyebrow: "New service",
+    heading: "Roof Washing for Homes in Hattiesburg, MS",
     headline: "Roof washing, handled by roofers first",
     subhead:
       "Those black streaks aren't dirt. They're a living organism feeding on your shingles. We now offer residential roof washing across South Mississippi, and because we're a roofing company, the roof gets evaluated before anything touches it.",
@@ -344,6 +345,7 @@ export const commercialRoofWashing: ServiceContent = {
 
   hero: {
     eyebrow: "New service",
+    heading: "Commercial Roof Washing in Hattiesburg, MS",
     headline: "Commercial roof washing, coordinated by your roofer",
     subhead:
       "Staining and growth on a commercial roof is a curb-appeal problem and a roofing question at the same time. We evaluate the system first, scope the work, and schedule it around how your building actually operates.",

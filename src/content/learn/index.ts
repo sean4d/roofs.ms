@@ -2139,9 +2139,12 @@ export const learnArticles: LearnArticle[] = [
     updated: "2026-09-10",
     readMinutes: 6,
     hero: {
-      headline: "Check the license yourself. It takes two minutes.",
+      // The learn template renders hero.headline as the H1, so this article's
+      // headline states its subject rather than opening with a hook. The hook
+      // moves into the subhead, where it still lands first for a reader.
+      headline: "How to verify a Mississippi contractor's license",
       subhead:
-        "A license number is the one claim on a roofing proposal you can verify against somebody other than the roofer. Here is exactly where to look, and what the answer does and does not prove.",
+        "It takes about two minutes, and a license number is the one claim on a roofing proposal you can verify against somebody other than the roofer. Here is exactly where to look, and what the answer does and does not prove.",
     },
     body: [
       {

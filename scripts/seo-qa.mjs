@@ -75,7 +75,12 @@ const PAGES = [
   ["/commercial/roof-maintenance", "commercial"],
   ["/commercial/roof-replacement", "commercial"],
   ["/commercial/metal-roofing", "commercial"],
+  ["/commercial/metal-roofing/standing-seam", "commercial"],
+  ["/commercial/roof-washing", "commercial"],
   ["/metal-roofing", "residential"],
+  ["/residential/roof-washing", "residential"],
+  ["/residential/leaf-guard", "residential"],
+  ["/storm-damage/emergency-roofing", "residential"],
   ["/service-areas/hattiesburg", "city"],
   ["/service-areas/gulfport", "city"],
   ["/learn/hiring/how-to-choose-a-roofing-contractor", "article"],
@@ -420,6 +425,26 @@ const CLASS_RULES = {
       at("article has section headings"),
     );
     check(doc.text.length > 2000, at("article has substantive body copy"));
+    /*
+     * The learn template renders hero.headline as the H1, so an article
+     * whose headline is a pure hook ships an H1 that says nothing about its
+     * subject. The H1 has to share real words with the title.
+     */
+    const stop =
+      /^(a|an|the|and|or|to|in|of|for|how|what|why|is|do|does|your|you|it|takes|about)$/i;
+    const words = (s) =>
+      new Set(
+        s
+          .toLowerCase()
+          .split(/[^a-z0-9']+/)
+          .filter((w) => w.length > 2 && !stop.test(w)),
+      );
+    const shared = [...words(doc.h1)].filter((w) => words(doc.title).has(w));
+    check(
+      shared.length >= 2,
+      at(`H1 states the article's subject ("${doc.h1}")`),
+      `shares only [${shared}] with the title "${doc.title}"`,
+    );
   },
 
   licensing(page, doc) {
