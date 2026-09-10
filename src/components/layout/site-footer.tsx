@@ -117,19 +117,32 @@ export function SiteFooter() {
       <div className="border-t border-white/10">
         <div className="container-site flex flex-col items-center justify-between gap-3 py-6 text-xs text-steel-300 sm:flex-row">
           {/*
-            BOTH LICENCE NUMBERS, AND THE COMMERCIAL ONE IS A LINK.
+            BOTH LICENCE NUMBERS, AND BOTH ARE LINKS.
 
             This was one line reading "MS Contractor License #R22245", which
             was accurate and told a building owner nothing about whether we
             are allowed to reroof their warehouse. Mississippi issues the two
-            separately and we hold both, so the footer of every page now
-            carries both numbers and a route to check the commercial one
-            against the state's own register.
+            separately and we hold both, so the footer of every page carries
+            both numbers.
+
+            Only the commercial one was a link, which looked like an oversight
+            rather than a decision (owner, 2026-09-10): two numbers side by
+            side, one underlined and one not. They are equally checkable, they
+            sit in two different registers, and each now points at its own
+            record.
           */}
           <p className="text-center sm:text-left">
             © {year} {siteConfig.legalName}. All rights reserved.
             {siteConfig.license && (
-              <span> · MSBOC Residential License #{siteConfig.license}</span>
+              <span>
+                {" · "}
+                <a
+                  href={siteConfig.links.msbocLicense}
+                  className="underline underline-offset-4 transition-colors hover:text-white"
+                >
+                  MSBOC Residential License #{siteConfig.license}
+                </a>
+              </span>
             )}
             {siteConfig.licenseCommercial && (
               <span>
@@ -138,8 +151,7 @@ export function SiteFooter() {
                   href={siteConfig.links.msbocCommercialLicense}
                   className="underline underline-offset-4 transition-colors hover:text-white"
                 >
-                  Verify MSBOC Commercial License #
-                  {siteConfig.licenseCommercial}
+                  MSBOC Commercial License #{siteConfig.licenseCommercial}
                 </a>
               </span>
             )}

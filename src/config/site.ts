@@ -14,6 +14,22 @@ export const siteConfig = {
   legalName: "Southeast Roofing LLC",
 
   /**
+   * Names this business used to trade under.
+   *
+   * The Google profile carries reviews going back to the old name, and a few
+   * reviewers wrote it into their text. Those reviews are real and they stay
+   * on the Google profile, but a visitor reading "The Roofing Society did an
+   * awesome job" on southeastroofing.llc has no way to know that is us, and
+   * it reads either as a mistake or as someone else's review borrowed for
+   * our site. So reviews that name a former identity are not displayed here
+   * (owner, 2026-09-10). Nothing is edited, quoted out of context, or
+   * reattributed; the review is simply left where it already lives.
+   *
+   * Matched case-insensitively against review text and the owner's reply.
+   */
+  formerNames: ["Roofing Society"] as string[],
+
+  /**
    * Canonical host. southeastroofing.llc is the primary production domain;
    * roofs.ms 301-redirects to it (PRD §1). Never hardcode a domain anywhere
    * else: flip NEXT_PUBLIC_SITE_URL if the owner ever changes strategy.

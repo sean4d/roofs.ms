@@ -605,8 +605,10 @@ export const serviceAreaSection = {
 export const reviewsSection = {
   eyebrow: "Reputation",
   title: "Don't take our word for it",
+  // The strip has four badges and the sentence listed three, which read as an
+  // oversight next to the one badge a building owner actually came for.
   description:
-    "Verify us yourself. Every badge below links straight to the official record: our Google reviews, our GAF certification, our BBB accreditation.",
+    "Verify us yourself. Every badge below links straight to the official record: our Google reviews, our GAF certification, our BBB accreditation, and both of our Mississippi State Board of Contractors licenses.",
   /** Live Google Business Profile (owner-supplied 2026-07-04), external */
   googleCta: {
     label: "Read our Google reviews",

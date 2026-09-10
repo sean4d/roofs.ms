@@ -1,3 +1,4 @@
+import { siteConfig } from "@/config/site";
 import { googleReviews } from "@/content/reviews";
 import { getGoogleReviewData } from "@/lib/google-reviews";
 import { cleanCopy, stripEmDashes } from "@/lib/no-em-dash";
@@ -32,6 +33,28 @@ export interface SiteReviews {
 }
 
 const firstName = (n: string) => n.trim().toLowerCase().split(/\s+/)[0];
+
+/**
+ * Reviews that name a business we no longer trade as.
+ *
+ * See siteConfig.formerNames. The filter runs inside getSiteReviews, which is
+ * the single door every surface comes through (homepage marquee, /reviews,
+ * city pages, /api/reviews), so a former name cannot reach one page by a
+ * route the others do not use.
+ */
+const FORMER_NAME = siteConfig.formerNames.length
+  ? new RegExp(
+      siteConfig.formerNames
+        .map((n) => n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+        .join("|"),
+      "i",
+    )
+  : null;
+
+function namesAFormerBusiness(review: DisplayReview): boolean {
+  if (!FORMER_NAME) return false;
+  return FORMER_NAME.test(review.text) || FORMER_NAME.test(review.reply ?? "");
+}
 
 /**
  * Words that mean a review is actually about the roof.
@@ -112,10 +135,18 @@ export async function getSiteReviews(): Promise<SiteReviews> {
       services: r.services,
     }));
 
+  /*
+   * `count` and `rating` stay exactly what Google reports, because they are
+   * a statement about the Google profile rather than about this page. "5.0
+   * from 34 Google reviews" remains true whether or not all 34 are displayed
+   * here, and quietly decrementing it would be inventing a statistic.
+   */
   return {
     live: Boolean(live),
     rating: live?.rating,
     count: live?.count,
-    reviews: [...liveReviews, ...curated],
+    reviews: [...liveReviews, ...curated].filter(
+      (r) => !namesAFormerBusiness(r),
+    ),
   };
 }

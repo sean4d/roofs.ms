@@ -83,6 +83,7 @@ const PAGES = [
   ["/storm-damage/emergency-roofing", "residential"],
   ["/service-areas/hattiesburg", "city"],
   ["/service-areas/gulfport", "city"],
+  ["/reviews", "company"],
   ["/learn/hiring/how-to-choose-a-roofing-contractor", "article"],
   [
     "/learn/hiring/verify-mississippi-commercial-roofing-license",
@@ -321,6 +322,14 @@ function universalRules(page, doc) {
       "invented MSBOC application requirements",
     ],
     [/five-figure surprises/i, "unhedged dollar-magnitude promise"],
+    /*
+     * The company traded as Roofing Society before it was Southeast Roofing,
+     * and a couple of Google reviews say so in their text. They stay on the
+     * Google profile; on this site a visitor has no way to know that is us.
+     * lib/reviews.ts filters them out of the live feed, and this catches the
+     * day somebody adds a review surface that bypasses it.
+     */
+    [/roofing society/i, "a review naming the company's former identity"],
   ];
   for (const [re, why] of BANNED) {
     check(!re.test(text), at(`does not contain: ${why}`));

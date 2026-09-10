@@ -6,8 +6,11 @@
  * - Every entry is verifiable on the live Google profile
  * - No schema.org Review/AggregateRating markup: Google treats
  *   self-collected testimonial markup as self-serving; display only
- * - EXCLUDED: one 5-star review that praises a different company name
- *   ("Roofing Society"), flagged to owner 2026-07-05
+ * - EXCLUDED: 5-star reviews that praise the company's former name
+ *   ("Roofing Society"), flagged to owner 2026-07-05. That exclusion is no
+ *   longer a manual one: siteConfig.formerNames drives a filter in
+ *   lib/reviews.ts that catches them in the LIVE Google feed too, which this
+ *   hand-transcribed list cannot do on its own.
  */
 
 export interface GoogleReview {
