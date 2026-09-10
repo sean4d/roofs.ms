@@ -262,7 +262,7 @@ export const learnArticles: LearnArticle[] = [
       {
         question: "Is a GAF Certified Contractor the same as a GAF employee?",
         answer:
-          "No. GAF certifies independent contractors it has vetted and trained to install its systems to specification. We're an independent Mississippi company (MSBOC #R22245). The certification is a manufacturer's standard we meet, and you can verify it directly on GAF's website rather than taking our word for it.",
+          "No. GAF certifies independent contractors it has vetted and trained to install its systems to specification. We're an independent Mississippi company (MSBOC Residential License #R22245). The certification is a manufacturer's standard we meet, and you can verify it directly on GAF's website rather than taking our word for it.",
       },
       {
         question: "Does using one manufacturer's full system really matter?",
@@ -517,7 +517,7 @@ export const learnArticles: LearnArticle[] = [
       { type: "h2", text: "The first 48 hours after" },
       {
         type: "p",
-        text: "Safety first: downed lines and weakened structures kill people after storms. From the ground, photograph everything. If water is coming in, a professional tarp job stops the damage from compounding, insurers expect reasonable mitigation and generally cover it. Then get a documented inspection before signing anything with whoever knocks on your door first: after every major storm, out-of-town crews flood the region, work fast, and leave faster. Check licenses. Ours is MSBOC #R22245, and we're still here after the trucks leave.",
+        text: "Safety first: downed lines and weakened structures kill people after storms. From the ground, photograph everything. If water is coming in, a professional tarp job stops the damage from compounding, insurers expect reasonable mitigation and generally cover it. Then get a documented inspection before signing anything with whoever knocks on your door first: after every major storm, out-of-town crews flood the region, work fast, and leave faster. Check licenses, and remember Mississippi keeps residential and commercial in separate registers. Ours are MSBOC Residential #R22245 and Commercial #27720-SC, and we're still here after the trucks leave.",
       },
       {
         type: "callout",
@@ -1097,13 +1097,22 @@ export const learnArticles: LearnArticle[] = [
       { type: "h2", text: "Start with license and insurance" },
       {
         type: "p",
-        text: "Commercial roofing and larger residential jobs in Mississippi fall under the Mississippi State Board of Contractors (MSBOC). Ask for the license number and confirm it's current. Then ask for proof of both general liability insurance and workers' compensation, if an uninsured worker is hurt on your roof, or your home is damaged, you don't want that liability landing on you. A legitimate contractor hands these over without flinching.",
+        text: "The Mississippi State Board of Contractors (MSBOC) licenses this work, and it licenses residential and commercial contracting separately, in two different registers. The board's own rule is that residential roofing work over $10,000 requires a residential license, which covers essentially every roof replacement, and that commercial jobs over $50,000 require a commercial license. So there is a second question after 'what is your license number', and it is 'which register is it in'. A contractor can hold one and not the other.",
+      },
+      {
+        type: "p",
+        text: "Then ask for proof of both general liability insurance and workers' compensation. If an uninsured worker is hurt on your roof, or your home is damaged, you don't want that liability landing on you. A legitimate contractor hands all of this over without flinching, and a number you can check beats any promise made on your driveway. If you want the click-by-click version, our guide to verifying a Mississippi contractor's license covers the register and both indexes.",
+        link: {
+          text: "verifying a Mississippi contractor's license",
+          href: "/learn/hiring/verify-mississippi-commercial-roofing-license",
+        },
       },
       {
         type: "list",
         title: "Ask every roofer for",
         items: [
-          "Their MSBOC license number (and confirm it's current)",
+          "Their MSBOC license number, and which register it is in: residential, commercial, or both",
+          "Confirmation that it is current, checked at search.msboc.us rather than taken on trust",
           "A certificate of general liability insurance",
           "Proof of workers' compensation coverage",
           "A physical local address: not just a cell number and a magnetic sign",
@@ -1146,7 +1155,7 @@ export const learnArticles: LearnArticle[] = [
       {
         type: "callout",
         title: "Vet us the same way",
-        text: "We're glad to be checked: MSBOC license #R22245, GAF Certified Contractor, BBB A+ rated, and 5-star reviewed on Google, every credential links to a record we can't edit. Our office is on US-98 in Hattiesburg.",
+        text: "We're glad to be checked, and we're in both registers: MSBOC Residential License #R22245 and MSBOC Commercial Certificate of Responsibility #27720-SC, plus GAF Certified Contractor, BBB A+ rated, and 5-star reviewed on Google. Every credential links to a record we can't edit. Our office is on US-98 in Hattiesburg.",
         href: "/reviews",
         linkLabel: "Verify our credentials",
       },
@@ -1932,7 +1941,7 @@ export const learnArticles: LearnArticle[] = [
         title: "Questions worth asking before you sign",
         items: [
           "Will you pull the permit under your license, and is the permit cost included in this proposal?",
-          "What's your Mississippi State Board of Contractors license number? (Ours is R22245, check it.)",
+          "What's your Mississippi State Board of Contractors license number, and is it residential or commercial? (Ours are Residential R22245 and Commercial 27720-SC. Check both.)",
           "Who meets the inspector, and what happens if something needs correcting?",
           "Will you provide the final documentation once the work passes?",
         ],
@@ -1964,7 +1973,7 @@ export const learnArticles: LearnArticle[] = [
       {
         type: "callout",
         title: "We handle the permit as part of the job",
-        text: "Licensed in Mississippi (MSBOC #R22245), GAF Certified, and glad to be checked before you commit to anything.",
+        text: "Licensed in Mississippi on both sides of the trade (MSBOC Residential #R22245, Commercial #27720-SC), GAF Certified, and glad to be checked before you commit to anything.",
         href: "/free-inspection",
         linkLabel: "Schedule a free inspection",
       },
@@ -2103,6 +2112,167 @@ export const learnArticles: LearnArticle[] = [
       },
       { label: "Ventilation", href: "/residential/ventilation" },
       { label: "Roof Color Visualizer", href: "/roof-color-visualizer" },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  /* Hiring: verifying a Mississippi commercial roofing licence          */
+  /*                                                                     */
+  /* Every threshold in this article is quoted from the MSBOC FAQ (see   */
+  /* src/config/licensing.ts, verified 2026-09-10). The article states   */
+  /* the law as the board states it and OUR credential as a fact, and    */
+  /* never merges the two into "so you must hire us". If the board       */
+  /* changes a figure, change config/licensing.ts and then correct the   */
+  /* quoted numbers here to match.                                       */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "verify-mississippi-commercial-roofing-license",
+    category: "hiring",
+    title:
+      "How to verify a Mississippi commercial roofing contractor's license",
+    metaTitle:
+      "Verify a Mississippi Commercial Roofing License | Southeast Roofing",
+    metaDescription:
+      "Mississippi keeps two separate contractor registers. How to look a roofer up at search.msboc.us, what the $50,000 commercial threshold means, and what a license won't tell you.",
+    excerpt:
+      "Mississippi keeps two registers, and a contractor can be in one and not the other. Here's how to check the right one in about two minutes.",
+    updated: "2026-09-10",
+    readMinutes: 6,
+    hero: {
+      headline: "Check the license yourself. It takes two minutes.",
+      subhead:
+        "A license number is the one claim on a roofing proposal you can verify against somebody other than the roofer. Here is exactly where to look, and what the answer does and does not prove.",
+    },
+    body: [
+      {
+        type: "p",
+        text: "If you manage a building in Mississippi and you are about to spend real money on its roof, the cheapest piece of due diligence available to you is free and takes about two minutes. The Mississippi State Board of Contractors publishes a searchable register of every contractor it licenses, and a number that does not resolve there is a number worth asking about before anything gets signed.",
+      },
+      { type: "h2", text: "First: Mississippi keeps two separate registers" },
+      {
+        type: "p",
+        text: "This is the part that trips people up. The board licenses residential contracting and commercial contracting separately, in two different indexes, and a company can appear in one and not the other. The same business will even carry a different internal ID in each index, so finding a roofer in the residential register tells you nothing about whether they are licensed for your warehouse. Ask which credential they hold for the work you are buying, then check that index specifically.",
+        link: {
+          text: "searchable register",
+          href: "https://search.msboc.us/",
+          external: true,
+        },
+      },
+      {
+        type: "p",
+        text: "What Mississippi calls the commercial credential is a Certificate of Responsibility. It is held by the company and tied to a qualifying individual, and it is a different thing from a residential license, not a bigger version of one.",
+      },
+      { type: "h2", text: "What the law actually requires" },
+      {
+        type: "p",
+        text: 'The thresholds matter, because a lot of roofing marketing (ours included, at one point) blurs them into a blanket claim that all commercial work requires a license. That is not what the board says. In MSBOC\'s own words: "All contractors and subcontractors performing work on commercial jobs over $50,000, including equipment installation, are required to have a commercial license issued by MSBOC."',
+        link: {
+          text: "MSBOC's own words",
+          href: "https://www.msboc.us/general-info/frequently-asked-questions/",
+          external: true,
+        },
+      },
+      {
+        type: "p",
+        text: 'On the residential side the figure is much lower: "All contractors performing new residential construction over $50,000, residential remodeling or additions over $10,000, or residential roofing over $10,000, are required to have a license issued by MSBOC." A roof replacement on a house is almost always over that $10,000 roofing figure, which is why the residential license is not optional in practice even though the law states it as a threshold.',
+      },
+      {
+        type: "p",
+        text: "Two honest caveats. Below the state thresholds, your city or county may still have its own licensing, permitting or registration requirements, and MSBOC does not administer those, so a state answer is not automatically the whole answer. And none of this is legal advice: it is what the board publishes, quoted so you can go read it yourself.",
+      },
+      {
+        type: "list",
+        title: "The thresholds, in one place",
+        items: [
+          "Commercial jobs over $50,000: a commercial license is required.",
+          "Residential roofing over $10,000: a residential license is required.",
+          "Residential remodeling or additions over $10,000: residential license required.",
+          "New residential construction over $50,000: residential license required.",
+          "Below those figures: local city or county requirements may still apply.",
+        ],
+      },
+      { type: "h2", text: "How to run the check" },
+      {
+        type: "list",
+        title: "Two minutes, start to finish",
+        items: [
+          "Go to search.msboc.us, the board's public contractor search.",
+          "Search by company name, or by the license number the contractor gave you.",
+          "Confirm you are looking at the right index: commercial for a commercial job, residential for a house.",
+          "Check that the name on the record is the legal entity that will sign your contract, not a similar-sounding one.",
+          "Check the status is current, and note the expiration date.",
+          "If nothing resolves, ask the contractor directly. There are innocent explanations, a name change or a typo, and there are the other kind.",
+        ],
+      },
+      { type: "h2", text: "What a license does not tell you" },
+      {
+        type: "p",
+        text: "A current license means the state has qualified the company to do the work at that size. It is a floor, not a recommendation. It says nothing about whether the crews are any good, whether the company carries insurance today, whether it pays its suppliers, or whether it will answer the phone in year three of a warranty. Those are separate checks, and on a commercial roof they matter as much as the license does.",
+      },
+      {
+        type: "list",
+        title: "Check these alongside the license",
+        items: [
+          "A current certificate of general liability insurance, sent to you by their agent rather than printed off by them.",
+          "Workers' compensation coverage, for the same reason.",
+          "Manufacturer approval for the specific system being proposed, if a manufacturer warranty is part of the deal.",
+          "A physical local address, and references on buildings like yours.",
+          "Whether the crews are employees or subcontractors, and who supervises them.",
+        ],
+      },
+      { type: "h2", text: "The storm-chaser version of this problem" },
+      {
+        type: "p",
+        text: "After a hurricane or a hail event, crews arrive from out of state, work fast, and leave faster. Some are licensed here and some are not, and the ones that are not are precisely the ones who will tell you a license is a formality. The register does not care how convincing anybody was on your driveway. If the number does not resolve, you have your answer, and you have it before you have paid anyone.",
+      },
+      {
+        type: "callout",
+        title: "Run the check on us",
+        text: "Southeast Roofing LLC holds MSBOC Residential License #R22245 and MSBOC Commercial Certificate of Responsibility #27720-SC. Both are on the board's public records, both are linked from our licenses page, and neither is a record we can edit.",
+        href: "/licenses",
+        linkLabel: "See both licenses and how to verify them",
+      },
+    ],
+    faqs: [
+      {
+        question: "Does all commercial work in Mississippi require a license?",
+        answer:
+          "No, and be wary of anyone who tells you it does. MSBOC states that contractors and subcontractors performing work on commercial jobs over $50,000, including equipment installation, are required to hold a commercial license. Smaller jobs fall below that state threshold, though a city or county may have requirements of its own that the state board does not administer.",
+      },
+      {
+        question:
+          "Is a residential license enough for work on a commercial building?",
+        answer:
+          "They are separate credentials in separate registers. If the job is a commercial job over the state's $50,000 threshold, the commercial license is the one that applies. Ask which the contractor holds and check that specific index rather than assuming one implies the other.",
+      },
+      {
+        question: "What is a Certificate of Responsibility?",
+        answer:
+          "It is what Mississippi calls the commercial contractor credential. It is issued to the company and tied to a qualifying individual, and it appears in the board's commercial register with its own number, separate from any residential license the same company may hold.",
+      },
+      {
+        question: "Where do I look up a Mississippi contractor's license?",
+        answer:
+          "At search.msboc.us, the Mississippi State Board of Contractors' public search. Search by company name or by license number, and make sure you are in the right index: commercial and residential are listed separately.",
+      },
+      {
+        question: "What if the number they gave me doesn't come up?",
+        answer:
+          "Ask them about it before you draw a conclusion. Registers lag, companies change names, and numbers get transcribed wrong. But a contractor who cannot produce a number that resolves, or who treats the question as an insult, has told you something useful either way.",
+      },
+      {
+        question: "Does a license mean the contractor is insured?",
+        answer:
+          "No. They are separate things and insurance lapses without the license changing. Ask for a certificate of general liability insurance and proof of workers' compensation, sent directly from their agent, and check the dates on it.",
+      },
+    ],
+    related: [
+      { label: "Licenses & Credentials", href: "/licenses" },
+      { label: "Commercial Roofing", href: "/commercial" },
+      {
+        label: "Commercial Roof Replacement",
+        href: "/commercial/roof-replacement",
+      },
     ],
   },
 ];

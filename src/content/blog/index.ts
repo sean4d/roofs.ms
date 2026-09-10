@@ -34,8 +34,7 @@ export interface BlogPost {
 export const blogPosts: BlogPost[] = [
   {
     slug: "roof-washing-now-offered-south-mississippi",
-    title:
-      "We now offer roof washing, and we’re doing it the roofer’s way",
+    title: "We now offer roof washing, and we’re doing it the roofer’s way",
     metaTitle: "Roof Washing Now Offered | Southeast Roofing Blog",
     metaDescription:
       "Southeast Roofing now offers residential and commercial roof washing across South Mississippi: with an exterior-cleaning partner alongside us, and the roof evaluated by roofers first.",

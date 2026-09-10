@@ -27,7 +27,8 @@ export type RoofTopic =
 
 export type Urgency = "low" | "moderate" | "high";
 
-export type CtaKind = "inspection" | "estimate" | "call" | "insurance" | "photos";
+export type CtaKind =
+  "inspection" | "estimate" | "call" | "insurance" | "photos";
 
 export interface AssistantCta {
   kind: CtaKind;
@@ -67,7 +68,8 @@ const TOPICS: Record<RoofTopic, TopicSpec> = {
     headline: "Let's track down that leak",
     read: "Active leaks in our area usually trace back to failed flashing, a dry-rotted pipe boot, or worn shingles: not always where the water shows up inside.",
     urgency: "high",
-    urgencyNote: "Leaks spread fast into decking and drywall. The sooner it's found, the smaller the repair.",
+    urgencyNote:
+      "Leaks spread fast into decking and drywall. The sooner it's found, the smaller the repair.",
     steps: [
       "Contain the water inside if you safely can (a bucket + move valuables).",
       "Book a free inspection so we can find the actual source, not just the stain.",
@@ -79,7 +81,8 @@ const TOPICS: Record<RoofTopic, TopicSpec> = {
     headline: "Storm damage, let's protect you",
     read: "Wind and hail often cause damage that isn't obvious from the ground: lifted shingles, bruised mats, and cracked seals that leak later.",
     urgency: "high",
-    urgencyNote: "Insurance has timelines. Documenting damage early protects both your roof and your claim.",
+    urgencyNote:
+      "Insurance has timelines. Documenting damage early protects both your roof and your claim.",
     steps: [
       "Photograph everything you can see, safely from the ground.",
       "Use our Insurance Claim Helper to plan your next step.",
@@ -91,7 +94,8 @@ const TOPICS: Record<RoofTopic, TopicSpec> = {
     headline: "Planning a new roof",
     read: "A full replacement is the right call when repairs stop making sense, widespread wear, multiple leaks, or an aging roof past its years.",
     urgency: "moderate",
-    urgencyNote: "No rush to decide today, but a free inspection tells you exactly where you stand.",
+    urgencyNote:
+      "No rush to decide today, but a free inspection tells you exactly where you stand.",
     steps: [
       "Get a free inspection and honest assessment of what you actually need.",
       "Try our instant estimate for a quick ballpark.",
@@ -103,7 +107,8 @@ const TOPICS: Record<RoofTopic, TopicSpec> = {
     headline: "Metal roofing questions",
     read: "Metal is a great long-term option in Mississippi's heat and storms: standing seam or exposed-fastener, in a range of gauges and finishes.",
     urgency: "low",
-    urgencyNote: "This is a considered purchase, take your time and get the facts.",
+    urgencyNote:
+      "This is a considered purchase, take your time and get the facts.",
     steps: [
       "Get a free inspection and metal-roof consultation.",
       "Try our instant estimate for a ballpark.",
@@ -115,7 +120,8 @@ const TOPICS: Record<RoofTopic, TopicSpec> = {
     headline: "Commercial roofing",
     read: "Flat and low-slope systems (TPO and more) need the right system and maintenance plan for the building and budget.",
     urgency: "moderate",
-    urgencyNote: "Small commercial issues get expensive fast when water ponds or seams open.",
+    urgencyNote:
+      "Small commercial issues get expensive fast when water ponds or seams open.",
     steps: [
       "Request a commercial consultation and roof assessment.",
       "We'll scope the system, condition, and a maintenance plan.",
@@ -126,7 +132,8 @@ const TOPICS: Record<RoofTopic, TopicSpec> = {
     headline: "Insurance claim help",
     read: "Claims are confusing when you're dealing with a damaged roof. The key is accurate documentation and knowing your next step.",
     urgency: "moderate",
-    urgencyNote: "Where you are in the process changes what you should do next.",
+    urgencyNote:
+      "Where you are in the process changes what you should do next.",
     steps: [
       "Use our Insurance Claim Helper to map your situation.",
       "Get a free inspection so the damage is fully documented.",
@@ -148,7 +155,8 @@ const TOPICS: Record<RoofTopic, TopicSpec> = {
     headline: "Gutters & drainage",
     read: "Good gutters protect your fascia, siding, and foundation: sizing, seamless runs, and guards all matter for how well water moves away.",
     urgency: "low",
-    urgencyNote: "Overflowing or undersized gutters quietly rot wood and soak foundations.",
+    urgencyNote:
+      "Overflowing or undersized gutters quietly rot wood and soak foundations.",
     steps: [
       "Get a free inspection and gutter assessment.",
       "Try our instant estimate for a ballpark.",
@@ -159,7 +167,8 @@ const TOPICS: Record<RoofTopic, TopicSpec> = {
     headline: "Let's figure it out together",
     read: "No problem. Most folks aren't sure what's going on up there. The fastest way to real answers is a free set of eyes on it.",
     urgency: "moderate",
-    urgencyNote: "A free inspection costs you nothing and gives you a straight answer.",
+    urgencyNote:
+      "A free inspection costs you nothing and gives you a straight answer.",
     steps: [
       "Book a free inspection. We'll tell you honestly what (if anything) needs doing.",
       "Or call and describe what you're seeing; we'll point you the right way.",
@@ -171,13 +180,29 @@ const TOPICS: Record<RoofTopic, TopicSpec> = {
 function buildCta(kind: CtaKind): AssistantCta {
   switch (kind) {
     case "inspection":
-      return { kind, label: "Schedule free inspection", href: "/free-inspection" };
+      return {
+        kind,
+        label: "Schedule free inspection",
+        href: "/free-inspection",
+      };
     case "estimate":
-      return { kind, label: "Get instant estimate", href: siteConfig.links.instantEstimate };
+      return {
+        kind,
+        label: "Get instant estimate",
+        href: siteConfig.links.instantEstimate,
+      };
     case "call":
-      return { kind, label: `Call ${siteConfig.phone.display}`, href: `tel:${siteConfig.phone.tel}` };
+      return {
+        kind,
+        label: `Call ${siteConfig.phone.display}`,
+        href: `tel:${siteConfig.phone.tel}`,
+      };
     case "insurance":
-      return { kind, label: "Insurance claim help", href: "/storm-damage/insurance-claims/wizard" };
+      return {
+        kind,
+        label: "Insurance claim help",
+        href: "/storm-damage/insurance-claims/wizard",
+      };
     case "photos":
       return { kind, label: "Add more photos" };
   }
@@ -220,7 +245,13 @@ const TOPIC_LABELS: Record<RoofTopic, string> = {
  * actual links/labels are built server-side by buildCta so URLs and the phone
  * number are never model-controlled.
  */
-const CTA_KINDS: CtaKind[] = ["inspection", "estimate", "call", "insurance", "photos"];
+const CTA_KINDS: CtaKind[] = [
+  "inspection",
+  "estimate",
+  "call",
+  "insurance",
+  "photos",
+];
 
 const ROOF_SYSTEM = [
   `You are the Roof Assistant for ${siteConfig.name}, a licensed, insured roofing`,
@@ -245,13 +276,19 @@ const ROOF_SYSTEM = [
 const ROOF_SCHEMA: Record<string, unknown> = {
   type: "object",
   properties: {
-    headline: { type: "string", description: "Short, friendly title (max ~6 words)." },
+    headline: {
+      type: "string",
+      description: "Short, friendly title (max ~6 words).",
+    },
     read: {
       type: "string",
       description: "2-3 sentence hedged preliminary read of the situation.",
     },
     urgency: { type: "string", enum: ["low", "moderate", "high"] },
-    urgencyNote: { type: "string", description: "One sentence on why it does/doesn't need quick action." },
+    urgencyNote: {
+      type: "string",
+      description: "One sentence on why it does/doesn't need quick action.",
+    },
     steps: {
       type: "array",
       items: { type: "string" },
@@ -280,7 +317,9 @@ const claudeProvider: RoofAnalysisProvider = {
     const fallback = TOPICS[input.topic] ?? TOPICS["not-sure"];
     const user = [
       `Topic the homeowner picked: ${TOPIC_LABELS[input.topic] ?? input.topic}.`,
-      input.description ? `Their note: "${input.description}"` : "They left no note.",
+      input.description
+        ? `Their note: "${input.description}"`
+        : "They left no note.",
       input.images?.length
         ? `${input.images.length} photo(s) attached: analyze them.`
         : "No photos attached, base your read on the topic and note only.",
@@ -327,6 +366,8 @@ function getProvider(): RoofAnalysisProvider {
   return process.env.ANTHROPIC_API_KEY ? claudeProvider : mockProvider;
 }
 
-export async function analyzeRoof(input: AssistantInput): Promise<AssistantResult> {
+export async function analyzeRoof(
+  input: AssistantInput,
+): Promise<AssistantResult> {
   return getProvider().analyze(input);
 }

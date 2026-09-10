@@ -1,4 +1,4 @@
-import { getSiteReviews } from "@/lib/reviews";
+import { getSiteReviews, roofingFirst } from "@/lib/reviews";
 
 /**
  * Reviews as JSON for client-side use (the homepage review wall). Rendered
@@ -15,6 +15,11 @@ export async function GET() {
     live: data.live,
     rating: data.rating ?? null,
     count: data.count ?? null,
-    reviews: data.reviews.filter((r) => r.text.length > 40).slice(0, 18),
+    // Same ordering the server-rendered wall uses, so the client upgrade does
+    // not reshuffle the cards under the reader.
+    reviews: roofingFirst(data.reviews.filter((r) => r.text.length > 40)).slice(
+      0,
+      18,
+    ),
   });
 }

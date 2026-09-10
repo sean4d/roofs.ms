@@ -1,7 +1,7 @@
 import type { CityContent } from "@/content/cities/types";
 
 /**
- * City pages batch 3 (PRD §5, Tier 2 depth): the Gulf Coast towns: 
+ * City pages batch 3 (PRD §5, Tier 2 depth): the Gulf Coast towns:
  * Hancock, Harrison, and Jackson County communities from the Kiln to
  * Pascagoula. Anti-doorway rules hold: unique local copy per town, and
  * none of these cities claim completed local work (no photos in the

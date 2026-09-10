@@ -14,11 +14,7 @@ import { facebookMessage } from "@/lib/facebook-caption";
 const GRAPH = "https://graph.facebook.com/v21.0";
 
 export type Platform =
-  | "google-business"
-  | "facebook"
-  | "instagram"
-  | "tiktok"
-  | "nextdoor";
+  "google-business" | "facebook" | "instagram" | "tiktok" | "nextdoor";
 
 export interface SyndicationInput {
   caption: string;
@@ -56,7 +52,10 @@ async function graph(
   path: string,
   params: Record<string, string>,
 ): Promise<Record<string, unknown>> {
-  const res = await fetch(`${GRAPH}/${path}`, { method: "POST", body: form(params) });
+  const res = await fetch(`${GRAPH}/${path}`, {
+    method: "POST",
+    body: form(params),
+  });
   const data = (await res.json()) as Record<string, unknown>;
   if (data.error) {
     const e = data.error as { message?: string };
@@ -110,12 +109,15 @@ async function mapPool<T, R>(
 ): Promise<R[]> {
   const out = new Array<R>(items.length);
   let next = 0;
-  const workers = Array.from({ length: Math.min(limit, items.length) }, async () => {
-    while (next < items.length) {
-      const i = next++;
-      out[i] = await fn(items[i], i);
-    }
-  });
+  const workers = Array.from(
+    { length: Math.min(limit, items.length) },
+    async () => {
+      while (next < items.length) {
+        const i = next++;
+        out[i] = await fn(items[i], i);
+      }
+    },
+  );
   await Promise.all(workers);
   return out;
 }
@@ -127,7 +129,10 @@ async function getPageToken(): Promise<string> {
   const res = await fetch(
     `${GRAPH}/${pageId}?fields=access_token&access_token=${encodeURIComponent(sys)}`,
   );
-  const data = (await res.json()) as { access_token?: string; error?: { message: string } };
+  const data = (await res.json()) as {
+    access_token?: string;
+    error?: { message: string };
+  };
   if (!data.access_token) {
     throw new Error(data.error?.message ?? "Could not resolve page token");
   }
@@ -261,7 +266,10 @@ async function postToInstagram(
   let lastError: unknown;
   for (let attempt = 0; attempt < 4; attempt++) {
     try {
-      await graph(`${ig}/media_publish`, { creation_id: creationId, access_token: token });
+      await graph(`${ig}/media_publish`, {
+        creation_id: creationId,
+        access_token: token,
+      });
       return {
         platform: "instagram",
         status: "posted",
@@ -273,11 +281,15 @@ async function postToInstagram(
       await new Promise((r) => setTimeout(r, 2000));
     }
   }
-  throw lastError instanceof Error ? lastError : new Error("Instagram publish failed");
+  throw lastError instanceof Error
+    ? lastError
+    : new Error("Instagram publish failed");
 }
 
 export function metaConfigured(): boolean {
-  return Boolean(process.env.META_PAGE_ACCESS_TOKEN && process.env.META_PAGE_ID);
+  return Boolean(
+    process.env.META_PAGE_ACCESS_TOKEN && process.env.META_PAGE_ID,
+  );
 }
 
 /**
@@ -346,10 +358,13 @@ export async function diagnoseMeta(): Promise<{
     };
     out.igAccountResolves = Boolean(data.username);
     out.igUsername = data.username;
-    if (!data.username) out.note = data.error?.message ?? "Instagram did not resolve";
+    if (!data.username)
+      out.note = data.error?.message ?? "Instagram did not resolve";
   } catch (err) {
     out.igAccountResolves = false;
-    out.note = redact(err instanceof Error ? err.message : "Instagram probe failed");
+    out.note = redact(
+      err instanceof Error ? err.message : "Instagram probe failed",
+    );
   }
 
   return out;
@@ -413,16 +428,32 @@ export async function syndicate(
       results.push({ platform: "instagram", status: "error", note });
     }
     if (pageToken) {
-      results.push(await safe("facebook", () => postToFacebook(input, pageToken!)));
+      results.push(
+        await safe("facebook", () => postToFacebook(input, pageToken!)),
+      );
       if (process.env.META_IG_USER_ID) {
-        results.push(await safe("instagram", () => postToInstagram(input, pageToken!)));
+        results.push(
+          await safe("instagram", () => postToInstagram(input, pageToken!)),
+        );
       } else {
-        results.push({ platform: "instagram", status: "skipped", note: "IG not linked" });
+        results.push({
+          platform: "instagram",
+          status: "skipped",
+          note: "IG not linked",
+        });
       }
     }
   } else {
-    results.push({ platform: "facebook", status: "skipped", note: "Not connected yet" });
-    results.push({ platform: "instagram", status: "skipped", note: "Not connected yet" });
+    results.push({
+      platform: "facebook",
+      status: "skipped",
+      note: "Not connected yet",
+    });
+    results.push({
+      platform: "instagram",
+      status: "skipped",
+      note: "Not connected yet",
+    });
   }
 
   // Google Business Profile + TikTok go through Metricool, Meta's Graph API

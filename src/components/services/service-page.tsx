@@ -201,7 +201,7 @@ export function ServicePage({
           <ToolStrip tools={tools} heading={toolHeading} />
         </Section>
       )}
-      <ServiceAreaLinks serviceName={service.name} />
+      <ServiceAreaLinks serviceName={service.name} audience={audience} />
       {commercial ? <CommercialCta /> : <FinalCta />}
     </>
   );

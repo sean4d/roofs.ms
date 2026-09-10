@@ -1,6 +1,7 @@
 import { ExternalLink, ShieldCheck } from "lucide-react";
 
 import { siteConfig } from "@/config/site";
+import { COMMERCIAL_THRESHOLD_SENTENCE } from "@/config/licensing";
 
 /**
  * The two Mississippi licences, with a way to check each one.
@@ -153,16 +154,31 @@ export function CommercialLicenseCallout({
             <strong className="text-navy-900">
               {siteConfig.licenseCommercial}
             </strong>
-            , alongside residential license {siteConfig.license}. Commercial
-            work in Mississippi requires that certificate, and plenty of the
-            crews that show up after a storm do not hold one.
+            , alongside residential license {siteConfig.license}.{" "}
+            {/*
+              WAS: "Commercial work in Mississippi requires that certificate."
+              That is not what the board says. Licensing turns on the size of
+              the job, and stating it as a blanket rule turned a true fact
+              about us into a false claim about the law, in service of making
+              a competitor sound illegal. The threshold is the honest version
+              and it still says the thing worth saying.
+            */}
+            {COMMERCIAL_THRESHOLD_SENTENCE}
           </p>
           <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
             <a
               href={siteConfig.links.msbocCommercialLicense}
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-steel-500 underline underline-offset-4 transition-colors hover:text-navy-900"
             >
-              Verify MSBOC Commercial License {siteConfig.licenseCommercial}
+              Verify {siteConfig.name}&rsquo;s MSBOC Commercial License{" "}
+              {siteConfig.licenseCommercial}
+              <ExternalLink className="size-3.5" aria-hidden="true" />
+            </a>
+            <a
+              href={siteConfig.links.msbocFaq}
+              className="inline-flex items-center gap-1.5 text-sm text-slate-500 underline underline-offset-4 transition-colors hover:text-navy-900"
+            >
+              MSBOC licensing requirements
               <ExternalLink className="size-3.5" aria-hidden="true" />
             </a>
           </div>

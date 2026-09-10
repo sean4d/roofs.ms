@@ -50,7 +50,7 @@ export async function getLiveProjects(): Promise<LiveProject[]> {
       { next: { revalidate: 600, tags: [PROJECTS_TAG] } },
     );
   } catch {
-    // If Sanity is unreachable, the live section simply doesn't render, 
+    // If Sanity is unreachable, the live section simply doesn't render,
     // the existing static gallery below is unaffected.
     return [];
   }

@@ -43,7 +43,9 @@ type ContentBlock =
  * The schema is enforced by a forced tool call, so a non-null result already
  * matches the shape the caller asked for.
  */
-export async function structuredClaude<T>(opts: CallOptions): Promise<T | null> {
+export async function structuredClaude<T>(
+  opts: CallOptions,
+): Promise<T | null> {
   const key = process.env.ANTHROPIC_API_KEY;
   if (!key) return null;
 

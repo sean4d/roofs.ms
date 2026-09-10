@@ -29,9 +29,14 @@ export const metadata: Metadata = buildMetadata({
    * licenses the two sides separately and we hold both, so the title says
    * which, which is also the distinction a searcher types.
    */
-  title: `${siteConfig.name} | Residential & Commercial Roofing Contractor in Hattiesburg, MS`,
+  /*
+   * SHORTENED, because the previous version ran 82 characters and Google
+   * simply cut it off in the results. The words that survive are the ones a
+   * searcher types: both divisions, the trade, and the city.
+   */
+  title: `${siteConfig.name} | Residential & Commercial Roofing, Hattiesburg MS`,
   description:
-    "MSBOC licensed residential and commercial roofing contractor in Hattiesburg, serving South Mississippi. Roof replacement and repair, shingle and metal, TPO and flat roofing, coatings, storm damage and free inspections.",
+    "MSBOC licensed residential and commercial roofing contractor in Hattiesburg, MS. Roof replacement, repair, metal, flat roofing and storm damage, with free inspections.",
   path: "/",
 });
 

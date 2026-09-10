@@ -34,6 +34,38 @@ export interface SiteReviews {
 const firstName = (n: string) => n.trim().toLowerCase().split(/\s+/)[0];
 
 /**
+ * Words that mean a review is actually about the roof.
+ *
+ * The company also hangs Christmas lights, and two of the warmest reviews on
+ * the Google profile are about exactly that. They are real, they are five
+ * stars, and they are staying on the site: nothing here filters a review out.
+ * But a stranger landing on a roofing page and reading "they hung our
+ * Christmas lights" first is being shown the wrong proof, so roofing reviews
+ * lead and the rest follow.
+ */
+const ROOFING_TERMS =
+  /\b(roof\w*|shingle\w*|leak\w*|gutter\w*|hail|storm\w*|siding|flashing|soffit|fascia|tarp\w*|attic|decking|adjuster|claim)\b/i;
+
+export function isRoofingReview(review: DisplayReview): boolean {
+  return (
+    ROOFING_TERMS.test(review.text) ||
+    (review.services ? ROOFING_TERMS.test(review.services) : false)
+  );
+}
+
+/**
+ * Stable partition: roofing reviews first, everything else after, original
+ * order preserved inside each group. Never drops a review and never edits
+ * one, so no reviewer is misquoted and no review is attributed to a city.
+ */
+export function roofingFirst(reviews: DisplayReview[]): DisplayReview[] {
+  return [
+    ...reviews.filter(isRoofingReview),
+    ...reviews.filter((r) => !isRoofingReview(r)),
+  ];
+}
+
+/**
  * Deterministically pick `n` reviews for a given key (e.g. a city slug), so
  * each page shows a stable but varied subset, different cities surface
  * different reviews, which keeps the content unique page to page.
@@ -47,7 +79,10 @@ export function pickReviews(
   let h = 0;
   for (let i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) >>> 0;
   const start = h % reviews.length;
-  return Array.from({ length: n }, (_, i) => reviews[(start + i) % reviews.length]);
+  return Array.from(
+    { length: n },
+    (_, i) => reviews[(start + i) % reviews.length],
+  );
 }
 
 export async function getSiteReviews(): Promise<SiteReviews> {

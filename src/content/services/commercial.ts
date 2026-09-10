@@ -16,7 +16,7 @@ import type { ServiceContent } from "@/content/services/types";
 
 /**
  * Commercial service pages (PRD §4.2, Phase 4). Commercial copy for
- * property managers, facility directors, boards, and owners' reps: 
+ * property managers, facility directors, boards, and owners' reps:
  * longer sales cycles, budget approvals, operations sensitivity. Unique
  * copy per system, qualitative industry facts only; no invented specs,
  * warranties, or project history (PRD §0.2). Dollar figures are banned
@@ -40,6 +40,7 @@ export const commercialServices: ServiceContent[] = [
       "TPO single-ply roofing for South Mississippi facilities: heat-welded seams, reflective white membrane, and installation scheduled around your operations.",
     hero: {
       eyebrow: "Commercial roofing",
+      heading: "TPO Commercial Roofing in Hattiesburg, MS",
       headline: "TPO: today's workhorse flat-roof membrane",
       subhead:
         "White, reflective, heat-welded single-ply, TPO has become the most installed low-slope system in the country for good reason. We install and service it across South Mississippi's offices, retail, and facilities.",
@@ -305,6 +306,7 @@ export const commercialServices: ServiceContent[] = [
       "EPDM rubber-membrane roofing for South Mississippi facilities: a half-century track record, simple detailing, and dependable performance in heat and storms.",
     hero: {
       eyebrow: "Commercial roofing",
+      heading: "EPDM Commercial Roofing in Hattiesburg, MS",
       headline: "EPDM: the membrane with a 50-year track record",
       subhead:
         "Synthetic rubber that's been protecting flat roofs since the 1960s. Simple, flexible, proven: EPDM remains one of the most dependable low-slope systems money can buy.",
@@ -559,6 +561,7 @@ export const commercialServices: ServiceContent[] = [
       "PVC single-ply roofing for South Mississippi, hot-welded seams and strong resistance to grease and many chemicals, a fit for restaurants and food service.",
     hero: {
       eyebrow: "Commercial roofing",
+      heading: "PVC Commercial Roofing in Hattiesburg, MS",
       headline: "PVC: the specialist for demanding roofs",
       subhead:
         "Heat-welded like TPO, but with a chemistry commonly selected where grease, oils, and certain chemical exposures would degrade other membranes. If your roof lives above a kitchen or a process floor, PVC is usually the conversation to have.",
@@ -811,6 +814,7 @@ export const commercialServices: ServiceContent[] = [
       "Modified bitumen roofing for South Mississippi commercial buildings: multi-ply asphalt redundancy, foot-traffic durability, and proven storm performance.",
     hero: {
       eyebrow: "Commercial roofing",
+      heading: "Modified Bitumen Roofing in Hattiesburg, MS",
       headline: "Modified bitumen: layered toughness",
       subhead:
         "Asphalt engineering in rolled form, reinforced plies stacked into a system that stands up to foot traffic, hail, and the abuse a working roof takes. The choice when durability outranks everything.",
@@ -1059,6 +1063,7 @@ export const commercialServices: ServiceContent[] = [
       "Silicone, acrylic, and urethane roof coatings across South Mississippi, restore a sound commercial roof with no tear-off, after honest moisture testing.",
     hero: {
       eyebrow: "Commercial roofing",
+      heading: "Commercial Roof Coatings & Restoration in Hattiesburg, MS",
       headline: "Restoration: the replacement you might not need",
       subhead:
         "If the roof under your problems is still fundamentally sound, a fluid-applied coating system can seal it, cool it, and extend its life, with no tear-off and no operational shutdown. The key word is 'if,' and testing answers it.",
@@ -1097,8 +1102,7 @@ export const commercialServices: ServiceContent[] = [
         ],
       },
       {
-        title:
-          "Silicone, acrylic, or urethane: matching chemistry to the roof",
+        title: "Silicone, acrylic, or urethane: matching chemistry to the roof",
         paragraphs: [
           "The three major coating families solve different problems, and fabric-reinforced restoration systems add strength at seams and details where applicable. Silicone commonly performs where intermittent ponding is a concern (a product-specific claim. We verify it against the actual product), but it collects dirt and is difficult to recoat with anything but more silicone. Acrylics are reflective, water-based, and economical, but they need proper drying conditions and a roof with positive drainage. Urethanes bring strong abrasion and traffic resistance, often used where wear is the enemy.",
         ],
@@ -1127,6 +1131,12 @@ export const commercialServices: ServiceContent[] = [
           ],
           note: "Generalized traits, performance claims are product-specific, and the manufacturer's data sheet governs.",
         },
+        links: [
+          {
+            label: "Silicone roof coating in detail",
+            href: "/commercial/silicone-roof-coating",
+          },
+        ],
       },
       {
         title: "Preparation is most of the system",
@@ -1256,7 +1266,7 @@ export const commercialServices: ServiceContent[] = [
       {
         question: "Silicone or acrylic. What's the difference?",
         answer:
-          "Silicone commonly performs where intermittent ponding is a concern (a product-specific claim we verify), but it collects dirt and is hard to recoat with anything but silicone. Acrylics are reflective and economical but need drying conditions and a roof that actually drains. The roof's drainage profile usually makes the choice.",
+          "Silicone commonly performs where intermittent ponding is a concern (a product-specific claim we verify), but it collects dirt and is hard to recoat with anything but silicone. Acrylics are reflective and economical but need drying conditions and a roof that actually drains. The roof's drainage profile usually makes the choice, and our silicone roof coating page goes through that trade-off in full.",
       },
       {
         question: "How long does a coating restoration last?",
@@ -1281,6 +1291,12 @@ export const commercialServices: ServiceContent[] = [
     ],
     related: [
       {
+        label: "Silicone Roof Coating",
+        href: "/commercial/silicone-roof-coating",
+        description:
+          "The chemistry most often proposed here, and what it costs you in trade-offs.",
+      },
+      {
         label: "Commercial Roof Replacement",
         href: "/commercial/roof-replacement",
         description:
@@ -1291,11 +1307,6 @@ export const commercialServices: ServiceContent[] = [
         href: "/commercial/roof-maintenance",
         description:
           "Maintenance is what keeps a restored roof performing to term.",
-      },
-      {
-        label: "Commercial Roof Repair",
-        href: "/commercial/roof-repair",
-        description: "Isolated problems fixed without a full restoration.",
       },
     ],
   },
@@ -1312,6 +1323,7 @@ export const commercialServices: ServiceContent[] = [
       "Planned commercial roof maintenance across South Mississippi: scheduled inspections, documentation, and small fixes that prevent expensive surprises.",
     hero: {
       eyebrow: "Commercial roofing",
+      heading: "Commercial Roof Maintenance in Hattiesburg, MS",
       headline: "The least expensive roof work is the scheduled kind",
       subhead:
         "Commercial roofs rarely fail suddenly. They fail slowly, visibly, and preventably. A maintenance program catches the minor defect before it becomes the capital emergency.",
@@ -1575,6 +1587,7 @@ export const commercialServices: ServiceContent[] = [
       "Commercial roof replacement across South Mississippi: engineered specs, itemized proposals, and installation phased around your operations.",
     hero: {
       eyebrow: "Commercial roofing",
+      heading: "Commercial Roof Replacement in Hattiesburg, MS",
       headline: "Replacement, engineered around your operations",
       subhead:
         "A commercial reroof is a capital project, not a purchase. We run it like one: assessment, written spec, itemized proposal, and a build phased so your building keeps doing its job.",
@@ -1856,6 +1869,7 @@ export const commercialServices: ServiceContent[] = [
       "Commercial roof leak response across South Mississippi, membrane-matched repairs, documented causes, and fixes that respect your operations.",
     hero: {
       eyebrow: "Commercial roofing",
+      heading: "Commercial Roof Repair in Hattiesburg, MS",
       headline: "Leaks stopped. Causes documented. Operations respected.",
       subhead:
         "A leaking commercial roof is an operations problem first: inventory, tenants, equipment, liability. We respond fast, fix the actual cause, and leave you a documented record of both.",

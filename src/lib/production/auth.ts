@@ -23,7 +23,7 @@ function passphrase(): string {
 }
 
 /**
- * Signing key derived from the passphrase plus the server-only write token, 
+ * Signing key derived from the passphrase plus the server-only write token,
  * changing either invalidates all outstanding sessions, which is exactly what
  * you want after rotating a password.
  */
@@ -66,7 +66,9 @@ export function verifySessionToken(token: string | undefined): boolean {
     return false;
   }
   const expected = signature(expiresAtMs);
-  return provided.length === expected.length && timingSafeEqual(provided, expected);
+  return (
+    provided.length === expected.length && timingSafeEqual(provided, expected)
+  );
 }
 
 /** Whether the current request carries a valid production session. */

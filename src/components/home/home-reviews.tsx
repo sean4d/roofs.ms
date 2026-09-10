@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-import { getSiteReviews } from "@/lib/reviews";
+import { getSiteReviews, roofingFirst } from "@/lib/reviews";
 import { Section } from "@/components/shared/section";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/motion/reveal";
@@ -15,7 +15,12 @@ import { ReviewsIsland } from "@/components/home/reviews-island";
  */
 export async function HomeReviews() {
   const { reviews } = await getSiteReviews();
-  const initial = reviews.filter((r) => r.text.length > 40).slice(0, 18);
+  // Roofing reviews lead. The Christmas-lights ones are real and still shown,
+  // just not the first proof a stranger reads on a roofing page.
+  const initial = roofingFirst(reviews.filter((r) => r.text.length > 40)).slice(
+    0,
+    18,
+  );
   if (initial.length === 0) return null;
 
   return (

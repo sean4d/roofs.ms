@@ -42,7 +42,10 @@ async function encodeOne(file: File): Promise<EncodedImage | null> {
  * Encode up to `limit` images. Best-effort: returns whatever encoded cleanly,
  * so a bad file never blocks the analysis.
  */
-export async function encodeImages(files: File[], limit = 4): Promise<EncodedImage[]> {
+export async function encodeImages(
+  files: File[],
+  limit = 4,
+): Promise<EncodedImage[]> {
   const picked = files.slice(0, limit);
   const out = await Promise.all(picked.map(encodeOne));
   return out.filter((x): x is EncodedImage => x !== null);

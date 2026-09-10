@@ -71,9 +71,13 @@ export async function pickHeroPhoto(imageUrls: string[]): Promise<HeroPick> {
     if (!match) return { index: 0, note: "First finished photo" };
     const parsed = JSON.parse(match[0]) as { photo?: number; why?: string };
     const oneBased = Number(parsed.photo);
-    if (!Number.isFinite(oneBased)) return { index: 0, note: "First finished photo" };
+    if (!Number.isFinite(oneBased))
+      return { index: 0, note: "First finished photo" };
     // Clamp rather than trust: a hallucinated index must not drop the cover.
-    const index = Math.min(Math.max(Math.round(oneBased) - 1, 0), candidates.length - 1);
+    const index = Math.min(
+      Math.max(Math.round(oneBased) - 1, 0),
+      candidates.length - 1,
+    );
     return { index, note: parsed.why?.trim() || undefined };
   } catch {
     return { index: 0, note: "First finished photo" };

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ExternalLink, ShieldCheck } from "lucide-react";
 
 import { siteConfig } from "@/config/site";
+import { MSBOC } from "@/config/licensing";
 import { buildMetadata } from "@/lib/seo";
 import { breadcrumbSchema, faqSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -50,21 +51,28 @@ const faqs = [
   {
     question:
       "Is Southeast Roofing licensed for commercial roofing in Mississippi?",
-    answer: `Yes. ${siteConfig.legalName} holds Mississippi State Board of Contractors Commercial Certificate of Responsibility ${siteConfig.licenseCommercial}, which is the credential Mississippi requires for commercial construction work. You can check it directly on the board's public record.`,
+    answer: `Yes. ${siteConfig.legalName} holds ${MSBOC.name} ${MSBOC.commercialCredential} ${siteConfig.licenseCommercial}, and you can check it directly on the board's public record. On the law itself, MSBOC states: "${MSBOC.commercialThreshold}" Work below that figure may still be subject to city or county requirements, which MSBOC does not administer.`,
   },
   {
     question: "Is Southeast Roofing licensed for residential roofing?",
-    answer: `Yes, and it always has been. MSBOC Residential License ${siteConfig.license} covers houses and other residential property across Mississippi. Adding the commercial certificate did not change anything about the residential side of the business.`,
+    answer: `Yes, and it always has been. MSBOC Residential License ${siteConfig.license} covers houses and other residential property across Mississippi, and adding the commercial certificate changed nothing about that side of the business. MSBOC states: "${MSBOC.residentialThreshold}" A roof replacement is almost always over that ${MSBOC.residentialRoofingThreshold} roofing figure.`,
   },
   {
     question: "How do I verify a Mississippi roofing contractor's license?",
     answer:
-      "Search the Mississippi State Board of Contractors register at search.msboc.us. Commercial certificates and residential licenses sit in two separate indexes, so a contractor can appear in one and not the other. Ask which one they hold for the work you are having done, and check that index.",
+      "Search the Mississippi State Board of Contractors register at search.msboc.us. Commercial certificates and residential licenses sit in two separate indexes, so a contractor can appear in one and not the other. Ask which one they hold for the work you are having done, and check that index. Our step-by-step guide walks through the whole check, including the thresholds that decide which credential applies.",
   },
   {
     question: "Why does the license number matter for commercial work?",
-    answer:
-      "Because commercial roofing in Mississippi is not open to anyone with a ladder. A certificate of responsibility requires trade and business examinations, a reviewed or audited financial statement, and proof of insurance filed with the state. Plenty of crews that appear after a storm hold none of it.",
+    /*
+     * WAS a list of what a certificate "requires": trade and business
+     * examinations, a reviewed or audited financial statement, insurance
+     * filed with the state. Those are things WE did. Stating them as the
+     * general rule was writing the board's requirements from memory in order
+     * to make competitors sound unqualified, which is both inaccurate and a
+     * poor look. What is left is checkable and still the point.
+     */
+    answer: `Because a licence number is the one claim on a roofing website you can check against somebody other than the roofer. Ours is ${siteConfig.licenseCommercial} and it is in the board's commercial register. If a contractor bidding your building cannot give you a number that resolves there, that is worth knowing before you sign, particularly on a job over ${MSBOC.commercialJobThreshold} where MSBOC requires a commercial licence.`,
   },
   {
     question: "Is Southeast Roofing insured?",
@@ -163,6 +171,21 @@ export default function LicensesPage() {
               </Link>
             </div>
           </div>
+          {/* The how-to lives in the Learning Center, where somebody checking a
+              different contractor will actually find it. This page is the
+              proof; that article is the method. */}
+          <p className="mt-6 text-sm leading-relaxed text-slate-600">
+            Checking a roofer other than us?{" "}
+            <Link
+              href="/learn/hiring/verify-mississippi-commercial-roofing-license"
+              className="font-semibold text-steel-500 underline underline-offset-4 transition-colors hover:text-navy-900"
+            >
+              How to verify a Mississippi commercial roofing contractor&apos;s
+              license
+            </Link>{" "}
+            walks through the register, the two indexes, and the thresholds that
+            decide which credential applies.
+          </p>
         </Reveal>
 
         <Reveal className="mt-12">

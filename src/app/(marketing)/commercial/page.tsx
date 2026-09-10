@@ -83,11 +83,17 @@ export default function CommercialHubPage() {
         <CommercialLicenseCallout />
       </Section>
 
+      {/*
+        WAS "Nine services, one accountable contractor". The grid below it
+        rendered ten. Hardcoding a count in marketing copy means the copy
+        silently becomes a lie the first time somebody adds a service, so the
+        sentence no longer carries a number at all: nothing left to drift.
+      */}
       <Section>
         <SectionHeading
           eyebrow="Commercial services"
           title="Every system a facility needs"
-          description="Nine services, one accountable contractor, from emergency repairs to full capital replacements."
+          description="One accountable contractor for every system on the building, from emergency repairs to full capital replacements."
         />
         <HubServiceGrid services={[...commercialHub.services]} />
       </Section>

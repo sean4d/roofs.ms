@@ -51,8 +51,8 @@ function bareId(value: string | undefined): string {
 export function gbpConfigured(): boolean {
   return Boolean(
     process.env.GBP_CLIENT_ID &&
-      process.env.GBP_CLIENT_SECRET &&
-      process.env.GBP_REFRESH_TOKEN,
+    process.env.GBP_CLIENT_SECRET &&
+    process.env.GBP_REFRESH_TOKEN,
   );
 }
 
@@ -226,7 +226,10 @@ export async function discoverGbp(
   accountIdOverride?: string,
 ): Promise<GbpDiscovery> {
   if (!gbpConfigured()) {
-    return { configured: false, note: "Set GBP_CLIENT_ID/SECRET/REFRESH_TOKEN" };
+    return {
+      configured: false,
+      note: "Set GBP_CLIENT_ID/SECRET/REFRESH_TOKEN",
+    };
   }
   try {
     const acc = await gbpFetch(`${ACCOUNT_MGMT}/accounts`);
@@ -240,8 +243,7 @@ export async function discoverGbp(
       []) as Array<{ name?: string; accountName?: string; type?: string }>;
 
     let locations:
-      | Array<{ name?: string; title?: string; address?: string }>
-      | undefined;
+      Array<{ name?: string; title?: string; address?: string }> | undefined;
     // An explicit accountId (passed in the request) lets us list locations
     // BEFORE GBP_ACCOUNT_ID is set in env, saves a redeploy during setup.
     const accountId = bareId(accountIdOverride ?? process.env.GBP_ACCOUNT_ID);
@@ -308,9 +310,7 @@ export interface GbpPostResult {
  * image itself from `sourceUrl`, so the URL must be publicly reachable (the
  * Sanity CDN is). Never throws.
  */
-export async function uploadGbpPhoto(
-  imageUrl: string,
-): Promise<GbpPostResult> {
+export async function uploadGbpPhoto(imageUrl: string): Promise<GbpPostResult> {
   if (!gbpReady()) {
     return { surface: "gallery", status: "skipped", note: "Not connected yet" };
   }
@@ -354,7 +354,9 @@ export async function uploadGbpPhotos(
   max = 3,
 ): Promise<GbpPostResult[]> {
   if (!gbpReady()) {
-    return [{ surface: "gallery", status: "skipped", note: "Not connected yet" }];
+    return [
+      { surface: "gallery", status: "skipped", note: "Not connected yet" },
+    ];
   }
   const out: GbpPostResult[] = [];
   for (const url of imageUrls.slice(0, max)) {
@@ -471,7 +473,8 @@ export async function getGbpReviews(
         `${V4}/${locationParent()}/reviews?pageSize=50&orderBy=updateTime desc` +
         (pageToken ? `&pageToken=${encodeURIComponent(pageToken)}` : "");
       const res = await gbpFetch(url);
-      if (!res.ok) return page === 0 ? null : { rating, count, reviews: collected };
+      if (!res.ok)
+        return page === 0 ? null : { rating, count, reviews: collected };
       const body = res.body as {
         reviews?: Array<{
           reviewer?: { displayName?: string; profilePhotoUrl?: string };
@@ -516,7 +519,9 @@ export async function postJobToGbp(input: {
   learnMoreUrl?: string;
 }): Promise<GbpPostResult[]> {
   if (!gbpReady()) {
-    return [{ surface: "update", status: "skipped", note: "Not connected yet" }];
+    return [
+      { surface: "update", status: "skipped", note: "Not connected yet" },
+    ];
   }
   const results: GbpPostResult[] = [];
   results.push(

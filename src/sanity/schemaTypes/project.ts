@@ -33,7 +33,9 @@ export const project = defineType({
       name: "jobType",
       title: "Job type",
       type: "string",
-      options: { list: JOB_TYPES.map((j) => ({ title: j.label, value: j.value })) },
+      options: {
+        list: JOB_TYPES.map((j) => ({ title: j.label, value: j.value })),
+      },
       description: "Set automatically by the /upload form.",
     }),
     defineField({
@@ -91,7 +93,9 @@ export const project = defineType({
             {
               name: "phase",
               type: "string",
-              options: { list: PHASES.map((p) => ({ title: p.label, value: p.key })) },
+              options: {
+                list: PHASES.map((p) => ({ title: p.label, value: p.key })),
+              },
             },
             { name: "alt", title: "Alt text", type: "string" },
             { name: "title", title: "SEO title", type: "string" },
@@ -146,8 +150,18 @@ export const project = defineType({
       of: [{ type: "image", options: { hotspot: true } }],
       hidden: true,
     }),
-    defineField({ name: "beforeImage", type: "image", options: { hotspot: true }, hidden: true }),
-    defineField({ name: "afterImage", type: "image", options: { hotspot: true }, hidden: true }),
+    defineField({
+      name: "beforeImage",
+      type: "image",
+      options: { hotspot: true },
+      hidden: true,
+    }),
+    defineField({
+      name: "afterImage",
+      type: "image",
+      options: { hotspot: true },
+      hidden: true,
+    }),
   ],
   preview: {
     select: { title: "title", subtitle: "city", media: "media.0.image" },

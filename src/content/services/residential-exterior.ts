@@ -30,6 +30,7 @@ export const exteriorServices: ServiceContent[] = [
       "Leaf guard systems for South Mississippi homes, stop pine straw and leaves from clogging your gutters, and retire the ladder for good.",
     hero: {
       eyebrow: "Residential exterior",
+      heading: "Gutter Leaf Guards in Hattiesburg, MS",
       headline: "Leaf guards: retire the ladder",
       subhead:
         "Pine straw is the great gutter-killer of South Mississippi: it mats, clogs, and sends rain pouring over the edges. A quality leaf guard keeps the water path open year-round without the twice-a-year ladder ritual.",
@@ -294,6 +295,7 @@ export const exteriorServices: ServiceContent[] = [
       "Fascia repair and replacement in South Mississippi, fix the rotted boards at your roof edge and cap them so the problem never comes back.",
     hero: {
       eyebrow: "Residential exterior",
+      heading: "Fascia Repair & Replacement in Hattiesburg, MS",
       headline: "Fascia: the roof edge that takes the abuse",
       subhead:
         "The fascia is the board your gutters hang on, first to rot when gutters overflow, first to show peeling paint at the roofline. We replace it right and cap it so you stop repainting it.",
@@ -499,6 +501,7 @@ export const exteriorServices: ServiceContent[] = [
       "Soffit repair and replacement in South Mississippi, vented panels that feed your attic airflow and close the overhang to pests and moisture.",
     hero: {
       eyebrow: "Residential exterior",
+      heading: "Soffit Repair & Replacement in Hattiesburg, MS",
       headline: "Soffit: where your attic breathes",
       subhead:
         "The panels under your roof overhang aren't decoration. They're the intake side of your attic's ventilation and the barrier keeping wasps, squirrels, and moisture out of the eaves.",

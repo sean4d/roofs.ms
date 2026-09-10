@@ -295,6 +295,7 @@ export const residentialMetalChildren: ServiceContent[] = [
       "Concealed-fastener standing seam metal roofing for South Mississippi homes, clean lines, decades of life, and serious storm performance. Southeast Roofing, Hattiesburg.",
     hero: {
       eyebrow: "Residential metal roofing",
+      heading: "Standing Seam Metal Roofing for Mississippi Homes",
       headline: "Standing seam: the concealed-fastener standard",
       subhead:
         "Vertical panels, crisp raised seams, and not a single exposed screw on the field of the roof. Standing seam is the system metal's reputation is built on, and on a South Mississippi home, it's built for the weather that's coming.",
@@ -539,6 +540,7 @@ export const residentialMetalChildren: ServiceContent[] = [
       "Cost-effective exposed-fastener metal roofing for South Mississippi homes, shops, and barns, honest guidance on where it shines and what to expect long-term.",
     hero: {
       eyebrow: "Residential metal roofing",
+      heading: "Exposed-Fastener Metal Roofing for Mississippi Homes",
       headline: "Exposed-fastener metal: the practical path to a metal roof",
       subhead:
         "Ribbed panels fastened directly to the structure, simpler to install, significantly more affordable, and genuinely tough. For many homes, shops, and barns across South Mississippi, it's the system that makes metal make sense.",

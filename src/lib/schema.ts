@@ -114,6 +114,10 @@ export function roofingContractorSchema(): JsonLdObject {
       { name: "Commercial Roof Repair", path: "/commercial/roof-repair" },
       { name: "TPO Roofing", path: "/commercial/tpo" },
       { name: "Commercial Roof Coatings", path: "/commercial/roof-coatings" },
+      {
+        name: "Silicone Roof Coating",
+        path: "/commercial/silicone-roof-coating",
+      },
       { name: "Commercial Metal Roofing", path: "/commercial/metal-roofing" },
     ].map((service) => ({
       "@type": "Offer",

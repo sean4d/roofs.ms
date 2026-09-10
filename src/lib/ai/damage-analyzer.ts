@@ -44,8 +44,10 @@ const ISSUES: Record<DamageIssue, Omit<DamageResult, never>> = {
   "missing-shingles": {
     damageType: "Missing or lifted shingles",
     urgency: "high",
-    urgencyNote: "Exposed areas let water reach the deck. This usually can't wait.",
-    nextStep: "Get a free inspection right away; if it's storm-related, a claim may apply.",
+    urgencyNote:
+      "Exposed areas let water reach the deck. This usually can't wait.",
+    nextStep:
+      "Get a free inspection right away; if it's storm-related, a claim may apply.",
   },
   leak: {
     damageType: "Active leak / water intrusion",
@@ -56,13 +58,16 @@ const ISSUES: Record<DamageIssue, Omit<DamageResult, never>> = {
   hail: {
     damageType: "Possible hail damage",
     urgency: "high",
-    urgencyNote: "Hail bruising isn't always visible from the ground and has claim deadlines.",
-    nextStep: "Document it and start with our insurance claim helper, then a free inspection.",
+    urgencyNote:
+      "Hail bruising isn't always visible from the ground and has claim deadlines.",
+    nextStep:
+      "Document it and start with our insurance claim helper, then a free inspection.",
   },
   wind: {
     damageType: "Possible wind damage",
     urgency: "high",
-    urgencyNote: "Wind lifts and creases shingles so they fail in the next storm.",
+    urgencyNote:
+      "Wind lifts and creases shingles so they fail in the next storm.",
     nextStep: "Get a free inspection to document it; a claim may apply.",
   },
   "tree-damage": {
@@ -74,13 +79,16 @@ const ISSUES: Record<DamageIssue, Omit<DamageResult, never>> = {
   "pipe-boot-leak": {
     damageType: "Failed pipe boot",
     urgency: "moderate",
-    urgencyNote: "Dry-rotted boots are a very common, fixable leak source here.",
-    nextStep: "A free inspection confirms it, usually a straightforward repair.",
+    urgencyNote:
+      "Dry-rotted boots are a very common, fixable leak source here.",
+    nextStep:
+      "A free inspection confirms it, usually a straightforward repair.",
   },
   "rusted-metal": {
     damageType: "Rust / aging metal roof",
     urgency: "moderate",
-    urgencyNote: "Surface rust can be manageable; through-rust and failed fasteners aren't.",
+    urgencyNote:
+      "Surface rust can be manageable; through-rust and failed fasteners aren't.",
     nextStep: "Get a free inspection to see whether it's repair or replace.",
   },
   "commercial-ponding": {
@@ -93,7 +101,8 @@ const ISSUES: Record<DamageIssue, Omit<DamageResult, never>> = {
     damageType: "Needs a closer look",
     urgency: "moderate",
     urgencyNote: "Hard to say from here. A free set of eyes settles it.",
-    nextStep: "Book a free inspection and we'll tell you honestly what's going on.",
+    nextStep:
+      "Book a free inspection and we'll tell you honestly what's going on.",
   },
 };
 
@@ -142,10 +151,19 @@ const DAMAGE_SYSTEM = [
 const DAMAGE_SCHEMA: Record<string, unknown> = {
   type: "object",
   properties: {
-    damageType: { type: "string", description: "Short label for the likely issue." },
+    damageType: {
+      type: "string",
+      description: "Short label for the likely issue.",
+    },
     urgency: { type: "string", enum: ["low", "moderate", "high"] },
-    urgencyNote: { type: "string", description: "One sentence on why it does/doesn't need quick action." },
-    nextStep: { type: "string", description: "One sentence, concrete recommended next step." },
+    urgencyNote: {
+      type: "string",
+      description: "One sentence on why it does/doesn't need quick action.",
+    },
+    nextStep: {
+      type: "string",
+      description: "One sentence, concrete recommended next step.",
+    },
   },
   required: ["damageType", "urgency", "urgencyNote", "nextStep"],
 };

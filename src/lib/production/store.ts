@@ -130,7 +130,9 @@ export async function listProjects(): Promise<ProductionProject[]> {
   return projects;
 }
 
-export async function getProject(id: string): Promise<ProductionProject | null> {
+export async function getProject(
+  id: string,
+): Promise<ProductionProject | null> {
   if (!id.startsWith(ID_PREFIX)) return null;
   const doc = await fetchDoc(id);
   if (!doc) return null;
@@ -199,7 +201,9 @@ export async function updateProject(
   const events: string[] = [];
 
   // Text/date fields, only the keys actually sent change.
-  for (const key of Object.keys(FIELD_HISTORY) as (keyof typeof FIELD_HISTORY)[]) {
+  for (const key of Object.keys(
+    FIELD_HISTORY,
+  ) as (keyof typeof FIELD_HISTORY)[]) {
     const next = patch[key as keyof ProjectPatch];
     if (typeof next === "string" && next !== payload[key as keyof Payload]) {
       (payload as unknown as Record<string, string>)[key] = next;

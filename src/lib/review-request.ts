@@ -25,11 +25,17 @@ export function reviewRequestMessage(name?: string): string {
 }
 
 /** Prefilled sms, and mailto: links for one-tap sending by the owner. */
-export function reviewRequestLinks(opts: { name?: string; email?: string; phone?: string }) {
+export function reviewRequestLinks(opts: {
+  name?: string;
+  email?: string;
+  phone?: string;
+}) {
   const body = reviewRequestMessage(opts.name);
   const phone = (opts.phone ?? "").replace(/[^\d+]/g, "");
   return {
-    smsHref: phone ? `sms:${phone}?&body=${encodeURIComponent(body)}` : undefined,
+    smsHref: phone
+      ? `sms:${phone}?&body=${encodeURIComponent(body)}`
+      : undefined,
     mailtoHref: opts.email
       ? `mailto:${opts.email}?subject=${encodeURIComponent(
           `Thanks from ${siteConfig.name}`,

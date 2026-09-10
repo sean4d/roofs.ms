@@ -32,7 +32,8 @@ export type GafWidgetKey =
 /**
  * One inline link inside a paragraph. `text` must appear verbatim in the
  * paragraph's `text`; the renderer splits on the first occurrence and turns
- * that phrase into the link. External links open in a new tab.
+ * that phrase into the link. `external` picks a plain anchor over next/link;
+ * nothing on this site opens in a new tab (owner directive 2026-09-09).
  */
 export interface InlineLink {
   text: string;

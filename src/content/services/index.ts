@@ -5,6 +5,7 @@ import {
   residentialMetalHub,
 } from "@/content/services/residential-metal";
 import { commercialServices as commercialCore } from "@/content/services/commercial";
+import { siliconeRoofCoating } from "@/content/services/commercial-silicone";
 import {
   commercialMetalChildren,
   commercialMetalHub,
@@ -33,6 +34,7 @@ export const residentialServices: ServiceContent[] = [
 /** Commercial systems + roof washing, all under /commercial/[service]. */
 export const commercialServices: ServiceContent[] = [
   ...commercialCore,
+  siliconeRoofCoating,
   commercialRoofWashing,
 ];
 

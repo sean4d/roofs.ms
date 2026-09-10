@@ -1,7 +1,7 @@
 import { defineField, defineType } from "sanity";
 
 /**
- * A service-area city page (PRD §5). Tier controls required content depth: 
+ * A service-area city page (PRD §5). Tier controls required content depth:
  * the anti-doorway rule: every city gets genuinely local, unique copy.
  */
 export const location = defineType({

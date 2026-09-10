@@ -21,6 +21,7 @@ export const commercialMetalHub: ServiceContent = {
     "Commercial metal roofing across South Mississippi: architectural standing seam, R-panel and PBR systems, and structural metal for facilities, warehouses, and ag buildings.",
   hero: {
     eyebrow: "Commercial roofing",
+    heading: "Commercial Metal Roofing in Hattiesburg, MS",
     headline: "Metal for buildings that work for a living",
     subhead:
       "Warehouses, shops, ag structures, offices with a long horizon, metal delivers decades of low-maintenance service where other systems need replacing twice. We install architectural and structural systems across the region.",
@@ -269,6 +270,7 @@ export const commercialMetalChildren: ServiceContent[] = [
       "Architectural standing seam metal roofing for South Mississippi commercial buildings: concealed fasteners, low-slope capability, and decades of service.",
     hero: {
       eyebrow: "Commercial metal roofing",
+      heading: "Standing Seam Metal Roofing for Commercial Buildings in MS",
       headline: "Architectural standing seam",
       subhead:
         "Concealed fasteners, raised mechanical locks, and thermal movement engineered in: the premium metal system for offices, schools, churches, and civic buildings that plan to be here in forty years.",
@@ -485,6 +487,7 @@ export const commercialMetalChildren: ServiceContent[] = [
       "R-panel metal roofing for South Mississippi shops, warehouses, and ag buildings: economical exposed-fastener panels installed to spec.",
     hero: {
       eyebrow: "Commercial metal roofing",
+      heading: "R-Panel Metal Roofing for Commercial Buildings in MS",
       headline: "R-panel: the commercial workhorse",
       subhead:
         "The ribbed exposed-fastener panel that covers half the shops, barns, and warehouses in the South: economical, fast to install, and tough enough for buildings that earn their keep.",
@@ -686,6 +689,7 @@ export const commercialMetalChildren: ServiceContent[] = [
       "PBR panel roofing for South Mississippi metal buildings: purlin-bearing strength for pre-engineered structures, shops, and warehouses.",
     hero: {
       eyebrow: "Commercial metal roofing",
+      heading: "PBR Panel Metal Roofing for Commercial Buildings in MS",
       headline: "PBR panel: built for the frame",
       subhead:
         "The purlin-bearing rib panel is the standard skin of America's metal buildings, a profile designed so the side lap bears on the framing it crosses, not on hope.",
@@ -881,6 +885,7 @@ export const commercialMetalChildren: ServiceContent[] = [
       "Structural metal roof systems for South Mississippi, panels engineered to span open framing on pre-engineered buildings, warehouses, and industrial structures.",
     hero: {
       eyebrow: "Commercial metal roofing",
+      heading: "Structural Metal Roofing for Commercial Buildings in MS",
       headline: "Structural metal: roof and structure in one",
       subhead:
         "Panels engineered to span open purlins without decking, carrying load, resisting uplift, and closing the building in a single system. The backbone approach for pre-engineered and industrial structures.",

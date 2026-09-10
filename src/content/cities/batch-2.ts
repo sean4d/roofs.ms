@@ -2,7 +2,7 @@ import type { CityContent } from "@/content/cities/types";
 
 /**
  * City pages batch 2 (PRD §5, Tier 2 depth): the Pine Belt communities and
- * the Highway 49/59/98 corridors. Same anti-doorway rules as batch 1: 
+ * the Highway 49/59/98 corridors. Same anti-doorway rules as batch 1:
  * unique local copy, and only cities with real project photos (per the
  * owner's 2026-07-05 relabel: Purvis, Ellisville, Richton, Poplarville,
  * Wiggins, Lucedale) reference completed local work.

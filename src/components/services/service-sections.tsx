@@ -419,17 +419,44 @@ export function RelatedServices({
   );
 }
 
-/** §4.1.10, service-area links ("We provide {service} in: …"). */
-export function ServiceAreaLinks({ serviceName }: { serviceName: string }) {
+/**
+ * §4.1.10, service-area links ("We provide {service} in: …").
+ *
+ * COMMERCIAL PAGES GET THE SHORT LIST (SEO audit, 2026-09-10).
+ *
+ * The full roster is eight hub cities plus roughly two dozen small
+ * communities, and it was rendering identically on every commercial child
+ * page. On a residential page that is genuinely useful: somebody in Seminary
+ * or McHenry needs a roof and wants to see their own town named. On a TPO or
+ * a roof-coatings page it is thirty near-identical town names on ten pages,
+ * which is boilerplate that dilutes the page and says nothing a facility
+ * manager needed to know.
+ *
+ * So commercial pages show the hub cities, where the commercial buildings
+ * actually are, and link to the full service-area page for the rest. The
+ * small-town pages are untouched and still fully linked from there.
+ */
+export function ServiceAreaLinks({
+  serviceName,
+  audience = "residential",
+}: {
+  serviceName: string;
+  audience?: "residential" | "commercial";
+}) {
   const hubs = siteConfig.serviceArea.filter((area) => area.hub);
   const communities = siteConfig.serviceArea.filter((area) => !area.hub);
+  const commercial = audience === "commercial";
 
   return (
     <Section>
       <SectionHeading
         eyebrow="Service area"
         title={`Where we provide ${serviceName.toLowerCase()}`}
-        description="Based in Hattiesburg and serving Mississippi within about two hours, from the Pine Belt to the Gulf Coast."
+        description={
+          commercial
+            ? "Based in Hattiesburg, on commercial buildings across the Pine Belt, the Gulf Coast and the corridor between them."
+            : "Based in Hattiesburg and serving Mississippi within about two hours, from the Pine Belt to the Gulf Coast."
+        }
       />
       <Reveal className="mt-10">
         <ul className="flex flex-wrap gap-3">
@@ -444,28 +471,53 @@ export function ServiceAreaLinks({ serviceName }: { serviceName: string }) {
             </li>
           ))}
         </ul>
-        <ul className="mt-5 flex flex-wrap gap-x-1 gap-y-1.5">
-          {communities.map(({ city, slug }) => (
-            <li key={city}>
-              <Link
-                href={`/service-areas/${slug}`}
-                className="inline-block rounded-full px-2.5 py-1 text-sm text-slate-500 transition-colors hover:bg-secondary hover:text-primary"
-              >
-                {city}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        {!commercial && (
+          <ul className="mt-5 flex flex-wrap gap-x-1 gap-y-1.5">
+            {communities.map(({ city, slug }) => (
+              <li key={city}>
+                <Link
+                  href={`/service-areas/${slug}`}
+                  className="inline-block rounded-full px-2.5 py-1 text-sm text-slate-500 transition-colors hover:bg-secondary hover:text-primary"
+                >
+                  {city}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
         <p className="mt-6 text-sm text-slate-500">
-          Don&apos;t see your town? If you&apos;re within about two hours of
-          Hattiesburg,{" "}
-          <Link
-            href="/contact"
-            className="font-medium text-navy-900 underline-offset-4 hover:underline"
-          >
-            we most likely serve you
-          </Link>
-          .
+          {commercial ? (
+            <>
+              We work well beyond these eight, on a radius of about two hours
+              from Hattiesburg.{" "}
+              <Link
+                href="/service-areas"
+                className="font-medium text-navy-900 underline-offset-4 hover:underline"
+              >
+                See every town we serve
+              </Link>
+              , or{" "}
+              <Link
+                href="/commercial/request-consultation"
+                className="font-medium text-navy-900 underline-offset-4 hover:underline"
+              >
+                tell us where the building is
+              </Link>
+              .
+            </>
+          ) : (
+            <>
+              Don&apos;t see your town? If you&apos;re within about two hours of
+              Hattiesburg,{" "}
+              <Link
+                href="/contact"
+                className="font-medium text-navy-900 underline-offset-4 hover:underline"
+              >
+                we most likely serve you
+              </Link>
+              .
+            </>
+          )}
         </p>
       </Reveal>
     </Section>

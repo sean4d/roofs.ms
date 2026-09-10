@@ -49,7 +49,9 @@ function runFfmpeg(args: string[]): Promise<void> {
     });
     p.on("error", reject);
     p.on("close", (code) =>
-      code === 0 ? resolve() : reject(new Error(`ffmpeg ${code}: ${err.slice(-600)}`)),
+      code === 0
+        ? resolve()
+        : reject(new Error(`ffmpeg ${code}: ${err.slice(-600)}`)),
     );
   });
 }
@@ -58,7 +60,9 @@ function runFfmpeg(args: string[]): Promise<void> {
  * Build a TikTok-ready MP4 from image URLs. Returns the MP4 bytes, or null if
  * nothing could be produced.
  */
-export async function buildSlideshow(imageUrls: string[]): Promise<Buffer | null> {
+export async function buildSlideshow(
+  imageUrls: string[],
+): Promise<Buffer | null> {
   if (imageUrls.length === 0) return null;
   const dir = await mkdtemp(join(tmpdir(), "slideshow-"));
   try {
@@ -68,7 +72,10 @@ export async function buildSlideshow(imageUrls: string[]): Promise<Buffer | null
         const res = await fetch(url);
         if (!res.ok) continue;
         const frame = await makeFrame(Buffer.from(await res.arrayBuffer()));
-        await writeFile(join(dir, `f${String(count).padStart(3, "0")}.jpg`), frame);
+        await writeFile(
+          join(dir, `f${String(count).padStart(3, "0")}.jpg`),
+          frame,
+        );
         count++;
       } catch {
         // skip a bad photo; keep building from the rest

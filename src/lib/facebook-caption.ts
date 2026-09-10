@@ -24,7 +24,11 @@ import { siteConfig } from "@/config/site";
 const FB_MAX_HASHTAGS = 3;
 
 const isHashtagLine = (line: string) =>
-  line.trim().length > 0 && line.trim().split(/\s+/).every((w) => w.startsWith("#"));
+  line.trim().length > 0 &&
+  line
+    .trim()
+    .split(/\s+/)
+    .every((w) => w.startsWith("#"));
 
 /**
  * Strip the AUTO-APPENDED booking link only.

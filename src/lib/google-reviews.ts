@@ -57,7 +57,13 @@ function relativeWhen(iso?: string): string {
 /** Coerce a star rating that may be a number or Google's word enum. */
 function toStars(v: unknown): number {
   if (typeof v === "number") return v;
-  const words: Record<string, number> = { ONE: 1, TWO: 2, THREE: 3, FOUR: 4, FIVE: 5 };
+  const words: Record<string, number> = {
+    ONE: 1,
+    TWO: 2,
+    THREE: 3,
+    FOUR: 4,
+    FIVE: 5,
+  };
   return words[String(v).toUpperCase()] ?? 5;
 }
 
@@ -81,7 +87,8 @@ async function fromFeaturable(): Promise<GoogleReviewData | null> {
         createTime?: string;
       }>;
     };
-    if (data.success === false || typeof data.averageRating !== "number") return null;
+    if (data.success === false || typeof data.averageRating !== "number")
+      return null;
 
     const reviews: LiveReview[] = (data.reviews ?? [])
       .map((r) => ({
@@ -108,13 +115,16 @@ async function fromPlacesApi(): Promise<GoogleReviewData | null> {
   const key = process.env.GOOGLE_PLACES_API_KEY;
   if (!key || !GOOGLE_PLACE_ID) return null;
   try {
-    const res = await fetch(`https://places.googleapis.com/v1/places/${GOOGLE_PLACE_ID}`, {
-      headers: {
-        "X-Goog-Api-Key": key,
-        "X-Goog-FieldMask": "rating,userRatingCount,reviews",
+    const res = await fetch(
+      `https://places.googleapis.com/v1/places/${GOOGLE_PLACE_ID}`,
+      {
+        headers: {
+          "X-Goog-Api-Key": key,
+          "X-Goog-FieldMask": "rating,userRatingCount,reviews",
+        },
+        next: { revalidate: 86400, tags: ["google-reviews"] },
       },
-      next: { revalidate: 86400, tags: ["google-reviews"] },
-    });
+    );
     if (!res.ok) return null;
     const data = (await res.json()) as {
       rating?: number;
@@ -214,9 +224,12 @@ export async function diagnoseReviews(): Promise<ReviewsDiag> {
 
   // Featurable
   try {
-    const res = await fetch(`https://api.featurable.com/v1/widgets/${FEATURABLE_WIDGET_ID}`, {
-      cache: "no-store",
-    });
+    const res = await fetch(
+      `https://api.featurable.com/v1/widgets/${FEATURABLE_WIDGET_ID}`,
+      {
+        cache: "no-store",
+      },
+    );
     diag.featurable.status = res.status;
     const data = (await res.json()) as {
       success?: boolean;
@@ -224,8 +237,11 @@ export async function diagnoseReviews(): Promise<ReviewsDiag> {
       error?: { key?: string };
     };
     diag.featurable.ok =
-      res.ok && data.success !== false && typeof data.averageRating === "number";
-    if (!diag.featurable.ok) diag.featurable.note = data.error?.key ?? "not published / no data";
+      res.ok &&
+      data.success !== false &&
+      typeof data.averageRating === "number";
+    if (!diag.featurable.ok)
+      diag.featurable.note = data.error?.key ?? "not published / no data";
   } catch (e) {
     diag.featurable.note = e instanceof Error ? e.message : "fetch failed";
   }
@@ -233,13 +249,16 @@ export async function diagnoseReviews(): Promise<ReviewsDiag> {
   // Places
   if (diag.places.keyPresent) {
     try {
-      const res = await fetch(`https://places.googleapis.com/v1/places/${GOOGLE_PLACE_ID}`, {
-        headers: {
-          "X-Goog-Api-Key": process.env.GOOGLE_PLACES_API_KEY!,
-          "X-Goog-FieldMask": "rating,userRatingCount,reviews",
+      const res = await fetch(
+        `https://places.googleapis.com/v1/places/${GOOGLE_PLACE_ID}`,
+        {
+          headers: {
+            "X-Goog-Api-Key": process.env.GOOGLE_PLACES_API_KEY!,
+            "X-Goog-FieldMask": "rating,userRatingCount,reviews",
+          },
+          cache: "no-store",
         },
-        cache: "no-store",
-      });
+      );
       diag.places.status = res.status;
       const data = (await res.json()) as {
         rating?: number;
@@ -250,7 +269,8 @@ export async function diagnoseReviews(): Promise<ReviewsDiag> {
       diag.places.rating = data.rating;
       diag.places.count = data.userRatingCount;
       if (!diag.places.ok)
-        diag.places.note = data.error?.message ?? data.error?.status ?? "no rating in response";
+        diag.places.note =
+          data.error?.message ?? data.error?.status ?? "no rating in response";
     } catch (e) {
       diag.places.note = e instanceof Error ? e.message : "fetch failed";
     }

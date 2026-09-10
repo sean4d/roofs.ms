@@ -3,7 +3,12 @@ import { notFound } from "next/navigation";
 
 import { cities, getCity } from "@/content/cities";
 import { buildMetadata } from "@/lib/seo";
-import { getSiteReviews, pickReviews } from "@/lib/reviews";
+import {
+  getSiteReviews,
+  isRoofingReview,
+  pickReviews,
+  roofingFirst,
+} from "@/lib/reviews";
 import { breadcrumbSchema, faqSchema, serviceSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/json-ld";
 import { CityPage } from "@/components/cities/city-page";
@@ -51,8 +56,16 @@ export default async function ServiceAreaCityPage(
   ];
 
   // A stable, varied trio of real Google reviews for this city (local proof).
+  // Drawn from the roofing reviews, because a roofing page should not lead
+  // with the Christmas-lights ones. The reviews are shown verbatim and are
+  // never presented as having come from this city.
   const { reviews } = await getSiteReviews();
-  const cityReviews = pickReviews(reviews, cityContent.slug, 3);
+  const roofing = reviews.filter(isRoofingReview);
+  const cityReviews = pickReviews(
+    roofing.length >= 6 ? roofing : roofingFirst(reviews),
+    cityContent.slug,
+    3,
+  );
 
   return (
     <>

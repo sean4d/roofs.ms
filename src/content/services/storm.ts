@@ -3,12 +3,12 @@ import type { ServiceContent } from "@/content/services/types";
 
 /**
  * Storm-damage child pages (PRD §4.1 additions, Phase 3): emergency
- * roofing and insurance claims. Language rules: factual assistance only: 
+ * roofing and insurance claims. Language rules: factual assistance only:
  * no outcome promises on claims, and no "24/7" claim until availability is
  * owner-confirmed ([NEEDS: real 24/7 emergency availability]).
  */
 
-// Owner relabel 2026-07-05: no tarping photos remain in the manifest, 
+// Owner relabel 2026-07-05: no tarping photos remain in the manifest,
 // the emergency page shows the wind damage that drives emergency calls.
 const tarpPhotos = stormPhotos
   .filter((photo) => photo.category === "wind-damage")
@@ -23,6 +23,7 @@ export const emergencyRoofing: ServiceContent = {
     "Roof leaking now? Southeast Roofing responds fast across South Mississippi with emergency tarping and mitigation: then a documented path to the permanent fix.",
   hero: {
     eyebrow: "Storm damage",
+    heading: "Emergency Roof Repair in Hattiesburg, MS",
     headline: "Roof open right now? Start here.",
     subhead:
       "When a storm puts a hole in your roof, the clock is running on everything under it. We respond fast across the Hattiesburg region with professional tarping and mitigation, then get you on the documented path to a permanent repair.",
@@ -139,6 +140,7 @@ export const insuranceClaims: ServiceContent = {
     "Storm-damage insurance claims without the confusion: thorough documentation, adjuster meetings, and factual guidance from a local Hattiesburg roofing contractor.",
   hero: {
     eyebrow: "Storm damage",
+    heading: "Roof Insurance Claims in Hattiesburg, MS",
     headline: "We speak insurance, so you don't have to learn it",
     subhead:
       "A storm claim is paperwork stapled to a roof. We handle the roof and the documentation: thorough inspection reports, photos in the format adjusters expect, and someone on your side of the table at the adjuster meeting.",

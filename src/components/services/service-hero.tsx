@@ -46,9 +46,33 @@ export function ServiceHero({
           <p className="mt-6 text-sm font-semibold tracking-wide text-steel-500 uppercase">
             {hero.eyebrow}
           </p>
-          <h1 className="mt-3 font-display text-4xl font-bold text-navy-900 sm:text-5xl">
-            {hero.headline}
-          </h1>
+          {/*
+            THE H1 IS THE SUBJECT, THE SLOGAN IS A TAGLINE.
+
+            Where a page supplies `heading`, that becomes the H1 and the
+            marketing line moves directly beneath it at the size the H1 used to
+            be, so nothing looks different and the biggest text on the page is
+            still the copy that sells. What changes is the document outline: a
+            crawler and a screen reader now hear "Commercial Roof Repair in
+            Hattiesburg, MS" rather than "Leaks stopped. Causes documented."
+
+            Pages whose headline already names the subject leave `heading`
+            unset and are untouched.
+          */}
+          {hero.heading ? (
+            <>
+              <h1 className="mt-3 font-display text-2xl font-bold text-navy-900 sm:text-3xl">
+                {hero.heading}
+              </h1>
+              <p className="mt-3 font-display text-4xl font-bold text-navy-900 sm:text-5xl">
+                {hero.headline}
+              </p>
+            </>
+          ) : (
+            <h1 className="mt-3 font-display text-4xl font-bold text-navy-900 sm:text-5xl">
+              {hero.headline}
+            </h1>
+          )}
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-600">
             {hero.subhead}
           </p>

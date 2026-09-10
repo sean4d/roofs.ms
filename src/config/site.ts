@@ -93,6 +93,10 @@ export const siteConfig = {
      */
     msbocCommercialLicense:
       "https://search.msboc.us/Detail.cfm?ContractorID=36955&ContractorType=Commercial&varDataSource=BOC",
+    /** MSBOC's own FAQ, the source for every licensing threshold we state. */
+    msbocFaq: "https://www.msboc.us/general-info/frequently-asked-questions/",
+    /** The board's public contractor search, for "check any roofer" advice. */
+    msbocSearch: "https://search.msboc.us/",
     gafProfile:
       "https://www.gaf.com/en-us/roofing-contractors/residential/usa/ms/hattiesburg/southeast-roofing-1147340",
     /** GoodLeap financing application */

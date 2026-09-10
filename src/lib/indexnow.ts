@@ -39,7 +39,9 @@ export interface IndexNowResult {
 export async function submitToIndexNow(
   urls: string[],
 ): Promise<IndexNowResult> {
-  const urlList = [...new Set(urls)].filter((u) => u.startsWith(siteConfig.url));
+  const urlList = [...new Set(urls)].filter((u) =>
+    u.startsWith(siteConfig.url),
+  );
   if (urlList.length === 0) {
     return { status: "skipped", count: 0, note: "No same-host URLs to submit" };
   }
@@ -64,7 +66,11 @@ export async function submitToIndexNow(
         note: (await res.text()).slice(0, 200),
       };
     }
-    return { status: "submitted", count: urlList.length, httpStatus: res.status };
+    return {
+      status: "submitted",
+      count: urlList.length,
+      httpStatus: res.status,
+    };
   } catch (err) {
     return {
       status: "error",

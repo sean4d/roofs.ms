@@ -661,6 +661,7 @@ export const residentialServices: ServiceContent[] = [
       "Roof leak and storm damage repair across South Mississippi. We find the real source, fix it right, and tell you honestly when a repair is all you need.",
     hero: {
       eyebrow: "Residential roofing",
+      heading: "Roof Repair in Hattiesburg, MS",
       headline: "Repairs that fix the cause, not just the drip",
       subhead:
         "Water is sneaky. Where it shows up inside is rarely where it got in. We trace leaks to their true source, repair them properly, and tell you honestly when a repair is all your roof needs.",

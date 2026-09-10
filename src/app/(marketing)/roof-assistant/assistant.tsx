@@ -357,13 +357,10 @@ function CtaButton({
     );
   }
   return (
-    <a
-      href={cta.href}
-      onClick={fire}
-      target={cta.href.startsWith("http") ? "_blank" : undefined}
-      rel={cta.href.startsWith("http") ? "noopener noreferrer" : undefined}
-      className={cls}
-    >
+    // No target="_blank" anywhere a visitor can click (owner directive
+    // 2026-09-09): leaving the site should be one Back press from returning
+    // to it, not a new tab they have to notice and close.
+    <a href={cta.href} onClick={fire} className={cls}>
       {cta.label}
     </a>
   );

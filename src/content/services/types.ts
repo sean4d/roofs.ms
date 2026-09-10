@@ -81,7 +81,22 @@ export interface ServiceContent {
 
   hero: {
     eyebrow: string;
+    /**
+     * The conversion line. Strong copy, and on its own it was a poor H1:
+     * "Leaks stopped. Causes documented." tells a search engine nothing about
+     * what page it is looking at.
+     */
     headline: string;
+    /**
+     * The H1, when the headline is a slogan.
+     *
+     * Set this and the page renders `heading` as the H1 with `headline`
+     * demoted to a visible tagline beneath it, at the same size it always
+     * had. The design does not change; the document outline stops being a
+     * marketing line. Omit it and `headline` remains the H1, which is right
+     * for the pages whose headline already states the subject.
+     */
+    heading?: string;
     subhead: string;
     /**
      * Omit when no honest imagery exists yet (e.g. metal pages are a
@@ -104,7 +119,7 @@ export interface ServiceContent {
   /**
    * Deep technical sections rendered after the intro (2026-07 expansion).
    * This is where each page earns its indexing: system specifications,
-   * comparisons, installation facts, and decision guidance. Never pricing, 
+   * comparisons, installation facts, and decision guidance. Never pricing,
    * dollar figures are banned site-wide on service pages (owner directive
    * 2026-07-30); use costFactors instead.
    */

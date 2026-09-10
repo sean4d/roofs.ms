@@ -10,6 +10,7 @@ import {
   PanelTop,
   Sparkles,
   TreePine,
+  Waves,
   Wind,
   Wrench,
 } from "lucide-react";
@@ -705,7 +706,14 @@ export const commercialHub = {
     // The eyebrow carries the search intent so the conversion headline does
     // not have to. "Commercial division" told a building owner nothing and
     // told a search engine less.
-    eyebrow: "Commercial roofing contractor · Hattiesburg, MS",
+    eyebrow: "Commercial roofing",
+    /*
+     * THE H1 NAMES THE PAGE, THE SLOGAN SELLS IT. "Protect your property,
+     * your tenants, and your budget" was the H1 and it is excellent copy that
+     * a search engine cannot place. It is a tagline now, directly beneath a
+     * heading that says what this page is, at the size it always had.
+     */
+    heading: "Commercial Roofing Contractor in Hattiesburg, MS",
     headline: "Protect your property, your tenants, and your budget",
     subhead:
       "Flat, metal, and everything between: engineered proposals, installation phased around your operations, and one accountable local contractor across your whole portfolio. Licensed by the Mississippi State Board of Contractors for commercial work.",
@@ -760,6 +768,13 @@ export const commercialHub = {
         "Silicone, acrylic, and urethane restoration for roofs that qualify.",
     },
     {
+      icon: Waves,
+      label: "Silicone Roof Coating",
+      href: "/commercial/silicone-roof-coating",
+      description:
+        "The ponding-tolerant chemistry, its trade-offs, and when to use something else.",
+    },
+    {
       icon: PanelTop,
       label: "Metal Roofing",
       href: "/commercial/metal-roofing",
@@ -781,7 +796,11 @@ export const commercialHub = {
       icon: Fan,
       label: "Roof Maintenance",
       href: "/commercial/roof-maintenance",
-      description: "Scheduled care that prevents five-figure surprises.",
+      // "Prevents five-figure surprises" put an unhedged dollar magnitude on
+      // an outcome nobody can promise. Same benefit, stated as what
+      // maintenance actually does.
+      description:
+        "Scheduled care that finds the small problems while they are still small.",
     },
     {
       icon: Sparkles,

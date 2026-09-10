@@ -73,7 +73,11 @@ export const TOPICS = [
 ];
 
 /** Pick the next unused item, falling back to the least recently used. */
-export function nextUnused<T>(all: T[], used: string[], key: (t: T) => string): {
+export function nextUnused<T>(
+  all: T[],
+  used: string[],
+  key: (t: T) => string,
+): {
   item: T;
   exhausted: boolean;
 } {
@@ -133,7 +137,10 @@ export async function generateUpdate(topic: string): Promise<string | null> {
     const text = data.content?.[0]?.text?.trim();
     if (!text) return null;
     // Belt and braces on the house style, same as the caption generator.
-    return text.replace(new RegExp(`\\s*${String.fromCharCode(0x2014)}\\s*`, "g"), ", ");
+    return text.replace(
+      new RegExp(`\\s*${String.fromCharCode(0x2014)}\\s*`, "g"),
+      ", ",
+    );
   } catch {
     return null;
   }
@@ -145,7 +152,13 @@ export async function loadState(client: SanityClient): Promise<GbpAutoState> {
     id: GBP_STATE_ID,
   })) as GbpAutoState | null;
   return (
-    doc ?? { _id: GBP_STATE_ID, _type: "gbpAuto", usedPhotoIds: [], usedTopics: [], postCount: 0 }
+    doc ?? {
+      _id: GBP_STATE_ID,
+      _type: "gbpAuto",
+      usedPhotoIds: [],
+      usedTopics: [],
+      postCount: 0,
+    }
   );
 }
 

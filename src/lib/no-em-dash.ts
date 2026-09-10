@@ -74,5 +74,5 @@ export function stripEmDashes(input: string): string {
 
 /** Convenience wrapper for optional fields. */
 export function cleanCopy<T extends string | undefined>(input: T): T {
-  return (input ? (stripEmDashes(input) as T) : input);
+  return input ? (stripEmDashes(input) as T) : input;
 }
