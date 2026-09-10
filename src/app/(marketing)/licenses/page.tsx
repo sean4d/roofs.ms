@@ -159,9 +159,9 @@ export default function LicensesPage() {
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-slate-600">
                 Flat and low-slope systems on offices, retail, warehouses,
-                churches, apartments and light industrial buildings: TPO, PVC,
-                EPDM, modified bitumen, standing seam metal, silicone roof
-                coatings, leak investigation and maintenance programs.
+                churches, apartments and industrial buildings: TPO, PVC, EPDM,
+                modified bitumen, standing seam metal, silicone roof coatings,
+                leak investigation and maintenance programs.
               </p>
               <Link
                 href="/commercial"

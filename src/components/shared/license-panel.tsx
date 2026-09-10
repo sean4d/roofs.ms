@@ -43,8 +43,14 @@ export function licenses(): License[] {
       label: "MSBOC Commercial Certificate of Responsibility",
       number: siteConfig.licenseCommercial,
       href: siteConfig.links.msbocCommercialLicense,
+      /*
+       * WAS "and light industrial". Accurate as a zoning term and wrong as
+       * marketing copy: to a facility manager reading it, "light" sounds
+       * like a limit on what we are trusted with rather than a description
+       * of their building (owner, 2026-09-10).
+       */
       covers:
-        "Commercial buildings: offices, retail, warehouses, churches, apartments and light industrial.",
+        "Commercial buildings: offices, retail, warehouses, churches, apartments and industrial facilities.",
     });
   }
   return list;
@@ -77,11 +83,20 @@ export function LicensePanel({
           >
             {heading}
           </h2>
+          {/*
+            ONE STRING, NOT JSX TEXT, AND THAT IS DELIBERATE.
+
+            Written as `{siteConfig.legalName} is licensed by...` this rendered
+            as "Southeast Roofing LLCis licensed by..." on the live site: the
+            JSX transform dropped the leading space of a text node that wraps
+            onto several source lines. An explicit {" "} fixes it until the
+            next prettier run reflows it back out again.
+
+            A template literal has no whitespace for a formatter or a compiler
+            to have an opinion about, so the sentence renders as written.
+          */}
           <p className="mt-2 text-sm leading-relaxed text-slate-600">
-            {siteConfig.legalName} is licensed by the Mississippi State Board of
-            Contractors on both sides of the trade. Each number below links to
-            the board&rsquo;s own record, so you can check it without taking our
-            word for anything.
+            {`${siteConfig.legalName} is licensed by the Mississippi State Board of Contractors on both sides of the trade. Each number below links to the board’s own record, so you can check it without taking our word for anything.`}
           </p>
         </div>
       </div>

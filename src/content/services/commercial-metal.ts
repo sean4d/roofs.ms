@@ -197,7 +197,7 @@ export const commercialMetalHub: ServiceContent = {
       },
       {
         title: "R-panel",
-        text: "The exposed-fastener workhorse for shops, warehouses, and light commercial, economical and fast to install.",
+        text: "The exposed-fastener workhorse for shops, warehouses, and commercial buildings, economical and fast to install.",
       },
       {
         title: "PBR panel",

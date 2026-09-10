@@ -233,6 +233,29 @@ function universalRules(page, doc) {
     (text.match(/.{0,60}—.{0,60}/) || [""])[0],
   );
 
+  /*
+   * WORDS RUN TOGETHER ACROSS AN INTERPOLATION.
+   *
+   * /licenses read "Southeast Roofing LLCis licensed by..." in production
+   * because the JSX transform dropped the leading space of a text node that
+   * wrapped across source lines. Nobody spots that reading the source; the
+   * space is right there in the file. React marks the join with an empty
+   * comment, so a letter on both sides of one is exactly the defect, and
+   * it is invisible to every other check here because the visible text is
+   * still a plausible-looking string.
+   */
+  const runOns = [
+    ...html.matchAll(/([A-Za-z0-9]{2})<!-- -->([A-Za-z0-9]{2})/g),
+  ];
+  check(
+    runOns.length === 0,
+    at(`no words run together across an interpolation (${runOns.length})`),
+    runOns
+      .slice(0, 3)
+      .map((m) => `"${m[1]}${m[2]}"`)
+      .join(", "),
+  );
+
   // --- Links --------------------------------------------------------
   check(
     !/target="_blank"/.test(html),

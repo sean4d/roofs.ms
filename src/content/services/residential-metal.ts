@@ -588,7 +588,7 @@ export const residentialMetalChildren: ServiceContent[] = [
             [
               "Typical use",
               "Homes, porches, barns, sheds, barndominiums",
-              "Shops, larger outbuildings, light commercial",
+              "Shops, larger outbuildings, commercial buildings",
             ],
           ],
           note: "Representative profiles: rib geometry, gauge availability, and slope approvals vary by manufacturer and are confirmed against the panel manual for your project.",
