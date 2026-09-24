@@ -34,7 +34,14 @@ export function GoogleG({ className }: { className?: string }) {
 }
 
 export type BrandMarkKey =
-  "google" | "gaf" | "certainteed" | "bbb" | "msboc" | "warranty" | "insured";
+  | "google"
+  | "gaf"
+  | "certainteed"
+  | "bbb"
+  | "adp"
+  | "msboc"
+  | "warranty"
+  | "insured";
 
 export const brandMarks: Record<BrandMarkKey, React.ReactNode> = {
   google: <GoogleG className="size-7 sm:size-9" />,
@@ -68,6 +75,22 @@ export const brandMarks: Record<BrandMarkKey, React.ReactNode> = {
       aria-label="Better Business Bureau"
     >
       BBB
+    </span>
+  ),
+  /*
+   * Area Development Partnership, Greater Hattiesburg's chamber of commerce.
+   *
+   * The initials rather than the full name: at badge size "Area Development
+   * Partnership" would either wrap to three lines or shrink past legibility,
+   * and the card title underneath carries the full name anyway. aria-label
+   * spells it out so nothing depends on a reader knowing the acronym.
+   */
+  adp: (
+    <span
+      className="flex h-7 items-center justify-center rounded-md bg-[#0b6b3a] px-2 font-display text-sm font-black tracking-tight text-white sm:h-10 sm:px-2.5 sm:text-lg"
+      aria-label="Area Development Partnership"
+    >
+      ADP
     </span>
   ),
   msboc: (

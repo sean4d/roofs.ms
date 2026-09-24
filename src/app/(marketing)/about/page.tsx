@@ -79,7 +79,7 @@ const credentials = [
   },
   {
     title: "GAF Certified Contractor",
-    detail: "Factory certification from GAF, verify it on gaf.com",
+    detail: "Certified by GAF, verify it on gaf.com",
     href: siteConfig.links.gafProfile,
   },
   {

@@ -71,6 +71,10 @@ export const heroTrustBar = [
   { icon: Star, label: "5-Star Google Rating" },
   { icon: BadgeCheck, label: "Google Guaranteed" },
   { icon: ShieldCheck, label: "GAF Certified Contractor" },
+  // Both manufacturer certifications sit together, because a homeowner
+  // scanning this list reads them as a pair and one without the other looks
+  // like the list is out of date (owner, 2026-09-24).
+  { icon: ShieldCheck, label: "CertainTeed ShingleMaster" },
   { icon: Handshake, label: "BBB Accredited · A+ Rating" },
   // Both licences named, because "Mississippi Licensed" is true of a company
   // that can only touch houses and a property manager cannot tell which we are.
@@ -78,6 +82,10 @@ export const heroTrustBar = [
   { icon: FileCheck, label: "Fully Insured & Bonded" },
   { icon: Banknote, label: "$0 Down Financing" },
   { icon: Medal, label: "Lifetime Warranty" },
+  // Chamber membership, last because it is the local-standing item rather
+  // than a roofing credential. Ten items keeps the grid square: five rows of
+  // two on a phone, two and a half rows of four on desktop.
+  { icon: Building2, label: "Area Development Partnership Member" },
 ] as const;
 
 /* ------------------------------------------------------------------ */
@@ -91,15 +99,24 @@ export interface TrustItem {
 }
 
 /**
- * Credential hierarchy (brand directive 2026-07-03): GAF certification gets
- * the greatest emphasis. We are NOT an Owens Corning certified/preferred
- * contractor, OC appears only as a product line we install.
+ * Credentials shown on the residential page.
+ *
+ * TWO MANUFACTURER CERTIFICATIONS NOW (2026-09-24). GAF used to be described
+ * here as "our primary manufacturer certification", which was accurate while
+ * it was the only one and became misleading the day CertainTeed arrived. We
+ * are still NOT an Owens Corning certified or preferred contractor: OC
+ * appears across the site only as a product line we install.
  */
 export const trustItems: TrustItem[] = [
   {
     icon: ShieldCheck,
     label: "GAF Certified Contractor",
-    detail: "Our primary manufacturer certification",
+    detail: "Certified to install GAF shingle systems",
+  },
+  {
+    icon: ShieldCheck,
+    label: "CertainTeed ShingleMaster",
+    detail: "CertainTeed's credential for shingle installers",
   },
   {
     icon: Medal,
@@ -117,6 +134,11 @@ export const trustItems: TrustItem[] = [
     icon: FileCheck,
     label: "Fully Insured & Bonded",
     detail: "Your home and project are protected",
+  },
+  {
+    icon: Building2,
+    label: "Area Development Partnership",
+    detail: "Member of Greater Hattiesburg's chamber of commerce",
   },
 ];
 
@@ -542,7 +564,7 @@ export const proposalSection = {
  */
 export const manufacturerSection = {
   eyebrow: "Manufacturer credentials",
-  title: "Factory certified by GAF and CertainTeed.",
+  title: "Certified by GAF and CertainTeed.",
   items: [
     {
       name: "GAF",
@@ -653,7 +675,7 @@ export const reviewsSection = {
     {
       key: "gaf",
       title: "GAF Certified",
-      subtitle: "Factory certification from GAF",
+      subtitle: "Certified contractor for GAF systems",
       href: siteConfig.links.gafProfile,
       cta: "Verify on gaf.com",
     },
@@ -665,7 +687,7 @@ export const reviewsSection = {
       // true the moment a second one existed.
       key: "certainteed",
       title: "CertainTeed ShingleMaster",
-      subtitle: "Factory certification from CertainTeed",
+      subtitle: "ShingleMaster certified by CertainTeed",
       href: siteConfig.links.certainteedProfile,
       cta: "Verify on certainteed.com",
     },
@@ -675,6 +697,16 @@ export const reviewsSection = {
       subtitle: "A+ rating with the Better Business Bureau",
       href: siteConfig.links.bbbProfile,
       cta: "Verify on bbb.org",
+    },
+    {
+      // Sixth card, added 2026-09-24. Five badges left a hole in the
+      // two-column phone grid; six fill it, and the membership belongs in a
+      // row of checkable records anyway: theadp.com publishes it, we don't.
+      key: "adp",
+      title: "ADP Member",
+      subtitle: "Area Development Partnership, Greater Hattiesburg",
+      href: siteConfig.links.adpMember,
+      cta: "Verify on theadp.com",
     },
     {
       key: "msboc",

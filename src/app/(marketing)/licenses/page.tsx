@@ -113,7 +113,7 @@ const otherCredentials = [
   {
     name: "GAF Certified Contractor",
     detail:
-      "Factory certification from GAF, which is what lets us register GAF's manufacturer warranties on the roofs we install.",
+      "Certified by GAF, which is what lets us register GAF's manufacturer warranties on the roofs we install.",
     href: siteConfig.links.gafProfile,
     cta: "Verify on gaf.com",
   },

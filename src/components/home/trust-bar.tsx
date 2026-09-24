@@ -22,17 +22,17 @@ export function TrustBar() {
             sequential (h1 → h2 → the h3 badge titles), no visual change. */}
         <h2 className="sr-only">Our credentials</h2>
         {/*
-          FIVE BADGES NOW, NOT FOUR (CertainTeed added 2026-09-24).
+          SIX BADGES (CertainTeed and ADP added 2026-09-24).
 
-          Four fitted a single row at every width. Five do not, so the grid
-          goes two-wide on phones and five-wide from sm up. The mobile change
-          is a side effect of the credential, and it reads better than the old
-          four-across squeeze: the cards are wider, so the subtitle that used
-          to be hidden below sm now has room to matter.
+          Was a hard four-across at every width. Six divides cleanly at every
+          breakpoint we care about: three rows of two on a phone with no
+          orphan tile, two rows of three on a tablet, one row of six on a
+          desktop. The phone cards are wider than the old four-across squeeze,
+          so the subtitle that used to be hidden below sm now has room.
         */}
         <StaggerGroup
           as="ul"
-          className="grid grid-cols-2 gap-2 sm:grid-cols-5 sm:gap-4"
+          className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6"
         >
           {reviewsSection.badges.map((badge) => {
             const inner = (

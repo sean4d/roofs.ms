@@ -59,9 +59,11 @@ export default function ResidentialHubPage() {
       </Section>
 
       <Section tone="surface" ariaLabel="Credentials">
+        {/* Six credentials since CertainTeed and ADP joined (2026-09-24):
+            three across divides evenly, four leaves an orphaned pair. */}
         <StaggerGroup
           as="ul"
-          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
         >
           {trustItems.map((item) => (
             <StaggerItem as="li" key={item.label} className="flex gap-4">
