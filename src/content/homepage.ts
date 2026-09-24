@@ -525,22 +525,44 @@ export const proposalSection = {
 /* 8c. Manufacturer partnerships, factual wording only (Phase 4 §12)  */
 /* ------------------------------------------------------------------ */
 
+/**
+ * Manufacturer credentials, and the line between a credential and a product.
+ *
+ * THE TITLE CHANGED WHEN CERTAINTEED ARRIVED (2026-09-24). It read "Certified
+ * on GAF. Experienced across brands." That was accurate when GAF was the only
+ * certification. It is now two certifications from two manufacturers, and a
+ * heading naming one of them undersells the other.
+ *
+ * The three-way distinction is the point of this section and must survive any
+ * future edit:
+ *   GAF         - certified us       -> "Certified Contractor", linked record
+ *   CertainTeed - certified us       -> "ShingleMaster", linked record
+ *   Owens Corning - we install it    -> "Product installer", NO link, because
+ *                                       there is no credential to verify
+ */
 export const manufacturerSection = {
-  eyebrow: "Manufacturer partnerships",
-  title: "Certified on GAF. Experienced across brands.",
+  eyebrow: "Manufacturer credentials",
+  title: "Factory certified by GAF and CertainTeed.",
   items: [
     {
       name: "GAF",
       claim: "Certified Contractor",
-      text: "North America's largest shingle manufacturer, and our primary, certified system. Verify our certification on gaf.com.",
+      text: "North America's largest shingle manufacturer, and the system we install most. Our certification is on GAF's own contractor record, not just on this page.",
       href: siteConfig.links.gafProfile,
       cta: "Verify on gaf.com",
+    },
+    {
+      name: "CertainTeed",
+      claim: "ShingleMaster",
+      text: "CertainTeed's credential for shingle installers, earned on their training and installation standards. Their public profile carries the same record.",
+      href: siteConfig.links.certainteedProfile,
+      cta: "Verify on certainteed.com",
     },
     {
       name: "Owens Corning",
       /** Product installer ONLY: never "Preferred/Platinum Contractor" */
       claim: "Product installer",
-      text: "We install Owens Corning shingle products when their style, color, or availability fits your project best.",
+      text: "We install Owens Corning shingle products when their style, color, or availability fits your project best. This is a product line we install, not a certification we hold.",
       href: null,
       cta: null,
     },
@@ -631,9 +653,21 @@ export const reviewsSection = {
     {
       key: "gaf",
       title: "GAF Certified",
-      subtitle: "Our primary manufacturer certification",
+      subtitle: "Factory certification from GAF",
       href: siteConfig.links.gafProfile,
       cta: "Verify on gaf.com",
+    },
+    {
+      // Added 2026-09-24. Two manufacturer certifications now, from two
+      // different manufacturers, each with a public record on that
+      // manufacturer's own site. "Our primary manufacturer certification" on
+      // the GAF badge above was retired at the same time: it stopped being
+      // true the moment a second one existed.
+      key: "certainteed",
+      title: "CertainTeed ShingleMaster",
+      subtitle: "Factory certification from CertainTeed",
+      href: siteConfig.links.certainteedProfile,
+      cta: "Verify on certainteed.com",
     },
     {
       key: "bbb",
@@ -696,6 +730,25 @@ export const homeFaqs: HomeFaq[] = [
     question: "Is the inspection really free?",
     answer:
       "Yes. We inspect your roof, document what we find, and give you a straight answer, including when the right answer is a small repair instead of a replacement.",
+  },
+  /*
+   * THE CREDENTIALS QUESTION, IN ONE ANSWER (added 2026-09-24).
+   *
+   * "Is this roofer licensed, insured and certified" is the single most asked
+   * question about a contractor and the one an answer engine is most likely
+   * to be asked on our behalf. It was answerable from four different pages
+   * and stated in full on none of them, which is how an AI ends up quoting
+   * half of it. One visible answer, on the homepage, carrying every
+   * credential with the two licence numbers spelled out.
+   */
+  {
+    question: "Is Southeast Roofing licensed, insured and certified?",
+    answer: `Yes to all three, and every part of it is checkable. We hold Mississippi State Board of Contractors residential license #${siteConfig.license} and commercial Certificate of Responsibility #${siteConfig.licenseCommercial}, we are fully insured and bonded, and we are certified by two shingle manufacturers: GAF Certified Contractor and CertainTeed ShingleMaster. We are also BBB Accredited with an A+ rating and a member of the Area Development Partnership. Our licenses page links to the public record behind each one.`,
+  },
+  {
+    question: "Does Southeast Roofing offer financing?",
+    answer:
+      "Yes. We offer financing through GoodLeap, including $0 down plans. You apply online in a few minutes and see the real terms you qualify for before you commit to anything.",
   },
 ];
 

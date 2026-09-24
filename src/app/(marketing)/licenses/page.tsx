@@ -75,19 +75,54 @@ const faqs = [
     answer: `Because a licence number is the one claim on a roofing website you can check against somebody other than the roofer. Ours is ${siteConfig.licenseCommercial} and it is in the board's commercial register. If a contractor bidding your building cannot give you a number that resolves there, that is worth knowing before you sign, particularly on a job over ${MSBOC.commercialJobThreshold} where MSBOC requires a commercial licence.`,
   },
   {
-    question: "Is Southeast Roofing insured?",
+    question: "Is Southeast Roofing insured and bonded?",
     answer:
-      "Yes. We carry general liability and workers' compensation coverage, and we are happy to have a certificate of insurance sent directly to a property manager or homeowner from our agent before work starts.",
+      "Yes to both. We carry general liability and workers' compensation coverage and we are bonded, and we are happy to have a certificate of insurance sent directly to a property manager or homeowner from our agent before work starts.",
+  },
+  /*
+   * MANUFACTURER QUESTIONS, ADDED 2026-09-24.
+   *
+   * These are here because they are the questions an answer engine gets asked
+   * about a roofer ("is X a CertainTeed ShingleMaster", "what shingles does X
+   * install") and because the credential-versus-product distinction is easy
+   * to get wrong. Answering it plainly, in visible copy on the page that also
+   * emits the FAQ schema, is the clearest way to put the right version of the
+   * fact where both a person and a machine will find it.
+   */
+  {
+    question: "Is Southeast Roofing a CertainTeed ShingleMaster?",
+    answer: `Yes. ${siteConfig.legalName} holds CertainTeed's ShingleMaster credential, and CertainTeed publishes our profile on their own site so you can check it rather than take our word for it. We also hold GAF Certified Contractor status. The two are separate credentials from separate manufacturers and we hold both.`,
+  },
+  {
+    question:
+      "Which shingle brands does Southeast Roofing install: CertainTeed, GAF or Owens Corning?",
+    answer:
+      "All three. There is a distinction worth understanding, though: GAF and CertainTeed have each certified us, which is why those two carry verifiable credentials. Owens Corning is a product line we install when its style, colour or availability suits the roof best. We install their shingles; they have not certified us, and we do not claim otherwise.",
   },
 ];
 
+/**
+ * Everything that is not a state licence, each with the record that proves it.
+ *
+ * CertainTeed ShingleMaster and the Area Development Partnership membership
+ * were added 2026-09-24. Owens Corning is deliberately not in this list: we
+ * install their shingles and they have not certified us, so it is not a
+ * credential and it does not belong on a credentials page.
+ */
 const otherCredentials = [
   {
     name: "GAF Certified Contractor",
     detail:
-      "Factory certification from our primary shingle manufacturer, which is what lets us register the manufacturer warranties on the roofs we install.",
+      "Factory certification from GAF, which is what lets us register GAF's manufacturer warranties on the roofs we install.",
     href: siteConfig.links.gafProfile,
     cta: "Verify on gaf.com",
+  },
+  {
+    name: "CertainTeed ShingleMaster",
+    detail:
+      "CertainTeed's credential for shingle installers, earned against their training and installation standards. It is a second manufacturer certification from a second manufacturer, not a rebrand of the first.",
+    href: siteConfig.links.certainteedProfile,
+    cta: "Verify on certainteed.com",
   },
   {
     name: "BBB Accredited, A+ rating",
@@ -95,6 +130,13 @@ const otherCredentials = [
       "Accredited with the Better Business Bureau, with the complaint and resolution history that goes with it publicly visible.",
     href: siteConfig.links.bbbProfile,
     cta: "Verify on bbb.org",
+  },
+  {
+    name: "Area Development Partnership member",
+    detail:
+      "Member of the Area Development Partnership, the chamber of commerce for Greater Hattiesburg. A membership rather than a certification, and listed as one.",
+    href: siteConfig.links.adpMember,
+    cta: "Verify on theadp.com",
   },
 ];
 

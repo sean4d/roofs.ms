@@ -39,14 +39,56 @@ export function SiteFooter() {
               {siteConfig.address.addressLocality},{" "}
               {siteConfig.address.addressRegion}.
             </p>
+            {/*
+              THE CREDENTIAL LINE, AND EACH CREDENTIAL GOES SOMEWHERE.
+
+              This was four words of plain text. Every item here is now
+              either a link to the record that proves it or a statement of
+              fact, because a credential a visitor cannot check is just a
+              claim, and a credential a crawler cannot follow contributes
+              nothing to the entity graph.
+
+              CertainTeed ShingleMaster joined GAF here on 2026-09-24. Owens
+              Corning is deliberately not in this line: we install their
+              shingles, they have not certified us.
+            */}
             <p className="mt-5 text-xs leading-relaxed text-steel-300">
-              GAF Certified Contractor · BBB Accredited ·{" "}
+              <a
+                href={siteConfig.links.gafProfile}
+                className="underline underline-offset-4 transition-colors hover:text-white"
+              >
+                {siteConfig.trustFacts.gaf}
+              </a>
+              {" · "}
+              <a
+                href={siteConfig.links.certainteedProfile}
+                className="underline underline-offset-4 transition-colors hover:text-white"
+              >
+                {siteConfig.trustFacts.certainteed}
+              </a>
+              {" · "}
+              <a
+                href={siteConfig.links.bbbProfile}
+                className="underline underline-offset-4 transition-colors hover:text-white"
+              >
+                BBB Accredited A+
+              </a>
+              {" · "}
               <Link
                 href="/licenses"
                 className="underline underline-offset-4 transition-colors hover:text-white"
               >
                 MSBOC licensed for residential &amp; commercial
               </Link>
+              {" · "}
+              {siteConfig.trustFacts.insured}
+              {" · "}
+              <a
+                href={siteConfig.links.adpMember}
+                className="underline underline-offset-4 transition-colors hover:text-white"
+              >
+                {siteConfig.trustFacts.adp}
+              </a>
             </p>
             <SocialLinks className="mt-5 flex items-center gap-1" />
           </div>

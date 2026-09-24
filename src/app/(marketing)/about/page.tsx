@@ -79,8 +79,17 @@ const credentials = [
   },
   {
     title: "GAF Certified Contractor",
-    detail: "Our primary manufacturer certification, verify it on gaf.com",
+    detail: "Factory certification from GAF, verify it on gaf.com",
     href: siteConfig.links.gafProfile,
+  },
+  {
+    // Added 2026-09-24. A second manufacturer certification from a second
+    // manufacturer, which is why the GAF entry above no longer calls itself
+    // "our primary manufacturer certification".
+    title: "CertainTeed ShingleMaster",
+    detail:
+      "CertainTeed's credential for shingle installers, verify it on certainteed.com",
+    href: siteConfig.links.certainteedProfile,
   },
   {
     title: "BBB Accredited: A+ rating",
@@ -96,6 +105,13 @@ const credentials = [
     title: "Fully insured & bonded",
     detail: "Certificates of insurance available on request",
     href: null,
+  },
+  {
+    // Chamber of commerce membership, added 2026-09-24. A membership, not a
+    // certification, and worded as one.
+    title: "Area Development Partnership member",
+    detail: "Greater Hattiesburg's chamber of commerce, see our member profile",
+    href: siteConfig.links.adpMember,
   },
   {
     title: "$0 down financing",

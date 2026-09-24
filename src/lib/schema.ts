@@ -96,6 +96,18 @@ export function roofingContractorSchema(): JsonLdObject {
       "Seamless gutters",
       "Siding",
       "Fascia and soffit",
+      // Shingle brands we actually install. Naming them here is how an
+      // answer engine connects "who installs CertainTeed near Hattiesburg"
+      // to this business. Owens Corning belongs in this list (we install it)
+      // and nowhere near hasCredential (they have not certified us).
+      "CertainTeed shingles",
+      "GAF shingles",
+      "Owens Corning shingles",
+      "Hail damage roof repair",
+      "Wind damage roof repair",
+      "Emergency roof leak repair",
+      "Roof ventilation",
+      "Leaf guards",
     ],
     makesOffer: [
       { name: "Residential Roofing", path: "/residential" },
@@ -205,9 +217,37 @@ export function roofingContractorSchema(): JsonLdObject {
         "@type": "EducationalOccupationalCredential",
         credentialCategory: "certification",
         name: "GAF Certified Contractor",
+        url: siteConfig.links.gafProfile,
         recognizedBy: { "@type": "Organization", name: "GAF" },
       },
+      /*
+       * CertainTeed ShingleMaster, obtained 2026-09.
+       *
+       * A second manufacturer certification from a second manufacturer, with
+       * its own public record. It sits alongside GAF rather than replacing
+       * it. Owens Corning is deliberately absent from this array: we install
+       * their shingles, they have not certified us, and hasCredential is for
+       * credentials somebody else issued.
+       */
+      {
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: "certification",
+        name: "CertainTeed ShingleMaster",
+        url: siteConfig.links.certainteedProfile,
+        recognizedBy: { "@type": "Organization", name: "CertainTeed" },
+      },
     ].filter(Boolean),
+    /*
+     * Chamber of commerce membership. `memberOf` is the correct property for
+     * an organisation belonging to another organisation, and it is a
+     * different claim from a credential: nobody certified us, we joined.
+     */
+    memberOf: {
+      "@type": "Organization",
+      name: "Area Development Partnership",
+      url: siteConfig.links.adpMember,
+      areaServed: "Greater Hattiesburg, Mississippi",
+    },
     /*
      * Both government licence records belong in sameAs. sameAs is for pages
      * that unambiguously identify the entity, and a state licensing register

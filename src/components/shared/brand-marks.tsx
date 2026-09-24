@@ -34,7 +34,7 @@ export function GoogleG({ className }: { className?: string }) {
 }
 
 export type BrandMarkKey =
-  "google" | "gaf" | "bbb" | "msboc" | "warranty" | "insured";
+  "google" | "gaf" | "certainteed" | "bbb" | "msboc" | "warranty" | "insured";
 
 export const brandMarks: Record<BrandMarkKey, React.ReactNode> = {
   google: <GoogleG className="size-7 sm:size-9" />,
@@ -44,6 +44,22 @@ export const brandMarks: Record<BrandMarkKey, React.ReactNode> = {
       aria-label="GAF"
     >
       GAF
+    </span>
+  ),
+  /*
+   * CertainTeed ShingleMaster (credential obtained 2026-09).
+   *
+   * A wordmark in CertainTeed's blue rather than a redrawn logo: we are not
+   * licensed to reproduce their artwork, and a coloured wordmark reads as a
+   * credential badge without pretending to be official brand material. Same
+   * approach already used for GAF and BBB above.
+   */
+  certainteed: (
+    <span
+      className="flex h-7 items-center justify-center rounded-md bg-[#00629b] px-2 font-display text-[11px] font-black tracking-tight text-white sm:h-10 sm:px-2.5 sm:text-sm"
+      aria-label="CertainTeed"
+    >
+      CertainTeed
     </span>
   ),
   bbb: (

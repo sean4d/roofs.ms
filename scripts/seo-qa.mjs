@@ -262,6 +262,32 @@ function universalRules(page, doc) {
     at("no link opens in a new tab (owner directive)"),
   );
 
+  /*
+   * SOCIAL ICONS MUST BE REAL, NAMED ANCHORS.
+   *
+   * An icon-only link is invisible twice over: a screen reader announces
+   * nothing, and a crawler reading the markup sees an <svg> with no text and
+   * cannot tell which platform it points at. Every social link on this site
+   * carries an accessible name, and every page that shows the icon row shows
+   * the whole row, LinkedIn included, because the row renders from one
+   * config object.
+   */
+  const socialRow = /aria-label="Visit [^"]*on Facebook"/.test(html);
+  if (socialRow) {
+    for (const p of ["Facebook", "Instagram", "TikTok", "LinkedIn"]) {
+      check(
+        new RegExp(`aria-label="Visit [^"]*on ${p}"`).test(html),
+        at(`social row includes a named ${p} link`),
+      );
+    }
+    check(
+      html.includes(
+        'href="https://www.linkedin.com/in/southeast-roofing-1b84b3367"',
+      ),
+      at("LinkedIn icon points at the company profile"),
+    );
+  }
+
   // --- Structured data ----------------------------------------------
   const { nodes, parseOk } = jsonLdNodes(html);
   check(parseOk, at("every JSON-LD block parses"));
@@ -283,9 +309,60 @@ function universalRules(page, doc) {
     }
     const sameAs = [].concat(org.sameAs || []);
     check(sameAs.length > 0, at("business entity has sameAs profiles"));
+    /*
+     * THE IDENTITY GRAPH, ASSERTED PROFILE BY PROFILE.
+     *
+     * sameAs is how a search or answer engine decides that a LinkedIn page, a
+     * CertainTeed profile and a chamber listing are all the same company as
+     * this website. A missing entry is invisible: nothing renders differently
+     * and nothing errors, the entity just quietly stops being connected. So
+     * each one is named here rather than trusting a count.
+     */
+    for (const [needle, label] of [
+      ["msboc", "MSBOC public record"],
+      ["linkedin.com", "LinkedIn"],
+      ["certainteed.com/profiles/", "CertainTeed ShingleMaster profile"],
+      ["members.theadp.com", "Area Development Partnership member profile"],
+      ["bbb.org", "BBB profile"],
+      ["gaf.com", "GAF contractor profile"],
+    ]) {
+      check(
+        sameAs.some((u) => String(u).includes(needle)),
+        at(`sameAs includes the ${label}`),
+      );
+    }
+    /*
+     * The ChamberMaster mirror of the ADP listing resolves to the same page
+     * as the branded members.theadp.com URL. Declaring both would be two
+     * URLs for one profile, which adds noise to the graph rather than
+     * authority, so only the branded one belongs here.
+     */
     check(
-      sameAs.some((u) => String(u).includes("msboc")),
-      at("sameAs includes the MSBOC public record"),
+      !sameAs.some((u) => String(u).includes("chambermaster.com")),
+      at("sameAs does not double-declare the ADP listing"),
+    );
+    const credNames = []
+      .concat(org.hasCredential || [])
+      .map((c) => c.name || "");
+    for (const want of [
+      "GAF Certified Contractor",
+      "CertainTeed ShingleMaster",
+    ]) {
+      check(
+        credNames.some((c) => c === want),
+        at(`hasCredential names ${want}`),
+      );
+    }
+    /*
+     * Owens Corning shingles are a product we install, not a credential
+     * anybody issued us. It belongs in knowsAbout and nowhere near
+     * hasCredential; claiming a certification a manufacturer never granted is
+     * the one credential error on this site that could actually be actioned
+     * against us.
+     */
+    check(
+      !JSON.stringify(org.hasCredential || []).match(/owens/i),
+      at("Owens Corning is not claimed as a credential"),
     );
     const ids = JSON.stringify(org.identifier || []);
     check(

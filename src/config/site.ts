@@ -115,6 +115,38 @@ export const siteConfig = {
     msbocSearch: "https://search.msboc.us/",
     gafProfile:
       "https://www.gaf.com/en-us/roofing-contractors/residential/usa/ms/hattiesburg/southeast-roofing-1147340",
+    /**
+     * CertainTeed ShingleMaster public profile (credential obtained 2026-09).
+     *
+     * ======================================================================
+     * THIS IS THE ONE PLACE THE CERTAINTEED URL IS DEFINED. Change it here
+     * and every badge, credential card, footer link and sameAs entry follows.
+     * ======================================================================
+     *
+     * The owner supplied https://www.certainteed.com/node/407251 and said the
+     * SoutheastRoofingLLC alias was still being processed. Verified
+     * 2026-09-24: the node URL now 301-redirects to the alias below, and the
+     * page title reads "Southeast Roofing LLC | CertainTeed". The alias is
+     * live, so we point at it directly rather than through a redirect.
+     *
+     * Note the path shape: /profiles/SoutheastRoofingLLC. A bare
+     * /SoutheastRoofingLLC returns 404, so do not "simplify" this URL.
+     */
+    certainteedProfile:
+      "https://www.certainteed.com/profiles/SoutheastRoofingLLC",
+    /**
+     * Area Development Partnership member profile, Greater Hattiesburg's
+     * chamber of commerce (owner-supplied 2026-09-24, verified 200).
+     *
+     * The branded members.theadp.com host is preferred over the raw
+     * ChamberMaster mirror at
+     * area-development-partnership.chambermaster.com/list/member/southeast-roofing-llc-9201
+     * (member ID 9201). Both resolve to the same listing; only one belongs in
+     * sameAs, because declaring two URLs for one profile adds noise rather
+     * than authority.
+     */
+    adpMember:
+      "https://members.theadp.com/list/member/southeast-roofing-llc-9201",
     /** GoodLeap financing application */
     financing:
       "https://www.goodleap.dev/southeastroofingllc/1b96fc28-5e63-477c-8074-0bec137f3154",
@@ -163,6 +195,15 @@ export const siteConfig = {
     facebook: "https://www.facebook.com/southeastroofing.llc",
     instagram: "https://www.instagram.com/southeastroofing.llc",
     tiktok: "https://www.tiktok.com/@southeastroofing.llc",
+    /**
+     * LinkedIn (owner-supplied 2026-09-24).
+     *
+     * This is an /in/ profile URL rather than /company/, which is how the
+     * account was created. It is the account the owner gave us and it is the
+     * one that goes in sameAs; if a /company/ page is created later, change
+     * it here and every icon row plus the identity graph follows.
+     */
+    linkedin: "https://www.linkedin.com/in/southeast-roofing-1b84b3367",
     nextdoor: "https://nextdoor.com/pages/southeast-roofing-hattiesburg-ms/",
   },
 
@@ -222,6 +263,23 @@ export const siteConfig = {
     googleGuaranteed: "Google Guaranteed",
     bbbRating: "BBB Accredited: A+ rating",
     /**
+     * Manufacturer credentials. TWO of them now, and the distinction between
+     * them and Owens Corning matters (owner directive 2026-09-24):
+     *
+     *   GAF Certified Contractor    - a credential GAF issued to us
+     *   CertainTeed ShingleMaster   - a credential CertainTeed issued to us
+     *   Owens Corning               - shingles we install, NOT a credential
+     *
+     * Never write "Owens Corning Certified" or put Owens Corning in a
+     * credential row. Installing a manufacturer's product is not the same as
+     * being certified by them, and claiming otherwise is the kind of thing a
+     * competitor reports.
+     */
+    gaf: "GAF Certified Contractor",
+    certainteed: "CertainTeed ShingleMaster",
+    /** Chamber of commerce membership, Greater Hattiesburg. */
+    adp: "Area Development Partnership Member",
+    /**
      * Owner update 2026-09-09: both licences held, so the badge says so.
      * "Mississippi licensed" alone was true and undersold it, and a building
      * owner scanning credentials needs the word commercial to appear.
@@ -254,6 +312,13 @@ export const siteConfig = {
     "https://share.google/8jfoy7nN9HyddPKDb",
     "https://www.bbb.org/us/ms/hattiesburg/profile/roofing-contractors/southeast-roofing-llc-0523-235902892",
     "https://www.gaf.com/en-us/roofing-contractors/residential/usa/ms/hattiesburg/southeast-roofing-1147340",
+    // CertainTeed ShingleMaster profile: a manufacturer-hosted record of a
+    // credential we hold, which is exactly what sameAs is for. Defined once
+    // in links.certainteedProfile, referenced here so the two cannot drift.
+    "https://www.certainteed.com/profiles/SoutheastRoofingLLC",
+    // Area Development Partnership (Greater Hattiesburg chamber) member
+    // profile. A local-authority listing that corroborates the address.
+    "https://members.theadp.com/list/member/southeast-roofing-llc-9201",
     // State licensing authority record for #R22245, the strongest
     // third-party credential we can point at. Declared as a bare URL with
     // no "residential" framing anywhere (see links.msbocLicense).
@@ -262,6 +327,7 @@ export const siteConfig = {
     "https://www.facebook.com/southeastroofing.llc",
     "https://www.instagram.com/southeastroofing.llc",
     "https://www.tiktok.com/@southeastroofing.llc",
+    "https://www.linkedin.com/in/southeast-roofing-1b84b3367",
     "https://nextdoor.com/pages/southeast-roofing-hattiesburg-ms/",
     // Maps + major directories
     "https://maps.apple.com/place?place-id=IFA6389F87BE4B40A",

@@ -19,7 +19,9 @@ export function ManufacturerStrip() {
         align="center"
       />
 
-      <StaggerGroup className="mx-auto mt-12 grid max-w-4xl gap-6 md:grid-cols-2">
+      {/* Three items since CertainTeed joined (2026-09-24), so the row is
+          three wide on desktop instead of two. */}
+      <StaggerGroup className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-3">
         {manufacturerSection.items.map((item) => (
           <StaggerItem
             key={item.name}

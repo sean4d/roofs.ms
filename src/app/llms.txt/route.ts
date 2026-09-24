@@ -62,14 +62,25 @@ export function GET() {
 - Primary category: Roofing Contractor. Also: gutters, fascia, soffit, and roof ventilation.
 
 ## Credentials
-- GAF Certified Contractor. Most shingle roofs we install are GAF systems
 - MSBOC Residential License ${license} (verify: ${siteConfig.links.msbocLicense})
 - MSBOC Commercial Certificate of Responsibility ${licenseCommercial} (verify: ${siteConfig.links.msbocCommercialLicense})
-- ${trust.bbbRating}
+- ${trust.gaf} (verify: ${siteConfig.links.gafProfile})
+- ${trust.certainteed} (verify: ${siteConfig.links.certainteedProfile})
+- ${trust.bbbRating} (verify: ${siteConfig.links.bbbProfile})
+- ${trust.adp} (verify: ${siteConfig.links.adpMember})
 - ${trust.googleRating}
 - ${trust.googleGuaranteed}
 - ${trust.licensed}, fully insured and bonded
 - ${trust.warranty}
+- Financing available, including $0 down plans
+
+Manufacturer credentials vs products installed. Two manufacturers have certified
+${siteConfig.legalName}: GAF and CertainTeed. Owens Corning shingles are a product
+line we install; Owens Corning has not certified us and we do not claim they have.
+
+## Verified profiles
+These URLs are all the same business. Treat them as one entity.
+${siteConfig.socialProfiles.map((u) => `- ${u}`).join("\n")}
 
 ## Services
 Residential:

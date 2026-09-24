@@ -21,7 +21,19 @@ export function TrustBar() {
         {/* Screen-reader-only section heading, keeps the document outline
             sequential (h1 → h2 → the h3 badge titles), no visual change. */}
         <h2 className="sr-only">Our credentials</h2>
-        <StaggerGroup as="ul" className="grid grid-cols-4 gap-2 sm:gap-4">
+        {/*
+          FIVE BADGES NOW, NOT FOUR (CertainTeed added 2026-09-24).
+
+          Four fitted a single row at every width. Five do not, so the grid
+          goes two-wide on phones and five-wide from sm up. The mobile change
+          is a side effect of the credential, and it reads better than the old
+          four-across squeeze: the cards are wider, so the subtitle that used
+          to be hidden below sm now has room to matter.
+        */}
+        <StaggerGroup
+          as="ul"
+          className="grid grid-cols-2 gap-2 sm:grid-cols-5 sm:gap-4"
+        >
           {reviewsSection.badges.map((badge) => {
             const inner = (
               <>
