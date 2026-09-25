@@ -378,19 +378,12 @@ export const siteConfig = {
     "https://nextdoor.com/pages/southeast-roofing-hattiesburg-ms/",
     // Maps + major directories
     "https://maps.apple.com/place?place-id=IFA6389F87BE4B40A",
-    "https://www.bing.com/maps?ss=ypid%3AYNF5FB5973B62E00B9",
     "https://www.mapquest.com/us/mississippi/southeast-roofing-778746474",
-    // Waze resolves by our Google Place ID, so it corroborates the same entity.
-    "https://www.waze.com/live-map/directions/us/ms/hattiesburg/southeast-roofing?to=place.ChIJxf_jHarfnIgRnliLC-o1F40",
     "https://www.yelp.com/biz/southeast-roofing-hattiesburg",
     "https://www.yellowpages.com/hattiesburg-ms/mip/southeast-roofing-578982581",
-    "https://www.manta.com/c/m1hb56p/southeast-roofing",
-    "https://www.hotfrog.com/company/78d347f4542871ef2a641a2303ca484c/southeast-roofing/hattiesburg/roofs-ceilings",
     // Home-services marketplaces
     "https://www.thumbtack.com/ms/hattiesburg/roofing/southeast-roofing/service/548708522880925705",
     "https://www.houzz.com/hznb/professionals/roofing-and-gutters/southeast-roofing-pfvwus-pf~1481771383",
-    // Reviews
-    "https://www.trustpilot.com/review/southeastroofing.llc",
     // NOTE: auto-generated scraper directories (roofingquotes, usaroofers,
     // smallbiztrackers, nears.me, tydl.io, roofs.fyi, prosgrade, findglocal,
     // whosmypro, realreviews, etc.) are deliberately EXCLUDED. sameAs should
@@ -398,6 +391,34 @@ export const siteConfig = {
     // padding it with scraped listings adds noise, not authority. Those links
     // are harmless where they are and need no disavow; they just don't belong
     // in our identity graph.
+    //
+    // FIVE MORE REMOVED 2026-09-25, each checked by fetching it:
+    //
+    //   Bing Maps   bing.com/maps?ss=ypid:... returned a page titled "Bing"
+    //               with no mention of this business anywhere in it. A map
+    //               query string, not a profile.
+    //   Waze        A DIRECTIONS url (/live-map/directions/...?to=place.<Google
+    //               Place ID>). It identifies us only by borrowing Google's
+    //               Place ID, so now that the real Google listing is declared
+    //               above it adds no independent signal. It is also an action,
+    //               like the review link, not a record.
+    //   Manta       Cloudflare-blocked, unverifiable, and the same class of
+    //               aggregated directory as the ones excluded above.
+    //   Hotfrog     As Manta.
+    //   Trustpilot  trustpilot.com/review/<domain> resolves for ANY domain
+    //               whether or not a business ever claimed it, so the URL by
+    //               itself is not evidence of a profile. Blocked from
+    //               checking, so it could not be confirmed as claimed.
+    //               RESTORE THIS if the owner confirms the profile is claimed
+    //               and has reviews: it is keyed to our own domain, which is
+    //               a genuinely strong signal once it is real.
+    //
+    // Kept and verified by fetch: Apple Maps (titled "Southeast Roofing"),
+    // MapQuest (full correct address in the title), YellowPages (name,
+    // address and phone all matching), Thumbtack, Nextdoor. Yelp, Houzz, BBB
+    // and GAF are bot-blocked but are business-specific profile URLs on major
+    // platforms, not searches, so a 403 is their crawler policy rather than
+    // evidence against the listing.
   ] as string[],
 
   /**
