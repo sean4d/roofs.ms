@@ -171,6 +171,27 @@ export default function ContactPage() {
               title="Map to Southeast Roofing's Hattiesburg office"
               className="shadow-premium h-[22rem] w-full rounded-2xl border border-border sm:h-[26rem]"
             />
+            {/*
+              A REAL LINK UNDER THE MAP.
+
+              The embed above is an iframe, so nothing in it is a link a
+              crawler can follow or a keyboard user can tab to, and there was
+              no other route from this page to the Google listing. This gives
+              both: somewhere to tap for directions, and a crawlable anchor
+              to the Business Profile from the page that carries the address.
+            */}
+            <p className="mt-4 text-sm">
+              <a
+                href={siteConfig.links.googleBusiness}
+                aria-label={`View ${siteConfig.legalName} on Google Maps and get directions`}
+                className="font-semibold text-steel-500 underline underline-offset-4 transition-colors hover:text-navy-900"
+              >
+                View {siteConfig.legalName} on Google Maps
+              </a>{" "}
+              <span className="text-slate-500">
+                for directions to the office.
+              </span>
+            </p>
           </Reveal>
         </div>
       </section>

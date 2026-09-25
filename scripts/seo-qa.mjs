@@ -357,6 +357,15 @@ function universalRules(page, doc) {
       !sameAs.some((u) => String(u).includes("share.google")),
       at("sameAs carries no opaque share shortlink"),
     );
+    /*
+     * The Google listing replaced that shortlink on 2026-09-25. It is the
+     * single most valuable identity record this business has, so it is
+     * asserted by name rather than left to the generic loop below.
+     */
+    check(
+      sameAs.some((u) => String(u).includes("maps.app.goo.gl")),
+      at("sameAs includes the Google Business Profile listing"),
+    );
     for (const [needle, label] of [
       ["msboc", "MSBOC public record"],
       ["linkedin.com", "LinkedIn"],

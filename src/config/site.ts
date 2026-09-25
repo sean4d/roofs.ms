@@ -70,10 +70,34 @@ export const siteConfig = {
    * GAF and BBB URLs are verifiable proof of the certifications we claim.
    */
   links: {
-    googleBusiness: "https://share.google/8jfoy7nN9HyddPKDb",
+    /**
+     * Google Business Profile, as the Maps listing (owner-supplied
+     * 2026-09-25, verified the same day).
+     *
+     * REPLACED https://share.google/8jfoy7nN9HyddPKDb, which was a dead end.
+     * Followed, that one 302s to https://www.google.com/share.google?q=...,
+     * a generic Google endpoint rather than this business. It was the target
+     * of six customer-facing links, so "View our profile" sent people
+     * nowhere useful, and it was the reason there was no Google entry in
+     * sameAs.
+     *
+     * This URL resolves to /maps/place/Southeast+Roofing/ at
+     * 31.3156712,-89.4293482, which matches siteConfig.geo to five decimal
+     * places. Same business, confirmed rather than assumed.
+     *
+     * The derived canonical form is https://maps.google.com/?cid=
+     * 10166653963144485022 (CID 0x8d1735ea0b8b589e from the resolved place
+     * data; it returns 200). The owner-supplied share link is what ships,
+     * since it is the one they gave us and it demonstrably resolves to the
+     * named listing. The CID is recorded here so nobody has to re-derive it.
+     */
+    googleBusiness: "https://maps.app.goo.gl/yHn4p2F5yeVSs35EA",
     /**
      * Direct "write a review" deep link (owner-supplied 2026-07-05), opens
      * the Google review dialog straight away, no extra taps.
+     *
+     * Kept separate from googleBusiness on purpose: this one is an action
+     * (leave a review), that one is the listing. Do not collapse them.
      */
     googleReview: "https://g.page/r/CZ5YiwvqNReNEBM/review",
     /** Google Calendar appointment-schedule booking page (owner-supplied 2026-07-06) */
@@ -325,23 +349,13 @@ export const siteConfig = {
    */
   socialProfiles: [
     /*
-     * NO GOOGLE ENTRY HERE, DELIBERATELY (reviewed 2026-09-25).
-     *
-     * links.googleBusiness is https://share.google/8jfoy7nN9HyddPKDb, which
-     * used to sit in this list. Followed, it 302s to
-     * https://www.google.com/share.google?q=8jfoy7nN9HyddPKDb: an opaque
-     * share shortlink landing on a generic Google endpoint, not a stable
-     * public record of this business. sameAs is for pages that unambiguously
-     * identify the entity, and a shortlink to a search endpoint does not.
-     *
-     * It stays exactly where it belongs, as the customer-facing "read our
-     * reviews" link: it works in a browser and that is its job.
-     *
-     * To restore a Google entry here, supply the canonical Business Profile
-     * URL (the maps.google.com/?cid=... form, or the full /maps/place/ URL)
-     * and add it below. Do not re-add the shortlink. The Apple Maps, Bing
-     * Maps and Waze records below already corroborate the same business.
+     * Google Business Profile. The gap flagged on 2026-09-25 is now closed:
+     * the old share.google shortlink resolved to a generic Google endpoint
+     * and was removed from this list, and the owner supplied the real Maps
+     * listing the same day. Verified to resolve to
+     * /maps/place/Southeast+Roofing/ at this company's own coordinates.
      */
+    "https://maps.app.goo.gl/yHn4p2F5yeVSs35EA",
     // Core credentials
     "https://www.bbb.org/us/ms/hattiesburg/profile/roofing-contractors/southeast-roofing-llc-0523-235902892",
     "https://www.gaf.com/en-us/roofing-contractors/residential/usa/ms/hattiesburg/southeast-roofing-1147340",
