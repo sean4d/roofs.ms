@@ -714,6 +714,26 @@ function bannedClaimRules(doc) {
     const hit = doc.text.match(re);
     check(!hit, at(`does not claim ${why}`), hit ? `matched: "${hit[0]}"` : "");
   }
+
+  /*
+   * THE CREDENTIAL ROW IS FOR OTHER PEOPLE'S RECORDS.
+   *
+   * A LinkedIn card was added to this row once and the owner took it out:
+   * every other card is something an outside body granted or publishes about
+   * this company, and a page we wrote ourselves sitting among them borrows
+   * credibility it cannot supply. LinkedIn belongs with the social profiles.
+   * This asserts it stays out, on any page that renders the row.
+   */
+  const row = doc.html.match(
+    /<section[^>]*aria-label="Credentials"[\s\S]*?<\/section>/i,
+  );
+  if (row) {
+    check(
+      !/linkedin/i.test(row[0]),
+      at("no LinkedIn card in the credential row"),
+      "LinkedIn is a social profile, not a credential somebody granted us.",
+    );
+  }
   /*
    * The company's OWN commitments must survive. A blunt search-and-replace
    * for the word "guarantee" would have taken the warranty language and the

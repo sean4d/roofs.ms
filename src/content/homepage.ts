@@ -660,7 +660,7 @@ export const reviewsSection = {
    * somebody else keeps about us.
    */
   description:
-    "Check us yourself. Every card below links straight to the source: our Google reviews, our GAF and CertainTeed certifications, our BBB accreditation, both Mississippi State Board of Contractors licenses, our chamber membership, and our company LinkedIn page.",
+    "Check us yourself. Every card below links straight to the source: our Google reviews, our GAF and CertainTeed certifications, our BBB accreditation, both Mississippi State Board of Contractors licenses, and our chamber membership.",
   /** Live Google Business Profile (owner-supplied 2026-07-04), external */
   googleCta: {
     label: "Read our Google reviews",
@@ -723,19 +723,19 @@ export const reviewsSection = {
       href: siteConfig.links.adpMember,
       cta: "Verify on theadp.com",
     },
-    {
-      /*
-       * Two cards that are NOT credentials, and the copy has to keep them
-       * apart from the ones that are. ADP is a business membership; nobody
-       * inspected a roof to grant it. LinkedIn is our own page. Neither says
-       * anything about workmanship and neither is written as though it does.
-       */
-      key: "linkedin",
-      title: "Company LinkedIn",
-      subtitle: "Our official company profile on LinkedIn",
-      href: siteConfig.socials.linkedin,
-      cta: "View our profile",
-    },
+    /*
+     * NO LINKEDIN CARD IN THIS ROW (owner, 2026-09-25).
+     *
+     * One was briefly added here and taken out again. Every card in this row
+     * is something an outside body granted or publishes about us: Google,
+     * GAF, CertainTeed, the BBB, the state board. Our own LinkedIn page is a
+     * page we wrote, so sitting it among them borrows credibility it cannot
+     * supply. It belongs with the other social profiles and appears nowhere
+     * else.
+     *
+     * ADP stays: a chamber admitted us, so it is somebody else's record, and
+     * its copy says membership rather than certification.
+     */
     {
       key: "msboc",
       title: "MSBOC Licensed",
