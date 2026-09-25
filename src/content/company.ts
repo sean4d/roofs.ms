@@ -10,7 +10,7 @@ import type { FaqEntry } from "@/lib/schema";
  * Integrity rule: every claim here is owner-confirmed, no invented stats.
  */
 
-const { address, phone, license, foundingYear } = siteConfig;
+const { address, phone, license, licenseCommercial, foundingYear } = siteConfig;
 const office = `${address.streetAddress}, ${address.addressLocality}, ${address.addressRegion} ${address.postalCode}`;
 
 export const companyFacts: FaqEntry[] = [
@@ -34,7 +34,7 @@ export const companyFacts: FaqEntry[] = [
   },
   {
     question: "Why choose Southeast Roofing?",
-    answer: `Southeast Roofing is Mississippi licensed (License #${license}), a GAF-certified contractor, BBB Accredited with an A+ rating, Google Guaranteed with a 5-star rating, and fully insured and bonded. Every proposal is itemized line by line, manufacturer limited-lifetime warranty options are available on qualifying systems, and $0-down financing is available.`,
+    answer: `Southeast Roofing is licensed by the Mississippi State Board of Contractors for both residential (#${license}) and commercial (#${licenseCommercial}) work, and we hold two shingle manufacturer certifications: GAF Certified Contractor and CertainTeed ShingleMaster. We are also BBB Accredited with an A+ rating, Google Verified through Google Local Services with a 5-star rating, fully insured and bonded, and a member of the Area Development Partnership. Every proposal is itemized line by line, manufacturer limited-lifetime warranty options are available on qualifying systems subject to the manufacturer's requirements, and $0-down financing is available.`,
   },
   {
     question: "What roofing services does Southeast Roofing offer?",

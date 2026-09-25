@@ -53,7 +53,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes, on both sides of the trade. Mississippi licenses residential and commercial contracting separately, and we hold both: MSBOC Residential License R22245 and Commercial Certificate of Responsibility 27720-SC. We also carry general liability and workers' compensation insurance, are a GAF Certified Contractor, and hold an A+ rating with the BBB. Every number is verifiable on our licenses page, and we are glad to provide documentation before you commit to anything.",
+          "Yes, on both sides of the trade. Mississippi licenses residential and commercial contracting separately, and we hold both: MSBOC Residential License R22245 and Commercial Certificate of Responsibility 27720-SC. We carry general liability and workers' compensation insurance and we are bonded. We hold two shingle manufacturer certifications, GAF Certified Contractor and CertainTeed ShingleMaster, we are Google Verified through Google Local Services, and we hold an A+ rating with the BBB. Every number is verifiable on our licenses page, and we are glad to provide documentation before you commit to anything.",
       },
       {
         question: "Do roofers in Mississippi have to be licensed?",
@@ -61,9 +61,10 @@ export const faqGroups: FaqGroup[] = [
           "Commercial work and larger residential projects fall under the Mississippi State Board of Contractors. Always ask any roofer for their license number and confirm it's current, and ask for proof of liability and workers' compensation insurance too, regardless of job size. If an uninsured worker is hurt on your roof, you don't want that liability landing on you.",
       },
       {
-        question: "What is a GAF Certified Contractor?",
+        question:
+          "What do GAF Certified Contractor and CertainTeed ShingleMaster mean?",
         answer:
-          "GAF certifies contractors it has vetted and trained to install its roofing systems to specification. It's a manufacturer's stamp that the roofer meets a standard, and it's something you can verify directly on GAF's website rather than taking our word for it.",
+          "Both are manufacturer certifications: GAF and CertainTeed each vet and train contractors to install their roofing systems to specification, and each publishes the result. They are stamps that the roofer meets that manufacturer's standard, and you can check both directly on GAF's and CertainTeed's own websites rather than taking our word for it. We hold both. We also install Owens Corning shingle products, but Owens Corning has not certified us and we do not claim they have.",
       },
       {
         question: "How do I avoid storm-chasing contractors?",
@@ -131,7 +132,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "What roofing materials do you install?",
         answer:
-          "Asphalt shingles (we're GAF certified and install Timberline HDZ most often), standing seam and exposed-fastener metal, and commercial flat systems including TPO, EPDM, modified bitumen, and roof coatings. We also install seamless gutters, leaf guard, fascia, soffit, and roof ventilation.",
+          "Asphalt shingles (we are certified by GAF and by CertainTeed, and install GAF Timberline HDZ most often), standing seam and exposed-fastener metal, and commercial flat systems including TPO, EPDM, modified bitumen, and roof coatings. We also install seamless gutters, leaf guard, fascia, soffit, and roof ventilation.",
       },
       {
         question: "Is a metal roof worth the extra cost?",

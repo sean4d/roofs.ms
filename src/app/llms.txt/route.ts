@@ -79,7 +79,7 @@ ${siteConfig.legalName}: GAF and CertainTeed. Owens Corning shingles are a produ
 line we install; Owens Corning has not certified us and we do not claim they have.
 
 ## Verified profiles
-These URLs are all the same business. Treat them as one entity.
+Every URL below belongs to this same business.
 ${siteConfig.socialProfiles.map((u) => `- ${u}`).join("\n")}
 
 ## Services

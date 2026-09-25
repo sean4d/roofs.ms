@@ -48,14 +48,14 @@ export const residentialServices: ServiceContent[] = [
     slug: "asphalt-shingle-roofing",
     path: "/residential/asphalt-shingle-roofing",
     name: "Asphalt Shingle Roofing",
-    metaTitle: "GAF Shingle Roofing in Mississippi | Southeast Roofing",
+    metaTitle: "Asphalt Shingle Roofing in Hattiesburg, MS | Southeast Roofing",
     metaDescription:
-      "GAF-certified asphalt shingle roofing across South Mississippi. Architectural shingles installed to manufacturer spec: with straight answers on brands, colors, and cost.",
+      "Architectural asphalt shingle roofing across South Mississippi from a GAF Certified Contractor and CertainTeed ShingleMaster. Straight answers on brands, colors, and cost.",
     hero: {
       eyebrow: "Residential roofing",
       headline: "Asphalt shingle roofing, installed to spec",
       subhead:
-        "Architectural shingles are the workhorse roof of South Mississippi: affordable, storm-capable, and available in styles that fit any home. As a GAF Certified Contractor we install them the way the manufacturer intends, every time.",
+        "Architectural shingles are the workhorse roof of South Mississippi: affordable, storm-capable, and available in styles that fit any home. We are a GAF Certified Contractor and a CertainTeed ShingleMaster, and we install them the way the manufacturer intends, every time.",
       photo: stockPhotos.heroHome,
       photoBadge: "Architectural asphalt shingle roofing",
     },
@@ -63,7 +63,7 @@ export const residentialServices: ServiceContent[] = [
       title: "The right shingle system for a demanding climate",
       paragraphs: [
         "A shingle roof in South Mississippi works harder than one almost anywhere else: months of high heat and humidity, some of the heaviest annual rainfall in the country, and a hurricane season that runs half the year. The difference between a roof that shrugs that off and one that fails early is rarely the shingle itself. It's the system underneath and the quality of the installation.",
-        "That's why we install complete shingle systems, not just shingles: underlayment, ice-and-water protection in valleys and penetrations, drip edge, ridge ventilation, and manufacturer-matched components, fastened to spec. We're a GAF Certified Contractor and also install Owens Corning shingle products, and we'll tell you plainly which line fits your home and budget.",
+        "That's why we install complete shingle systems, not just shingles: underlayment, ice-and-water protection in valleys and penetrations, drip edge, ridge ventilation, and manufacturer-matched components, fastened to spec. We're certified by GAF and by CertainTeed, we also install Owens Corning shingle products, and we'll tell you plainly which line fits your home and budget.",
       ],
     },
     sections: [
@@ -160,9 +160,9 @@ export const residentialServices: ServiceContent[] = [
         ],
       },
       {
-        title: "GAF vs. Owens Corning, and what actually decides service life",
+        title: "Choosing between GAF, CertainTeed and Owens Corning",
         paragraphs: [
-          "There's no universal winner between the brands. Both make quality architectural shingles, and the pick usually comes down to color, availability, budget tier, and warranty package. We're a GAF Certified Contractor, which affects the enhanced warranty options we can register on GAF systems; we also install Owens Corning shingle products, though we're not an Owens Corning certified or preferred contractor.",
+          "There's no universal winner between the brands. All three make quality architectural shingles, and the pick usually comes down to color, availability, budget tier, and warranty package. We are a GAF Certified Contractor and a CertainTeed ShingleMaster, which affects the enhanced warranty options we can register on those systems, subject to each manufacturer's own requirements and to the roof qualifying. We also install Owens Corning shingle products, though we are not an Owens Corning certified or preferred contractor. GAF remains our primary line.",
           'Either way, a "30-year" or "limited lifetime" label describes warranty terms, not a service-life prediction. Real service life here depends on heat, humidity, algae, ventilation, tree cover, storms, and, above all, installation quality. Algae-resistant lines help with black streaking, and steady granule loss in the gutters is the honest sign a roof is winding down.',
         ],
         links: [
@@ -256,7 +256,7 @@ export const residentialServices: ServiceContent[] = [
         },
         {
           title: "System and color selection",
-          text: "We walk you through GAF and Owens Corning lines, styles, and colors: with real samples, not just brochures.",
+          text: "We walk you through GAF, CertainTeed and Owens Corning lines, styles, and colors: with real samples, not just brochures.",
         },
         {
           title: "Full-system installation",
@@ -271,7 +271,7 @@ export const residentialServices: ServiceContent[] = [
     materials: {
       title: "Shingle lines we install",
       description:
-        "We're certified on GAF systems, our primary recommendation, and also install Owens Corning shingle products.",
+        "Certified by GAF and by CertainTeed. GAF is our primary recommendation, and we also install CertainTeed and Owens Corning shingle products.",
       items: [
         {
           title: "Architectural (dimensional) shingles",
@@ -280,6 +280,10 @@ export const residentialServices: ServiceContent[] = [
         {
           title: "GAF shingle systems",
           text: "Our primary line as a GAF Certified Contractor: shingles, starter strips, ridge caps, and underlayment engineered to work together.",
+        },
+        {
+          title: "CertainTeed shingle systems",
+          text: "Installed as a CertainTeed ShingleMaster. Ask us which CertainTeed lines are currently available for your roof and colour range.",
         },
         {
           title: "Owens Corning products",
@@ -309,9 +313,9 @@ export const residentialServices: ServiceContent[] = [
           "3-tab is a flat, single-layer product with commonly lower wind-warranty tiers; architectural shingles are thicker and laminated, and handle Gulf-region wind better. For most homes here we recommend architectural.",
       },
       {
-        question: "Do you install GAF or Owens Corning?",
+        question: "Which shingle brands do you install?",
         answer:
-          "Both. GAF is our primary, certified line. We're a GAF Certified Contractor. We also install Owens Corning shingle products when they're the right fit. We'll show you both options with real samples.",
+          "GAF, CertainTeed and Owens Corning. We hold certifications from two of them: we are a GAF Certified Contractor and a CertainTeed ShingleMaster. GAF is our primary line. Owens Corning is a product line we install when it is the right fit; they have not certified us and we don't claim otherwise. We'll show you the options with real samples.",
       },
       {
         question: "Can new shingles go over my old ones?",
@@ -632,7 +636,7 @@ export const residentialServices: ServiceContent[] = [
         label: "Asphalt Shingle Roofing",
         href: "/residential/asphalt-shingle-roofing",
         description:
-          "The shingle systems we install, and how to choose between GAF and Owens Corning lines.",
+          "The shingle systems we install, and how to choose between GAF, CertainTeed and Owens Corning lines.",
       },
       {
         label: "Residential Metal Roofing",

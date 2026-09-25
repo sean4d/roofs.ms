@@ -64,6 +64,7 @@ const PAGES = [
   ["/faq", "company"],
   ["/licenses", "licensing"],
   ["/residential", "residential"],
+  ["/residential/asphalt-shingle-roofing", "residential"],
   ["/residential/roof-replacement", "residential"],
   ["/residential/roof-repair", "residential"],
   ["/residential/metal-roofing", "residential"],
@@ -126,6 +127,34 @@ function visibleText(html) {
     afterHead
       .replace(/<script[\s\S]*?<\/script>/gi, " ")
       .replace(/<style[\s\S]*?<\/style>/gi, " ")
+      .replace(/<[^>]+>/g, " "),
+  )
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/**
+ * The page's own content, with the header, nav and footer stripped out.
+ *
+ * WHY THIS EXISTS. The footer carries "CertainTeed" on every page of the
+ * site. A test that searched the whole document would therefore pass on a
+ * shingle page whose own copy still said GAF and Owens Corning only, which is
+ * exactly the gap the second-pass review found: the shared components were
+ * right and the page-specific content was not. Asserting against <main> is
+ * the difference between "the word appears somewhere on the page" and "this
+ * page says it".
+ */
+function mainText(html) {
+  const afterHead = html.includes("</head>") ? html.split("</head>")[1] : html;
+  const main = afterHead.match(/<main[^>]*>([\s\S]*?)<\/main>/i);
+  const body = main ? main[1] : afterHead;
+  return decode(
+    body
+      .replace(/<script[\s\S]*?<\/script>/gi, " ")
+      .replace(/<style[\s\S]*?<\/style>/gi, " ")
+      .replace(/<header[\s\S]*?<\/header>/gi, " ")
+      .replace(/<footer[\s\S]*?<\/footer>/gi, " ")
+      .replace(/<nav[\s\S]*?<\/nav>/gi, " ")
       .replace(/<[^>]+>/g, " "),
   )
     .replace(/\s+/g, " ")
@@ -318,6 +347,16 @@ function universalRules(page, doc) {
      * and nothing errors, the entity just quietly stops being connected. So
      * each one is named here rather than trusting a count.
      */
+    /*
+     * The Google share shortlink was removed from sameAs on 2026-09-25: it
+     * resolves to a generic Google endpoint rather than a public record of
+     * this business. It is still the customer-facing reviews link, which is
+     * the right place for it. This keeps it out of the identity graph.
+     */
+    check(
+      !sameAs.some((u) => String(u).includes("share.google")),
+      at("sameAs carries no opaque share shortlink"),
+    );
     for (const [needle, label] of [
       ["msboc", "MSBOC public record"],
       ["linkedin.com", "LinkedIn"],
@@ -590,6 +629,105 @@ const CLASS_RULES = {
 /* ------------------------------------------------------------------ */
 /* Cross-page rules: the things that are only wrong in aggregate.      */
 /* ------------------------------------------------------------------ */
+/* ------------------------------------------------------------------ */
+/* Page-specific content, checked against <main> only.                  */
+/*                                                                      */
+/* Each entry names a page and what that page's OWN copy has to say. A  */
+/* shared footer carrying the word does not satisfy any of these.       */
+/* ------------------------------------------------------------------ */
+const PAGE_CONTENT = [
+  {
+    path: "/",
+    must: ["GAF", "CertainTeed", "Owens Corning"],
+    why: "the homepage summarises both certifications and the brands installed",
+  },
+  {
+    path: "/residential",
+    must: ["GAF", "CertainTeed"],
+    why: "the residential brand-selection answer lists what we install",
+  },
+  {
+    path: "/residential/asphalt-shingle-roofing",
+    must: ["GAF", "CertainTeed", "Owens Corning", "ShingleMaster"],
+    why: "the shingle page compares the brands and states both certifications",
+  },
+  {
+    path: "/about",
+    must: ["GAF", "CertainTeed", "Google Verified"],
+    why: "the About credential list is a full summary",
+  },
+  {
+    path: "/faq",
+    must: ["GAF", "CertainTeed", "Google Verified"],
+    why: "the credentials FAQ answer is the one an answer engine quotes",
+  },
+  {
+    path: "/licenses",
+    must: ["GAF Certified Contractor", "CertainTeed ShingleMaster"],
+    why: "the credentials page uses the precise credential names",
+  },
+  {
+    path: "/contact",
+    must: ["Official social profiles", "LinkedIn", "Facebook", "Instagram"],
+    why: "the readable social directory lives here",
+  },
+];
+
+/**
+ * Claims that must never appear in page copy again.
+ *
+ * "Google Guaranteed" is the important one: it is a different Local Services
+ * status from the one this company holds, and it carries a Google-backed
+ * money-back promise that nobody would honour. Stating it is not a wording
+ * preference, it is promising a refund on somebody else's behalf.
+ */
+const BANNED_CLAIMS = [
+  [/Google Guaranteed/i, "Google Guaranteed (we are Google Verified)"],
+  [
+    /money[- ]back guarantee from Google|Google[- ]backed guarantee/i,
+    "a Google money-back promise",
+  ],
+  [
+    /Owens Corning (certified|preferred) contractor(?!,? though| —)/i,
+    "an Owens Corning certification we do not hold",
+  ],
+  [/factory[- ]certifi/i, "factory certification wording"],
+  [/Select ShingleMaster/i, "a CertainTeed credential tier we do not hold"],
+];
+
+function pageContentRules(doc) {
+  const spec = PAGE_CONTENT.find((p) => p.path === doc.path);
+  if (!spec) return;
+  const at = (m) => `[${doc.path}] ${m}`;
+  for (const needle of spec.must) {
+    check(
+      doc.main.includes(needle),
+      at(`page content names "${needle}"`),
+      `${spec.why}. Found only in shared header/footer, or not at all.`,
+    );
+  }
+}
+
+function bannedClaimRules(doc) {
+  const at = (m) => `[${doc.path}] ${m}`;
+  for (const [re, why] of BANNED_CLAIMS) {
+    const hit = doc.text.match(re);
+    check(!hit, at(`does not claim ${why}`), hit ? `matched: "${hit[0]}"` : "");
+  }
+  /*
+   * The company's OWN commitments must survive. A blunt search-and-replace
+   * for the word "guarantee" would have taken the warranty language and the
+   * insurance-claims honesty copy with it, so this asserts the opposite
+   * direction: the words we meant to keep are still here.
+   */
+  if (doc.path === "/") {
+    check(
+      /Lifetime Warranty/i.test(doc.text),
+      at("still states the manufacturer warranty option"),
+    );
+  }
+}
+
 function crossPageRules(docs) {
   const dupes = (field) => {
     const by = new Map();
@@ -641,6 +779,7 @@ async function main() {
         cls,
         html,
         text: visibleText(html),
+        main: mainText(html),
         status: res.status,
         finalUrl: res.url.replace(/\/$/, "") || res.url,
       };
@@ -652,6 +791,8 @@ async function main() {
     if (doc.status === 200) {
       const rule = CLASS_RULES[cls];
       if (rule) rule(page, doc);
+      pageContentRules(doc);
+      bannedClaimRules(doc);
       docs.push(doc);
     }
     process.stdout.write(".");

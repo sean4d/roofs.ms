@@ -27,6 +27,65 @@ const LABELS: Record<string, string> = {
   nextdoor: "Nextdoor",
 };
 
+/**
+ * What each account is actually called, for the readable directory below.
+ *
+ * Three of the five URLs end in a real handle, so those are derived from
+ * siteConfig rather than retyped: if a URL changes, the displayed handle
+ * changes with it and the two cannot disagree.
+ *
+ * The other two have no handle to show. LinkedIn's URL ends in a generated
+ * id, and the Nextdoor URL is a page slug, not something anybody types at a
+ * person. Inventing a tidy-looking handle for either would be publishing a
+ * name that does not exist, so those fall back to the company name.
+ */
+const handleFromUrl = (url: string): string | null => {
+  const slug = url.replace(/\/+$/, "").split("/").pop() ?? "";
+  if (!slug || /^[0-9a-f-]{12,}$/i.test(slug)) return null;
+  if (slug.startsWith("@")) return slug;
+  return `@${slug}`;
+};
+
+const HANDLES: Record<string, string> = {
+  facebook: handleFromUrl(siteConfig.socials.facebook) ?? siteConfig.legalName,
+  instagram:
+    handleFromUrl(siteConfig.socials.instagram) ?? siteConfig.legalName,
+  tiktok: handleFromUrl(siteConfig.socials.tiktok) ?? siteConfig.legalName,
+  // Generated id, not a handle.
+  linkedin: siteConfig.legalName,
+  // Page slug, not a handle.
+  nextdoor: `${siteConfig.name}, ${siteConfig.address.addressLocality} ${siteConfig.address.addressRegion}`,
+};
+
+/**
+ * The same five profiles as the icon row, written out.
+ *
+ * The icons work and are properly labelled; this is a second way in, for
+ * anyone who would rather read a list than recognise a glyph, and for
+ * anything parsing the page that gets more from "LinkedIn, Southeast Roofing
+ * LLC" than from an <svg>. It renders server-side from the same config, so
+ * the two can never list different accounts.
+ */
+export function SocialDirectory({ className }: { className?: string }) {
+  return (
+    <ul className={className ?? "space-y-2"}>
+      {Object.entries(siteConfig.socials).map(([key, href]) => (
+        <li key={key} className="text-sm">
+          <a
+            href={href}
+            className="group inline-flex flex-wrap items-baseline gap-x-2 underline-offset-4 hover:underline"
+          >
+            <span className="font-semibold text-navy-900">{LABELS[key]}</span>
+            <span className="text-slate-500 group-hover:text-navy-900">
+              {HANDLES[key]}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export function SocialLinks({ className }: { className?: string }) {
   return (
     <ul className={className ?? "flex items-center gap-1"}>

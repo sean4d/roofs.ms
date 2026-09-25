@@ -88,10 +88,14 @@ export const brandAssets = {
     /**
      * DO NOT DISPLAY without owner verification (integrity rule):
      * - logo-01 shows a 5-star graphic → implies an unverified rating.
-     * - logo-02 is the "Google Guaranteed" program badge → implies enrollment
-     *   in Google Local Services, which is unconfirmed.
-     * [NEEDS: owner confirmation of Google Guaranteed status + actual rating,
-     * plus the live Google Business Profile URL]
+     * - logo-02 is the "Google Guaranteed" program badge. STILL DO NOT USE.
+     *   The owner confirmed Google VERIFIED status on 2026-09-25, which is a
+     *   different Local Services status from Google Guaranteed: Verified is a
+     *   background and licence check, Guaranteed adds a Google-backed
+     *   money-back promise we do not have. Displaying the Guaranteed badge
+     *   would claim a reimbursement Google will not pay, so the site states
+     *   "Google Verified" as text in our own styling and ships no Google
+     *   badge artwork at all.
      */
     googleReviews: {
       images: [

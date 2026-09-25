@@ -39,6 +39,7 @@ export type BrandMarkKey =
   | "certainteed"
   | "bbb"
   | "adp"
+  | "linkedin"
   | "msboc"
   | "warranty"
   | "insured";
@@ -91,6 +92,18 @@ export const brandMarks: Record<BrandMarkKey, React.ReactNode> = {
       aria-label="Area Development Partnership"
     >
       ADP
+    </span>
+  ),
+  /*
+   * LinkedIn, in LinkedIn's blue. A social profile rather than a credential,
+   * which is why the card copy under it says "profile" and never "certified".
+   */
+  linkedin: (
+    <span
+      className="flex h-7 items-center justify-center rounded-md bg-[#0a66c2] px-2 font-display text-[11px] font-black tracking-tight text-white sm:h-10 sm:px-2.5 sm:text-sm"
+      aria-label="LinkedIn"
+    >
+      LinkedIn
     </span>
   ),
   msboc: (

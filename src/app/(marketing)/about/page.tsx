@@ -97,8 +97,9 @@ const credentials = [
     href: siteConfig.links.bbbProfile,
   },
   {
-    title: "Google Guaranteed",
-    detail: "5-star rated, read every review on our live profile",
+    title: "Google Verified",
+    detail:
+      "Verified through Google Local Services. 5-star rated, read every review on our live profile",
     href: siteConfig.links.googleBusiness,
   },
   {

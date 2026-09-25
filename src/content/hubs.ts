@@ -41,12 +41,12 @@ export interface HubServiceCard {
 export const residentialHub = {
   metaTitle: "Residential Roofing in Hattiesburg, MS | Southeast Roofing",
   metaDescription:
-    "The full residential roofing lineup from Southeast Roofing: shingle and metal systems, replacement, repair, gutters, and ventilation: one local, GAF-certified team.",
+    "The full residential roofing lineup from Southeast Roofing: shingle and metal systems, replacement, repair, gutters, and ventilation. One local team, certified by GAF and CertainTeed.",
   hero: {
     eyebrow: "Residential division",
     headline: "Your home's roof, handled completely",
     subhead:
-      "Every system that protects a South Mississippi home lives under this roof: GAF-certified shingle work, metal systems, repairs, storm response, gutters, and ventilation. One local team, one standard of craftsmanship.",
+      "Every system that protects a South Mississippi home lives under this roof: certified shingle work, metal systems, repairs, storm response, gutters, and ventilation. One local team, certified by GAF and CertainTeed, one standard of craftsmanship.",
     photo: stockPhotos.residentialHome,
     photoBadge: "Asphalt shingle roofing",
   },
@@ -56,7 +56,7 @@ export const residentialHub = {
       label: "Asphalt Shingle Roofing",
       href: "/residential/asphalt-shingle-roofing",
       description:
-        "The region's workhorse roof: GAF and Owens Corning systems installed to spec.",
+        "The region's workhorse roof: GAF, CertainTeed and Owens Corning shingles installed to spec.",
     },
     {
       icon: PanelTop,
@@ -203,7 +203,7 @@ export const residentialHub = {
     {
       question: "What brands do you install?",
       answer:
-        "We're a GAF Certified Contractor, that's our primary shingle line, and we also install Owens Corning shingle products. On metal, we install standing seam and exposed-fastener steel systems in 26 and 29 gauge.",
+        "We hold two shingle manufacturer certifications: GAF Certified Contractor and CertainTeed ShingleMaster. GAF remains our primary shingle line. We also install CertainTeed and Owens Corning shingle products, though we are not an Owens Corning certified or preferred contractor. On metal, we install standing seam and exposed-fastener steel systems in 26 and 29 gauge.",
     },
     {
       question: "How far from Hattiesburg do you work?",

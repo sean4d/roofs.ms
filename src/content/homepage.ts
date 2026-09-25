@@ -69,7 +69,7 @@ export const hero = {
  */
 export const heroTrustBar = [
   { icon: Star, label: "5-Star Google Rating" },
-  { icon: BadgeCheck, label: "Google Guaranteed" },
+  { icon: BadgeCheck, label: "Google Verified" },
   { icon: ShieldCheck, label: "GAF Certified Contractor" },
   // Both manufacturer certifications sit together, because a homeowner
   // scanning this list reads them as a pair and one without the other looks
@@ -161,7 +161,7 @@ export const divisionSplit = {
     photo: stockPhotos.residentialHome,
     highlights: [
       "Asphalt shingle roof replacement",
-      "GAF & Owens Corning systems",
+      "GAF, CertainTeed & Owens Corning systems",
       "Repairs, storm restoration & claims",
     ],
   },
@@ -313,9 +313,10 @@ export const systemsSection = {
     {
       icon: Home,
       title: "Asphalt Shingle Roofing",
-      text: "The region's most popular roof, and for good reason. Affordable, storm-capable, and beautiful when installed to spec: GAF-certified installation.",
+      text: "The region's most popular roof, and for good reason. Affordable, storm-capable, and beautiful when installed to spec by a certified crew.",
       chips: [
         "GAF certified installs",
+        "CertainTeed ShingleMaster",
         "Owens Corning products",
         "Architectural shingles",
         "Full-system replacement",
@@ -409,8 +410,8 @@ export const whyUs = {
     },
     {
       icon: ShieldCheck,
-      title: "GAF Certified Contractor",
-      text: "Certified installation of GAF systems, plus Owens Corning shingle products: always to manufacturer specification.",
+      title: "Certified by GAF and CertainTeed",
+      text: "A GAF Certified Contractor and a CertainTeed ShingleMaster. We also install Owens Corning shingle products: always to manufacturer specification.",
     },
     {
       icon: Medal,
@@ -649,10 +650,17 @@ export const serviceAreaSection = {
 export const reviewsSection = {
   eyebrow: "Reputation",
   title: "Don't take our word for it",
-  // The strip has four badges and the sentence listed three, which read as an
-  // oversight next to the one badge a building owner actually came for.
+  /*
+   * The sentence has to describe what is actually in the row below it. It
+   * listed three things when there were four badges, and the row is now seven
+   * and no longer all of one kind: two manufacturer certifications, an
+   * accreditation, two state licences, a chamber membership and a social
+   * profile. "Every badge links to the official record" was the claim that
+   * broke first, since LinkedIn is a profile we publish, not a record
+   * somebody else keeps about us.
+   */
   description:
-    "Verify us yourself. Every badge below links straight to the official record: our Google reviews, our GAF certification, our BBB accreditation, and both of our Mississippi State Board of Contractors licenses.",
+    "Check us yourself. Every card below links straight to the source: our Google reviews, our GAF and CertainTeed certifications, our BBB accreditation, both Mississippi State Board of Contractors licenses, our chamber membership, and our company LinkedIn page.",
   /** Live Google Business Profile (owner-supplied 2026-07-04), external */
   googleCta: {
     label: "Read our Google reviews",
@@ -666,11 +674,18 @@ export const reviewsSection = {
    */
   badges: [
     {
+      /*
+       * Google Verified lives on this card rather than getting its own,
+       * because it and the reviews are the same profile. The status is
+       * Verified, NOT Guaranteed: Verified is a background and licence check,
+       * Guaranteed adds a Google-backed money-back promise we do not carry,
+       * and the subtitle must never drift back into implying one.
+       */
       key: "google",
-      title: "Google Reviews",
-      subtitle: "5-star rated by our customers",
+      title: "Google Verified",
+      subtitle: "Verified through Google Local Services, 5-star rated",
       href: siteConfig.links.googleBusiness,
-      cta: "View our profile",
+      cta: "Read our reviews",
     },
     {
       key: "gaf",
@@ -707,6 +722,19 @@ export const reviewsSection = {
       subtitle: "Area Development Partnership, Greater Hattiesburg",
       href: siteConfig.links.adpMember,
       cta: "Verify on theadp.com",
+    },
+    {
+      /*
+       * Two cards that are NOT credentials, and the copy has to keep them
+       * apart from the ones that are. ADP is a business membership; nobody
+       * inspected a roof to grant it. LinkedIn is our own page. Neither says
+       * anything about workmanship and neither is written as though it does.
+       */
+      key: "linkedin",
+      title: "Company LinkedIn",
+      subtitle: "Our official company profile on LinkedIn",
+      href: siteConfig.socials.linkedin,
+      cta: "View our profile",
     },
     {
       key: "msboc",

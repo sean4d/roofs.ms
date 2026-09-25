@@ -120,7 +120,7 @@ const otherCredentials = [
   {
     name: "CertainTeed ShingleMaster",
     detail:
-      "CertainTeed's credential for shingle installers, earned against their training and installation standards. It is a second manufacturer certification from a second manufacturer, not a rebrand of the first.",
+      "CertainTeed's certification for shingle installers, earned against their training and installation standards. We hold it alongside our GAF certification, so both manufacturers have certified our crews.",
     href: siteConfig.links.certainteedProfile,
     cta: "Verify on certainteed.com",
   },
@@ -134,7 +134,7 @@ const otherCredentials = [
   {
     name: "Area Development Partnership member",
     detail:
-      "Member of the Area Development Partnership, the chamber of commerce for Greater Hattiesburg. A membership rather than a certification, and listed as one.",
+      "Member of the Area Development Partnership, the chamber of commerce for Greater Hattiesburg. This is a business membership, not a roofing certification.",
     href: siteConfig.links.adpMember,
     cta: "Verify on theadp.com",
   },

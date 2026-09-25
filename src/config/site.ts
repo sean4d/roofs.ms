@@ -260,7 +260,23 @@ export const siteConfig = {
    */
   trustFacts: {
     googleRating: "5-star Google rating",
-    googleGuaranteed: "Google Guaranteed",
+    /**
+     * GOOGLE VERIFIED, NOT GOOGLE GUARANTEED (owner-confirmed 2026-09-25).
+     *
+     * These are two different Google Local Services statuses and the site was
+     * claiming the wrong one. Google Guaranteed carries a money-back
+     * reimbursement backed by Google; Google Verified is a background and
+     * licence check with no reimbursement attached. Advertising the former
+     * while holding the latter promises a customer a refund from Google that
+     * Google will not pay.
+     *
+     * The key name stays `googleGuaranteed` deliberately: renaming it would
+     * touch a dozen call sites for no benefit and risk missing one, which is
+     * exactly how half a rename ends up shipping. The VALUE is what renders.
+     */
+    googleGuaranteed: "Google Verified",
+    /** Context line, for anywhere the status needs explaining rather than listing. */
+    googleVerifiedDetail: "Google Verified through Google Local Services",
     bbbRating: "BBB Accredited: A+ rating",
     /**
      * Manufacturer credentials. TWO of them now, and the distinction between
@@ -308,8 +324,25 @@ export const siteConfig = {
    * stay stable. Verified inventory as of 2026-07-26.
    */
   socialProfiles: [
-    // Google + core credentials
-    "https://share.google/8jfoy7nN9HyddPKDb",
+    /*
+     * NO GOOGLE ENTRY HERE, DELIBERATELY (reviewed 2026-09-25).
+     *
+     * links.googleBusiness is https://share.google/8jfoy7nN9HyddPKDb, which
+     * used to sit in this list. Followed, it 302s to
+     * https://www.google.com/share.google?q=8jfoy7nN9HyddPKDb: an opaque
+     * share shortlink landing on a generic Google endpoint, not a stable
+     * public record of this business. sameAs is for pages that unambiguously
+     * identify the entity, and a shortlink to a search endpoint does not.
+     *
+     * It stays exactly where it belongs, as the customer-facing "read our
+     * reviews" link: it works in a browser and that is its job.
+     *
+     * To restore a Google entry here, supply the canonical Business Profile
+     * URL (the maps.google.com/?cid=... form, or the full /maps/place/ URL)
+     * and add it below. Do not re-add the shortlink. The Apple Maps, Bing
+     * Maps and Waze records below already corroborate the same business.
+     */
+    // Core credentials
     "https://www.bbb.org/us/ms/hattiesburg/profile/roofing-contractors/southeast-roofing-llc-0523-235902892",
     "https://www.gaf.com/en-us/roofing-contractors/residential/usa/ms/hattiesburg/southeast-roofing-1147340",
     // CertainTeed ShingleMaster profile: a manufacturer-hosted record of a

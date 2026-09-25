@@ -31,7 +31,7 @@ export function ReviewsTrust() {
       {/* Six badges since CertainTeed and ADP joined (2026-09-24), so the
           desktop row is three wide rather than four: two clean rows of three
           instead of four and an orphaned pair. */}
-      <StaggerGroup className="mx-auto mt-14 grid max-w-5xl gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <StaggerGroup className="mx-auto mt-14 grid max-w-5xl gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {reviewsSection.badges.map((badge) => {
           const inner = (
             <>

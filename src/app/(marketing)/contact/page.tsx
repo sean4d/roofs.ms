@@ -9,7 +9,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { Breadcrumbs } from "@/components/services/breadcrumbs";
 import { LeadForm } from "@/components/forms/lead-form";
 import { Reveal } from "@/components/motion/reveal";
-import { SocialLinks } from "@/components/shared/social-links";
+import { SocialDirectory, SocialLinks } from "@/components/shared/social-links";
 import { GoogleMapEmbed } from "@/components/shared/google-map";
 import { OpenStatus } from "@/components/shared/open-status";
 
@@ -113,11 +113,21 @@ export default function ContactPage() {
               </li>
             </ul>
 
+            {/*
+              ICONS AND NAMES, ONE SECTION, ONE SOURCE.
+
+              The icon row stays: it is compact and properly labelled. The
+              named list under it is a second route to the same five accounts
+              for anyone who would rather read than recognise a glyph. Both
+              render from siteConfig.socials, so they cannot end up listing
+              different accounts, and both are in the server HTML.
+            */}
             <div className="mt-10">
-              <p className="text-xs font-semibold tracking-wide text-slate-400 uppercase">
-                Find us on
-              </p>
+              <h2 className="text-xs font-semibold tracking-wide text-slate-400 uppercase">
+                Official social profiles
+              </h2>
               <SocialLinks className="mt-3 flex items-center gap-1 [&_a]:text-steel-500 [&_a:hover]:bg-secondary [&_a:hover]:text-navy-900" />
+              <SocialDirectory className="mt-4 space-y-1.5" />
             </div>
 
             {/* Real storefront so visitors recognize the building */}
