@@ -218,7 +218,8 @@ interface Row {
   material: string | null;
   stories: string | number | null;
   structures: PricedStructure[] | null;
-  rep_email: string;
+  /** NULL for a website quote, which has no rep. See the join below. */
+  rep_email: string | null;
   emailed_at: string | Date | null;
   printed_at: string | Date | null;
   mail_status: "requested" | "mailed" | "rejected" | null;
@@ -247,7 +248,7 @@ function toIsoDate(value: string | Date): string {
  * output rather than a person, and it publishes an individual's work address
  * on a document that gets forwarded and left on kitchen tables.
  */
-function repDisplayName(email: string): string {
+function repDisplayName(email: string | null): string {
   const local = (email ?? "").split("@")[0] ?? "";
   if (!local) return "Southeast Roofing";
   return local
@@ -293,8 +294,20 @@ const CORE = `
          u.email AS rep_email
     FROM quotes q
     JOIN customers c ON c.id = q.customer_id
-    JOIN users u ON u.id = q.created_by
+    LEFT JOIN users u ON u.id = q.created_by
 `;
+/*
+  LEFT, AND IT HAS TO BE LEFT.
+
+  A quote from the public estimator has created_by NULL on purpose: nobody on
+  the team made it, the website did. An inner join here silently dropped every
+  one of those rows, so getProposalByToken found nothing and the homeowner's
+  own link, the one we email them, answered 404. It was not a broken link, it
+  was a query that could not see the row the link pointed at.
+
+  repDisplayName turns the resulting NULL into "Southeast Roofing", which is
+  the correct name to put on a document the company generated itself.
+*/
 
 const SELECT = `
   SELECT q.id, q.public_token, q.squares, q.pitch_degrees, q.planes,

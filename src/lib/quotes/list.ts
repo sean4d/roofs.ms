@@ -31,7 +31,8 @@ export interface QuoteListRow {
   priceShown: number | null;
   createdAt: string;
   repName: string;
-  repEmail: string;
+  /** NULL for a website quote: it has no rep, the estimator made it. */
+  repEmail: string | null;
   /** What has reached this customer. Drives the small chips on the card. */
   emailedAt: string | null;
   mailStatus: "requested" | "mailed" | "rejected" | null;
@@ -49,7 +50,7 @@ interface Raw {
   squares: string | number | null;
   price_shown: number | null;
   created_at: string | Date;
-  rep_email: string;
+  rep_email: string | null;
   emailed_at?: string | Date | null;
   mail_status?: "requested" | "mailed" | "rejected" | null;
 }
@@ -57,7 +58,7 @@ interface Raw {
 const iso = (v: string | Date) =>
   v instanceof Date ? v.toISOString() : String(v);
 
-const repName = (email: string) =>
+const repName = (email: string | null) =>
   (email ?? "")
     .split("@")[0]
     .split(/[._-]+/)
@@ -111,7 +112,11 @@ export async function searchQuotes(
   const BODY = `
        FROM quotes q
        JOIN customers c ON c.id = q.customer_id
-       JOIN users u ON u.id = q.created_by
+       -- LEFT, so website quotes survive. created_by is NULL for anything the
+       -- public estimator made, and an inner join here hid every one of them
+       -- from this screen while quoteStats below still counted them: the list
+       -- and the headline number disagreed, and the list was the wrong one.
+       LEFT JOIN users u ON u.id = q.created_by
       WHERE ($2::uuid IS NULL OR c.owner_id = $2::uuid)
         AND (
           $1 = ''

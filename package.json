@@ -15,7 +15,8 @@
     "check:mailer": "node --conditions=react-server --import tsx scripts/check-mailer-pdf.mts",
     "check:prior": "node --conditions=react-server --import tsx scripts/check-prior-contact.mts",
     "seo:qa": "node scripts/seo-qa.mjs",
-    "check:mail": "node --conditions=react-server --import tsx scripts/check-mail-board.mts"
+    "check:mail": "node --conditions=react-server --import tsx scripts/check-mail-board.mts",
+    "check:website-quotes": "node --conditions=react-server --import tsx scripts/check-website-quotes.mts"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
