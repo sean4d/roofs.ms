@@ -3,6 +3,7 @@ import { TopBar } from "@/components/layout/top-bar";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { StickyMobileCTA } from "@/components/layout/sticky-mobile-cta";
+import { InstantEstimateRail } from "@/components/layout/instant-estimate-rail";
 import { JsonLd } from "@/components/seo/json-ld";
 import { roofingContractorSchema } from "@/lib/schema";
 
@@ -25,6 +26,8 @@ export default function MarketingLayout({
       </main>
       <SiteFooter />
       <StickyMobileCTA />
+      {/* Phones only. Desktop reaches the same tool from the header. */}
+      <InstantEstimateRail />
       <JsonLd data={roofingContractorSchema()} />
     </>
   );

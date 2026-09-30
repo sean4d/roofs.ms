@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Clock, MapPin, Search } from "lucide-react";
 import { track } from "@vercel/analytics";
@@ -16,6 +17,8 @@ export interface HubArticle {
   readMinutes: number;
   path: string;
   thumb?: string;
+  /** Describes the photo itself. Required wherever thumb is set. */
+  thumbAlt?: string;
   /** City/town of the real job photo used as the thumbnail (location tag). */
   thumbCity?: string;
 }
@@ -112,12 +115,23 @@ export function LearningHub({
                 <div className="relative aspect-[16/9] overflow-hidden bg-secondary">
                   {a.thumb ? (
                     <>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
+                      {/*
+                        next/image, not a bare img. The card grid is the
+                        heaviest thing on this page and these were shipping at
+                        full resolution to a 380px-wide phone card. fill plus
+                        sizes emits a srcset matched to the three column counts
+                        below, so a phone downloads a phone-sized file.
+
+                        The alt describes the photo rather than repeating the
+                        headline, which is already the link's own text two
+                        elements down.
+                      */}
+                      <Image
                         src={a.thumb}
-                        alt=""
-                        loading="lazy"
-                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        alt={a.thumbAlt ?? ""}
+                        fill
+                        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                       {a.thumbCity && (
                         <span className="absolute bottom-2 left-2 inline-flex items-center gap-1 rounded-full bg-navy-950/70 px-2 py-0.5 text-xs font-semibold text-white">

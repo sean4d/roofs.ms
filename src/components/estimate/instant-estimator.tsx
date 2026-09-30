@@ -8,13 +8,13 @@ import {
   Check,
   Home,
   Loader2,
-  MapPin,
   Phone,
   Ruler,
   ShieldCheck,
 } from "lucide-react";
 
 import { siteConfig } from "@/config/site";
+import { AddressAutocomplete } from "@/components/estimate/address-autocomplete";
 
 /**
  * The public instant estimator, in place of the Roofr link.
@@ -116,21 +116,27 @@ export function InstantEstimator() {
               >
                 Which roof are we pricing?
               </label>
-              <div className="relative mt-2">
-                <MapPin
-                  aria-hidden
-                  className="pointer-events-none absolute top-1/2 left-3.5 h-5 w-5 -translate-y-1/2 text-slate-400"
-                />
-                <input
+              <div className="mt-2">
+                <AddressAutocomplete
                   id="ie-address"
                   required
                   value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  placeholder="123 Main St, Hattiesburg, MS"
-                  autoComplete="street-address"
-                  className="w-full rounded-xl border border-slate-300 py-4 pr-4 pl-11 text-base outline-none focus:border-[#123b63] focus:ring-4 focus:ring-[#123b63]/10"
+                  onChange={(v) => {
+                    setAddress(v);
+                    // Typing after a failure clears the failure. Leaving a
+                    // "we could not find that address" sitting under a box the
+                    // customer has since corrected is how a working form looks
+                    // broken.
+                    if (error) setError(null);
+                  }}
+                  onResolved={() => setError(null)}
+                  placeholder="Start typing, e.g. 123 Main"
                 />
               </div>
+              <p className="mt-1.5 text-xs text-slate-500">
+                Start with the house number and street. Pick your address from
+                the list and we will fill in the rest.
+              </p>
 
               <fieldset className="mt-4">
                 <legend className="text-sm font-semibold text-slate-700">

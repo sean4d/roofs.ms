@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { ChevronDown, Phone } from "lucide-react";
+import { ChevronDown, Phone, Ruler } from "lucide-react";
 
 import type { NavLink } from "@/config/navigation";
 
@@ -71,8 +71,24 @@ export function SiteHeader() {
       )}
     >
       <div
+        /*
+          THE HEADER ROW IS ALLOWED TO BE WIDER THAN THE PAGE BODY.
+
+          container-site caps at max-w-7xl, 1280px, and that cap is right for
+          reading measure on the body. It is not right here. With the full nav
+          shown, this row needs about 1455px for the logo, eight nav items and
+          the button group, so inside a 1280px container it overflowed and
+          pushed the buttons off the right of the screen. That was true before
+          the Instant Estimate button was added, at 120px of horizontal scroll
+          on a 1280px laptop, and adding a second CTA took it to 316px.
+
+          A header spanning wider than the article column below it is ordinary
+          and looks deliberate. Capping the body's measure while letting the
+          navigation use the screen is the normal arrangement, and it is the
+          only one that fits everything without cutting the nav down.
+        */
         className={cn(
-          "container-site flex items-center justify-between gap-6 transition-all duration-300",
+          "mx-auto flex w-full max-w-[1720px] items-center justify-between gap-6 px-4 transition-all duration-300 sm:px-6 lg:px-8",
           scrolled ? "h-16" : "h-20",
         )}
       >
@@ -110,7 +126,7 @@ export function SiteHeader() {
         <nav
           ref={navRef}
           aria-label="Main navigation"
-          className="hidden xl:block"
+          className="hidden 2xl:block"
         >
           <ul className="flex items-center gap-4">
             {mainNav.map((link) => {
@@ -217,7 +233,7 @@ export function SiteHeader() {
                 variant="outline"
                 render={<a href={`tel:${siteConfig.phone.tel}`} />}
                 nativeButton={false}
-                className="hidden lg:inline-flex"
+                className="hidden min-[1750px]:inline-flex"
               >
                 <Phone className="size-4" aria-hidden="true" />
                 {siteConfig.phone.display}
@@ -225,12 +241,39 @@ export function SiteHeader() {
               <a
                 href={`tel:${siteConfig.phone.tel}`}
                 aria-label={`Call Southeast Roofing at ${siteConfig.phone.display}`}
-                className="flex size-10 items-center justify-center rounded-full bg-navy-900 text-white transition-colors hover:bg-navy-700 lg:hidden"
+                className="flex size-10 items-center justify-center rounded-full bg-navy-900 text-white transition-colors hover:bg-navy-700 min-[1750px]:hidden"
               >
                 <Phone className="size-4.5" aria-hidden="true" />
               </a>
             </>
           )}
+          {/*
+            TWO CTAs, AND THEY ARE NOT THE SAME OFFER.
+
+            Free Inspection books a person. Free Instant Estimate returns a
+            number in about a minute without anybody visiting, which is the
+            thing on this site nothing else does and the thing most visitors
+            actually want first. So both are in the header on desktop, and the
+            hierarchy is carried by fill rather than by size: Inspection stays
+            the solid navy button because it is the higher-intent action, and
+            Instant Estimate sits beside it in the outlined treatment so it
+            reads as the self-serve route rather than as a second, competing
+            primary. Two solid buttons side by side is how a header stops
+            having a primary action at all.
+
+            It appears from md up. Below that the right-edge rail carries it,
+            and the two are mutually exclusive at every width so nobody is ever
+            offered the same destination twice.
+          */}
+          <Button
+            variant="outline"
+            render={<Link href={siteConfig.links.instantEstimate} />}
+            nativeButton={false}
+            className="hidden md:inline-flex"
+          >
+            <Ruler className="size-4" aria-hidden="true" />
+            Free Instant Estimate
+          </Button>
           <Button
             render={<Link href={primaryCta.href} />}
             nativeButton={false}

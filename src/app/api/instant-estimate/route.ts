@@ -113,7 +113,10 @@ export async function POST(request: Request) {
     const point = await geocode(input.address);
     if (!point) {
       return NextResponse.json(
-        { error: "We could not find that address. Check the spelling?" },
+        {
+          error:
+            "We could not find that address. Try typing just the house number and street, then pick yours from the list.",
+        },
         { status: 404 },
       );
     }

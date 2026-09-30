@@ -29,7 +29,7 @@ export function MobileNav() {
           <Button
             variant="ghost"
             size="icon"
-            className="xl:hidden"
+            className="2xl:hidden"
             aria-label="Open menu"
           />
         }
