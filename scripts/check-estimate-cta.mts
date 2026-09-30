@@ -44,6 +44,14 @@ const combobox = read("src/components/estimate/address-autocomplete.tsx");
 const proxy = read("src/app/api/places/autocomplete/route.ts");
 const layout = read("src/app/(marketing)/layout.tsx");
 
+// The class list alone, not the whole file: the comments in it discuss the
+// z-50 header and the px/py trap, and a naive substring search over the file
+// found that prose and called it a defect.
+const railClasses = rail.slice(
+  rail.indexOf("className={["),
+  rail.indexOf("].join"),
+);
+
 /* ------------------------------------------------------------------ */
 /* 1. Exactly one version at every width                               */
 /* ------------------------------------------------------------------ */
@@ -74,6 +82,29 @@ check(
 check(
   rail.includes("motion-reduce:transition-none"),
   "the reveal respects prefers-reduced-motion",
+);
+
+/*
+ * THE AXIS TRAP, and it cost several rounds of tuning.
+ *
+ * Tailwind's py-* compiles to padding-block and px-* to padding-inline. Under
+ * writing-mode: vertical-rl the inline axis runs DOWN the screen, so the two
+ * swap: py-* pads the sides and px-* pads the ends. The tab carried py-2.5,
+ * then py-8, and its height never moved, because both were padding the sides
+ * where physical pr-3 and pl-4 overrode them to zero. Computed style read
+ * "0px 12px 0px 16px" against a class list asking for 32px top and bottom.
+ *
+ * Written as paddingInline and paddingBlock there is nothing to get
+ * backwards, so that is what this insists on.
+ */
+check(
+  rail.includes("paddingInline") && rail.includes("paddingBlock"),
+  "the tab sets padding in logical properties, not py-*/px-*",
+);
+check(
+  !/\bp[xy]-[\d.]+/.test(railClasses),
+  "no px-*/py-* on the tab, where the axes are swapped",
+  "use paddingInline for its height and paddingBlock for its width",
 );
 
 // Every CTA the rail is meant to defer to has to carry the marker, or the
@@ -137,10 +168,6 @@ check(
   rail.includes("env(safe-area-inset-right"),
   "it respects the right safe-area inset for curved and notched screens",
 );
-// Match the class list, not the file: the comment above it explains the
-// header and bottom bar sit at z-50, and a naive substring search found that
-// prose and called it a defect.
-const railClasses = rail.slice(rail.indexOf("className={["), rail.indexOf("].join"));
 check(
   railClasses.includes("z-40") && !railClasses.includes("z-50"),
   "it sits below the header and bottom bar at z-40, so it never covers them",
@@ -287,6 +314,26 @@ check(
  * what the response was assumed to look like. The ZIP box had never filled in
  * production even once.
  */
+/*
+ * The icon padding is the component's own business.
+ *
+ * The default class string carried pl-11 to clear the pin. Every form passes
+ * its own className to match the fields around it, which REPLACED that string
+ * wholesale, so the pin printed straight through whatever was typed. The
+ * owner's screenshot caught it over the 3 of 3705.
+ */
+check(
+  /className=\{cn\(/.test(combobox) && /"pl-11 pr-11"/.test(combobox),
+  "icon padding is merged onto any caller className, not replaced by it",
+);
+for (const [file, label] of ADDRESS_FORMS) {
+  check(
+    !/pl-11/.test(read(file)),
+    `${label} does not hand-patch the icon padding`,
+    "the component owns it now; a second copy drifts",
+  );
+}
+
 check(
   combobox.includes("/api/places/resolve"),
   "the ZIP is resolved separately, because autocomplete does not return one",

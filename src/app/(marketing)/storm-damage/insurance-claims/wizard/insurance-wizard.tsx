@@ -460,9 +460,8 @@ function Field({
           mode="street"
           required
           aria-invalid={error ? true : undefined}
-          // The shared box draws its own pin icon on the left, so the input
-          // needs room for it. Everything else matches the plain fields.
-          className={`${inputClass} w-full pl-11`}
+          // The shared box adds its own icon padding now.
+          className={`${inputClass} w-full`}
           placeholder="123 Hardy St"
         />
       ) : (

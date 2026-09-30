@@ -3,6 +3,8 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { Loader2, MapPin } from "lucide-react";
 
+import { cn } from "@/lib/utils";
+
 /**
  * The address box, with suggestions. Used by every address field on the site.
  *
@@ -320,10 +322,26 @@ export function AddressAutocomplete({
         aria-activedescendant={
           active >= 0 ? `${listId}-option-${active}` : undefined
         }
-        className={
+        /*
+          THE ICON PADDING IS NOT OPTIONAL, AND IT USED TO BE.
+          
+          The default class string carried pl-11 to clear the pin and pr-11 to
+          clear the spinner. A caller passing its own className REPLACED that
+          whole string, and the forms all pass their own so they match the
+          fields around them. Their class is px-4, which puts the text at 16px
+          while the pin occupies 14 to 34, so the pin sat on top of whatever
+          was typed: the owner's screenshot shows it printed through the 3 of
+          3705.
+          
+          cn merges, so the caller keeps its own border, ring and type styling
+          and the two paddings this component needs for its own furniture are
+          added on top. twMerge orders pl-* after px-*, so it wins.
+        */
+        className={cn(
           className ??
-          "w-full rounded-xl border border-slate-300 py-4 pr-11 pl-11 text-base outline-none focus:border-[#123b63] focus:ring-4 focus:ring-[#123b63]/10"
-        }
+            "w-full rounded-xl border border-slate-300 py-4 text-base outline-none focus:border-[#123b63] focus:ring-4 focus:ring-[#123b63]/10",
+          "pl-11 pr-11",
+        )}
       />
       {loading && (
         <Loader2

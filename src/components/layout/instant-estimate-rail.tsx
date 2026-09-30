@@ -26,9 +26,20 @@ import { siteConfig } from "@/config/site";
  * On a page with no such CTA there is nothing to duplicate, so it shows from
  * the start.
  *
- * IT IS DELIBERATELY SMALL. About 46px wide, which is a comfortable thumb
- * target and roughly a ninth of a 414px screen, and short enough to read as a
- * tab rather than a panel. It sits over the page gutter, not over text.
+ * THE PROPORTIONS ARE A TALL TAB, NOT A SMALL ONE. About 48px wide and 190
+ * tall, roughly one to four, which is the shape a side tab reads as. The first slim version was 45 by 115 and the owner called it "too
+ * small and weird": at 11.5px the label was hard to read at arm's length, and
+ * a short stubby block with a tight corner radius reads as a stray UI chip
+ * rather than as part of the page. A tall tab with a generous left radius and
+ * type you can actually read is the shape this pattern wants. Width is what
+ * keeps it unobtrusive, and 48px of a 414px screen is under an eighth; height
+ * is what makes it legible, and height costs nothing because it sits over the
+ * page gutter rather than over text.
+ *
+ * The corner radius is set in pixels rather than taken from the scale. The
+ * scale's 2xl is 28.8px here, and a 28.8px curve on a 48px-wide box eats more
+ * than half the width, which turned the tab into a fat lozenge. 16px curves
+ * the two left corners and leaves a straight edge between them.
  *
  * WHAT IT STAYS CLEAR OF, and how:
  *
@@ -124,9 +135,9 @@ export function InstantEstimateRail() {
         // Rounded on the left, flush square against the screen edge, so it
         // reads as attached rather than floating. No transform: a rotate would
         // take the rounding with it and put the corners against the edge.
-        "flex items-center gap-1.5 rounded-l-lg bg-primary py-2.5 pr-3 pl-4",
-        "text-[11.5px] font-bold tracking-wide text-primary-foreground",
-        "shadow-[-3px_0_12px_rgb(18_59_99_/_0.25)]",
+        "flex items-center gap-3 rounded-l-[16px] bg-primary",
+        "text-sm font-semibold tracking-wide text-primary-foreground",
+        "shadow-[-4px_0_16px_rgb(18_59_99_/_0.28)]",
         "transition-[opacity,transform] duration-300 ease-out",
         shown
           ? "translate-x-0 opacity-100"
@@ -136,9 +147,29 @@ export function InstantEstimateRail() {
         // the slide.
         "motion-reduce:transition-none",
       ].join(" ")}
-      style={{ writingMode: "vertical-rl" }}
+      /*
+        PADDING IS SET HERE, IN LOGICAL PROPERTIES, AND THAT IS NOT FUSSINESS.
+        
+        Tailwind's py-* compiles to padding-block and px-* to padding-inline.
+        Under writing-mode: vertical-rl the inline axis is VERTICAL, so those
+        two swap on screen: py-8 adds width, px-8 adds height. The tab carried
+        py-2.5 and then py-8 through several rounds of tuning and the height
+        never moved, because both were quietly padding the sides while pr-3 and
+        pl-4, which are physical, overrode them to zero. The computed style
+        read "0px 12px 0px 16px" against a class list asking for 32px top and
+        bottom.
+        
+        Written out as padding-inline and padding-block there is nothing to get
+        backwards: inline runs with the text, which here is down the screen and
+        therefore height; block runs across it, which is width.
+      */
+      style={{
+        writingMode: "vertical-rl",
+        paddingInline: "24px", // along the text: the tab's height
+        paddingBlock: "14px", // across it: the tab's width
+      }}
     >
-      <Ruler className="size-3.5 -rotate-90" aria-hidden="true" />
+      <Ruler className="size-4 -rotate-90" aria-hidden="true" />
       <span>Instant Estimate</span>
     </Link>
   );

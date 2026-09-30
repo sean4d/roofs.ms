@@ -217,7 +217,7 @@ export function DamageAnalyzer() {
                   if (parts.postal) setPostal(parts.postal);
                 }}
                 placeholder="Street address"
-                className="w-full rounded-xl border border-border bg-white py-2.5 pr-4 pl-11 outline-none focus:border-steel-500"
+                className="w-full rounded-xl border border-border bg-white py-2.5 outline-none focus:border-steel-500"
               />
             </label>
           </div>
