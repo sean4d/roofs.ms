@@ -71,15 +71,23 @@ export function InstantEstimateRail() {
         // outward rather than drawn inside the tab.
         "focus-visible:ring-3 focus-visible:ring-steel-500 focus-visible:outline-none",
       ].join(" ")}
-      style={{
-        writingMode: "vertical-rl",
-        // vertical-rl alone reads top-to-bottom. Turned 180 degrees it reads
-        // bottom-to-top, which is the convention for a tab on a right edge and
-        // the only orientation that does not make the reader tilt the wrong way.
-        transform: "rotate(180deg)",
-      }}
+      /*
+        NO ROTATE. vertical-rl on its own is the whole effect.
+
+        The first version added transform: rotate(180deg) to make the text read
+        bottom-to-top. It did, and it also turned the box over, which put the
+        rounded-l-xl corners against the screen edge where nobody can see them
+        and left the square corners facing into the page. The tab read as a
+        rectangle someone had shoved half off the screen (owner, 2026-09-30:
+        "looks super weird"). Rounding is a property of the painted box, so a
+        transform on the box takes the rounding with it.
+
+        Without the rotate the text reads top-to-bottom, which is what a right
+        edge tab usually does anyway, and the rounded edge faces the page.
+      */
+      style={{ writingMode: "vertical-rl" }}
     >
-      <Ruler className="size-4 rotate-90" aria-hidden="true" />
+      <Ruler className="size-4 -rotate-90" aria-hidden="true" />
       <span>Free Instant Estimate</span>
     </Link>
   );

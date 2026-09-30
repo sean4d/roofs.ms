@@ -248,25 +248,28 @@ export function SiteHeader() {
             </>
           )}
           {/*
-            TWO CTAs, AND THEY ARE NOT THE SAME OFFER.
+            TWO CTAs, BOTH SOLID NAVY (owner, 2026-09-30).
 
             Free Inspection books a person. Free Instant Estimate returns a
             number in about a minute without anybody visiting, which is the
             thing on this site nothing else does and the thing most visitors
-            actually want first. So both are in the header on desktop, and the
-            hierarchy is carried by fill rather than by size: Inspection stays
-            the solid navy button because it is the higher-intent action, and
-            Instant Estimate sits beside it in the outlined treatment so it
-            reads as the self-serve route rather than as a second, competing
-            primary. Two solid buttons side by side is how a header stops
-            having a primary action at all.
+            want first.
+
+            This shipped with the outlined treatment on the argument that two
+            solid buttons side by side leaves a header with no primary action.
+            The owner looked at it and wanted them matched, which is his call
+            to make and a defensible one: he is not ranking these two, he is
+            offering a genuine choice between talking to somebody and not
+            having to. Matching them says that.
+
+            The icon is what keeps them apart at a glance now that the fill
+            does not.
 
             It appears from md up. Below that the right-edge rail carries it,
             and the two are mutually exclusive at every width so nobody is ever
             offered the same destination twice.
           */}
           <Button
-            variant="outline"
             render={<Link href={siteConfig.links.instantEstimate} />}
             nativeButton={false}
             className="hidden md:inline-flex"
