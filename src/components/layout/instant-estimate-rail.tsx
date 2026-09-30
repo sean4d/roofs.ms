@@ -26,11 +26,19 @@ import { siteConfig } from "@/config/site";
  * On a page with no such CTA there is nothing to duplicate, so it shows from
  * the start.
  *
- * THIN AND LONG, WITH A CURVED BOTTOM. About 42px wide and 190 tall, which
- * is one to four and a half. It went 45x115 (too cramped to read), 48x190
- * (too heavy), 46x170, and then here, against two competitor tabs the owner
- * sent as reference. Both of those are thinner and longer than anything I had
- * reached for, and both carry the asymmetric radius described below. The first slim version was 45 by 115 and the owner called it "too
+ * THIN AND LONG, WITH SCOOPED ENDS. 44 by 190, about one to four and a half.
+ * It went 45x115 (too cramped to read), 48x190 (too heavy), 46x170, then a
+ * version with an asymmetric border-radius, and now this.
+ *
+ * The radius version was still wrong, and the reason is worth stating: the
+ * reference tabs are not rounded rectangles at all. Their left edge curves
+ * INWARD at the top and the bottom, so the tab is pinched at its ends and
+ * full width through the middle. border-radius cannot express that. It only
+ * ever rounds a corner off, convex, away from the shape. A concave scoop is
+ * material removed from where a square corner would be, and no combination of
+ * radii produces one.
+ *
+ * So the silhouette is an SVG path. See the comment on it below. The first slim version was 45 by 115 and the owner called it "too
  * small and weird": at 11.5px the label was hard to read at arm's length, and
  * a short stubby block with a tight corner radius reads as a stray UI chip
  * rather than as part of the page. A tall tab with a generous left radius and
@@ -39,9 +47,14 @@ import { siteConfig } from "@/config/site";
  * is what makes it legible, and height costs nothing because it sits over the
  * page gutter rather than over text.
  *
- * The radius is set in pixels rather than taken from the scale, because the
- * scale only offers symmetric corners and this shape is deliberately not
- * symmetric. See the style block.
+ * WHY AN SVG AND NOT clip-path. clip-path: path() would draw the same
+ * silhouette, but it takes absolute coordinates that do not follow the
+ * element, and, more importantly, it clips hit-testing along with paint: the
+ * scooped ends would stop accepting taps. Here the anchor stays an ordinary
+ * rectangle that takes the tap, and the SVG underneath paints the shape. The
+ * shape is decoration; the target is the box. preserveAspectRatio="none"
+ * stretches the path to whatever the text makes the box, so nothing has to be
+ * kept in sync by hand.
  *
  * WHAT IT STAYS CLEAR OF, and how:
  *
@@ -137,9 +150,21 @@ export function InstantEstimateRail() {
         // Rounded on the left, flush square against the screen edge, so it
         // reads as attached rather than floating. No transform: a rotate would
         // take the rounding with it and put the corners against the edge.
-        "flex items-center gap-2.5 bg-primary",
+        /*
+          No background and no box-shadow on the anchor: both would paint the
+          rectangle the SVG exists to hide. The shadow moves onto the path as a
+          drop-shadow filter, which follows the silhouette.
+
+          AND NO `relative` HERE, however much it looks like it belongs. It is
+          a position utility, so it competes with the `fixed` three lines up,
+          and Tailwind emits `relative` after `fixed`, so it wins: the tab
+          dropped out of fixed positioning, rejoined the flow and stretched to
+          the full 390px of the screen. `fixed` already establishes the
+          containing block the absolute SVG needs, so nothing was gained for
+          it either.
+        */
+        "flex items-center gap-2.5",
         "text-[13px] font-semibold tracking-[0.02em] text-primary-foreground",
-        "shadow-[-2px_0_10px_rgb(18_59_99_/_0.18)]",
         "transition-[opacity,transform] duration-300 ease-out",
         shown
           ? "translate-x-0 opacity-100"
@@ -167,26 +192,65 @@ export function InstantEstimateRail() {
       */
       style={{
         writingMode: "vertical-rl",
-        paddingInline: "30px", // along the text: the tab's height
+        paddingInline: "18px", // along the text: the tab's height (the counterweight adds 24)
         paddingBlock: "12px", // across it: the tab's width
-        /*
-          THE CURVED BOTTOM IS THE WHOLE SHAPE.
-          
-          The owner sent two competitors' tabs as reference and both do the
-          same thing: a small radius at the top left, a big sweeping one at
-          the bottom left, and square corners against the screen edge. That
-          asymmetry is what makes it read as a tab hanging off the side rather
-          than a rounded chip parked near it. An even radius on both left
-          corners, which is what rounded-l-* gives, cannot produce it.
-          
-          Order is top-left, top-right, bottom-right, bottom-left. The two
-          right corners stay square because that edge is the screen.
-        */
-        borderRadius: "14px 0 0 40px",
       }}
     >
-      <Ruler className="size-3.5 -rotate-90" aria-hidden="true" />
-      <span>Instant Estimate</span>
+      {/*
+        THE SILHOUETTE.
+
+        Drawn on a 44 by 190 grid and stretched to the real box. Read it from
+        the top right, clockwise:
+
+          M44 0    start flush against the screen edge
+          L16 0    a short top edge, so the tab does not come to a point
+          Q16 42   control pulled DOWN AND RIGHT, into the shape
+            0 42   ending at the full-width left edge 42 down
+          V148     the straight run that carries the label
+          Q16 148  control pulled UP AND RIGHT, into the shape again
+            16 190 ending back on the short bottom edge
+          H44 Z    across to the screen edge and close
+
+        The two Q curves are the whole point. A control point placed INSIDE
+        the shape pulls the curve away from the corner it would otherwise
+        fill, which carves material out rather than rounding it off. Move
+        either control point outside, to 0 0 or 0 190, and the same two
+        commands produce ordinary convex corners: same path syntax, opposite
+        silhouette. That is the thing border-radius cannot do.
+
+        The drop-shadow filter is on the path rather than the anchor so it
+        traces the scoops instead of outlining the rectangle behind them.
+      */}
+      <svg
+        viewBox="0 0 44 190"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full"
+        style={{ filter: "drop-shadow(-2px 0 6px rgb(18 59 99 / 0.22))" }}
+      >
+        <path
+          d="M44 0 L16 0 Q16 42 0 42 V148 Q16 148 16 190 H44 Z"
+          className="fill-primary"
+        />
+      </svg>
+      {/*
+        THE ICON SITS ABOVE THE LABEL AND THE LABEL IS STILL CENTRED.
+
+        Those two pull against each other. With the icon simply in flow, the
+        icon-plus-label group centres and the LABEL therefore sits low: 54px of
+        clearance above it against 30 below, and the 24px difference is exactly
+        the icon plus its gap. On a shape that is pinched at both ends that is
+        visible, and it put the end of the word inside the bottom scoop.
+
+        An empty element of the icon's own size at the other end restores it.
+        Its own gap balances the icon's gap, so the label lands dead centre
+        while the icon still reads as sitting near the top. No absolute
+        positioning, nothing to keep in sync, and it holds at whatever size the
+        label ends up.
+      */}
+      <Ruler className="relative size-3.5 -rotate-90" aria-hidden="true" />
+      <span className="relative">Instant Estimate</span>
+      <span aria-hidden="true" className="relative size-3.5 shrink-0" />
     </Link>
   );
 }

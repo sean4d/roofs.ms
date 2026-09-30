@@ -44,13 +44,21 @@ const combobox = read("src/components/estimate/address-autocomplete.tsx");
 const proxy = read("src/app/api/places/autocomplete/route.ts");
 const layout = read("src/app/(marketing)/layout.tsx");
 
-// The class list alone, not the whole file: the comments in it discuss the
-// z-50 header and the px/py trap, and a naive substring search over the file
-// found that prose and called it a defect.
-const railClasses = rail.slice(
+/*
+ * The class list alone, and only the QUOTED parts of it.
+ *
+ * The comments inside that array discuss the z-50 header, the px/py axis trap
+ * and the `relative` collision by name, so a substring search over the slice
+ * finds its own prose and reports a defect. Twice now. Pulling out the string
+ * literals leaves only classes that are really applied.
+ */
+const railClassBlock = rail.slice(
   rail.indexOf("className={["),
   rail.indexOf("].join"),
 );
+const railClasses = [...railClassBlock.matchAll(/"([^"]*)"/g)]
+  .map((m) => m[1])
+  .join(" ");
 
 /* ------------------------------------------------------------------ */
 /* 1. Exactly one version at every width                               */
@@ -100,6 +108,41 @@ check(
 check(
   rail.includes("paddingInline") && rail.includes("paddingBlock"),
   "the tab sets padding in logical properties, not py-*/px-*",
+);
+
+/* ---- the silhouette ---- */
+check(
+  rail.includes("<svg") && rail.includes("preserveAspectRatio=\"none\""),
+  "the shape is an SVG path stretched to the box, not a border-radius",
+  "border-radius only rounds corners off; these ends are scooped INTO the shape",
+);
+check(
+  !railClasses.includes("rounded"),
+  "no rounded-* left on the anchor, which would paint over the silhouette",
+);
+check(
+  !railClasses.includes("bg-") && !railClasses.includes("shadow-["),
+  "no background or box-shadow on the anchor: both draw the rectangle the SVG hides",
+);
+check(
+  rail.includes("drop-shadow("),
+  "the shadow is a drop-shadow on the path, so it follows the scoops",
+);
+/*
+ * `relative` on the anchor is the trap here. It is a position utility, so it
+ * competes with `fixed`, and Tailwind emits it later and wins: the tab left
+ * fixed positioning, rejoined the flow and stretched to the full 390px of the
+ * screen. `fixed` is already a containing block, so it was never needed.
+ */
+check(
+  !/\brelative\b/.test(railClasses),
+  "no `relative` on the anchor, which would override `fixed`",
+  "fixed already establishes the containing block the absolute SVG needs",
+);
+check(
+  /aria-hidden="true" className="relative size-3\.5 shrink-0"/.test(rail),
+  "the icon has a counterweight so the label is centred, not just the group",
+  "without it the label sat 24px low and ran into the bottom scoop",
 );
 check(
   !/\bp[xy]-[\d.]+/.test(railClasses),
