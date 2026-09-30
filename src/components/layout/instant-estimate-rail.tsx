@@ -26,7 +26,7 @@ import { siteConfig } from "@/config/site";
  * On a page with no such CTA there is nothing to duplicate, so it shows from
  * the start.
  *
- * THIN AND LONG, WITH SCOOPED ENDS. 44 by 190, about one to four and a half.
+ * A TONGUE OFF THE RIGHT EDGE. 50 by 175.
  * It went 45x115 (too cramped to read), 48x190 (too heavy), 46x170, then a
  * version with an asymmetric border-radius, and now this.
  *
@@ -144,8 +144,16 @@ export function InstantEstimateRail() {
       tabIndex={shown ? undefined : -1}
       aria-hidden={shown ? undefined : true}
       className={[
-        "fixed right-0 z-40 md:hidden",
-        "bottom-[calc(5.5rem+env(safe-area-inset-bottom,0px))]",
+        /*
+          CENTRED ON THE EDGE, not anchored above the bottom bar.
+
+          It used to sit just over the Call Now / Free Inspection bar. Centred
+          it is further from every other piece of furniture on the screen: at
+          175px tall on the shortest handset worth testing, a 640px Android, it
+          spans roughly 233 to 408, which clears the header above and leaves
+          about 170px to the bottom bar below.
+        */
+        "fixed top-1/2 right-0 z-40 -translate-y-1/2 md:hidden",
         "mr-[env(safe-area-inset-right,0px)]",
         // Rounded on the left, flush square against the screen edge, so it
         // reads as attached rather than floating. No transform: a rotate would
@@ -163,9 +171,11 @@ export function InstantEstimateRail() {
           containing block the absolute SVG needs, so nothing was gained for
           it either.
         */
-        "flex items-center gap-2.5",
+        "flex items-center gap-2",
         "text-[13px] font-semibold tracking-[0.02em] text-primary-foreground",
         "transition-[opacity,transform] duration-300 ease-out",
+        // translate-x only: the -translate-y-1/2 above is what centres it, and
+        // a second translate utility on the same axis would cancel it.
         shown
           ? "translate-x-0 opacity-100"
           : "pointer-events-none translate-x-full opacity-0",
@@ -192,44 +202,59 @@ export function InstantEstimateRail() {
       */
       style={{
         writingMode: "vertical-rl",
-        paddingInline: "18px", // along the text: the tab's height (the counterweight adds 24)
-        paddingBlock: "12px", // across it: the tab's width
+        paddingInline: "13px", // along the text: the tab's height
+        paddingBlock: "15px", // across it: the tab's width
       }}
     >
       {/*
-        THE SILHOUETTE.
+        THE SILHOUETTE: A TONGUE THAT GROWS OUT OF THE SCREEN EDGE.
 
-        Drawn on a 44 by 190 grid and stretched to the real box. Read it from
-        the top right, clockwise:
+        The previous attempt was a rectangle with two circular bites taken out
+        of its left edge, and the owner was right to reject it. Two things made
+        it that:
 
-          M44 0    start flush against the screen edge
-          L16 0    a short top edge, so the tab does not come to a point
-          Q16 42   control pulled DOWN AND RIGHT, into the shape
-            0 42   ending at the full-width left edge 42 down
-          V148     the straight run that carries the label
-          Q16 148  control pulled UP AND RIGHT, into the shape again
-            16 190 ending back on the short bottom edge
-          H44 Z    across to the screen edge and close
+          A FLAT TOP EDGE. It began with L16 0, a 28px horizontal run, so the
+          tab arrived at its top as a blunt rectangle and only then got carved.
+          The reference tabs have no top edge at all. They taper into the
+          screen edge and vanish.
 
-        The two Q curves are the whole point. A control point placed INSIDE
-        the shape pulls the curve away from the corner it would otherwise
-        fill, which carves material out rather than rounding it off. Move
-        either control point outside, to 0 0 or 0 190, and the same two
-        commands produce ordinary convex corners: same path syntax, opposite
-        silhouette. That is the thing border-radius cannot do.
+          QUADRATICS WITH THE CONTROL POINT ON THE CORNER. Q16 42 0 42 puts the
+          control exactly where the square corner would be, which is the
+          textbook way to draw a quarter circle. A quarter circle removed from
+          a straight edge IS a bite. There was no way to soften it by moving
+          the numbers; the curve type was wrong.
+
+        What it is now, read clockwise from the top:
+
+          M50 0            the top point, flush on the screen edge, zero width
+          C50 22 0 22      leaves heading straight DOWN, sweeps left, arrives
+            0 44           heading straight DOWN again: one smooth S
+          V131             the straight run that carries the label
+          C0 153 50 153    the same S mirrored, back into the edge
+            50 175
+          Z                straight up the right edge and closed
+
+        The S comes from the tangents, not the sweep. Both control points of
+        the first curve sit directly BELOW their own endpoint, 22px down, so
+        the curve leaves the edge vertically and meets the straight section
+        vertically. There is no corner anywhere for a bite to be taken out of,
+        and the transition is gradual rather than a quarter turn.
+
+        Widest through the middle, tapering into the edge at both ends, which
+        is what the reference tabs do.
 
         The drop-shadow filter is on the path rather than the anchor so it
-        traces the scoops instead of outlining the rectangle behind them.
+        traces the taper instead of outlining the rectangle behind it.
       */}
       <svg
-        viewBox="0 0 44 190"
+        viewBox="0 0 50 175"
         preserveAspectRatio="none"
         aria-hidden="true"
         className="absolute inset-0 h-full w-full"
         style={{ filter: "drop-shadow(-2px 0 6px rgb(18 59 99 / 0.22))" }}
       >
         <path
-          d="M44 0 L16 0 Q16 42 0 42 V148 Q16 148 16 190 H44 Z"
+          d="M50 0 C50 22 0 22 0 44 V131 C0 153 50 153 50 175 Z"
           className="fill-primary"
         />
       </svg>

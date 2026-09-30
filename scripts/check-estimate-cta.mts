@@ -126,7 +126,43 @@ check(
 );
 check(
   rail.includes("drop-shadow("),
-  "the shadow is a drop-shadow on the path, so it follows the scoops",
+  "the shadow is a drop-shadow on the path, so it follows the taper",
+);
+
+/*
+ * THE CURVE TYPE, WHICH IS WHAT WENT WRONG.
+ *
+ * The first silhouette used quadratics whose control point sat exactly on the
+ * square corner, which is the textbook construction for a quarter circle. A
+ * quarter circle removed from a straight edge is a bite, and the result read
+ * as a rectangle with two holes chewed out of its left side. No amount of
+ * moving the numbers would have fixed it; the curve type was wrong.
+ *
+ * Cubics with both control points directly BELOW their own endpoint make the
+ * curve leave the screen edge vertically and meet the straight run
+ * vertically: one smooth S, no corner anywhere for a bite to come out of.
+ */
+// Anchored on the M: a bare /d="/ matched data-testid="instant-estimate-rail"
+// and then graded the element id as if it were a path.
+const railPath = /\sd="(M[^"]+)"/.exec(rail)?.[1] ?? "";
+check(railPath.includes("C"), "the taper uses cubic curves, not quadratics");
+check(
+  !railPath.includes("Q"),
+  "no quadratics left in the path",
+  "a Q with its control on the corner is how the circular bites were drawn",
+);
+check(
+  /^M50 0 C/.test(railPath),
+  "the path starts flush on the screen edge and curves immediately",
+  "a straight run before the first curve gives the tab a blunt top edge",
+);
+check(
+  railPath.includes("V"),
+  "there is a straight vertical run between the two tapers",
+);
+check(
+  railPath.trim().endsWith("Z"),
+  "the shape closes along the right edge, which stays straight",
 );
 /*
  * `relative` on the anchor is the trap here. It is a position utility, so it
@@ -142,7 +178,7 @@ check(
 check(
   /aria-hidden="true" className="relative size-3\.5 shrink-0"/.test(rail),
   "the icon has a counterweight so the label is centred, not just the group",
-  "without it the label sat 24px low and ran into the bottom scoop",
+  "without it the label sat 24px low, which shows on a shape that tapers",
 );
 check(
   !/\bp[xy]-[\d.]+/.test(railClasses),
@@ -203,9 +239,19 @@ check(
 /* ------------------------------------------------------------------ */
 console.log("\nThe rail clears the furniture it shares a screen with");
 
+/*
+ * It is centred on the edge now rather than anchored above the bottom bar, so
+ * the clearance is a consequence of the geometry instead of a hardcoded
+ * offset: 175px tall centred on the shortest handset worth testing still
+ * leaves about 180px to the bar below and the header above.
+ */
 check(
-  /bottom-\[calc\([^\]]*env\(safe-area-inset-bottom/.test(rail),
-  "it sits above the bottom bar and the safe-area inset, not at 0",
+  /top-1\/2[\s\S]{0,60}-translate-y-1\/2/.test(railClasses),
+  "it is centred on the right edge",
+);
+check(
+  !railClasses.includes("bottom-["),
+  "it is not also bottom-anchored, which would fight the centring",
 );
 check(
   rail.includes("env(safe-area-inset-right"),
