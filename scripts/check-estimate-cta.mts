@@ -105,9 +105,22 @@ check(
  * Written as paddingInline and paddingBlock there is nothing to get
  * backwards, so that is what this insists on.
  */
+/*
+ * paddingBlock is the only padding left: the ribbon's height is set outright
+ * now, so there is no padding-inline to assert. What still matters is that
+ * whatever padding exists is written logically, because the py and px
+ * utilities swap axes under vertical-rl and silently pad the wrong side.
+ * (Spelled out rather than written with asterisks: the star-slash in
+ * "py-*" followed by "/px" closes this comment three lines early.)
+ */
 check(
-  rail.includes("paddingInline") && rail.includes("paddingBlock"),
-  "the tab sets padding in logical properties, not py-*/px-*",
+  rail.includes("paddingBlock"),
+  "the tab's width comes from a logical padding, not py-*/px-*",
+);
+check(
+  /height:\s*"clamp\(/.test(rail),
+  "the height is set and clamped to the viewport rather than grown from text",
+  "padding alone would leave the label marooned in the middle of a long bar",
 );
 
 /* ---- the silhouette ---- */
@@ -152,7 +165,7 @@ check(
   "a Q with its control on the corner is how the circular bites were drawn",
 );
 check(
-  /^M50 0 C/.test(railPath),
+  /^M44 0 C/.test(railPath),
   "the path starts flush on the screen edge and curves immediately",
   "a straight run before the first curve gives the tab a blunt top edge",
 );
@@ -176,8 +189,11 @@ check(
   "fixed already establishes the containing block the absolute SVG needs",
 );
 check(
-  /aria-hidden="true" className="relative size-3\.5 shrink-0"/.test(rail),
-  "the icon has a counterweight so the label is centred, not just the group",
+  /<Ruler className="relative (size-[\d.]+)[^"]*"/.exec(rail)?.[1] ===
+    /<span aria-hidden="true" className="relative (size-[\d.]+) shrink-0"/.exec(
+      rail,
+    )?.[1],
+  "the counterweight matches the icon's size, so the label is centred",
   "without it the label sat 24px low, which shows on a shape that tapers",
 );
 check(

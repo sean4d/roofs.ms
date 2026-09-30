@@ -26,7 +26,9 @@ import { siteConfig } from "@/config/site";
  * On a page with no such CTA there is nothing to duplicate, so it shows from
  * the start.
  *
- * A TONGUE OFF THE RIGHT EDGE. 50 by 175.
+ * A NARROW RIBBON DOWN THE RIGHT EDGE. 44 wide, 300 to 380 tall with the
+ * viewport. It was 50 by 175 and read as a short chunky panel; the owner
+ * wanted the proportions of the reference ribbons, which are long and thin.
  * It went 45x115 (too cramped to read), 48x190 (too heavy), 46x170, then a
  * version with an asymmetric border-radius, and now this.
  *
@@ -171,8 +173,8 @@ export function InstantEstimateRail() {
           containing block the absolute SVG needs, so nothing was gained for
           it either.
         */
-        "flex items-center gap-2",
-        "text-[13px] font-semibold tracking-[0.02em] text-primary-foreground",
+        "flex items-center justify-center gap-2.5",
+        "text-[12px] font-semibold tracking-[0.09em] text-primary-foreground",
         "transition-[opacity,transform] duration-300 ease-out",
         // translate-x only: the -translate-y-1/2 above is what centres it, and
         // a second translate utility on the same axis would cancel it.
@@ -202,8 +204,22 @@ export function InstantEstimateRail() {
       */
       style={{
         writingMode: "vertical-rl",
-        paddingInline: "13px", // along the text: the tab's height
-        paddingBlock: "15px", // across it: the tab's width
+        /*
+          HEIGHT IS SET, NOT GROWN FROM THE TEXT.
+          
+          A ribbon this long cannot be padded into existence: "Instant
+          Estimate" at 12px is about 100px, so reaching 350 by padding alone
+          would mean 125px of it at each end, and the label would read as a
+          small island marooned in a long bar. Setting the height and centring
+          the content inside it is the honest way round, and it also lets the
+          ribbon answer to the screen: clamp keeps it off the header on a
+          short handset and stops it running the whole side of a tall one.
+          
+          paddingBlock is the only padding left, and it is what sets the
+          width: 13 each side plus the ~18px glyph box of 12px type is 44.
+        */
+        height: "clamp(300px, 44vh, 380px)",
+        paddingBlock: "13px", // across the text: the ribbon's width
       }}
     >
       {/*
@@ -226,19 +242,27 @@ export function InstantEstimateRail() {
 
         What it is now, read clockwise from the top:
 
-          M50 0            the top point, flush on the screen edge, zero width
-          C50 22 0 22      leaves heading straight DOWN, sweeps left, arrives
-            0 44           heading straight DOWN again: one smooth S
-          V131             the straight run that carries the label
-          C0 153 50 153    the same S mirrored, back into the edge
-            50 175
+          M44 0            the top point, flush on the screen edge, zero width
+          C44 27 0 27      leaves heading straight DOWN, sweeps left, arrives
+            0 55           heading straight DOWN again: one smooth S
+          V295             the straight run that carries the label
+          C0 323 44 323    the same S mirrored, back into the edge
+            44 350
           Z                straight up the right edge and closed
 
         The S comes from the tangents, not the sweep. Both control points of
-        the first curve sit directly BELOW their own endpoint, 22px down, so
-        the curve leaves the edge vertically and meets the straight section
-        vertically. There is no corner anywhere for a bite to be taken out of,
-        and the transition is gradual rather than a quarter turn.
+        the first curve sit directly BELOW their own endpoint, halfway down the
+        taper, so the curve leaves the edge vertically and meets the straight
+        section vertically. There is no corner anywhere for a bite to be taken
+        out of, and the transition is gradual rather than a quarter turn.
+
+        THE NUMBERS CHANGED, THE CONSTRUCTION DID NOT. The ribbon went from
+        50x175 to 44x350, so the same two curves were restretched on the new
+        grid: each taper is 55 of 350 rather than 44 of 175, dropping from a
+        quarter of the height to a sixth. That is what "the curves should
+        consume only a small portion of the total height" means in practice.
+        Control points stayed directly below their endpoints at the taper's
+        midpoint, which is the only thing that makes the S an S.
 
         Widest through the middle, tapering into the edge at both ends, which
         is what the reference tabs do.
@@ -247,14 +271,14 @@ export function InstantEstimateRail() {
         traces the taper instead of outlining the rectangle behind it.
       */}
       <svg
-        viewBox="0 0 50 175"
+        viewBox="0 0 44 350"
         preserveAspectRatio="none"
         aria-hidden="true"
         className="absolute inset-0 h-full w-full"
         style={{ filter: "drop-shadow(-2px 0 6px rgb(18 59 99 / 0.22))" }}
       >
         <path
-          d="M50 0 C50 22 0 22 0 44 V131 C0 153 50 153 50 175 Z"
+          d="M44 0 C44 27 0 27 0 55 V295 C0 323 44 323 44 350 Z"
           className="fill-primary"
         />
       </svg>
@@ -273,9 +297,9 @@ export function InstantEstimateRail() {
         positioning, nothing to keep in sync, and it holds at whatever size the
         label ends up.
       */}
-      <Ruler className="relative size-3.5 -rotate-90" aria-hidden="true" />
+      <Ruler className="relative size-3 -rotate-90" aria-hidden="true" />
       <span className="relative">Instant Estimate</span>
-      <span aria-hidden="true" className="relative size-3.5 shrink-0" />
+      <span aria-hidden="true" className="relative size-3 shrink-0" />
     </Link>
   );
 }
