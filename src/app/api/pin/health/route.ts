@@ -91,6 +91,65 @@ async function autocompleteWorking(origin: string): Promise<boolean> {
   }
 }
 
+/**
+ * The two Google APIs nothing outside a signed-in session can reach.
+ *
+ * Solar is the measurement engine: without it a rep taps a house and gets no
+ * number. Static Maps draws the aerial thumbnail on every estimate, every
+ * mailer and the mail board. Both are billed separately from Geocoding and
+ * can be disabled independently, and both live behind /pin or a quote token,
+ * so there is no way to tell from outside whether they still answer. That is
+ * exactly the shape of failure this endpoint exists for.
+ *
+ * The probe uses the office's own coordinates, and asks only whether a
+ * response came back in the right shape. Neither call returns anything about
+ * a customer.
+ */
+async function solarProbe(): Promise<boolean> {
+  const key = process.env.GOOGLE_MAPS_SERVER_KEY;
+  if (!key) return false;
+  try {
+    const url = new URL(
+      "https://solar.googleapis.com/v1/buildingInsights:findClosest",
+    );
+    url.searchParams.set("location.latitude", String(siteConfig.geo.latitude));
+    url.searchParams.set("location.longitude", String(siteConfig.geo.longitude));
+    url.searchParams.set("requiredQuality", "LOW");
+    url.searchParams.set("key", key);
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) return false;
+    const data = (await res.json()) as { solarPotential?: unknown };
+    return Boolean(data.solarPotential);
+  } catch {
+    return false;
+  }
+}
+
+async function staticMapProbe(): Promise<boolean> {
+  const key = process.env.GOOGLE_MAPS_SERVER_KEY;
+  if (!key) return false;
+  try {
+    const url = new URL("https://maps.googleapis.com/maps/api/staticmap");
+    url.searchParams.set(
+      "center",
+      `${siteConfig.geo.latitude},${siteConfig.geo.longitude}`,
+    );
+    url.searchParams.set("zoom", "19");
+    url.searchParams.set("size", "80x80");
+    url.searchParams.set("maptype", "satellite");
+    url.searchParams.set("key", key);
+    const res = await fetch(url, { cache: "no-store" });
+    // A disabled or restricted key still answers 200 here, with a PNG that
+    // says so in words, so the content type alone is not enough. A real tile
+    // is far bigger than the error image at this size.
+    if (!res.ok) return false;
+    const buf = await res.arrayBuffer();
+    return buf.byteLength > 2000;
+  } catch {
+    return false;
+  }
+}
+
 export async function GET(request: Request) {
   /*
    * THE EXPENSIVE CHECKS ARE OPT IN.
@@ -196,6 +255,8 @@ export async function GET(request: Request) {
               autocomplete: await autocompleteWorking(
                 new URL(request.url).origin,
               ),
+              solar: await solarProbe(),
+              staticMaps: await staticMapProbe(),
             }
           : {}),
         // Which commit is actually serving this. Vercel does not expose a

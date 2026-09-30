@@ -161,6 +161,23 @@ console.log(`\nField tool`);
       ? "Places Autocomplete is not answering; customers must type the full address"
       : "endpoint too old",
   );
+  // The measurement engine. Nothing else on this site can replace it: without
+  // Solar a rep taps a house and gets no number at all.
+  check(
+    r.text.includes('"solar":true'),
+    "the Solar API still measures roofs",
+    r.text.includes('"solar"')
+      ? "Solar is not answering; every measurement will fail"
+      : "endpoint too old",
+  );
+  // Every estimate, mailer and board row shows an aerial thumbnail from here.
+  check(
+    r.text.includes('"staticMaps":true'),
+    "Static Maps still returns aerial imagery",
+    r.text.includes('"staticMaps"')
+      ? "Static Maps is not answering; estimates lose their aerial photo"
+      : "endpoint too old",
+  );
 }
 {
   // Cross-site POST must be refused, or any page on the internet could make a
