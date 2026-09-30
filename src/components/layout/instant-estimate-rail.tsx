@@ -26,10 +26,11 @@ import { siteConfig } from "@/config/site";
  * On a page with no such CTA there is nothing to duplicate, so it shows from
  * the start.
  *
- * THE PROPORTIONS ARE A TALL TAB, NOT A SMALL ONE. About 44px wide and 170
- * tall, roughly one to four, which is the shape a side tab reads as. It went
- * 45x115 (too cramped to read), then 48x190, then here: the owner wanted the
- * second one down a notch without losing the proportion. The first slim version was 45 by 115 and the owner called it "too
+ * THIN AND LONG, WITH A CURVED BOTTOM. About 42px wide and 190 tall, which
+ * is one to four and a half. It went 45x115 (too cramped to read), 48x190
+ * (too heavy), 46x170, and then here, against two competitor tabs the owner
+ * sent as reference. Both of those are thinner and longer than anything I had
+ * reached for, and both carry the asymmetric radius described below. The first slim version was 45 by 115 and the owner called it "too
  * small and weird": at 11.5px the label was hard to read at arm's length, and
  * a short stubby block with a tight corner radius reads as a stray UI chip
  * rather than as part of the page. A tall tab with a generous left radius and
@@ -38,10 +39,9 @@ import { siteConfig } from "@/config/site";
  * is what makes it legible, and height costs nothing because it sits over the
  * page gutter rather than over text.
  *
- * The corner radius is set in pixels rather than taken from the scale. The
- * scale's 2xl is 28.8px here, and a 28.8px curve on a 44px-wide box eats more
- * than half the width, which turned the tab into a fat lozenge. 14px curves
- * the two left corners and leaves a straight edge between them.
+ * The radius is set in pixels rather than taken from the scale, because the
+ * scale only offers symmetric corners and this shape is deliberately not
+ * symmetric. See the style block.
  *
  * WHAT IT STAYS CLEAR OF, and how:
  *
@@ -137,9 +137,9 @@ export function InstantEstimateRail() {
         // Rounded on the left, flush square against the screen edge, so it
         // reads as attached rather than floating. No transform: a rotate would
         // take the rounding with it and put the corners against the edge.
-        "flex items-center gap-2.5 rounded-l-[14px] bg-primary",
-        "text-[13px] font-semibold tracking-wide text-primary-foreground",
-        "shadow-[-4px_0_16px_rgb(18_59_99_/_0.28)]",
+        "flex items-center gap-2.5 bg-primary",
+        "text-[13px] font-semibold tracking-[0.02em] text-primary-foreground",
+        "shadow-[-2px_0_10px_rgb(18_59_99_/_0.18)]",
         "transition-[opacity,transform] duration-300 ease-out",
         shown
           ? "translate-x-0 opacity-100"
@@ -167,8 +167,22 @@ export function InstantEstimateRail() {
       */
       style={{
         writingMode: "vertical-rl",
-        paddingInline: "20px", // along the text: the tab's height
-        paddingBlock: "13px", // across it: the tab's width
+        paddingInline: "30px", // along the text: the tab's height
+        paddingBlock: "12px", // across it: the tab's width
+        /*
+          THE CURVED BOTTOM IS THE WHOLE SHAPE.
+          
+          The owner sent two competitors' tabs as reference and both do the
+          same thing: a small radius at the top left, a big sweeping one at
+          the bottom left, and square corners against the screen edge. That
+          asymmetry is what makes it read as a tab hanging off the side rather
+          than a rounded chip parked near it. An even radius on both left
+          corners, which is what rounded-l-* gives, cannot produce it.
+          
+          Order is top-left, top-right, bottom-right, bottom-left. The two
+          right corners stay square because that edge is the screen.
+        */
+        borderRadius: "14px 0 0 40px",
       }}
     >
       <Ruler className="size-3.5 -rotate-90" aria-hidden="true" />
