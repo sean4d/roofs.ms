@@ -58,13 +58,18 @@ export async function POST(request: Request) {
   try {
     // A map tap gives coordinates but no address, and the rep needs to see one
     // to know they hit the right house, so tapping resolves the address too.
-    const measurement =
-      "address" in input
-        ? await measureAddress(input.address)
-        : await measureAt(input.lat, input.lon, {
-            formattedAddress:
-              (await reverseGeocode(input.lat, input.lon)) ?? undefined,
-          });
+    let measurement;
+    if ("address" in input) {
+      measurement = await measureAddress(input.address);
+    } else {
+      const found = await reverseGeocode(input.lat, input.lon);
+      measurement = await measureAt(input.lat, input.lon, {
+        formattedAddress: found?.formatted,
+        // Pass the precision through. measureAt already warns on anything
+        // short of ROOFTOP; until now a tap never gave it anything to warn on.
+        precision: found?.precision,
+      });
+    }
 
     const lat = measurement.lat || ("lat" in input ? input.lat : 0);
     const lon = measurement.lon || ("lon" in input ? input.lon : 0);
@@ -146,11 +151,32 @@ export async function POST(request: Request) {
  * Best effort on purpose. If Google cannot name the spot the rep tapped, that
  * is not a reason to refuse to measure the roof: they are standing in front of
  * the house and can type the address themselves.
+ *
+ * THE PRECISION COMES BACK TOO, AND IT MATTERS MORE HERE THAN ANYWHERE.
+ *
+ * A forward geocode from the search box already carried location_type through
+ * to measureAt, which warns when it is not ROOFTOP. A reverse geocode from a
+ * map tap threw it away, and tapping is how reps actually work. That was the
+ * quiet half of the problem: on a rural road Google will answer a tap with a
+ * house number it INTERPOLATED from the road's address range, meaning it
+ * divided the range by the length of the road and guessed. The number looks
+ * ordinary, it prints on an envelope, and USPS returns it stamped NO SUCH
+ * NUMBER because that house was never there.
+ *
+ * Two of the five envelopes that came back in September carried that stamp,
+ * both on rural roads. The signal to catch them was in the response we were
+ * already parsing and already paying for, one field along from the address.
  */
+interface ReverseGeocoded {
+  formatted: string;
+  /** ROOFTOP, RANGE_INTERPOLATED, GEOMETRIC_CENTER or APPROXIMATE. */
+  precision: string;
+}
+
 async function reverseGeocode(
   lat: number,
   lon: number,
-): Promise<string | null> {
+): Promise<ReverseGeocoded | null> {
   const key = process.env.GOOGLE_MAPS_SERVER_KEY;
   if (!key) return null;
   try {
@@ -162,10 +188,17 @@ async function reverseGeocode(
     if (!res.ok) return null;
     const data = (await res.json()) as {
       status: string;
-      results?: Array<{ formatted_address: string }>;
+      results?: Array<{
+        formatted_address: string;
+        geometry?: { location_type?: string };
+      }>;
     };
     if (data.status !== "OK" || !data.results?.length) return null;
-    return data.results[0].formatted_address;
+    const top = data.results[0];
+    return {
+      formatted: top.formatted_address,
+      precision: top.geometry?.location_type ?? "APPROXIMATE",
+    };
   } catch {
     return null;
   }

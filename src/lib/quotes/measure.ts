@@ -391,7 +391,26 @@ export async function measureAt(
     aerialUrl: aerialUrl(lat, lon),
   };
 
-  if (context.precision && context.precision !== "ROOFTOP") {
+  /*
+    TWO DIFFERENT FAILURES WEAR THE SAME LABEL.
+
+    Anything short of ROOFTOP used to raise one warning about the pin being in
+    the road, which is the measurement risk. RANGE_INTERPOLATED carries a
+    second risk the old wording never mentioned, and it is the one that costs
+    postage: Google produced that house number by dividing the road's address
+    range along its length and guessing. The pin can be on the right roof while
+    the number on the envelope belongs to no house at all. That is what USPS
+    sends back stamped NO SUCH NUMBER, and on a rural road it is common.
+
+    So the warning now says which of the two it is, because the rep's next
+    action is different. A pin in the road means check the photo. A guessed
+    number means check the address before anything gets mailed to it.
+  */
+  if (context.precision === "RANGE_INTERPOLATED") {
+    warnings.push(
+      "Google guessed this house number from the road's address range, so it may not be a real mailing address. Confirm it before requesting a mailer.",
+    );
+  } else if (context.precision && context.precision !== "ROOFTOP") {
     warnings.push(
       "The address could not be pinned to a specific house, so the pin may be in the road. Check the photo.",
     );
