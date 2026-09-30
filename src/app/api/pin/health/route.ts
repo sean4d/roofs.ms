@@ -51,7 +51,9 @@ async function addressCheckProbe(): Promise<{ ok: boolean; detail: string }> {
       `${address.streetAddress}, ${address.addressLocality}, ${address.addressRegion} ${address.postalCode}`,
     );
     return {
-      ok: probe.verdict !== "unknown",
+      // reachable, not the verdict. A blocked address still proves USPS
+      // answered, and so does an inconclusive one.
+      ok: probe.reachable,
       // Enough to tell a disabled API from a restricted key from an address
       // USPS dislikes, and nothing about any customer.
       detail:

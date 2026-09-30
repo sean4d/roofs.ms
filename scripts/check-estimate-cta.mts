@@ -276,6 +276,36 @@ check(
   combobox.includes("parseAddressParts") && combobox.includes("fillSiblings"),
   "choosing a suggestion fills the form's city, state and ZIP too",
 );
+
+/*
+ * The ZIP needs a second call, and finding that out the hard way is the point
+ * of these two checks.
+ *
+ * Autocomplete's secondary line is "Petal, MS, USA". There is no postal code
+ * anywhere in the response. A browser test drove the whole flow green against
+ * a stubbed payload that carried one, because the fixture was written from
+ * what the response was assumed to look like. The ZIP box had never filled in
+ * production even once.
+ */
+check(
+  combobox.includes("/api/places/resolve"),
+  "the ZIP is resolved separately, because autocomplete does not return one",
+);
+const resolve = read("src/app/api/places/resolve/route.ts");
+check(
+  resolve.includes("geocode("),
+  "resolve reuses the geocoder rather than buying a second Places SKU",
+);
+check(
+  resolve.includes("sameOrigin") && resolve.includes("MAX_PER_WINDOW"),
+  "resolve is same-origin only and rate limited",
+);
+check(
+  /catch[\s\S]{0,120}NOTHING/.test(resolve) &&
+    resolve.includes("const NOTHING"),
+  "a failed resolve returns empty parts, never an error",
+  "the first pass has already filled what it could; there is nothing to undo",
+);
 check(
   combobox.includes("US_STATES"),
   "the parser only accepts real US state codes",

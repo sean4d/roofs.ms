@@ -79,12 +79,30 @@ check(
   "dpvConfirmation N is blocked (NO SUCH NUMBER)",
 );
 
-// Empty is not the same as Y. Treating a missing answer as a pass is how a
-// validator quietly stops validating.
+/*
+ * An empty dpvConfirmation is INCONCLUSIVE, not negative.
+ *
+ * This first asserted that empty must block, on the reasoning that treating a
+ * missing answer as a pass is how a validator stops validating. Google
+ * documents empty as "not submitted for verification": USPS did not say no,
+ * it did not run. Blocking on it refused our own office address, because
+ * Google standardises 6668 U.S. 98 into a form DPV never ran against, and it
+ * would have refused any rep standing at a similar address.
+ *
+ * Unknown lets the mailer through and records it as unverified, which is the
+ * same fail-open rule the outage path uses: block on evidence, never on the
+ * absence of it.
+ */
 stubUsps({ dpvVacant: "N" });
+const noDpv = await checkAddress(ADDRESS);
 check(
-  (await checkAddress(ADDRESS)).verdict === "blocked",
-  "a missing dpvConfirmation is blocked, not assumed good",
+  noDpv.verdict === "unknown",
+  "a missing dpvConfirmation is inconclusive, not a refusal",
+  `got ${noDpv.verdict}`,
+);
+check(
+  noDpv.reachable,
+  "an inconclusive answer still counts as USPS having been reached",
 );
 
 stubUsps({ dpvConfirmation: "D" });
@@ -159,9 +177,24 @@ check(
 );
 
 stubUsps({}); // answered, but said nothing about DPV
+const bare = await checkAddress(ADDRESS);
+check(bare.verdict === "unknown", "an answer with no DPV at all is inconclusive");
+check(bare.reachable, "but it still counts as the API working");
+
+// The distinction the health probe depends on: unreachable is false,
+// answered-but-inconclusive is true. Confusing the two reported a correctly
+// enabled API as broken for a week.
+globalThis.fetch = (async () => {
+  throw new Error("down");
+}) as typeof fetch;
 check(
-  (await checkAddress(ADDRESS)).verdict === "blocked",
-  "an answer with no DPV at all is still blocked",
+  (await checkAddress(ADDRESS)).reachable === false,
+  "an unreachable API is not reachable",
+);
+stubUsps({ dpvConfirmation: "Y" });
+check(
+  (await checkAddress(ADDRESS)).reachable === true,
+  "a working API is reachable",
 );
 
 globalThis.fetch = realFetch;
@@ -243,6 +276,11 @@ check(
 check(
   health.includes("checkAddress"),
   "it probes live rather than just looking at configuration",
+);
+check(
+  /ok: probe\.reachable/.test(health),
+  "the probe grades reachability, not whether one address is mailable",
+  "grading on mailable reported a working API as broken for a week",
 );
 const deployCheck = read("scripts/post-deploy-check.mjs");
 check(

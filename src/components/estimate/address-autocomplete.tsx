@@ -208,7 +208,8 @@ export function AddressAutocomplete({
    */
   function fillSiblings(parts: AddressParts) {
     const form = inputRef.current?.form;
-    if (!form || !parts.state) return;
+    if (!form) return;
+    if (!parts.city && !parts.state && !parts.postal) return;
     const set = (field: string, v: string) => {
       if (!v) return;
       const el = form.elements.namedItem(field);
@@ -226,15 +227,50 @@ export function AddressAutocomplete({
   }
 
   function choose(s: AddressSuggestion) {
-    const parts = parseAddressParts(s.secondary);
     const written = mode === "street" ? s.main : s.description;
     lastQuery.current = written;
     setText(written);
-    if (mode === "street") fillSiblings(parts);
-    onResolved?.(s, parts);
     setOpen(false);
     setSuggestions([]);
     setActive(-1);
+
+    /*
+     * TWO PASSES, BECAUSE AUTOCOMPLETE DOES NOT CARRY A ZIP.
+     *
+     * The secondary line is "Petal, MS, USA". There is no postal code in the
+     * response at all, so parsing it fills city and state and leaves ZIP
+     * empty. Pass one does that immediately, because it costs nothing and the
+     * customer sees two boxes complete themselves under their thumb.
+     *
+     * Pass two asks the geocoder for the ZIP and fills it a moment later. It
+     * is deliberately not awaited before the first fill: a network round trip
+     * between tapping a suggestion and seeing anything happen would read as a
+     * broken tap.
+     */
+    const quick = parseAddressParts(s.secondary);
+    if (mode === "street") fillSiblings(quick);
+    onResolved?.(s, quick);
+
+    void (async () => {
+      try {
+        const res = await fetch("/api/places/resolve", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ address: s.description }),
+        });
+        const data = await res.json();
+        const full: AddressParts = {
+          city: data?.city || quick.city,
+          state: data?.state || quick.state,
+          postal: data?.postal || quick.postal,
+        };
+        if (!full.postal && !full.city) return;
+        if (mode === "street") fillSiblings(full);
+        onResolved?.(s, full);
+      } catch {
+        // The first pass already filled what it could. Nothing to undo.
+      }
+    })();
   }
 
   function onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {

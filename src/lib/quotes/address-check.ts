@@ -49,6 +49,8 @@ export type MailVerdict = "mailable" | "blocked" | "unknown";
 
 export interface AddressCheck {
   verdict: MailVerdict;
+  /** Did USPS answer at all? Separate from what the answer was. */
+  reachable: boolean;
   /** Shown to the rep, so it has to name the fix, not the error. */
   reason: string | null;
   /** USPS's own spelling of the address, when it gave one. */
@@ -59,8 +61,9 @@ export interface AddressCheck {
   carrierRoute: string | null;
 }
 
-const UNKNOWN = (reason: string): AddressCheck => ({
+const UNKNOWN = (reason: string, reachable = false): AddressCheck => ({
   verdict: "unknown",
+  reachable,
   reason,
   standardized: null,
   dpv: null,
@@ -129,7 +132,8 @@ export async function checkAddress(address: string): Promise<AddressCheck> {
     }
     const data = (await res.json()) as { result?: { uspsData?: UspsData } };
     if (!data.result?.uspsData) {
-      return UNKNOWN("USPS had no record either way for this address.");
+      // The API answered, it just had nothing on this address.
+      return UNKNOWN("USPS had no record either way for this address.", true);
     }
     usps = data.result.uspsData;
   } catch {
@@ -141,7 +145,14 @@ export async function checkAddress(address: string): Promise<AddressCheck> {
   const noStat = usps.dpvNoStat === "Y";
   const carrierRoute = usps.carrierRoute ?? null;
   const standardized = formatStandardized(usps);
-  const base = { standardized, dpv: dpv || null, vacant, noStat, carrierRoute };
+  const base = {
+    reachable: true,
+    standardized,
+    dpv: dpv || null,
+    vacant,
+    noStat,
+    carrierRoute,
+  };
 
   const block = (reason: string): AddressCheck => ({
     verdict: "blocked",
@@ -149,9 +160,38 @@ export async function checkAddress(address: string): Promise<AddressCheck> {
     ...base,
   });
 
+  /*
+   * AN EMPTY dpvConfirmation IS NOT A REFUSAL, and treating it as one was a
+   * live bug that refused real mailers.
+   *
+   * This first blocked on `dpv === "N" || dpv === ""`, on the reasoning that
+   * treating a missing answer as a pass is how a validator quietly stops
+   * validating. That reasoning is right about "Y" and wrong about "N". Google
+   * documents an empty value as "the address was not submitted for
+   * verification", which is an INCONCLUSIVE result, not a negative one: USPS
+   * did not say no, it did not run.
+   *
+   * Our own office proved it. 6668 U.S. 98 comes back with USPS data attached
+   * and no dpvConfirmation at all, so the office address of the company
+   * sending the mail was refused. Any address Google standardises oddly, and a
+   * numbered highway is only the obvious case, would have been refused the
+   * same way, in front of a rep standing in the driveway.
+   *
+   * So empty degrades to unknown, on the same principle as an unreachable API:
+   * block on evidence, never on the absence of it. The mailer goes out
+   * recorded as unverified, which is exactly what it is.
+   */
+  if (dpv === "") {
+    return {
+      ...UNKNOWN("USPS did not run a delivery-point check on this address.", true),
+      ...base,
+      verdict: "unknown",
+    };
+  }
+
   // Order matters: report the most specific fixable thing first, because the
   // reason is what the rep reads and acts on.
-  if (dpv === "N" || dpv === "") {
+  if (dpv === "N") {
     return block(
       "USPS does not have this address as a delivery point. This is the one that comes back stamped NO SUCH NUMBER. Check the house number against the mailbox.",
     );
