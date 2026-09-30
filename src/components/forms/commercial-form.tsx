@@ -8,6 +8,7 @@ import { submitLead, type LeadFormState } from "@/lib/actions/lead";
 import { siteConfig } from "@/config/site";
 import { PhoneLink } from "@/components/shared/phone-link";
 import { Button } from "@/components/ui/button";
+import { AddressAutocomplete } from "@/components/estimate/address-autocomplete";
 
 /**
  * Commercial consultation form (PRD §4.2): company, contact name/role,
@@ -228,11 +229,12 @@ export function CommercialForm() {
           </select>
         </Field>
         <Field label="Property address" name="address" optional>
-          <input
+          {/* Fills the City and ZIP boxes below it when a suggestion is
+              chosen. See lead-form for why the street line stays alone. */}
+          <AddressAutocomplete
             id="address"
             name="address"
-            type="text"
-            autoComplete="street-address"
+            mode="street"
             className={inputClass}
             placeholder="123 Hardy St"
           />

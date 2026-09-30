@@ -54,6 +54,7 @@ export function CTASection({
           {siteConfig.links.instantEstimate && (
             <a
               href={siteConfig.links.instantEstimate}
+              data-estimate-cta=""
               onClick={() => fire("instant-estimate")}
               className="inline-flex items-center gap-2 rounded-full border border-steel-500 px-6 py-3 font-semibold text-white transition hover:bg-navy-900"
             >

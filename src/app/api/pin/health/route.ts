@@ -27,20 +27,40 @@ export const dynamic = "force-dynamic";
  * an unauthenticated endpoint should never be a free reconnaissance tool.
  */
 /**
- * One probe against an address USPS has certainly heard of.
+ * Is the validator getting real USPS data back?
  *
- * The White House is used because it is permanent, unambiguous and not a
- * customer of ours. If this comes back anything but mailable, the validator is
- * not doing its job, whatever the reason.
+ * THAT IS THE QUESTION, AND THE FIRST VERSION ASKED A DIFFERENT ONE. It probed
+ * the White House and demanded verdict === "mailable", so it reported the API
+ * as broken for a week after the owner had correctly enabled it. 1600
+ * Pennsylvania Ave sits on a unique ZIP for a government building, and USPS
+ * answers with a DPV record that checkAddress quite rightly refuses to post a
+ * mailer to. The API was working perfectly. The probe was grading it on
+ * whether one unusual building takes mail.
+ *
+ * A decided verdict, mailable OR blocked, means USPS answered with real DPV
+ * data, which is the only thing this needs to know. Only "unknown" means the
+ * validator could not be reached at all, and that is what "not working" means.
+ *
+ * The address is now our own office, which is ordinary, local, receives mail
+ * every day and is already public on this site.
  */
-async function addressCheckWorking(): Promise<boolean> {
+async function addressCheckProbe(): Promise<{ ok: boolean; detail: string }> {
   try {
+    const { address } = siteConfig;
     const probe = await checkAddress(
-      "1600 Pennsylvania Ave NW, Washington, DC 20500",
+      `${address.streetAddress}, ${address.addressLocality}, ${address.addressRegion} ${address.postalCode}`,
     );
-    return probe.verdict === "mailable";
-  } catch {
-    return false;
+    return {
+      ok: probe.verdict !== "unknown",
+      // Enough to tell a disabled API from a restricted key from an address
+      // USPS dislikes, and nothing about any customer.
+      detail:
+        probe.verdict === "unknown"
+          ? (probe.reason ?? "unreachable")
+          : `${probe.verdict}${probe.dpv ? ` dpv=${probe.dpv}` : ""}`,
+    };
+  } catch (error) {
+    return { ok: false, detail: `threw: ${(error as Error).name}` };
   }
 }
 
@@ -84,6 +104,9 @@ export async function GET(request: Request) {
    * which is exactly as often as the answer can change.
    */
   const deep = new URL(request.url).searchParams.get("probe") === "1";
+  const addressProbe = deep
+    ? await addressCheckProbe()
+    : { ok: false, detail: "" };
 
   if (!dbConfigured()) {
     return NextResponse.json(
@@ -165,7 +188,9 @@ export async function GET(request: Request) {
          */
         ...(deep
           ? {
-              addressCheck: await addressCheckWorking(),
+              addressCheck: addressProbe.ok,
+              // Says WHICH failure it is. Guessing cost a week last time.
+              addressCheckDetail: addressProbe.detail,
               autocomplete: await autocompleteWorking(
                 new URL(request.url).origin,
               ),

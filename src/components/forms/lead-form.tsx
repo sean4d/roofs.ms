@@ -8,6 +8,7 @@ import { submitLead, type LeadFormState } from "@/lib/actions/lead";
 import { siteConfig } from "@/config/site";
 import { PhoneLink } from "@/components/shared/phone-link";
 import { Button } from "@/components/ui/button";
+import { AddressAutocomplete } from "@/components/estimate/address-autocomplete";
 
 /**
  * Lead capture form (PRD §8 forms). Two variants:
@@ -275,11 +276,14 @@ export function LeadForm({
           error={state.errors?.address}
           optional={variant === "full"}
         >
-          <input
+          {/* Picking a suggestion also fills the City and ZIP boxes above,
+              so one tap completes three fields. mode="street" keeps the
+              street line here rather than writing the whole formatted
+              address into a box labelled "Street address". */}
+          <AddressAutocomplete
             id="address"
             name="address"
-            type="text"
-            autoComplete="street-address"
+            mode="street"
             required={variant === "short"}
             aria-invalid={state.errors?.address ? true : undefined}
             className={inputClass}

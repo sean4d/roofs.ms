@@ -21,6 +21,7 @@ import { EASE_OUT } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { PhoneLink } from "@/components/shared/phone-link";
 import { Button } from "@/components/ui/button";
+import { AddressAutocomplete } from "@/components/estimate/address-autocomplete";
 
 /**
  * Interactive quote wizard (PRD §13 Phase 8, first mini-project). Six
@@ -240,6 +241,7 @@ export function QuoteWizard() {
           )}
           <a
             href={siteConfig.links.instantEstimate}
+            data-estimate-cta=""
             className="inline-flex items-center gap-1.5 font-semibold text-navy-900 underline-offset-4 hover:underline"
           >
             Want a ballpark right now? Try the instant estimate
@@ -537,11 +539,12 @@ export function QuoteWizard() {
               Property address{" "}
               <span className="font-normal text-slate-400">optional</span>
             </label>
-            <input
+            {/* Same treatment as the other forms: suggestions here fill the
+                wizard's own city and ZIP fields. */}
+            <AddressAutocomplete
               id="address"
               name="address"
-              type="text"
-              autoComplete="street-address"
+              mode="street"
               className={inputClass}
               placeholder="123 Hardy St"
             />

@@ -87,6 +87,10 @@ export function Hero() {
                   It used to be an external Roofr link opened in a new tab. */}
               <Button
                 size="xl"
+                /* The floating rail watches for this. While it is on screen
+                   the rail hides, because two invitations to the same page in
+                   one viewport is just clutter. */
+                data-estimate-cta=""
                 className="w-full bg-white text-primary shadow-lg shadow-navy-950/30 hover:bg-steel-100 sm:w-auto"
                 render={<Link href={siteConfig.links.instantEstimate} />}
                 nativeButton={false}

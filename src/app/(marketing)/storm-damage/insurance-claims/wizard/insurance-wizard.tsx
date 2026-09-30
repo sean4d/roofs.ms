@@ -14,6 +14,7 @@ import {
 import { submitLead, type LeadFormState } from "@/lib/actions/lead";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
+import { AddressAutocomplete } from "@/components/estimate/address-autocomplete";
 
 interface Option {
   value: string;
@@ -344,6 +345,7 @@ export function InsuranceWizard() {
                 name="address"
                 label="Property address"
                 error={state.errors?.address}
+                address
               />
             </div>
           </div>
@@ -436,24 +438,43 @@ function Field({
   type = "text",
   autoComplete,
   error,
+  /** Street address fields get suggestions and fill City and ZIP themselves. */
+  address,
 }: {
   name: string;
   label: string;
   type?: string;
   autoComplete?: string;
   error?: string;
+  address?: boolean;
 }) {
+  const inputClass =
+    "rounded-xl border border-border bg-white px-4 py-2.5 outline-none focus:border-steel-500";
   return (
     <label className="flex flex-col gap-1.5">
       <span className="text-sm font-medium text-navy-900">{label}</span>
-      <input
-        name={name}
-        type={type}
-        autoComplete={autoComplete}
-        required
-        aria-invalid={error ? true : undefined}
-        className="rounded-xl border border-border bg-white px-4 py-2.5 outline-none focus:border-steel-500"
-      />
+      {address ? (
+        <AddressAutocomplete
+          id={name}
+          name={name}
+          mode="street"
+          required
+          aria-invalid={error ? true : undefined}
+          // The shared box draws its own pin icon on the left, so the input
+          // needs room for it. Everything else matches the plain fields.
+          className={`${inputClass} w-full pl-11`}
+          placeholder="123 Hardy St"
+        />
+      ) : (
+        <input
+          name={name}
+          type={type}
+          autoComplete={autoComplete}
+          required
+          aria-invalid={error ? true : undefined}
+          className={inputClass}
+        />
+      )}
       {error && <span className="text-xs text-red-600">{error}</span>}
     </label>
   );

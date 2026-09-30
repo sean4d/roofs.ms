@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Ruler } from "lucide-react";
@@ -13,11 +14,23 @@ import { siteConfig } from "@/config/site";
  * spoken for: StickyMobileCTA owns the full width with Call Now and Free
  * Inspection, and that bar converts. A third button down there would either
  * shrink those two or stack on top of them. The right edge is the one piece of
- * persistent furniture the layout has left, and a vertical tab is how it gets
- * used without stealing reading width: the rail is 40px of a 390px screen and
- * sits over the page gutter rather than over text.
+ * persistent furniture the layout has left.
  *
- * WHAT IT HAS TO STAY CLEAR OF, and how:
+ * IT STANDS DOWN WHILE A REAL BUTTON IS ON SCREEN. The first version was
+ * always visible, so on the homepage it sat there duplicating the big white
+ * "Free Instant Estimate" button in the hero, two feet apart, both going to
+ * the same page (owner, 2026-09-30). A sticky shortcut is for when the thing
+ * it shortcuts has scrolled away. So it watches every element marked
+ * data-estimate-cta and hides while any of them is in view.
+ *
+ * On a page with no such CTA there is nothing to duplicate, so it shows from
+ * the start.
+ *
+ * IT IS DELIBERATELY SMALL. About 46px wide, which is a comfortable thumb
+ * target and roughly a ninth of a 414px screen, and short enough to read as a
+ * tab rather than a panel. It sits over the page gutter, not over text.
+ *
+ * WHAT IT STAYS CLEAR OF, and how:
  *
  *   The bottom bar   bottom is pinned above it: 4rem of bar plus the safe-area
  *                    inset plus a gap, so the two never touch on any handset.
@@ -25,23 +38,67 @@ import { siteConfig } from "@/config/site";
  *                    an open nav dropdown covers the rail rather than fighting
  *                    it.
  *   A notch or a     the right inset is added to its own offset, so on a
- *   curved edge      landscape iPhone it clears the sensor housing instead of
- *                    hiding under it.
- *   Chat widgets     third-party bubbles conventionally sit bottom-right at
- *                    the corner. This sits mid-height on the edge, well above
- *                    the corner a widget would occupy.
+ *   curved edge      landscape iPhone it clears the sensor housing.
+ *   Chat widgets     third-party bubbles conventionally sit in the bottom
+ *                    right corner. This sits mid-height on the edge.
  *
  * DESKTOP DOES NOT GET THIS. Above md the same journey is a real button in the
- * header next to Free Inspection, where people look for it. Showing both would
- * be two invitations to the same place, and the floating one is the weaker of
- * the two on a pointer device.
+ * header next to Free Inspection.
  */
 export function InstantEstimateRail() {
   const pathname = usePathname();
+  /*
+   * Starts hidden, on purpose.
+   *
+   * The observer below decides within a frame of mount. Starting visible would
+   * flash the rail over the hero on every homepage load and then snatch it
+   * away, which is worse than the duplication it exists to fix. Starting
+   * hidden means the only thing anybody ever sees is the fade in.
+   */
+  const [shown, setShown] = useState(false);
 
-  // Never on the tool itself, and never over the internal apps. Offering a
-  // shortcut to the page somebody is already reading is noise, and /pin and
-  // /studio are not marketing surfaces at all.
+  useEffect(() => {
+    const targets = document.querySelectorAll("[data-estimate-cta]");
+    if (targets.length === 0) {
+      // Nothing to duplicate on this page.
+      setShown(true);
+      return;
+    }
+
+    const onScreen = new Set<Element>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) onScreen.add(entry.target);
+          else onScreen.delete(entry.target);
+        }
+        setShown(onScreen.size === 0);
+      },
+      {
+        /*
+         * ASYMMETRIC ON PURPOSE, and the bottom number is the important one.
+         *
+         * Top, -80px: a CTA has to be properly past the top of the screen
+         * before it stops counting, so the rail does not flick back the
+         * instant one pixel of the hero button clears the header.
+         *
+         * Bottom, +240px: the viewport is treated as reaching 240px BELOW the
+         * fold. On a short handset, an iPhone SE at 667px or a 640px Android,
+         * the hero button starts just under the fold, so a strict test said
+         * "no CTA on screen" and showed the rail at the very top of the
+         * homepage. The reader then scrolled down, met the real button, and
+         * watched the rail vanish and come back. Counting a CTA that is about
+         * to arrive as already here removes that entirely.
+         */
+        rootMargin: "-80px 0px 240px 0px",
+        threshold: 0,
+      },
+    );
+    targets.forEach((t) => observer.observe(t));
+    return () => observer.disconnect();
+  }, [pathname]);
+
+  // Never on the tool itself, and never over the internal apps.
   if (
     pathname === siteConfig.links.instantEstimate ||
     pathname.startsWith("/pin") ||
@@ -56,39 +113,33 @@ export function InstantEstimateRail() {
       href={siteConfig.links.instantEstimate}
       data-testid="instant-estimate-rail"
       aria-label="Get a free instant roof estimate"
+      // Out of the tab order and off the screen reader's list while hidden, so
+      // a keyboard or VoiceOver user cannot land on something nobody can see.
+      tabIndex={shown ? undefined : -1}
+      aria-hidden={shown ? undefined : true}
       className={[
-        // Anchored to the right edge, sitting just above the bottom bar.
         "fixed right-0 z-40 md:hidden",
         "bottom-[calc(5.5rem+env(safe-area-inset-bottom,0px))]",
         "mr-[env(safe-area-inset-right,0px)]",
-        // The tab itself: written bottom-to-top, rounded on the left so it
-        // reads as attached to the edge of the screen rather than floating.
-        "flex items-center gap-2 rounded-l-xl bg-primary py-4 pr-1.5 pl-2.5",
-        "text-[13px] font-bold tracking-wide text-primary-foreground",
-        "shadow-[-4px_0_16px_rgb(18_59_99_/_0.28)]",
-        "transition-colors active:bg-navy-700",
-        // Focus has to be visible against the navy, so the ring is offset
-        // outward rather than drawn inside the tab.
+        // Rounded on the left, flush square against the screen edge, so it
+        // reads as attached rather than floating. No transform: a rotate would
+        // take the rounding with it and put the corners against the edge.
+        "flex items-center gap-1.5 rounded-l-lg bg-primary py-2.5 pr-3 pl-4",
+        "text-[11.5px] font-bold tracking-wide text-primary-foreground",
+        "shadow-[-3px_0_12px_rgb(18_59_99_/_0.25)]",
+        "transition-[opacity,transform] duration-300 ease-out",
+        shown
+          ? "translate-x-0 opacity-100"
+          : "pointer-events-none translate-x-full opacity-0",
         "focus-visible:ring-3 focus-visible:ring-steel-500 focus-visible:outline-none",
+        // Somebody who asked not to be moved at gets the state change without
+        // the slide.
+        "motion-reduce:transition-none",
       ].join(" ")}
-      /*
-        NO ROTATE. vertical-rl on its own is the whole effect.
-
-        The first version added transform: rotate(180deg) to make the text read
-        bottom-to-top. It did, and it also turned the box over, which put the
-        rounded-l-xl corners against the screen edge where nobody can see them
-        and left the square corners facing into the page. The tab read as a
-        rectangle someone had shoved half off the screen (owner, 2026-09-30:
-        "looks super weird"). Rounding is a property of the painted box, so a
-        transform on the box takes the rounding with it.
-
-        Without the rotate the text reads top-to-bottom, which is what a right
-        edge tab usually does anyway, and the rounded edge faces the page.
-      */
       style={{ writingMode: "vertical-rl" }}
     >
-      <Ruler className="size-4 -rotate-90" aria-hidden="true" />
-      <span>Free Instant Estimate</span>
+      <Ruler className="size-3.5 -rotate-90" aria-hidden="true" />
+      <span>Instant Estimate</span>
     </Link>
   );
 }

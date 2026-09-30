@@ -16,6 +16,7 @@ import type { DamageIssue, DamageResult } from "@/lib/ai/damage-analyzer";
 import { encodeImages } from "@/lib/image-encode";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
+import { AddressAutocomplete } from "@/components/estimate/address-autocomplete";
 
 const ISSUES: { value: DamageIssue; label: string }[] = [
   { value: "missing-shingles", label: "Missing shingles" },
@@ -196,12 +197,29 @@ export function DamageAnalyzer() {
               onChange={setPostal}
               placeholder="39401"
             />
-            <Field
-              label="Property address"
-              value={address}
-              onChange={setAddress}
-              placeholder="Street address"
-            />
+            {/*
+              Controlled rather than the DOM fill the other forms use: City and
+              ZIP here are React state on inputs with no name attribute, so
+              there is nothing for a form lookup to find. onResolved hands the
+              parsed parts straight to their setters instead.
+            */}
+            <label className="flex flex-col gap-1.5">
+              <span className="text-sm font-medium text-navy-900">
+                Property address
+              </span>
+              <AddressAutocomplete
+                id="damage-address"
+                mode="street"
+                value={address}
+                onChange={setAddress}
+                onResolved={(_s, parts) => {
+                  if (parts.city) setCity(parts.city);
+                  if (parts.postal) setPostal(parts.postal);
+                }}
+                placeholder="Street address"
+                className="w-full rounded-xl border border-border bg-white py-2.5 pr-4 pl-11 outline-none focus:border-steel-500"
+              />
+            </label>
           </div>
           <p className="mt-5 text-sm font-semibold text-navy-900">
             When did it happen?

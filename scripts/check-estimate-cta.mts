@@ -55,6 +55,40 @@ check(
   "rail must stop exactly where the header button starts",
 );
 check(
+  rail.includes("IntersectionObserver") && rail.includes("data-estimate-cta"),
+  "the rail stands down while a real in-page CTA is on screen",
+);
+check(
+  /setShown\(true\)/.test(rail) && /targets\.length === 0/.test(rail),
+  "a page with no in-page CTA still gets the rail",
+);
+check(
+  /useState\(false\)/.test(rail),
+  "it starts hidden, so the homepage never flashes it over the hero",
+);
+check(
+  rail.includes("tabIndex={shown ? undefined : -1}") &&
+    rail.includes("aria-hidden={shown ? undefined : true}"),
+  "a hidden rail is out of the tab order and off the screen reader",
+);
+check(
+  rail.includes("motion-reduce:transition-none"),
+  "the reveal respects prefers-reduced-motion",
+);
+
+// Every CTA the rail is meant to defer to has to carry the marker, or the
+// rail sits on top of a real button and the duplication is back.
+for (const [file, label] of [
+  ["src/components/home/hero.tsx", "the homepage hero"],
+  ["src/components/tools/cta-section.tsx", "the tools CTA strip"],
+  ["src/components/quote/quote-wizard.tsx", "the quote wizard"],
+] as const) {
+  check(
+    read(file).includes("data-estimate-cta"),
+    `${label} is marked so the rail defers to it`,
+  );
+}
+check(
   /className="hidden md:inline-flex"/.test(header),
   "the header button appears from md up",
 );
@@ -202,6 +236,50 @@ check(
 check(
   proxy.includes("includedRegionCodes") && proxy.includes("locationBias"),
   "results are restricted to the US and biased to the service area",
+);
+
+/* ------------------------------------------------------------------ */
+/* 7. Every address field on the site gets suggestions                 */
+/* ------------------------------------------------------------------ */
+console.log("\nEvery address field uses the shared box");
+
+const ADDRESS_FORMS = [
+  ["src/components/forms/lead-form.tsx", "the lead form"],
+  ["src/components/forms/commercial-form.tsx", "the commercial form"],
+  ["src/components/quote/quote-wizard.tsx", "the quote wizard"],
+  [
+    "src/app/(marketing)/storm-damage/insurance-claims/wizard/insurance-wizard.tsx",
+    "the insurance wizard",
+  ],
+  [
+    "src/app/(marketing)/roof-damage-analyzer/damage-analyzer.tsx",
+    "the damage analyzer",
+  ],
+] as const;
+
+for (const [file, label] of ADDRESS_FORMS) {
+  const src = read(file);
+  check(src.includes("AddressAutocomplete"), `${label} uses the shared box`);
+  check(
+    src.includes('mode="street"'),
+    `${label} writes the street line, not the whole formatted address`,
+    "a box labelled Street address should not end up holding the city and ZIP",
+  );
+  // A plain input left behind would be the old field, still there, silently.
+  check(
+    !/<input[^>]*autoComplete="street-address"/.test(src),
+    `${label} has no plain address input left over`,
+  );
+}
+
+check(
+  combobox.includes("parseAddressParts") && combobox.includes("fillSiblings"),
+  "choosing a suggestion fills the form's city, state and ZIP too",
+);
+check(
+  combobox.includes("US_STATES"),
+  "the parser only accepts real US state codes",
+  "without it \"London, UK\" parsed as state UK and overwrote a real field",
 );
 
 console.log(

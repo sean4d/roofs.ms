@@ -4,31 +4,36 @@ import { useEffect, useId, useRef, useState } from "react";
 import { Loader2, MapPin } from "lucide-react";
 
 /**
- * The address box, with suggestions.
+ * The address box, with suggestions. Used by every address field on the site.
  *
- * THE PROBLEM IT SOLVES. The old box was one free-text field that went
- * straight to the geocoder, so a homeowner who typed "123 Main" got nothing
- * and a homeowner who typed their address the way they say it out loud, with
- * no city, often got the wrong town. They had to produce a complete, correctly
- * formatted address before the tool would do anything, which is a strange
- * thing to ask of somebody whose reward for getting it right is a price.
+ * THE PROBLEM IT SOLVES. A free-text address field goes straight to a
+ * geocoder, so "123 Main" returns nothing and an address typed the way people
+ * say it out loud often resolves to the wrong town. Asking somebody to produce
+ * a correctly formatted address before a tool will do anything is a strange
+ * toll to charge, and on the lead forms it meant three separate boxes to fill
+ * in by hand.
  *
- * WHY A COMBOBOX RATHER THAN FOUR FIELDS. Four boxes (street, city, state,
- * ZIP) is the other honest answer and it is what the contact form does, but it
- * is four taps and four keyboards on a phone, and it still lets somebody
- * mistype the ZIP into a different county. Picking a real address off a list
- * is one tap, and what it hands the backend is a complete formatted address
- * that Google has already resolved. The submitted value is still a single
- * string, so /api/instant-estimate is unchanged.
+ * TWO WRITE-BACK MODES, because the forms want different things.
  *
- * TYPING STILL WORKS. Suggestions are an accelerator, never a gate. Somebody
- * on a rural road that Places does not list, or anybody whose suggestions fail
- * to load, can type the address and submit exactly as before.
+ *   "full"   one box holds the whole address. The instant estimator submits a
+ *            single string that the API geocodes, so it needs every part.
+ *   "street" the form has its own city, state and ZIP boxes. This one takes
+ *            the street line and fills the siblings, so picking a suggestion
+ *            completes four fields with one tap. Writing the whole formatted
+ *            address into a box labelled "Street address" would look like a
+ *            bug to anyone reading it back.
  *
- * ACCESSIBILITY. This is a real combobox: aria-expanded, aria-controls,
+ * CONTROLLED OR NOT. The estimator holds its value in React state. The lead
+ * and commercial forms post FormData to a server action and need a real named
+ * input. Pass value/onChange for the first, name for the second.
+ *
+ * TYPING STILL WORKS. Suggestions are an accelerator, never a gate. A rural
+ * address Places has never heard of, a blocked request, a missing key: all
+ * still type and submit exactly as before.
+ *
+ * ACCESSIBILITY. A real combobox: aria-expanded, aria-controls,
  * aria-activedescendant, arrow keys, Enter to choose, Escape to dismiss, and a
- * polite live region so a screen reader hears how many suggestions arrived.
- * The list is mouse, touch and keyboard reachable.
+ * polite live region announcing how many suggestions arrived.
  */
 
 export interface AddressSuggestion {
@@ -38,48 +43,116 @@ export interface AddressSuggestion {
   secondary: string;
 }
 
+export interface AddressParts {
+  city: string;
+  state: string;
+  postal: string;
+}
+
+/**
+ * Pull city, state and ZIP out of the secondary line.
+ *
+ * Places returns it as "Petal, MS 39465, USA" for a US address, which is
+ * stable enough to split on. Anything that does not match that shape returns
+ * empty strings and the sibling fields are left alone, because filling a form
+ * with a wrong guess is worse than not filling it.
+ */
+/*
+ * Real USPS state and territory codes.
+ *
+ * Without this the pattern below accepted any two capital letters, so
+ * "London, UK" parsed as state "UK". The proxy restricts suggestions to the
+ * US so that cannot arrive today, but this function overwrites fields the
+ * customer typed and a bad parse is worse than no parse. The guard costs one
+ * lookup.
+ */
+const US_STATES = new Set(
+  ("AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS " +
+    "MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV " +
+    "WI WY DC AS GU MP PR VI AA AE AP").split(" "),
+);
+
+export function parseAddressParts(secondary: string): AddressParts {
+  const empty = { city: "", state: "", postal: "" };
+  if (!secondary) return empty;
+
+  const bits = secondary
+    .split(",")
+    .map((b) => b.trim())
+    .filter((b) => b && b.toUpperCase() !== "USA" && b !== "US");
+  if (bits.length < 2) return empty;
+
+  // Last chunk is "MS 39465", "MS 39465-1234" or sometimes just "MS".
+  const tail = bits[bits.length - 1];
+  const m = /^([A-Z]{2})(?:\s+(\d{5})(?:-\d{4})?)?$/.exec(tail);
+  if (!m || !US_STATES.has(m[1])) return empty;
+
+  return {
+    city: bits.slice(0, -1).join(", "),
+    state: m[1],
+    postal: m[2] ?? "",
+  };
+}
+
 export function AddressAutocomplete({
+  id,
+  name,
   value,
   onChange,
   onResolved,
-  id,
+  mode = "full",
   required,
+  defaultValue,
+  className,
   placeholder = "Start typing your address",
+  "aria-invalid": ariaInvalid,
 }: {
-  value: string;
-  onChange: (value: string) => void;
-  /** Fired when the customer picks a real address rather than typing one. */
-  onResolved?: (suggestion: AddressSuggestion) => void;
   id: string;
+  /** Set for a FormData form. Omit when value/onChange are supplied. */
+  name?: string;
+  value?: string;
+  onChange?: (value: string) => void;
+  onResolved?: (suggestion: AddressSuggestion, parts: AddressParts) => void;
+  mode?: "full" | "street";
   required?: boolean;
+  defaultValue?: string;
+  className?: string;
   placeholder?: string;
+  "aria-invalid"?: boolean | undefined;
 }) {
+  const controlled = value !== undefined;
+  const [inner, setInner] = useState(defaultValue ?? "");
+  const text = controlled ? value : inner;
+
   const [suggestions, setSuggestions] = useState<AddressSuggestion[]>([]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [active, setActive] = useState(-1);
   const listId = useId();
   const boxRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   /*
    * The text we last asked Google about.
    *
    * Without this, choosing a suggestion sets the input value, the effect below
-   * sees a change, and fires a fresh lookup for the address that was just
-   * chosen: a wasted billed request and a list that reopens under the
-   * customer's thumb the instant they pick something.
+   * sees a change and fires a fresh lookup for the address just chosen: a
+   * wasted billed request and a list that reopens under the customer's thumb.
    */
   const lastQuery = useRef("");
 
+  const setText = (v: string) => {
+    if (controlled) onChange?.(v);
+    else setInner(v);
+  };
+
   useEffect(() => {
-    const q = value.trim();
+    const q = text.trim();
     if (q === lastQuery.current) return;
 
     /*
      * Everything that sets state happens inside the timer, never in the effect
-     * body. Clearing the list synchronously here tripped
-     * react-hooks/set-state-in-effect and, worse, re-rendered on every
-     * keystroke below three characters for no visible benefit. Deleting back
-     * to two characters now simply closes the list when the debounce lands.
+     * body, which keeps react-hooks/set-state-in-effect happy and stops a
+     * re-render on every keystroke below the threshold.
      */
     const controller = new AbortController();
     const timer = setTimeout(async () => {
@@ -102,8 +175,6 @@ export function AddressAutocomplete({
         setActive(-1);
         if (next.length) setOpen(true);
       } catch {
-        // An aborted or failed lookup leaves the customer typing, which is a
-        // working state. Nothing is shown and nothing is broken.
         setSuggestions([]);
       } finally {
         setLoading(false);
@@ -114,10 +185,8 @@ export function AddressAutocomplete({
       clearTimeout(timer);
       controller.abort();
     };
-  }, [value]);
+  }, [text]);
 
-  // Dismiss on an outside tap. On a phone this is how the list gets out of the
-  // way when somebody decides to scroll instead of choose.
   useEffect(() => {
     if (!open) return;
     const onDown = (e: PointerEvent) => {
@@ -129,10 +198,40 @@ export function AddressAutocomplete({
     return () => document.removeEventListener("pointerdown", onDown);
   }, [open]);
 
+  /**
+   * Fill the form's own city, state and ZIP from the chosen suggestion.
+   *
+   * It overwrites rather than only filling blanks, deliberately: the customer
+   * just pointed at a specific building, so the town and ZIP attached to it
+   * are more trustworthy than anything half-typed above. Only fields the form
+   * actually has are touched, and a line that does not parse touches nothing.
+   */
+  function fillSiblings(parts: AddressParts) {
+    const form = inputRef.current?.form;
+    if (!form || !parts.state) return;
+    const set = (field: string, v: string) => {
+      if (!v) return;
+      const el = form.elements.namedItem(field);
+      if (el instanceof HTMLInputElement || el instanceof HTMLSelectElement) {
+        el.value = v;
+        // React-controlled siblings would ignore a raw value assignment, so
+        // announce it the way a user edit would.
+        el.dispatchEvent(new Event("input", { bubbles: true }));
+        el.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    };
+    set("city", parts.city);
+    set("state", parts.state);
+    set("postal", parts.postal);
+  }
+
   function choose(s: AddressSuggestion) {
-    lastQuery.current = s.description;
-    onChange(s.description);
-    onResolved?.(s);
+    const parts = parseAddressParts(s.secondary);
+    const written = mode === "street" ? s.main : s.description;
+    lastQuery.current = written;
+    setText(written);
+    if (mode === "street") fillSiblings(parts);
+    onResolved?.(s, parts);
     setOpen(false);
     setSuggestions([]);
     setActive(-1);
@@ -164,11 +263,13 @@ export function AddressAutocomplete({
         className="pointer-events-none absolute top-1/2 left-3.5 h-5 w-5 -translate-y-1/2 text-slate-400"
       />
       <input
+        ref={inputRef}
         id={id}
+        name={name}
         required={required}
-        value={value}
+        value={text}
         onChange={(e) => {
-          onChange(e.target.value);
+          setText(e.target.value);
           setOpen(true);
         }}
         onFocus={() => suggestions.length > 0 && setOpen(true)}
@@ -179,10 +280,14 @@ export function AddressAutocomplete({
         aria-expanded={open && suggestions.length > 0}
         aria-controls={listId}
         aria-autocomplete="list"
+        aria-invalid={ariaInvalid}
         aria-activedescendant={
           active >= 0 ? `${listId}-option-${active}` : undefined
         }
-        className="w-full rounded-xl border border-slate-300 py-4 pr-11 pl-11 text-base outline-none focus:border-[#123b63] focus:ring-4 focus:ring-[#123b63]/10"
+        className={
+          className ??
+          "w-full rounded-xl border border-slate-300 py-4 pr-11 pl-11 text-base outline-none focus:border-[#123b63] focus:ring-4 focus:ring-[#123b63]/10"
+        }
       />
       {loading && (
         <Loader2
@@ -206,9 +311,9 @@ export function AddressAutocomplete({
               aria-selected={i === active}
               /*
                * pointerdown, not click. On touch a click fires after the input
-               * blurs, and the blur can close the list before the tap lands on
-               * anything. Choosing on pointerdown makes the first tap the one
-               * that counts, which is what a thumb expects.
+               * blurs, and the blur can close the list before the tap lands.
+               * Choosing on pointerdown makes the first tap the one that
+               * counts, which is what a thumb expects.
                */
               onPointerDown={(e) => {
                 e.preventDefault();
@@ -219,8 +324,8 @@ export function AddressAutocomplete({
                 i === active ? "bg-[#123b63]/8" : ""
               }`}
             >
-              {/* 44px+ of tappable height per row, so a thumb on a phone hits
-                  the address it aimed at rather than the one below it. */}
+              {/* 44px+ of tappable height per row, so a thumb hits the address
+                  it aimed at rather than the one below it. */}
               <span className="block text-[15px] leading-tight font-semibold text-slate-900">
                 {s.main}
               </span>
@@ -234,8 +339,6 @@ export function AddressAutocomplete({
         </ul>
       )}
 
-      {/* Announced, not drawn. A sighted user sees the list appear; a screen
-          reader user gets told it did. */}
       <p aria-live="polite" className="sr-only">
         {open && suggestions.length > 0
           ? `${suggestions.length} address ${suggestions.length === 1 ? "suggestion" : "suggestions"} available. Use the arrow keys to review them.`
