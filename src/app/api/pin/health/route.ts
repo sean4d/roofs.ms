@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import { db, dbConfigured } from "@/lib/quotes/db";
 import { checkAddress } from "@/lib/quotes/address-check";
+import { siteConfig } from "@/config/site";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -34,14 +35,56 @@ export const dynamic = "force-dynamic";
  */
 async function addressCheckWorking(): Promise<boolean> {
   try {
-    const probe = await checkAddress("1600 Pennsylvania Ave NW, Washington, DC 20500");
+    const probe = await checkAddress(
+      "1600 Pennsylvania Ave NW, Washington, DC 20500",
+    );
     return probe.verdict === "mailable";
   } catch {
     return false;
   }
 }
 
-export async function GET() {
+/**
+ * One probe at the autocomplete proxy, for the same reason.
+ *
+ * Places Autocomplete is a separate API from Geocoding and has to be enabled
+ * separately on the project. When it is not, the proxy does what it should and
+ * degrades to an empty list, which is indistinguishable on screen from an
+ * address nobody has heard of. This asks it about a street that certainly
+ * exists, so an empty answer means the API, not the address.
+ */
+async function autocompleteWorking(origin: string): Promise<boolean> {
+  try {
+    const res = await fetch(`${origin}/api/places/autocomplete`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ input: "100 Hardy St Hattiesburg" }),
+      cache: "no-store",
+    });
+    if (!res.ok) return false;
+    const data = (await res.json()) as { suggestions?: unknown[] };
+    return (data.suggestions?.length ?? 0) > 0;
+  } catch {
+    return false;
+  }
+}
+
+export async function GET(request: Request) {
+  /*
+   * THE EXPENSIVE CHECKS ARE OPT IN.
+   *
+   * Both probes below call a billed Google API. This endpoint is also the
+   * thing a deploy is polled against and the obvious target for any uptime
+   * monitor somebody adds later, and a probe on every poll would quietly turn
+   * a liveness check into a metered spend: once a minute is over seven hundred
+   * dollars a year to learn something that changes about twice.
+   *
+   * So a plain GET stays free and answers the question it was written for, and
+   * ?probe=1 runs the paid ones. check:deploy asks for them once per deploy,
+   * which is exactly as often as the answer can change.
+   */
+  const deep = new URL(request.url).searchParams.get("probe") === "1";
+
   if (!dbConfigured()) {
     return NextResponse.json(
       { ok: false },
@@ -120,7 +163,14 @@ export async function GET() {
          * known-good address rather than a look at configuration, because the
          * key existing proves nothing about whether the API is enabled for it.
          */
-        addressCheck: await addressCheckWorking(),
+        ...(deep
+          ? {
+              addressCheck: await addressCheckWorking(),
+              autocomplete: await autocompleteWorking(
+                new URL(request.url).origin,
+              ),
+            }
+          : {}),
         // Which commit is actually serving this. Vercel does not expose a
         // build id in the HTML, so without this there is no way to tell from
         // outside whether a push has finished deploying or the old build is

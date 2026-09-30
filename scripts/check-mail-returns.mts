@@ -244,9 +244,16 @@ check(
   health.includes("checkAddress"),
   "it probes live rather than just looking at configuration",
 );
+const deployCheck = read("scripts/post-deploy-check.mjs");
 check(
-  read("scripts/post-deploy-check.mjs").includes('"addressCheck":true'),
+  deployCheck.includes('"addressCheck":true'),
   "the deploy check fails when addresses are going out unverified",
+);
+// The probes are billed, so they are opt in. The deploy check has to actually
+// ask for them or it asserts a field that is never present.
+check(
+  deployCheck.includes("probe=1"),
+  "the deploy check asks for the paid probes explicitly",
 );
 
 console.log(

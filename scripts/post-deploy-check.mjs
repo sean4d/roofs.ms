@@ -115,7 +115,9 @@ console.log(`\nField tool`);
   // call that touched this API was the cross-site POST below, which is refused
   // before any query runs. A gate that fails closed and a gate that works look
   // the same from outside. So this one asks for a real query.
-  const r = await get("/api/pin/health");
+  // probe=1 asks for the paid external-API probes. They are off by default so
+  // that ordinary health polls and any uptime monitor stay free.
+  const r = await get("/api/pin/health?probe=1");
   check(
     r.status === 200 && r.text.includes('"ok":true'),
     "database is reachable from the deployment",
@@ -146,6 +148,17 @@ console.log(`\nField tool`);
     "addresses are checked before a mailer can be requested",
     r.text.includes('"addressCheck"')
       ? "Address Validation API is not answering; mailers go out unverified"
+      : "endpoint too old",
+  );
+  // Same shape of failure, different API. Autocomplete degrading to an empty
+  // list is correct behaviour and indistinguishable on screen from an address
+  // nobody has heard of, so the probe is the only thing that can tell the
+  // homeowner's experience from a switched-off API.
+  check(
+    r.text.includes('"autocomplete":true'),
+    "the instant estimate address box returns suggestions",
+    r.text.includes('"autocomplete"')
+      ? "Places Autocomplete is not answering; customers must type the full address"
       : "endpoint too old",
   );
 }
