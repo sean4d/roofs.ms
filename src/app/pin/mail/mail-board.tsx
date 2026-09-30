@@ -3,11 +3,12 @@
 import { useState } from "react";
 
 import type { MailRow, MailStatus } from "@/lib/quotes/delivery";
+import { RETURN_CODES, type ReturnCode } from "@/lib/quotes/return-codes";
 
 import { QuoteEditor } from "./quote-editor";
 
 /**
- * The three lists, and the two decisions the office makes on each one.
+ * The four lists, and the decisions the office makes on each one.
  *
  * REJECTION IS A FEATURE, not an error path. The office looks at an estimate
  * before it goes in an envelope, and sometimes the measurement is wrong enough
@@ -15,24 +16,35 @@ import { QuoteEditor } from "./quote-editor";
  * is how the rep finds out, and it is the only route by which anybody's
  * estimates get better. So the reason is required, shown back on the rep's own
  * copy of the estimate, and kept.
+ *
+ * RETURNED IS THE FOURTH LIST AND IT ONLY REACHES FROM POSTED. An envelope has
+ * to have gone out before USPS can bring it back, so "Came back" appears on
+ * the posted tab and nowhere else. The reason is picked from the labels USPS
+ * actually prints rather than typed, because the difference between NO SUCH
+ * NUMBER and UNCLAIMED is the difference between a bad address and a bad
+ * afternoon, and free text loses that within a week.
  */
 export function MailBoard({
   requested,
   mailed,
   rejected,
+  returned,
   counts,
 }: {
   requested: MailRow[];
   mailed: MailRow[];
   rejected: MailRow[];
+  returned: MailRow[];
   /** True totals from the whole table, not the length of the capped list. */
   counts: Record<MailStatus, number>;
 }) {
   const [tab, setTab] = useState<MailStatus>("requested");
-  const [rows, setRows] = useState({ requested, mailed, rejected });
+  const [rows, setRows] = useState({ requested, mailed, rejected, returned });
   const [search, setSearch] = useState("");
   const [busy, setBusy] = useState<string | null>(null);
   const [editing, setEditing] = useState<string | null>(null);
+  /** Which posted row is waiting for its return reason to be picked. */
+  const [returning, setReturning] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   /*
    * How far the tab counts have moved since the page loaded.
@@ -46,6 +58,7 @@ export function MailBoard({
     requested: 0,
     mailed: 0,
     rejected: 0,
+    returned: 0,
   });
 
   async function resolve(row: MailRow, action: "mailed" | "rejected") {
@@ -102,6 +115,51 @@ export function MailBoard({
     }
   }
 
+  /**
+   * USPS brought this one back.
+   *
+   * It moves out of Posted, which is the whole point: the posted count was
+   * counting envelopes that left the building rather than envelopes that
+   * arrived, and those differ by exactly the number of rows that end up here.
+   */
+  async function markReturned(row: MailRow, code: ReturnCode) {
+    setBusy(row.quoteId);
+    setError(null);
+    try {
+      const res = await fetch("/api/pin/mail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          quoteId: row.quoteId,
+          action: "returned",
+          returnCode: code,
+          note: `Returned by USPS: ${RETURN_CODES[code]}`,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) {
+        setError(data.error ?? "Could not save that.");
+        return;
+      }
+      const moved: MailRow = {
+        ...row,
+        status: "returned",
+        note: `Returned by USPS: ${RETURN_CODES[code]}`,
+      };
+      setRows((r) => ({
+        ...r,
+        mailed: r.mailed.filter((x) => x.quoteId !== row.quoteId),
+        returned: [moved, ...r.returned],
+      }));
+      setDrift((d) => ({ ...d, mailed: d.mailed - 1, returned: d.returned + 1 }));
+      setReturning(null);
+    } catch {
+      setError("Lost the connection. Try again.");
+    } finally {
+      setBusy(null);
+    }
+  }
+
   const q = search.trim().toLowerCase();
   const list = rows[tab].filter(
     (r) =>
@@ -127,6 +185,7 @@ export function MailBoard({
             ["requested", "To send", counts.requested + drift.requested],
             ["mailed", "Posted", counts.mailed + drift.mailed],
             ["rejected", "Rejected", counts.rejected + drift.rejected],
+            ["returned", "Came back", counts.returned + drift.returned],
           ] as const
         ).map(([key, label, n]) => (
           <button
@@ -174,7 +233,9 @@ export function MailBoard({
         <p className="mt-6 text-sm text-slate-500">
           {tab === "requested"
             ? "Nothing waiting. Reps request a mailer from an estimate."
-            : "Nothing here yet."}
+            : tab === "returned"
+              ? "Nothing has come back. Mark an envelope here when USPS returns it."
+              : "Nothing here yet."}
         </p>
       ) : (
         <ul className="mt-3 space-y-2">
@@ -214,7 +275,7 @@ export function MailBoard({
                         that gets its own line below rather than being read as
                         what happened to this request. */}
                     {r.handledAt && r.status !== "requested"
-                      ? ` · ${r.status === "mailed" ? "posted" : "rejected"} ${new Date(r.handledAt).toLocaleDateString()}${r.handledBy ? ` by ${r.handledBy}` : ""}`
+                      ? ` · ${r.status === "mailed" ? "posted" : r.status === "returned" ? "posted, came back" : "rejected"} ${new Date(r.handledAt).toLocaleDateString()}${r.handledBy ? ` by ${r.handledBy}` : ""}`
                       : ""}
                     {r.emailedAt
                       ? ` · also emailed ${new Date(r.emailedAt).toLocaleDateString()}`
@@ -274,6 +335,20 @@ export function MailBoard({
                   >
                     Print
                   </a>
+                  {/* Only from Posted. USPS cannot hand back an envelope that
+                      never went out, and offering the button anywhere else
+                      would invite a row into a state it cannot honestly be. */}
+                  {tab === "mailed" && (
+                    <button
+                      onClick={() =>
+                        setReturning(returning === r.quoteId ? null : r.quoteId)
+                      }
+                      disabled={busy === r.quoteId}
+                      className="rounded-lg border border-amber-600 px-3 py-2 text-sm font-semibold text-amber-800 disabled:opacity-50"
+                    >
+                      {returning === r.quoteId ? "Close" : "Came back"}
+                    </button>
+                  )}
                   {tab === "requested" && (
                     <>
                       <button
@@ -302,6 +377,41 @@ export function MailBoard({
                   )}
                 </div>
               </div>
+
+              {/*
+                WHAT THE YELLOW LABEL SAID.
+
+                Picked, not typed. These are different problems and the office
+                should not have to remember which words matter: NO SUCH NUMBER
+                means the house number is wrong and the measurement probably
+                was too, NOT DELIVERABLE usually means a PO Box town where the
+                house is real and the mail simply does not go there, and
+                UNCLAIMED is nobody's fault and says nothing about the address.
+                Free text loses that distinction inside a week.
+              */}
+              {returning === r.quoteId && tab === "mailed" && (
+                <div className="mt-3 rounded-lg border border-amber-200 bg-amber-50 p-3">
+                  <p className="text-xs font-semibold text-amber-900">
+                    What did the label say?
+                  </p>
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    {(
+                      Object.entries(RETURN_CODES) as Array<
+                        [ReturnCode, string]
+                      >
+                    ).map(([code, label]) => (
+                      <button
+                        key={code}
+                        onClick={() => markReturned(r, code)}
+                        disabled={busy === r.quoteId}
+                        className="rounded-lg border border-amber-300 bg-white px-2.5 py-1.5 text-xs font-semibold text-amber-900 disabled:opacity-50"
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Only on the queue. Once it is in the post the number is out
                   in the world, and editing it afterwards would make the

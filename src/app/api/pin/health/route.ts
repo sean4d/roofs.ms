@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { db, dbConfigured } from "@/lib/quotes/db";
+import { checkAddress } from "@/lib/quotes/address-check";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -24,6 +25,22 @@ export const dynamic = "force-dynamic";
  * It answers ok or not ok and nothing else. No error text, no host, no schema:
  * an unauthenticated endpoint should never be a free reconnaissance tool.
  */
+/**
+ * One probe against an address USPS has certainly heard of.
+ *
+ * The White House is used because it is permanent, unambiguous and not a
+ * customer of ours. If this comes back anything but mailable, the validator is
+ * not doing its job, whatever the reason.
+ */
+async function addressCheckWorking(): Promise<boolean> {
+  try {
+    const probe = await checkAddress("1600 Pennsylvania Ave NW, Washington, DC 20500");
+    return probe.verdict === "mailable";
+  } catch {
+    return false;
+  }
+}
+
 export async function GET() {
   if (!dbConfigured()) {
     return NextResponse.json(
@@ -55,6 +72,8 @@ export async function GET() {
       ["quotes", "measured_squares"],
       ["quotes", "edited_at"],
       ["quotes", "mail_status"],
+      ["quotes", "mail_return_code"],
+      ["quotes", "mail_check"],
       ["quotes", "emailed_at"],
       ["quotes", "printed_at"],
       ["quotes", "structures"],
@@ -86,6 +105,22 @@ export async function GET() {
          * the key.
          */
         email: Boolean(process.env.RESEND_API_KEY),
+        /**
+         * Is address checking actually switched on?
+         *
+         * THE DANGEROUS FAILURE IS THE QUIET ONE. checkAddress degrades to
+         * "unknown" and lets the mailer through when Google cannot be reached,
+         * which is right: a third party having a bad afternoon must not stop
+         * the office posting anything. But if the Address Validation API was
+         * never enabled on the project, every single call degrades, nothing is
+         * ever blocked, and the board looks exactly like one that is working.
+         * Protection you believe you have and do not is worse than none.
+         *
+         * So the check is published as a boolean. It is a live probe against a
+         * known-good address rather than a look at configuration, because the
+         * key existing proves nothing about whether the API is enabled for it.
+         */
+        addressCheck: await addressCheckWorking(),
         // Which commit is actually serving this. Vercel does not expose a
         // build id in the HTML, so without this there is no way to tell from
         // outside whether a push has finished deploying or the old build is

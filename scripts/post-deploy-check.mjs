@@ -137,6 +137,17 @@ console.log(`\nField tool`);
     "the deployment can send email",
     r.text.includes('"email"') ? r.text.slice(0, 80) : "endpoint too old",
   );
+  // Address checking fails OPEN by design: an unreachable Google must not stop
+  // the office posting anything. That makes "never enabled" and "working" look
+  // identical from the board, so the probe is the only thing that can tell
+  // them apart, and five returned envelopes is what it costs not to.
+  check(
+    r.text.includes('"addressCheck":true'),
+    "addresses are checked before a mailer can be requested",
+    r.text.includes('"addressCheck"')
+      ? "Address Validation API is not answering; mailers go out unverified"
+      : "endpoint too old",
+  );
 }
 {
   // Cross-site POST must be refused, or any page on the internet could make a

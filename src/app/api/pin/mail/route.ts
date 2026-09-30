@@ -4,7 +4,15 @@ import { z } from "zod";
 import { currentUser } from "@/lib/quotes/auth";
 import { sameOrigin } from "@/lib/production/auth";
 import { getProposalForUser } from "@/lib/quotes/save";
-import { requestMail, resolveMail, recordPrinted } from "@/lib/quotes/delivery";
+import {
+  markReturned,
+  recordAddressCheck,
+  recordPrinted,
+  requestMail,
+  resolveMail,
+} from "@/lib/quotes/delivery";
+import { checkAddress } from "@/lib/quotes/address-check";
+import { RETURN_CODES } from "@/lib/quotes/return-codes";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -25,7 +33,11 @@ export const dynamic = "force-dynamic";
 
 const schema = z.object({
   quoteId: z.string().uuid(),
-  action: z.enum(["request", "mailed", "rejected", "printed"]),
+  action: z.enum(["request", "mailed", "rejected", "printed", "returned"]),
+  /** Which yellow label came back. Required on "returned", ignored elsewhere. */
+  returnCode: z
+    .enum(Object.keys(RETURN_CODES) as [string, ...string[]])
+    .optional(),
   /**
    * Why the office would not post it. Shown back to the rep.
    *
@@ -72,8 +84,42 @@ export async function POST(request: Request) {
     }
 
     if (input.action === "request") {
+      /**
+       * THE ADDRESS IS CHECKED HERE AND NOWHERE ELSE.
+       *
+       * This is the single door into the print queue, so it is the only place
+       * that has to hold. Checking on the board instead would mean the rep
+       * hears about a bad address days later, from somebody else, about a
+       * house they are no longer standing in front of.
+       *
+       * A block is a 422 rather than a 400: the request was well formed, the
+       * world just will not accept it. The reason goes back verbatim because
+       * the rep can usually fix it from the driveway by reading the mailbox.
+       */
+      const check = await checkAddress(quote.address);
+      if (check.verdict === "blocked") {
+        await recordAddressCheck(input.quoteId, "blocked", check.reason);
+        return NextResponse.json(
+          {
+            error: check.reason,
+            blocked: true,
+            standardized: check.standardized,
+          },
+          { status: 422 },
+        );
+      }
+
       await requestMail(input.quoteId, user);
-      return NextResponse.json({ ok: true, status: "requested" });
+      // "unknown" is recorded too, and deliberately. In three months the only
+      // way to tell a mailer that went out verified from one that went out
+      // while Google was unreachable is if the row said so at the time.
+      await recordAddressCheck(input.quoteId, check.verdict, check.reason);
+      return NextResponse.json({
+        ok: true,
+        status: "requested",
+        checked: check.verdict,
+        note: check.reason,
+      });
     }
 
     if (user.role !== "admin") {
@@ -82,6 +128,32 @@ export async function POST(request: Request) {
         { status: 403 },
       );
     }
+
+    if (input.action === "returned") {
+      if (!input.returnCode) {
+        return NextResponse.json(
+          { error: "Pick what the label said." },
+          { status: 400 },
+        );
+      }
+      const saved = await markReturned(
+        input.quoteId,
+        input.returnCode as keyof typeof RETURN_CODES,
+        user,
+        input.note?.trim() || null,
+      );
+      if (!saved) {
+        return NextResponse.json(
+          {
+            error:
+              "Returned mail needs the latest database migration. Run it from Settings and try again.",
+          },
+          { status: 503 },
+        );
+      }
+      return NextResponse.json({ ok: true, status: "returned" });
+    }
+
     await resolveMail(
       input.quoteId,
       input.action,

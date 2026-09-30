@@ -305,6 +305,39 @@ ALTER TABLE quotes ADD COLUMN IF NOT EXISTS mail_note         text;
 CREATE INDEX IF NOT EXISTS quotes_mail_queue_idx
   ON quotes (mail_requested_at) WHERE mail_status = 'requested';
 
+-- ---------------------------------------------------------------------------
+-- RETURNED MAIL, AND THE CHECK THAT SHOULD HAVE PREVENTED IT
+--
+-- Five envelopes came back from USPS in September 2026 and there was nowhere
+-- to put them. The board could say an envelope was POSTED and had no way to
+-- ever say it came back, so "Posted 300" counted three hundred envelopes that
+-- left the building rather than three hundred that arrived. Those are not the
+-- same number and only one of them is worth knowing.
+--
+-- 'returned' is therefore a fourth state, reached only from 'mailed', and it
+-- carries the reason off the yellow label because the reasons are different
+-- problems: NO SUCH NUMBER is a bad house number, NOT DELIVERABLE AS ADDRESSED
+-- is usually a PO Box town, UNCLAIMED is nobody's fault at all.
+--
+-- mail_check_* records what the address validator said at the moment the rep
+-- asked, including when it could not be reached. A mailer that went out
+-- unverified because Google was down is a different thing from one that went
+-- out verified, and in three months the only way to tell them apart is if the
+-- row said so at the time.
+-- ---------------------------------------------------------------------------
+ALTER TABLE quotes DROP CONSTRAINT IF EXISTS quotes_mail_status_check;
+ALTER TABLE quotes ADD CONSTRAINT quotes_mail_status_check
+  CHECK (mail_status IN ('requested','mailed','rejected','returned'));
+ALTER TABLE quotes ADD COLUMN IF NOT EXISTS mail_returned_at  timestamptz;
+ALTER TABLE quotes ADD COLUMN IF NOT EXISTS mail_return_code  text;
+ALTER TABLE quotes ADD COLUMN IF NOT EXISTS mail_check        text;
+ALTER TABLE quotes ADD COLUMN IF NOT EXISTS mail_check_note   text;
+
+-- Which roads send mail back. Small table, but this is the one query that
+-- turns five envelopes on a desk into something the canvassing map can use.
+CREATE INDEX IF NOT EXISTS quotes_mail_returned_idx
+  ON quotes (mail_returned_at DESC) WHERE mail_status = 'returned';
+
 -- "Has this homeowner already heard from us?" is asked on every single tap of
 -- the map, before anything is saved, so it has to be cheap. The lookup is by
 -- position, so the index is on the customer's coordinates.

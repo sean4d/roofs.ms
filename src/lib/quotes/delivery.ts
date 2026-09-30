@@ -1,6 +1,7 @@
 import "server-only";
 
 import { db } from "./db";
+import type { ReturnCode } from "./return-codes";
 import type { User } from "./auth";
 
 /**
@@ -25,7 +26,12 @@ import type { User } from "./auth";
  * which anybody's estimates ever get better.
  */
 
-export type MailStatus = "requested" | "mailed" | "rejected";
+export type MailStatus = "requested" | "mailed" | "rejected" | "returned";
+
+// The labels live in their own module so the client-side mail board can import
+// them without pulling this server-only file into the browser bundle.
+export { RETURN_CODES, ADDRESS_FAULT } from "./return-codes";
+export type { ReturnCode } from "./return-codes";
 
 /** What the map says when a rep taps a house we have already contacted. */
 export interface PriorContact {
@@ -552,6 +558,67 @@ export async function resolveMail(
   `;
 }
 
+/**
+ * USPS brought it back.
+ *
+ * THE POSTING IS NOT ERASED. mail_handled_at and mail_handled_by say somebody
+ * in the office really did put that envelope in the post, and that remains
+ * true after it comes back: the return is a later fact about the same
+ * envelope, not a correction of the earlier one. The mail board learned this
+ * the expensive way in September, when re-requesting a mailer wiped the
+ * handling record and the owner watched his counts fall overnight. Adding a
+ * state that destroys history to record history would be the same mistake
+ * wearing a different name.
+ *
+ * sent_via and sent_at are left alone for the same reason. Something was sent.
+ */
+export async function markReturned(
+  quoteId: string,
+  code: ReturnCode,
+  user: User,
+  note: string | null,
+): Promise<boolean> {
+  try {
+    await db()`
+      UPDATE quotes
+         SET mail_status = 'returned',
+             mail_returned_at = now(),
+             mail_return_code = ${code},
+             mail_note = COALESCE(${note}, mail_note),
+             mail_handled_by = COALESCE(mail_handled_by, ${user.id}::uuid)
+       WHERE id = ${quoteId}::uuid
+    `;
+    return true;
+  } catch (error) {
+    // The columns arrive in a hand-applied migration. Saying so beats a 500.
+    console.error("[delivery] markReturned failed, schema is behind", error);
+    return false;
+  }
+}
+
+/**
+ * What the address validator said when the rep asked for this mailer.
+ *
+ * Never fatal. This is a note about the request, not the request itself, and a
+ * rep standing in a driveway should not lose their mailer because a column has
+ * not been added yet.
+ */
+export async function recordAddressCheck(
+  quoteId: string,
+  verdict: string,
+  note: string | null,
+): Promise<void> {
+  try {
+    await db()`
+      UPDATE quotes
+         SET mail_check = ${verdict}, mail_check_note = ${note}
+       WHERE id = ${quoteId}::uuid
+    `;
+  } catch (error) {
+    console.error("[delivery] could not record the address check", error);
+  }
+}
+
 export interface MailRow {
   quoteId: string;
   publicToken: string | null;
@@ -770,6 +837,7 @@ export async function mailCounts(): Promise<Record<MailStatus, number>> {
     requested: new Set(),
     mailed: new Set(),
     rejected: new Set(),
+    returned: new Set(),
   };
   for (const r of rows) {
     const bucket = seen[r.mail_status];
@@ -780,6 +848,7 @@ export async function mailCounts(): Promise<Record<MailStatus, number>> {
     requested: seen.requested.size,
     mailed: seen.mailed.size,
     rejected: seen.rejected.size,
+    returned: seen.returned.size,
   };
 }
 

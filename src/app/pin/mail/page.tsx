@@ -11,9 +11,15 @@ export const dynamic = "force-dynamic";
 /**
  * The office's mail board.
  *
- * Three lists rather than one filtered table, because they are three different
+ * Four lists rather than one filtered table, because they are four different
  * jobs: a queue to work through this morning, a record to search when a
- * homeowner rings, and a pile of estimates that were not good enough to post.
+ * homeowner rings, a pile of estimates that were not good enough to post, and
+ * the envelopes USPS handed back.
+ *
+ * POSTED AND DELIVERED ARE DIFFERENT NUMBERS. Until Returned existed the board
+ * could only say an envelope left the building, so "Posted 300" quietly
+ * counted five that came back. Only one of those two numbers is worth
+ * anything, and it is not the first one.
  *
  * Admin only. A rep can ask for a mailer and can see what happened to their
  * own, but who actually put an envelope in the post is the office's record and
@@ -30,10 +36,11 @@ export default async function MailPage() {
    * tab reading "Posted 300" when the cap is 300 tells the office nothing
    * about how many mailers have actually gone out.
    */
-  const [requested, mailed, rejected, counts] = await Promise.all([
+  const [requested, mailed, rejected, returned, counts] = await Promise.all([
     listMail("requested"),
     listMail("mailed"),
     listMail("rejected"),
+    listMail("returned"),
     mailCounts(),
   ]);
 
@@ -53,6 +60,7 @@ export default async function MailPage() {
             requested={requested}
             mailed={mailed}
             rejected={rejected}
+            returned={returned}
             counts={counts}
           />
         </div>
