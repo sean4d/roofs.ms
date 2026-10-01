@@ -26,28 +26,28 @@ import { siteConfig } from "@/config/site";
  * On a page with no such CTA there is nothing to duplicate, so it shows from
  * the start.
  *
- * A NARROW RIBBON DOWN THE RIGHT EDGE. 44 wide, 300 to 380 tall with the
- * viewport. It was 50 by 175 and read as a short chunky panel; the owner
- * wanted the proportions of the reference ribbons, which are long and thin.
- * It went 45x115 (too cramped to read), 48x190 (too heavy), 46x170, then a
- * version with an asymmetric border-radius, and now this.
+ * A COMPACT TAB ON THE RIGHT EDGE. 44 by 230, and every number in that pair
+ * was argued down from something worse.
  *
- * The radius version was still wrong, and the reason is worth stating: the
- * reference tabs are not rounded rectangles at all. Their left edge curves
- * INWARD at the top and the bottom, so the tab is pinched at its ends and
- * full width through the middle. border-radius cannot express that. It only
- * ever rounds a corner off, convex, away from the shape. A concave scoop is
- * material removed from where a square corner would be, and no combination of
- * radii produces one.
+ * Width went 50, then 48, then 46, then 44. Width is what decides whether the
+ * tab is unobtrusive, because it is the part that sits over the page: 44px of
+ * a 390px screen is a ninth of it.
  *
- * So the silhouette is an SVG path. See the comment on it below. The first slim version was 45 by 115 and the owner called it "too
- * small and weird": at 11.5px the label was hard to read at arm's length, and
- * a short stubby block with a tight corner radius reads as a stray UI chip
- * rather than as part of the page. A tall tab with a generous left radius and
- * type you can actually read is the shape this pattern wants. Width is what
- * keeps it unobtrusive, and 48px of a 414px screen is under an eighth; height
- * is what makes it legible, and height costs nothing because it sits over the
- * page gutter rather than over text.
+ * Height went 115 (too cramped to read at arm's length), 175, 190, then
+ * clamp(300px, 44vh, 380px), which on an iPhone 13 came out 371px around
+ * 141px of icon and label. That is 115px of empty navy above the content and
+ * the same below, and the owner called it a banner. It was one. Height no
+ * longer answers to the viewport at all: 230 is the label plus a deliberate
+ * margin, which is what a shortcut to a tool should be.
+ *
+ * SHAPE, SEPARATELY. One of those rounds used an asymmetric border-radius and
+ * it was still wrong, for a reason worth stating: the reference tabs are not
+ * rounded rectangles. Their left edge curves INWARD at the top and the bottom,
+ * so the tab is pinched at its ends and full width through the middle.
+ * border-radius cannot express that. It only ever rounds a corner off, convex,
+ * away from the shape. A concave scoop is material removed from where a square
+ * corner would be, and no combination of radii produces one. So the silhouette
+ * is an SVG path; see the comment on it below.
  *
  * WHY AN SVG AND NOT clip-path. clip-path: path() would draw the same
  * silhouette, but it takes absolute coordinates that do not follow the
@@ -60,8 +60,9 @@ import { siteConfig } from "@/config/site";
  *
  * WHAT IT STAYS CLEAR OF, and how:
  *
- *   The bottom bar   bottom is pinned above it: 4rem of bar plus the safe-area
- *                    inset plus a gap, so the two never touch on any handset.
+ *   The bottom bar   it is centred rather than pinned above the bar, which at
+ *                    230px tall leaves well over 100px of clearance to it even
+ *                    on a 640px Android.
  *   The header       z-40, one below the header and the bottom bar at z-50, so
  *                    an open nav dropdown covers the rail rather than fighting
  *                    it.
@@ -88,9 +89,25 @@ export function InstantEstimateRail() {
   useEffect(() => {
     const targets = document.querySelectorAll("[data-estimate-cta]");
     if (targets.length === 0) {
-      // Nothing to duplicate on this page.
-      setShown(true);
-      return;
+      /*
+       * Nothing to duplicate on this page, so show it.
+       *
+       * DEFERRED, AND NOT ONLY TO SATISFY react-hooks/set-state-in-effect.
+       * An IntersectionObserver delivers its first callback asynchronously
+       * even when a target is already on screen, so the observed path below
+       * always resolves one tick after mount. Setting state synchronously here
+       * would make this path resolve during the mount commit instead: the same
+       * component would reach its visible state through two different render
+       * sequences depending on the page, which is the kind of difference that
+       * shows up later as a flicker on one page and not the other.
+       */
+      let cancelled = false;
+      queueMicrotask(() => {
+        if (!cancelled) setShown(true);
+      });
+      return () => {
+        cancelled = true;
+      };
     }
 
     const onScreen = new Set<Element>();
@@ -151,9 +168,9 @@ export function InstantEstimateRail() {
 
           It used to sit just over the Call Now / Free Inspection bar. Centred
           it is further from every other piece of furniture on the screen: at
-          175px tall on the shortest handset worth testing, a 640px Android, it
-          spans roughly 233 to 408, which clears the header above and leaves
-          about 170px to the bottom bar below.
+          230px tall on the shortest handset worth testing, a 640px Android, it
+          spans roughly 205 to 435, which clears the header above and leaves
+          about 140px to the bottom bar below.
         */
         "fixed top-1/2 right-0 z-40 -translate-y-1/2 md:hidden",
         "mr-[env(safe-area-inset-right,0px)]",
@@ -173,8 +190,8 @@ export function InstantEstimateRail() {
           containing block the absolute SVG needs, so nothing was gained for
           it either.
         */
-        "flex items-center justify-center gap-2.5",
-        "text-[12px] font-semibold tracking-[0.09em] text-primary-foreground",
+        "flex items-center justify-center gap-2",
+        "text-[12px] font-semibold tracking-[0.02em] text-primary-foreground",
         "transition-[opacity,transform] duration-300 ease-out",
         // translate-x only: the -translate-y-1/2 above is what centres it, and
         // a second translate utility on the same axis would cancel it.
@@ -205,20 +222,28 @@ export function InstantEstimateRail() {
       style={{
         writingMode: "vertical-rl",
         /*
-          HEIGHT IS SET, NOT GROWN FROM THE TEXT.
+          HEIGHT IS SET, AND SET TO FIT THE LABEL.
           
-          A ribbon this long cannot be padded into existence: "Instant
-          Estimate" at 12px is about 100px, so reaching 350 by padding alone
-          would mean 125px of it at each end, and the label would read as a
-          small island marooned in a long bar. Setting the height and centring
-          the content inside it is the honest way round, and it also lets the
-          ribbon answer to the screen: clamp keeps it off the header on a
-          short handset and stops it running the whole side of a tall one.
+          The long version ran clamp(300px, 44vh, 380px), which on an iPhone 13
+          meant 371px holding about 141px of icon and text: 115px of empty
+          navy above it and the same below. The owner called it a banner and
+          he was right. It is a shortcut to a tool, not a feature panel.
+          
+          230 is the label plus a deliberate margin, and the margin is what
+          stops it looking cramped rather than what pads it out to a length.
+          The content lands inside the straight middle section with a few
+          pixels to spare, which matters more here than it looks: the tapers
+          narrow the tab toward the screen edge, so a label that ran into one
+          would have its first or last letter outside the painted shape.
+          
+          No clamp any more. A compact tab has no reason to answer to the
+          viewport, and 230 sits comfortably on the shortest handset worth
+          testing without ever reaching for the header or the bottom bar.
           
           paddingBlock is the only padding left, and it is what sets the
           width: 13 each side plus the ~18px glyph box of 12px type is 44.
         */
-        height: "clamp(300px, 44vh, 380px)",
+        height: "230px",
         paddingBlock: "13px", // across the text: the ribbon's width
       }}
     >
@@ -243,11 +268,11 @@ export function InstantEstimateRail() {
         What it is now, read clockwise from the top:
 
           M44 0            the top point, flush on the screen edge, zero width
-          C44 27 0 27      leaves heading straight DOWN, sweeps left, arrives
-            0 55           heading straight DOWN again: one smooth S
-          V295             the straight run that carries the label
-          C0 323 44 323    the same S mirrored, back into the edge
-            44 350
+          C44 18 0 18      leaves heading straight DOWN, sweeps left, arrives
+            0 36           heading straight DOWN again: one smooth S
+          V194             the straight run that carries the label
+          C0 212 44 212    the same S mirrored, back into the edge
+            44 230
           Z                straight up the right edge and closed
 
         The S comes from the tangents, not the sweep. Both control points of
@@ -256,13 +281,12 @@ export function InstantEstimateRail() {
         section vertically. There is no corner anywhere for a bite to be taken
         out of, and the transition is gradual rather than a quarter turn.
 
-        THE NUMBERS CHANGED, THE CONSTRUCTION DID NOT. The ribbon went from
-        50x175 to 44x350, so the same two curves were restretched on the new
-        grid: each taper is 55 of 350 rather than 44 of 175, dropping from a
-        quarter of the height to a sixth. That is what "the curves should
-        consume only a small portion of the total height" means in practice.
-        Control points stayed directly below their endpoints at the taper's
-        midpoint, which is the only thing that makes the S an S.
+        THE NUMBERS CHANGED, THE CONSTRUCTION DID NOT. 50x175, then 44x350,
+        now 44x230: the same two curves restretched on each new grid, with the
+        taper held at a sixth of the height throughout (36 of 230 here) so the
+        curves keep the same character whatever the tab's length. Control
+        points stay directly below their endpoints at the taper's midpoint,
+        which is the only thing that makes the S an S.
 
         Widest through the middle, tapering into the edge at both ends, which
         is what the reference tabs do.
@@ -271,14 +295,14 @@ export function InstantEstimateRail() {
         traces the taper instead of outlining the rectangle behind it.
       */}
       <svg
-        viewBox="0 0 44 350"
+        viewBox="0 0 44 230"
         preserveAspectRatio="none"
         aria-hidden="true"
         className="absolute inset-0 h-full w-full"
         style={{ filter: "drop-shadow(-2px 0 6px rgb(18 59 99 / 0.22))" }}
       >
         <path
-          d="M44 0 C44 27 0 27 0 55 V295 C0 323 44 323 44 350 Z"
+          d="M44 0 C44 18 0 18 0 36 V194 C0 212 44 212 44 230 Z"
           className="fill-primary"
         />
       </svg>

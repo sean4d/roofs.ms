@@ -117,10 +117,24 @@ check(
   rail.includes("paddingBlock"),
   "the tab's width comes from a logical padding, not py-*/px-*",
 );
+/*
+ * THE HEIGHT IS A SET NUMBER, AND IT IS SMALL.
+ *
+ * Three wrong answers preceded this one. Growing it from padding left the
+ * label marooned in the middle of whatever length the padding happened to
+ * make. Then clamp(300px, 44vh, 380px) tied it to the viewport, which on an
+ * iPhone 13 produced 371px around 141px of icon and label: 115px of empty
+ * navy at each end, and the owner called it a banner.
+ *
+ * So: one number, no viewport term, and short enough that the content fills
+ * it. The ceiling here is what stops the next round of tuning drifting back
+ * toward a banner.
+ */
+const railHeightPx = Number(/height:\s*"(\d+)px"/.exec(rail)?.[1] ?? NaN);
 check(
-  /height:\s*"clamp\(/.test(rail),
-  "the height is set and clamped to the viewport rather than grown from text",
-  "padding alone would leave the label marooned in the middle of a long bar",
+  Number.isFinite(railHeightPx) && railHeightPx <= 260,
+  "the height is one set number, compact rather than viewport-sized",
+  `got ${Number.isFinite(railHeightPx) ? `${railHeightPx}px` : "no plain px height"}; a shortcut to a tool is the label plus a margin`,
 );
 
 /* ---- the silhouette ---- */
@@ -176,6 +190,30 @@ check(
 check(
   railPath.trim().endsWith("Z"),
   "the shape closes along the right edge, which stays straight",
+);
+/*
+ * preserveAspectRatio="none" means the viewBox is stretched to the box, so a
+ * viewBox height that does not match the set height distorts the tapers:
+ * shortening the element without redrawing the path squashes both curves and
+ * the S flattens into the quarter-turn bite this path exists to avoid. The two
+ * numbers have to be changed together, so they are asserted together.
+ */
+const viewBoxHeight = Number(
+  /viewBox="0 0 (\d+) (\d+)"/.exec(rail)?.[2] ?? NaN,
+);
+check(
+  viewBoxHeight === railHeightPx,
+  "the viewBox height matches the set height, so the tapers are not stretched",
+  `viewBox ${viewBoxHeight} against height ${railHeightPx}`,
+);
+// The taper is held at a sixth of the height on every regrid, which is what
+// keeps the curve's character the same whatever length the tab is.
+const taperEnd = Number(/^M44 0 C44 \d+ 0 \d+ 0 (\d+)/.exec(railPath)?.[1] ?? NaN);
+check(
+  Number.isFinite(taperEnd) &&
+    Math.abs(taperEnd / railHeightPx - 1 / 6) < 0.03,
+  "the taper runs about a sixth of the height",
+  `taper ends at ${taperEnd} of ${railHeightPx}`,
 );
 /*
  * `relative` on the anchor is the trap here. It is a position utility, so it
