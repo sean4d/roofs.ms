@@ -26,12 +26,14 @@ import { siteConfig } from "@/config/site";
  * On a page with no such CTA there is nothing to duplicate, so it shows from
  * the start.
  *
- * A COMPACT TAB ON THE RIGHT EDGE. 44 by 230, and every number in that pair
+ * A COMPACT TAB ON THE RIGHT EDGE. 40 by 230, and every number in that pair
  * was argued down from something worse.
  *
- * Width went 50, then 48, then 46, then 44. Width is what decides whether the
- * tab is unobtrusive, because it is the part that sits over the page: 44px of
- * a 390px screen is a ninth of it.
+ * Width went 50, 48, 46, 44, now 40. Width is what decides whether the tab is
+ * unobtrusive, because it is the part that sits over the page rather than over
+ * the gutter: 40px of a 390px screen is under a tenth. Every one of those
+ * steps came out of the padding, never out of the type, which has stayed at
+ * 12px since the 11.5px version was unreadable at arm's length.
  *
  * Height went 115 (too cramped to read at arm's length), 175, 190, then
  * clamp(300px, 44vh, 380px), which on an iPhone 13 came out 371px around
@@ -244,7 +246,23 @@ export function InstantEstimateRail() {
           width: 13 each side plus the ~18px glyph box of 12px type is 44.
         */
         height: "230px",
-        paddingBlock: "13px", // across the text: the ribbon's width
+        /*
+          ACROSS THE TEXT, SO THIS IS THE WIDTH, and it is the only thing that
+          sets it. 11 each side plus the 18px glyph box of 12px type is 40.
+
+          It was 13, for 44. Width is the part of the tab that sits over the
+          page rather than over the gutter, so it is the number that decides
+          whether the thing is unobtrusive, and 40 of a 390px screen is under a
+          tenth. Taking it out of the padding rather than the type leaves the
+          label at 12px with 11px of navy flanking it, which is still clear of
+          both edges.
+
+          CHANGING THIS MEANS CHANGING THE viewBox WIDTH TO MATCH. See the note
+          on the path below: preserveAspectRatio="none" stretches the viewBox to
+          whatever this makes the box, so a stale viewBox squashes the tapers
+          sideways instead of redrawing them.
+        */
+        paddingBlock: "11px",
       }}
     >
       {/*
@@ -267,12 +285,12 @@ export function InstantEstimateRail() {
 
         What it is now, read clockwise from the top:
 
-          M44 0            the top point, flush on the screen edge, zero width
-          C44 18 0 18      leaves heading straight DOWN, sweeps left, arrives
+          M40 0            the top point, flush on the screen edge, zero width
+          C40 18 0 18      leaves heading straight DOWN, sweeps left, arrives
             0 36           heading straight DOWN again: one smooth S
           V194             the straight run that carries the label
-          C0 212 44 212    the same S mirrored, back into the edge
-            44 230
+          C0 212 40 212    the same S mirrored, back into the edge
+            40 230
           Z                straight up the right edge and closed
 
         The S comes from the tangents, not the sweep. Both control points of
@@ -282,11 +300,20 @@ export function InstantEstimateRail() {
         out of, and the transition is gradual rather than a quarter turn.
 
         THE NUMBERS CHANGED, THE CONSTRUCTION DID NOT. 50x175, then 44x350,
-        now 44x230: the same two curves restretched on each new grid, with the
-        taper held at a sixth of the height throughout (36 of 230 here) so the
-        curves keep the same character whatever the tab's length. Control
-        points stay directly below their endpoints at the taper's midpoint,
-        which is the only thing that makes the S an S.
+        then 44x230, now 40x230: the same two curves redrawn on each new grid,
+        with the taper held at a sixth of the height throughout (36 of 230
+        here) so the curves keep the same character whatever the tab's length.
+        Control points stay directly below their endpoints at the taper's
+        midpoint, which is the only thing that makes the S an S.
+
+        REDRAWN, NOT RESTRETCHED, and on the last change that distinction is
+        the whole point. preserveAspectRatio="none" fits the viewBox to the
+        box, so leaving the grid at 44 while the box narrowed to 40 would have
+        squeezed both tapers 9% sideways: the same curve compressed, which is a
+        slightly different curve. Moving the grid with the box keeps the
+        silhouette identical and only makes it thinner. The viewBox width and
+        the paddingBlock above are therefore one number in two places, and the
+        check script asserts they agree.
 
         Widest through the middle, tapering into the edge at both ends, which
         is what the reference tabs do.
@@ -295,14 +322,14 @@ export function InstantEstimateRail() {
         traces the taper instead of outlining the rectangle behind it.
       */}
       <svg
-        viewBox="0 0 44 230"
+        viewBox="0 0 40 230"
         preserveAspectRatio="none"
         aria-hidden="true"
         className="absolute inset-0 h-full w-full"
         style={{ filter: "drop-shadow(-2px 0 6px rgb(18 59 99 / 0.22))" }}
       >
         <path
-          d="M44 0 C44 18 0 18 0 36 V194 C0 212 44 212 44 230 Z"
+          d="M40 0 C40 18 0 18 0 36 V194 C0 212 40 212 40 230 Z"
           className="fill-primary"
         />
       </svg>

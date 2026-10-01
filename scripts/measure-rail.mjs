@@ -64,6 +64,12 @@ for (const [name, width, height] of DEVICES) {
       // How much navy is left over above the icon and below the label.
       padAbove: ir && sr ? Math.round(ir.top - r.top) : null,
       padBelow: sr ? Math.round(r.bottom - sr.bottom) : null,
+      // Across the tab. Narrowing it moves these, and if the two ever stop
+      // matching the label has drifted off the centre line of the silhouette,
+      // which on a shape that tapers is visible.
+      labelW: sr ? Math.round(sr.width * 10) / 10 : null,
+      gapLeft: sr ? Math.round((sr.left - r.left) * 10) / 10 : null,
+      gapRight: sr ? Math.round((r.right - sr.right) * 10) / 10 : null,
     };
   });
 
@@ -74,7 +80,8 @@ for (const [name, width, height] of DEVICES) {
       `${name.padEnd(20)} viewport ${m.vw}x${m.vh}  tab ${m.w}x${m.h}  ` +
         `pos ${m.position} op ${m.opacity}  pad ${m.padding}  font ${m.font}\n` +
         `${" ".repeat(20)} top ${m.top}  bottom-gap ${m.bottom}  right ${m.right}  ` +
-        `label ${m.labelH}px  empty above ${m.padAbove}  empty below ${m.padBelow}`,
+        `label ${m.labelH}px  empty above ${m.padAbove}  empty below ${m.padBelow}\n` +
+        `${" ".repeat(20)} label box ${m.labelW}px wide  navy left ${m.gapLeft}  navy right ${m.gapRight}`,
     );
   }
   await page.close();

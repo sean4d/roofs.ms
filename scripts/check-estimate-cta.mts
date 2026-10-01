@@ -178,8 +178,15 @@ check(
   "no quadratics left in the path",
   "a Q with its control on the corner is how the circular bites were drawn",
 );
+const viewBox = /viewBox="0 0 (\d+) (\d+)"/.exec(rail);
+const viewBoxWidth = Number(viewBox?.[1] ?? NaN);
+const viewBoxHeight = Number(viewBox?.[2] ?? NaN);
+
+// Width is read off the viewBox rather than hardcoded, because the tab has
+// been narrowed four times and a literal here would just be a second place to
+// forget. What matters is that the path agrees with its own grid.
 check(
-  /^M44 0 C/.test(railPath),
+  new RegExp(`^M${viewBoxWidth} 0 C`).test(railPath),
   "the path starts flush on the screen edge and curves immediately",
   "a straight run before the first curve gives the tab a blunt top edge",
 );
@@ -191,24 +198,45 @@ check(
   railPath.trim().endsWith("Z"),
   "the shape closes along the right edge, which stays straight",
 );
-/*
- * preserveAspectRatio="none" means the viewBox is stretched to the box, so a
- * viewBox height that does not match the set height distorts the tapers:
- * shortening the element without redrawing the path squashes both curves and
- * the S flattens into the quarter-turn bite this path exists to avoid. The two
- * numbers have to be changed together, so they are asserted together.
- */
-const viewBoxHeight = Number(
-  /viewBox="0 0 (\d+) (\d+)"/.exec(rail)?.[2] ?? NaN,
+check(
+  railPath.trim().endsWith(`${viewBoxWidth} ${viewBoxHeight} Z`),
+  "the path returns to the far corner of its own grid",
+  "a path that stops short of the viewBox leaves a sliver of unpainted tab",
 );
+
+/*
+ * THE viewBox AND THE BOX ARE ONE SHAPE IN TWO PLACES.
+ *
+ * preserveAspectRatio="none" fits the viewBox to whatever the CSS makes the
+ * box, so a grid that disagrees with the box does not fail, it DISTORTS. A
+ * stale height squashes both tapers vertically and the S flattens into the
+ * quarter-turn bite this path exists to avoid; a stale width squeezes them
+ * sideways into a slightly different curve. Neither shows up as an error
+ * anywhere, which is why both are asserted here.
+ *
+ * Height is set outright, so it compares directly. Width is not: it is the
+ * padding on each side plus the glyph box of the vertical label, which
+ * measures 18px at the 12px type the tab has carried since 11.5px proved
+ * unreadable at arm's length. Change the font size and this needs remeasuring,
+ * which is the point of spelling it out rather than hiding it in a constant.
+ */
 check(
   viewBoxHeight === railHeightPx,
   "the viewBox height matches the set height, so the tapers are not stretched",
   `viewBox ${viewBoxHeight} against height ${railHeightPx}`,
 );
+const GLYPH_BOX = 18;
+const railPadBlock = Number(/paddingBlock:\s*"(\d+)px"/.exec(rail)?.[1] ?? NaN);
+check(
+  viewBoxWidth === railPadBlock * 2 + GLYPH_BOX,
+  "the viewBox width matches the width the padding makes",
+  `viewBox ${viewBoxWidth} against ${railPadBlock}+${GLYPH_BOX}+${railPadBlock} = ${railPadBlock * 2 + GLYPH_BOX}`,
+);
 // The taper is held at a sixth of the height on every regrid, which is what
 // keeps the curve's character the same whatever length the tab is.
-const taperEnd = Number(/^M44 0 C44 \d+ 0 \d+ 0 (\d+)/.exec(railPath)?.[1] ?? NaN);
+const taperEnd = Number(
+  /^M\d+ 0 C\d+ \d+ 0 \d+ 0 (\d+)/.exec(railPath)?.[1] ?? NaN,
+);
 check(
   Number.isFinite(taperEnd) &&
     Math.abs(taperEnd / railHeightPx - 1 / 6) < 0.03,
