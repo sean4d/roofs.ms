@@ -4,6 +4,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { Loader2, MapPin } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { US_STATES } from "@/lib/us-states";
 
 /**
  * The address box, with suggestions. Used by every address field on the site.
@@ -59,21 +60,6 @@ export interface AddressParts {
  * empty strings and the sibling fields are left alone, because filling a form
  * with a wrong guess is worse than not filling it.
  */
-/*
- * Real USPS state and territory codes.
- *
- * Without this the pattern below accepted any two capital letters, so
- * "London, UK" parsed as state "UK". The proxy restricts suggestions to the
- * US so that cannot arrive today, but this function overwrites fields the
- * customer typed and a bad parse is worse than no parse. The guard costs one
- * lookup.
- */
-const US_STATES = new Set(
-  ("AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS " +
-    "MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV " +
-    "WI WY DC AS GU MP PR VI AA AE AP").split(" "),
-);
-
 export function parseAddressParts(secondary: string): AddressParts {
   const empty = { city: "", state: "", postal: "" };
   if (!secondary) return empty;

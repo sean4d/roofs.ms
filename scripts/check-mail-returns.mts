@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 
-import { checkAddress } from "@/lib/quotes/address-check";
+import { checkAddress, splitAddress } from "@/lib/quotes/address-check";
 
 /**
  * Undeliverable addresses must not reach the print queue, and an outage must
@@ -49,27 +49,154 @@ const read = (rel: string) =>
 /* ------------------------------------------------------------------ */
 /* 1. The validator's verdicts, exercised for real                     */
 /* ------------------------------------------------------------------ */
-console.log("\nWhat the validator does with each USPS answer");
-
 // checkAddress reads the key when it is called, not when it is imported, so
 // setting it here is enough. The stubbed fetch below means it never leaves.
 process.env.GOOGLE_MAPS_SERVER_KEY ??= "test-key";
 
 const realFetch = globalThis.fetch;
+/**
+ * The last request body checkAddress sent, so the SHAPE can be asserted.
+ *
+ * Held on an object rather than in a bare `let` because the only assignment
+ * happens inside the stubbed fetch. Control flow analysis cannot see across
+ * that boundary, so a bare variable stays narrowed to `null` at every read
+ * here and every property access below becomes an error on type `never`.
+ */
+interface SentBody {
+  address?: {
+    addressLines?: string[];
+    locality?: string;
+    administrativeArea?: string;
+    postalCode?: string;
+  };
+  enableUspsCass?: boolean;
+}
+const sent: { body: SentBody | null } = { body: null };
+
 function stubUsps(uspsData: Record<string, string> | null, status = 200) {
-  globalThis.fetch = (async () =>
-    new Response(JSON.stringify(uspsData ? { result: { uspsData } } : {}), {
-      status,
-      headers: { "Content-Type": "application/json" },
-    })) as typeof fetch;
+  globalThis.fetch = (async (_url: unknown, init?: RequestInit) => {
+    sent.body = init?.body ? JSON.parse(init.body as string) : null;
+    return new Response(
+      JSON.stringify(uspsData ? { result: { uspsData } } : {}),
+      { status, headers: { "Content-Type": "application/json" } },
+    );
+  }) as typeof fetch;
 }
 
 const ADDRESS = "100 Janesville Rd, Mt. Olive, MS 39119";
+
+/* ------------------------------------------------------------------ */
+/* 0. THE REQUEST SHAPE. This is the bug that made all of section 1    */
+/*    unreachable for five days in production.                         */
+/* ------------------------------------------------------------------ */
+console.log("\nThe question is asked in the form USPS answers");
+
+/*
+ * WHY THIS IS THE FIRST THING CHECKED NOW.
+ *
+ * Every verdict below is downstream of one property of the request body: the
+ * city, state and ZIP have to travel as their OWN fields. Flattened into a
+ * single addressLines entry, the API still returns 200, still sets
+ * cassProcessed: true, still hands back a standardised address and a carrier
+ * route, and omits every dpv* field. checkAddress then sees an empty
+ * dpvConfirmation, correctly calls that inconclusive, and passes the address.
+ *
+ * Every address. Forever. Thirteen envelopes came back across September and
+ * early October while the deploy check reported addressCheck: true, because
+ * nothing anywhere asserted that USPS had actually been asked anything.
+ *
+ * Measured on those thirteen: one line caught 0, split caught 9.
+ */
+stubUsps({ dpvConfirmation: "Y" });
+await checkAddress(ADDRESS);
+const asked = sent.body?.address;
+const lines = asked?.addressLines ?? [];
+check(
+  lines.length === 1 && !lines[0].includes(","),
+  "the street line travels alone, with no city or state glued to it",
+  `sent ${JSON.stringify(lines)}`,
+);
+check(
+  asked?.locality === "Mt. Olive" &&
+    asked?.administrativeArea === "MS" &&
+    asked?.postalCode === "39119",
+  "city, state and ZIP travel as their own fields, which is what runs DPV",
+  `sent ${JSON.stringify(asked)}`,
+);
+check(
+  sent.body?.enableUspsCass === true,
+  "CASS is requested, which is what makes uspsData come back at all",
+);
+
+// The splitter is the thing standing between a stored address string and that
+// request, so its failure modes matter as much as its successes.
+check(
+  splitAddress("505 E Bond Ave, Wiggins, MS 39577")?.street === "505 E Bond Ave",
+  "a plain address splits into street, city, state and ZIP",
+);
+check(
+  splitAddress("6668 US 98, Suite F, Hattiesburg, MS 39402")?.street ===
+    "6668 US 98, Suite F",
+  "a secondary line stays with the street rather than being read as the city",
+  "splitting on the last two commas would have sent USPS 'Suite F' as the city",
+);
+check(
+  splitAddress("505 E Bond Ave, Wiggins, MS 39577-3416")?.zip === "39577",
+  "a ZIP+4 is accepted and the five-digit ZIP is sent",
+);
+check(
+  splitAddress("1 Main St, Springfield, XX 12345") === null,
+  "a two-letter tail that is not a real state refuses to parse",
+  "without the guard 'London, UK' parses as state UK and USPS is asked about the wrong place",
+);
+check(
+  splitAddress("just a street line") === null,
+  "an unsplittable address returns null rather than a guess",
+);
+// And an unsplittable address must still be SENT, degrading honestly.
+stubUsps({ carrierRoute: "R001" });
+const unsplittable = await checkAddress("PO Box 12 Rural Route 3");
+check(
+  unsplittable.verdict === "unknown" && !unsplittable.dpvRan,
+  "an address that cannot be split reports that DPV did not run",
+  "silently passing it is exactly how the original bug stayed invisible",
+);
+
+/* ------------------------------------------------------------------ */
+/* 1. The validator's verdicts, exercised for real                     */
+/* ------------------------------------------------------------------ */
+console.log("\nWhat the validator does with each USPS answer");
 
 stubUsps({ dpvConfirmation: "Y", dpvVacant: "N", dpvNoStat: "N" });
 check(
   (await checkAddress(ADDRESS)).verdict === "mailable",
   "a confirmed, occupied, active address is mailable",
+);
+
+/*
+ * THROWBACK: the one that no other rule catches.
+ *
+ * USPS carries this street address's mail to a PO Box. The house is confirmed,
+ * occupied and on an active route, so dpvConfirmation is Y, dpvNoStat is N,
+ * dpvVacant is N and every other test here passes. Nothing reaches the door.
+ *
+ * 431 Iowa St in Wiggins came back NO SUCH NUMBER with exactly that profile.
+ */
+stubUsps({
+  dpvConfirmation: "Y",
+  dpvVacant: "N",
+  dpvNoStat: "N",
+  dpvThrowback: "Y",
+});
+const thrown = await checkAddress(ADDRESS);
+check(
+  thrown.verdict === "blocked",
+  "a throwback address is blocked, though every other flag is clean",
+  `got ${thrown.verdict}`,
+);
+check(
+  Boolean(thrown.reason?.toLowerCase().includes("po box")),
+  "the throwback reason tells the rep to ask for the box number",
 );
 
 // NO SUCH NUMBER: two of the five envelopes.
@@ -277,10 +404,28 @@ check(
   health.includes("checkAddress"),
   "it probes live rather than just looking at configuration",
 );
+/*
+ * WHAT THE PROBE GRADES, which has now been wrong twice in opposite
+ * directions, so both failures are pinned here.
+ *
+ * Grading verdict === "mailable" reported a working API as broken for a week,
+ * because the probe address was a government building USPS will not take mail
+ * at. Grading probe.reachable then reported a BROKEN validator as healthy for
+ * five days, because a malformed request returns a perfectly good 200.
+ *
+ * reachable AND dpvRan is the pair that separates the three states that
+ * matter: cannot reach USPS, reached USPS but asked it nothing, asked properly
+ * and got an answer. Only the third is working.
+ */
 check(
-  /ok: probe\.reachable/.test(health),
-  "the probe grades reachability, not whether one address is mailable",
-  "grading on mailable reported a working API as broken for a week",
+  /ok: probe\.reachable && probe\.dpvRan/.test(health),
+  "the probe grades that USPS actually ran a delivery point check",
+  "a 200 proves the request succeeded, not that anything was validated",
+);
+check(
+  !/siteConfig\.address/.test(health.slice(0, health.indexOf("autocompleteProbe"))),
+  "the probe does not use our own office, whose DPV is legitimately empty",
+  "an address that never returns DPV cannot detect a request that never asks for it",
 );
 const deployCheck = read("scripts/post-deploy-check.mjs");
 check(

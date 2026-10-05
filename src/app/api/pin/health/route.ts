@@ -27,39 +27,59 @@ export const dynamic = "force-dynamic";
  * an unauthenticated endpoint should never be a free reconnaissance tool.
  */
 /**
- * Is the validator getting real USPS data back?
+ * Did the DELIVERY POINT CHECK RUN? Not "did the request succeed".
  *
- * THAT IS THE QUESTION, AND THE FIRST VERSION ASKED A DIFFERENT ONE. It probed
- * the White House and demanded verdict === "mailable", so it reported the API
- * as broken for a week after the owner had correctly enabled it. 1600
- * Pennsylvania Ave sits on a unique ZIP for a government building, and USPS
- * answers with a DPV record that checkAddress quite rightly refuses to post a
- * mailer to. The API was working perfectly. The probe was grading it on
- * whether one unusual building takes mail.
+ * THREE VERSIONS, AND THE MIDDLE ONE COST THIRTEEN ENVELOPES.
  *
- * A decided verdict, mailable OR blocked, means USPS answered with real DPV
- * data, which is the only thing this needs to know. Only "unknown" means the
- * validator could not be reached at all, and that is what "not working" means.
+ * V1 probed the White House and demanded verdict === "mailable". 1600
+ * Pennsylvania Ave sits on a unique government ZIP that checkAddress quite
+ * rightly refuses to post to, so a working API was reported broken for a week.
+ * Grading on whether one unusual building takes mail was the wrong question.
  *
- * The address is now our own office, which is ordinary, local, receives mail
- * every day and is already public on this site.
+ * V2 therefore graded probe.reachable, and reachable is satisfied by any HTTP
+ * 200. The Address Validation API returns 200, cassProcessed: true, a
+ * standardised address and a carrier route for a MALFORMED request that USPS
+ * never actually runs a delivery point check on. So V2 reported "addressCheck:
+ * true" every single deploy while the validator passed every address it was
+ * ever given, including eight that came back with yellow stickers.
+ *
+ * V3 asks the only question that distinguishes those two states: did a DPV
+ * code come back? That field is absent precisely when the request is shaped
+ * wrong, which is the failure that actually happened and the one no amount of
+ * status-code checking could see.
+ *
+ * WHY NOT THE OFFICE ANY MORE. 6668 U.S. 98 is a genuine empty-DPV address: it
+ * sits on a real rural route, receives mail daily, and USPS returns no
+ * delivery point record for it. That makes it a fine address and a useless
+ * probe, because it cannot tell "DPV did not run" from "DPV has nothing here".
+ * The probe needs somewhere DPV is known to answer, so it uses the university
+ * up the road: local, permanent, and not a customer.
  */
+const PROBE_ADDRESS = {
+  street: "118 College Dr",
+  city: "Hattiesburg",
+  state: "MS",
+  zip: "39406",
+};
+
 async function addressCheckProbe(): Promise<{ ok: boolean; detail: string }> {
   try {
-    const { address } = siteConfig;
-    const probe = await checkAddress(
-      `${address.streetAddress}, ${address.addressLocality}, ${address.addressRegion} ${address.postalCode}`,
-    );
+    const probe = await checkAddress(PROBE_ADDRESS);
     return {
-      // reachable, not the verdict. A blocked address still proves USPS
-      // answered, and so does an inconclusive one.
-      ok: probe.reachable,
-      // Enough to tell a disabled API from a restricted key from an address
-      // USPS dislikes, and nothing about any customer.
-      detail:
-        probe.verdict === "unknown"
-          ? (probe.reason ?? "unreachable")
-          : `${probe.verdict}${probe.dpv ? ` dpv=${probe.dpv}` : ""}`,
+      /*
+        BOTH conditions. reachable alone was V2's mistake; dpvRan alone would
+        call an outage a pass, because an unreachable API returns dpvRan false
+        for the same reason a malformed one does, and the two need different
+        fixes.
+      */
+      ok: probe.reachable && probe.dpvRan,
+      // Enough to tell a disabled API from a restricted key from a request
+      // that is not asking USPS anything, and nothing about any customer.
+      detail: !probe.reachable
+        ? (probe.reason ?? "unreachable")
+        : probe.dpvRan
+          ? `${probe.verdict} dpv=${probe.dpv}`
+          : "reached, but USPS ran no delivery point check: the request is not asking for one",
     };
   } catch (error) {
     return { ok: false, detail: `threw: ${(error as Error).name}` };
