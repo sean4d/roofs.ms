@@ -268,6 +268,12 @@ check(
   "fixing a duplicate by creating one somewhere else is not a fix",
 );
 
+check(
+  upload.includes('if (step === "gbp-mark")'),
+  "a photo published by hand can be recorded in the rotation",
+  "a hand-made repost is a third publisher the cron cannot otherwise see",
+);
+
 console.log(
   failures === 0
     ? "\nAll social checks passed.\n"

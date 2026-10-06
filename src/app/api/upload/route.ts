@@ -53,7 +53,11 @@ import {
   listGbpPosts,
   deleteGbpPost,
 } from "@/lib/gbp";
-import { googleSummary, recordGbpPhotoUse } from "@/lib/gbp-content";
+import {
+  googleSummary,
+  recordGbpPhotoUse,
+  loadState,
+} from "@/lib/gbp-content";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -226,6 +230,7 @@ export async function POST(request: Request) {
     if (step === "metricool-clean") return await handleMetricoolClean(request);
     if (step === "gbp-photo") return await handleGbpPhoto(request);
     if (step === "gbp-posts") return await handleGbpPosts();
+    if (step === "gbp-mark") return await handleGbpMark(request);
     if (step === "gbp-delete") return await handleGbpDelete(request);
     if (step === "gbp") return await handleGbp(request);
     if (step === "gbp-auth") return await handleGbpAuth(request);
@@ -335,6 +340,34 @@ async function handleGbpPosts() {
        */
       mediaUrls: p.mediaUrls,
     })),
+  });
+}
+
+/**
+ * Record photos as already published, without posting anything.
+ *
+ * The weekly rotation only learns about a photo when IT picks one, or now when
+ * a job post uses one. A repost made by hand through step=gbp is a third
+ * publisher, and it was invisible to the rotation the same way job posts used
+ * to be: seven Updates were replaced by hand on 2026-10-06, and without this
+ * the cron would have been free to show all seven of those photos again over
+ * the following weeks. Which is the complaint that started the whole repair.
+ *
+ * Records only. It never posts, so it is safe to run against photos that are
+ * already live.
+ */
+async function handleGbpMark(request: Request) {
+  const { assetIds } = (await request.json()) as { assetIds?: string[] };
+  if (!Array.isArray(assetIds) || assetIds.length === 0) {
+    return Response.json({ error: "assetIds required" }, { status: 400 });
+  }
+  const client = getWriteClient();
+  for (const id of assetIds) await recordGbpPhotoUse(client, id);
+  const state = await loadState(client);
+  return Response.json({
+    ok: true,
+    marked: assetIds.length,
+    usedPhotoIds: (state.usedPhotoIds ?? []).length,
   });
 }
 
