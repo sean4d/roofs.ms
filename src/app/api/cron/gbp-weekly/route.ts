@@ -8,6 +8,7 @@ import {
   generateUpdate,
   loadState,
   nextUnused,
+  roundRobinByJob,
   saveState,
 } from "@/lib/gbp-content";
 
@@ -86,7 +87,19 @@ export async function GET(request: Request) {
     photos = [];
   }
   const finished = photos.filter((p) => p?.assetId && p.phase === "after");
-  const pool = finished.length ? finished : photos.filter((p) => p?.assetId);
+  /*
+   * ROUND ROBIN ACROSS JOBS, not straight through the list.
+   *
+   * The query returns photos grouped by project, and nextUnused takes the
+   * first unused entry, so the rotation used to walk one job's photos end to
+   * end: three consecutive weeks of the same Petal gutter job, then two of one
+   * house, then two of another. No photo ever repeated and the profile still
+   * looked like it had three jobs on it.
+   */
+  const pool = roundRobinByJob(
+    finished.length ? finished : photos.filter((p) => p?.assetId),
+    (p) => p.slug ?? "unknown",
+  );
 
   let imageUrl: string | undefined;
   let photoId: string | undefined;

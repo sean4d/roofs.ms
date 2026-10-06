@@ -53,6 +53,7 @@ import {
   listGbpPosts,
   deleteGbpPost,
 } from "@/lib/gbp";
+import { stripSwipeCue } from "@/lib/gbp-content";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -94,6 +95,59 @@ function jpgUrl(assetId: string): string {
     .width(1200)
     .format("jpg")
     .url();
+}
+
+/**
+ * INSTAGRAM REFUSES MOST OF OUR PHOTOS, and this is why the Bassfield job never
+ * reached the feed: "The aspect ratio is not supported."
+ *
+ * Instagram accepts a feed image only between 4:5 (0.80) and 1.91:1. An iPhone
+ * shoots 3:4, which is 0.75, so EVERY portrait photo a crew takes is rejected.
+ * Seven of the nine Bassfield photos were 1350x1800. The earlier jobs posted
+ * only because those happened to be landscape, which made this look like bad
+ * luck rather than a standing fault: the next portrait-heavy job was always
+ * going to fail the same way.
+ *
+ * CLAMPED, NOT STANDARDISED. The obvious fix is to render every Instagram image
+ * at one ratio, and it is the wrong one. Forcing 4:5 would take 58% of the
+ * width off a wide drone shot; forcing 1:1 takes 44%. Instead each photo keeps
+ * its own framing unless that framing is actually illegal, and then it moves
+ * the minimum distance into range: 0.75 becomes 0.80, a 6% crop, and 1.94
+ * becomes 1.91, a 2% crop. Anything already legal is passed through untouched.
+ *
+ * Only Instagram gets this. Facebook, Google and TikTok take the full frame.
+ *
+ * Dimensions come out of the asset id because Sanity encodes them there
+ * (image-<hash>-1350x1800-jpg), so no extra round trip is needed to know what
+ * we are about to send.
+ */
+const IG_MIN_AR = 0.8;
+const IG_MAX_AR = 1.91;
+
+export function instagramUrl(assetId: string): string {
+  const image = urlFor({
+    _type: "image",
+    asset: { _type: "reference", _ref: assetId },
+  }).format("jpg");
+
+  const dims = /-(\d+)x(\d+)-[a-z]+$/.exec(assetId);
+  if (!dims) return image.width(1200).url();
+
+  const w = Number(dims[1]);
+  const h = Number(dims[2]);
+  const ar = w / h;
+  if (ar >= IG_MIN_AR && ar <= IG_MAX_AR) return image.width(1200).url();
+
+  // Too tall: keep the full width and take height off. Too wide: the reverse.
+  // Rounded to whole pixels, then nudged inward, because a ratio that lands
+  // exactly on the boundary can still fail Instagram's own rounding.
+  const target = ar < IG_MIN_AR ? IG_MIN_AR : IG_MAX_AR;
+  const [outW, outH] =
+    ar < IG_MIN_AR
+      ? [w, Math.floor(w / (target + 0.005))]
+      : [Math.floor(h * (target - 0.005)), h];
+
+  return image.width(outW).height(outH).fit("crop").crop("entropy").url();
 }
 
 /*
@@ -271,6 +325,15 @@ async function handleGbpPosts() {
       createTime: p.createTime,
       summary: (p.summary ?? "").slice(0, 90),
       photos: p.mediaUrls.length,
+      /*
+       * The URLs are returned so a duplicate can actually be FOUND rather than
+       * guessed at by eye. Google rehosts our images on its own CDN, so the
+       * URL tells you nothing about which of our photos it came from and the
+       * only way to match two posts is to fetch both and compare the bytes.
+       * Without this field that was impossible from outside the profile, which
+       * is how the same roof ran three weeks in a row unnoticed.
+       */
+      mediaUrls: p.mediaUrls,
     })),
   });
 }
@@ -1087,7 +1150,12 @@ async function handleSocial(request: Request) {
   if (platform === "facebook" || platform === "instagram") {
     result = await postToMeta(platform, {
       caption,
-      imageUrls,
+      // Instagram refuses anything outside 4:5 to 1.91:1, which is every
+      // portrait phone photo a crew takes. See instagramUrl.
+      imageUrls:
+        platform === "instagram"
+          ? (order ?? []).map((m) => instagramUrl(m.assetId)).filter(Boolean)
+          : imageUrls,
       title,
       projectUrl,
     });
@@ -1103,7 +1171,9 @@ async function handleSocial(request: Request) {
       };
     } else {
       const gbp = await postJobToGbp({
-        summary: caption,
+        // One photo and no swipe gesture, so the carousel's "swipe to see the
+        // before and after" opener has to come off. See stripSwipeCue.
+        summary: stripSwipeCue(caption),
         imageUrls: [heroUrl],
         learnMoreUrl: projectUrl,
       });
@@ -1142,18 +1212,33 @@ async function handleSocial(request: Request) {
 
   /** Replace this platform's row in the syndication log, keeping the others. */
   async function log(status: string, note?: string, url?: string) {
+    const platformName = platform === "google" ? "google-business" : platform;
+    let existing: Array<Record<string, unknown>> | undefined;
+    try {
+      existing = ((await client.getDocument(id)) as ProjectDoc)
+        ?.syndication as Array<Record<string, unknown>> | undefined;
+    } catch {
+      // Fall through: a row that cannot be read is written fresh below.
+    }
+    /*
+     * Carried across the replace, deliberately. The row is replaced rather
+     * than appended so a platform keeps exactly one post, which also means
+     * every previous attempt's history is discarded. The count is the one
+     * thing that has to survive, because it is what stops the daily sweeper
+     * retrying a permanently failing platform forever.
+     */
+    const prior = existing?.find((s) => s.platform === platformName);
     const entry = {
       _key: randomUUID(),
       _type: "syndicationTarget",
-      platform: platform === "google" ? "google-business" : platform,
+      platform: platformName,
       status,
       url,
       note,
+      attempts: (typeof prior?.attempts === "number" ? prior.attempts : 0) + 1,
       postedAt: status === "posted" ? new Date().toISOString() : undefined,
     };
     try {
-      const existing = ((await client.getDocument(id)) as ProjectDoc)
-        ?.syndication as Array<Record<string, unknown>> | undefined;
       const kept = (existing ?? []).filter(
         (s) => s.platform !== entry.platform,
       );

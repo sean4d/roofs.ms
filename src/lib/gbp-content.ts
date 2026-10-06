@@ -72,6 +72,37 @@ export const TOPICS = [
   "what a roof warranty covers, manufacturer versus workmanship",
 ];
 
+/**
+ * Strip a "swipe to see the before and after" opener.
+ *
+ * A Google Business Profile Update carries exactly ONE photo and has no
+ * swipe gesture at all, so a caption that opens by telling the reader to swipe
+ * is instructing them to do something the surface cannot do. Four live posts
+ * did this before the owner caught it (2026-10-06), including one that said
+ * "Swipe to see the before and after!" above a single finished roof.
+ *
+ * TWO DIFFERENT SOURCES, which is why this matches loosely rather than
+ * matching one known string. The carousel builder prepends a fixed template,
+ * and the AI caption writer sometimes produces its own variant despite being
+ * told not to open that way: the Bassfield post had no leading emoji, so it
+ * came from the model, not the template. Anything whose first line is a swipe
+ * instruction goes.
+ *
+ * Only the FIRST line is considered. A sentence in the middle of a caption
+ * that happens to contain the word is left alone, because removing text from
+ * the middle of somebody's copy is a worse failure than leaving it.
+ */
+export function stripSwipeCue(caption: string): string {
+  const [first, ...rest] = caption.split("\n");
+  const isCue =
+    /swipe/i.test(first) &&
+    // A cue is short and is about the photos. A real opening sentence that
+    // merely mentions swiping would not be this terse.
+    first.replace(/[^\p{L}\s]/gu, "").trim().length <= 60;
+  if (!isCue) return caption;
+  return rest.join("\n").replace(/^\s+/, "");
+}
+
 /** Pick the next unused item, falling back to the least recently used. */
 export function nextUnused<T>(
   all: T[],
@@ -91,6 +122,51 @@ export function nextUnused<T>(
     (a, b) => (order.get(key(a)) ?? 0) - (order.get(key(b)) ?? 0),
   );
   return { item: sorted[0], exhausted: true };
+}
+
+/**
+ * Reorder a photo pool so consecutive posts come from DIFFERENT jobs.
+ *
+ * WHY. The rotation already guaranteed no photo repeats until the library is
+ * exhausted, and the owner still saw the same roof week after week (flagged
+ * 2026-10-06). Both things were true at once. nextUnused takes the first
+ * unused entry, and the pool arrived grouped by project, so the rotation
+ * walked a single job's photos end to end before moving on:
+ *
+ *   weeks 1-3   the Petal gutters job, three times
+ *   weeks 4-5   one Hattiesburg roof, twice
+ *   weeks 6-7   one Hattiesburg metal roof, twice
+ *
+ * Seven posts, three houses. "No photo repeats" was satisfied and the profile
+ * still looked like it only had three jobs on it.
+ *
+ * WHAT THIS DOES. One photo from each job, then the next photo from each job,
+ * and so on: a round robin instead of a walk. Thirteen jobs means the same
+ * house cannot come back for thirteen weeks. Jobs contribute in a stable
+ * order, so the sequence is still deterministic and auditable.
+ *
+ * The caller keeps using nextUnused on the result, so the no-repeat guarantee
+ * and the recycling behaviour at the end are unchanged.
+ */
+export function roundRobinByJob<T>(
+  photos: T[],
+  jobKey: (p: T) => string,
+): T[] {
+  const byJob = new Map<string, T[]>();
+  for (const p of photos) {
+    const k = jobKey(p);
+    const list = byJob.get(k);
+    if (list) list.push(p);
+    else byJob.set(k, [p]);
+  }
+  const queues = [...byJob.values()];
+  const out: T[] = [];
+  for (let depth = 0; out.length < photos.length; depth++) {
+    for (const q of queues) {
+      if (depth < q.length) out.push(q[depth]);
+    }
+  }
+  return out;
 }
 
 /**

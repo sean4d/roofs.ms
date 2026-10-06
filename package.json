@@ -19,7 +19,8 @@
     "check:website-quotes": "node --conditions=react-server --import tsx scripts/check-website-quotes.mts",
     "check:mail-returns": "node --conditions=react-server --import tsx scripts/check-mail-returns.mts",
     "check:learn-images": "node --conditions=react-server --import tsx scripts/check-learn-images.mts",
-    "check:estimate-cta": "node --conditions=react-server --import tsx scripts/check-estimate-cta.mts"
+    "check:estimate-cta": "node --conditions=react-server --import tsx scripts/check-estimate-cta.mts",
+    "check:social": "node --conditions=react-server --import tsx scripts/check-social.mts"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",

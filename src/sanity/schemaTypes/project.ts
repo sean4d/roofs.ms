@@ -138,6 +138,14 @@ export const project = defineType({
             { name: "url", type: "url" },
             { name: "postedAt", type: "datetime" },
             { name: "note", type: "string" },
+            /*
+             * How many times this platform has been tried. The daily sweeper
+             * retries a platform that errored, and without a counter a failure
+             * that actually posted (a timeout reported as an error, say) would
+             * be retried every day for a week and publish the job repeatedly.
+             * The counter is what bounds that.
+             */
+            { name: "attempts", type: "number" },
           ],
           preview: { select: { title: "platform", subtitle: "status" } },
         },

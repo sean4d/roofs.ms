@@ -56,12 +56,15 @@ const WINDOW_DAYS = 7;
  *  a clean summary instead of being killed mid-post. */
 const BUDGET_MS = 40_000;
 
+/** Retries before a failing platform is left alone. See the filter below. */
+const MAX_ATTEMPTS = 3;
+
 interface ProjectRow {
   _id: string;
   slug?: string;
   socialCaption?: string;
   media?: Array<{ phase?: string; assetId?: string }>;
-  syndication?: Array<{ platform?: string; status?: string }>;
+  syndication?: Array<{ platform?: string; status?: string; attempts?: number }>;
 }
 
 /**
@@ -102,7 +105,7 @@ export async function GET(request: Request) {
        "slug": slug.current,
        socialCaption,
        "media": media[]{ phase, "assetId": image.asset._ref },
-       "syndication": syndication[]{ platform, status }
+       "syndication": syndication[]{ platform, status, attempts }
      }`,
     { since },
   )) as ProjectRow[];
@@ -112,9 +115,38 @@ export async function GET(request: Request) {
 
   for (const p of projects) {
     const rows = p.syndication ?? [];
-    const missing = PLATFORMS.filter(
-      (k) => !rows.some((r) => r.platform === ROW_NAME[k]),
+    /*
+     * A FAILED PLATFORM IS ALSO UNFINISHED WORK, and this used to miss it.
+     *
+     * The sweeper only looked for platforms with NO row, on the reasoning that
+     * a row means the server was reached and made a decision. True, but a row
+     * saying "error" is a decision that the post did not happen, and nothing
+     * anywhere retried it. The Bassfield job (2026-10-06) logged
+     * instagram / error / "The aspect ratio is not supported" and sat there:
+     * Facebook, Google and TikTok all carried the job, Instagram never did,
+     * and no daily run ever looked at it again.
+     *
+     * So an errored platform is retried, and only three things are left alone:
+     * a post that succeeded, one deliberately skipped (not connected, no
+     * photos), and one already being retried. Retrying an error is safe for
+     * the same reason filling a gap is: the row is replaced, not appended, so
+     * a platform still ends up with exactly one post.
+     */
+    const settled = new Set(
+      rows
+        .filter(
+          (r) =>
+            r.status === "posted" ||
+            r.status === "skipped" ||
+            // Tried enough. An error that actually posted (a timeout reported
+            // as a failure) would otherwise be retried every day for a week
+            // and publish the job over and over, which is the exact complaint
+            // this sweeper is supposed to be helping with.
+            (r.attempts ?? 0) >= MAX_ATTEMPTS,
+        )
+        .map((r) => r.platform),
     );
+    const missing = PLATFORMS.filter((k) => !settled.has(ROW_NAME[k]));
     if (!missing.length) continue;
 
     const PHASES: PhaseKey[] = ["before", "progress", "after"];
