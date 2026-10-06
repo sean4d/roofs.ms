@@ -7,6 +7,7 @@ import {
   TOPICS,
   generateUpdate,
   loadState,
+  matchPhotosToTopic,
   nextUnused,
   roundRobinByJob,
   saveState,
@@ -131,22 +132,6 @@ export async function GET(request: Request) {
     state.usedPhotoIds ?? [],
   );
 
-  let imageUrl: string | undefined;
-  let photoId: string | undefined;
-  let photoCycled = false;
-  if (pool.length) {
-    const picked = nextUnused(pool, state.usedPhotoIds ?? [], (p) => p.assetId);
-    photoCycled = picked.exhausted;
-    photoId = picked.item.assetId;
-    imageUrl = urlFor({
-      _type: "image",
-      asset: { _type: "reference", _ref: photoId },
-    })
-      .width(1200)
-      .format("jpg")
-      .url();
-  }
-
   // ── Copy: evergreen set first, then AI industry updates ───────────────────
   const usedTopics = state.usedTopics ?? [];
   const evergreenKeys = EVERGREEN.map((_, i) => `evergreen:${i}`);
@@ -182,6 +167,41 @@ export async function GET(request: Request) {
     }
   }
 
+  /*
+   * THE PHOTO IS CHOSEN AFTER THE WORDS, and that order is the fix.
+   *
+   * It used to be chosen first, independently, so the 5 October Update
+   * explained black streaks on shingle roofs above a photograph of a brand new
+   * burgundy metal roof. Neither half was wrong. They had never been
+   * introduced.
+   *
+   * matchPhotosToTopic narrows the pool to jobs whose slug matches what the
+   * post is about, and hands the whole pool back when nothing matches, so a
+   * week can never go unposted for want of a themed photo.
+   */
+  const topicText = topicKey.startsWith("ai:") ? topicKey.slice(3) : summary;
+  const relevant = matchPhotosToTopic(pool, topicText, (p) => p.slug ?? "");
+
+  let imageUrl: string | undefined;
+  let photoId: string | undefined;
+  let photoCycled = false;
+  if (relevant.length) {
+    const picked = nextUnused(
+      relevant,
+      state.usedPhotoIds ?? [],
+      (p) => p.assetId,
+    );
+    photoCycled = picked.exhausted;
+    photoId = picked.item.assetId;
+    imageUrl = urlFor({
+      _type: "image",
+      asset: { _type: "reference", _ref: photoId },
+    })
+      .width(1200)
+      .format("jpg")
+      .url();
+  }
+
   if (dryRun) {
     return Response.json({
       ok: true,
@@ -193,6 +213,7 @@ export async function GET(request: Request) {
       imageUrl,
       photoCycled,
       poolSize: pool.length,
+      topicMatchedPool: relevant.length,
       // If this is 1 the grouping has broken again and the rotation is back to
       // walking one job at a time. It read 1 for the whole of the first run.
       jobsInPool: new Set(pool.map((p) => p.slug ?? "unknown")).size,

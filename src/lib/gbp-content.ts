@@ -129,6 +129,45 @@ export function stripSwipeCue(caption: string): string {
   return rest.join("\n").replace(/^\s+/, "");
 }
 
+/**
+ * Narrow the photo pool to jobs that match what the post is about.
+ *
+ * WHY. The topic and the photo were picked independently, so the 5 October
+ * Update explained black streaks on shingle roofs above a photograph of a
+ * brand new burgundy METAL roof. Nothing was wrong with either half. They had
+ * simply never been introduced.
+ *
+ * The match is deliberately coarse, on the job slug, because the slug already
+ * carries the system and product: "gaf-timberline-hdz-shingle-roof-in-hickory",
+ * "29ga-gibraltar-rib-metal-roof-in-burgundy", "seamless-6-k-style-gutters",
+ * "silicone-roof-coating-in-white". No new data to maintain.
+ *
+ * IT NARROWS, IT NEVER EMPTIES. If a topic matches nothing, or matches only
+ * photos already used, the full pool comes back. A relevant photo is better
+ * than an irrelevant one; no photo at all would be worse than both, and a
+ * weekly post that silently stops going out is the kind of failure this file
+ * has produced before.
+ */
+const TOPIC_MATCHERS: Array<{ when: RegExp; job: RegExp }> = [
+  // Order matters: the first match wins, so put the specific before the broad.
+  { when: /gutter|downspout|fascia|soffit/i, job: /gutter|fascia|soffit/i },
+  { when: /\bmetal\b|standing seam|exposed fastener|panel/i, job: /metal/i },
+  { when: /coating|silicone|tpo|epdm|pvc|low.slope|flat roof/i, job: /coating|silicone|tpo|epdm|pvc/i },
+  { when: /storm|hail|wind damage|insurance|adjuster|claim/i, job: /storm|damage|hail|wind/i },
+  { when: /shingle|granule|streak|algae|architectural|3.tab|decking|underlayment|ridge|flashing|valley/i, job: /shingle/i },
+];
+
+export function matchPhotosToTopic<T>(
+  pool: T[],
+  topic: string,
+  jobKey: (p: T) => string,
+): T[] {
+  const rule = TOPIC_MATCHERS.find((m) => m.when.test(topic));
+  if (!rule) return pool;
+  const matched = pool.filter((p) => rule.job.test(jobKey(p)));
+  return matched.length ? matched : pool;
+}
+
 /** Pick the next unused item, falling back to the least recently used. */
 export function nextUnused<T>(
   all: T[],

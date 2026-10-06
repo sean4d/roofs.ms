@@ -1,6 +1,11 @@
 import { readFileSync } from "node:fs";
 
-import { stripSwipeCue, googleSummary, roundRobinByJob } from "@/lib/gbp-content";
+import {
+  stripSwipeCue,
+  googleSummary,
+  roundRobinByJob,
+  matchPhotosToTopic,
+} from "@/lib/gbp-content";
 
 /**
  * The social fan-out tells customers to do things, so it has to be right about
@@ -327,6 +332,70 @@ check(
   upload.includes('if (step === "gbp-mark")'),
   "a photo published by hand can be recorded in the rotation",
   "a hand-made repost is a third publisher the cron cannot otherwise see",
+);
+
+/* ------------------------------------------------------------------ */
+/* 7. The picture is about the same thing as the words                 */
+/* ------------------------------------------------------------------ */
+console.log("\nThe photo matches what the post is about");
+
+const mixed = [
+  { job: "gaf-timberline-hdz-shingle-roof-in-hickory-purvis-ms" },
+  { job: "29ga-gibraltar-rib-metal-roof-in-burgundy-hattiesburg-ms" },
+  { job: "seamless-6-k-style-gutters-in-musket-brown-petal-ms" },
+  { job: "silicone-roof-coating-in-white-lucedale-ms" },
+  { job: "storm-damage-wind-and-missing-shingles-picayune-ms" },
+];
+const only = (topic: string) =>
+  matchPhotosToTopic(mixed, topic, (p) => p.job).map((p) => p.job);
+
+// The post that started this: black streaks are a shingle problem, and it ran
+// above a brand new burgundy metal roof.
+check(
+  only("why black streaks appear on roofs in humid climates").every((j) =>
+    j.includes("shingle"),
+  ),
+  "a shingle topic does not pull a metal roof photo",
+);
+check(
+  only("standing seam versus exposed fastener metal roofing").every((j) =>
+    j.includes("metal"),
+  ),
+  "a metal topic pulls metal jobs",
+);
+check(
+  only("gutter sizing and why 6-inch seamless gutters matter").every((j) =>
+    j.includes("gutter"),
+  ),
+  "a gutter topic pulls the gutter job",
+);
+check(
+  only("commercial low-slope roofing options").every(
+    (j) => j.includes("coating") || j.includes("silicone"),
+  ),
+  "a low-slope topic pulls the coating job",
+);
+// The safety property matters more than any match: a themed photo is better
+// than a random one, and no photo at all is worse than both.
+check(
+  only("what a roof warranty covers, manufacturer versus workmanship").length ===
+    mixed.length,
+  "a topic that matches nothing falls back to the whole pool",
+  "a week must never go unposted for want of a themed photo",
+);
+check(
+  matchPhotosToTopic([], "shingle granules", (p: { job: string }) => p.job)
+    .length === 0,
+  "an empty pool stays empty rather than throwing",
+);
+
+const cron = read("src/app/api/cron/gbp-weekly/route.ts");
+// Anchored on the CALL, not the symbol: the import sits at the top of the
+// file and would always compare as "before".
+check(
+  cron.indexOf("matchPhotosToTopic(pool") > cron.indexOf("let summary: string"),
+  "the photo is chosen after the topic, not before it",
+  "choosing first is what let the words and the picture disagree",
 );
 
 console.log(

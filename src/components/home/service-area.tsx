@@ -2,6 +2,7 @@ import Link from "next/link";
 import { MapPin } from "lucide-react";
 
 import { siteConfig } from "@/config/site";
+import { hasCityPage } from "@/config/service-area-pages";
 import { serviceAreaSection } from "@/content/homepage";
 import { Section } from "@/components/shared/section";
 import { SectionHeading } from "@/components/shared/section-heading";
@@ -15,8 +16,11 @@ import { Button } from "@/components/ui/button";
  * smaller communities follow in geographic order at quieter weight.
  */
 export function ServiceArea() {
-  const hubs = siteConfig.serviceArea.filter((area) => area.hub);
-  const communities = siteConfig.serviceArea.filter((area) => !area.hub);
+  // Only towns with a page. serviceArea is where we WORK, which is not the
+  // same list, and linking the difference publishes links to a 404.
+  const linkable = siteConfig.serviceArea.filter((a) => hasCityPage(a.slug));
+  const hubs = linkable.filter((area) => area.hub);
+  const communities = linkable.filter((area) => !area.hub);
 
   return (
     <Section>

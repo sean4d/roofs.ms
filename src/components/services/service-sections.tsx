@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 import { siteConfig } from "@/config/site";
+import { hasCityPage } from "@/config/service-area-pages";
 import type {
   ProseSection,
   ServiceContent,
@@ -443,8 +444,10 @@ export function ServiceAreaLinks({
   serviceName: string;
   audience?: "residential" | "commercial";
 }) {
-  const hubs = siteConfig.serviceArea.filter((area) => area.hub);
-  const communities = siteConfig.serviceArea.filter((area) => !area.hub);
+  // Only towns with a page. See config/service-area-pages.ts.
+  const linkable = siteConfig.serviceArea.filter((a) => hasCityPage(a.slug));
+  const hubs = linkable.filter((area) => area.hub);
+  const communities = linkable.filter((area) => !area.hub);
   const commercial = audience === "commercial";
 
   return (

@@ -1,14 +1,19 @@
 import type { NextConfig } from "next";
 
 import { siteConfig } from "./src/config/site";
+import { hasCityPage } from "./src/config/service-area-pages";
 
 /** Legacy Wix city URLs (/{city}-services) → new service-area pages. Driven by
  *  the service-area list so every community Google has indexed is covered. */
-const legacyCityRedirects = siteConfig.serviceArea.map((c) => ({
-  source: `/${c.slug}-services`,
-  destination: `/service-areas/${c.slug}`,
-  permanent: true,
-}));
+const legacyCityRedirects = siteConfig.serviceArea
+  // A 301 into a page that does not exist is worse than the 404 it replaced:
+  // Google follows it expecting content and finds none.
+  .filter((c) => hasCityPage(c.slug))
+  .map((c) => ({
+    source: `/${c.slug}-services`,
+    destination: `/service-areas/${c.slug}`,
+    permanent: true,
+  }));
 
 /**
  * Wix concatenated multi-word city names with NO hyphen (e.g.
@@ -18,7 +23,7 @@ const legacyCityRedirects = siteConfig.serviceArea.map((c) => ({
  * URL never existed, and mops up latent 404s before Google finds them.
  */
 const legacyCompactCityRedirects = siteConfig.serviceArea
-  .filter((c) => c.slug.includes("-"))
+  .filter((c) => hasCityPage(c.slug) && c.slug.includes("-"))
   .map((c) => ({
     source: `/${c.slug.replace(/-/g, "")}-services`,
     destination: `/service-areas/${c.slug}`,
