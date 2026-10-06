@@ -177,6 +177,8 @@ export function nextUnused<T>(
 export function roundRobinByJob<T>(
   photos: T[],
   jobKey: (p: T) => string,
+  photoKey?: (p: T) => string,
+  used: string[] = [],
 ): T[] {
   const byJob = new Map<string, T[]>();
   for (const p of photos) {
@@ -185,7 +187,34 @@ export function roundRobinByJob<T>(
     if (list) list.push(p);
     else byJob.set(k, [p]);
   }
-  const queues = [...byJob.values()];
+
+  /*
+   * JOBS GO IN LEAST-RECENTLY-SHOWN ORDER, which is a second, separate thing
+   * from the round robin itself.
+   *
+   * The round robin alone stops the cron showing one job twice in a row. It
+   * does not know what the profile has ALREADY shown, so after seven Updates
+   * were replaced by hand the very next scheduled post would have been the
+   * same Ocean Springs roof that had gone up an hour earlier: a different
+   * photo of it, which is exactly the distinction the owner does not care
+   * about and should not have to.
+   *
+   * Ranking by the most recent use of ANY of a job's photos puts the house
+   * nobody has seen in months at the front and the one from this morning at
+   * the back. Jobs never shown at all rank first, which is what you want from
+   * a profile that is trying to look like it does a lot of work.
+   */
+  const recency = new Map(used.map((id, i) => [id, i]));
+  const lastShown = (job: string): number =>
+    Math.max(
+      -1,
+      ...(byJob.get(job) ?? []).map((p) =>
+        photoKey ? (recency.get(photoKey(p)) ?? -1) : -1,
+      ),
+    );
+  const queues = [...byJob.keys()]
+    .sort((a, b) => lastShown(a) - lastShown(b))
+    .map((k) => byJob.get(k)!);
   const out: T[] = [];
   for (let depth = 0; out.length < photos.length; depth++) {
     for (const q of queues) {

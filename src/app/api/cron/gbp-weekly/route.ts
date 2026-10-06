@@ -99,6 +99,8 @@ export async function GET(request: Request) {
   const pool = roundRobinByJob(
     finished.length ? finished : photos.filter((p) => p?.assetId),
     (p) => p.slug ?? "unknown",
+    (p) => p.assetId,
+    state.usedPhotoIds ?? [],
   );
 
   let imageUrl: string | undefined;

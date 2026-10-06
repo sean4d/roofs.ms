@@ -172,6 +172,36 @@ check(
   `got ${new Set(firstPass).size} distinct`,
 );
 
+/*
+ * And the jobs shown most recently go to the BACK. The round robin alone only
+ * knows about the sequence it is building; it does not know what the profile
+ * has already shown, which is how the next scheduled post lined up behind a
+ * repost of the same house made an hour earlier.
+ */
+const recentlyShown = ["mccomb-0", "leakesville-0"];
+const ranked = roundRobinByJob(
+  pool,
+  (p) => p.job,
+  (p) => p.id,
+  recentlyShown,
+);
+check(
+  ranked[0].job !== "mccomb" && ranked[0].job !== "leakesville",
+  "a job shown recently does not come up first again",
+  `first pick was ${ranked[0].job}`,
+);
+check(
+  ranked[ranked.length - 1].job === "leakesville" ||
+    ranked.slice(-2).some((p) => p.job === "leakesville"),
+  "the most recently shown job sinks to the back of the order",
+  `tail was ${ranked.slice(-2).map((p) => p.job).join(", ")}`,
+);
+check(
+  ranked.length === pool.length &&
+    new Set(ranked.map((p) => p.id)).size === pool.length,
+  "ranking loses and duplicates nothing",
+);
+
 // The old behaviour, asserted as the thing that must not come back.
 const naiveWorst = (() => {
   let worst = 1;
