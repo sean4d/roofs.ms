@@ -27,6 +27,7 @@ const CITIES: MapCity[] = [
   { name: "Sumrall", lat: 31.42, lon: -89.54 },
   { name: "Seminary", lat: 31.56, lon: -89.5 },
   { name: "Collins", lat: 31.65, lon: -89.56 },
+  { name: "Bassfield", lat: 31.5, lon: -89.73 },
   { name: "Ellisville", lat: 31.6, lon: -89.2 },
   { name: "Richton", lat: 31.35, lon: -88.94 },
   { name: "Leakesville", lat: 31.15, lon: -88.56 },

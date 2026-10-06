@@ -445,6 +445,7 @@ export const siteConfig = {
     { city: "Sumrall", slug: "sumrall", tier: 2, hub: false },
     { city: "Seminary", slug: "seminary", tier: 2, hub: false },
     { city: "Collins", slug: "collins", tier: 2, hub: false },
+    { city: "Bassfield", slug: "bassfield", tier: 2, hub: false },
     { city: "Ellisville", slug: "ellisville", tier: 2, hub: false },
     { city: "Richton", slug: "richton", tier: 2, hub: false },
     { city: "Waynesboro", slug: "waynesboro", tier: 2, hub: false },

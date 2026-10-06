@@ -6,6 +6,7 @@ import { ArrowRight, MapPin, Phone } from "lucide-react";
 import { getProjectBySlug, getProjectSlugs } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import { siteConfig } from "@/config/site";
+import { cities } from "@/content/cities";
 import { slugify } from "@/lib/job-content";
 import { buildMetadata } from "@/lib/seo";
 import { breadcrumbSchema } from "@/lib/schema";
@@ -64,9 +65,22 @@ export default async function ProjectDetailPage(
   const process =
     afters.length > 0 ? media.filter((m) => m.phase !== "after") : [];
   const citySlug = project.city ? slugify(project.city) : null;
-  const cityIsServiceArea = siteConfig.serviceArea.some(
-    (c) => c.slug === citySlug,
-  );
+  /*
+   * GATED ON A PAGE THAT EXISTS, NOT ON THE SERVICE AREA.
+   *
+   * This asked siteConfig.serviceArea, which is the list of places we WORK.
+   * The link it guards points at /service-areas/<slug>, which only exists for
+   * the places we have written a city page for. Those two lists have always
+   * been different, and the mismatch was harmless only because every service
+   * area town that had project photos also happened to have a page.
+   *
+   * Adding a town to the service area is also what puts it in the upload
+   * form's city list, so the first Bassfield job uploaded would have published
+   * a project page linking to a 404. Checking the launched pages directly
+   * means a new town can be added to the service area without anyone having to
+   * remember this.
+   */
+  const cityHasPage = cities.some((c) => c.slug === citySlug);
 
   const breadcrumbs = [
     { name: "Home", path: "/" },
@@ -230,7 +244,7 @@ export default async function ProjectDetailPage(
             >
               ← All projects
             </Link>
-            {cityIsServiceArea && citySlug && (
+            {cityHasPage && citySlug && (
               <Link
                 href={`/service-areas/${citySlug}`}
                 className="font-medium text-navy-900 underline underline-offset-4 hover:text-steel-500"
