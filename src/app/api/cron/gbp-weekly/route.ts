@@ -75,14 +75,42 @@ export async function GET(request: Request) {
   // ── Photo: every finished shot we have, oldest project first ──────────────
   // Finished work only. A "before" or a mid-tear-off photo is the wrong thing
   // to lead a business profile with.
+  /*
+   * FLATTENED HERE, NOT IN GROQ, and that is not a style preference.
+   *
+   * This query used to end `[].media[]{ ..., "slug": ^.slug }`, reaching back
+   * to the parent project for the slug after flattening. The parent reference
+   * does not survive that flattening: every row came back with slug: null.
+   *
+   * Nothing failed. The rows were all there, the photos were all correct, and
+   * the one field used to tell one job from another was quietly absent on
+   * every single one. Grouping by it put all 41 photos in a single bucket, so
+   * the round robin that exists to stop the same house running week after week
+   * was a no-op, and so was the ranking on top of it. The symptom was exactly
+   * what it had been before either was written.
+   *
+   * Pulling projects and flattening in TypeScript cannot lose the association,
+   * because the slug never has to travel anywhere.
+   */
+  interface ProjectPhotos {
+    slug?: string;
+    media?: Array<{ phase?: string; assetId?: string }>;
+  }
   let photos: PhotoRow[] = [];
   try {
-    photos = (await client.fetch(
+    const rows = (await client.fetch(
       `*[_type == "project" && defined(media)] | order(_createdAt asc){
          "slug": slug.current,
          "media": media[]{ phase, "assetId": image.asset._ref }
-       }[].media[]{ ..., "slug": ^.slug }`,
-    )) as PhotoRow[];
+       }`,
+    )) as ProjectPhotos[];
+    photos = rows.flatMap((r) =>
+      (r.media ?? [])
+        .filter((m): m is { phase?: string; assetId: string } =>
+          Boolean(m.assetId),
+        )
+        .map((m) => ({ assetId: m.assetId, phase: m.phase, slug: r.slug })),
+    );
   } catch {
     photos = [];
   }
@@ -165,6 +193,9 @@ export async function GET(request: Request) {
       imageUrl,
       photoCycled,
       poolSize: pool.length,
+      // If this is 1 the grouping has broken again and the rotation is back to
+      // walking one job at a time. It read 1 for the whole of the first run.
+      jobsInPool: new Set(pool.map((p) => p.slug ?? "unknown")).size,
       alreadyUsedPhotos: (state.usedPhotoIds ?? []).length,
       postCount: state.postCount ?? 0,
     });

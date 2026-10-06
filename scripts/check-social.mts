@@ -298,6 +298,31 @@ check(
   "fixing a duplicate by creating one somewhere else is not a fix",
 );
 
+/*
+ * The grouping key has to actually arrive. The first version of the round
+ * robin shipped against a query whose slug came back null on every row, so
+ * all 41 photos grouped under one key and the reorder did nothing at all.
+ * Nothing failed; the symptom was simply unchanged.
+ */
+const weekly = read("src/app/api/cron/gbp-weekly/route.ts");
+// Scoped to the GROQ itself: the comment above it explains the trap by name,
+// so grading the whole file would fail on the explanation.
+const groq = /client\.fetch\(\s*`([^`]+)`/.exec(weekly)?.[1] ?? "";
+check(
+  groq.length > 0 && !groq.includes("^."),
+  "the photo query does not reach back to a parent for the slug",
+  "that reference does not survive flattening, and returns null silently",
+);
+check(
+  /photos = rows\.flatMap\(/.test(weekly),
+  "photos are flattened in code, where the slug cannot be lost",
+);
+check(
+  /jobsInPool:/.test(weekly),
+  "the dry run reports how many distinct jobs are in the pool",
+  "a value of 1 means the grouping has broken again",
+);
+
 check(
   upload.includes('if (step === "gbp-mark")'),
   "a photo published by hand can be recorded in the rotation",
