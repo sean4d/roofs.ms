@@ -232,6 +232,22 @@ check(
   "Google rehosts our images, so only the bytes can match two posts",
 );
 
+/* ------------------------------------------------------------------ */
+/* 6. Both photo publishers share one memory                           */
+/* ------------------------------------------------------------------ */
+console.log("\nA job post and the weekly cron cannot pick the same photo");
+
+check(
+  /if \(posted\) await recordGbpPhotoUse\(/.test(upload),
+  "a job's Google post records its photo in the rotation state",
+  "the 24 August Update reran the 8 July gutters photo, byte identical",
+);
+check(
+  upload.includes("const results = gallery ? await uploadGbpPhotos"),
+  "replacing an Update does not also add a second copy to the photo gallery",
+  "fixing a duplicate by creating one somewhere else is not a fix",
+);
+
 console.log(
   failures === 0
     ? "\nAll social checks passed.\n"

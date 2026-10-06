@@ -53,7 +53,7 @@ import {
   listGbpPosts,
   deleteGbpPost,
 } from "@/lib/gbp";
-import { stripSwipeCue } from "@/lib/gbp-content";
+import { stripSwipeCue, recordGbpPhotoUse } from "@/lib/gbp-content";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -554,12 +554,16 @@ async function handleGbp(request: Request) {
     imageUrl,
     summary,
     accountId,
+    gallery = false,
+    learnMoreUrl,
   } = (await request.json().catch(() => ({}))) as {
     test?: boolean;
     id?: string;
     imageUrl?: string;
     summary?: string;
     accountId?: string;
+    gallery?: boolean;
+    learnMoreUrl?: string;
   };
 
   if (!test) {
@@ -613,10 +617,17 @@ async function handleGbp(request: Request) {
         summary ??
         "Southeast Roofing: quality roofing across South Mississippi.",
       imageUrl,
-      learnMoreUrl: `${siteConfig.url}/projects`,
+      learnMoreUrl: learnMoreUrl ?? `${siteConfig.url}/projects`,
     });
-    const gallery = await uploadGbpPhotos([imageUrl]);
-    return Response.json({ ok: true, results: [update, ...gallery] });
+    /*
+     * The profile's PHOTO GALLERY is a separate surface from its Updates, and
+     * pushing to it is now opt in. This used to happen on every call, so
+     * replacing a bad Update (delete, post again) quietly added a second copy
+     * of the image to the gallery each time. Fixing a duplicate by creating a
+     * duplicate somewhere else is not a fix.
+     */
+    const results = gallery ? await uploadGbpPhotos([imageUrl]) : [];
+    return Response.json({ ok: true, results: [update, ...results] });
   }
 
   return Response.json(
@@ -1178,13 +1189,14 @@ async function handleSocial(request: Request) {
         learnMoreUrl: projectUrl,
       });
       const errored = gbp.find((r) => r.status === "error");
+      const posted = gbp.some((r) => r.status === "posted");
+      // Tell the weekly rotation this photo has now been on the profile.
+      // Without it the cron will happily pick the same image again, which is
+      // exactly how the 24 August Update reran the 8 July gutters photo.
+      if (posted) await recordGbpPhotoUse(client, heroAssetId ?? order?.[0]?.assetId);
       result = {
         platform: "google-business",
-        status: gbp.some((r) => r.status === "posted")
-          ? "posted"
-          : errored
-            ? "error"
-            : "skipped",
+        status: posted ? "posted" : errored ? "error" : "skipped",
         note: errored?.note,
       };
     }

@@ -238,6 +238,41 @@ export async function loadState(client: SanityClient): Promise<GbpAutoState> {
   );
 }
 
+/**
+ * Mark a photo as spent WITHOUT consuming a copy slot, for photos the weekly
+ * cron did not choose.
+ *
+ * WHY. Two different things post photos to the profile: this cron, and a job
+ * upload. Only the cron recorded what it used, so the cron was free to pick a
+ * photo a job post had already published. It did: the 24 August evergreen
+ * Update went out with the identical image from the 8 July Petal gutters post,
+ * byte for byte, confirmed by hashing both off Google's CDN.
+ *
+ * The rotation was never wrong about its own history. It just could not see
+ * half of what the profile had already shown.
+ */
+export async function recordGbpPhotoUse(
+  client: SanityClient,
+  photoId: string | undefined,
+): Promise<void> {
+  if (!photoId) return;
+  try {
+    const state = await loadState(client);
+    const used = state.usedPhotoIds ?? [];
+    if (used.includes(photoId)) return;
+    await client.createOrReplace({
+      _id: GBP_STATE_ID,
+      _type: "gbpAuto",
+      usedPhotoIds: [...used, photoId].slice(-400),
+      usedTopics: state.usedTopics ?? [],
+      postCount: state.postCount ?? 0,
+    });
+  } catch {
+    // Best effort. A missed record costs one possible repeat later, which is
+    // not worth failing a post that has already gone out over.
+  }
+}
+
 /** Record what went out, trimming history so the document cannot grow forever. */
 export async function saveState(
   client: SanityClient,
