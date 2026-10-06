@@ -369,6 +369,14 @@ check(
   ),
   "a gutter topic pulls the gutter job",
 );
+// Ventilation names the ridge AND the soffit, so it used to fall through to
+// the gutter rule and illustrate attic airflow with guttering.
+check(
+  only("roof ventilation, ridge vents and soffit intake").every(
+    (j) => j.includes("shingle") || j.includes("metal"),
+  ),
+  "a ventilation topic pulls a roof, not the gutter job",
+);
 check(
   only("commercial low-slope roofing options").every(
     (j) => j.includes("coating") || j.includes("silicone"),

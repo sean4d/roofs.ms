@@ -150,7 +150,19 @@ export function stripSwipeCue(caption: string): string {
  */
 const TOPIC_MATCHERS: Array<{ when: RegExp; job: RegExp }> = [
   // Order matters: the first match wins, so put the specific before the broad.
-  { when: /gutter|downspout|fascia|soffit/i, job: /gutter|fascia|soffit/i },
+  /*
+   * Ventilation goes FIRST and deliberately reads as a roof topic. It names
+   * both the ridge and the soffit, so without this it fell through to the
+   * gutter rule on the word "soffit" and illustrated an article about attic
+   * airflow with a photograph of guttering. Soffit intake vents are in the
+   * soffit, so the match was not wrong, it was just the less useful of two
+   * right answers.
+   */
+  {
+    when: /ventilation|ridge vent|soffit intake|attic|airflow/i,
+    job: /shingle|metal/i,
+  },
+  { when: /gutter|downspout|fascia|leaf guard/i, job: /gutter|fascia|soffit/i },
   { when: /\bmetal\b|standing seam|exposed fastener|panel/i, job: /metal/i },
   { when: /coating|silicone|tpo|epdm|pvc|low.slope|flat roof/i, job: /coating|silicone|tpo|epdm|pvc/i },
   { when: /storm|hail|wind damage|insurance|adjuster|claim/i, job: /storm|damage|hail|wind/i },
