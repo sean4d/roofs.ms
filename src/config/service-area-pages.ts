@@ -28,7 +28,7 @@
  * check:seo-links asserts this list matches reality in both directions, so it
  * cannot drift.
  */
-export const CITIES_WITHOUT_PAGES: readonly string[] = ["bassfield"];
+export const CITIES_WITHOUT_PAGES: readonly string[] = [];
 
 /** True when /service-areas/<slug> is a real, indexable page. */
 export function hasCityPage(slug: string): boolean {

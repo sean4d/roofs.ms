@@ -18,6 +18,10 @@ const REGIONS: string[][] = [
     "petal",
     "purvis",
     "sumrall",
+    // Bassfield sits 14 miles up MS-42 from Sumrall, and it was on the path
+    // of the same 2020 Easter tornado that crossed Seminary, so both of those
+    // are genuine neighbours rather than the nearest names on a map.
+    "bassfield",
     "seminary",
     "collins",
     "ellisville",
