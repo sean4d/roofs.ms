@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 
-import { stripSwipeCue, roundRobinByJob } from "@/lib/gbp-content";
+import { stripSwipeCue, googleSummary, roundRobinByJob } from "@/lib/gbp-content";
 
 /**
  * The social fan-out tells customers to do things, so it has to be right about
@@ -90,9 +90,29 @@ const gbpBranch = upload.slice(
   upload.indexOf('} else if (platform === "google")') + 1200,
 );
 check(
-  /summary: stripSwipeCue\(/.test(gbpBranch),
-  "the Google branch strips the cue before posting",
+  /summary: googleSummary\(/.test(gbpBranch),
+  "the Google branch rewrites the caption before posting",
   "the caption it receives was written for a carousel",
+);
+
+// Hashtags are the other Instagram habit that does not survive the trip:
+// Google Business Profile has no hashtag feature, so a tag block is just
+// leftover social copy sitting on a business listing.
+check(
+  googleSummary("A Petal reroof.\n\n#Roofing #Petal #GAF") === "A Petal reroof.",
+  "a trailing hashtag block is removed for Google",
+);
+check(
+  googleSummary("Licensed with the MSBOC (#R22245) and GAF certified.").includes(
+    "#R22245",
+  ),
+  "a hash inside a sentence survives, because that is the licence number",
+  "a blanket hashtag strip would take a real credential off the post",
+);
+check(
+  googleSummary("Swipe to see it!\n\nA McComb tear-off.\n\n#Roofing #McComb") ===
+    "A McComb tear-off.",
+  "both the swipe cue and the tags come off together",
 );
 
 /* ------------------------------------------------------------------ */

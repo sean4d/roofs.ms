@@ -53,7 +53,7 @@ import {
   listGbpPosts,
   deleteGbpPost,
 } from "@/lib/gbp";
-import { stripSwipeCue, recordGbpPhotoUse } from "@/lib/gbp-content";
+import { googleSummary, recordGbpPhotoUse } from "@/lib/gbp-content";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -1182,9 +1182,9 @@ async function handleSocial(request: Request) {
       };
     } else {
       const gbp = await postJobToGbp({
-        // One photo and no swipe gesture, so the carousel's "swipe to see the
-        // before and after" opener has to come off. See stripSwipeCue.
-        summary: stripSwipeCue(caption),
+        // One photo, no swipe gesture and no hashtag feature, so the
+        // carousel's opener and its tag block both come off. See googleSummary.
+        summary: googleSummary(caption),
         imageUrls: [heroUrl],
         learnMoreUrl: projectUrl,
       });

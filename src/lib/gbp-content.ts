@@ -92,6 +92,32 @@ export const TOPICS = [
  * that happens to contain the word is left alone, because removing text from
  * the middle of somebody's copy is a worse failure than leaving it.
  */
+/**
+ * Turn a caption written for a social carousel into one that suits a Google
+ * Business Profile Update.
+ *
+ * Two things do not survive the trip, and both are the same kind of mistake:
+ * an Instagram habit applied to a surface that has no such feature.
+ *
+ *   The swipe cue   a Business Profile Update carries one photo and has no
+ *                   swipe gesture. See stripSwipeCue.
+ *   The hashtags    Google Business Profile has no hashtag feature at all.
+ *                   They are not indexed, not clickable and not searchable
+ *                   there. On a business listing a row of them reads as
+ *                   leftover social copy, which is exactly what it is.
+ *
+ * Only whole hashtag lines are removed. A hash inside a sentence stays, which
+ * matters because the licence number is written "#R22245" and dropping it
+ * would take a real credential off the post.
+ */
+export function googleSummary(caption: string): string {
+  return stripSwipeCue(caption)
+    .split("\n")
+    .filter((line) => !/^\s*(#[\w-]+[ \t]*)+$/.test(line))
+    .join("\n")
+    .trim();
+}
+
 export function stripSwipeCue(caption: string): string {
   const [first, ...rest] = caption.split("\n");
   const isCue =
