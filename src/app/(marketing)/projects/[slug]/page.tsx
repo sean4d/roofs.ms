@@ -8,6 +8,7 @@ import { urlFor } from "@/sanity/lib/image";
 import { siteConfig } from "@/config/site";
 import { cities } from "@/content/cities";
 import { slugify } from "@/lib/job-content";
+import { serviceForJob } from "@/lib/project-links";
 import { buildMetadata } from "@/lib/seo";
 import { breadcrumbSchema } from "@/lib/schema";
 import type { JsonLdObject } from "@/lib/schema";
@@ -33,6 +34,45 @@ export async function generateStaticParams() {
   return slugs.map((slug) => ({ slug }));
 }
 
+/**
+ * A description that distinguishes one job from another.
+ *
+ * The stored summary is generated from channel, product and city, so two jobs
+ * in the same town with the same shingle produced the IDENTICAL description:
+ * "Residential GAF Timberline HDZ shingle roof in Hattiesburg, MS by Southeast
+ * Roofing", twice, for two different roofs. The same happened in Purvis. The
+ * colour is what actually separates them and it was the one fact left out.
+ *
+ * Everything here comes from fields the job really has. A project with no
+ * colour recorded gets the summary unchanged rather than an invented one, and
+ * the sentence is built from the parts that exist rather than from a template
+ * with gaps in it.
+ */
+function projectDescription(project: {
+  title: string;
+  city?: string;
+  summary?: string;
+  details?: { key?: string; value?: string }[];
+}): string {
+  const detail = (key: string) =>
+    project.details?.find((d) => d.key === key)?.value?.trim() || undefined;
+  const colour = detail("color");
+  const product = detail("product");
+
+  if (!colour) {
+    return (
+      project.summary ??
+      `${project.title}: a completed project by ${siteConfig.name}.`
+    );
+  }
+
+  const what = product ? `${product} in ${colour}` : `roofing in ${colour}`;
+  const where = project.city
+    ? ` in ${project.city}, ${siteConfig.address.addressRegion}`
+    : "";
+  return `${what}${where}, installed by ${siteConfig.name}. Photographs of the finished job.`;
+}
+
 export async function generateMetadata(
   props: PageProps<"/projects/[slug]">,
 ): Promise<Metadata> {
@@ -41,9 +81,7 @@ export async function generateMetadata(
   if (!project) return {};
   return buildMetadata({
     title: project.title,
-    description:
-      project.summary ??
-      `${project.title}: a completed project by ${siteConfig.name}.`,
+    description: projectDescription(project),
     path: `/projects/${slug}`,
     titleAbsolute: true,
   });
@@ -81,6 +119,12 @@ export default async function ProjectDetailPage(
    * remember this.
    */
   const cityHasPage = cities.some((c) => c.slug === citySlug);
+  /*
+   * The service page that describes what was actually done here. Returns null
+   * for a job type with no obvious page rather than linking something
+   * approximate, so a reader following it always lands on the right work.
+   */
+  const service = serviceForJob(project.jobType, project.channel);
 
   const breadcrumbs = [
     { name: "Home", path: "/" },
@@ -244,6 +288,14 @@ export default async function ProjectDetailPage(
             >
               ← All projects
             </Link>
+            {service && (
+              <Link
+                href={service.href}
+                className="font-medium text-navy-900 underline underline-offset-4 hover:text-steel-500"
+              >
+                {service.label}
+              </Link>
+            )}
             {cityHasPage && citySlug && (
               <Link
                 href={`/service-areas/${citySlug}`}

@@ -327,11 +327,30 @@ export const siteConfig = {
     licensed: "Licensed residential & commercial",
     insured: "Fully insured & bonded",
     financing: "$0 down financing available",
-    /**
-     * Owner correction 2026-07-04: manufacturer warranty, NOT workmanship.
-     * Always word as just "lifetime warranty", intentionally unspecific.
+    /*
+     * TWO WARRANTIES, AND CONFLATING THEM IS THE WHOLE RISK HERE.
+     *
+     * Southeast Roofing warrants its own WORKMANSHIP for 10 years (owner,
+     * 2026-10-06). The manufacturer separately warrants its PRODUCT, and on
+     * qualifying systems that can be a limited-lifetime term. They are
+     * different promises from different companies and only one of them is
+     * ours to make.
+     *
+     * The earlier instruction (2026-07-04) was to say just "lifetime
+     * warranty", deliberately unspecific, so the manufacturer's term was
+     * never claimed as ours. It achieved the opposite: an unqualified
+     * "Lifetime warranty" in a Southeast Roofing trust badge reads as
+     * Southeast Roofing's warranty, which at 10 years it is not. Being vague
+     * about whose promise it is does not make the claim safer, it makes it
+     * unfalsifiable, and a homeowner holds you to the reading they took.
+     *
+     * So each warranty is now named, with its owner attached. Never merge
+     * these two fields into one line, and never put a number on the
+     * manufacturer field: the term depends on the system installed.
      */
-    warranty: "Lifetime warranty",
+    warranty: "10-year workmanship warranty",
+    manufacturerWarranty:
+      "Manufacturer limited-lifetime options on qualifying systems",
     /**
      * Owner-supplied 2026-07-30. COMBINED across the team: deliberately not
      * "in business 10 years" (the company was founded 2023). Keep the word

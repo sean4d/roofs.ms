@@ -5,6 +5,11 @@ import { getResidentialService, residentialServices } from "@/content/services";
 import { buildMetadata } from "@/lib/seo";
 import { breadcrumbSchema, faqSchema, serviceSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/json-ld";
+import { getLiveProjects } from "@/sanity/lib/queries";
+import {
+  projectsForService,
+  SERVICE_JOB_TYPES,
+} from "@/lib/project-links";
 import { ServicePage } from "@/components/services/service-page";
 
 /**
@@ -40,6 +45,15 @@ export default async function ResidentialServicePage(
   const service = getResidentialService(slug);
   if (!service) notFound();
 
+
+  // Real jobs of this service's kind, so the page links out to evidence
+  // rather than only to other pages. Empty for a service we have no
+  // uploaded work under, which renders nothing.
+  const serviceProjects = projectsForService(
+    await getLiveProjects(),
+    SERVICE_JOB_TYPES[service.slug] ?? [],
+    "residential",
+  );
   const breadcrumbs = [
     { name: "Home", path: "/" },
     { name: "Residential Roofing", path: "/residential" },
@@ -59,7 +73,11 @@ export default async function ResidentialServicePage(
           faqSchema(service.faqs),
         ]}
       />
-      <ServicePage service={service} breadcrumbs={breadcrumbs} />
+      <ServicePage
+        service={service}
+        breadcrumbs={breadcrumbs}
+        serviceProjects={serviceProjects}
+      />
     </>
   );
 }

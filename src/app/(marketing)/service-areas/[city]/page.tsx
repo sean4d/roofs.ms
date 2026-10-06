@@ -12,6 +12,8 @@ import {
 import { breadcrumbSchema, faqSchema, serviceSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/json-ld";
 import { CityPage } from "@/components/cities/city-page";
+import { getLiveProjects } from "@/sanity/lib/queries";
+import { projectsInCity } from "@/lib/project-links";
 
 /**
  * City service-area pages (PRD §5, batch 1). Only cities with completed
@@ -59,6 +61,10 @@ export default async function ServiceAreaCityPage(
   // Drawn from the roofing reviews, because a roofing page should not lead
   // with the Christmas-lights ones. The reviews are shown verbatim and are
   // never presented as having come from this city.
+  // Real jobs completed in this town, for the "recent work" section and, just
+  // as importantly, to give the project pages internal links from somewhere.
+  const cityProjects = projectsInCity(await getLiveProjects(), cityContent.slug);
+
   const { reviews } = await getSiteReviews();
   const roofing = reviews.filter(isRoofingReview);
   const cityReviews = pickReviews(
@@ -85,6 +91,7 @@ export default async function ServiceAreaCityPage(
         cityContent={cityContent}
         breadcrumbs={breadcrumbs}
         reviews={cityReviews}
+        cityProjects={cityProjects}
       />
     </>
   );

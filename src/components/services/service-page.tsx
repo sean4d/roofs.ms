@@ -26,6 +26,7 @@ import {
   ServiceSigns,
 } from "@/components/services/service-sections";
 import { HelpPanel } from "@/components/services/help-panel";
+import type { LiveProject } from "@/sanity/lib/queries";
 import { RoofDiagram } from "@/components/roof/roof-diagram";
 import { FlashingDiagram } from "@/components/roof/flashing-diagram";
 import { VentilationAirflow } from "@/components/services/ventilation-airflow";
@@ -46,10 +47,13 @@ export function ServicePage({
   service,
   breadcrumbs,
   audience = "residential",
+  serviceProjects = [],
 }: {
   service: ServiceContent;
   breadcrumbs: BreadcrumbItem[];
   audience?: "residential" | "commercial";
+  /** Real jobs of this service's kind. Empty is normal and renders nothing. */
+  serviceProjects?: LiveProject[];
 }) {
   const commercial = audience === "commercial";
 
@@ -151,6 +155,43 @@ export function ServicePage({
         />
       )}
       {service.gallery && <ServiceGallery gallery={service.gallery} />}
+      {/*
+        REAL JOBS OF THIS KIND, where we have any.
+
+        Deliberately not "the three newest projects" on every service page.
+        The brief asks for contextual links, and a gutter page showing shingle
+        roofs is the mechanical linking it warns against: this block only
+        appears on a service whose job type we have actually done, and it
+        shows only those jobs.
+      */}
+      {serviceProjects.length > 0 && (
+        <Section>
+          <SectionHeading
+            eyebrow="Our work"
+            title={`Recent ${service.name.toLowerCase()} projects`}
+          />
+          <StaggerGroup as="ul" className="mt-10 grid gap-4 sm:grid-cols-3">
+            {serviceProjects.map((project) => (
+              <StaggerItem as="li" key={project.slug}>
+                <Link
+                  href={`/projects/${project.slug}`}
+                  className="group flex h-full flex-col rounded-2xl border border-border bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-steel-500 hover:shadow-md"
+                >
+                  <span className="font-semibold text-navy-900 group-hover:text-steel-500">
+                    {project.title}
+                  </span>
+                  {project.city && (
+                    <span className="mt-1.5 text-sm text-slate-600">
+                      {project.city}, MS
+                    </span>
+                  )}
+                </Link>
+              </StaggerItem>
+            ))}
+          </StaggerGroup>
+        </Section>
+      )}
+
       {!commercial && <HelpPanel />}
       <ServiceFaq
         faqs={service.faqs}

@@ -22,9 +22,11 @@ import type { ProposalData } from "@/lib/quotes/save";
  *
  * EVERY CLAIM ON IT IS NOW OWNER-EDITABLE, from /pin/settings, and seeded from
  * siteConfig.trustFacts. Those seeds carry constraints that are not obvious
- * from reading them: "lifetime warranty" is deliberately unspecific because it
- * is the MANUFACTURER's warranty and not workmanship, and the experience line
- * must keep the word "combined" because the company was founded in 2023.
+ * from reading them: the warranty line is Southeast Roofing's own 10-year
+ * WORKMANSHIP warranty and must never be written as a lifetime one, because
+ * the lifetime term belongs to the manufacturer and covers the product rather
+ * than the installation; and the experience line must keep the word
+ * "combined" because the company was founded in 2023.
  * Whoever edits them is making a claim a customer can hold the company to,
  * which is why the settings screen says so next to the box.
  *

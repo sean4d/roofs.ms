@@ -253,6 +253,7 @@ export function SettingsForm({ profile }: { profile: CompanyProfile }) {
         />
         <Field
           label="Warranty line"
+          hint="Ours, not the manufacturer's. Southeast Roofing warrants workmanship for 10 years; the lifetime term belongs to the shingle maker and covers the product."
           value={form.warranty}
           onChange={(v) => set("warranty", v)}
         />

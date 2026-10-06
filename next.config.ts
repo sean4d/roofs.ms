@@ -129,13 +129,17 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        // Both of these pointed at /residential/roof-repair, which predates
+        // the roof-washing page existing. Roof washing is not roof repair,
+        // and sending that intent to a repair page wasted both the click and
+        // whatever equity the old Wix URLs still carry.
         source: "/roof-washing",
-        destination: "/residential/roof-repair",
+        destination: "/residential/roof-washing",
         permanent: true,
       },
       {
         source: "/roof-cleaning",
-        destination: "/residential/roof-repair",
+        destination: "/residential/roof-washing",
         permanent: true,
       },
       {

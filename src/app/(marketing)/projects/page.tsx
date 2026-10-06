@@ -55,6 +55,18 @@ export default async function ProjectsPage() {
   const liveProjects = await getLiveProjects();
   const jobs = buildGalleryJobs(liveProjects);
 
+  // Grouped for the crawlable list below. Towns in alphabetical order, jobs
+  // within a town in the order the feed returns them (newest first).
+  const projectsByCity = Object.entries(
+    liveProjects
+      .filter((p) => p.slug && p.title)
+      .reduce<Record<string, typeof liveProjects>>((acc, p) => {
+        const city = p.city?.trim() || "Other";
+        (acc[city] ??= []).push(p);
+        return acc;
+      }, {}),
+  ).sort(([a], [b]) => a.localeCompare(b));
+
   return (
     <>
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
@@ -94,6 +106,53 @@ export default async function ProjectsPage() {
       {/* Unified gallery */}
       <section className="container-site py-12 sm:py-16">
         <UnifiedGallery jobs={jobs} />
+
+        {/*
+          EVERY JOB, AS A PLAIN SERVER-RENDERED LINK.
+
+          The gallery above is a client component: its tiles and filter chips
+          are built in the browser, so none of its links exist in the HTML a
+          crawler reads. A live crawl on 2026-10-06 found all thirteen project
+          pages with zero internal links pointing at them from anywhere on the
+          site. They were in the sitemap and returning 200, and they were the
+          hardest pages here to actually reach.
+
+          This list is the fix, and it is deliberately plain markup with real
+          hrefs rather than anything clever. It is also genuinely useful: it is
+          the only place the whole body of work can be read at a glance,
+          grouped by town.
+        */}
+        {projectsByCity.length > 0 && (
+          <nav
+            aria-label="All completed projects"
+            className="mt-12 border-t border-border pt-10"
+          >
+            <h2 className="font-display text-xl font-bold text-navy-900">
+              Every project, by city
+            </h2>
+            <div className="mt-6 grid gap-x-10 gap-y-7 sm:grid-cols-2 lg:grid-cols-3">
+              {projectsByCity.map(([city, items]) => (
+                <div key={city}>
+                  <h3 className="text-sm font-semibold tracking-wide text-slate-500 uppercase">
+                    {city}
+                  </h3>
+                  <ul className="mt-2.5 space-y-1.5">
+                    {items.map((project) => (
+                      <li key={project.slug}>
+                        <Link
+                          href={`/projects/${project.slug}`}
+                          className="text-sm leading-snug text-navy-900 underline-offset-4 hover:text-steel-500 hover:underline"
+                        >
+                          {project.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </nav>
+        )}
 
         <div className="mt-12 rounded-2xl border border-border bg-secondary p-6 sm:p-8">
           <p className="text-base leading-relaxed text-slate-600">

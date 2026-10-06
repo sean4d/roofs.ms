@@ -6,6 +6,8 @@ import type { BreadcrumbItem } from "@/lib/schema";
 import type { CityContent } from "@/content/cities/types";
 import type { DisplayReview } from "@/lib/reviews";
 import { nearbyCities } from "@/content/cities/nearby";
+import { jobSummaryLine } from "@/lib/project-links";
+import type { LiveProject } from "@/sanity/lib/queries";
 import { projectPhotos } from "@/content/photos";
 import { GoogleMapEmbed } from "@/components/shared/google-map";
 import { JobPhotoTile } from "@/components/projects/job-photo-tile";
@@ -44,10 +46,13 @@ export function CityPage({
   cityContent,
   breadcrumbs,
   reviews = [],
+  cityProjects = [],
 }: {
   cityContent: CityContent;
   breadcrumbs: BreadcrumbItem[];
   reviews?: DisplayReview[];
+  /** Jobs actually completed in this town. Empty is normal and renders nothing. */
+  cityProjects?: LiveProject[];
 }) {
   const localPhotos = projectPhotos.filter(
     (photo) =>
@@ -153,6 +158,49 @@ export function CityPage({
       )}
 
       {/* Services in this city */}
+      {/*
+        REAL WORK IN THIS TOWN, or nothing at all.
+
+        Only jobs actually completed here, matched on the city recorded at
+        upload. A town with no completed job renders no section: an empty
+        "recent work" block is worse than its absence, and inventing one is
+        not available.
+
+        It also exists to carry link equity INTO the project pages, which a
+        crawl on 2026-10-06 found completely orphaned because the gallery that
+        normally links them is client-rendered.
+      */}
+      {cityProjects.length > 0 && (
+        <Section>
+          <SectionHeading
+            eyebrow="Recent work"
+            title={`Projects we have completed in ${cityContent.city}`}
+          />
+          <StaggerGroup as="ul" className="mt-10 grid gap-4 sm:grid-cols-2">
+            {cityProjects.map((project) => {
+              const line = jobSummaryLine(project);
+              return (
+                <StaggerItem as="li" key={project.slug}>
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    className="group flex h-full flex-col rounded-2xl border border-border bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-steel-500 hover:shadow-md"
+                  >
+                    <span className="font-semibold text-navy-900 group-hover:text-steel-500">
+                      {project.title}
+                    </span>
+                    {line && line !== project.title && (
+                      <span className="mt-1.5 text-sm text-slate-600">
+                        {line}
+                      </span>
+                    )}
+                  </Link>
+                </StaggerItem>
+              );
+            })}
+          </StaggerGroup>
+        </Section>
+      )}
+
       <Section tone={localPhotos.length > 1 ? "white" : "surface"}>
         <SectionHeading
           eyebrow="What we do here"

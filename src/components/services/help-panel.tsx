@@ -8,7 +8,14 @@ import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
  * Insurance, financing & warranty panel (PRD §4.1.7, Phase 4 §7/§10),
  * three-up trust band used across service pages. Factual language only:
  * claim decisions rest with the insurer, terms come from the lender, and
- * the lifetime workmanship warranty is owner-confirmed (2026-07-04).
+ * the warranty card names BOTH warranties with their owners attached.
+ *
+ * This card used to be headed "Lifetime warranty", with correct body text
+ * underneath explaining it was the manufacturer's. The heading is what gets
+ * read. On a Southeast Roofing trust band, an unqualified "Lifetime warranty"
+ * reads as Southeast Roofing's own, and Southeast Roofing's workmanship
+ * warranty is 10 years (owner, 2026-10-06). Correct small print under a
+ * misleading heading is still misleading.
  */
 
 const panels = [
@@ -28,10 +35,14 @@ const panels = [
   },
   {
     icon: Medal,
-    title: "Lifetime warranty",
-    // Hedged per the warranty rule: manufacturer limited-lifetime options on
-    // qualifying systems, never a blanket Southeast Roofing guarantee.
-    text: "Manufacturer limited-lifetime warranty options are available on qualifying roofing systems. Ask what applies to your roof at your free inspection.",
+    title: "10-year workmanship warranty",
+    /*
+     * Two sentences, two companies, in that order. Ours first because it is
+     * the one we can actually be held to; the manufacturer's second, with no
+     * number on it, because the term depends on the system installed and
+     * putting a figure there would be inventing one.
+     */
+    text: "We warrant our own installation for 10 years. Separately, manufacturer limited-lifetime product warranty options are available on qualifying systems: ask which applies to your roof at your free inspection.",
     href: "/free-inspection",
     cta: "Start with a free inspection",
   },
