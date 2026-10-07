@@ -170,6 +170,62 @@ async function staticMapProbe(): Promise<boolean> {
   }
 }
 
+/**
+ * Is the BROWSER key present, and is it actually restricted?
+ *
+ * WHY THIS IS HERE AND WHAT IT CANNOT DO. The field map broke for the whole
+ * crew on 2026-10-07: every tile stamped "For development purposes only" with
+ * Google's own "this page can't load Google Maps correctly" dialog over it.
+ * Four Google APIs were probed green at the time, because all four run on the
+ * SERVER key. Nothing anywhere looked at the browser key, so a tool the reps
+ * use daily failed in a way the health endpoint called healthy.
+ *
+ * It cannot verify the one thing that actually broke. Maps JavaScript has no
+ * server-callable surface, and Google's own AuthenticationService endpoint
+ * returns the identical refusal for a correct key, a wrong key and a string of
+ * nonsense, so there is nothing honest to assert from here. The map now
+ * reports that itself through window.gm_authFailure, which is the only signal
+ * the library gives.
+ *
+ * What this DOES answer is the pair of questions that are checkable and that
+ * both matter:
+ *
+ *   set        a missing key is the trivial explanation, worth excluding
+ *              before anybody opens the Cloud Console.
+ *   restricted a browser key ships to every visitor in the page source. If it
+ *              answers an unrelated API, it is unrestricted, and an
+ *              unrestricted public key is somebody else's free quota on our
+ *              bill. Being REFUSED here is the pass condition.
+ */
+async function browserKeyProbe(): Promise<{ ok: boolean; detail: string }> {
+  const key = process.env.GOOGLE_MAPS_BROWSER_KEY;
+  if (!key) return { ok: false, detail: "GOOGLE_MAPS_BROWSER_KEY is not set" };
+  if (key === process.env.GOOGLE_MAPS_SERVER_KEY) {
+    return {
+      ok: false,
+      detail: "browser key is the SERVER key: it is public in the page source",
+    };
+  }
+  try {
+    const url = new URL("https://maps.googleapis.com/maps/api/geocode/json");
+    url.searchParams.set("address", "Hattiesburg, MS");
+    url.searchParams.set("key", key);
+    const res = await fetch(url, { cache: "no-store" });
+    const data = (await res.json()) as { status?: string };
+    // REQUEST_DENIED is the healthy answer: the key is scoped to the APIs the
+    // browser needs and geocoding is not one of them.
+    if (data.status === "REQUEST_DENIED") {
+      return { ok: true, detail: "set and API-restricted" };
+    }
+    return {
+      ok: false,
+      detail: `set but NOT restricted (geocoding returned ${data.status})`,
+    };
+  } catch {
+    return { ok: false, detail: "set, but the check could not be run" };
+  }
+}
+
 export async function GET(request: Request) {
   /*
    * THE EXPENSIVE CHECKS ARE OPT IN.
@@ -187,6 +243,11 @@ export async function GET(request: Request) {
   const deep = new URL(request.url).searchParams.get("probe") === "1";
   const addressProbe = deep
     ? await addressCheckProbe()
+    : { ok: false, detail: "" };
+  // Hoisted: called once, read twice. Inlining it twice in the response body
+  // doubled the request for no extra information.
+  const browserProbe = deep
+    ? await browserKeyProbe()
     : { ok: false, detail: "" };
 
   if (!dbConfigured()) {
@@ -277,6 +338,10 @@ export async function GET(request: Request) {
               ),
               solar: await solarProbe(),
               staticMaps: await staticMapProbe(),
+              // The field map's key. See browserKeyProbe: this cannot prove
+              // Maps JavaScript works, only that the key exists and is scoped.
+              browserKey: browserProbe.ok,
+              browserKeyDetail: browserProbe.detail,
             }
           : {}),
         // Which commit is actually serving this. Vercel does not expose a

@@ -74,6 +74,17 @@ interface Result {
 // Hattiesburg. Where the truck usually starts.
 const HOME = { lat: 31.3271, lng: -89.2903 };
 
+/*
+ * Google calls this on the window when it rejects the key. It is not in the
+ * @types/google.maps surface because it is a callback the PAGE defines rather
+ * than something the library exports.
+ */
+declare global {
+  interface Window {
+    gm_authFailure?: () => void;
+  }
+}
+
 export function MapView({ apiKey }: { apiKey: string }) {
   const holder = useRef<HTMLDivElement>(null);
   const map = useRef<google.maps.Map | null>(null);
@@ -190,14 +201,46 @@ export function MapView({ apiKey }: { apiKey: string }) {
       if (existing) {
         existing.addEventListener("load", build);
       } else {
+        /*
+         * AN AUTH FAILURE IS NOT A LOAD FAILURE, and conflating the two is
+         * why this broke silently for the field crew (owner, 2026-10-07).
+         *
+         * s.onerror below fires only if the SCRIPT FILE cannot be fetched.
+         * When the key is rejected the file downloads perfectly: 200, about
+         * 320KB. Google then fails authorisation at runtime, greys the
+         * imagery, stamps "For development purposes only" across every tile
+         * and puts up its own dialog reading "This page can't load Google
+         * Maps correctly. Do you own this website?".
+         *
+         * To a rep standing in somebody's driveway that is a broken tool with
+         * a message aimed at a developer. Our own error state never fired,
+         * because nothing had failed in a way this code was watching for.
+         *
+         * window.gm_authFailure is the documented hook for exactly this, and
+         * it is the ONLY signal the library gives. It takes no arguments: the
+         * specific reason (API not on the key's restriction list, referrer
+         * not allowed, billing off) is printed to the browser console and
+         * never handed to the page, so the message below names where to look
+         * rather than guessing which of them it is.
+         */
+        window.gm_authFailure = () => {
+          setError(
+            "Google rejected the map key for this site, so the imagery is " +
+              "watermarked and measuring will not work. This is a key " +
+              "setting, not a problem with your phone or this address: " +
+              "nothing you do here will fix it. Send Sean this message.",
+          );
+        };
+
         const s = document.createElement("script");
         s.id = "gmaps";
         s.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=weekly`;
         s.async = true;
         s.onload = build;
+        // Network-level only: DNS, offline, blocked request. See above.
         s.onerror = () =>
           setError(
-            "The map could not load. Check the browser key restrictions.",
+            "The map script could not be downloaded. Check the connection.",
           );
         document.head.appendChild(s);
       }
