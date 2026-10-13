@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 
 import { getProposalByToken } from "@/lib/quotes/save";
@@ -24,14 +24,32 @@ export const metadata: Metadata = {
   title: "Your roof estimate",
 };
 
+/**
+ * Estimates made before this moment were copied into RoofGo, token and all,
+ * so their links and QR codes forward there. A day early on purpose: the
+ * import ran during 2026-10-11, and anything made that day stays here, where
+ * it certainly exists, rather than risk a link that lands on nothing.
+ */
+const MOVED_BEFORE = Date.parse("2026-10-11T00:00:00Z");
+
 export default async function PublicEstimate({
   params,
+  searchParams,
 }: {
   params: Promise<{ token: string }>;
+  searchParams: Promise<{ m?: string }>;
 }) {
   const { token } = await params;
   const data = await getProposalByToken(token);
   if (!data) notFound();
+
+  if (Date.parse(data.createdAt) < MOVED_BEFORE) {
+    // ?m=1 rides along so RoofGo still counts it as a mailer QR scan.
+    const { m } = await searchParams;
+    redirect(
+      `${siteConfig.roofgoEstimateOrigin}/estimate/${encodeURIComponent(token)}${m === "1" ? "?m=1" : ""}`,
+    );
+  }
 
   return (
     <main className="min-h-dvh bg-slate-100 py-4 print:bg-white print:py-0">
