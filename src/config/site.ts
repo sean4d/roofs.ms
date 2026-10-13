@@ -36,6 +36,14 @@ export const siteConfig = {
    */
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://southeastroofing.llc",
 
+  /**
+   * Where homeowner estimate links live now. Every estimate made here before
+   * the move was copied into RoofGo with the same link token on 2026-10-11,
+   * so /estimate/TOKEN (and a mailer's QR code, ?m=1) forwards there.
+   */
+  roofgoEstimateOrigin:
+    process.env.ROOFGO_ESTIMATE_ORIGIN ?? "https://app.roofgo.com",
+
   tagline: "Premium residential & commercial roofing in South Mississippi",
   description:
     "Southeast Roofing LLC is a Mississippi licensed residential and commercial roofing contractor based in Hattiesburg, serving South Mississippi and the Pine Belt: roof replacement, roof repair, metal roofing, TPO and flat roofing, roof coatings, storm damage and insurance claim assistance.",
