@@ -425,7 +425,7 @@ export const whyUs = {
     {
       icon: ShieldCheck,
       title: "Certified by GAF and CertainTeed",
-      text: "A GAF Certified Contractor and a CertainTeed ShingleMaster. We also install Owens Corning shingle products: always to manufacturer specification.",
+      text: "A GAF Certified Contractor and a CertainTeed ShingleMaster, and a member of the Owens Corning Roofing Contractor Network. Every system goes on to manufacturer specification.",
     },
     {
       icon: Medal,
