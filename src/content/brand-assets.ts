@@ -32,8 +32,14 @@ export const brandAssets = {
   /**
    * Held credentials (brand directive 2026-07-03 §4): GAF certification
    * receives the greatest emphasis of all manufacturer relationships.
-   * Southeast Roofing is NOT an Owens Corning certified/preferred
-   * contractor, never state or imply OC certification (see productLines).
+   * Southeast Roofing joined the Owens Corning Roofing Contractor
+   * Network in October 2026 (company ID held internally, never on the
+   * public site). That is a
+   * membership, not a certification: it lives in
+   * siteConfig.trustFacts.owensCorningMembership rather than in this
+   * map, and it is NOT grounds to call us an Owens Corning
+   * Certified, Preferred or Platinum Preferred contractor, nor to claim
+   * enhanced OC warranty eligibility (see productLines).
    * Third-party logos always keep their original colors, never redrawn
    * or recolored; source official SVGs from manufacturer sites (§5).
    */
@@ -71,9 +77,11 @@ export const brandAssets = {
       label: "Owens Corning roofing products",
       /**
        * DO NOT DISPLAY, supplied files are "Preferred Contractor" badge
-       * artwork implying a certification we do not hold. Retained only for
-       * reference; replace with official OC *product* logos when product
-       * pages are built.
+       * artwork implying a tier we do not hold. Network membership is not
+       * Preferred or Platinum Preferred, so joining the network does not
+       * unlock these. Retained only for reference; replace with official
+       * OC *product* logos, or network-member artwork supplied through
+       * OCConnect, when permission is confirmed.
        */
       doNotDisplay: [
         "/images/brand/owens-corning-preferred-contractor-logo-01.png",

@@ -34,7 +34,7 @@ import { Button } from "@/components/ui/button";
 export const metadata: Metadata = buildMetadata({
   title: "Licenses & Credentials | Southeast Roofing, Hattiesburg MS",
   description:
-    "Southeast Roofing LLC holds MSBOC Residential License R22245 and Commercial Certificate of Responsibility 27720-SC. Verify both with the Mississippi State Board of Contractors.",
+    "MSBOC Residential License R22245, Commercial Certificate 27720-SC, GAF Certified Contractor, CertainTeed ShingleMaster, Owens Corning network member. Verify each.",
   path: "/licenses",
 });
 
@@ -97,7 +97,7 @@ const faqs = [
     question:
       "Which shingle brands does Southeast Roofing install: CertainTeed, GAF or Owens Corning?",
     answer:
-      "All three. There is a distinction worth understanding, though: GAF and CertainTeed have each certified us, which is why those two carry verifiable credentials. Owens Corning is a product line we install when its style, colour or availability suits the roof best. We install their shingles; they have not certified us, and we do not claim otherwise.",
+      "All three. Southeast Roofing is a GAF Certified Contractor, a CertainTeed ShingleMaster, and a member of the Owens Corning Roofing Contractor Network. The first two are certifications each manufacturer issued to us and publishes on their own site, so you can check them rather than take our word for it. The Owens Corning relationship is a network membership rather than a certification, which is a real relationship and a different kind of one. GAF remains our primary shingle line, and we help you compare options based on your roof, budget, style and color preferences.",
   },
 ];
 
@@ -105,9 +105,17 @@ const faqs = [
  * Everything that is not a state licence, each with the record that proves it.
  *
  * CertainTeed ShingleMaster and the Area Development Partnership membership
- * were added 2026-09-24. Owens Corning is deliberately not in this list: we
- * install their shingles and they have not certified us, so it is not a
- * credential and it does not belong on a credentials page.
+ * were added 2026-09-24; the Owens Corning network membership on 2026-10-14.
+ *
+ * OWENS CORNING IS THE ONE ENTRY WITH NO VERIFY LINK, and that is deliberate
+ * rather than an omission. It was previously kept off this page entirely, on
+ * the reasoning that a product line is not a credential. It is now a stated
+ * membership, which belongs here, but membership publishes no public record
+ * to link to. The honest shape is therefore: name it, say plainly what kind
+ * of relationship it is, and link nothing, rather than invent a directory
+ * profile so the row matches the others.
+ *
+ * `id` exists so the footer can link straight to this entry.
  */
 const otherCredentials = [
   {
@@ -130,6 +138,14 @@ const otherCredentials = [
       "Accredited with the Better Business Bureau, with the complaint and resolution history that goes with it publicly visible.",
     href: siteConfig.links.bbbProfile,
     cta: "Verify on bbb.org",
+  },
+  {
+    id: "owens-corning",
+    name: "Owens Corning Roofing Contractor Network Member",
+    detail:
+      "Member of the Owens Corning Roofing Contractor Network, which is how we install and specify Owens Corning shingles. This is a network membership rather than a manufacturer certification: Owens Corning has not certified our crews, and we are not an Owens Corning Preferred or Platinum Preferred contractor. Our certifications are the GAF and CertainTeed ones above.",
+    href: null,
+    cta: null,
   },
   {
     name: "Area Development Partnership member",
@@ -239,7 +255,10 @@ export default function LicensesPage() {
             {otherCredentials.map((credential) => (
               <li
                 key={credential.name}
-                className="shadow-premium rounded-2xl border border-border bg-white p-6"
+                /* The id is only on the entry that something links to, so
+                   scroll-margin only needs to exist there. */
+                id={"id" in credential ? credential.id : undefined}
+                className="shadow-premium scroll-mt-24 rounded-2xl border border-border bg-white p-6"
               >
                 <h3 className="font-display text-lg font-bold text-navy-900">
                   {credential.name}
@@ -247,13 +266,23 @@ export default function LicensesPage() {
                 <p className="mt-3 text-sm leading-relaxed text-slate-600">
                   {credential.detail}
                 </p>
-                <a
-                  href={credential.href}
-                  className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-steel-500 underline underline-offset-4 transition-colors hover:text-navy-900"
-                >
-                  {credential.cta}
-                  <ExternalLink className="size-3.5" aria-hidden="true" />
-                </a>
+                {/*
+                  CONDITIONAL, because one of these has nothing to verify
+                  against. The Owens Corning network membership publishes no
+                  public record, so it carries href: null and renders no link
+                  at all. Rendering the anchor unconditionally would emit an
+                  <a> with no href, which is a focusable element that goes
+                  nowhere for a keyboard or screen reader user.
+                */}
+                {credential.href && (
+                  <a
+                    href={credential.href}
+                    className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-steel-500 underline underline-offset-4 transition-colors hover:text-navy-900"
+                  >
+                    {credential.cta}
+                    <ExternalLink className="size-3.5" aria-hidden="true" />
+                  </a>
+                )}
               </li>
             ))}
           </ul>

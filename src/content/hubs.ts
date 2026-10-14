@@ -203,7 +203,7 @@ export const residentialHub = {
     {
       question: "What brands do you install?",
       answer:
-        "We hold two shingle manufacturer certifications: GAF Certified Contractor and CertainTeed ShingleMaster. GAF remains our primary shingle line. We also install CertainTeed and Owens Corning shingle products, though we are not an Owens Corning certified or preferred contractor. On metal, we install standing seam and exposed-fastener steel systems in 26 and 29 gauge.",
+        "We hold two shingle manufacturer certifications, GAF Certified Contractor and CertainTeed ShingleMaster, and we are a member of the Owens Corning Roofing Contractor Network. GAF remains our primary shingle line. Membership is a different kind of relationship from a certification, so we do not describe ourselves as Owens Corning certified or preferred. On metal, we install standing seam and exposed-fastener steel systems in 26 and 29 gauge.",
     },
     {
       question: "How far from Hattiesburg do you work?",

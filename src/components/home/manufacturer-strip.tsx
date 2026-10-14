@@ -6,9 +6,10 @@ import { SectionHeading } from "@/components/shared/section-heading";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
 
 /**
- * Manufacturer partnerships (Phase 4 §8, §12): factually exact wording,
- * GAF is our certification; Owens Corning is a product line we install,
- * never a certification claim. Official logos slot in when sourced.
+ * Manufacturer certifications and memberships (Phase 4 §8, §12):
+ * factually exact wording. GAF and CertainTeed issued us certifications;
+ * Owens Corning is a contractor-network membership, never a certification
+ * claim. Official logos slot in when sourced.
  */
 export function ManufacturerStrip() {
   return (
@@ -16,6 +17,7 @@ export function ManufacturerStrip() {
       <SectionHeading
         eyebrow={manufacturerSection.eyebrow}
         title={manufacturerSection.title}
+        description={manufacturerSection.description}
         align="center"
       />
 
@@ -27,7 +29,13 @@ export function ManufacturerStrip() {
             key={item.name}
             className="shadow-premium flex h-full flex-col rounded-2xl border border-border bg-white p-7"
           >
-            <div className="flex items-baseline gap-3">
+            {/* Wraps since the Owens Corning card arrived (2026-10-14): its
+                name and its badge are both longer than the other two, and on
+                one line the name broke across two rows while the badge broke
+                across another. Wrapping drops the badge onto its own line
+                instead, which keeps every name whole. GAF and CertainTeed
+                still fit beside their badges, so nothing moves for them. */}
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-2">
               <span className="font-display text-2xl font-bold text-navy-900">
                 {item.name}
               </span>

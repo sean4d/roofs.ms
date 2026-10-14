@@ -101,11 +101,14 @@ export interface TrustItem {
 /**
  * Credentials shown on the residential page.
  *
- * TWO MANUFACTURER CERTIFICATIONS NOW (2026-09-24). GAF used to be described
- * here as "our primary manufacturer certification", which was accurate while
- * it was the only one and became misleading the day CertainTeed arrived. We
- * are still NOT an Owens Corning certified or preferred contractor: OC
- * appears across the site only as a product line we install.
+ * TWO MANUFACTURER CERTIFICATIONS, PLUS ONE MEMBERSHIP (2026-10-14). GAF used
+ * to be described here as "our primary manufacturer certification", accurate
+ * while it was the only one and misleading the day CertainTeed arrived.
+ *
+ * Owens Corning is now a Roofing Contractor Network MEMBERSHIP, which is a
+ * real relationship and is stated as one. It is still not a certification, and
+ * we are still not an Owens Corning Preferred or Platinum Preferred
+ * contractor, so it never appears in a row headed "certified".
  */
 export const trustItems: TrustItem[] = [
   {
@@ -117,6 +120,17 @@ export const trustItems: TrustItem[] = [
     icon: ShieldCheck,
     label: "CertainTeed ShingleMaster",
     detail: "CertainTeed's credential for shingle installers",
+  },
+  {
+    /*
+     * Handshake, not ShieldCheck. The icon carries meaning in this list: the
+     * two shields above are certifications, and a membership is a different
+     * kind of relationship. Giving it a shield would file it visually as a
+     * third certification, which is exactly the claim we must not make.
+     */
+    icon: Handshake,
+    label: "Owens Corning Roofing Contractor Network",
+    detail: "Member of Owens Corning's contractor network",
   },
   {
     icon: Medal,
@@ -558,14 +572,41 @@ export const proposalSection = {
  *
  * The three-way distinction is the point of this section and must survive any
  * future edit:
- *   GAF         - certified us       -> "Certified Contractor", linked record
- *   CertainTeed - certified us       -> "ShingleMaster", linked record
- *   Owens Corning - we install it    -> "Product installer", NO link, because
- *                                       there is no credential to verify
+ *   GAF           - certified us  -> "Certified Contractor", linked record
+ *   CertainTeed   - certified us  -> "ShingleMaster", linked record
+ *   Owens Corning - we are a MEMBER of their contractor network
+ *                   -> "Contractor Network Member", and still NO verify link,
+ *                      because membership has no public record to point at.
+ *                      That is not a reason to understate it, only a reason
+ *                      not to invent a directory profile for it.
+ *
+ * THE OWENS CORNING ENTRY CHANGED ON 2026-10-14 and the heading changed with
+ * it. The card used to claim "Product installer" and carry a sentence saying
+ * this was "not a certification we hold". That was accurate while it was only
+ * a product line; Owens Corning's welcome mail now names us an Owens Corning
+ * Roofing Contractor Network member, so the defensive sentence is simply out
+ * of date and reads as underselling a real relationship.
+ *
+ * The section heading had to move too. "Manufacturer credentials" is wrong
+ * for a group of three where one is a membership, so the eyebrow now covers
+ * both kinds rather than quietly filing a membership under credentials.
+ *
+ * STILL FORBIDDEN on this card: "Owens Corning Certified", "Preferred",
+ * "Platinum Preferred". Membership is not certification.
  */
 export const manufacturerSection = {
-  eyebrow: "Manufacturer credentials",
+  eyebrow: "Manufacturer certifications & memberships",
+  /*
+   * The membership lives in the description rather than the H2, and the two
+   * kinds of relationship never share a verb: "Certified by GAF, CertainTeed
+   * and Owens Corning" would be the forbidden claim. Putting all three in the
+   * heading was tried on 2026-10-14 and ran the third line of a centred H2
+   * into the floating estimate tab at 390px. The description wraps at body
+   * size well clear of it, and still says the thing in full.
+   */
   title: "Certified by GAF and CertainTeed.",
+  description:
+    "We are also a member of the Owens Corning Roofing Contractor Network, which is a membership rather than a certification.",
   items: [
     {
       name: "GAF",
@@ -583,9 +624,13 @@ export const manufacturerSection = {
     },
     {
       name: "Owens Corning",
-      /** Product installer ONLY: never "Preferred/Platinum Contractor" */
-      claim: "Product installer",
-      text: "We install Owens Corning shingle products when their style, color, or availability fits your project best. This is a product line we install, not a certification we hold.",
+      /**
+       * MEMBER, never "Certified", "Preferred" or "Platinum Preferred". The
+       * short form is used because the card heading already says Owens
+       * Corning and repeating it would wrap badly on a phone.
+       */
+      claim: "Contractor Network Member",
+      text: "Southeast Roofing is a member of the Owens Corning Roofing Contractor Network. We install Owens Corning shingles and help you choose the right style and color for your home.",
       href: null,
       cta: null,
     },

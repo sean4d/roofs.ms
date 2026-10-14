@@ -59,8 +59,12 @@ export default function ResidentialHubPage() {
       </Section>
 
       <Section tone="surface" ariaLabel="Credentials">
-        {/* Six credentials since CertainTeed and ADP joined (2026-09-24):
-            three across divides evenly, four leaves an orphaned pair. */}
+        {/* Seven since the Owens Corning network membership joined
+            (2026-10-14), so no column count divides evenly any more. Three
+            across keeps the line length readable and leaves one item alone
+            on the last row, which these borderless icon-and-text rows carry
+            far better than cards would. Padding the list to eight would mean
+            inventing a credential, so it stays at seven. */}
         <StaggerGroup
           as="ul"
           className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"

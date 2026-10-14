@@ -311,20 +311,43 @@ export const siteConfig = {
     googleVerifiedDetail: "Google Verified through Google Local Services",
     bbbRating: "BBB Accredited: A+ rating",
     /**
-     * Manufacturer credentials. TWO of them now, and the distinction between
-     * them and Owens Corning matters (owner directive 2026-09-24):
+     * Manufacturer relationships. THREE now, and they are NOT the same kind of
+     * thing, which is the whole point of keeping them in separate fields.
      *
-     *   GAF Certified Contractor    - a credential GAF issued to us
-     *   CertainTeed ShingleMaster   - a credential CertainTeed issued to us
-     *   Owens Corning               - shingles we install, NOT a credential
+     *   GAF Certified Contractor      a credential GAF issued to us
+     *   CertainTeed ShingleMaster     a credential CertainTeed issued to us
+     *   OC Roofing Contractor Network a MEMBERSHIP we hold, not a credential
      *
-     * Never write "Owens Corning Certified" or put Owens Corning in a
-     * credential row. Installing a manufacturer's product is not the same as
-     * being certified by them, and claiming otherwise is the kind of thing a
-     * competitor reports.
+     * The Owens Corning line changed on 2026-10-14. It previously read as
+     * "shingles we install, NOT a credential", with the site carrying a
+     * defensive sentence to that effect on several pages. That was correct at
+     * the time and is now out of date: Owens Corning's own welcome mail names us
+     * an "Owens Corning Roofing Contractor Network member" and the OCConnect
+     * account exists. Membership is a real, stateable relationship.
+     *
+     * WHAT IT IS STILL NOT, and the distinction a competitor would test:
+     * network membership is not certification. It is not Preferred, not
+     * Platinum Preferred, and it does not by itself carry an OC endorsement,
+     * an installation inspection, workmanship backing, or eligibility for
+     * enhanced OC warranties. Write "member of the Owens Corning Roofing
+     * Contractor Network" and never "Owens Corning Certified".
+     *
+     * So this field is named `owensCorningMembership`, not `owensCorning`:
+     * the key itself says which of the two kinds it is, which is what stops
+     * it being pasted into a credential row by someone reading quickly.
      */
     gaf: "GAF Certified Contractor",
     certainteed: "CertainTeed ShingleMaster",
+    owensCorningMembership: "Owens Corning Roofing Contractor Network Member",
+    /** Short form, for where "Owens Corning" is already the card heading. */
+    owensCorningBadge: "Contractor Network Member",
+    /**
+     * The three in one sentence, for an about page or a company summary. One
+     * string so the three cannot drift apart or be listed as if they were all
+     * the same kind of relationship.
+     */
+    manufacturerSummary:
+      "Southeast Roofing is a GAF Certified Contractor, a CertainTeed ShingleMaster, and a member of the Owens Corning Roofing Contractor Network.",
     /** Chamber of commerce membership, Greater Hattiesburg. */
     adp: "Area Development Partnership Member",
     /**

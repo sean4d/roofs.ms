@@ -61,11 +61,12 @@ export function GET() {
 - Insurance: ${trust.insured}
 - Primary category: Roofing Contractor. Also: gutters, fascia, soffit, and roof ventilation.
 
-## Credentials
+## Credentials and memberships
 - MSBOC Residential License ${license} (verify: ${siteConfig.links.msbocLicense})
 - MSBOC Commercial Certificate of Responsibility ${licenseCommercial} (verify: ${siteConfig.links.msbocCommercialLicense})
 - ${trust.gaf} (verify: ${siteConfig.links.gafProfile})
 - ${trust.certainteed} (verify: ${siteConfig.links.certainteedProfile})
+- ${trust.owensCorningMembership}
 - ${trust.bbbRating} (verify: ${siteConfig.links.bbbProfile})
 - ${trust.adp} (verify: ${siteConfig.links.adpMember})
 - ${trust.googleRating}
@@ -74,9 +75,13 @@ export function GET() {
 - ${trust.warranty}
 - Financing available, including $0 down plans
 
-Manufacturer credentials vs products installed. Two manufacturers have certified
-${siteConfig.legalName}: GAF and CertainTeed. Owens Corning shingles are a product
-line we install; Owens Corning has not certified us and we do not claim they have.
+Manufacturer certifications and memberships. ${siteConfig.legalName} is a GAF
+Certified Contractor, a CertainTeed ShingleMaster, and a member of the Owens
+Corning Roofing Contractor Network. GAF and CertainTeed are certifications those
+manufacturers issued and publish. The Owens Corning relationship is a network
+membership, not a certification: we are not an Owens Corning Certified, Preferred
+or Platinum Preferred contractor, and membership alone does not carry enhanced
+Owens Corning warranty eligibility.
 
 ## Verified profiles
 Every URL below belongs to this same business.
@@ -120,7 +125,7 @@ Mississippi only, within roughly a two-hour drive of Hattiesburg.
 
 ## Products we install
 - GAF: Timberline HDZ and Timberline Natural Shadow shingles, WeatherWatch and StormGuard leak barriers, FeltBuster synthetic underlayment, Pro-Start starter strip, Cobra ridge vent, Seal-A-Ridge ridge cap
-- Owens Corning shingles: Duration, Oakridge, Supreme (we install these products; we are not an Owens Corning certified contractor)
+- Owens Corning shingles: Duration, Oakridge, Supreme (we are a member of the Owens Corning Roofing Contractor Network, which is a membership rather than a certification)
 - Gibraltar metal roofing systems, including 29ga exposed-fastener panel and Galvalume
 - Spectra seamless gutter systems
 

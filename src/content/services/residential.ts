@@ -50,7 +50,7 @@ export const residentialServices: ServiceContent[] = [
     name: "Asphalt Shingle Roofing",
     metaTitle: "Asphalt Shingle Roofing in Hattiesburg, MS | Southeast Roofing",
     metaDescription:
-      "Architectural asphalt shingle roofing across South Mississippi from a GAF Certified Contractor and CertainTeed ShingleMaster. Straight answers on brands, colors, and cost.",
+      "Architectural asphalt shingle roofing across South Mississippi from a GAF Certified Contractor, CertainTeed ShingleMaster and Owens Corning Roofing Contractor Network member.",
     hero: {
       eyebrow: "Residential roofing",
       headline: "Asphalt shingle roofing, installed to spec",
@@ -63,7 +63,7 @@ export const residentialServices: ServiceContent[] = [
       title: "The right shingle system for a demanding climate",
       paragraphs: [
         "A shingle roof in South Mississippi works harder than one almost anywhere else: months of high heat and humidity, some of the heaviest annual rainfall in the country, and a hurricane season that runs half the year. The difference between a roof that shrugs that off and one that fails early is rarely the shingle itself. It's the system underneath and the quality of the installation.",
-        "That's why we install complete shingle systems, not just shingles: underlayment, ice-and-water protection in valleys and penetrations, drip edge, ridge ventilation, and manufacturer-matched components, fastened to spec. We're certified by GAF and by CertainTeed, we also install Owens Corning shingle products, and we'll tell you plainly which line fits your home and budget.",
+        "That's why we install complete shingle systems, not just shingles: underlayment, ice-and-water protection in valleys and penetrations, drip edge, ridge ventilation, and manufacturer-matched components, fastened to spec. We're certified by GAF and by CertainTeed and a member of the Owens Corning Roofing Contractor Network, and we'll tell you plainly which line fits your home and budget.",
       ],
     },
     sections: [
@@ -162,7 +162,7 @@ export const residentialServices: ServiceContent[] = [
       {
         title: "Choosing between GAF, CertainTeed and Owens Corning",
         paragraphs: [
-          "There's no universal winner between the brands. All three make quality architectural shingles, and the pick usually comes down to color, availability, budget tier, and warranty package. We are a GAF Certified Contractor and a CertainTeed ShingleMaster, which affects the enhanced warranty options we can register on those systems, subject to each manufacturer's own requirements and to the roof qualifying. We also install Owens Corning shingle products, though we are not an Owens Corning certified or preferred contractor. GAF remains our primary line.",
+          "There's no universal winner between the brands. All three make quality architectural shingles, and the pick usually comes down to color, availability, budget tier, and warranty package. We are a GAF Certified Contractor and a CertainTeed ShingleMaster, which affects the enhanced warranty options we can register on those systems, subject to each manufacturer's own requirements and to the roof qualifying. We are also a member of the Owens Corning Roofing Contractor Network, which is a membership rather than a certification and does not by itself carry enhanced Owens Corning warranty eligibility. GAF remains our primary line.",
           'Either way, a "30-year" or "limited lifetime" label describes warranty terms, not a service-life prediction. Real service life here depends on heat, humidity, algae, ventilation, tree cover, storms, and, above all, installation quality. Algae-resistant lines help with black streaking, and steady granule loss in the gutters is the honest sign a roof is winding down.',
         ],
         links: [
@@ -271,7 +271,7 @@ export const residentialServices: ServiceContent[] = [
     materials: {
       title: "Shingle lines we install",
       description:
-        "Certified by GAF and by CertainTeed. GAF is our primary recommendation, and we also install CertainTeed and Owens Corning shingle products.",
+        "Certified by GAF and by CertainTeed, and a member of the Owens Corning Roofing Contractor Network. GAF is our primary recommendation.",
       items: [
         {
           title: "Architectural (dimensional) shingles",
@@ -283,11 +283,11 @@ export const residentialServices: ServiceContent[] = [
         },
         {
           title: "CertainTeed shingle systems",
-          text: "Installed as a CertainTeed ShingleMaster. Ask us which CertainTeed lines are currently available for your roof and colour range.",
+          text: "Installed as a CertainTeed ShingleMaster. Ask us which CertainTeed lines are currently available for your roof and color range.",
         },
         {
-          title: "Owens Corning products",
-          text: "A proven alternative line we install when its style, color, or availability fits your project best.",
+          title: "Owens Corning shingles",
+          text: "Installed as a member of the Owens Corning Roofing Contractor Network. Duration, Oakridge and Supreme lines, and we'll help you pick the style and color that suits the house.",
         },
       ],
       note: "We recommend based on your roof and budget, not on what we happen to have on the truck. Ask us to compare lines side by side at your estimate.",
@@ -315,7 +315,7 @@ export const residentialServices: ServiceContent[] = [
       {
         question: "Which shingle brands do you install?",
         answer:
-          "GAF, CertainTeed and Owens Corning. We hold certifications from two of them: we are a GAF Certified Contractor and a CertainTeed ShingleMaster. GAF is our primary line. Owens Corning is a product line we install when it is the right fit; they have not certified us and we don't claim otherwise. We'll show you the options with real samples.",
+          "We install GAF, CertainTeed and Owens Corning shingles. Southeast Roofing is a GAF Certified Contractor, a CertainTeed ShingleMaster, and a member of the Owens Corning Roofing Contractor Network. GAF remains our primary shingle line, and we help you compare options based on your roof, budget, style and color preferences. We'll show you the options with real samples.",
       },
       {
         question: "Can new shingles go over my old ones?",

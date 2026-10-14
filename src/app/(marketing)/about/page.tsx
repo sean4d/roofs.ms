@@ -92,6 +92,17 @@ const credentials = [
     href: siteConfig.links.certainteedProfile,
   },
   {
+    /*
+     * Added 2026-10-14. No href, because a network membership publishes no
+     * public record: the card points at our own /licenses entry, which says
+     * what kind of relationship it is, rather than at an invented profile.
+     */
+    title: "Owens Corning Roofing Contractor Network Member",
+    detail:
+      "Member of Owens Corning's contractor network, a membership rather than a certification",
+    href: "/licenses#owens-corning",
+  },
+  {
     title: "BBB Accredited: A+ rating",
     detail: "Check our record with the Better Business Bureau",
     href: siteConfig.links.bbbProfile,

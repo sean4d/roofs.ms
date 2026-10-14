@@ -49,8 +49,12 @@ export function SiteFooter() {
               nothing to the entity graph.
 
               CertainTeed ShingleMaster joined GAF here on 2026-09-24. Owens
-              Corning is deliberately not in this line: we install their
-              shingles, they have not certified us.
+              Corning joined on 2026-10-14 as a MEMBERSHIP, having previously
+              been kept out of this line entirely because they had not
+              certified us. That is still true and is why it is the one entry
+              here with no link: network membership has no public record to
+              point at, and inventing a directory URL for it would be worse
+              than having none. The wording carries the distinction instead.
             */}
             <p className="mt-5 text-xs leading-relaxed text-steel-300">
               <a
@@ -66,6 +70,16 @@ export function SiteFooter() {
               >
                 {siteConfig.trustFacts.certainteed}
               </a>
+              {" · "}
+              {/* No link, and no shortening: the full designation is what
+                  distinguishes a membership from a certification, so it is
+                  the full designation that ships. It wraps; that is fine. */}
+              <Link
+                href="/licenses#owens-corning"
+                className="underline underline-offset-4 transition-colors hover:text-white"
+              >
+                {siteConfig.trustFacts.owensCorningMembership}
+              </Link>
               {" · "}
               <a
                 href={siteConfig.links.bbbProfile}

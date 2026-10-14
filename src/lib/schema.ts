@@ -98,8 +98,10 @@ export function roofingContractorSchema(): JsonLdObject {
       "Fascia and soffit",
       // Shingle brands we actually install. Naming them here is how an
       // answer engine connects "who installs CertainTeed near Hattiesburg"
-      // to this business. Owens Corning belongs in this list (we install it)
-      // and nowhere near hasCredential (they have not certified us).
+      // to this business. Owens Corning belongs in this list because we
+      // install it, and in memberOf below because we belong to their
+      // contractor network. It stays out of hasCredential either way:
+      // membership is not a credential somebody issued us.
       "CertainTeed shingles",
       "GAF shingles",
       "Owens Corning shingles",
@@ -225,9 +227,15 @@ export function roofingContractorSchema(): JsonLdObject {
        *
        * A second manufacturer certification from a second manufacturer, with
        * its own public record. It sits alongside GAF rather than replacing
-       * it. Owens Corning is deliberately absent from this array: we install
-       * their shingles, they have not certified us, and hasCredential is for
-       * credentials somebody else issued.
+       * it.
+       *
+       * OWENS CORNING IS STILL DELIBERATELY ABSENT FROM THIS ARRAY, and that
+       * did not change when the network membership was added on 2026-10-14.
+       * hasCredential is for credentials somebody issued and assessed us
+       * against. A contractor network membership is an affiliation, so it is
+       * expressed with memberOf below. Putting it here would assert to every
+       * answer engine that Owens Corning certified us, which is precisely
+       * the claim we must not make.
        */
       {
         "@type": "EducationalOccupationalCredential",
@@ -238,16 +246,34 @@ export function roofingContractorSchema(): JsonLdObject {
       },
     ].filter(Boolean),
     /*
-     * Chamber of commerce membership. `memberOf` is the correct property for
-     * an organisation belonging to another organisation, and it is a
-     * different claim from a credential: nobody certified us, we joined.
+     * Memberships. `memberOf` is the correct property for an organisation
+     * belonging to another organisation, and it is a different claim from a
+     * credential: nobody certified us, we joined.
+     *
+     * An ARRAY since 2026-10-14, when the Owens Corning Roofing Contractor
+     * Network membership was added beside the chamber of commerce. The two
+     * are the same KIND of statement even though one is a trade body and the
+     * other a manufacturer's network, which is the whole reason they belong
+     * together here rather than one of them being promoted into
+     * hasCredential.
+     *
+     * The Owens Corning entry carries no url on purpose: membership has no
+     * public record to cite, and pointing at owenscorning.com's home page
+     * would imply a profile that does not exist.
      */
-    memberOf: {
-      "@type": "Organization",
-      name: "Area Development Partnership",
-      url: siteConfig.links.adpMember,
-      areaServed: "Greater Hattiesburg, Mississippi",
-    },
+    memberOf: [
+      {
+        "@type": "Organization",
+        name: "Area Development Partnership",
+        url: siteConfig.links.adpMember,
+        areaServed: "Greater Hattiesburg, Mississippi",
+      },
+      {
+        "@type": "Organization",
+        name: "Owens Corning Roofing Contractor Network",
+        parentOrganization: { "@type": "Organization", name: "Owens Corning" },
+      },
+    ],
     /*
      * Both government licence records belong in sameAs. sameAs is for pages
      * that unambiguously identify the entity, and a state licensing register

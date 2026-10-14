@@ -62,9 +62,9 @@ export const faqGroups: FaqGroup[] = [
       },
       {
         question:
-          "What do GAF Certified Contractor and CertainTeed ShingleMaster mean?",
+          "What manufacturer certifications and memberships does Southeast Roofing hold?",
         answer:
-          "Both are manufacturer certifications: GAF and CertainTeed each vet and train contractors to install their roofing systems to specification, and each publishes the result. They are stamps that the roofer meets that manufacturer's standard, and you can check both directly on GAF's and CertainTeed's own websites rather than taking our word for it. We hold both. We also install Owens Corning shingle products, but Owens Corning has not certified us and we do not claim they have.",
+          "Three relationships, of two different kinds. GAF Certified Contractor and CertainTeed ShingleMaster are manufacturer certifications: each company vets and trains contractors to install their roofing systems to specification, and each publishes the result, so you can check both on GAF's and CertainTeed's own websites rather than taking our word for it. We hold both. We are also a member of the Owens Corning Roofing Contractor Network, which is a membership rather than a certification: it is how we install and specify Owens Corning shingles, and it is a different kind of relationship from the other two.",
       },
       {
         question: "How do I avoid storm-chasing contractors?",
