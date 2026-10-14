@@ -7,6 +7,8 @@ import { primaryCta } from "@/config/navigation";
 import { hero, heroTrustBar } from "@/content/homepage";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
+import { WordReveal } from "@/components/motion/word-reveal";
+import { Magnetic } from "@/components/motion/magnetic";
 import { PhoneLink } from "@/components/shared/phone-link";
 import { HeroVideo } from "@/components/home/hero-video";
 
@@ -71,42 +73,82 @@ export function Hero() {
               {siteConfig.address.addressLocality},{" "}
               {siteConfig.address.addressRegion}
             </h1>
-            <p className="mt-2 font-display text-[2.5rem] leading-[1.06] font-bold text-white sm:mt-3 sm:text-5xl lg:text-6xl">
-              {hero.headline.lead}{" "}
-              <span className="text-steel-300">{hero.headline.accent}</span>
-              {hero.headline.tail && ` ${hero.headline.tail}`}
-            </p>
+          </Reveal>
+
+          {/*
+            THE BRAND LINE RISES WORD BY WORD, OUTSIDE THE REVEAL ABOVE.
+
+            It used to sit inside that same <Reveal> as the descriptor and the
+            subhead, which meant the whole block faded and rose as one slab.
+            Giving the biggest line on the page its own motion is the point of
+            the effect, and nesting it inside the slab would have run two
+            animations over the same pixels at once.
+
+            The two-tone treatment survives: accentFrom/accentTo colour the
+            "right." exactly as the span used to, and the accent run is bounded
+            so an added tail would not inherit it.
+          */}
+          <WordReveal
+            as="p"
+            text={[hero.headline.lead, hero.headline.accent, hero.headline.tail]
+              .filter(Boolean)
+              .join(" ")}
+            accentFrom={hero.headline.lead.split(/\s+/).length}
+            accentTo={
+              hero.headline.lead.split(/\s+/).length +
+              hero.headline.accent.split(/\s+/).length
+            }
+            delay={0.1}
+            className="mt-2 block font-display text-[2.5rem] leading-[1.06] font-bold text-white sm:mt-3 sm:text-5xl lg:text-6xl"
+          />
+
+          <Reveal delay={0.3}>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-steel-100 sm:text-xl">
               {hero.subhead}
             </p>
           </Reveal>
 
           <Reveal delay={0.15}>
+            {/*
+              The two conversion buttons lean toward the cursor. Only these
+              two: the outline division links and the phone row below stay
+              still, because the effect means "this is the thing to click"
+              and it stops meaning that if everything does it.
+
+              Magnetic renders an inline-block span, so the buttons keep
+              w-full on mobile only if the span does too, hence the wrapper
+              classes. On a touchscreen the component disables its own
+              transform, so a finger never chases a moving target.
+            */}
             <div className="mt-6 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center">
               {/* Primary conversion: OUR instant estimator, on our own site.
                   It used to be an external Roofr link opened in a new tab. */}
-              <Button
-                size="xl"
-                /* The floating rail watches for this. While it is on screen
-                   the rail hides, because two invitations to the same page in
-                   one viewport is just clutter. */
-                data-estimate-cta=""
-                className="w-full bg-white text-primary shadow-lg shadow-navy-950/30 hover:bg-steel-100 sm:w-auto"
-                render={<Link href={siteConfig.links.instantEstimate} />}
-                nativeButton={false}
-              >
-                <Zap className="size-5" aria-hidden="true" />
-                Free Instant Estimate
-              </Button>
-              <Button
-                size="xl"
-                className="w-full bg-navy-700 text-white shadow-lg shadow-navy-950/30 hover:bg-navy-800 sm:w-auto"
-                render={<Link href={primaryCta.href} />}
-                nativeButton={false}
-              >
-                {primaryCta.label}
-                <ArrowRight aria-hidden="true" />
-              </Button>
+              <Magnetic className="w-full sm:w-auto">
+                <Button
+                  size="xl"
+                  /* The floating rail watches for this. While it is on screen
+                     the rail hides, because two invitations to the same page in
+                     one viewport is just clutter. */
+                  data-estimate-cta=""
+                  className="w-full bg-white text-primary shadow-lg shadow-navy-950/30 hover:bg-steel-100 sm:w-auto"
+                  render={<Link href={siteConfig.links.instantEstimate} />}
+                  nativeButton={false}
+                >
+                  <Zap className="size-5" aria-hidden="true" />
+                  Free Instant Estimate
+                </Button>
+              </Magnetic>
+              <Magnetic className="w-full sm:w-auto">
+                <Button
+                  size="xl"
+                  className="w-full bg-navy-700 text-white shadow-lg shadow-navy-950/30 hover:bg-navy-800 sm:w-auto"
+                  render={<Link href={primaryCta.href} />}
+                  nativeButton={false}
+                >
+                  {primaryCta.label}
+                  <ArrowRight aria-hidden="true" />
+                </Button>
+              </Magnetic>
             </div>
             <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
               <Button

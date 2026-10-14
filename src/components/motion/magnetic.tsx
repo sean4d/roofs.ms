@@ -47,7 +47,16 @@ export function Magnetic({
   const sy = useSpring(y, { stiffness: 180, damping: 18, mass: 0.4 });
 
   if (reduced) {
-    return <span className={className}>{children}</span>;
+    /*
+     * inline-block here too, not a bare span. Callers size this wrapper
+     * (the hero buttons are w-full on a phone and w-auto above it), and
+     * width does nothing on an inline box, so dropping the display on the
+     * reduced-motion path would quietly shrink those buttons for exactly
+     * the people least likely to report it.
+     */
+    return (
+      <span className={`inline-block ${className ?? ""}`}>{children}</span>
+    );
   }
 
   return (

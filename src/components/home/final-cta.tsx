@@ -4,6 +4,7 @@ import { finalCta } from "@/content/homepage";
 import { Section } from "@/components/shared/section";
 import { PhoneLink } from "@/components/shared/phone-link";
 import { Reveal } from "@/components/motion/reveal";
+import { Magnetic } from "@/components/motion/magnetic";
 import { Button } from "@/components/ui/button";
 
 /**
@@ -32,14 +33,19 @@ export function FinalCta() {
         </Reveal>
 
         <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">
-          <Button
-            size="xl"
-            className="bg-white text-primary hover:bg-steel-100"
-            render={<Link href={finalCta.primary.href} />}
-            nativeButton={false}
-          >
-            {finalCta.primary.label}
-          </Button>
+          {/* Only the primary button is magnetic. The estimate and financing
+              buttons beside it are outline-styled seconds, and three
+              buttons all leaning at the cursor would be a toy. */}
+          <Magnetic>
+            <Button
+              size="xl"
+              className="bg-white text-primary hover:bg-steel-100"
+              render={<Link href={finalCta.primary.href} />}
+              nativeButton={false}
+            >
+              {finalCta.primary.label}
+            </Button>
+          </Magnetic>
           {/*
             OUR OWN ESTIMATOR, SO IT IS A Link.
 

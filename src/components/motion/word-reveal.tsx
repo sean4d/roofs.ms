@@ -38,6 +38,12 @@ export function WordReveal({
    * WordReveals would restart the stagger halfway through the line.
    */
   accentFrom,
+  /*
+   * Exclusive end of the accent run. The hero headline is lead + accent +
+   * tail, and the tail is empty today; without this bound, the day someone
+   * fills the tail in it would silently take the accent colour too.
+   */
+  accentTo,
   accentClassName = "text-steel-300",
 }: {
   text: string;
@@ -46,12 +52,17 @@ export function WordReveal({
   delay?: number;
   as?: "span" | "h1" | "h2" | "p";
   accentFrom?: number;
+  accentTo?: number;
   accentClassName?: string;
 }) {
   const reduced = useReducedMotion();
   const words = text.split(/\s+/).filter(Boolean);
   const accentAt = (i: number) =>
-    accentFrom !== undefined && i >= accentFrom ? accentClassName : undefined;
+    accentFrom !== undefined &&
+    i >= accentFrom &&
+    i < (accentTo ?? words.length)
+      ? accentClassName
+      : undefined;
 
   if (reduced) {
     return (

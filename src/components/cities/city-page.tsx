@@ -20,6 +20,7 @@ import { SectionHeading } from "@/components/shared/section-heading";
 import { PhoneLink } from "@/components/shared/phone-link";
 import { Reveal } from "@/components/motion/reveal";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
+import { ImageWipe } from "@/components/motion/image-wipe";
 import { Button } from "@/components/ui/button";
 import { FinalCta } from "@/components/home/final-cta";
 
@@ -142,16 +143,20 @@ export function CityPage({
             title={`Roofs we've completed in ${cityContent.city}`}
             description="Every photo below is a genuine Southeast Roofing project in this community: not stock, not staged."
           />
+          {/* Four tiles at most, wiping in sequence. A swap for the fade
+              and rise these already had, not extra motion. The hero photo
+              above is left alone on purpose: it carries `priority` and is
+              the largest paint on the page. */}
           <StaggerGroup className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {localPhotos.slice(0, 4).map((photo) => (
-              <StaggerItem as="div" key={photo.src}>
+              <ImageWipe key={photo.src} from="bottom" inStagger>
                 <JobPhotoTile
                   src={photo.src}
                   alt={photo.alt}
                   city={cityContent.city}
                   className="aspect-[4/3] w-full rounded-2xl border border-border"
                 />
-              </StaggerItem>
+              </ImageWipe>
             ))}
           </StaggerGroup>
         </Section>

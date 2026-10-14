@@ -12,6 +12,7 @@ import { Section } from "@/components/shared/section";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/motion/reveal";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
+import { ImageWipe } from "@/components/motion/image-wipe";
 import { JobPhotoTile } from "@/components/projects/job-photo-tile";
 
 /**
@@ -360,17 +361,31 @@ export function ServiceGallery({
         title={gallery.title}
         description={gallery.description}
       />
+      {/*
+        THE TILES WIPE IN INSTEAD OF FADING AND RISING.
+
+        This is a swap, not an addition: each tile already animated once on
+        entry as a StaggerItem, and ImageWipe replaces that with a wipe and a
+        settle. The count is small and fixed by the page's own gallery list,
+        which is why the effect is affordable here and is deliberately NOT on
+        /projects: that grid is filterable, so every filter change would
+        re-mount the tiles and wipe the whole wall again.
+
+        The group keeps its StaggerGroup, and the tiles are inStagger
+        children of it: see image-wipe.tsx for why a grid of self-triggering
+        wipes drops its first tile.
+      */}
       <StaggerGroup className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {gallery.photos.map((photo) => (
-          <StaggerItem as="div" key={photo.src}>
-            {/* JobPhotoTile shows the city/town tag and opens the job card, 
+          <ImageWipe key={photo.src} from="bottom" inStagger>
+            {/* JobPhotoTile shows the city/town tag and opens the job card,
                 every real job photo carries its location (owner rule). */}
             <JobPhotoTile
               src={photo.src}
               alt={photo.alt}
               className="aspect-[4/3] w-full rounded-2xl border border-border"
             />
-          </StaggerItem>
+          </ImageWipe>
         ))}
       </StaggerGroup>
       <Reveal className="mt-8">

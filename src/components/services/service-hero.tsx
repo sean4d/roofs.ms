@@ -6,6 +6,8 @@ import type { ServiceContent } from "@/content/services/types";
 import { Breadcrumbs } from "@/components/services/breadcrumbs";
 import { PhoneLink } from "@/components/shared/phone-link";
 import { Reveal } from "@/components/motion/reveal";
+import { WordReveal } from "@/components/motion/word-reveal";
+import { Magnetic } from "@/components/motion/magnetic";
 import { Button } from "@/components/ui/button";
 
 /**
@@ -59,32 +61,48 @@ export function ServiceHero({
             Pages whose headline already names the subject leave `heading`
             unset and are untouched.
           */}
+          {/*
+            The big line rises word by word, whichever element it is. Where
+            the page supplies a heading, that heading stays the H1 and reads
+            plainly; the marketing line beneath it is the one that moves.
+            Where it does not, the marketing line IS the H1 and WordReveal
+            renders it as one, keeping the whole sentence in the
+            accessibility tree for a crawler and a screen reader.
+          */}
           {hero.heading ? (
             <>
               <h1 className="mt-3 font-display text-2xl font-bold text-navy-900 sm:text-3xl">
                 {hero.heading}
               </h1>
-              <p className="mt-3 font-display text-4xl font-bold text-navy-900 sm:text-5xl">
-                {hero.headline}
-              </p>
+              <WordReveal
+                as="p"
+                text={hero.headline}
+                className="mt-3 block font-display text-4xl font-bold text-navy-900 sm:text-5xl"
+              />
             </>
           ) : (
-            <h1 className="mt-3 font-display text-4xl font-bold text-navy-900 sm:text-5xl">
-              {hero.headline}
-            </h1>
+            <WordReveal
+              as="h1"
+              text={hero.headline}
+              className="mt-3 block font-display text-4xl font-bold text-navy-900 sm:text-5xl"
+            />
           )}
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-600">
             {hero.subhead}
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-4">
-            <Button
-              size="lg"
-              className="text-base"
-              render={<Link href={cta.href} />}
-              nativeButton={false}
-            >
-              {cta.label}
-            </Button>
+            {/* The one conversion button on the page leans toward the
+                cursor; the phone link beside it stays still. */}
+            <Magnetic>
+              <Button
+                size="lg"
+                className="text-base"
+                render={<Link href={cta.href} />}
+                nativeButton={false}
+              >
+                {cta.label}
+              </Button>
+            </Magnetic>
             <PhoneLink className="text-base text-navy-900" />
           </div>
         </Reveal>

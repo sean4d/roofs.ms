@@ -7,6 +7,7 @@ import { Section } from "@/components/shared/section";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/motion/reveal";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
+import { ImageWipe } from "@/components/motion/image-wipe";
 
 /**
  * Why choose Southeast Roofing (PRD §3.8): honest local differentiators,
@@ -50,7 +51,17 @@ export function WhyUs() {
           </Reveal>
         </div>
 
-        <Reveal as="figure">
+        {/*
+          The photo wipes up rather than fading in with the rest. It is the
+          only image in this section, so it can carry a motion of its own
+          without competing with anything; the rounded corners live on the
+          wipe's clipping box, because clip-path on the inside of a rounded
+          element would square the picture off while it ran.
+        */}
+        <ImageWipe
+          className="shadow-premium aspect-[4/3] w-full rounded-3xl border border-border"
+          from="bottom"
+        >
           <Image
             src={whyUs.photo.src}
             alt={whyUs.photo.alt}
@@ -58,9 +69,9 @@ export function WhyUs() {
             height={750}
             quality={70}
             sizes="(min-width: 1024px) 50vw, 100vw"
-            className="shadow-premium aspect-[4/3] w-full rounded-3xl border border-border object-cover"
+            className="h-full w-full object-cover"
           />
-        </Reveal>
+        </ImageWipe>
       </div>
     </Section>
   );
