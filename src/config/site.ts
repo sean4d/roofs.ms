@@ -228,14 +228,22 @@ export const siteConfig = {
     instagram: "https://www.instagram.com/southeastroofing.llc",
     tiktok: "https://www.tiktok.com/@southeastroofing.llc",
     /**
-     * LinkedIn (owner-supplied 2026-09-24).
+     * LinkedIn COMPANY page (owner-supplied 2026-10-15), replacing the
+     * /in/southeast-roofing-1b84b3367 personal-profile URL the business ran
+     * on until now. That swap is what the previous note here anticipated.
      *
-     * This is an /in/ profile URL rather than /company/, which is how the
-     * account was created. It is the account the owner gave us and it is the
-     * one that goes in sameAs; if a /company/ page is created later, change
-     * it here and every icon row plus the identity graph follows.
+     * It matters for more than tidiness. A /company/ page is the entity type
+     * Google and the answer engines expect an Organization's sameAs to point
+     * at; a personal profile standing in for a business is a weaker identity
+     * signal and is against LinkedIn's own rules. The old URL is deliberately
+     * NOT kept alongside this one: sameAs is a set of assertions that each
+     * page IS this business, and pointing at two different LinkedIn entities
+     * asks the crawler to pick one.
+     *
+     * Verified live before it went in: 200, og:title "Southeast Roofing",
+     * og:url exactly this, description naming Hattiesburg, Mississippi.
      */
-    linkedin: "https://www.linkedin.com/in/southeast-roofing-1b84b3367",
+    linkedin: "https://www.linkedin.com/company/southeastroofing",
     nextdoor: "https://nextdoor.com/pages/southeast-roofing-hattiesburg-ms/",
   },
 
@@ -424,7 +432,9 @@ export const siteConfig = {
     "https://www.facebook.com/southeastroofing.llc",
     "https://www.instagram.com/southeastroofing.llc",
     "https://www.tiktok.com/@southeastroofing.llc",
-    "https://www.linkedin.com/in/southeast-roofing-1b84b3367",
+    // LinkedIn company page. Replaced the old /in/ personal profile on
+    // 2026-10-15; see socials.linkedin for why only one of the two is here.
+    "https://www.linkedin.com/company/southeastroofing",
     "https://nextdoor.com/pages/southeast-roofing-hattiesburg-ms/",
     // Maps + major directories
     "https://maps.apple.com/place?place-id=IFA6389F87BE4B40A",

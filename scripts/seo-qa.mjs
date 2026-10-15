@@ -309,11 +309,20 @@ function universalRules(page, doc) {
         at(`social row includes a named ${p} link`),
       );
     }
+    /*
+     * The company page, not the old /in/ personal profile it replaced on
+     * 2026-10-15. Asserted as a literal rather than read from siteConfig on
+     * purpose: this script checks the SHIPPED html, so a literal catches a
+     * stale deployment, where reading the config would only ever compare the
+     * build to itself and pass.
+     */
     check(
-      html.includes(
-        'href="https://www.linkedin.com/in/southeast-roofing-1b84b3367"',
-      ),
-      at("LinkedIn icon points at the company profile"),
+      html.includes('href="https://www.linkedin.com/company/southeastroofing"'),
+      at("LinkedIn icon points at the company page"),
+    );
+    check(
+      !html.includes("southeast-roofing-1b84b3367"),
+      at("the superseded LinkedIn personal profile is gone"),
     );
   }
 

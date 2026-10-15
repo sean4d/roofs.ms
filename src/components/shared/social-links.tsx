@@ -30,14 +30,19 @@ const LABELS: Record<string, string> = {
 /**
  * What each account is actually called, for the readable directory below.
  *
- * Three of the five URLs end in a real handle, so those are derived from
+ * Four of the five URLs end in a real handle, so those are derived from
  * siteConfig rather than retyped: if a URL changes, the displayed handle
  * changes with it and the two cannot disagree.
  *
- * The other two have no handle to show. LinkedIn's URL ends in a generated
- * id, and the Nextdoor URL is a page slug, not something anybody types at a
- * person. Inventing a tidy-looking handle for either would be publishing a
- * name that does not exist, so those fall back to the company name.
+ * LinkedIn JOINED THAT GROUP on 2026-10-15. Its URL used to end in a
+ * generated id (/in/southeast-roofing-1b84b3367) with nothing readable to
+ * show, so it fell back to the company name; the new company page ends in a
+ * chosen slug like the rest, so it is derived like the rest and the fallback
+ * is no longer reached.
+ *
+ * Nextdoor still has no handle: its URL ends in a page slug, not something
+ * anybody types at a person. Inventing a tidy-looking handle for it would be
+ * publishing a name that does not exist, so it keeps the company name.
  */
 const handleFromUrl = (url: string): string | null => {
   const slug = url.replace(/\/+$/, "").split("/").pop() ?? "";
@@ -51,8 +56,7 @@ const HANDLES: Record<string, string> = {
   instagram:
     handleFromUrl(siteConfig.socials.instagram) ?? siteConfig.legalName,
   tiktok: handleFromUrl(siteConfig.socials.tiktok) ?? siteConfig.legalName,
-  // Generated id, not a handle.
-  linkedin: siteConfig.legalName,
+  linkedin: handleFromUrl(siteConfig.socials.linkedin) ?? siteConfig.legalName,
   // Page slug, not a handle.
   nextdoor: `${siteConfig.name}, ${siteConfig.address.addressLocality} ${siteConfig.address.addressRegion}`,
 };
