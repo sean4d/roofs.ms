@@ -7,6 +7,10 @@
     {
       "path": "/api/cron/social-reconcile",
       "schedule": "0 15 * * *"
+    },
+    {
+      "path": "/api/cron/roofgo-leads",
+      "schedule": "45 13 * * *"
     }
   ]
 }

@@ -1,10 +1,5 @@
 import "server-only";
 
-import { randomBytes } from "node:crypto";
-
-import { db } from "./db";
-import { baseUrl } from "./base-url";
-import { rateCard } from "@/config/quote-rates";
 import { siteConfig } from "@/config/site";
 
 /**
@@ -15,28 +10,10 @@ import { siteConfig } from "@/config/site";
  * lead tool, and it means every measurement we pay Google for is attached to
  * somebody we can actually call.
  *
- * These rows carry no owner. See the note in schema.sql: NULL means the
- * website, which lands correctly on the existing scoping rule so the office
- * sees them and reps do not.
+ * Since SE8 (2026-10-15) the estimate itself is saved in RoofGo, not in the
+ * /pin tables (src/lib/roofgo-lead.ts); what stays here is the email check
+ * and the homeowner's email.
  */
-
-export interface PublicQuoteInput {
-  name: string;
-  email: string;
-  phone: string;
-  address: string;
-  lat: number;
-  lon: number;
-  squares: number;
-  pitchDegrees: number | null;
-  planes: number;
-  imageryDate: string | null;
-  material: string;
-  stories: number;
-  priceShown: number;
-  monthlyLow: number;
-  monthlyHigh: number;
-}
 
 /**
  * Reject the addresses that exist to avoid being contacted.
@@ -86,75 +63,6 @@ export function emailLooksReal(email: string): boolean {
   // Somebody typing "asdf@asdf.com" gets through, and should: the estimate
   // simply never arrives and the office learns that from the bounce.
   return /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/.test(email);
-}
-
-export interface SavedPublicQuote {
-  quoteId: string;
-  publicToken: string;
-  url: string;
-}
-
-/** Store the customer and their quote, and mint the link we email them. */
-export async function savePublicQuote(
-  input: PublicQuoteInput,
-): Promise<SavedPublicQuote> {
-  const sql = db();
-  const publicToken = randomBytes(24).toString("base64url");
-
-  // One customer per address from the website, so somebody who runs their own
-  // house three times does not appear three times in the office's list.
-  const existing = (await sql`
-    SELECT id FROM customers
-     WHERE owner_id IS NULL
-       AND round(lat::numeric, 5) = round(${input.lat}::numeric, 5)
-       AND round(lon::numeric, 5) = round(${input.lon}::numeric, 5)
-     LIMIT 1
-  `) as Array<{ id: string }>;
-
-  let customerId: string;
-  if (existing.length) {
-    customerId = existing[0].id;
-    await sql`
-      UPDATE customers
-         SET name = ${input.name}, email = ${input.email}, phone = ${input.phone},
-             address = ${input.address},
-             status = CASE WHEN status = 'new' THEN 'quoted' ELSE status END,
-             updated_at = now()
-       WHERE id = ${customerId}::uuid
-    `;
-  } else {
-    const created = (await sql`
-      INSERT INTO customers (owner_id, address, lat, lon, name, email, phone, status, tags)
-      VALUES (NULL, ${input.address}, ${input.lat}, ${input.lon},
-              ${input.name}, ${input.email}, ${input.phone}, 'quoted',
-              ARRAY['website','instant-estimate'])
-      RETURNING id
-    `) as Array<{ id: string }>;
-    customerId = created[0].id;
-  }
-
-  const quote = (await sql`
-    INSERT INTO quotes (
-      customer_id, created_by, roof_sqft, squares, pitch_degrees, planes,
-      measure_source, measure_quality, imagery_date, material, stories,
-      rate_card, price_low, price_high, price_shown, monthly_low, monthly_high,
-      public_token, sent_via, sent_at
-    ) VALUES (
-      ${customerId}::uuid, NULL, ${Math.round(input.squares * 100)},
-      ${input.squares}, ${input.pitchDegrees}, ${input.planes},
-      'solar', 'public', ${input.imageryDate}, ${input.material},
-      ${String(input.stories)}, ${JSON.stringify(rateCard)}::jsonb,
-      ${input.priceShown}, ${input.priceShown}, ${input.priceShown},
-      ${input.monthlyLow}, ${input.monthlyHigh}, ${publicToken}, 'email', now()
-    )
-    RETURNING id
-  `) as Array<{ id: string }>;
-
-  return {
-    quoteId: quote[0].id,
-    publicToken,
-    url: `${baseUrl()}/estimate/${publicToken}`,
-  };
 }
 
 /**

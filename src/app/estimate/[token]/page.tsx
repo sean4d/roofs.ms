@@ -5,6 +5,8 @@ import { getProposalByToken } from "@/lib/quotes/save";
 import { ProposalDoc } from "@/app/pin/proposal/proposal-doc";
 import { siteConfig } from "@/config/site";
 
+import { ensureDelivered } from "@/lib/roofgo-lead";
+
 import { TrackEstimate } from "./track";
 import "@/app/pin/proposal/print.css";
 
@@ -40,8 +42,28 @@ export default async function PublicEstimate({
   searchParams: Promise<{ m?: string }>;
 }) {
   const { token } = await params;
+  if (!token || token.length < 20) notFound();
   const data = await getProposalByToken(token);
-  if (!data) notFound();
+  if (!data) {
+    /*
+     * Not in /pin: since SE8 (2026-10-15) website estimates are saved in
+     * RoofGo under the token minted here, so forward it. If this site has not
+     * managed to hand that estimate to RoofGo yet (RoofGo was down), try once
+     * more now, and if it still is not there say so instead of sending the
+     * homeowner to a page that would 404.
+     */
+    let state: Awaited<ReturnType<typeof ensureDelivered>> = "unknown";
+    try {
+      state = await ensureDelivered(token);
+    } catch (error) {
+      console.error("[estimate] RoofGo outbox check failed", error);
+    }
+    if (state === "pending") return <BeingPrepared />;
+    const { m } = await searchParams;
+    redirect(
+      `${siteConfig.roofgoEstimateOrigin}/estimate/${encodeURIComponent(token)}${m === "1" ? "?m=1" : ""}`,
+    );
+  }
 
   if (Date.parse(data.createdAt) < MOVED_BEFORE) {
     // ?m=1 rides along so RoofGo still counts it as a mailer QR scan.
@@ -103,6 +125,30 @@ export default async function PublicEstimate({
             Check us out online
           </a>
         </div>
+      </div>
+    </main>
+  );
+}
+
+/** The estimate exists, RoofGo just does not have it yet. Rare, and brief. */
+function BeingPrepared() {
+  return (
+    <main className="flex min-h-dvh items-center justify-center bg-slate-100 px-4 py-10">
+      <div className="max-w-md rounded-xl bg-white p-6 text-center shadow-xl">
+        <h1 className="text-xl font-bold text-[#123b63]">
+          Your estimate is being prepared
+        </h1>
+        <p className="mt-3 text-sm text-slate-600">
+          Your price is saved and we have your details. The full estimate will
+          be ready at this same link in a few minutes. If you would rather talk
+          it through now, call us.
+        </p>
+        <a
+          href={`tel:${siteConfig.phone.tel}`}
+          className="mt-5 inline-block rounded-lg bg-[#123b63] px-5 py-3 text-sm font-semibold text-white"
+        >
+          Call {siteConfig.phone.display}
+        </a>
       </div>
     </main>
   );

@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { z } from "zod";
 
 import { geocode, measureAt } from "@/lib/quotes/measure";
@@ -11,14 +11,14 @@ import {
   monthlyPayment,
   paymentFor,
   priceFor,
+  rateCard,
 } from "@/config/quote-rates";
 import { clientIp, sameOrigin } from "@/lib/production/auth";
 import { deliverLead } from "@/lib/leads";
-import {
-  emailEstimate,
-  emailLooksReal,
-  savePublicQuote,
-} from "@/lib/quotes/public-quote";
+import { emailEstimate, emailLooksReal } from "@/lib/quotes/public-quote";
+import { baseUrl } from "@/lib/quotes/base-url";
+import { recordInstantEstimate } from "@/lib/instant-estimate-save";
+import { drain, saveLead } from "@/lib/roofgo-lead";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -130,86 +130,37 @@ export async function POST(request: Request) {
       stories: input.stories ?? DEFAULT_OPTIONS.stories,
     };
     const measured = m.confidence !== "reject" && Boolean(m.squares);
-    // Display only: the saved quote page and the customer's email read
-    // as a person's name, while the CRM below gets the two parts apart.
-    const fullName = `${input.firstName} ${input.lastName}`;
     const price = measured ? priceFor(m.squares!, options).shown : null;
 
-    // Save first, because the estimate link has to exist before it is mailed
-    // and before the lead that references it goes out.
-    let url: string | null = null;
-    if (measured && price) {
-      try {
-        const saved = await savePublicQuote({
-          name: fullName,
-          email: input.email,
-          phone: input.phone,
-          address: point.formatted,
-          lat: point.lat,
-          lon: point.lon,
-          squares: m.squares!,
-          pitchDegrees: m.pitchDegrees,
-          planes: m.planes,
-          imageryDate: m.imageryDate,
-          material: options.material,
-          stories: options.stories,
-          priceShown: price,
-          monthlyLow: monthlyPayment(price),
-          monthlyHigh: monthlyPayment(price),
-        });
-        url = saved.url;
-        await emailEstimate({
-          to: input.email,
-          name: fullName,
-          address: point.formatted,
-          price,
-          squares: m.squares!,
-          url: saved.url,
-        });
-      } catch (error) {
-        // A failed save or send must not cost us the lead or the answer on
-        // screen. The office still hears about it below.
-        console.error("[instant-estimate] save/send failed", error);
-      }
-    }
-
-    // The lead goes out either way. Somebody whose roof we could not see has
-    // still handed us their phone number.
-    try {
-      await deliverLead({
-        source: "instant-estimate",
+    // The homeowner's link, their email, the lead email and Zapier go out
+    // exactly as before; the estimate is now saved in RoofGo, not /pin, and a
+    // RoofGo outage only queues it (src/lib/instant-estimate-save.ts).
+    const { url } = await recordInstantEstimate(
+      {
         firstName: input.firstName,
         lastName: input.lastName,
         email: input.email,
         phone: input.phone,
-        address: point.formatted,
-        // Roofr requires these three separately and will not split an address
-        // string. They come straight out of the geocode we already ran, so the
-        // CRM gets the components Google resolved rather than a guess made by
-        // cutting the formatted address on commas.
-        city: point.city || undefined,
-        state: point.state || undefined,
-        postal: point.postal || undefined,
-        service: measured
-          ? `Website Instant Estimate $${price!.toLocaleString()}`
-          : "Website Instant Estimate (could not measure, needs a visit)",
-        squareFootage: measured ? `${m.squares} squares` : undefined,
-        roofType: options.material,
-        preference: `${options.stories} story`,
-        page: "/instant-estimate",
-        message: [
-          measured
-            ? `Instant estimate: $${price!.toLocaleString()} for ${m.squares} squares.`
-            : `Could not measure from imagery (usually tree cover). Needs a site visit.`,
-          `Address: ${point.formatted}`,
-          url ? `Estimate link: ${url}` : null,
-        ]
-          .filter(Boolean)
-          .join("\n"),
-      });
-    } catch (error) {
-      console.error("[instant-estimate] lead delivery failed", error);
-    }
+        point,
+        options,
+        measured: measured
+          ? {
+              squares: m.squares!,
+              pitchDegrees: m.pitchDegrees,
+              planes: m.planes,
+              imageryDate: m.imageryDate,
+            }
+          : null,
+        price,
+        monthly: price ? monthlyPayment(price) : null,
+        rateCard,
+      },
+      { baseUrl, emailEstimate, deliverLead, saveLead },
+    );
+
+    // Anything an earlier request could not hand to RoofGo gets another try,
+    // after this homeowner already has their answer.
+    after(() => drain(undefined, 5).catch(() => undefined));
 
     if (!measured) {
       return NextResponse.json({

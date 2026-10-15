@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "test": "node --conditions=react-server --import tsx --test \"test/*.test.ts\"",
     "seo:smoke": "node scripts/seo-smoke.mjs",
     "check:deploy": "node scripts/post-deploy-check.mjs",
     "check:mailer": "node --conditions=react-server --import tsx scripts/check-mailer-pdf.mts",

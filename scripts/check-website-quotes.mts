@@ -7,7 +7,8 @@ import { readFileSync } from "node:fs";
  * email, tapped the link she was sent, and the site answered 404. The link was
  * fine. The row was there. The query could not see it.
  *
- * savePublicQuote writes created_by NULL on purpose: nobody on the team made
+ * savePublicQuote wrote created_by NULL on purpose (until SE8 moved new
+ * website estimates to RoofGo): nobody on the team made
  * that quote, the estimator did, and NULL is what makes the office scoping
  * rule show it to admins and hide it from reps. But two read paths joined the
  * users table with a plain JOIN:
@@ -48,12 +49,19 @@ const publicQuote = read("lib/quotes/public-quote.ts");
 /* ------------------------------------------------------------------ */
 console.log("\nA website quote has no rep");
 
+// Since SE8 (2026-10-15) new website estimates are saved in RoofGo, not here,
+// so nothing in this site inserts them any more. The rows already in /pin
+// (kept for the 90-day hold, and still opened by their homeowners' links)
+// carry created_by NULL, which is what the joins below must keep tolerating.
+const savers = [
+  publicQuote,
+  read("app/api/instant-estimate/route.ts"),
+  read("lib/instant-estimate-save.ts"),
+];
 check(
-  /INSERT INTO quotes[\s\S]*?created_by[\s\S]*?VALUES[\s\S]*?::uuid,\s*NULL/.test(
-    publicQuote,
-  ),
-  "savePublicQuote still inserts created_by NULL",
-  "If this ever changes, the joins below can go back to being inner joins.",
+  savers.every((src) => !/INSERT INTO (quotes|customers)\b/.test(src)),
+  "the instant estimate no longer writes the /pin tables",
+  "Website estimates belong in RoofGo (src/lib/roofgo-lead.ts).",
 );
 
 /* ------------------------------------------------------------------ */
