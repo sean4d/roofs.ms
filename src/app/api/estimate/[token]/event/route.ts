@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-import { db } from "@/lib/quotes/db";
-
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
@@ -49,19 +47,11 @@ export async function POST(
     return NextResponse.json({ ok: false }, { status: 400 });
   }
 
-  try {
-    // Resolved through the token in the same statement that inserts, so an
-    // unknown token writes nothing at all rather than a row pointing nowhere.
-    await db()`
-      INSERT INTO estimate_events (quote_id, kind, via)
-      SELECT id, ${input.kind}, ${input.via ?? "link"}
-        FROM quotes WHERE public_token = ${token}
-    `;
-  } catch (error) {
-    // Never fatal. This is a page a customer is reading; a analytics failure
-    // must not be something they can see.
-    console.error("[estimate] event not recorded", error);
-  }
+  // /pin is retired and its tables are read-only (SE8, 2026-10-15): opens of
+  // the few estimates still served from them are no longer counted. The
+  // request is still validated and answered the same way.
+  void token;
+  void input;
 
   // Always the same answer, so a probe cannot tell a real token from a wrong
   // one by watching the response.

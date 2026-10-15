@@ -1,5 +1,8 @@
 # /pin + Instant Estimator — Technical Brief
 
+> **Retired 2026-10-15 (SE8).** /pin forwards to RoofGo and the instant
+> estimate saves there. See docs/PIN-RETIRED.md. This brief is history.
+
 Context handoff document. Written for an AI assistant that has not seen the
 codebase, as background for designing a commercial product aimed at roofing
 contractors (instant estimates + direct mail for door-knocking sales teams).
