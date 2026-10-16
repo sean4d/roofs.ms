@@ -32,10 +32,9 @@ import { siteConfig } from "@/config/site";
  * the outbox and nothing is lost.
  */
 
-export interface RoofgoLead {
+interface LeadBase {
   leadId: string;
   createdAt: string;
-  publicToken: string;
   name: string;
   email: string;
   phone: string;
@@ -45,18 +44,35 @@ export interface RoofgoLead {
   postal: string | null;
   lat: number;
   lon: number;
+  material: string;
+  stories: number;
+}
+
+/** A roof the website measured and priced, with the homeowner's link. */
+export interface MeasuredRoofgoLead extends LeadBase {
+  measured: true;
+  publicToken: string;
   squares: number;
   pitchDegrees: number | null;
   planes: number;
   imageryDate: string | null;
-  material: string;
-  stories: number;
   priceShown: number;
   monthlyLow: number;
   monthlyHigh: number;
   rateCard: unknown;
   emailedTo: string | null;
 }
+
+/**
+ * A roof the website could not measure (usually trees over it). The
+ * homeowner saw no price and got no link, so none is sent: RoofGo shows it as
+ * "Not measured: needs a site visit" (owner, 2026-10-16).
+ */
+export interface UnmeasuredRoofgoLead extends LeadBase {
+  measured: false;
+}
+
+export type RoofgoLead = MeasuredRoofgoLead | UnmeasuredRoofgoLead;
 
 export const newLeadId = () => `ie_${randomBytes(12).toString("base64url")}`;
 export const newPublicToken = () => randomBytes(24).toString("base64url");
@@ -153,7 +169,8 @@ export async function sendBody(
 
 export interface OutboxRow {
   leadId: string;
-  publicToken: string;
+  /** Null for an unmeasured lead, which has no homeowner link. */
+  publicToken: string | null;
   body: string | null;
   createdAt: Date;
   attempts: number;
@@ -164,7 +181,11 @@ export interface OutboxRow {
 }
 
 export interface Outbox {
-  insert(leadId: string, publicToken: string, body: string): Promise<void>;
+  insert(
+    leadId: string,
+    publicToken: string | null,
+    body: string,
+  ): Promise<void>;
   byToken(token: string): Promise<OutboxRow | null>;
   due(limit: number): Promise<OutboxRow[]>;
   delivered(leadId: string): Promise<void>;
@@ -181,7 +202,7 @@ export const backoffAfter = (attempts: number) =>
 
 type Raw = {
   lead_id: string;
-  public_token: string;
+  public_token: string | null;
   body: string | null;
   created_at: string | Date;
   attempts: number;
@@ -215,7 +236,7 @@ function ensureTable() {
     await sql`
       CREATE TABLE IF NOT EXISTS roofgo_lead_outbox (
         lead_id         text PRIMARY KEY,
-        public_token    text NOT NULL UNIQUE,
+        public_token    text UNIQUE,
         body            text,
         created_at      timestamptz NOT NULL DEFAULT now(),
         attempts        integer NOT NULL DEFAULT 0,
@@ -225,6 +246,10 @@ function ensureTable() {
         gave_up_at      timestamptz,
         alerted_at      timestamptz
       )`;
+    // Unmeasured leads (2026-10-16) have no link token. The table was first
+    // created with the column NOT NULL; this relaxes it, and is a no-op after.
+    await sql`
+      ALTER TABLE roofgo_lead_outbox ALTER COLUMN public_token DROP NOT NULL`;
     await sql`
       CREATE INDEX IF NOT EXISTS roofgo_lead_outbox_due_idx
         ON roofgo_lead_outbox (next_attempt_at)
@@ -359,7 +384,11 @@ export async function saveLead(
   const body = JSON.stringify(lead);
   let queued = true;
   try {
-    await s.outbox.insert(lead.leadId, lead.publicToken, body);
+    await s.outbox.insert(
+      lead.leadId,
+      lead.measured ? lead.publicToken : null,
+      body,
+    );
   } catch (error) {
     queued = false;
     console.error("[roofgo-lead] outbox write failed", lead.leadId, error);

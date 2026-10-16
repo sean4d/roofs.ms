@@ -4,21 +4,24 @@ import { siteConfig } from "@/config/site";
 
 /**
  * Lead delivery service (PRD Phase 1, adapter pattern, no hardcoded
- * destinations). Every submission fans out to all configured transports:
+ * destinations). Every submission goes out by email (RESEND_API_KEY +
+ * LEAD_NOTIFY_EMAIL): a notification via the Resend REST API, falling back
+ * to siteConfig.email as the recipient, plus the Zapier Email Parser mailbox
+ * (LEAD_ROOFR_EMAIL) that creates the Roofr job.
  *
- * 1. Webhook (LEAD_WEBHOOK_URL), point at Make.com, Zapier, or a Roofr
- *    endpoint; the JSON body is flat so no-code tools map fields easily.
- * 2. Email (RESEND_API_KEY + LEAD_NOTIFY_EMAIL): notification via the
- *    Resend REST API; falls back to siteConfig.email as the recipient.
+ * THE WEBHOOK TRANSPORT WAS REMOVED ON 2026-10-16 (owner: "remove the
+ * webhook"). LEAD_WEBHOOK_URL had answered 404 on every lead since at least
+ * 2026-10-13, so it delivered nothing; leads reached Zapier through the
+ * Email Parser all along. The email below is unchanged.
  *
- * If NO transport is configured the submission fails loudly (the form
- * tells the visitor to call). A lead must never silently vanish.
+ * If the email transport is not configured the submission fails loudly (the
+ * form tells the visitor to call). A lead must never silently vanish.
  *
  * ONE LEAD, TWO DESTINATIONS. LEAD_NOTIFY_EMAIL is the office inbox and
  * LEAD_ROOFR_EMAIL is the Zapier Email Parser mailbox that creates the Roofr
  * job. Both receive every lead: every form on the site is somebody worth a job
- * card. Rep estimates from /pin are the ones that stay out of the CRM, and
- * they do so by never calling deliverLead at all.
+ * card. Rep estimates (formerly /pin, now RoofGo) are the ones that stay out
+ * of the CRM, and they do so by never calling deliverLead at all.
  */
 
 export interface Lead {
@@ -75,25 +78,6 @@ export interface Lead {
 interface DeliveryResult {
   delivered: boolean;
   transports: string[];
-}
-
-async function sendWebhook(lead: Lead): Promise<boolean> {
-  const url = process.env.LEAD_WEBHOOK_URL;
-  if (!url) return false;
-
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      ...lead,
-      // Note: keep metadata keys distinct from Lead fields, lead.company
-      // is the customer's organization and must never be clobbered.
-      brand: siteConfig.name,
-      submittedAt: new Date().toISOString(),
-    }),
-  });
-  if (!res.ok) throw new Error(`Lead webhook responded ${res.status}`);
-  return true;
 }
 
 const addressList = (value: string | null | undefined): string[] =>
@@ -251,7 +235,6 @@ async function sendEmail(lead: Lead): Promise<boolean> {
 
 export async function deliverLead(lead: Lead): Promise<DeliveryResult> {
   const attempts: Array<[string, Promise<boolean>]> = [
-    ["webhook", sendWebhook(lead)],
     ["email", sendEmail(lead)],
   ];
 

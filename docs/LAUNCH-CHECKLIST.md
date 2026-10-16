@@ -32,20 +32,26 @@ These make the site's features actually function. Add each and redeploy.
 | `NEXT_PUBLIC_SITE_URL` | Canonical domain = `https://southeastroofing.llc` | [Owner] |
 | `NEXT_PUBLIC_SANITY_PROJECT_ID` | Enables the `/studio` CMS (optional for launch) | [Together] |
 | `NEXT_PUBLIC_SANITY_DATASET` | `production` | [Owner] |
-| `LEAD_WEBHOOK_URL` | Sends every form lead to Roofr/Make (Phase 3a) | [Together] |
+| ~~`LEAD_WEBHOOK_URL`~~ | Removed 2026-10-16 (it answered 404); Roofr jobs come from the Zapier Email Parser (`LEAD_ROOFR_EMAIL`) | n/a |
 | `RESEND_API_KEY` | Emails every lead to the office (Phase 3b) | [Together] |
 | `LEAD_NOTIFY_EMAIL` | Where leads email to (defaults to office@southeastroofing.llc) | [Owner] |
 | `NEXT_PUBLIC_BOOKING_URL` | "Pick a time" button on the form thank-you screen (Phase 3c) | [Together] |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Optional — you're already DNS-verified, so this can stay blank | [Owner] |
 
-> **How the forms behave:** every submission fans out to the webhook **and**
-> the email. If neither is configured, the form intentionally tells the
+> **How the forms behave:** every submission goes out by email, to the office
+> and to the Zapier Email Parser (the webhook was removed 2026-10-16). If the
+> email is not configured, the form intentionally tells the
 > visitor to **call instead** — a lead never silently vanishes. So configure
 > at least one of Phase 3a / 3b before launch.
 
 ## Phase 3 — Integrations (make the site do its job)
 
-### 3a. Lead forms → Roofr CRM (webhook)
+### 3a. Lead forms → Roofr CRM (webhook): superseded
+
+Removed 2026-10-16. Roofr jobs are created by the Zapier Email Parser from the
+lead email (`LEAD_ROOFR_EMAIL`); the webhook it replaced answered 404. The
+original steps are kept below for history.
+
 - [ ] **[Owner]** Check Roofr for a **direct lead-intake webhook or email**. If
       it has one, use that URL as `LEAD_WEBHOOK_URL` and skip the middleman.
 - [ ] **[Owner]** Otherwise, create a free **Make.com** scenario: *Webhooks →

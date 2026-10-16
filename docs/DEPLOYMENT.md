@@ -47,7 +47,10 @@ The /free-inspection and /contact forms deliver every lead through two
 channels — configure at least one in Vercel → Settings → Environment
 Variables (until then, the form tells visitors to call instead):
 
-**a) Webhook → Roofr CRM** (`LEAD_WEBHOOK_URL`)
+**a) Webhook → Roofr CRM** (`LEAD_WEBHOOK_URL`): REMOVED 2026-10-16. The
+webhook answered 404 and has been taken out of the code; Roofr jobs come from
+the Zapier Email Parser address (`LEAD_ROOFR_EMAIL`) on the lead email. The
+original steps follow for history only.
 
 1. Recommended free route: [make.com](https://www.make.com) (free tier,
    1,000 ops/month). Create a scenario: **Webhooks → Custom webhook** →

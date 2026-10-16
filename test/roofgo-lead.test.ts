@@ -11,6 +11,7 @@ import {
   signatureHeader,
   type Outbox,
   type OutboxRow,
+  type MeasuredRoofgoLead,
   type RoofgoLead,
   type Sync,
   type Transport,
@@ -143,7 +144,10 @@ function sync(transport: Transport, outbox = memoryOutbox()) {
   return { s, outbox, alerts };
 }
 
-const roofgoLead = (over: Partial<RoofgoLead> = {}): RoofgoLead => ({
+const roofgoLead = (
+  over: Partial<MeasuredRoofgoLead> = {},
+): MeasuredRoofgoLead => ({
+  measured: true,
   leadId: `ie_${Math.random().toString(36).slice(2, 14)}`,
   createdAt: "2026-10-15T14:03:00.000Z",
   publicToken: "tok_" + "a".repeat(30) + Math.random().toString(36).slice(2),
@@ -407,6 +411,8 @@ test("success: homeowner email, lead email/Zapier and RoofGo all get the same li
   assert.deepEqual(t.leads, [expectedLead(out.url!)]);
   assert.equal(t.saved.length, 1);
   const s = t.saved[0];
+  assert.equal(s.measured, true);
+  if (!s.measured) return;
   assert.equal(
     out.url,
     `https://southeastroofing.llc/estimate/${s.publicToken}`,
@@ -449,14 +455,13 @@ test("RoofGo slow: the lead email/Zapier does not wait for it", async () => {
   await pending;
 });
 
-test("could not measure: no link, no RoofGo copy, the lead still goes out as before", async () => {
+test("could not measure: no link, no email, the lead goes out as before, and RoofGo gets it unpriced", async () => {
   const t = deps(async () => ({ ok: true, status: 201 }));
   const out = await recordInstantEstimate(
     { ...input, measured: null, price: null, monthly: null },
     t.deps,
   );
   assert.equal(out.url, null);
-  assert.equal(t.saved.length, 0);
   assert.equal(t.emails.length, 0);
   assert.equal(
     t.leads[0].service,
@@ -466,6 +471,68 @@ test("could not measure: no link, no RoofGo copy, the lead still goes out as bef
     t.leads[0].message,
     "Could not measure from imagery (usually tree cover). Needs a site visit.\nAddress: 1 Test St, Hattiesburg, MS 39401, USA",
   );
+  assert.equal(t.saved.length, 1);
+  const s = t.saved[0];
+  assert.equal(s.measured, false);
+  // No price, no figures, no link: exactly the contact and the address.
+  assert.deepEqual(Object.keys(s).sort(), [
+    "address",
+    "city",
+    "createdAt",
+    "email",
+    "lat",
+    "leadId",
+    "lon",
+    "material",
+    "measured",
+    "name",
+    "phone",
+    "postal",
+    "state",
+    "stories",
+  ]);
+  assert.equal(s.name, "RoofGo Test Lead");
+  assert.equal(s.createdAt, "2026-10-15T14:03:00.000Z");
+});
+
+test("could not measure, RoofGo down: the lead email still goes out unchanged", async () => {
+  const t = deps(async () => {
+    throw new Error("RoofGo is down");
+  });
+  const out = await recordInstantEstimate(
+    { ...input, measured: null, price: null, monthly: null },
+    t.deps,
+  );
+  assert.equal(t.leads.length, 1);
+  assert.equal(out.roofgo?.ok, false);
+});
+
+test("an unmeasured lead is queued without a link token and retried", async () => {
+  const outbox = memoryOutbox();
+  const lead: RoofgoLead = {
+    measured: false,
+    leadId: "ie_unmeasured_test1",
+    createdAt: "2026-10-15T14:03:00.000Z",
+    name: "RoofGo Test Lead",
+    email: "sean+leadtest@roofgo.com",
+    phone: "6015550123",
+    address: "1 Test St, Hattiesburg, MS 39401, USA",
+    city: "Hattiesburg",
+    state: "MS",
+    postal: "39401",
+    lat: 31.3,
+    lon: -89.3,
+    material: "architectural",
+    stories: 1,
+  };
+  await saveLead(lead, sync(down().transport, outbox).s);
+  const row = outbox.rows.get(lead.leadId)!;
+  assert.equal(row.publicToken, null);
+  assert.ok(row.body);
+  outbox.advance(61);
+  const later = up();
+  assert.equal((await drain(sync(later.transport, outbox).s)).delivered, 1);
+  assert.deepEqual(JSON.parse(String(later.calls[0].init.body)), lead);
 });
 
 test("homeowner email failing does not stop the lead or RoofGo", async () => {
@@ -476,6 +543,8 @@ test("homeowner email failing does not stop the lead or RoofGo", async () => {
   const out = await recordInstantEstimate(input, t.deps);
   assert.equal(t.leads.length, 1);
   assert.equal(t.saved.length, 1);
-  assert.equal(t.saved[0].emailedTo, null);
+  const saved = t.saved[0];
+  assert.ok(saved.measured);
+  assert.equal(saved.emailedTo, null);
   assert.ok(out.url);
 });

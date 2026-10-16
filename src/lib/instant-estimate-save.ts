@@ -22,6 +22,7 @@ import {
  *      fields and the same "Estimate link:" line,
  *   4. and, new, the RoofGo copy is saved at the same time as step 3, through
  *      its outbox. Step 3 never waits on RoofGo and never fails because of it.
+ *      A roof that could not be measured goes too, with no price and no link.
  */
 
 export interface MeasuredFigures {
@@ -99,6 +100,7 @@ export async function recordInstantEstimate(
         console.error("[instant-estimate] save/send failed", error);
       }
       roofgoLead = {
+        measured: true,
         leadId: newLeadId(),
         createdAt,
         publicToken,
@@ -126,6 +128,27 @@ export async function recordInstantEstimate(
     } catch (error) {
       console.error("[instant-estimate] save/send failed", error);
     }
+  } else {
+    // Could not measure (usually trees). Still a lead: RoofGo gets the
+    // contact and address with no price and no link, and shows it as
+    // "Not measured: needs a site visit" (owner, 2026-10-16). Nothing the
+    // homeowner sees or receives changes.
+    roofgoLead = {
+      measured: false,
+      leadId: newLeadId(),
+      createdAt,
+      name: fullName,
+      email: input.email,
+      phone: input.phone,
+      address: point.formatted,
+      city: point.city || null,
+      state: point.state || null,
+      postal: point.postal || null,
+      lat: point.lat,
+      lon: point.lon,
+      material: options.material,
+      stories: options.stories,
+    };
   }
 
   // RoofGo, in parallel with the lead below, and never allowed to throw.

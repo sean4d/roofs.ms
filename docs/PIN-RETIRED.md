@@ -11,9 +11,12 @@ Southeast Roofing's estimator moved to RoofGo (app.roofgo.com). On this site:
   2026-10-11 forward to RoofGo (SE7), /pin estimates made after that still
   render here read-only, and new website estimates forward to RoofGo.
 - **The instant estimate** saves to RoofGo, not /pin (`src/lib/roofgo-lead.ts`,
-  `src/lib/instant-estimate-save.ts`). The homeowner's email, the website-lead
-  email and the Zapier webhook (`src/lib/leads.ts`) are unchanged and do not
-  depend on RoofGo. A lead RoofGo does not acknowledge waits in the
+  `src/lib/instant-estimate-save.ts`). The homeowner's email and the
+  website-lead email to the office and the Zapier Email Parser
+  (`src/lib/leads.ts`) are unchanged and do not depend on RoofGo. Since
+  2026-10-16 a roof that could not be measured is saved in RoofGo too, with no
+  price and no link ("Not measured: needs a site visit"), and the old Zapier
+  webhook (`LEAD_WEBHOOK_URL`, answering 404) is gone. A lead RoofGo does not acknowledge waits in the
   `roofgo_lead_outbox` table and is retried (after later estimates, when its
   link is opened, and daily by `/api/cron/roofgo-leads`); one still missing
   after an hour is emailed to the office (`ROOFGO_LEAD_ALERT_EMAIL`, default
